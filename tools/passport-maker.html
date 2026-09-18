@@ -9,7 +9,6 @@
 
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
-<!-- MediaPipe Selfie Segmentation -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
 
@@ -562,7 +561,7 @@
 
 <script>
 /* ==========================================================================
-   Passport Photo Studio — Hardened Mask (No White Halo)
+   Passport Photo Studio — Smooth Mask (Fixed Jagged Edges)
    ========================================================================== */
 const fileIn = document.getElementById("photo-in");
 const uploadScreen = document.getElementById("upload-screen");
@@ -832,7 +831,7 @@ gridGapInput.oninput = () => {
 };
 
 /* ==========================================================================
-   renderPhoto — HARDENED MASK (no white halo)
+   renderPhoto — SMOOTH MASK (no halo, no jagged edges)
    ========================================================================== */
 function renderPhoto() {
   if (!rawImg) return;
@@ -843,11 +842,9 @@ function renderPhoto() {
   canvas.width = targetW;
   canvas.height = targetH;
 
-  // Fill background
   ctx.fillStyle = useAiBg ? activeColor : "#ffffff";
   ctx.fillRect(0, 0, targetW, targetH);
 
-  // Fit image inside canvas
   const scale = Math.max(targetW / rawImg.width, targetH / rawImg.height);
   const dw = rawImg.width * scale;
   const dh = rawImg.height * scale;
@@ -861,30 +858,36 @@ function renderPhoto() {
     cutout.height = targetH;
     const cCtx = cutout.getContext("2d");
 
-    // Draw original image
     cCtx.drawImage(rawImg, dx, dy, dw, dh);
 
-    // ---- STEP 2: Build HARDENED mask ----
+    // ---- STEP 2: Build SMOOTH mask (smoothstep feathering) ----
     const maskCanvas = document.createElement("canvas");
     maskCanvas.width = targetW;
     maskCanvas.height = targetH;
     const mCtx = maskCanvas.getContext("2d");
     mCtx.drawImage(personMaskCanvas, dx, dy, dw, dh);
 
-    // Hard-threshold: remove soft gray halos
     const maskData = mCtx.getImageData(0, 0, targetW, targetH);
     const md = maskData.data;
     for (let i = 0; i < md.length; i += 4) {
-      const v = md[i]; // grayscale value (R=G=B)
-      if (v > 128) {
-        md[i] = md[i+1] = md[i+2] = md[i+3] = 255; // fully opaque
+      const v = md[i];
+      let a;
+      if (v <= 80) {
+        a = 0;
+      } else if (v >= 200) {
+        a = 255;
       } else {
-        md[i] = md[i+1] = md[i+2] = md[i+3] = 0;   // fully transparent
+        const t = (v - 80) / (200 - 80);
+        a = Math.round(t * t * (3 - 2 * t) * 255);
       }
+      md[i] = 255;
+      md[i+1] = 255;
+      md[i+2] = 255;
+      md[i+3] = a;
     }
     mCtx.putImageData(maskData, 0, 0);
 
-    // ---- STEP 3: Apply hardened mask to cutout ----
+    // ---- STEP 3: Apply smooth mask to cutout ----
     cCtx.globalCompositeOperation = "destination-in";
     cCtx.drawImage(maskCanvas, 0, 0);
     cCtx.globalCompositeOperation = "source-over";
@@ -892,7 +895,6 @@ function renderPhoto() {
     // ---- STEP 4: Draw clean cutout on colored background ----
     ctx.drawImage(cutout, 0, 0);
   } else {
-    // Original image on top
     ctx.drawImage(rawImg, dx, dy, dw, dh);
   }
 
