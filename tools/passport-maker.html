@@ -9,8 +9,8 @@
 
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
-<!-- IS-Net Background Removal Library (High Quality) -->
-<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.8/dist/bundle.js"></script>
+<!-- IS-Net Background Removal Library (correct IIFE build) -->
+<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/iife.js"></script>
 
 <style>
 :root {
@@ -276,8 +276,8 @@
 
 <div id="ai-loader">
   <div class="spinner"></div>
-  <div id="loader-text" style="font-size:16px; font-weight:800; color:#fff; letter-spacing:0.3px;">Loading AI Model (First Time)...</div>
-  <div id="loader-subtext" style="font-size:12.5px; color:#94a3b8; max-width:320px;">Initial download is ~40 MB. It will be cached for future use.</div>
+  <div id="loader-text" style="font-size:16px; font-weight:800; color:#fff; letter-spacing:0.3px;">Loading AI Model...</div>
+  <div id="loader-subtext" style="font-size:12.5px; color:#94a3b8; max-width:320px;">First use: downloads ~40 MB one-time. Then cached for future.</div>
 </div>
 
 <div id="officekit-header"></div>
@@ -567,8 +567,8 @@
 
 <script>
 /* ==========================================================================
-   Passport Photo Studio — IS-Net Background Removal (High Quality)
-   Uses @imgly/background-removal library (IS-Net model)
+   Passport Photo Studio — IS-Net Background Removal
+   Uses @imgly/background-removal v1.4.5 (IIFE build) - exposes window.removeBackground
    ========================================================================== */
 const fileIn = document.getElementById("photo-in");
 const uploadScreen = document.getElementById("upload-screen");
@@ -619,8 +619,8 @@ const btnDownloadPhoto = document.getElementById("btn-download-photo");
 const btnReset = document.getElementById("btn-reset");
 const btnUploadAnother = document.getElementById("btn-upload-another");
 
-let rawImg = null;             // Original uploaded image
-let cutoutImg = null;          // Transparent-background image (from IS-Net)
+let rawImg = null;
+let cutoutImg = null;
 let useAiBg = true;
 let activeColor = "#1d4ed8";
 let currentW_mm = 35;
@@ -639,10 +639,10 @@ fileIn.onchange = async (e) => {
 
   aiLoader.style.display = "flex";
   loaderText.innerText = "Loading AI Model...";
-  loaderSubtext.innerText = "First use: downloads ~40 MB. It will be cached for future.";
+  loaderSubtext.innerText = "First use: downloads ~40 MB one-time. Then cached for future.";
 
   try {
-    // Show original image
+    // Show original image first
     const originalUrl = URL.createObjectURL(file);
     rawImg = new Image();
     await new Promise((resolve, reject) => {
@@ -655,28 +655,24 @@ fileIn.onchange = async (e) => {
     loaderText.innerText = "Removing Background with AI...";
     loaderSubtext.innerText = "This may take 5-15 seconds depending on image size.";
 
-    // @imgly/background-removal exposes window.imglyRemoveBackground
-    const removalFn = window.imglyRemoveBackground || (window.default && window.default.removeBackground);
-    if (!removalFn) {
-      throw new Error("Background removal library not loaded. Please check your internet connection and refresh.");
+    // @imgly/background-removal v1.4.5 IIFE exposes window.removeBackground
+    const removalFn = window.removeBackground;
+    if (typeof removalFn !== "function") {
+      throw new Error("AI library failed to load. Please refresh the page and try again.");
     }
 
-    // Progress callback
     const removeOpts = {
       progress: (key, current, total) => {
         if (total) {
           const pct = Math.round((current / total) * 100);
           loaderSubtext.innerText = `${key}: ${pct}%`;
         }
-      },
-      // 'small' = fastest, 'medium' = balanced, 'large' = best quality
-      // Use 'medium' as default for best balance
-      model: 'isnet'
+      }
     };
 
     const blob = await removalFn(file, removeOpts);
 
-    // Load the resulting transparent PNG
+    // Load the transparent PNG cutout
     const cutoutUrl = URL.createObjectURL(blob);
     cutoutImg = new Image();
     await new Promise((resolve, reject) => {
@@ -692,7 +688,7 @@ fileIn.onchange = async (e) => {
     renderPhoto();
   } catch (err) {
     console.error("Background removal error:", err);
-    alert("Could not process image. Please check your internet connection and try again.\n\nError: " + (err.message || err));
+    alert("Could not process image. Please refresh the page and try again.\n\nError: " + (err.message || err));
     aiLoader.style.display = "none";
   }
 };
@@ -846,7 +842,7 @@ gridGapInput.oninput = () => {
 };
 
 /* ==========================================================================
-   renderPhoto — Uses IS-Net transparent cutout
+   renderPhoto — uses IS-Net transparent cutout
    ========================================================================== */
 function renderPhoto() {
   if (!rawImg) return;
@@ -857,11 +853,9 @@ function renderPhoto() {
   canvas.width = targetW;
   canvas.height = targetH;
 
-  // Fill background
   ctx.fillStyle = useAiBg ? activeColor : "#ffffff";
   ctx.fillRect(0, 0, targetW, targetH);
 
-  // Use cutoutImg if AI BG is on and cutout is ready, else use rawImg
   const sourceImg = (useAiBg && cutoutImg) ? cutoutImg : rawImg;
 
   const scale = Math.max(targetW / sourceImg.width, targetH / sourceImg.height);
@@ -896,6 +890,7 @@ function applyImageAdjustments(w, h) {
   const brightOffset = b * 2.5;
 
   for (let i = 0; i < data.length; i += 4) {
+    if (data[i+3] === 0) continue; // skip transparent pixels
     let r = contrastFactor * (data[i] - 128) + 128 + brightOffset;
     let g = contrastFactor * (data[i+1] - 128) + 128 + brightOffset;
     let bl = contrastFactor * (data[i+2] - 128) + 128 + brightOffset;
@@ -1002,4 +997,4 @@ btnUploadAnother.onclick = () => {
 };
 </script>
 </body>
-                                                                                            </html>
+</html>
