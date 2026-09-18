@@ -9,12 +9,11 @@
 
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
-<!-- MediaPipe Selfie Segmentation (lightweight, reliable) -->
+<!-- MediaPipe Selfie Segmentation -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
 
 <style>
-/* ============ Modernized UI & Professional Styling ============ */
 :root {
   --primary-glow: rgba(37, 99, 235, 0.15);
 }
@@ -563,7 +562,7 @@
 
 <script>
 /* ==========================================================================
-   Passport Photo Studio — MediaPipe Selfie Segmentation
+   Passport Photo Studio — Hardened Mask (No White Halo)
    ========================================================================== */
 const fileIn = document.getElementById("photo-in");
 const uploadScreen = document.getElementById("upload-screen");
@@ -613,8 +612,8 @@ const btnDownloadPhoto = document.getElementById("btn-download-photo");
 const btnReset = document.getElementById("btn-reset");
 const btnUploadAnother = document.getElementById("btn-upload-another");
 
-let rawImg = null;           // original uploaded image
-let personMaskCanvas = null; // MediaPipe segmentation mask
+let rawImg = null;
+let personMaskCanvas = null;
 let useAiBg = true;
 let activeColor = "#1d4ed8";
 let currentW_mm = 35;
@@ -625,19 +624,18 @@ let selectedPaperH_mm = 297;
 let selectedPaperName = "A4 Paper";
 
 /* ==========================================================================
-   MediaPipe initialization
+   MediaPipe
    ========================================================================== */
 let selfieSegmentation = null;
 
 function initMediaPipe() {
-  if (selfieSegmentation) return; // already initialized
+  if (selfieSegmentation) return;
   selfieSegmentation = new SelfieSegmentation({
     locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`
   });
   selfieSegmentation.setOptions({ modelSelection: 1 });
 
   selfieSegmentation.onResults((results) => {
-    // Save mask
     personMaskCanvas = document.createElement("canvas");
     personMaskCanvas.width = results.image.width;
     personMaskCanvas.height = results.image.height;
@@ -651,7 +649,7 @@ function initMediaPipe() {
 }
 
 /* ==========================================================================
-   File upload handler
+   File upload
    ========================================================================== */
 fileIn.onchange = async (e) => {
   const file = e.target.files[0];
@@ -661,7 +659,6 @@ fileIn.onchange = async (e) => {
   loaderText.innerText = "Loading AI model...";
 
   try {
-    // Load image
     const imgUrl = await new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (ev) => resolve(ev.target.result);
@@ -676,14 +673,12 @@ fileIn.onchange = async (e) => {
       rawImg.src = imgUrl;
     });
 
-    // Init MediaPipe if needed
     initMediaPipe();
-
     loaderText.innerText = "Segmenting person from background...";
     await selfieSegmentation.send({ image: rawImg });
   } catch (err) {
     console.error(err);
-    alert("Could not process image. Please try another photo.\n\nError: " + err.message);
+    alert("Could not process image. Please try another photo.");
     aiLoader.style.display = "none";
   }
 };
@@ -837,7 +832,7 @@ gridGapInput.oninput = () => {
 };
 
 /* ==========================================================================
-   Render function
+   renderPhoto — HARDENED MASK (no white halo)
    ========================================================================== */
 function renderPhoto() {
   if (!rawImg) return;
@@ -849,14 +844,10 @@ function renderPhoto() {
   canvas.height = targetH;
 
   // Fill background
-  if (useAiBg) {
-    ctx.fillStyle = activeColor;
-  } else {
-    ctx.fillStyle = "#ffffff";
-  }
+  ctx.fillStyle = useAiBg ? activeColor : "#ffffff";
   ctx.fillRect(0, 0, targetW, targetH);
 
-  // Calculate fit
+  // Fit image inside canvas
   const scale = Math.max(targetW / rawImg.width, targetH / rawImg.height);
   const dw = rawImg.width * scale;
   const dh = rawImg.height * scale;
@@ -864,19 +855,44 @@ function renderPhoto() {
   const dy = (targetH - dh) / 2;
 
   if (useAiBg && personMaskCanvas) {
-    // Draw image + mask combined
-    const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = targetW;
-    tempCanvas.height = targetH;
-    const tCtx = tempCanvas.getContext("2d");
+    // ---- STEP 1: Build cutout canvas (person only) ----
+    const cutout = document.createElement("canvas");
+    cutout.width = targetW;
+    cutout.height = targetH;
+    const cCtx = cutout.getContext("2d");
 
-    tCtx.drawImage(rawImg, dx, dy, dw, dh);
-    tCtx.globalCompositeOperation = "destination-in";
-    tCtx.drawImage(personMaskCanvas, dx, dy, dw, dh);
-    tCtx.globalCompositeOperation = "source-over";
+    // Draw original image
+    cCtx.drawImage(rawImg, dx, dy, dw, dh);
 
-    ctx.drawImage(tempCanvas, 0, 0);
+    // ---- STEP 2: Build HARDENED mask ----
+    const maskCanvas = document.createElement("canvas");
+    maskCanvas.width = targetW;
+    maskCanvas.height = targetH;
+    const mCtx = maskCanvas.getContext("2d");
+    mCtx.drawImage(personMaskCanvas, dx, dy, dw, dh);
+
+    // Hard-threshold: remove soft gray halos
+    const maskData = mCtx.getImageData(0, 0, targetW, targetH);
+    const md = maskData.data;
+    for (let i = 0; i < md.length; i += 4) {
+      const v = md[i]; // grayscale value (R=G=B)
+      if (v > 128) {
+        md[i] = md[i+1] = md[i+2] = md[i+3] = 255; // fully opaque
+      } else {
+        md[i] = md[i+1] = md[i+2] = md[i+3] = 0;   // fully transparent
+      }
+    }
+    mCtx.putImageData(maskData, 0, 0);
+
+    // ---- STEP 3: Apply hardened mask to cutout ----
+    cCtx.globalCompositeOperation = "destination-in";
+    cCtx.drawImage(maskCanvas, 0, 0);
+    cCtx.globalCompositeOperation = "source-over";
+
+    // ---- STEP 4: Draw clean cutout on colored background ----
+    ctx.drawImage(cutout, 0, 0);
   } else {
+    // Original image on top
     ctx.drawImage(rawImg, dx, dy, dw, dh);
   }
 
