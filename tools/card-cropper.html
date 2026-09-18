@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aadhaar & PAN Dual-Side Cropper (Ultra HD 300 DPI) — OfficeKit</title>
+<meta name="description" content="Crop Aadhaar & PAN card both sides at ultra HD 300 DPI. Password-protected e-Aadhaar PDF support. Free, browser-based, 100% private.">
+<meta name="keywords" content="aadhaar cropper, pan card cropper, id card cropper, 300 dpi aadhaar, dual side id crop">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://pdf365.in/tools/card-cropper.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aadhaar & PAN Dual-Side Cropper (300 DPI) — OfficeKit">
+<meta property="og:description" content="Crop both sides of Aadhaar / PAN at ultra HD 300 DPI. Free & private.">
+<meta property="og:url" content="https://pdf365.in/tools/card-cropper.html">
+<meta property="og:site_name" content="OfficeKit">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<!-- pdf.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script>
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  }
+</script>
+
+<style>
+/* ============ Tool-specific styles (theme comes from global CSS) ============ */
+.cropper-container { text-align: center; }
+
+.upload-box {
+  max-width: 620px;
+  margin: 30px auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 30px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.drop-zone {
+  position: relative;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 40px 20px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.drop-zone:hover { background: var(--accent-soft-hover); }
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+}
+.drop-zone h3 { color: var(--text-color); }
+.drop-zone p { color: var(--subtext-color); }
+
+/* Password card */
+.password-card {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 16px 20px;
+  max-width: 500px;
+  margin: 15px auto;
+  text-align: left;
+}
+[data-theme="dark"] .password-card {
+  background: #2a1608;
+  border-color: #7c2d12;
+}
+.password-card .pc-title { font-size: 13.5px; font-weight: 700; color: #c2410c; }
+[data-theme="dark"] .password-card .pc-title { color: #fdba74; }
+.password-card .pc-hint { font-size: 12.5px; color: #9a3412; margin-top: 2px; }
+[data-theme="dark"] .password-card .pc-hint { color: #fdba74; }
+.password-input-group { display: flex; gap: 8px; margin-top: 10px; }
+.password-input-group input {
+  flex: 1;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #fdba74;
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+.btn-unlock {
+  background: #ea580c;
+  color: #ffffff;
+  border: none;
+  padding: 0 18px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13.5px;
+}
+.btn-unlock:hover { background: #c2410c; }
+
+/* Sticky toolbar */
+.cropper-toolbar {
+  position: sticky;
+  top: 62px;
+  z-index: 500;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 8px 14px;
+  margin: 10px auto;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  max-width: 980px;
+}
+.toolbar-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 12px;
+  border-right: 1px solid var(--border-color);
+}
+.toolbar-group:last-child { border-right: none; }
+.toolbar-label { font-size: 12.5px; font-weight: 700; color: var(--subtext-color); }
+
+.tool-btn {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.tool-btn:hover {
+  background: var(--card-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.tool-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+
+.btn-print-both {
+  background: #15803d !important;
+  color: #ffffff !important;
+  border-color: #166534 !important;
+}
+.btn-print-both:hover { background: #166534 !important; color: #fff !important; }
+
+.size-input {
+  width: 58px;
+  height: 32px;
+  padding: 0 4px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+.hd-note {
+  font-size: 13px;
+  color: #166534;
+  font-weight: 600;
+  margin: 6px auto 12px;
+  max-width: 780px;
+  line-height: 1.45;
+}
+[data-theme="dark"] .hd-note { color: #4ade80; }
+
+/* Viewport & crop boxes */
+.viewport-box {
+  position: relative;
+  margin: 15px auto 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  background: #ffffff;
+  display: inline-block;
+  user-select: none;
+  border-radius: 4px;
+}
+#pdf-canvas { display: block; max-width: 100%; height: auto; }
+
+.crop-selector {
+  position: absolute;
+  cursor: move;
+  display: none;
+  z-index: 100;
+  touch-action: none;
+}
+#crop-front {
+  border: 2px dashed #16a34a;
+  background: rgba(22, 163, 74, 0.14);
+}
+#crop-back {
+  border: 2px dashed #2563eb;
+  background: rgba(37, 99, 235, 0.14);
+}
+.crop-badge {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.handle {
+  position: absolute;
+  background: #ffffff;
+  border: 2px solid #0f172a;
+  border-radius: 3px;
+  z-index: 102;
+}
+.handle-tl { top: -6px; left: -6px; width: 12px; height: 12px; cursor: nwse-resize; }
+.handle-tr { top: -6px; right: -6px; width: 12px; height: 12px; cursor: nesw-resize; }
+.handle-bl { bottom: -6px; left: -6px; width: 12px; height: 12px; cursor: nesw-resize; }
+.handle-br { bottom: -6px; right: -6px; width: 12px; height: 12px; cursor: nwse-resize; }
+.handle-l { top: calc(50% - 10px); left: -6px; width: 10px; height: 20px; cursor: ew-resize; background: #0f172a; }
+.handle-r { top: calc(50% - 10px); right: -6px; width: 10px; height: 20px; cursor: ew-resize; background: #0f172a; }
+.handle-t { top: -6px; left: calc(50% - 10px); width: 20px; height: 10px; cursor: ns-resize; background: #0f172a; }
+.handle-b { bottom: -6px; left: calc(50% - 10px); width: 20px; height: 10px; cursor: ns-resize; background: #0f172a; }
+
+.bottom-action-bar {
+  margin: 15px auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.btn-bottom {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+.btn-bottom-reset {
+  background: var(--card-bg);
+  color: var(--subtext-color);
+}
+.btn-bottom-reset:hover {
+  background: var(--card-hover);
+  color: var(--text-color);
+  border-color: var(--accent);
+}
+.btn-bottom-upload {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.btn-bottom-upload:hover { background: var(--accent-soft-hover); }
+
+/* Print */
+@media print {
+  body * { visibility: hidden; }
+  #print-area, #print-area * { visibility: visible; }
+  #print-area {
+    position: absolute;
+    top: 20mm;
+    left: 15mm;
+    display: flex !important;
+    gap: 10mm;
+    margin: 0;
+    padding: 0;
+  }
+  .card-print-img {
+    width: 85mm !important;
+    height: 55mm !important;
+    border: 1px dashed #94a3b8;
+    object-fit: fill;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Aadhaar & PAN Dual-Side Cropper</h1>
+    <p class="hero-sub">Ultra HD 300 DPI rendering. Crop both sides of your ID card with pixel-perfect precision — right in your browser. No upload, no signup, 100% private.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="cropper-container">
+
+    <!-- Upload Screen -->
+    <div id="upload-screen" class="upload-box">
+      <div class="drop-zone">
+        <input type="file" id="pdf-in" accept="application/pdf,image/*">
+        <svg style="width:52px; height:52px; color:var(--accent); margin:0 auto 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+          <circle cx="9" cy="10" r="2"></circle>
+          <line x1="15" y1="8" x2="17" y2="8"></line>
+          <line x1="15" y1="12" x2="17" y2="12"></line>
+          <line x1="7" y1="16" x2="17" y2="16"></line>
+        </svg>
+        <h3 style="margin:0 0 6px; font-size:18px;">Drop Aadhaar / PAN PDF or Image</h3>
+        <p style="margin:0; font-size:13.5px;">Ultra HD 300 DPI rendering. No pixel loss, zero blur print guaranteed.</p>
+      </div>
+
+      <div id="password-box" class="password-card" hidden>
+        <div class="pc-title">🔒 Password Protected PDF Detected</div>
+        <div class="pc-hint">
+          e-Aadhaar format: First 4 letters of name in CAPITAL + Birth Year (e.g. DEEP1998)
+        </div>
+        <div class="password-input-group">
+          <input type="password" id="pdf-password" placeholder="Enter password (e.g. DEEP1998)">
+          <button class="btn-unlock" id="btn-unlock">Unlock & Load</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Workspace -->
+    <div id="workspace" hidden>
+
+      <div class="cropper-toolbar">
+        <div class="toolbar-group">
+          <span class="toolbar-label">Target Size (cm):</span>
+          <input type="number" id="box-w-input" class="size-input" value="8.5" step="0.1" min="5" max="15" title="Width (cm)">
+          <span style="color:var(--subtext-color); font-weight:700;">×</span>
+          <input type="number" id="box-h-input" class="size-input" value="5.5" step="0.1" min="3" max="12" title="Height (cm)">
+        </div>
+
+        <div class="toolbar-group" id="page-controls" style="display:none;">
+          <button class="tool-btn" id="btn-prev-page">◀ Prev</button>
+          <span id="page-label" style="font-size:12px; font-weight:700; color:var(--subtext-color);">Page 1/1</span>
+          <button class="tool-btn" id="btn-next-page">Next ▶</button>
+        </div>
+
+        <button class="tool-btn btn-print-both" id="btn-print-both">
+          <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print Ultra HD (8.5 × 5.5 cm)
+        </button>
+
+        <button class="tool-btn" id="btn-download-both">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Save HD Images
+        </button>
+      </div>
+
+      <div class="hd-note">
+        ✨ <b>300 DPI Studio Quality:</b> बॉक्स को कार्ड पर सेट करें। प्रिंटिंग के समय यह ओरिजिनल PDF से फुल क्रिस्टल क्लियर पिक्सल निकालेगा।
+      </div>
+
+      <div class="viewport-box" id="viewport-wrap">
+        <canvas id="pdf-canvas"></canvas>
+
+        <div id="crop-front" class="crop-selector">
+          <span class="crop-badge" style="background:#16a34a;">Front</span>
+          <div class="handle handle-tl" data-dir="tl"></div>
+          <div class="handle handle-tr" data-dir="tr"></div>
+          <div class="handle handle-bl" data-dir="bl"></div>
+          <div class="handle handle-br" data-dir="br"></div>
+          <div class="handle handle-l" data-dir="l"></div>
+          <div class="handle handle-r" data-dir="r"></div>
+          <div class="handle handle-t" data-dir="t"></div>
+          <div class="handle handle-b" data-dir="b"></div>
+        </div>
+
+        <div id="crop-back" class="crop-selector">
+          <span class="crop-badge" style="background:#2563eb;">Back</span>
+          <div class="handle handle-tl" data-dir="tl"></div>
+          <div class="handle handle-tr" data-dir="tr"></div>
+          <div class="handle handle-bl" data-dir="bl"></div>
+          <div class="handle handle-br" data-dir="br"></div>
+          <div class="handle handle-l" data-dir="l"></div>
+          <div class="handle handle-r" data-dir="r"></div>
+          <div class="handle handle-t" data-dir="t"></div>
+          <div class="handle handle-b" data-dir="b"></div>
+        </div>
+      </div>
+
+      <div class="bottom-action-bar">
+        <button class="btn-bottom btn-bottom-reset" id="btn-bottom-reset" title="Auto-place boxes over cards">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          Reset Positions
+        </button>
+
+        <button class="btn-bottom btn-bottom-upload" id="btn-bottom-upload" title="Upload another file">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          Upload Another Document
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Hidden High-Res Master Canvas -->
+  <canvas id="hd-master-canvas" style="display:none;"></canvas>
+
+  <!-- Print Area -->
+  <div id="print-area" style="display:none;">
+    <img id="print-front-img" class="card-print-img" alt="Front">
+    <img id="print-back-img" class="card-print-img" alt="Back">
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ SEO ARTICLE (800+ words) ============ -->
+  <section class="seo-article">
+    <h2>Complete Guide: Crop Aadhaar & PAN Cards at 300 DPI Online</h2>
+
+    <p>
+      Applying for a government exam, opening a bank account, submitting KYC documents to a fintech app, or verifying your identity on a job portal almost always demands the same thing — clean, correctly-sized copies of your Aadhaar card and PAN card, showing both the front and back. But scanned Aadhaar PDFs are password-protected, phone photos come out blurry, and manually cropping two cards to exact dimensions is a headache. The OfficeKit Aadhaar & PAN Dual-Side Cropper solves all of this in one browser-based tool that produces ultra HD 300 DPI output — without ever uploading your sensitive identity documents to any server.
+    </p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/card-cropper-demo.jpg" alt="Aadhaar and PAN card dual-side cropping workflow showing front and back crop boxes at 300 DPI"
+           onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image Here: assets/images/card-cropper-demo.jpg]</div>';">
+      <div class="article-image-caption">Dual-side crop boxes over a scanned Aadhaar card, exporting at exactly 8.5 × 5.5 cm (CR80) in 300 DPI print resolution.</div>
+    </div>
+
+    <h3>Why 300 DPI Matters for Aadhaar & PAN Submissions</h3>
+    <p>
+      DPI stands for Dots Per Inch and determines the physical print quality of an image. Most government portals, exam authorities (UPSC, SSC, IBPS), and banks specify that uploaded ID card images must be at least 200–300 DPI to ensure all text, QR codes, and photo details remain legible. A phone photo taken at 72 DPI looks fine on a screen but produces blurry, unreadable text when printed or zoomed by a verifying officer. This tool renders your Aadhaar and PAN cards at 300 DPI by internally using the original PDF's vector data at up to 4× the display resolution — guaranteeing razor-sharp text, barcodes, and photographs every time.
+    </p>
+    <p>
+      Traditional online cropping tools downsample your PDF to a screen-sized bitmap before you crop, permanently losing pixel data. Even if you zoom in, the text gets blurry because the underlying information is gone. OfficeKit takes a completely different approach — it keeps a hidden ultra-HD master canvas at roughly 2480 pixels wide (the equivalent of A4 at 300 DPI) and extracts your crop from that master, not from the compressed on-screen preview.
+    </p>
+
+    <h3>Step-by-Step Instructions</h3>
+    <ul>
+      <li><b>Step 1 — Upload your document:</b> Click the upload zone or drag-and-drop your e-Aadhaar PDF, scanned JPG, or phone photo of your Aadhaar / PAN card. Both PDF and image formats are supported.</li>
+      <li><b>Step 2 — Enter the e-Aadhaar password (if prompted):</b> Downloaded e-Aadhaar PDFs are password-protected using the format "first 4 letters of your name in CAPITALS + birth year" (e.g., for a person named Deepak born in 1998, the password would be <code>DEEPAK1998</code> — actually it's <code>DEEP1998</code>, the first 4 letters). Enter it to unlock the PDF. Everything is decrypted locally in your browser.</li>
+      <li><b>Step 3 — Position the two crop boxes:</b> Two draggable, resizable crop boxes appear automatically. The <b>green box</b> is for the front side (marked "Front") and the <b>blue box</b> is for the back side (marked "Back"). Drag each box to sit precisely over the corresponding card on the scanned page.</li>
+      <li><b>Step 4 — Adjust the size (optional):</b> The default target size is 8.5 × 5.5 cm, which matches the international CR80 standard (the size of a credit card, Aadhaar, PAN, driving licence, and voter ID). If your specific form asks for a different size, enter it in the "Target Size" fields.</li>
+      <li><b>Step 5 — Fine-tune the crop boundaries:</b> Use the 8 directional handles around each box — four corners for proportional resizing and four edges for single-axis adjustment — to align the box edges exactly with the card's physical boundaries. You can also drag the box from its center to move it without resizing.</li>
+      <li><b>Step 6 — Multi-page PDFs:</b> If your PDF has multiple pages (like a merged e-Aadhaar with front and back on different pages), use the Prev / Next page navigation in the toolbar to switch pages and crop each side separately.</li>
+      <li><b>Step 7 — Download or print:</b> Click <b>"Save HD Images"</b> to download two 1004 × 650 pixel PNG files (front and back at 300 DPI), or click <b>"Print Ultra HD"</b> to open your system print dialog with both cards laid out side-by-side on an A4 sheet at their true 8.5 × 5.5 cm size.</li>
+    </ul>
+
+    <h3>What Makes OfficeKit's Cropper Different</h3>
+    <ul>
+      <li><b>True client-side processing:</b> Your Aadhaar and PAN card data is extremely sensitive — it contains your name, address, photo, biometric-linked number, and signature. OfficeKit never uploads any of it. Every pixel operation happens inside your browser's memory and is instantly wiped when you close the tab.</li>
+      <li><b>Dual-side cropping in one session:</b> Instead of processing front and back separately (which most tools force you to do), OfficeKit gives you two independent crop boxes on the same page, so both sides are done in a single smooth workflow.</li>
+      <li><b>Ultra HD 300 DPI output:</b> The exported PNG is exactly 1004 × 650 pixels — the correct physical size for a CR80 card at 300 DPI. Perfect for both digital uploads and physical printing without pixelation.</li>
+      <li><b>Password-protected PDF support:</b> Directly open downloaded e-Aadhaar files without needing to first decrypt them in an external tool.</li>
+      <li><b>A4 print layout:</b> The print feature automatically arranges both cards on an A4 sheet at their true physical size, with a light dashed cutting guide around each card — ideal for printing on photo paper or sticker sheets.</li>
+      <li><b>Works on any device:</b> Desktop, tablet, or mobile — the crop boxes and toolbar adapt to any screen size.</li>
+    </ul>
+
+    <h3>Common Use Cases</h3>
+    <ul>
+      <li><b>Government exam applications:</b> UPSC, SSC, IBPS, RRB, and state PSC portals require both sides of Aadhaar and PAN at specific dimensions.</li>
+      <li><b>Bank KYC submissions:</b> Physical or digital KYC forms for opening savings, current, and Demat accounts.</li>
+      <li><b>Fintech app verification:</b> UPI apps, wallets, and lending platforms require clean front-and-back card photos.</li>
+      <li><b>Job portal uploads:</b> Naukri, LinkedIn, and direct company ATS portals often ask for identity documents as part of background verification.</li>
+      <li><b>Visa & travel applications:</b> Embassies and visa facilitation centres require ID documents in specific sizes.</li>
+      <li><b>Insurance and loan applications:</b> Aadhaar and PAN copies are mandatory for policy issuance and loan processing.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions (FAQ)</h3>
+    <p><b>Q: Is my Aadhaar / PAN data safe with this tool?</b><br>
+    Absolutely. OfficeKit processes everything in your browser. Your files are never uploaded, never stored, and never seen by anyone — including us. You can verify this by disconnecting your internet after the page loads; the tool will still work completely.</p>
+
+    <p><b>Q: What is the exact size of an Aadhaar / PAN card?</b><br>
+    All Indian identity cards (Aadhaar, PAN, driving licence, voter ID) follow the CR80 standard: 85.6 mm × 54 mm, which is approximately 8.5 × 5.5 cm. This tool uses that size by default.</p>
+
+    <p><b>Q: How do I know my e-Aadhaar password?</b><br>
+    The standard e-Aadhaar password format is the first four letters of your name in CAPITAL letters followed by your year of birth. For example, if your name is "Deepak Kumar" and you were born in 1998, the password is <code>DEEP1998</code>. This password is set by UIDAI, not by us — we cannot recover or reset it.</p>
+
+    <p><b>Q: Can I crop PAN cards using the same tool?</b><br>
+    Yes. PAN cards are the same size as Aadhaar (CR80). The tool is called a "dual-side cropper" precisely because it works with both Aadhaar and PAN, and any other government ID in the same format.</p>
+
+    <p><b>Q: Will the downloaded image be blurry when printed?</b><br>
+    No. The output is rendered at 300 DPI from the original PDF's vector data, which is the industry standard for professional print. You can print at 100% size and the text will be razor-sharp.</p>
+
+    <p><b>Q: Can I use this on a mobile phone?</b><br>
+    Yes. The interface is fully responsive. On mobile, tap and drag the crop boxes with your finger, and use the corner handles to resize. The HD rendering works identically on mobile and desktop.</p>
+
+    <p><b>Q: What if my scanned Aadhaar is tilted or rotated?</b><br>
+    The crop boxes are axis-aligned rectangles, so they work best with upright documents. If your scan is tilted, re-scan it upright first, or rotate the image in a basic photo editor before uploading. Perfectly upright scans give the best results.</p>
+
+    <p><b>Q: Is there any file size limit?</b><br>
+    No fixed limit. Very large PDFs (50+ pages) may take a few seconds to load and render on older devices, but the tool will handle them without crashing.</p>
+
+    <p><b>Q: Can I crop more than two cards at once?</b><br>
+    Currently the tool provides two crop boxes (front + back). If you have multiple cards on a single page (for example, family members' Aadhaar cards), you can process them in multiple sessions — crop two at a time, download, then re-upload for the next pair.</p>
+
+    <h3>Pro Tips for Best Results</h3>
+    <ul>
+      <li>Scan Aadhaar and PAN at 300 DPI in your scanner's settings before uploading, if possible. It costs the same file size and gives the sharpest output.</li>
+      <li>If using a phone camera, place the card on a dark matte surface in bright indirect daylight to avoid glare and shadows.</li>
+      <li>Always place the green box on the front and the blue box on the back to keep your downloads organized.</li>
+      <li>After cropping, open the downloaded PNG in an image viewer and zoom in to 200% to verify that the card number, QR code, and photo are all clearly readable before submitting.</li>
+      <li>Keep a master copy of your cropped PNGs in a secure folder so you never need to re-crop for future applications.</li>
+    </ul>
+
+    <h3>Related OfficeKit Tools</h3>
+    <p>
+      If you found this tool useful, you may also benefit from our <a href="passport-maker.html">Passport Photo Maker</a> for government-compliant 35×45 mm photos, our <a href="signature-resize.html">Signature Resize</a> tool to compress handwritten signatures to 10–50 KB, our <a href="doc-scanner.html">Document Scanner with OCR</a> to extract text from scanned Aadhaar PDFs, and our <a href="pdf-merge.html">PDF Merge</a> tool to combine multiple ID documents into a single submission file.
+    </p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+/* ============ CROPPER LOGIC ============ */
+const fileIn = document.getElementById("pdf-in");
+const uploadScreen = document.getElementById("upload-screen");
+const passwordBox = document.getElementById("password-box");
+const passwordInput = document.getElementById("pdf-password");
+const btnUnlock = document.getElementById("btn-unlock");
+
+const workspace = document.getElementById("workspace");
+const canvas = document.getElementById("pdf-canvas");
+const ctx = canvas.getContext("2d");
+const hdCanvas = document.getElementById("hd-master-canvas");
+const hdCtx = hdCanvas.getContext("2d");
+const viewportWrap = document.getElementById("viewport-wrap");
+
+const cropFront = document.getElementById("crop-front");
+const cropBack = document.getElementById("crop-back");
+
+const boxWInput = document.getElementById("box-w-input");
+const boxHInput = document.getElementById("box-h-input");
+
+const btnBottomReset = document.getElementById("btn-bottom-reset");
+const btnBottomUpload = document.getElementById("btn-bottom-upload");
+
+const btnPrintBoth = document.getElementById("btn-print-both");
+const btnDownloadBoth = document.getElementById("btn-download-both");
+
+const pageControls = document.getElementById("page-controls");
+const pageLabel = document.getElementById("page-label");
+const btnPrevPage = document.getElementById("btn-prev-page");
+const btnNextPage = document.getElementById("btn-next-page");
+
+let rawBuffer = null;
+let pdfDocInstance = null;
+let currentPageNum = 1;
+let totalPages = 1;
+let isImage = false;
+let imageObj = null;
+let hdRatio = 1.0;
+
+btnBottomUpload.onclick = () => {
+  fileIn.value = "";
+  workspace.hidden = true;
+  uploadScreen.hidden = false;
+  passwordBox.hidden = true;
+  cropFront.style.display = "none";
+  cropBack.style.display = "none";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+fileIn.onchange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  if (file.type === "application/pdf") {
+    isImage = false;
+    rawBuffer = await file.arrayBuffer();
+    attemptLoadPdf("");
+  } else {
+    isImage = true;
+    pageControls.style.display = "none";
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      imageObj = new Image();
+      imageObj.onload = () => renderImageToCanvas();
+      imageObj.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+async function attemptLoadPdf(pwd) {
+  try {
+    const loadingTask = pdfjsLib.getDocument({
+      data: rawBuffer.slice(0),
+      password: pwd
+    });
+
+    loadingTask.onPassword = () => {
+      passwordBox.hidden = false;
+      passwordInput.focus();
+    };
+
+    pdfDocInstance = await loadingTask.promise;
+    totalPages = pdfDocInstance.numPages;
+    currentPageNum = 1;
+
+    if (totalPages > 1) {
+      pageControls.style.display = "inline-flex";
+      updatePageLabel();
+    } else {
+      pageControls.style.display = "none";
+    }
+
+    await renderPdfPage(currentPageNum);
+
+    passwordBox.hidden = true;
+    uploadScreen.hidden = true;
+    workspace.hidden = false;
+    initBothBoxes();
+  } catch (err) {
+    if (err.name === "PasswordException") {
+      passwordBox.hidden = false;
+      passwordInput.focus();
+      if (pwd !== "") alert("Incorrect password! Please try again.");
+    } else {
+      alert("Error opening PDF: " + err.message);
+    }
+  }
+}
+
+async function renderPdfPage(pageNum) {
+  const page = await pdfDocInstance.getPage(pageNum);
+  const unscaledViewport = page.getViewport({ scale: 1.0 });
+
+  const maxDisplayWidth = Math.min(window.innerWidth - 80, 1020);
+  const displayScale = maxDisplayWidth / unscaledViewport.width;
+  const displayViewport = page.getViewport({ scale: displayScale });
+
+  canvas.width = displayViewport.width;
+  canvas.height = displayViewport.height;
+  viewportWrap.style.width = displayViewport.width + "px";
+  viewportWrap.style.height = displayViewport.height + "px";
+
+  const hdScale = Math.max(3.2, 2480 / unscaledViewport.width);
+  const hdViewport = page.getViewport({ scale: hdScale });
+
+  hdCanvas.width = hdViewport.width;
+  hdCanvas.height = hdViewport.height;
+  hdRatio = hdCanvas.width / canvas.width;
+
+  await page.render({ canvasContext: ctx, viewport: displayViewport }).promise;
+  await page.render({ canvasContext: hdCtx, viewport: hdViewport }).promise;
+}
+
+function updatePageLabel() {
+  pageLabel.innerText = `Page ${currentPageNum}/${totalPages}`;
+}
+
+btnPrevPage.onclick = async () => {
+  if (currentPageNum > 1) {
+    currentPageNum--;
+    updatePageLabel();
+    await renderPdfPage(currentPageNum);
+  }
+};
+
+btnNextPage.onclick = async () => {
+  if (currentPageNum < totalPages) {
+    currentPageNum++;
+    updatePageLabel();
+    await renderPdfPage(currentPageNum);
+  }
+};
+
+btnUnlock.onclick = () => {
+  const pwd = passwordInput.value.trim();
+  if (!pwd) { alert("Please enter the password."); return; }
+  attemptLoadPdf(pwd);
+};
+
+passwordInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") btnUnlock.click();
+});
+
+function renderImageToCanvas() {
+  const maxDisplayWidth = Math.min(window.innerWidth - 80, 1020);
+  const ratio = maxDisplayWidth / imageObj.width;
+
+  canvas.width = maxDisplayWidth;
+  canvas.height = imageObj.height * ratio;
+  viewportWrap.style.width = canvas.width + "px";
+  viewportWrap.style.height = canvas.height + "px";
+  ctx.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+
+  hdCanvas.width = imageObj.width;
+  hdCanvas.height = imageObj.height;
+  hdCtx.drawImage(imageObj, 0, 0);
+  hdRatio = hdCanvas.width / canvas.width;
+
+  uploadScreen.hidden = true;
+  workspace.hidden = false;
+  initBothBoxes();
+}
+
+function initBothBoxes() {
+  const wCm = parseFloat(boxWInput.value) || 8.5;
+  const hCm = parseFloat(boxHInput.value) || 5.5;
+  const aspect = wCm / hCm;
+
+  const boxWidth = Math.min(canvas.width * 0.44, 430);
+  const boxHeight = boxWidth / aspect;
+
+  cropFront.style.width = boxWidth + "px";
+  cropFront.style.height = boxHeight + "px";
+  cropFront.style.left = (canvas.width * 0.05) + "px";
+  cropFront.style.top = (canvas.height - boxHeight - 35) + "px";
+  cropFront.style.display = "block";
+
+  cropBack.style.width = boxWidth + "px";
+  cropBack.style.height = boxHeight + "px";
+  cropBack.style.left = (canvas.width * 0.51) + "px";
+  cropBack.style.top = (canvas.height - boxHeight - 35) + "px";
+  cropBack.style.display = "block";
+}
+
+btnBottomReset.onclick = initBothBoxes;
+
+function syncSizeFromInputs() {
+  const wCm = parseFloat(boxWInput.value) || 8.5;
+  const hCm = parseFloat(boxHInput.value) || 5.5;
+  const aspect = wCm / hCm;
+
+  [cropFront, cropBack].forEach(box => {
+    const curW = parseFloat(box.style.width);
+    box.style.height = (curW / aspect) + "px";
+  });
+}
+boxWInput.oninput = syncSizeFromInputs;
+boxHInput.oninput = syncSizeFromInputs;
+
+function setupInteractiveBox(box) {
+  let activeMode = null;
+  let startX, startY, origX, origY, origW, origH;
+
+  box.addEventListener("mousedown", (e) => {
+    startX = e.clientX;
+    startY = e.clientY;
+    origX = parseFloat(box.style.left);
+    origY = parseFloat(box.style.top);
+    origW = box.offsetWidth;
+    origH = box.offsetHeight;
+
+    activeMode = e.target.classList.contains("handle")
+      ? e.target.getAttribute("data-dir")
+      : "drag";
+
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!activeMode) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    if (activeMode === "drag") {
+      const newX = Math.max(0, Math.min(canvas.width - box.offsetWidth, origX + dx));
+      const newY = Math.max(0, Math.min(canvas.height - box.offsetHeight, origY + dy));
+      box.style.left = newX + "px";
+      box.style.top = newY + "px";
+    } else {
+      let newW = origW, newH = origH, newX = origX, newY = origY;
+      if (activeMode.includes("r")) newW = Math.max(80, origW + dx);
+      if (activeMode.includes("l")) {
+        const possibleW = origW - dx;
+        if (possibleW > 80) { newW = possibleW; newX = origX + dx; }
+      }
+      if (activeMode.includes("b")) newH = Math.max(50, origH + dy);
+      if (activeMode.includes("t")) {
+        const possibleH = origH - dy;
+        if (possibleH > 50) { newH = possibleH; newY = origY + dy; }
+      }
+      box.style.width = newW + "px";
+      box.style.height = newH + "px";
+      box.style.left = newX + "px";
+      box.style.top = newY + "px";
+    }
+  });
+
+  window.addEventListener("mouseup", () => { activeMode = null; });
+}
+
+setupInteractiveBox(cropFront);
+setupInteractiveBox(cropBack);
+
+function getUltraHdCroppedCanvas(boxEl) {
+  const screenX = parseFloat(boxEl.style.left);
+  const screenY = parseFloat(boxEl.style.top);
+  const screenW = boxEl.offsetWidth;
+  const screenH = boxEl.offsetHeight;
+
+  const realX = screenX * hdRatio;
+  const realY = screenY * hdRatio;
+  const realW = screenW * hdRatio;
+  const realH = screenH * hdRatio;
+
+  const outCanvas = document.createElement("canvas");
+  outCanvas.width = 1004;
+  outCanvas.height = 650;
+  const outCtx = outCanvas.getContext("2d");
+  outCtx.imageSmoothingEnabled = true;
+  outCtx.imageSmoothingQuality = "high";
+
+  outCtx.drawImage(
+    hdCanvas,
+    realX, realY, realW, realH,
+    0, 0, outCanvas.width, outCanvas.height
+  );
+
+  return outCanvas;
+}
+
+btnPrintBoth.onclick = () => {
+  const frontCanvas = getUltraHdCroppedCanvas(cropFront);
+  const backCanvas = getUltraHdCroppedCanvas(cropBack);
+
+  document.getElementById("print-front-img").src = frontCanvas.toDataURL("image/png", 1.0);
+  document.getElementById("print-back-img").src = backCanvas.toDataURL("image/png", 1.0);
+
+  document.getElementById("print-area").style.display = "flex";
+  setTimeout(() => {
+    window.print();
+    document.getElementById("print-area").style.display = "none";
+  }, 250);
+};
+
+btnDownloadBoth.onclick = () => {
+  const fCanvas = getUltraHdCroppedCanvas(cropFront);
+  const bCanvas = getUltraHdCroppedCanvas(cropBack);
+
+  const a1 = document.createElement("a");
+  a1.href = fCanvas.toDataURL("image/png", 1.0);
+  a1.download = "id-card-front-300dpi.png";
+  a1.click();
+
+  setTimeout(() => {
+    const a2 = document.createElement("a");
+    a2.href = bCanvas.toDataURL("image/png", 1.0);
+    a2.download = "id-card-back-300dpi.png";
+    a2.click();
+  }, 300);
+};
+</script>
+</body>
+</html>

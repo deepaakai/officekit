@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDF Editor — Auto Font Detection Studio | OfficeKit</title>
+<meta name="description" content="Edit PDF text with automatic font, size and color detection. Add whiteout, stamps, watermark, images. 100% browser-based.">
+<link rel="canonical" href="https://pdf365.in/tools/pdf-editor.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Courier+Prime:wght@400;700&family=Inter:wght@400;600;700;800;900&family=League+Spartan:wght@600;700;800;900&family=Merriweather:wght@400;700;900&family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Oswald:wght@500;600;700&family=Poppins:wght@600;700;800;900&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';</script>
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+<style>
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+/* ============ Ribbon ============ */
+.pro-ribbon {
+  position: sticky;
+  top: 62px;
+  z-index: 500;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  margin: 12px auto;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  max-width: 1260px;
+}
+.ribbon-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding-right: 8px;
+  border-right: 1px solid var(--border-color);
+}
+.ribbon-cluster:last-child { border-right: none; }
+
+.pro-btn {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.pro-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; flex-shrink: 0; }
+.pro-btn:hover { border-color: var(--accent); color: var(--accent); }
+.pro-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.pro-btn.active svg { stroke: #fff; }
+
+.pro-select {
+  height: 32px;
+  padding: 0 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--card-bg);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+/* ============ Upload ============ */
+.upload-card-box {
+  max-width: 650px;
+  margin: 40px auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.clean-drop-zone {
+  position: relative;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 45px 20px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.clean-drop-zone:hover { background: var(--accent-soft-hover); }
+.clean-drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+.upload-svg-icon { width: 54px; height: 54px; color: var(--accent); margin: 0 auto 12px; }
+
+/* Password prompt */
+.pwd-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 20px;
+  max-width: 500px;
+  margin: 15px auto;
+  text-align: left;
+}
+.pwd-card .pwd-title { font-size: 13.5px; font-weight: 700; color: var(--accent); }
+.pwd-card .pwd-hint { font-size: 12.5px; color: var(--subtext-color); margin-top: 2px; }
+.pwd-row { display: flex; gap: 8px; margin-top: 10px; }
+.pwd-row input {
+  flex: 1; height: 38px; padding: 0 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 14px;
+}
+.pwd-row button {
+  background: var(--success);
+  color: #fff;
+  border: none;
+  padding: 0 18px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13.5px;
+}
+
+/* Scanned-PDF warning */
+.warn-banner {
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #78350f;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 12px auto;
+  max-width: 900px;
+  text-align: left;
+}
+[data-theme="dark"] .warn-banner {
+  background: rgba(180, 83, 9, 0.15);
+  border-color: rgba(180, 83, 9, 0.5);
+  color: #fbbf24;
+}
+
+/* ============ Stage ============ */
+.pages-stage-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin: 16px auto 140px;
+}
+.viewport-holder {
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  background: #ffffff;
+  display: inline-block;
+  user-select: none;
+  border-radius: 4px;
+}
+.blank-page-box {
+  width: 792px;
+  height: 1120px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  position: relative;
+  user-select: none;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+}
+
+/* Custom text layer — we build this ourselves */
+.textLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  line-height: 1;
+  z-index: 5;
+}
+.textLayer span {
+  position: absolute;
+  color: transparent;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+  padding: 0;
+  margin: 0;
+  border-radius: 2px;
+  transition: background 0.1s;
+}
+.textLayer span:hover {
+  background: rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+}
+
+/* Overlays */
+.canvas-overlay-item {
+  position: absolute;
+  cursor: move;
+  outline: none;
+  z-index: 100;
+}
+.overlay-text {
+  border: 1px dashed #2563eb;
+  background: #ffffff;
+  padding: 0 2px;
+  min-width: 20px;
+  line-height: 0.95;
+  white-space: pre;
+  letter-spacing: -0.01em;
+}
+.overlay-whiteout {
+  background: #ffffff;
+  border: 1px dashed #94a3b8;
+  width: 120px;
+  height: 24px;
+}
+.overlay-shape-rect { border: 2px solid #dc2626; width: 140px; height: 60px; background: rgba(220,38,38,0.05); }
+.overlay-shape-circle { border: 2px solid #dc2626; width: 80px; height: 80px; border-radius: 50%; background: rgba(220,38,38,0.05); }
+.overlay-stamp {
+  border: 2.5px solid #dc2626;
+  color: #dc2626;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 15px;
+  background: #ffffff;
+  letter-spacing: 1px;
+}
+.overlay-img { max-width: 180px; border: 1px dashed #2563eb; }
+
+/* ============ Save dock ============ */
+.action-dock {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+.btn-save-corp {
+  background: var(--success);
+  color: #fff;
+  border: 1px solid var(--success-hover);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 34px;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(22,101,52,0.4);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-save-corp:hover { background: var(--success-hover); }
+.btn-save-corp svg { width: 18px; height: 18px; stroke: #fff; fill: none; }
+.btn-save-corp:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Detection toast — shows what was auto-detected */
+.detect-toast {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  color: var(--text-color);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  z-index: 2000;
+  max-width: 300px;
+}
+.detect-toast.show { opacity: 1; transform: translateY(0); }
+.detect-toast small { display: block; font-size: 11px; color: var(--subtext-color); font-weight: 500; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap" style="text-align:center;">
+
+  <div class="hero-box">
+    <h1 class="hero-title">PDF Editor with Auto Font Detection</h1>
+    <p class="hero-sub">Click any text — the editor automatically matches its exact font, size & ink color.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div id="upload-screen" class="upload-card-box">
+    <div class="clean-drop-zone">
+      <input type="file" id="pdf-in" accept="application/pdf">
+      <div style="pointer-events:none;">
+        <svg class="upload-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+        <h3 style="margin: 0 0 6px 0; font-size: 18px; color: var(--text-color);">Select or Drop PDF Document</h3>
+        <p style="margin: 0; color: var(--subtext-color); font-size: 13.5px;">Auto-detects font family, weight, size & ink color from any text-based PDF</p>
+      </div>
+    </div>
+
+    <!-- Password prompt (shown for encrypted PDFs) -->
+    <div id="pwd-box" class="pwd-card" hidden>
+      <div class="pwd-title">🔒 Password Protected PDF</div>
+      <div class="pwd-hint">Enter the document password to unlock and load.</div>
+      <div class="pwd-row">
+        <input type="password" id="pdf-password" placeholder="Enter PDF password">
+        <button id="btn-unlock">Unlock</button>
+      </div>
+    </div>
+
+    <!-- Scanned PDF warning -->
+    <div id="warn-scanned" class="warn-banner" hidden>
+      ⚠️ <b>This PDF has no text layer</b> — it appears to be a scanned image. You can still add overlays (stamps, watermarks, images, whiteout), but text in the original cannot be edited. Use <a href="doc-scanner.html" style="color:inherit; text-decoration:underline;">OCR Scanner</a> to extract text first.
+    </div>
+  </div>
+
+  <div id="editor-workspace" hidden>
+
+    <div class="pro-ribbon">
+      <div class="ribbon-cluster">
+        <button class="pro-btn active" id="mode-text">
+          <svg viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          Text
+        </button>
+        <select id="shape-select" class="pro-select">
+          <option value="">▢ Shape</option>
+          <option value="rect">Rectangle</option>
+          <option value="circle">Circle</option>
+        </select>
+        <button class="pro-btn" id="mode-whiteout">
+          <svg viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+          Whiteout
+        </button>
+      </div>
+
+      <div class="ribbon-cluster">
+        <select id="font-family" class="pro-select" style="min-width: 150px;">
+          <option value="Inter">Inter (Neutral Sans)</option>
+          <option value="Roboto">Roboto (Arial-like)</option>
+          <option value="OpenSans">Open Sans (Body)</option>
+          <option value="Montserrat">Montserrat (Geometric)</option>
+          <option value="Poppins">Poppins (Rounded)</option>
+          <option value="Oswald">Oswald (Condensed)</option>
+          <option value="LeagueSpartan">League Spartan</option>
+          <option value="ArchivoBlack">Archivo Black (Heavy)</option>
+          <option value="Merriweather">Merriweather (Serif)</option>
+          <option value="Courier">Courier Prime (Mono)</option>
+        </select>
+        <input type="number" id="font-size-input" class="pro-select" min="6" max="200" value="32" style="width: 65px; font-weight: 600;" title="Font size (px)">
+        <button class="pro-btn" id="btn-bold" title="Bold">
+          <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h9a4 4 0 0 1 0 8H6v-8zm0 0h8a3.5 3.5 0 0 0 0-7H6v7z"/></svg>
+        </button>
+        <button class="pro-btn" id="btn-italic" title="Italic">
+          <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+        </button>
+        <input type="color" id="text-color" value="#000000" title="Ink Color" style="width:28px;height:28px;padding:0;border:1px solid var(--border-color);border-radius:6px;cursor:pointer;">
+      </div>
+
+      <div class="ribbon-cluster">
+        <button class="pro-btn" id="btn-add-blank-page" style="color: var(--accent); font-weight:700;">
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          + Page
+        </button>
+        <select id="stamp-select" class="pro-select">
+          <option value="">Stamp</option>
+          <option value="APPROVED">APPROVED</option>
+          <option value="REJECTED">REJECTED</option>
+          <option value="PAID">PAID</option>
+        </select>
+        <button class="pro-btn" id="btn-watermark">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          Watermark
+        </button>
+        <label class="pro-btn" style="margin:0; cursor:pointer;">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image
+          <input type="file" id="img-in" accept="image/*" style="display:none;">
+        </label>
+      </div>
+
+      <div class="ribbon-cluster">
+        <button class="pro-btn" id="btn-undo" title="Undo">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </button>
+        <button class="pro-btn" id="btn-redo" title="Redo">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </button>
+        <button class="pro-btn" id="btn-reset" style="color:#f87171;" title="Reset all overlays">
+          <svg viewBox="0 0 24 24" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="pages-stage-wrap" id="stage-wrapper">
+      <div class="viewport-holder" id="canvas-wrapper">
+        <canvas id="pdf-view-canvas"></canvas>
+        <div id="text-layer" class="textLayer"></div>
+      </div>
+    </div>
+
+    <div class="action-dock">
+      <button class="btn-save-corp" id="btn-save-pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save & Export PDF
+      </button>
+    </div>
+
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>How the Auto Font Detection Works</h2>
+    <p>When you load a PDF, this editor reads the font metadata that PDF.js extracts from each font descriptor embedded in the document. The font's <code>FontFamily</code> field, its weight hints (Bold, Heavy, Black), and its style hints (Italic, Oblique) are all preserved and used to reconstruct the exact typography of any text block you click.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/pdf-editor-demo.jpg" alt="Auto font detection in PDF editor" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/pdf-editor-demo.jpg]</div>';">
+      <div class="article-image-caption">Click any text to auto-match its font family, weight, size and ink color.</div>
+    </div>
+
+    <h3>What gets detected automatically:</h3>
+    <ul>
+      <li><b>Font family</b> — read from the PDF font descriptor's <code>FontFamily</code> field, with intelligent fallbacks to the <code>BaseFont</code> name or generic category</li>
+      <li><b>Font size</b> — computed from the text transform matrix, so scaled and rotated text is sized correctly</li>
+      <li><b>Font weight</b> — detected from "Bold", "Heavy", "Black", "SemiBold", "Demi" in the font name</li>
+      <li><b>Font style</b> — detected from "Italic" or "Oblique" in the font name</li>
+      <li><b>Ink color</b> — sampled by building a color histogram over the text's bounding box, filtering out the background color, and averaging the remaining ink pixels (works on white-on-dark text too)</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: Why does some text look slightly different after editing?</b><br>
+    PDFs embed subsetted fonts whose exact glyph outlines are unique to that document. The editor maps the detected category (serif/sans/mono/condensed) to the closest matching Google Font for on-screen editing, and uses PDF-standard fonts (Helvetica/Times/Courier) for export. The result is visually near-identical but not byte-perfect.</p>
+    <p><b>Q: What if a PDF is scanned?</b><br>
+    Scanned PDFs contain images, not text. This editor detects this and shows a clear warning. You can still add overlay annotations (stamps, watermarks, images) but the original scanned pixels cannot be text-edited. Use the <a href="doc-scanner.html">OCR Scanner</a> to convert scanned PDFs to editable text first.</p>
+    <p><b>Q: Are my documents uploaded anywhere?</b><br>
+    Never. All parsing, rendering, and exporting happen 100% inside your browser using PDF.js and PDF-Lib.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<div class="detect-toast" id="detect-toast"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+/* ==========================================================================
+   State
+   ========================================================================== */
+const fileIn       = document.getElementById("pdf-in");
+const uploadScreen = document.getElementById("upload-screen");
+const pwdBox       = document.getElementById("pwd-box");
+const pwdInput     = document.getElementById("pdf-password");
+const btnUnlock    = document.getElementById("btn-unlock");
+const warnScanned  = document.getElementById("warn-scanned");
+const workspace    = document.getElementById("editor-workspace");
+const canvas       = document.getElementById("pdf-view-canvas");
+const ctx          = canvas.getContext("2d", { willReadFrequently: true });
+const wrap         = document.getElementById("canvas-wrapper");
+const textLayerDiv = document.getElementById("text-layer");
+const stageWrapper = document.getElementById("stage-wrapper");
+
+const modeText      = document.getElementById("mode-text");
+const modeWhiteout  = document.getElementById("mode-whiteout");
+const shapeSelect   = document.getElementById("shape-select");
+const fontFam       = document.getElementById("font-family");
+const fontSzInput   = document.getElementById("font-size-input");
+const btnBold       = document.getElementById("btn-bold");
+const btnItalic     = document.getElementById("btn-italic");
+const textColor     = document.getElementById("text-color");
+const stampSelect   = document.getElementById("stamp-select");
+const btnWatermark  = document.getElementById("btn-watermark");
+const btnAddBlank   = document.getElementById("btn-add-blank-page");
+const imgIn         = document.getElementById("img-in");
+const btnUndo       = document.getElementById("btn-undo");
+const btnRedo       = document.getElementById("btn-redo");
+const btnReset      = document.getElementById("btn-reset");
+const btnSave       = document.getElementById("btn-save-pdf");
+const detectToast   = document.getElementById("detect-toast");
+
+let rawBytes        = null;
+let pdfDoc          = null;
+let currentMode     = "text";
+const scale         = 1.35;
+let items           = [];
+let redoStack       = [];
+let selectedEl      = null;
+let blankPageAdded  = false;
+let blankPageEl     = null;
+let isBold          = false;
+let isItalic        = false;
+
+/* ==========================================================================
+   Small helpers
+   ========================================================================== */
+function toast(msg, sub) {
+  detectToast.innerHTML = msg + (sub ? `<small>${sub}</small>` : "");
+  detectToast.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => detectToast.classList.remove("show"), 2200);
+}
+
+function hexToRgb(hex) {
+  const num = parseInt(String(hex).replace("#",""), 16);
+  return { r: ((num>>16)&255)/255, g: ((num>>8)&255)/255, b: (num&255)/255 };
+}
+
+function toHex(r, g, b) {
+  return "#" + [r,g,b].map(v => Math.max(0, Math.min(255, Math.round(v)))
+    .toString(16).padStart(2, "0")).join("");
+}
+
+function getCssFont(key) {
+  switch (key) {
+    case "LeagueSpartan": return "'League Spartan', sans-serif";
+    case "ArchivoBlack":  return "'Archivo Black', sans-serif";
+    case "Montserrat":    return "'Montserrat', sans-serif";
+    case "Oswald":        return "'Oswald', sans-serif";
+    case "Poppins":       return "'Poppins', sans-serif";
+    case "Roboto":        return "'Roboto', sans-serif";
+    case "OpenSans":      return "'Open Sans', sans-serif";
+    case "Merriweather":  return "'Merriweather', serif";
+    case "Courier":       return "'Courier Prime', monospace";
+    default:              return "'Inter', sans-serif";
+  }
+}
+
+/* ==========================================================================
+   Font classification — the core of auto-detection
+   Maps a PDF font family string + weight hints to one of our loaded Google fonts
+   ========================================================================== */
+function classifyPdfFont(familyRaw, isBoldHint, isItalicHint) {
+  const raw = String(familyRaw || "").toLowerCase();
+
+  /* Weight & style detection */
+  const bold   = isBoldHint   || /bold|black|heavy|semibold|demibold|extrabold|ultra|700|800|900/.test(raw);
+  const italic = isItalicHint || /italic|oblique|slanted/.test(raw);
+
+  /* Category detection */
+  let category = "sans";
+  if (/mono|courier|consol|menlo|inconsolata|source\s*code|typewriter/.test(raw)) category = "mono";
+  else if (/serif|times|georgia|garamond|book|baskerville|palatino|minion|cambria|charter|merriweather|source\s*serif/.test(raw)) category = "serif";
+  else if (/condensed|narrow|compressed|oswald|bebas|impact/.test(raw)) category = "condensed";
+
+  /* Map to a loaded Google Font */
+  let fontKey = "Inter"; // safe default for sans
+  if (category === "mono")       fontKey = "Courier";
+  else if (category === "serif") fontKey = "Merriweather";
+  else if (category === "condensed") fontKey = "Oswald";
+  else {
+    if (/arial|helvetica|roboto|segoe|nimbus\s*sans|liberation\s*sans/.test(raw)) fontKey = "Roboto";
+    else if (/calibri|open\s*sans|lato|source\s*sans|noto\s*sans|carlito/.test(raw))  fontKey = "OpenSans";
+    else if (/poppins|nunito|quicksand|rounded|comfortaa|varela/.test(raw))           fontKey = "Poppins";
+    else if (/montserrat|futura|proxima|gotham|century\s*gothic|avenir/.test(raw))    fontKey = "Montserrat";
+    else if (/spartan|league|helvetica\s*neue/.test(raw))                             fontKey = "LeagueSpartan";
+    else if (/archivo|impact|anton|black/.test(raw))                                  fontKey = "ArchivoBlack";
+  }
+
+  return { fontKey, bold, italic, category, raw: familyRaw || "" };
+}
+
+/* ==========================================================================
+   Color detection — samples the ink color inside a bounding box on the canvas
+   Filters out the background (most common color) and averages the rest.
+   Handles white-on-dark and colored backgrounds.
+   ========================================================================== */
+function detectInkColor(bx, by, bw, bh) {
+  const pad = 3;
+  const x0 = Math.max(0, Math.floor(bx - pad));
+  const y0 = Math.max(0, Math.floor(by - pad));
+  const x1 = Math.min(canvas.width,  Math.ceil(bx + bw + pad));
+  const y1 = Math.min(canvas.height, Math.ceil(by + bh + pad));
+  const w  = x1 - x0, h = y1 - y0;
+  if (w <= 0 || h <= 0) return "#000000";
+
+  const data = ctx.getImageData(x0, y0, w, h).data;
+
+  /* Build a coarse 4-bit color histogram */
+  const hist = new Map();
+  const px = [];
+  for (let i = 0; i < data.length; i += 4) {
+    const a = data[i+3];
+    if (a < 128) continue;
+    const r = data[i], g = data[i+1], b = data[i+2];
+    const key = `${r>>4}-${g>>4}-${b>>4}`;
+    hist.set(key, (hist.get(key) || 0) + 1);
+    px.push({ r, g, b, key });
+  }
+  if (px.length === 0) return "#000000";
+
+  /* Find most common color = likely background */
+  let bgKey = null, bgCount = -1;
+  for (const [k, c] of hist) {
+    if (c > bgCount) { bgCount = c; bgKey = k; }
+  }
+
+  /* Foreground = pixels whose quantized color differs from background */
+  const fg = px.filter(p => p.key !== bgKey);
+  if (fg.length < 3) return "#000000"; // nothing reliably foreground
+
+  /* Median of foreground ink pixels */
+  fg.sort((a,b) => a.r - b.r); const r = fg[fg.length>>1].r;
+  fg.sort((a,b) => a.g - b.g); const g = fg[fg.length>>1].g;
+  fg.sort((a,b) => a.b - b.b); const b = fg[fg.length>>1].b;
+
+  return toHex(r, g, b);
+}
+
+/* ==========================================================================
+   PDF Loading — with password + scanned-PDF detection
+   ========================================================================== */
+fileIn.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) loadPdfFromFile(file, "");
+});
+
+btnUnlock.addEventListener("click", () => {
+  const pwd = pwdInput.value.trim();
+  if (!pwd) { alert("Please enter the password."); return; }
+  loadPdfFromFile(null, pwd);
+});
+pwdInput.addEventListener("keydown", (e) => { if (e.key === "Enter") btnUnlock.click(); });
+
+async function loadPdfFromFile(file, password) {
+  try {
+    let buffer;
+    if (file) {
+      buffer = await file.arrayBuffer();
+      rawBytes = buffer;
+    } else {
+      buffer = rawBytes;
+    }
+
+    const loadingTask = pdfjsLib.getDocument({
+      data: buffer.slice(0),
+      password: password || ""
+    });
+
+    loadingTask.onPassword = (cb, reason) => {
+      pwdBox.hidden = false;
+      uploadScreen.hidden = false;
+      pwdInput.focus();
+      if (reason === 2 && password) alert("Incorrect password. Please try again.");
+    };
+
+    pdfDoc = await loadingTask.promise;
+    pwdBox.hidden = true;
+    await renderFirstPage();
+  } catch (err) {
+    if (err && err.name === "PasswordException") {
+      pwdBox.hidden = false;
+      return;
+    }
+    alert("Failed to load PDF: " + (err.message || err));
+  }
+}
+
+async function renderFirstPage() {
+  const page = await pdfDoc.getPage(1);
+  const viewport = page.getViewport({ scale });
+
+  canvas.width  = viewport.width;
+  canvas.height = viewport.height;
+  wrap.style.width  = viewport.width  + "px";
+  wrap.style.height = viewport.height + "px";
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  await page.render({ canvasContext: ctx, viewport }).promise;
+
+  /* Now get the text content WITH style metadata */
+  const textContent = await page.getTextContent();
+  const styles = textContent.styles || {};
+
+  /* Scanned PDF detection */
+  const totalChars = textContent.items.reduce((n, it) => n + (it.str ? it.str.length : 0), 0);
+  if (totalChars < 20) {
+    warnScanned.hidden = false;
+  } else {
+    warnScanned.hidden = true;
+  }
+
+  buildTextLayer(textContent.items, styles, viewport);
+
+  uploadScreen.hidden = true;
+  workspace.hidden = false;
+}
+
+/* ==========================================================================
+   Custom Text Layer Builder
+   Builds clickable spans with full font metadata attached to each one.
+   Uses PDF.js's own coordinate math so positions match the rendered canvas.
+   ========================================================================== */
+function buildTextLayer(items, styles, viewport) {
+  textLayerDiv.innerHTML = "";
+
+  items.forEach((item, idx) => {
+    if (!item.str || !item.str.length) return;
+    if (!/\S/.test(item.str)) return; // skip pure whitespace
+
+    const tx = pdfjsLib.Util.transform(viewport.transform, item.transform);
+    const angle = Math.atan2(tx[1], tx[0]);
+    const fontHeight = Math.hypot(tx[2], tx[3]);
+
+    /* Get the PDF.js style info (family + ascent) */
+    const styleInfo = styles[item.fontName] || {};
+    const ascent = (typeof styleInfo.ascent === "number" && styleInfo.ascent > 0)
+      ? styleInfo.ascent
+      : 0.8;
+    const fontAscent = fontHeight * ascent;
+
+    let left, top;
+    if (angle === 0) {
+      left = tx[4];
+      top  = tx[5] - fontAscent;
+    } else {
+      left = tx[4] + fontAscent * Math.sin(angle);
+      top  = tx[5] - fontAscent * Math.cos(angle);
+    }
+
+    const span = document.createElement("span");
+    span.textContent = item.str;
+    span.style.left = left + "px";
+    span.style.top  = top  + "px";
+    span.style.fontSize = fontHeight + "px";
+    span.style.fontFamily = "'Inter', sans-serif"; // visual hint only
+
+    /* Store full metadata on the element */
+    span._meta = {
+      text: item.str,
+      fontName: item.fontName,
+      familyRaw: styleInfo.fontFamily || "",
+      fontHeight,
+      left, top,
+      angle,
+      transform: tx,
+      itemWidth: item.width || 0,
+      width: item.width ? item.width * viewport.scale : 0,
+      height: fontHeight
+    };
+
+    span.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      handleTextClick(span);
+    });
+
+    textLayerDiv.appendChild(span);
+  });
+}
+
+/* ==========================================================================
+   Click-to-edit handler — auto matches font, size & ink color
+   ========================================================================== */
+function handleTextClick(span) {
+  const meta = span._meta;
+  if (!meta) return;
+
+  /* Refine width from the rendered span */
+  const rect = span.getBoundingClientRect();
+  const wrapRect = wrap.getBoundingClientRect();
+  const sx = rect.left - wrapRect.left;
+  const sy = rect.top  - wrapRect.top;
+  const sw = rect.width  || meta.width || (meta.text.length * meta.fontHeight * 0.55);
+  const sh = rect.height || meta.fontHeight;
+
+  /* 1. Detect ink color from the RENDERED canvas */
+  const detectedColor = detectInkColor(sx, sy, sw, sh);
+
+  /* 2. Classify font */
+  const cls = classifyPdfFont(meta.familyRaw);
+
+  /* 3. Update the UI to reflect detection */
+  fontFam.value     = cls.fontKey;
+  fontSzInput.value = Math.max(6, Math.round(meta.fontHeight));
+  textColor.value   = detectedColor;
+  isBold   = cls.bold;
+  isItalic = cls.italic;
+  btnBold.classList.toggle("active", isBold);
+  btnItalic.classList.toggle("active", isItalic);
+
+  /* 4. Create whiteout patch over the original */
+  const whiteout = document.createElement("div");
+  whiteout.className = "canvas-overlay-item overlay-whiteout";
+  whiteout.style.left   = (sx - 2) + "px";
+  whiteout.style.top    = (sy - 1) + "px";
+  whiteout.style.width  = (sw + 4) + "px";
+  whiteout.style.height = (sh + 2) + "px";
+  wrap.appendChild(whiteout);
+  pushItem({ type: "whiteout", el: whiteout, pageIdx: 0 });
+
+  /* 5. Create the editable replacement — pre-styled with detection */
+  const div = document.createElement("div");
+  div.className = "canvas-overlay-item overlay-text";
+  div.contentEditable = "true";
+  div.spellcheck = false;
+  div.innerText = meta.text;
+  div.style.left       = sx + "px";
+  div.style.top        = sy + "px";
+  div.style.fontSize   = meta.fontHeight + "px";
+  div.style.fontFamily = getCssFont(cls.fontKey);
+  div.style.color      = detectedColor;
+  div.style.fontWeight = isBold   ? "900" : "500";
+  div.style.fontStyle  = isItalic ? "italic" : "normal";
+
+  div._fontKey   = cls.fontKey;
+  div._fontSize  = meta.fontHeight;
+  div._color     = detectedColor;
+  div._isBold    = isBold;
+  div._isItalic  = isItalic;
+
+  wrap.appendChild(div);
+  makeDraggable(div);
+  div.focus();
+
+  /* Select all text for quick overwrite */
+  const range = document.createRange();
+  range.selectNodeContents(div);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  pushItem({
+    type: "text", el: div, pageIdx: 0,
+    get font()   { return div._fontKey; },
+    get size()   { return div._fontSize; },
+    get color()  { return div._color; },
+    get bold()   { return div._isBold; },
+    get italic() { return div._isItalic; }
+  });
+
+  /* Show the detection toast */
+  const friendly = cls.raw || cls.category;
+  const weight = cls.bold ? " · Bold" : "";
+  const it = cls.italic ? " · Italic" : "";
+  toast(
+    `Detected: <span style="color:${detectedColor}">●</span> ${friendly}`,
+    `${Math.round(meta.fontHeight)}px${weight}${it} · ${detectedColor}`
+  );
+}
+
+/* ==========================================================================
+   Ribbon controls
+   ========================================================================== */
+function setMode(m, btn) {
+  currentMode = m;
+  [modeText, modeWhiteout].forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+}
+modeText.onclick     = () => setMode("text", modeText);
+modeWhiteout.onclick = () => setMode("whiteout", modeWhiteout);
+
+btnBold.onclick = () => {
+  isBold = !isBold;
+  btnBold.classList.toggle("active", isBold);
+  if (selectedEl && selectedEl.classList.contains("overlay-text")) {
+    selectedEl.style.fontWeight = isBold ? "900" : "500";
+    selectedEl._isBold = isBold;
+  }
+};
+btnItalic.onclick = () => {
+  isItalic = !isItalic;
+  btnItalic.classList.toggle("active", isItalic);
+  if (selectedEl && selectedEl.classList.contains("overlay-text")) {
+    selectedEl.style.fontStyle = isItalic ? "italic" : "normal";
+    selectedEl._isItalic = isItalic;
+  }
+};
+fontFam.onchange = () => {
+  if (selectedEl && selectedEl.classList.contains("overlay-text")) {
+    selectedEl.style.fontFamily = getCssFont(fontFam.value);
+    selectedEl._fontKey = fontFam.value;
+  }
+};
+fontSzInput.oninput = () => {
+  if (selectedEl && selectedEl.classList.contains("overlay-text")) {
+    selectedEl.style.fontSize = fontSzInput.value + "px";
+    selectedEl._fontSize = Number(fontSzInput.value);
+  }
+};
+textColor.oninput = () => {
+  if (selectedEl && selectedEl.classList.contains("overlay-text")) {
+    selectedEl.style.color = textColor.value;
+    selectedEl._color = textColor.value;
+  }
+};
+
+/* ==========================================================================
+   Draggable overlay
+   ========================================================================== */
+function makeDraggable(el) {
+  let dragging = false, sx, sy, ox, oy;
+  el.addEventListener("mousedown", (e) => {
+    selectedEl = el;
+    if (el.isContentEditable && document.activeElement === el) return;
+    dragging = true;
+    sx = e.clientX; sy = e.clientY;
+    ox = parseFloat(el.style.left) || 0;
+    oy = parseFloat(el.style.top)  || 0;
+    e.stopPropagation();
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    el.style.left = (ox + e.clientX - sx) + "px";
+    el.style.top  = (oy + e.clientY - sy) + "px";
+  });
+  window.addEventListener("mouseup", () => { dragging = false; });
+}
+
+/* ==========================================================================
+   Canvas click → create new element at cursor
+   ========================================================================== */
+function setupCanvasClick(container, pageIdx) {
+  container.addEventListener("click", (e) => {
+    /* Ignore clicks on overlays / text layer / existing spans */
+    if (e.target.classList.contains("canvas-overlay-item")) return;
+    if (e.target.closest(".canvas-overlay-item")) return;
+    if (e.target.tagName === "SPAN" && e.target.parentElement === textLayerDiv) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (currentMode === "text") {
+      const div = document.createElement("div");
+      div.className = "canvas-overlay-item overlay-text";
+      div.contentEditable = "true";
+      div.spellcheck = false;
+      div.innerText = "Type text here";
+      div.style.left       = x + "px";
+      div.style.top        = y + "px";
+      div.style.fontSize   = fontSzInput.value + "px";
+      div.style.fontFamily = getCssFont(fontFam.value);
+      div.style.color      = textColor.value;
+      div.style.fontWeight = isBold   ? "900" : "500";
+      div.style.fontStyle  = isItalic ? "italic" : "normal";
+
+      div._fontKey  = fontFam.value;
+      div._fontSize = Number(fontSzInput.value);
+      div._color    = textColor.value;
+      div._isBold   = isBold;
+      div._isItalic = isItalic;
+
+      container.appendChild(div);
+      makeDraggable(div);
+      div.focus();
+      const range = document.createRange();
+      range.selectNodeContents(div);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+
+      pushItem({
+        type: "text", el: div, pageIdx,
+        get font()   { return div._fontKey; },
+        get size()   { return div._fontSize; },
+        get color()  { return div._color; },
+        get bold()   { return div._isBold; },
+        get italic() { return div._isItalic; }
+      });
+    } else if (currentMode === "whiteout") {
+      const div = document.createElement("div");
+      div.className = "canvas-overlay-item overlay-whiteout";
+      div.style.left = x + "px";
+      div.style.top  = y + "px";
+      container.appendChild(div);
+      makeDraggable(div);
+      pushItem({ type: "whiteout", el: div, pageIdx });
+    }
+  });
+}
+
+/* ==========================================================================
+   Undo / redo
+   ========================================================================== */
+function pushItem(item) {
+  items.push(item);
+  redoStack = [];
+}
+btnUndo.onclick = () => {
+  if (!items.length) return;
+  const last = items.pop();
+  if (last.el) last.el.style.display = "none";
+  redoStack.push(last);
+};
+btnRedo.onclick = () => {
+  if (!redoStack.length) return;
+  const it = redoStack.pop();
+  if (it.el) it.el.style.display = "block";
+  items.push(it);
+};
+btnReset.onclick = () => {
+  items.forEach(i => i.el && i.el.remove());
+  items = []; redoStack = [];
+  if (blankPageEl) { blankPageEl.remove(); blankPageEl = null; blankPageAdded = false; }
+};
+
+/* ==========================================================================
+   Blank page, shapes, stamps, watermark, images
+   ========================================================================== */
+btnAddBlank.onclick = () => {
+  if (blankPageAdded) { toast("Blank page already added."); return; }
+  blankPageAdded = true;
+  blankPageEl = document.createElement("div");
+  blankPageEl.className = "blank-page-box";
+  blankPageEl.innerHTML = `
+    <div style="position:absolute; top:12px; right:15px; font-size:12px; color:#94a3b8; font-weight:600; display:flex; gap:10px; align-items:center;">
+      <span>Blank Page</span>
+      <button id="btn-del-blank" style="background:#fee2e2; border:1px solid #f87171; color:#dc2626; border-radius:4px; padding:2px 8px; cursor:pointer; font-weight:bold;">✕</button>
+    </div>`;
+  stageWrapper.appendChild(blankPageEl);
+  setupCanvasClick(blankPageEl, 1);
+  document.getElementById("btn-del-blank").onclick = (e) => {
+    e.stopPropagation();
+    blankPageEl.remove();
+    blankPageEl = null; blankPageAdded = false;
+    items = items.filter(it => it.pageIdx !== 1);
+  };
+};
+
+shapeSelect.onchange = () => {
+  const type = shapeSelect.value;
+  if (!type) return;
+  const target = blankPageAdded ? blankPageEl : wrap;
+  const div = document.createElement("div");
+  div.className = `canvas-overlay-item overlay-shape-${type}`;
+  div.style.left = "90px";
+  div.style.top  = "90px";
+  target.appendChild(div);
+  makeDraggable(div);
+  pushItem({ type: "shape", subType: type, el: div, pageIdx: blankPageAdded ? 1 : 0 });
+  shapeSelect.value = "";
+};
+
+stampSelect.onchange = () => {
+  const val = stampSelect.value;
+  if (!val) return;
+  const div = document.createElement("div");
+  div.className = "canvas-overlay-item overlay-stamp";
+  div.innerText = val;
+  div.style.left = "80px";
+  div.style.top  = "80px";
+  wrap.appendChild(div);
+  makeDraggable(div);
+  pushItem({ type: "stamp", el: div, text: val, pageIdx: 0 });
+  stampSelect.value = "";
+};
+
+btnWatermark.onclick = () => {
+  const txt = prompt("Watermark text:", "CONFIDENTIAL");
+  if (!txt) return;
+  const all = confirm("Apply watermark to ALL pages? (Cancel = current page only)");
+  const div = document.createElement("div");
+  div.className = "canvas-overlay-item";
+  div.innerText = txt;
+  div.style.left = "25%";
+  div.style.top  = "40%";
+  div.style.fontSize = "48px";
+  div.style.fontWeight = "bold";
+  div.style.color = "rgba(150,150,150,0.28)";
+  div.style.transform = "rotate(-35deg)";
+  div.style.pointerEvents = "none";
+  wrap.appendChild(div);
+  pushItem({ type: "watermark", text: txt, allPages: all, el: div, pageIdx: 0 });
+};
+
+imgIn.onchange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const target = blankPageAdded ? blankPageEl : wrap;
+    const img = document.createElement("img");
+    img.src = ev.target.result;
+    img.className = "canvas-overlay-item overlay-img";
+    img.style.left = "60px";
+    img.style.top  = "60px";
+    target.appendChild(img);
+    makeDraggable(img);
+    pushItem({ type: "image", el: img, dataUrl: ev.target.result, pageIdx: blankPageAdded ? 1 : 0 });
+  };
+  reader.readAsDataURL(file);
+  imgIn.value = "";
+};
+
+/* ==========================================================================
+   Setup canvas click on the main viewport
+   ========================================================================== */
+setupCanvasClick(wrap, 0);
+
+/* ==========================================================================
+   Export — writes overlays into the PDF and downloads
+   Font mapping: our Google-font keys → PDF standard fonts
+   ========================================================================== */
+function mapToStandardFont(key, bold, italic) {
+  const S = PDFLib.StandardFonts;
+  switch (key) {
+    case "Merriweather": return bold ? S.TimesRomanBold : (italic ? S.TimesRomanItalic : S.TimesRoman);
+    case "Courier":      return bold ? S.CourierBold : S.Courier;
+    case "Oswald":
+    case "LeagueSpartan":
+    case "ArchivoBlack": return bold ? S.HelveticaBold : S.Helvetica;
+    default:             return bold ? S.HelveticaBold : (italic ? S.HelveticaOblique : S.Helvetica);
+  }
+}
+
+btnSave.onclick = async () => {
+  btnSave.disabled = true;
+  const orig = btnSave.innerHTML;
+  btnSave.textContent = "Writing PDF...";
+
+  try {
+    const doc = await PDFLib.PDFDocument.load(rawBytes);
+    const pages = doc.getPages();
+    const main = pages[0];
+
+    let extraBlank = null;
+    if (blankPageAdded) {
+      extraBlank = doc.addPage([main.getWidth(), main.getHeight()]);
+    }
+
+    const { width: pw, height: ph } = main.getSize();
+    const factor = pw / canvas.width;
+
+    /* Cache standard fonts */
+    const fontCache = {};
+    async function getFont(standard) {
+      if (!fontCache[standard]) fontCache[standard] = await doc.embedFont(standard);
+      return fontCache[standard];
+    }
+
+    for (const item of items) {
+      if (item.type === "watermark") {
+        const targets = item.allPages ? doc.getPages() : [main];
+        const f = await getFont(PDFLib.StandardFonts.HelveticaBold);
+        targets.forEach(p => {
+          const { width: w, height: h } = p.getSize();
+          p.drawText(item.text, {
+            x: w * 0.15, y: h * 0.45,
+            size: 50, font: f,
+            color: PDFLib.rgb(0.7, 0.7, 0.7),
+            rotate: PDFLib.degrees(35)
+          });
+        });
+        continue;
+      }
+
+      const page = (item.pageIdx === 1 && extraBlank) ? extraBlank : main;
+      const left = parseFloat(item.el.style.left) * factor;
+      const top  = parseFloat(item.el.style.top)  * factor;
+      const w = item.el.offsetWidth  * factor;
+      const h = item.el.offsetHeight * factor;
+      const y = ph - top - h;
+
+      if (item.type === "whiteout") {
+        page.drawRectangle({ x: left, y, width: w, height: h, color: PDFLib.rgb(1,1,1) });
+      } else if (item.type === "shape") {
+        if (item.subType === "circle") {
+          page.drawEllipse({
+            x: left + w/2, y: y + h/2,
+            xScale: w/2, yScale: h/2,
+            borderColor: PDFLib.rgb(0.86,0.15,0.15), borderWidth: 2
+          });
+        } else {
+          page.drawRectangle({
+            x: left, y, width: w, height: h,
+            borderColor: PDFLib.rgb(0.86,0.15,0.15), borderWidth: 2
+          });
+        }
+      } else if (item.type === "stamp") {
+        page.drawRectangle({
+          x: left, y, width: w, height: h,
+          borderColor: PDFLib.rgb(0.86,0.15,0.15), borderWidth: 2,
+          color: PDFLib.rgb(1,1,1)
+        });
+        const sf = await getFont(PDFLib.StandardFonts.HelveticaBold);
+        page.drawText(item.text, {
+          x: left + 6, y: y + h * 0.25,
+          size: 14, font: sf, color: PDFLib.rgb(0.86,0.15,0.15)
+        });
+      } else if (item.type === "text") {
+        /* Whiteout behind replaced text */
+        if (item.pageIdx === 0) {
+          page.drawRectangle({ x: left, y, width: w, height: h, color: PDFLib.rgb(1,1,1) });
+        }
+        const stdFont = mapToStandardFont(item.font, item.bold, item.italic);
+        const f = await getFont(stdFont);
+        const c = hexToRgb(item.color || "#000000");
+        page.drawText(item.el.innerText, {
+          x: left + 1,
+          y: y + h * 0.22,
+          size: item.size * factor * 0.95,
+          font: f,
+          color: PDFLib.rgb(c.r, c.g, c.b)
+        });
+      } else if (item.type === "image") {
+        const bytes = await fetch(item.dataUrl).then(r => r.arrayBuffer());
+        let emb;
+        try { emb = await doc.embedPng(bytes); }
+        catch { emb = await doc.embedJpg(bytes); }
+        page.drawImage(emb, { x: left, y, width: w, height: h });
+      }
+    }
+
+    const out = await doc.save();
+    const blob = new Blob([out], { type: "application/pdf" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "edited-document.pdf";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch (err) {
+    alert("Save error: " + (err.message || err));
+  } finally {
+    btnSave.disabled = false;
+    btnSave.innerHTML = orig;
+  }
+};
+</script>
+</body>
+</html>

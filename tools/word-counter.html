@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Word & Character Counter — Live Text Analysis | OfficeKit</title>
+<meta name="description" content="Free online word and character counter. Live word count, characters, sentences, paragraphs, reading time, keyword density, readability score and social media character limits.">
+<link rel="canonical" href="https://pdf365.in/tools/word-counter.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Word & Character Counter — Live Text Analysis">
+<meta property="og:description" content="Count words, characters, sentences and paragraphs instantly. Includes readability scoring, keyword density and social media limits.">
+<meta property="og:url" content="https://pdf365.in/tools/word-counter.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<!-- ============================================================
+     EARLY THEME RESTORE — runs before paint to prevent FOUC
+     and stay in sync with the home page's theme choice
+     ============================================================ -->
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('officekit_theme') || 'light';
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  } catch (e) {}
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How is reading time calculated?","acceptedAnswer":{"@type":"Answer","text":"Reading time uses an average silent reading rate of 200 words per minute. Speaking time uses 130 words per minute."}},
+    {"@type":"Question","name":"Does the counter include spaces?","acceptedAnswer":{"@type":"Answer","text":"Both figures are shown. The character count includes spaces and punctuation, and a separate figure excludes spaces."}},
+    {"@type":"Question","name":"Is my text stored anywhere?","acceptedAnswer":{"@type":"Answer","text":"No text leaves your browser. A draft is kept in your own device storage so you do not lose work on refresh."}},
+    {"@type":"Question","name":"What is the readability score?","acceptedAnswer":{"@type":"Answer","text":"It is the Flesch Reading Ease score, from 0 to 100. Higher is easier. Most web writing aims for 60 or above."}}
+  ]
+}
+</script>
+
+<style>
+/* ============ Layout (inherits theme from officekit-global.css) ============ */
+.wc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 900px) { .wc-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.wc-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.wc-panel + .wc-panel { margin-top: 18px; }
+
+.wc-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+.wc-panel-head h2 { margin: 0; font-size: 14px; font-weight: 700; color: var(--text-color); }
+.wc-panel-body { padding: 14px; }
+
+/* ===== Stats grid ===== */
+.wc-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+.wc-stat { background: var(--card-bg); padding: 14px 14px 12px; }
+.wc-stat b {
+  display: block;
+  font-size: clamp(20px, 3.4vw, 26px);
+  font-weight: 800;
+  color: var(--text-color);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.wc-stat span {
+  display: block;
+  font-size: 12px;
+  color: var(--subtext-color);
+  font-weight: 600;
+  margin-top: 2px;
+}
+@media (max-width: 640px) { .wc-stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* ===== Editor ===== */
+#text-input {
+  width: 100%;
+  min-height: 280px;
+  padding: 16px;
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.7;
+  resize: vertical;
+  display: block;
+  outline: none;
+}
+#text-input:focus { box-shadow: inset 0 0 0 2px var(--accent); }
+#text-input::placeholder { color: var(--subtext-color); }
+
+/* ===== Toolbar ===== */
+.wc-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border-color);
+}
+.wc-btn {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 6px 11px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.wc-btn:hover { border-color: var(--accent); color: var(--accent); }
+.wc-btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.wc-btn-primary:hover { color: #fff; opacity: 0.92; }
+.wc-btn-danger:hover { color: #f87171; border-color: #f87171; }
+.wc-toolbar-sep { width: 1px; background: var(--border-color); margin: 2px 4px; }
+
+/* ===== Rows list ===== */
+.wc-rows { display: grid; gap: 0; margin: 0; }
+.wc-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13.5px;
+}
+.wc-row:last-child { border-bottom: 0; }
+.wc-row dt { color: var(--subtext-color); margin: 0; }
+.wc-row dd {
+  margin: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-color);
+}
+
+/* ===== Limits ===== */
+.wc-limit { margin-bottom: 13px; }
+.wc-limit:last-child { margin-bottom: 0; }
+.wc-limit-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  margin-bottom: 5px;
+}
+.wc-limit-top span:first-child { color: var(--subtext-color); font-weight: 600; }
+.wc-limit-top span:last-child { font-variant-numeric: tabular-nums; color: var(--subtext-color); }
+.wc-bar {
+  height: 5px;
+  background: var(--border-color);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.wc-bar i {
+  display: block;
+  height: 100%;
+  background: #34d399;
+  border-radius: 99px;
+  transition: width 0.12s linear;
+}
+.wc-bar.near i { background: #fbbf24; }
+.wc-bar.over i { background: #f87171; }
+.wc-limit.over .wc-limit-top span:last-child { color: #f87171; font-weight: 700; }
+
+/* ===== Readability ===== */
+.wc-score { display: flex; align-items: center; gap: 14px; }
+.wc-score-num {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--subtext-color);
+}
+.wc-score-txt { font-size: 13px; color: var(--subtext-color); }
+.wc-score-txt b { display: block; color: var(--text-color); font-size: 14px; }
+
+/* ===== Density table ===== */
+table.wc-density { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.wc-density th {
+  text-align: left;
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  font-weight: 700;
+  padding: 0 0 7px;
+  border-bottom: 1px solid var(--border-color);
+}
+table.wc-density th:last-child,
+table.wc-density td:last-child { text-align: right; }
+table.wc-density td {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-color);
+}
+table.wc-density tr:last-child td { border-bottom: 0; }
+table.wc-density td:first-child { font-weight: 600; }
+.wc-empty { color: var(--subtext-color); font-size: 13px; margin: 0; }
+
+/* ===== Goal ===== */
+.wc-goal-input { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.wc-goal-input input {
+  width: 100px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 13px;
+}
+.wc-goal-input input:focus { border-color: var(--accent); }
+.wc-goal-input label { font-size: 13px; color: var(--subtext-color); }
+
+/* ===== Toast ===== */
+.wc-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 9px 16px;
+  border-radius: 99px;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  z-index: 99;
+}
+.wc-toast.show { opacity: 1; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Word and character counter</h1>
+    <p class="hero-sub">Paste your text and see the counts update as you type. Nothing is uploaded — the analysis runs in this browser tab.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="wc-grid">
+    <div>
+      <section class="wc-panel" aria-label="Text editor and live counts">
+        <div class="wc-stats">
+          <div class="wc-stat"><b id="val-words">0</b><span>Words</span></div>
+          <div class="wc-stat"><b id="val-chars">0</b><span>Characters</span></div>
+          <div class="wc-stat"><b id="val-sentences">0</b><span>Sentences</span></div>
+          <div class="wc-stat"><b id="val-reading">0s</b><span>Reading time</span></div>
+        </div>
+
+        <div>
+          <label class="sr-only" for="text-input">Your text</label>
+          <textarea id="text-input" spellcheck="true" placeholder="Start typing, or paste the text you want to measure."></textarea>
+        </div>
+
+        <div class="wc-toolbar">
+          <button class="wc-btn wc-btn-primary" id="btn-copy" type="button">Copy text</button>
+          <button class="wc-btn" id="btn-download" type="button">Download .txt</button>
+          <button class="wc-btn" id="btn-upload" type="button">Open a file</button>
+          <input type="file" id="file-input" accept=".txt,.md,.csv,text/plain" hidden>
+          <span class="wc-toolbar-sep" aria-hidden="true"></span>
+          <button class="wc-btn" data-case="upper" type="button">UPPER</button>
+          <button class="wc-btn" data-case="lower" type="button">lower</button>
+          <button class="wc-btn" data-case="title" type="button">Title Case</button>
+          <button class="wc-btn" data-case="sentence" type="button">Sentence case</button>
+          <span class="wc-toolbar-sep" aria-hidden="true"></span>
+          <button class="wc-btn" id="btn-tidy" type="button">Tidy spacing</button>
+          <button class="wc-btn wc-btn-danger" id="btn-clear" type="button">Clear</button>
+        </div>
+      </section>
+
+      <section class="wc-panel">
+        <div class="wc-panel-head">
+          <h2>Most used words</h2>
+          <span id="density-note" style="font-size:12px; color:var(--subtext-color);"></span>
+        </div>
+        <div class="wc-panel-body">
+          <p class="wc-empty" id="density-empty">Keyword density appears once you have written a few sentences.</p>
+          <table class="wc-density" id="density-table" hidden>
+            <thead><tr><th>Word</th><th>Uses</th><th>Density</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <section class="wc-panel">
+        <div class="wc-panel-head"><h2>Full breakdown</h2></div>
+        <div class="wc-panel-body">
+          <dl class="wc-rows">
+            <div class="wc-row"><dt>Characters, no spaces</dt><dd id="val-nospace">0</dd></div>
+            <div class="wc-row"><dt>Paragraphs</dt><dd id="val-paragraphs">0</dd></div>
+            <div class="wc-row"><dt>Unique words</dt><dd id="val-unique">0</dd></div>
+            <div class="wc-row"><dt>Average word length</dt><dd id="val-avgword">0</dd></div>
+            <div class="wc-row"><dt>Average sentence length</dt><dd id="val-avgsent">0</dd></div>
+            <div class="wc-row"><dt>Longest word</dt><dd id="val-longest">—</dd></div>
+            <div class="wc-row"><dt>Speaking time</dt><dd id="val-speaking">0s</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="wc-panel">
+        <div class="wc-panel-head"><h2>Readability</h2></div>
+        <div class="wc-panel-body">
+          <div class="wc-score">
+            <div class="wc-score-num" id="val-flesch">—</div>
+            <div class="wc-score-txt">
+              <b id="val-flesch-label">Not enough text yet</b>
+              <span id="val-grade">Write a full sentence to get a score.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wc-panel">
+        <div class="wc-panel-head"><h2>Word goal</h2></div>
+        <div class="wc-panel-body">
+          <div class="wc-goal-input">
+            <label for="goal">Target</label>
+            <input type="number" id="goal" min="0" step="50" placeholder="500">
+            <span style="font-size:13px; color:var(--subtext-color);">words</span>
+          </div>
+          <div class="wc-bar" id="goal-bar"><i style="width:0%"></i></div>
+          <p class="wc-empty" id="goal-text" style="margin-top:8px;">Set a target to track progress.</p>
+        </div>
+      </section>
+
+      <section class="wc-panel">
+        <div class="wc-panel-head"><h2>Platform limits</h2></div>
+        <div class="wc-panel-body" id="limits"></div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>How to use word and character counts to size your writing</h2>
+    <p>Most writing has a length it needs to hit. A meta description gets cut off past roughly 160 characters, a conference talk runs to a word budget rather than a page count, and academic abstracts are usually capped to the word. Counting by hand is slow and counting in a word processor means opening one. This tool gives you the numbers as you type, and adds the context those numbers usually need: how long the text takes to read aloud, how hard it is to read, and which words you are leaning on.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/word-counter-demo.jpg" alt="The counter showing live word, character and sentence totals beside a block of draft text"
+           onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 Add a screenshot at assets/images/word-counter-demo.jpg</div>';">
+      <div class="article-image-caption">Live totals update on every keystroke, with the full breakdown and platform limits alongside.</div>
+    </div>
+
+    <h3>Getting started</h3>
+    <ul>
+      <li><b>Paste or type.</b> Drop text into the editor, or use <b>Open a file</b> to load a .txt or .md draft straight from your device.</li>
+      <li><b>Read the four headline numbers.</b> Words, characters, sentences and reading time sit above the editor and update instantly.</li>
+      <li><b>Check the sidebar for detail.</b> Characters without spaces, paragraph count, unique words, average sentence length and speaking time are all broken out.</li>
+      <li><b>Watch your platform limits.</b> The bars turn amber as you approach a limit and red once you pass it, so you can trim before you paste.</li>
+    </ul>
+
+    <h3>What changed in this version</h3>
+    <ul>
+      <li><b>Readability scoring.</b> A Flesch Reading Ease score with a plain-English verdict and an approximate US grade level.</li>
+      <li><b>Keyword density.</b> The ten most used words with their share of the total, filler words excluded.</li>
+      <li><b>Live platform limits</b> for X, meta titles, meta descriptions, Instagram captions, LinkedIn posts and SMS.</li>
+      <li><b>Text tools.</b> Four case conversions, a spacing cleanup, plus copy, download and file open.</li>
+      <li><b>Draft recovery.</b> Your text is saved to this device only. Clear removes it.</li>
+      <li><b>A word goal</b> with a progress bar, and theme sync with the main site.</li>
+    </ul>
+
+    <h3>Common questions</h3>
+    <p><b>Q: How is reading time calculated?</b><br>
+    Reading time assumes 200 words per minute. Speaking time uses 130 words per minute.</p>
+    <p><b>Q: Does the character count include spaces?</b><br>
+    The headline figure counts everything, including spaces. The sidebar shows the count without spaces.</p>
+    <p><b>Q: Is my text stored or uploaded?</b><br>
+    No text is sent anywhere. A copy of your draft is kept in this browser's local storage.</p>
+    <p><b>Q: What does the readability score mean?</b><br>
+    It is the Flesch Reading Ease score, from 0 to 100, where higher is easier. Web writing usually aims for 60 or above.</p>
+    <p><b>Q: How is keyword density counted?</b><br>
+    Each word's count is divided by the total number of words. Common filler words are excluded.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<div class="wc-toast" id="toast" role="status" aria-live="polite"></div>
+<p class="sr-only" id="live-count" aria-live="polite"></p>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+(function(){
+  "use strict";
+
+  var $ = function(id){ return document.getElementById(id); };
+  var input = $("text-input");
+  var STORE_TEXT = "officekit.wordcounter.draft";
+  var STORE_GOAL = "officekit.wordcounter.goal";
+
+  function load(key){ try { return localStorage.getItem(key); } catch(e){ return null; } }
+  function save(key,val){ try { localStorage.setItem(key,val); } catch(e){} }
+  function drop(key){ try { localStorage.removeItem(key); } catch(e){} }
+
+  var toastEl = $("toast"), toastTimer;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 1800);
+  }
+
+  var STOP = ("a an the and or but if then than that this these those of in on at to for with from by as is are was were be been being it its "+
+    "i you he she we they me him her us them my your his our their not no so such can will just about into over after before up down out very "+
+    "do does did done has have had would could should there here when where which who whom what how all any both each more most other some").split(" ");
+  var STOPSET = Object.create(null);
+  STOP.forEach(function(w){ STOPSET[w] = true; });
+
+  function fmt(n){ return n.toLocaleString(); }
+
+  function duration(words, wpm){
+    if (!words) return "0s";
+    var secs = Math.round(words / wpm * 60);
+    if (secs < 60) return secs + "s";
+    var m = Math.floor(secs/60), s = secs % 60;
+    if (m < 60) return s ? m + "m " + s + "s" : m + "m";
+    return Math.floor(m/60) + "h " + (m % 60) + "m";
+  }
+
+  function syllables(word){
+    word = word.replace(/[^a-z]/g,"");
+    if (word.length <= 3) return word.length ? 1 : 0;
+    word = word.replace(/(?:es|ed|[^laeiouy]e)$/,"");
+    var m = word.match(/[aeiouy]{1,2}/g);
+    return m ? m.length : 1;
+  }
+
+  function fleschLabel(score){
+    if (score >= 90) return ["Very easy","Around 5th grade level"];
+    if (score >= 80) return ["Easy","Around 6th grade level"];
+    if (score >= 70) return ["Fairly easy","Around 7th grade level"];
+    if (score >= 60) return ["Plain English","Around 8th to 9th grade level"];
+    if (score >= 50) return ["Fairly hard","Around 10th to 12th grade level"];
+    if (score >= 30) return ["Hard","College reading level"];
+    return ["Very hard","Postgraduate reading level"];
+  }
+
+  var LIMITS = [
+    { name:"X post", max:280 },
+    { name:"Meta title", max:60 },
+    { name:"Meta description", max:160 },
+    { name:"Instagram caption", max:2200 },
+    { name:"LinkedIn post", max:3000 },
+    { name:"SMS", max:160 }
+  ];
+  var limitsBox = $("limits");
+  LIMITS.forEach(function(l, i){
+    var el = document.createElement("div");
+    el.className = "wc-limit";
+    el.innerHTML =
+      '<div class="wc-limit-top"><span>' + l.name + '</span><span data-n="' + i + '">0 / ' + fmt(l.max) + '</span></div>' +
+      '<div class="wc-bar"><i style="width:0%"></i></div>';
+    limitsBox.appendChild(el);
+  });
+
+  function analyse(){
+    var text = input.value;
+    var trimmed = text.trim();
+
+    var chars = text.length;
+    var noSpace = text.replace(/\s/g,"").length;
+
+    var wordList = trimmed ? trimmed.split(/\s+/) : [];
+    var words = wordList.length;
+
+    var sentenceParts = trimmed
+      ? trimmed.split(/[.!?]+(?:\s|$)/).filter(function(s){ return s.trim().length; })
+      : [];
+    var sentences = sentenceParts.length;
+
+    var paragraphs = trimmed
+      ? trimmed.split(/\n\s*\n/).filter(function(p){ return p.trim().length; }).length
+      : 0;
+
+    $("val-words").textContent = fmt(words);
+    $("val-chars").textContent = fmt(chars);
+    $("val-sentences").textContent = fmt(sentences);
+    $("val-reading").textContent = duration(words, 200);
+
+    $("val-nospace").textContent = fmt(noSpace);
+    $("val-paragraphs").textContent = fmt(paragraphs);
+    $("val-speaking").textContent = duration(words, 130);
+
+    var clean = [], seen = Object.create(null), uniq = 0, letters = 0, longest = "";
+    for (var i = 0; i < words; i++){
+      var w = wordList[i].toLowerCase().replace(/[^a-z0-9'’-]/g,"");
+      if (!w) continue;
+      clean.push(w);
+      letters += w.length;
+      if (w.length > longest.length) longest = wordList[i].replace(/[^A-Za-z0-9'’-]/g,"");
+      if (!seen[w]){ seen[w] = 0; uniq++; }
+      seen[w]++;
+    }
+    $("val-unique").textContent = fmt(uniq);
+    $("val-avgword").textContent = clean.length ? (letters / clean.length).toFixed(1) + " chars" : "0";
+    $("val-avgsent").textContent = sentences ? (words / sentences).toFixed(1) + " words" : "0";
+    $("val-longest").textContent = longest || "—";
+
+    var fEl = $("val-flesch"), fLabel = $("val-flesch-label"), fGrade = $("val-grade");
+    if (words >= 10 && sentences >= 1){
+      var syl = 0;
+      for (var j = 0; j < clean.length; j++) syl += syllables(clean[j]);
+      var score = 206.835 - 1.015 * (words / sentences) - 84.6 * (syl / Math.max(clean.length,1));
+      score = Math.max(0, Math.min(100, score));
+      var info = fleschLabel(score);
+      fEl.textContent = Math.round(score);
+      fEl.style.color = score >= 60 ? "#34d399" : (score >= 30 ? "#fbbf24" : "#f87171");
+      fLabel.textContent = info[0];
+      fGrade.textContent = info[1];
+    } else {
+      fEl.textContent = "—";
+      fEl.style.color = "";
+      fLabel.textContent = "Not enough text yet";
+      fGrade.textContent = "Write at least ten words to get a score.";
+    }
+
+    var table = $("density-table"), emptyMsg = $("density-empty"), note = $("density-note");
+    var pairs = [];
+    for (var key in seen){
+      if (STOPSET[key] || key.length < 3) continue;
+      pairs.push([key, seen[key]]);
+    }
+    pairs.sort(function(a,b){ return b[1] - a[1] || a[0].localeCompare(b[0]); });
+    if (pairs.length && words >= 12){
+      var top = pairs.slice(0,10);
+      var body = table.tBodies[0];
+      body.innerHTML = top.map(function(p){
+        return "<tr><td>" + p[0].replace(/</g,"&lt;") + "</td><td>" + p[1] + "</td><td>" + (p[1]/words*100).toFixed(1) + "%</td></tr>";
+      }).join("");
+      table.hidden = false;
+      emptyMsg.hidden = true;
+      note.textContent = "Filler words excluded";
+    } else {
+      table.hidden = true;
+      emptyMsg.hidden = false;
+      note.textContent = "";
+    }
+
+    var tops = limitsBox.querySelectorAll(".wc-limit-top span:last-child");
+    var bars = limitsBox.querySelectorAll(".wc-bar");
+    var boxes = limitsBox.querySelectorAll(".wc-limit");
+    LIMITS.forEach(function(l, i){
+      var pct = Math.min(100, chars / l.max * 100);
+      tops[i].textContent = fmt(chars) + " / " + fmt(l.max);
+      bars[i].firstElementChild.style.width = pct + "%";
+      bars[i].classList.toggle("near", pct >= 85 && chars <= l.max);
+      bars[i].classList.toggle("over", chars > l.max);
+      boxes[i].classList.toggle("over", chars > l.max);
+    });
+
+    updateGoal(words);
+
+    $("live-count").textContent = fmt(words) + " words, " + fmt(chars) + " characters";
+    save(STORE_TEXT, text);
+  }
+
+  var goalInput = $("goal"), goalBar = $("goal-bar"), goalText = $("goal-text");
+  function updateGoal(words){
+    var target = parseInt(goalInput.value, 10);
+    if (!target || target < 1){
+      goalBar.firstElementChild.style.width = "0%";
+      goalBar.classList.remove("near","over");
+      goalText.textContent = "Set a target to track progress.";
+      return;
+    }
+    var pct = Math.min(100, words / target * 100);
+    goalBar.firstElementChild.style.width = pct + "%";
+    goalBar.classList.remove("near","over");
+    if (words >= target){
+      goalText.textContent = "Target reached — " + fmt(words - target) + " words over.";
+    } else {
+      goalText.textContent = fmt(target - words) + " words to go (" + Math.round(pct) + "%).";
+    }
+  }
+  goalInput.addEventListener("input", function(){
+    save(STORE_GOAL, goalInput.value);
+    analyse();
+  });
+
+  var frame = null;
+  function schedule(){
+    if (frame) cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(analyse);
+  }
+  input.addEventListener("input", schedule);
+
+  function setText(v){ input.value = v; analyse(); input.focus(); }
+
+  $("btn-copy").addEventListener("click", function(){
+    if (!input.value){ toast("Nothing to copy yet."); return; }
+    var done = function(){ toast("Copied to clipboard."); };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(input.value).then(done, function(){ fallbackCopy(); });
+    } else { fallbackCopy(); }
+    function fallbackCopy(){
+      input.select();
+      document.execCommand("copy");
+      input.setSelectionRange(input.value.length, input.value.length);
+      done();
+    }
+  });
+
+  $("btn-download").addEventListener("click", function(){
+    if (!input.value){ toast("Write something first."); return; }
+    var blob = new Blob([input.value], { type:"text/plain;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "text.txt";
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast("Downloaded text.txt");
+  });
+
+  $("btn-upload").addEventListener("click", function(){ $("file-input").click(); });
+  $("file-input").addEventListener("change", function(e){
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){ setText(String(reader.result)); toast("Loaded " + file.name); };
+    reader.onerror = function(){ toast("That file could not be read."); };
+    reader.readAsText(file);
+    e.target.value = "";
+  });
+
+  $("btn-clear").addEventListener("click", function(){
+    if (!input.value) return;
+    setText("");
+    drop(STORE_TEXT);
+    toast("Editor cleared.");
+  });
+
+  $("btn-tidy").addEventListener("click", function(){
+    if (!input.value){ toast("Write something first."); return; }
+    var v = input.value
+      .replace(/[ \t]+/g," ")
+      .replace(/ ?\n ?/g,"\n")
+      .replace(/\n{3,}/g,"\n\n")
+      .replace(/ +([,.;:!?])/g,"$1")
+      .trim();
+    setText(v);
+    toast("Spacing tidied.");
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-case]"), function(btn){
+    btn.addEventListener("click", function(){
+      if (!input.value){ toast("Write something first."); return; }
+      var mode = btn.getAttribute("data-case"), v = input.value;
+      if (mode === "upper") v = v.toUpperCase();
+      else if (mode === "lower") v = v.toLowerCase();
+      else if (mode === "title") v = v.toLowerCase().replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); });
+      else if (mode === "sentence") v = v.toLowerCase().replace(/(^\s*[a-z])|([.!?]\s+[a-z])/g, function(c){ return c.toUpperCase(); });
+      setText(v);
+    });
+  });
+
+  document.addEventListener("keydown", function(e){
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k" && !e.shiftKey){
+      e.preventDefault();
+      input.focus();
+    }
+  });
+
+  var savedText = load(STORE_TEXT);
+  if (savedText) input.value = savedText;
+  var savedGoal = load(STORE_GOAL);
+  if (savedGoal) goalInput.value = savedGoal;
+  analyse();
+})();
+</script>
+</body>
+</html>

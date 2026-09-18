@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Split PDF Files Online Free — OfficeKit</title>
+<meta name="description" content="Split large PDF documents into individual pages or custom ranges online. 100% browser-based.">
+<link rel="canonical" href="https://pdf365.in/tools/pdf-split.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+<style>
+.split-options { margin: 20px 0; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.split-options label {
+  font-size: 14px; font-weight: 600; color: var(--text-color);
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+}
+.split-input {
+  width: 100%; padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px; margin-top: 6px;
+}
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Split PDF Files Online</h1>
+    <p class="hero-sub">Extract specific pages or separate large PDF documents into individual files instantly.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tool-card" style="max-width:900px; margin:0 auto;">
+    <div class="drop-zone" id="initial-drop" style="display:flex; flex-direction:column;">
+      <input type="file" id="pdf-in" accept="application/pdf">
+      <div>
+        <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6z"/><polyline points="13 2 13 9 20 9"/></svg>
+        <h3>Select or Drop a PDF File</h3>
+        <p>Upload a PDF document to extract pages</p>
+      </div>
+    </div>
+
+    <div id="split-workspace" style="display:none; margin-top:15px;">
+      <div class="pdf-queue-item">
+        <span id="file-name-display" style="font-weight:600; word-break:break-all;"></span>
+        <button id="btn-change-file" type="button" style="background:transparent; border:none; color:#f87171; cursor:pointer; font-weight:bold;">Change</button>
+      </div>
+
+      <div class="split-options">
+        <label><input type="radio" name="split-mode" value="all" checked> Extract all pages as separate PDFs</label>
+        <label><input type="radio" name="split-mode" value="range"> Extract page range (e.g., 1-3, 5)</label>
+        <div id="range-box" style="display:none; margin-top:4px;">
+          <input type="text" id="range-input" class="split-input" placeholder="Enter page numbers or ranges (e.g. 1-3, 5, 7-10)">
+        </div>
+      </div>
+
+      <button class="primary-button" id="btn-split-action" style="width:100%; margin-top:15px;">Split PDF Now</button>
+    </div>
+
+    <div id="pdf-output" style="margin-top:15px;"></div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide: How to Split Large PDF Documents Online Free</h2>
+    <p>Managing bulky academic papers, voluminous corporate contracts, or massive financial statements often requires isolating particular pages. OfficeKit Split PDF enables you to break down large documents into single pages or custom page ranges instantly within your browser window without uploading confidential records to any external cloud storage.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/pdf-split-demo.jpg" alt="OfficeKit Split PDF Workflow Diagram" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>[Place Demo Here: assets/images/pdf-split-demo.jpg]</div>';">
+      <div class="article-image-caption">Visual sequence showing a multi-page PDF document splitting into individual separate files.</div>
+    </div>
+
+    <h3>Step-by-Step Instructions:</h3>
+    <ul>
+      <li><b>Step 1 - Upload PDF File:</b> Drag and drop or browse to select your source PDF file.</li>
+      <li><b>Step 2 - Choose Split Mode:</b> Select whether you want every page individually or a custom page range.</li>
+      <li><b>Step 3 - Execute Split:</b> Click "Split PDF Now" to process locally.</li>
+      <li><b>Step 4 - Download Results:</b> Save your extracted PDF files instantly.</li>
+    </ul>
+
+    <h3>Why Choose OfficeKit Split PDF?</h3>
+    <ul>
+      <li><b>100% Client-Side Privacy:</b> All calculations run inside your browser sandbox.</li>
+      <li><b>High Fidelity:</b> Original text vectors, layouts, and image resolutions remain intact.</li>
+      <li><b>No Installation Required:</b> Works on mobile and desktop.</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: Can I split password-protected PDFs?</b><br>
+    Currently supports unencrypted documents. Please unlock your PDF first.</p>
+    <p><b>Q: Are my documents saved on any server?</b><br>
+    No. OfficeKit operates entirely client-side.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const pdfIn = document.getElementById("pdf-in");
+const initialDrop = document.getElementById("initial-drop");
+const splitWorkspace = document.getElementById("split-workspace");
+const fileNameDisplay = document.getElementById("file-name-display");
+const btnChangeFile = document.getElementById("btn-change-file");
+const radioModes = document.querySelectorAll('input[name="split-mode"]');
+const rangeBox = document.getElementById("range-box");
+const rangeInput = document.getElementById("range-input");
+const btnSplit = document.getElementById("btn-split-action");
+const pdfOutput = document.getElementById("pdf-output");
+
+let loadedFile = null;
+
+pdfIn.addEventListener("change", (e) => {
+  if (e.target.files && e.target.files[0]) {
+    loadedFile = e.target.files[0];
+    fileNameDisplay.textContent = `${loadedFile.name} (${Math.round(loadedFile.size / 1024)} KB)`;
+    initialDrop.style.display = "none";
+    splitWorkspace.style.display = "block";
+    pdfOutput.innerHTML = "";
+  }
+});
+
+btnChangeFile.addEventListener("click", () => {
+  loadedFile = null;
+  pdfIn.value = "";
+  splitWorkspace.style.display = "none";
+  initialDrop.style.display = "flex";
+  pdfOutput.innerHTML = "";
+});
+
+radioModes.forEach(radio => {
+  radio.addEventListener("change", (e) => {
+    rangeBox.style.display = e.target.value === "range" ? "block" : "none";
+  });
+});
+
+btnSplit.addEventListener("click", async () => {
+  if (!loadedFile) return;
+  btnSplit.disabled = true;
+  btnSplit.textContent = "Processing PDF...";
+  try {
+    const buffer = await loadedFile.arrayBuffer();
+    const srcDoc = await PDFLib.PDFDocument.load(buffer);
+    const totalPages = srcDoc.getPageCount();
+    const mode = document.querySelector('input[name="split-mode"]:checked').value;
+
+    if (mode === "all") {
+      let outputHTML = `<div style="display:flex; flex-direction:column; gap:10px;"><strong style="color:var(--text-color);">Extracted Pages (${totalPages} files):</strong>`;
+      for (let i = 0; i < totalPages; i++) {
+        const newDoc = await PDFLib.PDFDocument.create();
+        const [copiedPage] = await newDoc.copyPages(srcDoc, [i]);
+        newDoc.addPage(copiedPage);
+        const pdfBytes = await newDoc.save();
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        outputHTML += `
+          <div class="pdf-queue-item">
+            <span>Page_${i + 1}.pdf</span>
+            <a href="${url}" download="page_${i + 1}.pdf" class="primary-button" style="padding:6px 14px; font-size:12px; text-decoration:none;">Download</a>
+          </div>`;
+      }
+      outputHTML += `</div>`;
+      pdfOutput.innerHTML = outputHTML;
+    } else {
+      const rangeStr = rangeInput.value.trim();
+      if (!rangeStr) { alert("Please enter a valid page range (e.g., 1-3, 5)"); return; }
+      const indices = parsePageRanges(rangeStr, totalPages);
+      if (indices.length === 0) { alert("Invalid page range specified."); return; }
+
+      const newDoc = await PDFLib.PDFDocument.create();
+      const copiedPages = await newDoc.copyPages(srcDoc, indices);
+      copiedPages.forEach(p => newDoc.addPage(p));
+      const pdfBytes = await newDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+
+      pdfOutput.innerHTML = `
+        <div class="pdf-queue-item" style="align-items:center; gap:14px; flex-wrap:wrap;">
+          <div>
+            <strong style="color:var(--text-color);">split_selected_pages.pdf</strong><br>
+            <span style="color:var(--subtext-color); font-size:12.5px;">Contains ${indices.length} pages</span>
+          </div>
+          <a href="${url}" download="split_selected_pages.pdf" class="primary-button" style="text-decoration:none;">Download Split PDF</a>
+        </div>`;
+    }
+  } catch (err) {
+    alert("Error while splitting: " + err.message);
+  } finally {
+    btnSplit.disabled = false;
+    btnSplit.textContent = "Split PDF Now";
+  }
+});
+
+function parsePageRanges(str, max) {
+  let set = new Set();
+  str.split(",").forEach(part => {
+    part = part.trim();
+    if (part.includes("-")) {
+      let range = part.split("-");
+      let start = parseInt(range[0], 10);
+      let end = parseInt(range[1], 10);
+      if (!isNaN(start) && !isNaN(end)) {
+        for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
+          if (i >= 1 && i <= max) set.add(i - 1);
+        }
+      }
+    } else {
+      let num = parseInt(part, 10);
+      if (!isNaN(num) && num >= 1 && num <= max) set.add(num - 1);
+    }
+  });
+  return Array.from(set).sort((a, b) => a - b);
+}
+</script>
+</body>
+</html>

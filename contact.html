@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact Us — OfficeKit</title>
+<meta name="description" content="Contact OfficeKit for support, feedback, bug reports, business inquiries, or partnership opportunities.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://pdf365.in/contact.html">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+
+<style>
+:root {
+--bg-color: #f8fafc;
+--text-color: #1e293b;
+--header-bg: #19398a;
+--card-bg: #ffffff;
+--card-hover: #f1f5f9;
+--border-color: #cbd5e1;
+--subtext-color: #64748b;
+--accent: #19398a;
+}
+[data-theme="dark"] {
+--bg-color: #0b1329;
+--text-color: #f8fafc;
+--header-bg: #111e38;
+--card-bg: #111e38;
+--card-hover: #1e293b;
+--border-color: #334155;
+--subtext-color: #94a3b8;
+--accent: #38bdf8;
+}
+* { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+margin: 0;
+background: var(--bg-color);
+color: var(--text-color);
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+transition: background 0.3s, color 0.3s;
+line-height: 1.5;
+}
+a { color: inherit; }
+.site-header { background: var(--header-bg); color: #fff; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand-link { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: #fff; font-weight: 800; font-size: 17px; flex-shrink: 0; }
+.brand-badge { background: #fff; color: #19398a; font-weight: 900; font-size: 14px; padding: 6px 10px; border-radius: 7px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+.brand-badge svg { width: 17px; height: 17px; fill: #19398a; }
+.nav-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+.top-nav { display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.top-nav::-webkit-scrollbar { display: none; }
+.top-nav a { color: #e0e7ff; text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 5px; white-space: nowrap; transition: background 0.15s; }
+.top-nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.theme-switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.25); transition: .3s; border-radius: 34px; border: 1px solid rgba(255,255,255,0.4); }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+input:checked + .slider { background-color: #38bdf8; }
+input:checked + .slider:before { transform: translateX(23px); }
+@media (max-width: 780px) {
+.header-inner { flex-wrap: wrap; }
+.nav-right { width: 100%; justify-content: space-between; }
+.top-nav { order: 2; width: 100%; }
+.theme-switch { order: 1; margin-left: auto; }
+}
+
+.main-wrap { max-width: 900px; margin: 0 auto; padding: 40px 16px 80px; }
+.legal-hero { text-align: center; padding: 20px 0 30px; }
+.legal-hero h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; color: var(--text-color); margin: 0 0 10px; letter-spacing: -0.5px; }
+.legal-hero p { color: var(--subtext-color); font-size: 14.5px; margin: 0 auto; max-width: 640px; }
+
+.legal-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 32px 28px; margin-bottom: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.legal-card h2 { font-size: 20px; font-weight: 700; color: var(--text-color); margin: 0 0 14px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); display: inline-block; }
+.legal-card p { font-size: 14.5px; color: var(--subtext-color); margin: 0 0 12px; line-height: 1.7; }
+.legal-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.legal-card a:hover { text-decoration: underline; }
+
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 20px 0; }
+.contact-card {
+background: var(--card-hover);
+border: 1px solid var(--border-color);
+border-radius: 10px;
+padding: 24px;
+text-align: center;
+transition: transform 0.15s, border-color 0.15s;
+}
+.contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.contact-card .icon-circle {
+width: 52px;
+height: 52px;
+background: var(--accent);
+border-radius: 50%;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 12px;
+}
+.contact-card .icon-circle svg { width: 26px; height: 26px; fill: #fff; }
+.contact-card h3 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--text-color); }
+.contact-card p { margin: 0 0 12px; font-size: 13px; color: var(--subtext-color); line-height: 1.5; }
+.contact-card a.btn-link {
+display: inline-block;
+background: var(--accent);
+color: #fff;
+padding: 8px 18px;
+border-radius: 6px;
+text-decoration: none;
+font-weight: 600;
+font-size: 13.5px;
+transition: opacity 0.15s;
+}
+.contact-card a.btn-link:hover { opacity: 0.9; }
+
+.faq-item {
+border-bottom: 1px solid var(--border-color);
+padding: 14px 0;
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-item h3 {
+font-size: 15px;
+font-weight: 700;
+color: var(--text-color);
+margin: 0 0 6px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.faq-item h3::before { content: "Q:"; color: var(--accent); font-weight: 800; }
+.faq-item p { margin: 0; font-size: 14px; color: var(--subtext-color); padding-left: 22px; line-height: 1.6; }
+
+.site-footer { background: #19398a; color: #fff; padding: 40px 16px 20px; font-size: 13px; margin-top: 40px; }
+.footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 30px; }
+@media (max-width: 880px) { .footer-container { grid-template-columns: 1fr 1fr; gap: 24px; } }
+@media (max-width: 520px) { .footer-container { grid-template-columns: 1fr; } }
+.footer-brand-box { background: #fff; color: #19398a; font-weight: 900; font-size: 16px; padding: 6px 12px; border-radius: 7px; display: inline-flex; align-items: center; gap: 7px; margin-bottom: 12px; }
+.footer-brand-box svg { width: 17px; height: 17px; fill: #19398a; }
+.footer-col h5 { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: #fff; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 9px; }
+.footer-col ul li a { color: #e0e7ff; text-decoration: none; font-size: 12.5px; transition: color 0.15s; }
+.footer-col ul li a:hover { color: #fff; text-decoration: underline; }
+.footer-bottom-bar { max-width: 1200px; margin: 30px auto 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.22); display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 12.5px; color: #e0e7ff; flex-wrap: wrap; }
+.made-with-love-link { color: #fff; text-decoration: none; font-weight: 700; }
+.made-with-love-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-inner">
+<a class="brand-link" href="index.html" aria-label="OfficeKit Home">
+<span class="brand-badge">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+OfficeKit
+</span>
+</a>
+<div class="nav-right">
+<nav class="top-nav" aria-label="Quick links">
+<a href="index.html">Home</a>
+<a href="terms.html">Terms</a>
+<a href="privacy.html">Privacy</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</nav>
+<label class="theme-switch" aria-label="Toggle theme">
+<input type="checkbox" id="theme-checkbox" onchange="toggleTheme()">
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</header>
+
+<main class="main-wrap">
+
+<div class="legal-hero">
+<h1>Contact Us</h1>
+<p>Have a question, feedback, bug report, or business inquiry? We'd love to hear from you.</p>
+</div>
+
+<div class="legal-card">
+<h2>Get in Touch</h2>
+<p>Whether you found a bug, want to suggest a new tool, need help using an existing one, or want to discuss a partnership — reach out anytime. We read every message.</p>
+
+<div class="contact-grid">
+<div class="contact-card">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+</div>
+<h3>Email Us</h3>
+<p>For all inquiries — support, feedback, or business.</p>
+<div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+  <a href="mailto:ahpurdeepak@aol.com" class="btn-link">Send Email</a>
+  <a href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer" class="btn-link" style="background:transparent; border:1px solid var(--accent); color:var(--accent);">Visit Portfolio</a>
+</div>
+
+<div class="contact-card">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+</div>
+<h3>Bug Report</h3>
+<p>Found a tool that isn't working? Let us know with details.</p>
+<a href="mailto:contact@pdf365.in?subject=Bug%20Report" class="btn-link">Report a Bug</a>
+</div>
+
+<div class="contact-card">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+</div>
+<h3>Feature Request</h3>
+<p>Have an idea for a new tool or improvement? We're listening.</p>
+<a href="mailto:contact@pdf365.in?subject=Feature%20Request" class="btn-link">Suggest a Tool</a>
+</div>
+</div>
+</div>
+
+<div class="legal-card">
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item">
+<h3>Are my files really private?</h3>
+<p>Yes — 100%. OfficeKit runs entirely inside your browser. Your files never leave your device. No uploads, no server storage, no tracking of file content. Read our <a href="privacy.html">Privacy Policy</a> for full details.</p>
+</div>
+
+<div class="faq-item">
+<h3>Do I need to create an account?</h3>
+<p>No. Every tool on OfficeKit is available without signup, email, or payment. Just open the tool and use it.</p>
+</div>
+
+<div class="faq-item">
+<h3>Is there a file size limit?</h3>
+<p>No fixed limit. Since processing happens in your browser, the only limit is your device's available memory. Most modern devices handle large files easily.</p>
+</div>
+
+<div class="faq-item">
+<h3>Will you add watermarks to my output?</h3>
+<p>Never. All output files are clean, without any watermarks, logos, or branding.</p>
+</div>
+
+<div class="faq-item">
+<h3>Can I use OfficeKit for commercial work?</h3>
+<p>Yes. Our tools are free for both personal and professional/commercial use. See our <a href="terms.html">Terms & Conditions</a> for full details.</p>
+</div>
+
+<div class="faq-item">
+<h3>How do I report a bug or issue?</h3>
+<p>Email us at <a href="mailto:contact@pdf365.in">contact@pdf365.in</a> with a description of the issue, the tool name, and (if possible) a screenshot. We'll investigate and fix it.</p>
+</div>
+
+<div class="faq-item">
+<h3>Do you offer API access?</h3>
+<p>Not currently. OfficeKit is designed as a browser-first set of tools for end-users. If you need bulk automation, feel free to reach out to discuss options.</p>
+</div>
+
+<div class="faq-item">
+<h3>How can I support OfficeKit?</h3>
+<p>Share it with friends, colleagues, or on social media — that's the biggest help. You can also email us feedback about what's working and what isn't.</p>
+</div>
+</div>
+
+<div class="legal-card">
+<h2>Response Time</h2>
+<p>We aim to respond to all messages within <b>24-48 hours</b> (Monday to Friday, India Standard Time). For urgent bug reports, please include "URGENT" in the subject line.</p>
+<p>For legal matters, please also review our <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+</div>
+
+</main>
+
+<footer class="site-footer">
+<div class="footer-container">
+<div>
+<div class="footer-brand-box">
+<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+OfficeKit
+</div>
+<p style="font-size:12.5px; color:#e0e7ff; margin:0;">100% client-side browser processing. Your files never leave your device.</p>
+</div>
+<div class="footer-col">
+<h5>Legal</h5>
+<ul>
+<li><a href="terms.html">Terms & Conditions</a></li>
+<li><a href="privacy.html">Privacy Policy</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h5>Popular Tools</h5>
+<ul>
+<li><a href="tools/passport-maker.html">Passport Photo Maker</a></li>
+<li><a href="tools/invoice-generator.html">GST Invoice Generator</a></li>
+<li><a href="tools/image-compressor.html">Image Compressor</a></li>
+<li><a href="tools/pdf-editor.html">PDF Editor</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h5>Identity Tools</h5>
+<ul>
+<li><a href="tools/card-cropper.html">ID & PAN Cropper</a></li>
+<li><a href="tools/signature-resize.html">Signature Resize</a></li>
+<li><a href="tools/signature-bg-remover.html">Signature BG Remover</a></li>
+<li><a href="tools/doc-scanner.html">Document Scanner OCR</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom-bar">
+<div>© 2026 OfficeKit. All rights reserved.</div>
+<div>
+<a class="made-with-love-link" href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer">
+Made with ❤️ by Deepaak Kumar
+</a>
+</div>
+</div>
+</footer>
+
+<script>
+(function initTheme() {
+const saved = localStorage.getItem('officekit_theme') || 'light';
+if (saved === 'dark') {
+document.documentElement.setAttribute('data-theme', 'dark');
+const checkbox = document.getElementById('theme-checkbox');
+if (checkbox) checkbox.checked = true;
+}
+})();
+function toggleTheme() {
+const checkbox = document.getElementById('theme-checkbox');
+if (checkbox.checked) {
+document.documentElement.setAttribute('data-theme', 'dark');
+localStorage.setItem('officekit_theme', 'dark');
+} else {
+document.documentElement.removeAttribute('data-theme');
+localStorage.setItem('officekit_theme', 'light');
+}
+}
+</script>
+</body>
+</html>

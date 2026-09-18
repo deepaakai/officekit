@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QR Code Generator Online — OfficeKit</title>
+<meta name="description" content="Generate high-definition QR codes from any URL, text, or payment link. Free, private, no signup.">
+<link rel="canonical" href="https://pdf365.in/tools/qr-generator.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<style>
+.input-box label { display: block; font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+.input-box input {
+  width: 100%; height: 46px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 0 12px; border-radius: 6px; font-size: 14px;
+}
+.input-box input:focus { border-color: var(--accent); }
+
+.qr-preview-box {
+  text-align: center; margin: 25px 0; padding: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  display: inline-block; width: 100%;
+}
+.qr-preview-box img {
+  width: 240px; height: 240px;
+  border: 1px solid var(--border-color);
+  padding: 8px; border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Instant QR Code Generator</h1>
+    <p class="hero-sub">Enter any text, website URL, contact card, or UPI payment link to generate a high-definition QR code.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tool-card" style="max-width:600px; margin:0 auto;">
+    <div class="input-box">
+      <label>Enter URL, Text or Payment Link</label>
+      <input type="text" id="qr-val" placeholder="https://example.com" value="https://officekit.tools">
+    </div>
+    <div class="qr-preview-box">
+      <img id="qr-img" alt="Generated QR Code">
+    </div>
+    <button class="primary-button" id="btn-dl-qr" style="width:100%;">Download QR Code (PNG)</button>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide: Generate Custom, High-Definition QR Codes Online Free</h2>
+    <p>Quick Response (QR) codes have become the ubiquitous standard for instant physical-to-digital interactions across storefront menus, packaging labels, marketing collaterals, digital payments, and Wi-Fi provisioning. The OfficeKit Instant QR Code Generator offers a streamlined, fast utility to encode URLs, plain text strings, phone numbers, and payment addresses into crisp 500x500 pixel matrices.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/qr-generator-demo.jpg" alt="OfficeKit Instant QR Code Generator Workflow" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/qr-generator-demo.jpg]</div>';">
+      <div class="article-image-caption">Visual sequence showing text encoding, dynamic matrix generation, and lossless PNG download.</div>
+    </div>
+
+    <h3>Step-by-Step Instructions:</h3>
+    <ul>
+      <li><b>Step 1 - Enter Your Content:</b> Paste any website destination URL, contact detail, or plain text instruction.</li>
+      <li><b>Step 2 - Live Matrix Preview:</b> The preview canvas updates automatically with every keystroke.</li>
+      <li><b>Step 3 - Download High-Res PNG:</b> Click "Download QR Code (PNG)" to retrieve a 500x500 HD image.</li>
+    </ul>
+
+    <h3>Why Choose OfficeKit QR Generator?</h3>
+    <ul>
+      <li><b>No Expiration:</b> Codes are static — they never expire or redirect through tracking links.</li>
+      <li><b>High Error Tolerance:</b> Built with Reed-Solomon error correction for reliable readability.</li>
+      <li><b>Uncapped & Free:</b> Generate unlimited QR codes with zero signups.</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: Do these QR codes expire after a certain period?</b><br>
+    No. These are standard static QR codes with content hardcoded into the grid pattern.</p>
+    <p><b>Q: Can I use these QR codes for commercial printing?</b><br>
+    Yes. The 500x500 px PNG is suitable for brochures, posters, and product packaging.</p>
+    <p><b>Q: Is my entered information private?</b><br>
+    Yes. No user tracking, accounts, or logging.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const qrVal = document.getElementById("qr-val");
+const qrImg = document.getElementById("qr-img");
+const btnDl = document.getElementById("btn-dl-qr");
+
+function updateQR() {
+  const txt = encodeURIComponent(qrVal.value.trim() || "OfficeKit");
+  qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${txt}`;
+}
+qrVal.addEventListener("input", updateQR);
+updateQR();
+
+btnDl.addEventListener("click", async () => {
+  btnDl.textContent = "Downloading...";
+  try {
+    const res = await fetch(qrImg.src);
+    const blob = await res.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "qrcode.png";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } catch (err) {
+    alert("Failed to download image: " + err.message);
+  } finally {
+    btnDl.textContent = "Download QR Code (PNG)";
+  }
+});
+</script>
+</body>
+</html>

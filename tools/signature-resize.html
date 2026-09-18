@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Resize Signature & Image — OfficeKit</title>
+<meta name="description" content="Resize and compress images or signatures by pixels, centimeters, and exact KB size. 100% browser-based.">
+<link rel="canonical" href="https://pdf365.in/tools/signature-resize.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<style>
+.resize-controls-box {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 8px;
+}
+.unit-selector { display: flex; justify-content: center; gap: 20px; font-weight: 600; font-size: 14px; color: var(--text-color); }
+.unit-selector label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.dimension-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.dimension-row input {
+  width: 120px; padding: 8px 12px;
+  border: 1px solid var(--border-color); border-radius: 6px;
+  background: var(--bg-color); color: var(--text-color);
+  text-align: center; font-size: 14px; font-weight: 600;
+}
+.size-kb-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.size-kb-row input {
+  width: 140px; padding: 8px 12px;
+  border: 1px solid var(--border-color); border-radius: 6px;
+  background: var(--bg-color); color: var(--text-color);
+  text-align: center; font-size: 14px; font-weight: 600;
+}
+.kb-badge { background: var(--border-color); color: var(--text-color); padding: 8px 14px; border-radius: 0 6px 6px 0; font-weight: 700; font-size: 13px; margin-left: -11px; }
+.preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+@media (max-width: 768px) { .preview-grid { grid-template-columns: 1fr; } }
+.preview-card { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; text-align: center; }
+.preview-card img { max-width: 100%; max-height: 180px; object-fit: contain; border-radius: 4px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Resize Signature & Image Online</h1>
+    <p class="hero-sub">Resize images and signatures by custom pixels, centimeters, and exact file size in KB.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tool-card" style="max-width:900px; margin:0 auto;">
+    <div class="drop-zone" id="initial-drop" style="display:flex; flex-direction:column;">
+      <input type="file" id="image-in" accept="image/jpeg, image/png, image/webp" multiple>
+      <div>
+        <svg style="width:40px; height:40px; margin:0 auto 8px; color:var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <h3>Select Or Drag & Drop Images Here</h3>
+        <p>Signature, photo, or document image</p>
+      </div>
+    </div>
+
+    <div id="resize-workspace" style="display:none; margin-top:15px;">
+      <div class="pdf-queue-item">
+        <span id="file-name-display" style="font-weight:600; word-break:break-all;"></span>
+        <button id="btn-change-file" type="button" style="background:transparent; border:none; color:#f87171; cursor:pointer; font-weight:bold;">Change</button>
+      </div>
+
+      <div class="resize-controls-box">
+        <div class="unit-selector">
+          <label><input type="radio" name="unit" value="pixel" checked> Pixel</label>
+          <label><input type="radio" name="unit" value="cm"> Centimeter</label>
+        </div>
+        <div class="dimension-row">
+          <div>
+            <div style="font-size:11.5px; color:var(--subtext-color); margin-bottom:4px; text-align:center;">Width (<span id="unit-label-w">px</span>)</div>
+            <input type="number" id="width-input" value="140">
+          </div>
+          <span style="font-weight:bold; margin-top:18px;">X</span>
+          <div>
+            <div style="font-size:11.5px; color:var(--subtext-color); margin-bottom:4px; text-align:center;">Height (<span id="unit-label-h">px</span>)</div>
+            <input type="number" id="height-input" value="60">
+          </div>
+        </div>
+        <div class="size-kb-row">
+          <span style="font-weight:600; font-size:13.5px;">Size</span>
+          <input type="number" id="size-kb-input" value="20">
+          <span class="kb-badge">Kb</span>
+        </div>
+      </div>
+
+      <div class="preview-grid">
+        <div class="preview-card">
+          <div style="font-size:12px; font-weight:700; color:var(--subtext-color); margin-bottom:6px;">Original</div>
+          <img id="orig-preview" alt="Original Preview">
+          <div id="orig-size" style="font-size:13px; font-weight:600;"></div>
+        </div>
+        <div class="preview-card">
+          <div style="font-size:12px; font-weight:700; color:var(--subtext-color); margin-bottom:6px;">Resized Output</div>
+          <img id="comp-preview" alt="Resized Preview">
+          <div id="comp-size" style="font-size:13px; font-weight:600; color:var(--accent);"></div>
+        </div>
+      </div>
+
+      <button class="primary-button" id="btn-download" style="width:100%; margin-top:20px;">Resize Signature</button>
+    </div>
+    <p style="text-align:center; font-size:12.5px; color:var(--subtext-color); margin-top:10px;">Note: You can resize images securely in your browser.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide: How to Resize Signature & Photos Online</h2>
+    <p>Application portals for competitive exams and government submissions require precise dimensions in pixels or centimeters along with strict KB file limits. OfficeKit Resize Signature tool allows you to customize width, height, and target KB weights instantly with 100% client-side privacy.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/signature-resize-demo.jpg" alt="OfficeKit Signature Resizer Workflow" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>[Place Demo Diagram Here: assets/images/signature-resize-demo.jpg]</div>';">
+      <div class="article-image-caption">Visual guide illustrating signature dimensions and file size adjustments.</div>
+    </div>
+
+    <h3>Step-by-Step Instructions:</h3>
+    <ul>
+      <li><b>Step 1 - Select Image:</b> Click "Select Images" or drop your signature/photo file.</li>
+      <li><b>Step 2 - Choose Units:</b> Select between Pixel or Centimeter mode.</li>
+      <li><b>Step 3 - Set Dimensions & KB:</b> Enter your required Width, Height, and target KB size.</li>
+      <li><b>Step 4 - Download:</b> Click "Resize Signature" to save your file instantly.</li>
+    </ul>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const imageIn = document.getElementById("image-in");
+const initialDrop = document.getElementById("initial-drop");
+const resizeWorkspace = document.getElementById("resize-workspace");
+const fileNameDisplay = document.getElementById("file-name-display");
+const btnChangeFile = document.getElementById("btn-change-file");
+const unitRadios = document.querySelectorAll('input[name="unit"]');
+const unitLabelW = document.getElementById("unit-label-w");
+const unitLabelH = document.getElementById("unit-label-h");
+const widthInput = document.getElementById("width-input");
+const heightInput = document.getElementById("height-input");
+const sizeKbInput = document.getElementById("size-kb-input");
+const origPreview = document.getElementById("orig-preview");
+const compPreview = document.getElementById("comp-preview");
+const origSize = document.getElementById("orig-size");
+const compSize = document.getElementById("comp-size");
+const btnDownload = document.getElementById("btn-download");
+
+let currentFile = null;
+let originalImageObj = null;
+let finalBlob = null;
+
+imageIn.addEventListener("change", (e) => {
+  if (e.target.files && e.target.files[0]) {
+    currentFile = e.target.files[0];
+    fileNameDisplay.textContent = `${currentFile.name} (${(currentFile.size / 1024).toFixed(1)} KB)`;
+    origSize.textContent = `Size: ${(currentFile.size / 1024).toFixed(1)} KB`;
+    origPreview.src = URL.createObjectURL(currentFile);
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const img = new Image();
+      img.onload = function() {
+        originalImageObj = img;
+        widthInput.value = img.width;
+        heightInput.value = img.height;
+        initialDrop.style.display = "none";
+        resizeWorkspace.style.display = "block";
+        processResizing();
+      };
+      img.src = evt.target.result;
+    };
+    reader.readAsDataURL(currentFile);
+  }
+});
+
+btnChangeFile.addEventListener("click", () => {
+  currentFile = null;
+  originalImageObj = null;
+  imageIn.value = "";
+  resizeWorkspace.style.display = "none";
+  initialDrop.style.display = "flex";
+});
+
+unitRadios.forEach(radio => {
+  radio.addEventListener("change", (e) => {
+    const unit = e.target.value;
+    unitLabelW.textContent = unit === "pixel" ? "px" : "cm";
+    unitLabelH.textContent = unit === "pixel" ? "px" : "cm";
+    if (originalImageObj) {
+      if (unit === "cm") {
+        widthInput.value = (originalImageObj.width / 37.8).toFixed(1);
+        heightInput.value = (originalImageObj.height / 37.8).toFixed(1);
+      } else {
+        widthInput.value = originalImageObj.width;
+        heightInput.value = originalImageObj.height;
+      }
+      processResizing();
+    }
+  });
+});
+
+widthInput.addEventListener("input", () => { if (originalImageObj) processResizing(); });
+heightInput.addEventListener("input", () => { if (originalImageObj) processResizing(); });
+sizeKbInput.addEventListener("input", () => { if (originalImageObj) processResizing(); });
+
+function processResizing() {
+  if (!originalImageObj) return;
+  const isCm = document.querySelector('input[name="unit"]:checked').value === "cm";
+  let w = parseFloat(widthInput.value) || originalImageObj.width;
+  let h = parseFloat(heightInput.value) || originalImageObj.height;
+  if (isCm) { w = Math.round(w * 37.8); h = Math.round(h * 37.8); }
+  const targetKB = parseFloat(sizeKbInput.value) || 20;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = w > 0 ? w : 100;
+  canvas.height = h > 0 ? h : 100;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(originalImageObj, 0, 0, canvas.width, canvas.height);
+
+  let quality = 0.85;
+  canvas.toBlob(function cb(blob) {
+    if (!blob) return;
+    let currentKB = blob.size / 1024;
+    if (Math.abs(currentKB - targetKB) > 3 && quality > 0.1 && quality < 1.0) {
+      if (currentKB > targetKB) {
+        quality -= 0.1;
+        canvas.toBlob(cb, "image/jpeg", quality);
+        return;
+      }
+    }
+    finalBlob = blob;
+    compPreview.src = URL.createObjectURL(blob);
+    compSize.textContent = `Size: ${(blob.size / 1024).toFixed(1)} KB (${canvas.width}×${canvas.height} px)`;
+  }, "image/jpeg", quality);
+}
+
+btnDownload.addEventListener("click", () => {
+  if (!finalBlob) return;
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(finalBlob);
+  link.download = `resized_signature_${Date.now()}.jpg`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
+</script>
+</body>
+</html>

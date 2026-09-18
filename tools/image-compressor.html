@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>All-in-One Converter Studio — OfficeKit</title>
+<meta name="description" content="Convert image formats, merge images to PDF, extract PDF pages to ZIP, and OCR text. 100% browser-based.">
+<link rel="canonical" href="https://pdf365.in/tools/image-converter.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/tesseract.js@v5.0.5/dist/tesseract.min.js"></script>
+
+<style>
+.dropzone {
+  border: 2px dashed var(--accent);
+  padding: 35px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: 0.2s;
+}
+.dropzone:hover { border-color: var(--accent); background: var(--accent-soft-hover); }
+.dropzone svg { width: 36px; height: 36px; fill: var(--accent); margin-bottom: 8px; }
+.dropzone p { margin: 0; color: var(--accent); font-weight: 600; font-size: 14px; }
+
+.action-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 15px; }
+.preview-box { margin-top: 15px; max-height: 250px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 10px; }
+.preview-box img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color); }
+.ocr-output {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  padding: 14px;
+  border-radius: 6px;
+  min-height: 150px;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--accent);
+  white-space: pre-wrap;
+  margin-top: 15px;
+}
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">All-in-One Image & PDF Converter Studio</h1>
+    <p class="hero-sub">Convert image formats, merge/extract PDFs, and scan text with browser OCR — 100% private.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-target="panel-img-conv">Image Format</button>
+    <button class="tab-btn" data-target="panel-img-pdf">Images to PDF</button>
+    <button class="tab-btn" data-target="panel-pdf-jpg">PDF to JPG (ZIP)</button>
+    <button class="tab-btn" data-target="panel-ocr">Image to OCR</button>
+  </div>
+
+  <!-- Panel 1 -->
+  <div id="panel-img-conv" class="tool-card">
+    <h3 style="color:var(--accent); margin-top:0;">Image Format Converter (JPG / PNG / WEBP)</h3>
+    <p style="color:var(--subtext-color); font-size:13px;">Convert any image format instantly.</p>
+    <div class="dropzone" onclick="document.getElementById('img-file-in').click()">
+      <p>Click to upload image</p>
+      <input type="file" id="img-file-in" accept="image/*" style="display:none" onchange="previewSingleImg(event)">
+    </div>
+    <div id="single-img-name" style="font-size:12px; color:var(--subtext-color); margin-bottom:10px;"></div>
+    <div class="action-row">
+      <label style="font-size:13px; font-weight:600; color:var(--text-color);">Convert To:</label>
+      <select id="target-img-fmt">
+        <option value="image/jpeg">JPEG / JPG</option>
+        <option value="image/png">PNG</option>
+        <option value="image/webp">WEBP</option>
+      </select>
+      <button class="primary-button" onclick="convertSingleImage()">Convert & Download</button>
+    </div>
+    <canvas id="hidden-canvas" style="display:none;"></canvas>
+  </div>
+
+  <!-- Panel 2 -->
+  <div id="panel-img-pdf" class="tool-card" hidden>
+    <h3 style="color:var(--accent); margin-top:0;">Images to PDF Maker</h3>
+    <p style="color:var(--subtext-color); font-size:13px;">Combine multiple images into a single PDF.</p>
+    <div class="dropzone" onclick="document.getElementById('pdf-files-in').click()">
+      <p>Click to select multiple images</p>
+      <input type="file" id="pdf-files-in" accept="image/*" multiple style="display:none" onchange="previewMultipleImgs(event)">
+    </div>
+    <div id="multi-img-count" style="font-size:12px; color:var(--subtext-color); margin-bottom:10px;">No images selected</div>
+    <div class="preview-box" id="pdf-preview-box"></div>
+    <div class="action-row">
+      <button class="primary-button" onclick="generatePDF()">Generate & Download PDF</button>
+    </div>
+  </div>
+
+  <!-- Panel 3 -->
+  <div id="panel-pdf-jpg" class="tool-card" hidden>
+    <h3 style="color:var(--accent); margin-top:0;">PDF to JPG (ZIP Download)</h3>
+    <p style="color:var(--subtext-color); font-size:13px;">Extract all pages as JPG images inside a ZIP.</p>
+    <div class="dropzone" onclick="document.getElementById('pdf-to-jpg-in').click()">
+      <p>Click to upload PDF</p>
+      <input type="file" id="pdf-to-jpg-in" accept="application/pdf" style="display:none" onchange="convertPdfToJpgZip(event)">
+    </div>
+    <div id="pdf-status" style="font-size:13px; color:var(--accent); font-weight:600; margin-bottom:10px;"></div>
+  </div>
+
+  <!-- Panel 4 -->
+  <div id="panel-ocr" class="tool-card" hidden>
+    <h3 style="color:var(--accent); margin-top:0;">Real Image to Text OCR</h3>
+    <p style="color:var(--subtext-color); font-size:13px;">Extract text using browser OCR engine.</p>
+    <div class="dropzone" onclick="document.getElementById('ocr-file-in').click()">
+      <p>Click to upload image for OCR</p>
+      <input type="file" id="ocr-file-in" accept="image/*" style="display:none" onchange="runRealOCR(event)">
+    </div>
+    <div id="ocr-status" style="font-size:12px; color:var(--accent); font-weight:600; margin-bottom:8px;"></div>
+    <div class="ocr-output" id="ocr-result-text">Scanned text will appear here...</div>
+    <div class="action-row">
+      <button class="btn" onclick="copyOcrText()">Copy Text</button>
+    </div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide: Convert Images, Create PDFs & Extract Text Online</h2>
+    <p>Managing diverse digital documents across desktop and mobile devices often requires juggling multiple separate conversion utilities. The OfficeKit Converter Studio unifies everyday document transformations into a singular browser-based powerhouse.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/converter-studio-demo.jpg" alt="All in One Converter Studio" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/converter-studio-demo.jpg]</div>';">
+      <div class="article-image-caption">Overview of raster format transcode, multi-image PDF compiling, and local OCR transcription.</div>
+    </div>
+
+    <h3>How to Use the All-in-One Converter:</h3>
+    <ul>
+      <li><b>Format Transcode:</b> Select the first tab, upload your source picture, pick your target format, and trigger instant canvas re-encoding.</li>
+      <li><b>Compile Images into PDF:</b> Switch to Images to PDF, select one or more photos, and export them into a printable document.</li>
+      <li><b>Extract PDF Pages into ZIP:</b> Upload any multi-page PDF to render every page into high-definition JPG inside a ZIP.</li>
+      <li><b>Extract Text (OCR):</b> Upload document screenshots to transcribe English typography into editable text.</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: Does converting an image format affect the original quality?</b><br>
+    PNG outputs retain lossless transparency. JPG and WebP balance fidelity with compact weights.</p>
+    <p><b>Q: How large of a PDF can I unpack?</b><br>
+    Multi-page PDFs with dozens of pages can be extracted depending on device RAM.</p>
+    <p><b>Q: Is my document data private?</b><br>
+    Yes. No document or extracted text ever leaves your browser sandbox.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tool-card[id^="panel-"]').forEach(p => p.hidden = true);
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).hidden = false;
+  };
+});
+
+/* 1. Single image */
+let activeImage = null;
+function previewSingleImg(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  document.getElementById('single-img-name').textContent = `Loaded: ${file.name}`;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    activeImage = new Image();
+    activeImage.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function convertSingleImage() {
+  if (!activeImage) { alert('Please upload an image first!'); return; }
+  const format = document.getElementById('target-img-fmt').value;
+  const canvas = document.getElementById('hidden-canvas');
+  canvas.width = activeImage.width;
+  canvas.height = activeImage.height;
+  canvas.getContext('2d').drawImage(activeImage, 0, 0);
+  const dataUrl = canvas.toDataURL(format);
+  const ext = format.split('/')[1].replace('jpeg', 'jpg');
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = `converted-image.${ext}`;
+  a.click();
+}
+
+/* 2. Multi images to PDF */
+let selectedPdfImages = [];
+function previewMultipleImgs(e) {
+  const files = e.target.files;
+  if (!files.length) return;
+  selectedPdfImages = [];
+  const box = document.getElementById('pdf-preview-box');
+  box.innerHTML = '';
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      selectedPdfImages.push(ev.target.result);
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      box.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('multi-img-count').textContent = `${files.length} image(s) loaded`;
+}
+function generatePDF() {
+  if (selectedPdfImages.length === 0) { alert('Please select images first!'); return; }
+  const win = window.open('', '_blank');
+  win.document.write('<html><head><title>Print to PDF</title><style>body{margin:0;text-align:center;} img{max-width:100%; height:auto; display:block; margin:0 auto; page-break-after:always;}</style></head><body>');
+  selectedPdfImages.forEach(src => win.document.write(`<img src="${src}">`));
+  win.document.write('</body></html>');
+  win.document.close();
+  setTimeout(() => win.print(), 500);
+}
+
+/* 3. PDF to JPG ZIP */
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+async function convertPdfToJpgZip(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById('pdf-status');
+  statusEl.textContent = 'Reading PDF...';
+  const reader = new FileReader();
+  reader.onload = async function(ev) {
+    try {
+      const pdf = await pdfjsLib.getDocument(new Uint8Array(ev.target.result)).promise;
+      const zip = new JSZip();
+      const folder = zip.folder("pdf-pages-jpg");
+      for (let i = 1; i <= pdf.numPages; i++) {
+        statusEl.textContent = `Processing page ${i} of ${pdf.numPages}...`;
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1.5 });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        await page.render({ canvasContext: context, viewport }).promise;
+        const imgData = canvas.toDataURL('image/jpeg', 0.9).replace(/^data:image\/jpeg;base64,/, "");
+        folder.file(`page-${i}.jpg`, imgData, { base64: true });
+      }
+      statusEl.textContent = 'Generating ZIP...';
+      const content = await zip.generateAsync({ type: "blob" });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(content);
+      link.download = `${file.name.replace(/\.[^/.]+$/, "")}-images.zip`;
+      link.click();
+      statusEl.textContent = 'Success! ZIP downloaded.';
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = 'Error processing PDF.';
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+/* 4. OCR */
+async function runRealOCR(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById('ocr-status');
+  const resultEl = document.getElementById('ocr-result-text');
+  statusEl.textContent = 'Initializing OCR engine...';
+  resultEl.textContent = 'Processing image pixels...';
+  try {
+    const { data: { text } } = await Tesseract.recognize(file, 'eng', {
+      logger: m => { if (m.status) statusEl.textContent = `${m.status} (${Math.round(m.progress * 100)}%)`; }
+    });
+    statusEl.textContent = 'Scan complete!';
+    resultEl.textContent = text || 'No readable text found.';
+  } catch (err) {
+    statusEl.textContent = 'Error during OCR scan.';
+    resultEl.textContent = 'Failed to extract text.';
+  }
+}
+function copyOcrText() {
+  const text = document.getElementById('ocr-result-text').textContent;
+  navigator.clipboard.writeText(text);
+  alert('Extracted text copied to clipboard!');
+}
+</script>
+</body>
+</html>

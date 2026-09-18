@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>OfficeKit — Free Online Image, PDF & Invoice Tools (No Upload, 100% Private)</title>
+  <meta name="description" content="Free online tools to compress, resize, crop images, remove background, make passport photos, generate GST invoices, merge PDFs, and more. 100% browser-based — files never leave your device.">
+  <meta name="keywords" content="image compressor, passport photo maker, signature resize, PDF merge, GST invoice generator, ID card cropper, background remover, image converter, word counter">
+  <meta name="author" content="Deepaak Kumar">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://pdf365.in/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="OfficeKit — Free Online Image, PDF & Invoice Tools">
+  <meta property="og:description" content="100% browser-based tools. Compress, resize, crop, remove BG, make invoices — free, fast, private.">
+  <meta property="og:url" content="https://pdf365.in/">
+  <meta property="og:image" content="https://pdf365.in/og-cover.png">
+  <meta property="og:site_name" content="OfficeKit">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OfficeKit — Free Online Image & PDF Tools">
+  <meta name="twitter:description" content="100% browser-based. No upload. No signup. Completely free.">
+  <meta name="twitter:image" content="https://pdf365.in/og-cover.png">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "OfficeKit",
+    "url": "https://pdf365.in/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (Web)",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "description": "Free online image, PDF and invoice tools — 100% browser-based.",
+    "featureList": [
+      "Image Compressor", "Passport Photo Maker", "Signature Background Remover",
+      "PDF Merge", "PDF Split", "GST Invoice Generator", "ID Card Cropper",
+      "Image Converter", "QR Code Generator", "Word Counter"
+    ]
+  }
+  </script>
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="assets/css/officekit-global.css">
+
+  <!-- Early theme restore (runs before paint — no FOUC) -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('officekit_theme') || 'light';
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    /* ============ INDEX-ONLY STYLES (header/footer styles are in officekit-global.css) ============ */
+
+    /* MAIN */
+    .main-wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; }
+
+    .hero-box { text-align: center; padding: 8px 0 20px; }
+    .hero-title {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 800;
+      color: var(--text-color);
+      margin: 0 0 8px;
+      letter-spacing: -0.5px;
+    }
+    .hero-sub {
+      color: var(--subtext-color);
+      font-size: 14.5px;
+      margin: 0 0 18px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* SEARCH */
+    .search-box-wrap { position: relative; max-width: 560px; margin: 0 auto 24px; }
+    .search-input {
+      width: 100%;
+      height: 48px;
+      padding: 8px 44px 8px 44px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 15px;
+      background: var(--card-bg);
+      color: var(--text-color);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      stroke: var(--subtext-color);
+      fill: none;
+      stroke-width: 2;
+      pointer-events: none;
+    }
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--subtext-color);
+      font-size: 20px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      display: none;
+    }
+    .search-clear:hover { background: var(--card-hover); }
+
+    /* AD SLOT */
+    .ad-slot-container {
+      background: var(--card-bg);
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      margin: 24px 0;
+      color: var(--subtext-color);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* CATEGORIES */
+    .tool-group { margin-bottom: 30px; }
+    .group-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin: 0 0 12px;
+      padding-left: 12px;
+      border-left: 4px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.2;
+    }
+    .group-heading svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--accent);
+    }
+    .btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    @media (max-width: 1024px) { .btn-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px) { .btn-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
+    @media (max-width: 400px) { .btn-grid { grid-template-columns: 1fr; } }
+
+    .tool-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      min-height: 54px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      transition: all 0.18s ease;
+      line-height: 1.3;
+    }
+    .tool-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--accent);
+      flex-shrink: 0;
+    }
+    .tool-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 4px 12px rgba(25,57,138,0.14);
+      transform: translateY(-2px);
+    }
+
+    /* FEATURED BUTTONS — subtle star badge */
+    .tool-btn.featured {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+    .tool-btn.featured svg { fill: var(--accent); }
+    .tool-btn.featured:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 4px 12px rgba(25,57,138,0.14);
+      transform: translateY(-2px);
+    }
+    .tool-btn.featured::after {
+      content: "★";
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-size: 11px;
+      color: var(--accent);
+      line-height: 1;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--subtext-color);
+      display: none;
+    }
+    .empty-state.visible { display: block; }
+    .empty-state h3 { color: var(--text-color); margin: 0 0 8px; font-size: 18px; }
+    .empty-state p { margin: 0; font-size: 14px; }
+
+    /* STATS STRIP */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    @media (max-width: 640px) { .stats-strip { grid-template-columns: repeat(2, 1fr); } }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-lbl { font-size: 11.5px; color: var(--subtext-color); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<!-- ============ HEADER — AUTO-INJECTED ============ -->
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Free Online Image, PDF & Invoice Tools</h1>
+    <p class="hero-sub">100% browser-based. No upload, no signup, no watermark. Your files never leave your device.</p>
+  </div>
+
+  <!-- Search -->
+  <div class="search-box-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input type="text" id="tool-search" class="search-input" placeholder="Search tool (e.g. 50kb, passport, invoice, merge pdf)..." autocomplete="off">
+    <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
+  </div>
+
+  <!-- Trust Strip -->
+  <div class="stats-strip">
+    <div class="stat-item"><div class="stat-num">20+</div><div class="stat-lbl">Free Tools</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">Private</div></div>
+    <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Signup Needed</div></div>
+    <div class="stat-item"><div class="stat-num">Free</div><div class="stat-lbl">Forever</div></div>
+  </div>
+
+  <!-- Ad Slot -->
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state">
+    <h3>No tool found</h3>
+    <p>Please try another keyword — like "passport", "invoice", "compress".</p>
+  </div>
+
+  <!-- 1. Most Used -->
+  <section class="tool-group" data-group>
+    <h2 class="group-heading">
+      <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      Most Used Tools
+    </h2>
+    <div class="btn-grid">
+      <a class="tool-btn featured" href="tools/passport-maker.html">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        Passport Photo Maker (35×45 mm)
+      </a>
+      <a class="tool-btn featured" href="tools/card-cropper.html">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/></svg>
+        PAN Card Cropper (25×35 mm)
+      </a>
+      <a class="tool-btn featured" href="tools/invoice-generator.html">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        GST Invoice Generator
+      </a>
+      <a class="tool-btn" href="tools/image-compressor.html">
+        <svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14L5.83 11.17l1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41L12 5z"/></svg>
+        Image Compressor
+      </a>
+      <a class="tool-btn" href="tools/signature-bg-remover.html">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        Signature BG Remover
+      </a>
+      <a class="tool-btn" href="tools/pdf-merge.html">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+        Merge PDF
+      </a>
+      <a class="tool-btn" href="tools/image-compressor.html">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        Target KB Resizer
+      </a>
+      <a class="tool-btn" href="tools/qr-generator.html">
+        <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zM13 19h2v2h-2v-2zm2-4h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 4h2v2h-2v-2zm2 2h2v2h-2v-2z"/></svg>
+        QR Code Generator
+      </a>
+      <a class="tool-btn" href="tools/word-counter.html">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        Word Counter
+      </a>
+    </div>
+  </section>
+
+  <!-- 2. Identity Card & Govt Sizes -->
+  <section class="tool-group" data-group>
+    <h2 class="group-heading">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/></svg>
+      Identity Card & Government Sizes
+    </h2>
+    <div class="btn-grid">
+      <a class="tool-btn" href="tools/card-cropper.html">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/></svg>
+        ID Card Cropper (8.5×5.5 cm)
+      </a>
+      <a class="tool-btn" href="tools/card-cropper.html">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        ID Card Both Side Print
+      </a>
+      <a class="tool-btn" href="tools/card-cropper.html">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zm2 2v8h12V8H6z"/></svg>
+        PAN Card Cropper (CR80)
+      </a>
+      <a class="tool-btn" href="tools/passport-maker.html">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        Passport Photo (35×45 mm)
+      </a>
+      <a class="tool-btn" href="tools/signature-resize.html">
+        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        Signature Resize (10/20/50 KB)
+      </a>
+      <a class="tool-btn" href="tools/passport-maker.html">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        SSC / UPSC Photo Resize
+      </a>
+    </div>
+  </section>
+
+  <!-- Ad Slot 2 -->
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- 3. Image Editing -->
+  <section class="tool-group" data-group>
+    <h2 class="group-heading">
+      <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19l1.39 1.39 1.61-1.62C8.93 19.26 10.42 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+      Image Editing
+    </h2>
+    <div class="btn-grid">
+      <a class="tool-btn" href="tools/image-bg-remover.html">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        Image Background Remover
+      </a>
+      <a class="tool-btn" href="tools/image-converter.html">
+        <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        Image Format Converter
+      </a>
+      <a class="tool-btn" href="tools/image-converter.html">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        JPG to PNG / WEBP
+      </a>
+      <a class="tool-btn" href="tools/image-compressor.html">
+        <svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14L5.83 11.17l1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41L12 5z"/></svg>
+        Reduce Image Size (KB)
+      </a>
+      <a class="tool-btn" href="tools/image-beautifier.html">
+        <svg viewBox="0 0 24 24"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="m3 21 9-9"/></svg>
+        Image Beautifier (AI Enhance)
+      </a>
+      <a class="tool-btn" href="tools/doc-scanner.html">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Document Scanner (OCR)
+      </a>
+    </div>
+  </section>
+
+  <!-- 4. PDF Document Suite -->
+  <section class="tool-group" data-group>
+    <h2 class="group-heading">
+      <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm4 0h-2V5h2v6z"/></svg>
+      PDF Document Suite
+    </h2>
+    <div class="btn-grid">
+      <a class="tool-btn" href="tools/pdf-editor.html">
+        <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm4 0h-2V5h2v6z"/></svg>
+        Online PDF Editor
+      </a>
+      <a class="tool-btn" href="tools/pdf-merge.html">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+        Merge PDF Files
+      </a>
+      <a class="tool-btn" href="tools/pdf-split.html">
+        <svg viewBox="0 0 24 24"><path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/></svg>
+        Split PDF
+      </a>
+      <a class="tool-btn" href="tools/jpg-to-pdf.html">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        Images to PDF Maker
+      </a>
+      <a class="tool-btn" href="tools/pdf-to-jpg.html">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        PDF to JPG (ZIP)
+      </a>
+    </div>
+  </section>
+
+  <!-- 5. Everyday Utilities -->
+  <section class="tool-group" data-group>
+    <h2 class="group-heading">
+      <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+      Everyday Utilities
+    </h2>
+    <div class="btn-grid">
+      <a class="tool-btn" href="tools/qr-generator.html">
+        <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zM13 19h2v2h-2v-2zm2-4h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 4h2v2h-2v-2zm2 2h2v2h-2v-2z"/></svg>
+        QR Code Generator
+      </a>
+      <a class="tool-btn" href="tools/qr-scanner.html">
+        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zm-6-5h-2v3h-3v2h3v3h2v-3h3v-2h-3z"/></svg>
+        QR Code Scanner
+      </a>
+      <a class="tool-btn" href="tools/word-counter.html">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        Word & Character Counter
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER — AUTO-INJECTED ============ -->
+<div id="officekit-footer"></div>
+
+<!-- ============ CORE SCRIPT — Injects header + footer + theme toggle ============ -->
+<script src="assets/js/core/officekit-core.js"></script>
+
+<script>
+  /* ============ INDEX-ONLY: SEARCH ============ */
+  (function () {
+    var searchInput = document.getElementById('tool-search');
+    var searchClear = document.getElementById('search-clear');
+    var emptyState  = document.getElementById('empty-state');
+    var allGroups   = document.querySelectorAll('[data-group]');
+
+    if (!searchInput) return;
+
+    function runSearch() {
+      var query = searchInput.value.toLowerCase().trim();
+      searchClear.style.display = query ? 'block' : 'none';
+
+      var totalVisible = 0;
+      allGroups.forEach(function (group) {
+        var visible = 0;
+        group.querySelectorAll('.tool-btn').forEach(function (btn) {
+          var match = !query || btn.innerText.toLowerCase().includes(query);
+          btn.style.display = match ? 'flex' : 'none';
+          if (match) visible++;
+        });
+        group.style.display = visible > 0 ? 'block' : 'none';
+        totalVisible += visible;
+      });
+
+      emptyState.classList.toggle('visible', totalVisible === 0);
+    }
+
+    searchInput.addEventListener('input', runSearch);
+    searchClear.addEventListener('click', function () {
+      searchInput.value = '';
+      runSearch();
+      searchInput.focus();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = '';
+        runSearch();
+        searchInput.blur();
+      }
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beautify Image Online with AI — OfficeKit</title>
+<meta name="description" content="Free browser-based AI photo beautifier. Enhance lighting, smooth skin, boost contrast. 100% private.">
+<link rel="canonical" href="https://pdf365.in/tools/image-beautifier.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<style>
+.hero-banner-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 24px;
+  align-items: center;
+  margin: 10px 0 25px;
+  box-shadow: var(--shadow-sm);
+}
+@media(max-width: 768px) { .hero-banner-box { grid-template-columns: 1fr; padding: 22px 18px; } }
+
+.hero-text h1 {
+  font-size: clamp(24px, 3.8vw, 34px);
+  font-weight: 900;
+  margin: 0 0 10px;
+  color: var(--text-color);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+.hero-text h1 span { display: block; color: var(--accent); }
+.hero-text p { color: var(--subtext-color); font-size: 13.5px; margin: 0; line-height: 1.55; }
+
+.ba-graphic-container {
+  height: 170px;
+  background: linear-gradient(135deg, var(--card-hover) 0%, var(--bg-color) 100%);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 15px;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.15);
+}
+.ba-side { text-align: center; z-index: 2; }
+.ba-side span {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.ba-side.before span { color: #f87171; }
+.ba-side.after span { color: #4ade80; }
+.ba-badge-face {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.ba-divider {
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 2.5px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  transform: translateX(-50%);
+}
+.officekit-watermark-tag {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  background: #19398a;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 3px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+#loader {
+  display: none;
+  text-align: center;
+  padding: 30px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.workspace-box {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+@media(max-width: 768px) { .workspace-box { grid-template-columns: 1fr; } }
+
+.preview-col { text-align: center; }
+.preview-col canvas {
+  max-width: 100%;
+  max-height: 380px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  box-shadow: var(--shadow-md);
+}
+
+.controls-col h3 { margin: 0 0 16px; font-size: 18px; color: var(--accent); }
+.slider-row { margin-bottom: 16px; }
+.slider-row label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-color);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.slider-row input[type="range"] {
+  width: 100%; height: 6px;
+  border-radius: 3px;
+  background: var(--border-color);
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.btn-secondary {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { background: var(--card-bg); border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Beautify Image Online with AI</h1>
+    <p class="hero-sub">Enhance lighting, smooth skin, and restore portraits in seconds — 100% in your browser.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="hero-banner-box">
+    <div class="hero-text">
+      <h1>Beautify Image <span>Online with AI</span></h1>
+      <p>OfficeKit AI automatically enhances lighting, removes blemishes, smooths skin tone, and restores portraits in seconds.</p>
+    </div>
+    <div class="ba-graphic-container">
+      <div class="officekit-watermark-tag">OfficeKit AI Tool</div>
+      <div class="ba-divider"></div>
+      <div class="ba-side before"><span>Before</span><div class="ba-badge-face">👤</div></div>
+      <div class="ba-side after"><span>After</span><div class="ba-badge-face">✨</div></div>
+    </div>
+  </div>
+
+  <div id="upload-screen" class="tool-card">
+    <div class="drop-zone">
+      <input type="file" id="photo-in" accept="image/*">
+      <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="m3 21 9-9"/>
+      </svg>
+      <h3>Upload your image</h3>
+      <p>Choose any photo from your device to enhance instantly</p>
+    </div>
+  </div>
+
+  <div id="loader">✨ Enhancing photo lighting & skin texture...</div>
+
+  <div id="workspace" hidden>
+    <div class="workspace-box">
+      <div class="preview-col">
+        <canvas id="preview-canvas"></canvas>
+      </div>
+      <div class="controls-col">
+        <h3>✨ AI Enhancement Studio</h3>
+
+        <div class="slider-row">
+          <label>Skin Softening & Polish: <span id="skin-val">2</span></label>
+          <input type="range" id="skin-smooth" min="0" max="6" value="2">
+        </div>
+
+        <div class="slider-row">
+          <label>Brightness & Glow: <span id="bright-val">10%</span></label>
+          <input type="range" id="brightness" min="-20" max="40" value="10">
+        </div>
+
+        <div class="slider-row">
+          <label>Contrast & Sharpness: <span id="contrast-val">15%</span></label>
+          <input type="range" id="contrast" min="-20" max="40" value="15">
+        </div>
+
+        <button class="primary-button" id="btn-download" style="width:100%;">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Beautified Image
+        </button>
+
+        <button class="btn-secondary" id="btn-upload-another">Upload New Image</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Transform Your Everyday Photos with OfficeKit AI Photo Beautifier</h2>
+    <p>Whether dealing with poor lighting, harsh camera shadows, camera noise, or minor facial blemishes, the OfficeKit AI Photo Beautifier revitalizes your photographs in real time. Designed for job application photos, social media avatars, and personal photo restoration, our in-browser algorithms polish textures, correct color balance, and smooth skin tones while retaining realistic skin pores and edge sharpness.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/beautifier-demo.jpg" alt="AI Photo Beautifier Before and After Comparison" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/beautifier-demo.jpg]</div>';">
+      <div class="article-image-caption">Comparison showing subtle skin smoothing, illumination correction, and enhanced contrast.</div>
+    </div>
+
+    <h3>How to Beautify Your Image Online</h3>
+    <ul>
+      <li><b>Upload Your Image:</b> Drag and drop any selfie, family portrait, or document picture.</li>
+      <li><b>Adjust Texture & Softening:</b> Use the Skin Softening slider to reduce imperfections without unnatural blur.</li>
+      <li><b>Balance Illumination:</b> Fine-tune Brightness and Contrast sliders.</li>
+      <li><b>Instant HD Download:</b> Save the finished image with zero watermarks.</li>
+    </ul>
+
+    <h3>Key Advantages:</h3>
+    <ul>
+      <li><b>Client-Side Privacy:</b> Your photos never touch external cloud servers.</li>
+      <li><b>Lossless Export:</b> Keep high visual fidelity and original resolution.</li>
+      <li><b>Free & Uncapped:</b> Enhance unlimited photographs.</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: Does this tool compress my photograph?</b><br>
+    No. Photos are rendered in high clarity for crisp output.</p>
+    <p><b>Q: Is my picture saved on your server?</b><br>
+    Never. All calculations run strictly inside your local device cache.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const fileIn = document.getElementById("photo-in");
+const uploadScreen = document.getElementById("upload-screen");
+const workspace = document.getElementById("workspace");
+const loader = document.getElementById("loader");
+
+const canvas = document.getElementById("preview-canvas");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+const skinInput = document.getElementById("skin-smooth");
+const skinVal = document.getElementById("skin-val");
+const brightInput = document.getElementById("brightness");
+const brightVal = document.getElementById("bright-val");
+const contrastInput = document.getElementById("contrast");
+const contrastVal = document.getElementById("contrast-val");
+
+const btnDownload = document.getElementById("btn-download");
+const btnUploadAnother = document.getElementById("btn-upload-another");
+
+let rawImg = null;
+
+fileIn.onchange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  loader.style.display = "block";
+  uploadScreen.hidden = true;
+
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    rawImg = new Image();
+    rawImg.onload = () => {
+      loader.style.display = "none";
+      workspace.hidden = false;
+      renderBeautified();
+    };
+    rawImg.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+[skinInput, brightInput, contrastInput].forEach(el => {
+  el.oninput = () => {
+    skinVal.innerText = skinInput.value;
+    brightVal.innerText = brightInput.value + "%";
+    contrastVal.innerText = contrastInput.value + "%";
+    renderBeautified();
+  };
+});
+
+function renderBeautified() {
+  if (!rawImg) return;
+  const maxDim = 1200;
+  let w = rawImg.width, h = rawImg.height;
+  if (w > maxDim || h > maxDim) {
+    const ratio = Math.min(maxDim / w, maxDim / h);
+    w = Math.round(w * ratio);
+    h = Math.round(h * ratio);
+  }
+  canvas.width = w;
+  canvas.height = h;
+  ctx.drawImage(rawImg, 0, 0, w, h);
+
+  const skinLevel = parseInt(skinInput.value);
+  const b = parseInt(brightInput.value);
+  const c = parseInt(contrastInput.value);
+  if (skinLevel === 0 && b === 0 && c === 0) return;
+
+  const imgData = ctx.getImageData(0, 0, w, h);
+  const data = imgData.data;
+  const contrastFactor = (259 * (c + 255)) / (255 * (259 - c));
+  const brightOffset = b * 2.2;
+
+  for (let i = 0; i < data.length; i += 4) {
+    let r = contrastFactor * (data[i] - 128) + 128 + brightOffset;
+    let g = contrastFactor * (data[i+1] - 128) + 128 + brightOffset;
+    let bl = contrastFactor * (data[i+2] - 128) + 128 + brightOffset;
+    if (skinLevel > 0) {
+      const boost = skinLevel * 3;
+      r = Math.min(255, r + boost * 1.1);
+      g = Math.min(255, g + boost * 0.95);
+      bl = Math.min(255, bl + boost * 0.8);
+    }
+    data[i] = Math.max(0, Math.min(255, r));
+    data[i+1] = Math.max(0, Math.min(255, g));
+    data[i+2] = Math.max(0, Math.min(255, bl));
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+btnDownload.onclick = () => {
+  const a = document.createElement("a");
+  a.href = canvas.toDataURL("image/jpeg", 0.96);
+  a.download = `beautified-photo-${Date.now()}.jpg`;
+  a.click();
+};
+
+btnUploadAnother.onclick = () => {
+  fileIn.value = "";
+  rawImg = null;
+  workspace.hidden = true;
+  uploadScreen.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+</script>
+</body>
+</html>

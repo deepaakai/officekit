@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About Us — OfficeKit</title>
+<meta name="description" content="About OfficeKit — Free, private, 100% browser-based tools for image editing, PDF manipulation, invoicing, and document management.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://pdf365.in/about.html">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+
+<style>
+/* Same base styles as terms.html */
+:root {
+--bg-color: #f8fafc;
+--text-color: #1e293b;
+--header-bg: #19398a;
+--card-bg: #ffffff;
+--card-hover: #f1f5f9;
+--border-color: #cbd5e1;
+--subtext-color: #64748b;
+--accent: #19398a;
+}
+[data-theme="dark"] {
+--bg-color: #0b1329;
+--text-color: #f8fafc;
+--header-bg: #111e38;
+--card-bg: #111e38;
+--card-hover: #1e293b;
+--border-color: #334155;
+--subtext-color: #94a3b8;
+--accent: #38bdf8;
+}
+* { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+margin: 0;
+background: var(--bg-color);
+color: var(--text-color);
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+transition: background 0.3s, color 0.3s;
+line-height: 1.5;
+}
+a { color: inherit; }
+.site-header { background: var(--header-bg); color: #fff; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand-link { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: #fff; font-weight: 800; font-size: 17px; flex-shrink: 0; }
+.brand-badge { background: #fff; color: #19398a; font-weight: 900; font-size: 14px; padding: 6px 10px; border-radius: 7px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+.brand-badge svg { width: 17px; height: 17px; fill: #19398a; }
+.nav-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+.top-nav { display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.top-nav::-webkit-scrollbar { display: none; }
+.top-nav a { color: #e0e7ff; text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 5px; white-space: nowrap; transition: background 0.15s; }
+.top-nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.theme-switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.25); transition: .3s; border-radius: 34px; border: 1px solid rgba(255,255,255,0.4); }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+input:checked + .slider { background-color: #38bdf8; }
+input:checked + .slider:before { transform: translateX(23px); }
+@media (max-width: 780px) {
+.header-inner { flex-wrap: wrap; }
+.nav-right { width: 100%; justify-content: space-between; }
+.top-nav { order: 2; width: 100%; }
+.theme-switch { order: 1; margin-left: auto; }
+}
+.main-wrap { max-width: 900px; margin: 0 auto; padding: 40px 16px 80px; }
+.legal-hero { text-align: center; padding: 20px 0 30px; }
+.legal-hero h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; color: var(--text-color); margin: 0 0 10px; letter-spacing: -0.5px; }
+.legal-hero p { color: var(--subtext-color); font-size: 14.5px; margin: 0; max-width: 640px; margin-left: auto; margin-right: auto; }
+.legal-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 32px 28px; margin-bottom: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.legal-card h2 { font-size: 20px; font-weight: 700; color: var(--text-color); margin: 0 0 14px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); display: inline-block; }
+.legal-card h3 { font-size: 16px; font-weight: 700; color: var(--text-color); margin: 22px 0 8px; }
+.legal-card p { font-size: 14.5px; color: var(--subtext-color); margin: 0 0 12px; line-height: 1.7; }
+.legal-card ul { padding-left: 22px; margin: 10px 0 14px; }
+.legal-card li { font-size: 14.5px; color: var(--subtext-color); margin-bottom: 8px; line-height: 1.6; }
+.legal-card li b, .legal-card b { color: var(--text-color); font-weight: 700; }
+.legal-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.legal-card a:hover { text-decoration: underline; }
+
+.feature-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 16px;
+margin: 20px 0;
+}
+.feature-box {
+background: var(--card-hover);
+border: 1px solid var(--border-color);
+border-radius: 10px;
+padding: 20px;
+text-align: center;
+}
+.feature-box .icon-circle {
+width: 48px;
+height: 48px;
+background: var(--accent);
+border-radius: 50%;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 10px;
+}
+.feature-box .icon-circle svg { width: 24px; height: 24px; fill: #fff; }
+.feature-box h3 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--text-color); }
+.feature-box p { margin: 0; font-size: 13px; color: var(--subtext-color); line-height: 1.5; }
+
+.stat-row {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 14px;
+margin: 20px 0;
+}
+@media (max-width: 640px) { .stat-row { grid-template-columns: 1fr; } }
+.stat-box {
+background: var(--card-hover);
+border: 1px solid var(--border-color);
+border-radius: 10px;
+padding: 18px;
+text-align: center;
+}
+.stat-box .num {
+font-size: 26px;
+font-weight: 800;
+color: var(--accent);
+line-height: 1.1;
+}
+.stat-box .lbl {
+font-size: 12px;
+color: var(--subtext-color);
+margin-top: 4px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+font-weight: 700;
+}
+
+.highlight-box { background: rgba(25, 57, 138, 0.06); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: 6px; margin: 16px 0; }
+[data-theme="dark"] .highlight-box { background: rgba(56, 189, 248, 0.08); }
+.highlight-box p { color: var(--text-color); margin: 0; font-weight: 500; }
+
+.cta-box {
+text-align: center;
+background: linear-gradient(135deg, #19398a, #2563eb);
+color: #fff;
+border-radius: 12px;
+padding: 32px 24px;
+margin-top: 24px;
+}
+.cta-box h2 { color: #fff; border: none; margin-bottom: 12px; padding: 0; }
+.cta-box p { color: rgba(255,255,255,0.9); margin-bottom: 20px; font-size: 15px; }
+.cta-btn {
+display: inline-block;
+background: #fff;
+color: #19398a;
+padding: 12px 28px;
+border-radius: 8px;
+font-weight: 700;
+text-decoration: none;
+font-size: 15px;
+transition: transform 0.15s, box-shadow 0.15s;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.3); }
+
+.site-footer { background: #19398a; color: #fff; padding: 40px 16px 20px; font-size: 13px; margin-top: 40px; }
+.footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 30px; }
+@media (max-width: 880px) { .footer-container { grid-template-columns: 1fr 1fr; gap: 24px; } }
+@media (max-width: 520px) { .footer-container { grid-template-columns: 1fr; } }
+.footer-brand-box { background: #fff; color: #19398a; font-weight: 900; font-size: 16px; padding: 6px 12px; border-radius: 7px; display: inline-flex; align-items: center; gap: 7px; margin-bottom: 12px; }
+.footer-brand-box svg { width: 17px; height: 17px; fill: #19398a; }
+.footer-col h5 { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: #fff; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 9px; }
+.footer-col ul li a { color: #e0e7ff; text-decoration: none; font-size: 12.5px; transition: color 0.15s; }
+.footer-col ul li a:hover { color: #fff; text-decoration: underline; }
+.footer-bottom-bar { max-width: 1200px; margin: 30px auto 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.22); display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 12.5px; color: #e0e7ff; flex-wrap: wrap; }
+.made-with-love-link { color: #fff; text-decoration: none; font-weight: 700; }
+.made-with-love-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-inner">
+<a class="brand-link" href="index.html" aria-label="OfficeKit Home">
+<span class="brand-badge">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+OfficeKit
+</span>
+</a>
+<div class="nav-right">
+<nav class="top-nav" aria-label="Quick links">
+<a href="index.html">Home</a>
+<a href="terms.html">Terms</a>
+<a href="privacy.html">Privacy</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</nav>
+<label class="theme-switch" aria-label="Toggle theme">
+<input type="checkbox" id="theme-checkbox" onchange="toggleTheme()">
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</header>
+
+<main class="main-wrap">
+
+<div class="legal-hero">
+<h1>About OfficeKit</h1>
+<p>Free, private, and fast online tools — built with a privacy-first, browser-based approach.</p>
+</div>
+
+<div class="legal-card">
+<h2>Our Mission</h2>
+<p>OfficeKit was created to solve a simple but critical problem: <b>the everyday tools we need most — image compression, PDF editing, invoice generation, document scanning — shouldn't require uploading our private files to unknown servers.</b></p>
+<p>Most online tools force you to hand over your documents. Your passports, ID cards, invoices, signatures, and personal photos end up on someone else's server, often without a clear privacy policy. OfficeKit takes a completely different approach.</p>
+
+<div class="highlight-box">
+<p><b>Every tool on OfficeKit runs 100% inside your browser. Your files never leave your device. Ever.</b></p>
+</div>
+</div>
+
+<div class="legal-card">
+<h2>What Makes OfficeKit Different</h2>
+<div class="feature-grid">
+<div class="feature-box">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+</div>
+<h3>Privacy First</h3>
+<p>Client-side processing means your files stay on your device. Zero uploads, zero storage.</p>
+</div>
+<div class="feature-box">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+</div>
+<h3>Fast & Reliable</h3>
+<p>No file uploads means instant processing. Most tools finish in under a second.</p>
+</div>
+<div class="feature-box">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg>
+</div>
+<h3>Free Forever</h3>
+<p>No signup, no credit card, no watermark, no hidden limits. All tools are completely free.</p>
+</div>
+<div class="feature-box">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+</div>
+<h3>No Software Install</h3>
+<p>Runs entirely in your modern browser. Works on Windows, Mac, Linux, Android, iOS.</p>
+</div>
+</div>
+</div>
+
+<div class="legal-card">
+<h2>What You Can Do With OfficeKit</h2>
+<ul>
+<li><b>Image Tools:</b> Compress images by exact KB, resize for government forms, remove backgrounds from photos and signatures, beautify portraits, convert between formats.</li>
+<li><b>PDF Tools:</b> Merge multiple PDFs, split large documents, convert images to PDF, extract pages as JPG, edit PDF text with auto font detection.</li>
+<li><b>Identity Tools:</b> Create passport photos (35×45 mm), crop Aadhaar/PAN cards, resize signatures to exact KB.</li>
+<li><b>Business Tools:</b> Generate GST-compliant invoices with automatic CGST/SGST/IGST calculation.</li>
+<li><b>Productivity Tools:</b> QR code generator, document scanner with OCR, live word and character counter.</li>
+</ul>
+</div>
+
+<div class="legal-card">
+<h2>Our Numbers</h2>
+<div class="stat-row">
+<div class="stat-box">
+<div class="num">20+</div>
+<div class="lbl">Free Tools</div>
+</div>
+<div class="stat-box">
+<div class="num">100%</div>
+<div class="lbl">Browser-Based</div>
+</div>
+<div class="stat-box">
+<div class="num">0</div>
+<div class="lbl">Files Stored</div>
+</div>
+</div>
+</div>
+
+<div class="legal-card">
+<h2>Who Built OfficeKit</h2>
+<p>OfficeKit is designed and developed by <b>Deepaak Kumar</b>, a developer passionate about building privacy-respecting utilities that solve real everyday problems. Frustrated by tools that required account creation just to compress a single image, the mission became clear: build the simplest, most private, and most useful online toolkit for everyone.</p>
+<p>Have feedback, a bug report, or a tool idea? We'd love to hear from you — head over to our <a href="contact.html">Contact page</a>.</p>
+</div>
+
+<div class="legal-card">
+<h2>Our Privacy Promise</h2>
+<p>OfficeKit will <b>never</b>:</p>
+<ul>
+<li>Upload your files to any server.</li>
+<li>Store, log, or share your documents.</li>
+<li>Require account signup to use any tool.</li>
+<li>Sell or share your personal information.</li>
+<li>Add watermarks to your output.</li>
+<li>Limit how many files you can process.</li>
+</ul>
+<p>Read our full <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms & Conditions</a> for complete details.</p>
+</div>
+
+<div class="cta-box">
+<h2>Ready to try OfficeKit?</h2>
+<p>Explore 20+ free tools — no signup, no uploads, 100% private.</p>
+<a href="index.html" class="cta-btn">Browse All Tools →</a>
+</div>
+
+</main>
+
+<footer class="site-footer">
+<div class="footer-container">
+<div>
+<div class="footer-brand-box">
+<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+OfficeKit
+</div>
+<p style="font-size:12.5px; color:#e0e7ff; margin:0;">100% client-side browser processing. Your files never leave your device.</p>
+</div>
+<div class="footer-col">
+<h5>Legal</h5>
+<ul>
+<li><a href="terms.html">Terms & Conditions</a></li>
+<li><a href="privacy.html">Privacy Policy</a></li>
+<li><a href="about.html">About Us</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h5>Popular Tools</h5>
+<ul>
+<li><a href="tools/passport-maker.html">Passport Photo Maker</a></li>
+<li><a href="tools/invoice-generator.html">GST Invoice Generator</a></li>
+<li><a href="tools/image-compressor.html">Image Compressor</a></li>
+<li><a href="tools/pdf-editor.html">PDF Editor</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h5>Identity Tools</h5>
+<ul>
+<li><a href="tools/card-cropper.html">ID & PAN Cropper</a></li>
+<li><a href="tools/signature-resize.html">Signature Resize</a></li>
+<li><a href="tools/signature-bg-remover.html">Signature BG Remover</a></li>
+<li><a href="tools/doc-scanner.html">Document Scanner OCR</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom-bar">
+<div>© 2026 OfficeKit. All rights reserved.</div>
+<div>
+<a class="made-with-love-link" href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer">
+Made with ❤️ by Deepaak Kumar
+</a>
+</div>
+</div>
+</footer>
+
+<script>
+(function initTheme() {
+const saved = localStorage.getItem('officekit_theme') || 'light';
+if (saved === 'dark') {
+document.documentElement.setAttribute('data-theme', 'dark');
+const checkbox = document.getElementById('theme-checkbox');
+if (checkbox) checkbox.checked = true;
+}
+})();
+function toggleTheme() {
+const checkbox = document.getElementById('theme-checkbox');
+if (checkbox.checked) {
+document.documentElement.setAttribute('data-theme', 'dark');
+localStorage.setItem('officekit_theme', 'dark');
+} else {
+document.documentElement.removeAttribute('data-theme');
+localStorage.setItem('officekit_theme', 'light');
+}
+}
+</script>
+</body>
+</html>

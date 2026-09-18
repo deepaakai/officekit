@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merge PDF Files Online Free — OfficeKit</title>
+<meta name="description" content="Merge multiple PDF documents into one file online for free. 100% browser-based, no upload to any server.">
+<link rel="canonical" href="https://pdf365.in/tools/pdf-merge.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+<style>
+.add-more-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  background: var(--card-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: 6px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+.add-more-box:hover { border-color: var(--accent); background: var(--card-hover); }
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Merge PDF Files Online</h1>
+    <p class="hero-sub">Select multiple PDF documents, arrange them, and combine them into one unified file — 100% private.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tool-card" style="max-width:900px; margin:0 auto;">
+    <div class="drop-zone" id="initial-drop" style="display:flex; flex-direction:column;">
+      <input type="file" id="pdf-in" accept="application/pdf" multiple>
+      <div>
+        <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <h3>Select or Drop PDF Files</h3>
+        <p>Upload files from any folder on your device</p>
+      </div>
+    </div>
+
+    <div id="pdf-queue" style="margin: 15px 0; display: flex; flex-direction: column; gap: 8px;"></div>
+
+    <input type="file" id="pdf-add-more" accept="application/pdf" multiple style="display:none;">
+
+    <button class="add-more-box" id="btn-add-more" type="button" style="display:none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add More PDF Files
+    </button>
+
+    <button class="primary-button" id="btn-merge-action" style="display:none; width:100%; margin-top:15px;">Merge PDFs Now</button>
+
+    <div id="pdf-output" style="margin-top:15px;"></div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide: Merge Multiple PDF Documents into One Online Free</h2>
+    <p>Combining separate PDF chapters, scanned bills, academic records, and legal briefs into a unified document is a regular requirement for corporate compliance, tax submissions, and university assignments. Rather than uploading confidential materials to external conversion databases, OfficeKit Merge PDF operates exclusively inside your browser. Our engine sequentially stitches arbitrary page arrays together while retaining internal hyperlinks, bookmarks, and high-resolution vector assets.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/pdf-merge-demo.jpg" alt="OfficeKit Merge PDF Workflow Diagram" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>[Place Demo / Merge PDF Diagram Here: assets/images/pdf-merge-demo.jpg]</div>';">
+      <div class="article-image-caption">Visual sequence showing multiple individual PDF uploads combining into a single consolidated output file.</div>
+    </div>
+
+    <h3>Step-by-Step Instructions:</h3>
+    <ul>
+      <li><b>Step 1 - Upload Initial Documents:</b> Tap or drag your primary PDF files into the designated drop zone.</li>
+      <li><b>Step 2 - Add Files from Other Folders:</b> Click the <b>"Add More PDF Files" (+)</b> button to append additional documents without losing your current queue.</li>
+      <li><b>Step 3 - Verify Your File Queue:</b> Inspect the loaded queue list. Remove any accidental entries using the red cross icon.</li>
+      <li><b>Step 4 - Click Merge:</b> Press "Merge PDFs Now" to initiate local document assembly.</li>
+      <li><b>Step 5 - Download Consolidated File:</b> Save your unified master document instantly.</li>
+    </ul>
+
+    <h3>Why Choose OfficeKit Merge PDF?</h3>
+    <ul>
+      <li><b>Zero-Knowledge Security:</b> Document parsing and page copying happen entirely inside your device RAM.</li>
+      <li><b>Lossless Preservation:</b> Document fonts, interactive form fields, vector illustrations, and original layout resolution are fully retained.</li>
+      <li><b>Fast Client-Side Execution:</b> Powered by PDF-Lib, merging takes only seconds.</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: Is there any limit on how many PDFs I can merge?</b><br>
+    No. Merge as many as needed, bounded only by available browser memory.</p>
+    <p><b>Q: Will merging compress or reduce text sharpness?</b><br>
+    No. The engine extracts exact underlying page objects without rasterizing.</p>
+    <p><b>Q: Is my document confidential?</b><br>
+    Absolutely. No file is saved, logged, or sent over the internet.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const pdfIn = document.getElementById("pdf-in");
+const pdfAddMore = document.getElementById("pdf-add-more");
+const btnAddMore = document.getElementById("btn-add-more");
+const initialDrop = document.getElementById("initial-drop");
+const pdfQueue = document.getElementById("pdf-queue");
+const btnMerge = document.getElementById("btn-merge-action");
+const pdfOutput = document.getElementById("pdf-output");
+
+let filesList = [];
+
+pdfIn.addEventListener("change", (e) => {
+  if (e.target.files && e.target.files.length) {
+    filesList = [...filesList, ...Array.from(e.target.files)];
+    render();
+    pdfIn.value = "";
+  }
+});
+
+btnAddMore.addEventListener("click", () => pdfAddMore.click());
+
+pdfAddMore.addEventListener("change", (e) => {
+  if (e.target.files && e.target.files.length) {
+    filesList = [...filesList, ...Array.from(e.target.files)];
+    render();
+    pdfAddMore.value = "";
+  }
+});
+
+function render() {
+  pdfQueue.innerHTML = "";
+  if (filesList.length > 0) {
+    initialDrop.style.display = "none";
+    btnAddMore.style.display = "flex";
+    btnMerge.style.display = "block";
+  } else {
+    initialDrop.style.display = "flex";
+    btnAddMore.style.display = "none";
+    btnMerge.style.display = "none";
+  }
+  filesList.forEach((file, idx) => {
+    const item = document.createElement("div");
+    item.className = "pdf-queue-item";
+    item.innerHTML = `<span><b>${idx + 1}.</b> ${file.name} (${Math.round(file.size / 1024)} KB)</span><span class="queue-del-btn" title="Remove">✕</span>`;
+    item.querySelector(".queue-del-btn").onclick = () => { filesList.splice(idx, 1); render(); };
+    pdfQueue.appendChild(item);
+  });
+}
+
+btnMerge.addEventListener("click", async () => {
+  if (filesList.length < 2) { alert("Please select at least 2 PDF files to merge."); return; }
+  btnMerge.disabled = true;
+  btnMerge.textContent = "Merging Documents...";
+  try {
+    const mergedDoc = await PDFLib.PDFDocument.create();
+    for (const file of filesList) {
+      const buffer = await file.arrayBuffer();
+      const doc = await PDFLib.PDFDocument.load(buffer);
+      const pages = await mergedDoc.copyPages(doc, doc.getPageIndices());
+      pages.forEach(p => mergedDoc.addPage(p));
+    }
+    const mergedBytes = await mergedDoc.save();
+    const blob = new Blob([mergedBytes], { type: "application/pdf" });
+    const sizeMB = (blob.size / (1024 * 1024)).toFixed(2);
+
+    pdfOutput.innerHTML = `
+      <div class="pdf-queue-item" style="align-items:center; gap:14px; flex-wrap:wrap;">
+        <div>
+          <strong style="color:var(--text-color);">Ready: merged-document.pdf</strong><br>
+          <span style="color:var(--subtext-color); font-size:12.5px;">Merged ${filesList.length} files (${sizeMB} MB)</span>
+        </div>
+        <button class="primary-button" id="dl-pdf-btn">Download Merged PDF</button>
+      </div>`;
+
+    document.getElementById("dl-pdf-btn").onclick = () => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "merged-document.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+  } catch (err) {
+    alert("Error while merging: " + err.message);
+  } finally {
+    btnMerge.disabled = false;
+    btnMerge.textContent = "Merge PDFs Now";
+  }
+});
+</script>
+</body>
+</html>

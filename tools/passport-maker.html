@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Passport Photo Studio & Background Changer — OfficeKit</title>
+<meta name="description" content="Create government-compliant passport photos with AI background replacement. 300 DPI print-ready. 100% browser-based.">
+<link rel="canonical" href="https://pdf365.in/tools/passport-maker.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
+
+<style>
+/* ============ Tool-specific ============ */
+.work-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  margin-top: 15px;
+}
+@media (max-width: 900px) { .work-grid { grid-template-columns: 1fr; } }
+
+.tool-tabs {
+  display: flex;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tool-tabs::-webkit-scrollbar { display: none; }
+
+.tool-tabs .tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--subtext-color);
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.tool-tabs .tab-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; flex-shrink: 0; }
+.tool-tabs .tab-btn.active { background: var(--accent); color: #fff; }
+
+.color-category-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--subtext-color);
+  margin: 12px 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.swatch-group { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 10px; }
+.swatch-dot {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.swatch-dot:hover { transform: translateY(-2px); border-color: var(--accent); }
+.swatch-dot.active { border-color: var(--accent); transform: scale(1.12); box-shadow: 0 0 12px var(--accent); }
+
+.paper-list-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-height: 290px; overflow-y: auto; padding-right: 4px; }
+.paper-item-btn {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 9px 10px;
+  color: var(--text-color);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.paper-item-btn:hover { border-color: var(--accent); }
+.paper-item-btn.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.paper-item-btn small { display: block; color: var(--subtext-color); font-size: 11px; margin-top: 2px; }
+
+.grid-presets { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+.p-btn {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text-color);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.p-btn.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.p-btn small { display: block; color: var(--subtext-color); font-size: 11px; }
+
+.beauty-levels { display: flex; gap: 8px; margin-top: 6px; }
+.b-pill {
+  flex: 1;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 7px 0;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12.5px;
+  transition: all 0.15s;
+}
+.b-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.canvas-column { position: sticky; top: 70px; text-align: center; }
+.preview-box {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 16px;
+  position: relative;
+  display: inline-block;
+  box-shadow: var(--shadow-md);
+}
+#preview-canvas { display: block; max-width: 100%; max-height: 360px; background: #ffffff; border-radius: 4px; }
+
+.guide-overlay {
+  position: absolute; inset: 16px;
+  border: 2px dashed rgba(56,189,248,0.7);
+  border-radius: 50% 50% 45% 45%;
+  pointer-events: none;
+  display: none;
+}
+.guide-text-head { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); font-size: 11px; color: #38bdf8; font-weight: 700; }
+.guide-text-chin { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 11px; color: #38bdf8; font-weight: 700; }
+
+.btn-print-sheet {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.btn-print-sheet svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(11,19,41,0.85);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+.modal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 380px;
+  padding: 22px;
+  box-shadow: var(--shadow-md);
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.modal-header h3 { margin: 0; font-size: 17px; color: var(--text-color); }
+.btn-close-modal { background: none; border: none; color: var(--subtext-color); font-size: 20px; cursor: pointer; }
+.unit-selector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 16px; }
+.u-btn {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+}
+.u-btn.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+#ai-loader {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(11,19,41,0.85);
+  z-index: 4000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+}
+.spinner {
+  width: 44px; height: 44px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.sheet-modal-box {
+  margin-top: 25px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+}
+#sheet-canvas {
+  max-width: 100%;
+  max-height: 440px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+.switch-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.switch-toggle input { display: none; }
+.toggle-slider { width: 36px; height: 20px; background: var(--border-color); border-radius: 20px; position: relative; transition: background 0.2s; }
+.toggle-slider:before {
+  content: ""; position: absolute; width: 14px; height: 14px; border-radius: 50%;
+  top: 3px; left: 3px; background: #fff; transition: transform 0.2s;
+}
+.switch-toggle input:checked + .toggle-slider { background: var(--accent); }
+.switch-toggle input:checked + .toggle-slider:before { transform: translateX(16px); }
+
+.slider-row { margin-bottom: 12px; }
+.slider-row label { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--text-color); font-weight: 600; margin-bottom: 4px; }
+.slider-row input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: var(--border-color); accent-color: var(--accent); cursor: pointer; }
+
+#dim-label { font-size: 12px; color: var(--subtext-color); font-family: ui-monospace, monospace; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<div id="ai-loader">
+  <div class="spinner"></div>
+  <div style="font-size:15px; font-weight:700; color:var(--accent);">AI Processing Portrait...</div>
+  <div style="font-size:12px; color:var(--subtext-color);">Human body segmentation running locally</div>
+</div>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Passport Photo Studio</h1>
+    <p class="hero-sub">Generate government-compliant passport & visa photos with AI background replacement — 300 DPI print-ready, 100% private.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- Upload Screen -->
+  <div id="upload-screen" class="tool-card" style="max-width:600px; margin:30px auto;">
+    <div class="drop-zone">
+      <input type="file" id="photo-in" accept="image/*">
+      <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+      <h3>Select Photo from Camera or Gallery</h3>
+      <p>AI auto separates hair & body for pure color poster backgrounds</p>
+    </div>
+  </div>
+
+  <!-- Workspace -->
+  <div id="workspace" hidden>
+    <div class="tool-tabs">
+      <button class="tab-btn active" data-tab="tab-bg">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        Background & Colors
+      </button>
+      <button class="tab-btn" data-tab="tab-border">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        Border
+      </button>
+      <button class="tab-btn" data-tab="tab-paper">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Paper Size
+      </button>
+      <button class="tab-btn" data-tab="tab-size">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"/><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"/></svg>
+        Photo Size
+      </button>
+      <button class="tab-btn" data-tab="tab-adjust">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+        Adjust
+      </button>
+      <button class="tab-btn" data-tab="tab-beauty">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="m3 21 9-9"/></svg>
+        Beauty
+      </button>
+    </div>
+
+    <div class="work-grid">
+      <div>
+        <!-- BG Tab -->
+        <div id="tab-bg" class="tool-card">
+          <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+            <button class="b-pill active" id="btn-bg-ai">AI Studio BG</button>
+            <button class="b-pill" id="btn-bg-orig">Original BG</button>
+            <button class="b-pill" id="btn-toggle-guide">Head Guide</button>
+          </div>
+
+          <div class="color-category-label">Blue Shades (Official / Govt):</div>
+          <div class="swatch-group">
+            <div class="swatch-dot active" data-color="#1d4ed8" style="background:#1d4ed8;"></div>
+            <div class="swatch-dot" data-color="#2563eb" style="background:#2563eb;"></div>
+            <div class="swatch-dot" data-color="#38bdf8" style="background:#38bdf8;"></div>
+            <div class="swatch-dot" data-color="#bfdbfe" style="background:#bfdbfe;"></div>
+          </div>
+
+          <div class="color-category-label">Red & Green Shades:</div>
+          <div class="swatch-group">
+            <div class="swatch-dot" data-color="#dc2626" style="background:#dc2626;"></div>
+            <div class="swatch-dot" data-color="#991b1b" style="background:#991b1b;"></div>
+            <div class="swatch-dot" data-color="#16a34a" style="background:#16a34a;"></div>
+            <div class="swatch-dot" data-color="#14532d" style="background:#14532d;"></div>
+          </div>
+
+          <div class="color-category-label">Yellow & Brown Shades:</div>
+          <div class="swatch-group">
+            <div class="swatch-dot" data-color="#eab308" style="background:#eab308;"></div>
+            <div class="swatch-dot" data-color="#fef3c7" style="background:#fef3c7;"></div>
+            <div class="swatch-dot" data-color="#854d0e" style="background:#854d0e;"></div>
+            <div class="swatch-dot" data-color="#451a03" style="background:#451a03;"></div>
+          </div>
+
+          <div class="color-category-label">Neutral & Custom:</div>
+          <div class="swatch-group" style="align-items:center;">
+            <div class="swatch-dot" data-color="#ffffff" style="background:#ffffff;"></div>
+            <div class="swatch-dot" data-color="#e2e8f0" style="background:#e2e8f0;"></div>
+            <div class="swatch-dot" data-color="#475569" style="background:#475569;"></div>
+            <input type="color" id="custom-color" value="#1d4ed8" style="width:34px;height:34px;border:none;border-radius:8px;cursor:pointer;">
+          </div>
+
+          <div class="slider-row" style="margin-top:14px;">
+            <label>Edge Feather / Hair Softness: <span id="feather-val">2</span></label>
+            <input type="range" id="feather" min="0" max="6" value="2">
+          </div>
+        </div>
+
+        <!-- Border Tab -->
+        <div id="tab-border" class="tool-card" hidden>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border-color);">
+            <span style="font-size:13.5px; font-weight:700; color:var(--accent);">Enable Photo Border</span>
+            <label class="switch-toggle">
+              <input type="checkbox" id="border-enable" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div id="border-controls-box">
+            <div class="slider-row">
+              <label>Border Thickness: <span id="border-width-val">3 px</span></label>
+              <input type="range" id="border-width" min="1" max="25" value="3">
+            </div>
+            <div style="margin-top:14px;">
+              <label style="font-size:12.5px; color:var(--text-color); font-weight:600; display:block; margin-bottom:6px;">Border Color:</label>
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <button class="b-pill border-col-quick active" data-bcol="#111827" style="max-width:90px;">⚫ Black</button>
+                <button class="b-pill border-col-quick" data-bcol="#ffffff" style="max-width:90px;">⚪ White</button>
+                <button class="b-pill border-col-quick" data-bcol="#1d4ed8" style="max-width:90px;">🔵 Blue</button>
+                <input type="color" id="border-custom-color" value="#111827" style="width:34px;height:34px;border:none;border-radius:6px;cursor:pointer;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paper Tab -->
+        <div id="tab-paper" class="tool-card" hidden>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:13px; font-weight:700; color:var(--accent);">Select Paper Size</span>
+            <button id="btn-open-custom-paper" class="btn" style="padding:5px 12px; font-size:12px;">Custom Size</button>
+          </div>
+          <div class="paper-list-grid" id="paper-list">
+            <button class="paper-item-btn active" data-w="210" data-h="297" data-name="A4 Paper">A4 Paper<small>210mm × 297mm</small></button>
+            <button class="paper-item-btn" data-w="102" data-h="152" data-name="4R">4R (4×6 in)<small>102mm × 152mm</small></button>
+            <button class="paper-item-btn" data-w="89" data-h="127" data-name="3R">3R (3.5×5 in)<small>89mm × 127mm</small></button>
+            <button class="paper-item-btn" data-w="127" data-h="178" data-name="5R">5R (5×7 in)<small>127mm × 178mm</small></button>
+            <button class="paper-item-btn" data-w="152" data-h="203" data-name="6R">6R (6×8 in)<small>152mm × 203mm</small></button>
+            <button class="paper-item-btn" data-w="203" data-h="254" data-name="8R">8R (8×10 in)<small>203mm × 254mm</small></button>
+          </div>
+          <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border-color);">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div class="slider-row">
+                <label>Columns: <span id="col-val">Auto</span></label>
+                <input type="range" id="grid-cols" min="0" max="8" value="0">
+              </div>
+              <div class="slider-row">
+                <label>Photo Gap: <span id="gap-val">3 mm</span></label>
+                <input type="range" id="grid-gap" min="1" max="10" value="3">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Size Tab -->
+        <div id="tab-size" class="tool-card" hidden>
+          <div class="grid-presets">
+            <button class="p-btn active" data-w="35" data-h="45">Passport / Visa<small>35 × 45 mm</small></button>
+            <button class="p-btn" data-w="25" data-h="35">PAN Card / DL<small>25 × 35 mm</small></button>
+            <button class="p-btn" data-w="20" data-h="25">Stamp Size<small>20 × 25 mm</small></button>
+            <button class="p-btn" data-w="51" data-h="51">US / International Visa<small>51 × 51 mm</small></button>
+          </div>
+        </div>
+
+        <!-- Adjust Tab -->
+        <div id="tab-adjust" class="tool-card" hidden>
+          <div class="slider-row">
+            <label>Brightness: <span id="bright-val">0%</span></label>
+            <input type="range" id="brightness" min="-40" max="40" value="0">
+          </div>
+          <div class="slider-row">
+            <label>Contrast: <span id="contrast-val">0%</span></label>
+            <input type="range" id="contrast" min="-40" max="40" value="0">
+          </div>
+          <div class="slider-row">
+            <label>Saturation: <span id="sat-val">0%</span></label>
+            <input type="range" id="saturation" min="-30" max="30" value="0">
+          </div>
+        </div>
+
+        <!-- Beauty Tab -->
+        <div id="tab-beauty" class="tool-card" hidden>
+          <div class="beauty-levels">
+            <button class="b-pill active" data-beauty="0">0</button>
+            <button class="b-pill" data-beauty="1">1</button>
+            <button class="b-pill" data-beauty="2">2</button>
+            <button class="b-pill" data-beauty="3">3</button>
+            <button class="b-pill" data-beauty="4">4</button>
+            <button class="b-pill" data-beauty="5">5</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="canvas-column">
+        <div class="preview-box">
+          <canvas id="preview-canvas"></canvas>
+          <div class="guide-overlay" id="guide-overlay">
+            <span class="guide-text-head">Head</span>
+            <span class="guide-text-chin">Chin</span>
+          </div>
+        </div>
+        <div id="dim-label">35.0 × 45.0 mm | 300 DPI</div>
+        <button class="primary-button" id="btn-download-photo" style="width:100%; margin-top:10px;">
+          Download Passport Photo (300 DPI HD)
+        </button>
+        <button class="btn-print-sheet" id="btn-render-sheet">
+          Generate & Preview Printable Sheet
+        </button>
+      </div>
+    </div>
+
+    <div id="sheet-preview-wrap" class="sheet-modal-box" hidden>
+      <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:10px;">
+        Live Printable Sheet Preview (<span id="sheet-title">A4 Paper</span>)
+      </div>
+      <canvas id="sheet-canvas"></canvas>
+      <div style="margin-top:12px; display:flex; justify-content:center; gap:10px;">
+        <button class="primary-button" id="btn-download-sheet" style="max-width:320px;">
+          Download Ready-To-Print JPG (300 DPI)
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-top:25px; padding-top:15px; border-top:1px solid var(--border-color); display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <button class="btn-secondary" id="btn-reset">Reset Adjustments</button>
+      <button class="btn-secondary" id="btn-upload-another">Upload Another Photo</button>
+    </div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide to Generating Studio Quality Passport & Visa Photos Online</h2>
+    <p>Creating official government-compliant passport photographs at home has never been easier. The OfficeKit Passport Photo Studio operates 100% locally in your web browser, utilizing state-of-the-art client-side AI body segmentation models. Whether you need standard 35x45 mm photographs for national passports, competitive exams, and government recruitment portals, or 2x2 inch square photographs for US and Schengen visa documentation, our system renders high-density 300 DPI output instantly.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/passport-maker-demo.jpg" alt="Passport Maker Studio Workflow and Sheet Print Layout" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo / Grid Sheet Graphic Here: assets/images/passport-maker-demo.jpg]</div>';">
+      <div class="article-image-caption">Demonstration of AI background color isolation, 300 DPI crop presets, and multi-up printing sheets.</div>
+    </div>
+
+    <p>Traditional online photo editors upload your personal biometric portraits to third-party cloud servers, risking your privacy. In contrast, OfficeKit guarantees zero server interaction. The entire AI background isolation, color correction, skin smoothing, and multi-photo printable sheet creation take place exclusively inside your browser's local sandbox memory.</p>
+
+    <h3>Step-by-Step Instructions:</h3>
+    <ul>
+      <li><b>Step 1 - Upload Photo:</b> Click the upload area or drag and drop any clear, front-facing mobile selfie or camera portrait.</li>
+      <li><b>Step 2 - Background Replacement:</b> Choose from standard government-approved background colors like Royal Blue, Passport Red, or Clean Pure White.</li>
+      <li><b>Step 3 - Border & Spacing:</b> Toggle the 2px–4px black border option to ensure your photo stands out cleanly when printed on paper.</li>
+      <li><b>Step 4 - Choose Paper Sheet:</b> Select A4 or 4x6 (4R) paper size to automatically tile dozens of photos across a single page, ready for immediate color printing.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions (FAQ):</h3>
+    <p><b>Q: What are the exact dimensions for standard passport and identity photos?</b><br>
+    The standard official dimension is 35 mm in width by 45 mm in height (3.5 cm x 4.5 cm). The face should cover 70% to 80% of the vertical area.</p>
+    <p><b>Q: Will my photo lose quality or look pixelated?</b><br>
+    No. All single-image downloads and complete printable sheets are generated at a sharp 300 DPI print resolution.</p>
+    <p><b>Q: Are my photos uploaded or stored anywhere?</b><br>
+    No. All calculations run strictly client-side on your device. When you refresh or close the tab, all memory is immediately wiped.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<!-- Custom Paper Modal -->
+<div class="modal-overlay" id="custom-paper-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Custom Paper Size</h3>
+      <button class="btn-close-modal" id="btn-close-modal">&times;</button>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <div>
+        <label style="font-size:12px; font-weight:700; color:var(--text-color); display:block; margin-bottom:4px;">Width</label>
+        <input type="number" id="cust-p-w" value="210" style="width:100%; height:38px; padding:0 8px;">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:700; color:var(--text-color); display:block; margin-bottom:4px;">Height</label>
+        <input type="number" id="cust-p-h" value="297" style="width:100%; height:38px; padding:0 8px;">
+      </div>
+    </div>
+    <label style="font-size:12px; font-weight:700; color:var(--text-color); display:block; margin:14px 0 6px;">Select Unit</label>
+    <div class="unit-selector-grid" id="modal-unit-grid">
+      <button class="u-btn active" data-unit="mm">Millimeters (mm)</button>
+      <button class="u-btn" data-unit="px">Pixels (px)</button>
+      <button class="u-btn" data-unit="cm">Centimeters (cm)</button>
+      <button class="u-btn" data-unit="in">Inches (in)</button>
+    </div>
+    <button id="btn-apply-custom-paper" class="primary-button" style="width:100%; height:40px;">OK / Apply</button>
+  </div>
+</div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const fileIn = document.getElementById("photo-in");
+const uploadScreen = document.getElementById("upload-screen");
+const workspace = document.getElementById("workspace");
+const aiLoader = document.getElementById("ai-loader");
+
+const canvas = document.getElementById("preview-canvas");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
+const guideOverlay = document.getElementById("guide-overlay");
+const dimLabel = document.getElementById("dim-label");
+
+const customPaperModal = document.getElementById("custom-paper-modal");
+const btnOpenCustomPaper = document.getElementById("btn-open-custom-paper");
+const btnCloseModal = document.getElementById("btn-close-modal");
+const btnApplyCustomPaper = document.getElementById("btn-apply-custom-paper");
+const custPW = document.getElementById("cust-p-w");
+const custPH = document.getElementById("cust-p-h");
+let modalUnit = "mm";
+
+const sheetPreviewWrap = document.getElementById("sheet-preview-wrap");
+const sheetCanvas = document.getElementById("sheet-canvas");
+const sCtx = sheetCanvas.getContext("2d");
+const sheetTitle = document.getElementById("sheet-title");
+const btnRenderSheet = document.getElementById("btn-render-sheet");
+const btnDownloadSheet = document.getElementById("btn-download-sheet");
+
+const btnBgAi = document.getElementById("btn-bg-ai");
+const btnBgOrig = document.getElementById("btn-bg-orig");
+const btnToggleGuide = document.getElementById("btn-toggle-guide");
+const featherInput = document.getElementById("feather");
+const featherVal = document.getElementById("feather-val");
+const customColor = document.getElementById("custom-color");
+
+const borderEnable = document.getElementById("border-enable");
+const borderWidth = document.getElementById("border-width");
+const borderWidthVal = document.getElementById("border-width-val");
+const borderCustomColor = document.getElementById("border-custom-color");
+const borderControlsBox = document.getElementById("border-controls-box");
+let activeBorderColor = "#111827";
+
+const brightInput = document.getElementById("brightness");
+const contrastInput = document.getElementById("contrast");
+const satInput = document.getElementById("saturation");
+const gridColsInput = document.getElementById("grid-cols");
+const gridGapInput = document.getElementById("grid-gap");
+
+const btnDownloadPhoto = document.getElementById("btn-download-photo");
+const btnReset = document.getElementById("btn-reset");
+const btnUploadAnother = document.getElementById("btn-upload-another");
+
+let rawImg = null;
+let personMaskCanvas = null;
+let useAiBg = true;
+let activeColor = "#1d4ed8";
+let currentW_mm = 35;
+let currentH_mm = 45;
+let beautyLevel = 0;
+let selectedPaperW_mm = 210;
+let selectedPaperH_mm = 297;
+let selectedPaperName = "A4 Paper";
+
+const selfieSegmentation = new SelfieSegmentation({
+  locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`
+});
+selfieSegmentation.setOptions({ modelSelection: 1 });
+
+selfieSegmentation.onResults((results) => {
+  personMaskCanvas = document.createElement("canvas");
+  personMaskCanvas.width = results.image.width;
+  personMaskCanvas.height = results.image.height;
+  personMaskCanvas.getContext("2d").drawImage(results.segmentationMask, 0, 0);
+  aiLoader.style.display = "none";
+  uploadScreen.hidden = true;
+  workspace.hidden = false;
+  renderPhoto();
+});
+
+fileIn.onchange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    rawImg = new Image();
+    rawImg.onload = async () => {
+      aiLoader.style.display = "flex";
+      await selfieSegmentation.send({ image: rawImg });
+    };
+    rawImg.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+document.querySelectorAll(".tool-tabs .tab-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".tool-tabs .tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tool-card[id^='tab-']").forEach(p => p.hidden = true);
+    btn.classList.add("active");
+    document.getElementById(btn.getAttribute("data-tab")).hidden = false;
+  };
+});
+
+borderEnable.onchange = () => {
+  borderControlsBox.style.opacity = borderEnable.checked ? "1" : "0.4";
+  borderControlsBox.style.pointerEvents = borderEnable.checked ? "auto" : "none";
+  renderPhoto();
+  if (!sheetPreviewWrap.hidden) generateSheet();
+};
+
+borderWidth.oninput = () => {
+  borderWidthVal.innerText = borderWidth.value + " px";
+  renderPhoto();
+  if (!sheetPreviewWrap.hidden) generateSheet();
+};
+
+document.querySelectorAll(".border-col-quick").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".border-col-quick").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeBorderColor = btn.dataset.bcol;
+    borderCustomColor.value = activeBorderColor;
+    renderPhoto();
+    if (!sheetPreviewWrap.hidden) generateSheet();
+  };
+});
+
+borderCustomColor.oninput = (e) => {
+  activeBorderColor = e.target.value;
+  document.querySelectorAll(".border-col-quick").forEach(b => b.classList.remove("active"));
+  renderPhoto();
+  if (!sheetPreviewWrap.hidden) generateSheet();
+};
+
+document.getElementById("paper-list").addEventListener("click", (e) => {
+  const btn = e.target.closest(".paper-item-btn");
+  if (!btn) return;
+  document.querySelectorAll(".paper-item-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  selectedPaperW_mm = parseFloat(btn.dataset.w);
+  selectedPaperH_mm = parseFloat(btn.dataset.h);
+  selectedPaperName = btn.dataset.name;
+  sheetTitle.innerText = selectedPaperName;
+  if (!sheetPreviewWrap.hidden) generateSheet();
+});
+
+btnOpenCustomPaper.onclick = () => { customPaperModal.style.display = "flex"; };
+btnCloseModal.onclick = () => { customPaperModal.style.display = "none"; };
+
+document.getElementById("modal-unit-grid").addEventListener("click", (e) => {
+  const btn = e.target.closest(".u-btn");
+  if (!btn) return;
+  document.querySelectorAll(".u-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  modalUnit = btn.dataset.unit;
+});
+
+btnApplyCustomPaper.onclick = () => {
+  const wVal = parseFloat(custPW.value) || 210;
+  const hVal = parseFloat(custPH.value) || 297;
+  let mmW = wVal, mmH = hVal;
+  if (modalUnit === "cm") { mmW = wVal * 10; mmH = hVal * 10; }
+  else if (modalUnit === "in") { mmW = wVal * 25.4; mmH = hVal * 25.4; }
+  else if (modalUnit === "px") { mmW = (wVal / 300) * 25.4; mmH = (hVal / 300) * 25.4; }
+  selectedPaperW_mm = mmW;
+  selectedPaperH_mm = mmH;
+  selectedPaperName = `Custom (${wVal}×${hVal} ${modalUnit})`;
+  sheetTitle.innerText = selectedPaperName;
+  document.querySelectorAll(".paper-item-btn").forEach(b => b.classList.remove("active"));
+  customPaperModal.style.display = "none";
+  if (!sheetPreviewWrap.hidden) generateSheet();
+};
+
+document.querySelectorAll(".swatch-dot").forEach(dot => {
+  dot.onclick = () => {
+    document.querySelectorAll(".swatch-dot").forEach(d => d.classList.remove("active"));
+    dot.classList.add("active");
+    activeColor = dot.getAttribute("data-color");
+    useAiBg = true;
+    btnBgAi.classList.add("active");
+    btnBgOrig.classList.remove("active");
+    renderPhoto();
+  };
+});
+
+customColor.oninput = (e) => { activeColor = e.target.value; useAiBg = true; renderPhoto(); };
+
+btnBgAi.onclick = () => { useAiBg = true; btnBgAi.classList.add("active"); btnBgOrig.classList.remove("active"); renderPhoto(); };
+btnBgOrig.onclick = () => { useAiBg = false; btnBgOrig.classList.add("active"); btnBgAi.classList.remove("active"); renderPhoto(); };
+
+btnToggleGuide.onclick = () => {
+  const isVisible = guideOverlay.style.display === "block";
+  guideOverlay.style.display = isVisible ? "none" : "block";
+  btnToggleGuide.classList.toggle("active", !isVisible);
+};
+
+document.querySelectorAll('.b-pill[data-beauty]').forEach(pill => {
+  pill.onclick = () => {
+    document.querySelectorAll('.b-pill[data-beauty]').forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    beautyLevel = parseInt(pill.getAttribute("data-beauty"));
+    renderPhoto();
+  };
+});
+
+document.querySelectorAll(".p-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".p-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentW_mm = parseFloat(btn.getAttribute("data-w"));
+    currentH_mm = parseFloat(btn.getAttribute("data-h"));
+    renderPhoto();
+  };
+});
+
+[brightInput, contrastInput, satInput, featherInput].forEach(el => {
+  el.oninput = () => {
+    document.getElementById("bright-val").innerText = brightInput.value + "%";
+    document.getElementById("contrast-val").innerText = contrastInput.value + "%";
+    document.getElementById("sat-val").innerText = satInput.value + "%";
+    featherVal.innerText = featherInput.value;
+    renderPhoto();
+  };
+});
+
+gridColsInput.oninput = () => {
+  document.getElementById("col-val").innerText = gridColsInput.value === "0" ? "Auto" : gridColsInput.value;
+  if (!sheetPreviewWrap.hidden) generateSheet();
+};
+gridGapInput.oninput = () => {
+  document.getElementById("gap-val").innerText = gridGapInput.value + " mm";
+  if (!sheetPreviewWrap.hidden) generateSheet();
+};
+
+function renderPhoto() {
+  if (!rawImg) return;
+  const dpi = 300;
+  const targetW = Math.round((currentW_mm / 25.4) * dpi);
+  const targetH = Math.round((currentH_mm / 25.4) * dpi);
+
+  canvas.width = targetW;
+  canvas.height = targetH;
+
+  ctx.fillStyle = activeColor;
+  ctx.fillRect(0, 0, targetW, targetH);
+
+  const scale = Math.max(targetW / rawImg.width, targetH / rawImg.height);
+  const dw = rawImg.width * scale;
+  const dh = rawImg.height * scale;
+  const dx = (targetW - dw) / 2;
+  const dy = (targetH - dh) / 2;
+
+  if (useAiBg && personMaskCanvas) {
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = targetW;
+    tempCanvas.height = targetH;
+    const tCtx = tempCanvas.getContext("2d");
+    tCtx.drawImage(rawImg, dx, dy, dw, dh);
+    tCtx.globalCompositeOperation = "destination-in";
+    if (parseInt(featherInput.value) > 0) tCtx.filter = `blur(${featherInput.value}px)`;
+    tCtx.drawImage(personMaskCanvas, dx, dy, dw, dh);
+    tCtx.filter = "none";
+    tCtx.globalCompositeOperation = "source-over";
+    ctx.drawImage(tempCanvas, 0, 0);
+  } else {
+    ctx.drawImage(rawImg, dx, dy, dw, dh);
+  }
+
+  applyImageAdjustments(targetW, targetH);
+
+  if (borderEnable.checked) {
+    const bThick = parseInt(borderWidth.value) || 3;
+    ctx.strokeStyle = activeBorderColor;
+    ctx.lineWidth = bThick;
+    ctx.strokeRect(bThick / 2, bThick / 2, targetW - bThick, targetH - bThick);
+  }
+
+  dimLabel.innerText = `${targetW} × ${targetH} px @ 300 DPI | ${currentW_mm} × ${currentH_mm} mm`;
+}
+
+function applyImageAdjustments(w, h) {
+  const b = parseInt(brightInput.value);
+  const c = parseInt(contrastInput.value);
+  const s = parseInt(satInput.value);
+  if (b === 0 && c === 0 && s === 0 && beautyLevel === 0) return;
+
+  const imgData = ctx.getImageData(0, 0, w, h);
+  const data = imgData.data;
+  const contrastFactor = (259 * (c + 255)) / (255 * (259 - c));
+  const brightOffset = b * 2.5;
+
+  for (let i = 0; i < data.length; i += 4) {
+    let r = contrastFactor * (data[i] - 128) + 128 + brightOffset;
+    let g = contrastFactor * (data[i+1] - 128) + 128 + brightOffset;
+    let bl = contrastFactor * (data[i+2] - 128) + 128 + brightOffset;
+
+    if (beautyLevel > 0) {
+      const skinBoost = beautyLevel * 3.5;
+      r = Math.min(255, r + skinBoost * 1.1);
+      g = Math.min(255, g + skinBoost * 0.9);
+      bl = Math.min(255, bl + skinBoost * 0.7);
+    }
+
+    data[i] = Math.max(0, Math.min(255, r));
+    data[i+1] = Math.max(0, Math.min(255, g));
+    data[i+2] = Math.max(0, Math.min(255, bl));
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+function generateSheet() {
+  const dpi = 300;
+  sheetCanvas.width = Math.round((selectedPaperW_mm / 25.4) * dpi);
+  sheetCanvas.height = Math.round((selectedPaperH_mm / 25.4) * dpi);
+
+  sCtx.fillStyle = "#ffffff";
+  sCtx.fillRect(0, 0, sheetCanvas.width, sheetCanvas.height);
+
+  const photoW = canvas.width;
+  const photoH = canvas.height;
+  const gapMM = parseFloat(gridGapInput.value);
+  const gapPx = Math.round((gapMM / 25.4) * dpi);
+  const marginPx = Math.round((5 / 25.4) * dpi);
+
+  let cols = parseInt(gridColsInput.value);
+  if (cols === 0) {
+    cols = Math.max(1, Math.floor((sheetCanvas.width - marginPx * 2 + gapPx) / (photoW + gapPx)));
+  }
+  const rows = Math.max(1, Math.floor((sheetCanvas.height - marginPx * 2 + gapPx) / (photoH + gapPx)));
+
+  const totalGridW = cols * photoW + (cols - 1) * gapPx;
+  const totalGridH = rows * photoH + (rows - 1) * gapPx;
+  const startX = Math.max(marginPx, Math.floor((sheetCanvas.width - totalGridW) / 2));
+  const startY = Math.max(marginPx, Math.floor((sheetCanvas.height - totalGridH) / 2));
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      sCtx.drawImage(canvas, startX + c * (photoW + gapPx), startY + r * (photoH + gapPx));
+    }
+  }
+
+  sheetPreviewWrap.hidden = false;
+  sheetPreviewWrap.scrollIntoView({ behavior: "smooth" });
+}
+
+btnRenderSheet.onclick = generateSheet;
+
+btnDownloadPhoto.onclick = () => {
+  const a = document.createElement("a");
+  a.href = canvas.toDataURL("image/jpeg", 0.98);
+  a.download = `passport-photo-${currentW_mm}x${currentH_mm}mm.jpg`;
+  a.click();
+};
+
+btnDownloadSheet.onclick = () => {
+  const a = document.createElement("a");
+  a.href = sheetCanvas.toDataURL("image/jpeg", 0.98);
+  a.download = `print-sheet-${selectedPaperName.replace(/[^a-zA-Z0-9]/g, '_')}-300dpi.jpg`;
+  a.click();
+};
+
+btnReset.onclick = () => {
+  brightInput.value = 0;
+  contrastInput.value = 0;
+  satInput.value = 0;
+  document.getElementById("bright-val").innerText = "0%";
+  document.getElementById("contrast-val").innerText = "0%";
+  document.getElementById("sat-val").innerText = "0%";
+  beautyLevel = 0;
+  document.querySelectorAll('.b-pill[data-beauty]').forEach(p => p.classList.remove("active"));
+  document.querySelector('.b-pill[data-beauty="0"]').classList.add("active");
+  activeColor = "#1d4ed8";
+  useAiBg = true;
+  borderEnable.checked = true;
+  borderWidth.value = 3;
+  borderWidthVal.innerText = "3 px";
+  activeBorderColor = "#111827";
+  gridColsInput.value = 0;
+  document.getElementById("col-val").innerText = "Auto";
+  gridGapInput.value = 3;
+  document.getElementById("gap-val").innerText = "3 mm";
+  renderPhoto();
+  if (!sheetPreviewWrap.hidden) generateSheet();
+};
+
+btnUploadAnother.onclick = () => {
+  fileIn.value = "";
+  rawImg = null;
+  personMaskCanvas = null;
+  workspace.hidden = true;
+  sheetPreviewWrap.hidden = true;
+  uploadScreen.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+</script>
+</body>
+</html>

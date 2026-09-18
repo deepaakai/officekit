@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Convert JPG to PDF Online Free — OfficeKit</title>
+<meta name="description" content="Convert JPG / PNG / WEBP images into a single PDF document. 100% browser-based, private, free.">
+<link rel="canonical" href="https://pdf365.in/tools/jpg-to-pdf.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+<style>
+.queue-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: var(--text-color);
+}
+.queue-del-btn { color: #f87171; cursor: pointer; font-weight: 700; font-size: 16px; margin-left: 10px; }
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Convert JPG Images to PDF</h1>
+    <p class="hero-sub">Transform multiple JPG or PNG images into a single professional PDF document — 100% in your browser.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tool-card" style="max-width:900px; margin:0 auto;">
+    <div class="drop-zone">
+      <input type="file" id="jpg-in" accept="image/jpeg,image/png,image/webp" multiple>
+      <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <h3>Select or Drop JPG / PNG Images</h3>
+      <p>Add single or multiple files to compile into a single PDF</p>
+    </div>
+
+    <div id="queue" style="margin:15px 0; display:flex; flex-direction:column; gap:6px;"></div>
+    <button class="primary-button" id="btn-convert" style="display:none; width:100%; margin-top:10px;">Convert to PDF Now</button>
+    <div id="output" style="margin-top:15px;"></div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide: Merge & Convert Multiple JPG/PNG Images into PDF Online</h2>
+    <p>Converting physical paperwork, smartphone camera snapshots, fee receipts, and certificate photos into a clean, unified PDF is essential when submitting documents to universities, government employment boards, and visa embassies. While traditional converters send personal files to external servers or enforce strict file-size paywalls, the OfficeKit JPG to PDF Converter builds standard PDF documents directly in your browser using pure WebAssembly binary encoding.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/jpg-to-pdf-demo.jpg" alt="JPG to PDF Converter Workflow Diagram" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/jpg-to-pdf-demo.jpg]</div>';">
+      <div class="article-image-caption">Visual demonstration showing multi-image sequencing and lossless packaging into a unified PDF file.</div>
+    </div>
+
+    <h3>Step-by-Step Instructions:</h3>
+    <ul>
+      <li><b>Step 1 - Select or Drag Photos:</b> Click the upload zone to choose one or more JPG, PNG, or WebP pictures.</li>
+      <li><b>Step 2 - Verify Your File Queue:</b> Inspect the loaded files list. Remove any unwanted pages using the red cross icon.</li>
+      <li><b>Step 3 - Click Convert:</b> Hit the "Convert to PDF Now" action button to trigger instant client-side binary page embedding.</li>
+      <li><b>Step 4 - Instant Download:</b> Download the generated PDF directly to your device storage.</li>
+    </ul>
+
+    <h3>Why Choose OfficeKit JPG to PDF?</h3>
+    <ul>
+      <li><b>Zero Cloud Storage:</b> Your sensitive photos are compiled in your device RAM and never uploaded to any remote host.</li>
+      <li><b>Lossless Dimension Retention:</b> Each page dynamically adjusts to match the original image dimensions.</li>
+      <li><b>Fast Client-Side Execution:</b> Powered by PDF-Lib, conversions happen in milliseconds.</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: Is there any limit on how many images I can convert?</b><br>
+    No. You can compile dozens of pages in a single queue, bounded only by your device's browser memory.</p>
+    <p><b>Q: Can I combine both PNG and JPG pictures into the same PDF?</b><br>
+    Yes. The embedded converter recognizes both formats automatically.</p>
+    <p><b>Q: Are my documents private?</b><br>
+    Absolutely. No file content is saved, logged, or sent over the internet.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const fileIn = document.getElementById("jpg-in");
+const queue = document.getElementById("queue");
+const btn = document.getElementById("btn-convert");
+const output = document.getElementById("output");
+let files = [];
+
+fileIn.addEventListener("change", (e) => {
+  files = [...files, ...Array.from(e.target.files)];
+  render();
+  fileIn.value = "";
+});
+
+function render() {
+  queue.innerHTML = "";
+  files.forEach((f, idx) => {
+    const div = document.createElement("div");
+    div.className = "queue-item";
+    div.innerHTML = `<span>${idx + 1}. ${f.name}</span><span class="queue-del-btn" title="Remove">✕</span>`;
+    div.querySelector(".queue-del-btn").onclick = () => { files.splice(idx, 1); render(); };
+    queue.appendChild(div);
+  });
+  btn.style.display = files.length > 0 ? "block" : "none";
+}
+
+btn.onclick = async () => {
+  btn.disabled = true;
+  btn.textContent = "Creating PDF...";
+  try {
+    const pdfDoc = await PDFLib.PDFDocument.create();
+    for (const file of files) {
+      const buf = await file.arrayBuffer();
+      let img;
+      if (file.type === "image/png") img = await pdfDoc.embedPng(buf);
+      else img = await pdfDoc.embedJpg(buf);
+      const page = pdfDoc.addPage([img.width, img.height]);
+      page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+    }
+    const bytes = await pdfDoc.save();
+    const blob = new Blob([bytes], { type: "application/pdf" });
+    output.innerHTML = `
+      <div class="pdf-queue-item" style="align-items:center; gap:14px; flex-wrap:wrap;">
+        <div>
+          <strong style="color:var(--text-color);">Ready: converted-document.pdf</strong><br>
+          <span style="color:var(--subtext-color); font-size:12.5px;">${files.length} page(s) compiled</span>
+        </div>
+        <button class="primary-button" id="dl">Download PDF</button>
+      </div>`;
+    document.getElementById("dl").onclick = () => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "converted-document.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+  } catch (err) {
+    alert("Error compiling PDF: " + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Convert to PDF Now";
+  }
+};
+</script>
+</body>
+</html>

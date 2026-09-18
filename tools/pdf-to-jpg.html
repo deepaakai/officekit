@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDF to JPG Converter (ZIP) — OfficeKit</title>
+<meta name="description" content="Extract every page from a PDF into high-quality JPG images bundled inside a ZIP. 100% browser-based.">
+<link rel="canonical" href="https://pdf365.in/tools/pdf-to-jpg.html">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';</script>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">PDF to JPG Converter (ZIP)</h1>
+    <p class="hero-sub">Extract all pages from a PDF file into high-quality JPG images bundled inside a ZIP archive.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tool-card" style="max-width:900px; margin:0 auto;">
+    <div class="drop-zone">
+      <input type="file" id="pdf-in" accept="application/pdf">
+      <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <h3>Select or Drop PDF File</h3>
+      <p>Extract all pages into crisp individual JPG pictures</p>
+    </div>
+
+    <div id="controls" hidden style="margin-top:20px;">
+      <p id="info" style="font-weight:600; color:var(--accent); font-size:14px; margin-bottom:12px;"></p>
+      <button class="primary-button" id="btn-extract" style="width:100%;">Convert to JPG & Download ZIP</button>
+    </div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Complete Guide: Convert PDF Pages into High-Resolution JPG Images (ZIP)</h2>
+    <p>Extracting individual raster graphics, presentations, invoice records, and scanned document pages from multi-page PDFs is often necessary when embedding slides into web presentations, sharing images via social apps, or uploading pictures into document portals. The OfficeKit PDF to JPG Converter renders each vector page locally at high pixel density, packages the resulting image files into an organized file structure, and delivers a consolidated ZIP archive in seconds.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/pdf-to-jpg-demo.jpg" alt="OfficeKit PDF to JPG Conversion and ZIP Archiving Diagram" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/pdf-to-jpg-demo.jpg]</div>';">
+      <div class="article-image-caption">Visual sequence showing high-resolution canvas extraction, sequential page naming, and ZIP bundling.</div>
+    </div>
+
+    <h3>Step-by-Step Instructions:</h3>
+    <ul>
+      <li><b>Step 1 - Upload PDF:</b> Select or drag your target document into the upload drop area.</li>
+      <li><b>Step 2 - Confirm File Loading:</b> The file parser registers the document buffer and calculates total page volume.</li>
+      <li><b>Step 3 - Extract & Compress:</b> Press "Convert to JPG & Download ZIP".</li>
+      <li><b>Step 4 - Download Archive:</b> Save the bundled <code>.zip</code> file containing numbered JPEG files.</li>
+    </ul>
+
+    <h3>FAQ</h3>
+    <p><b>Q: What image format and quality are exported?</b><br>
+    High-clarity JPEG files with balanced 90% quality quantization.</p>
+    <p><b>Q: Is there a page or file size limit?</b><br>
+    No arbitrary quotas. Performance scales with available device RAM.</p>
+    <p><b>Q: Are my confidential records saved on your server?</b><br>
+    Never. Everything runs purely client-side.</p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+const fileIn = document.getElementById("pdf-in");
+const controls = document.getElementById("controls");
+const info = document.getElementById("info");
+const btn = document.getElementById("btn-extract");
+let pdfFileBytes = null;
+let fileName = "";
+
+fileIn.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  fileName = file.name.replace(/\.[^/.]+$/, "");
+  pdfFileBytes = await file.arrayBuffer();
+  controls.hidden = false;
+  info.textContent = `Loaded: ${file.name}`;
+});
+
+btn.onclick = async () => {
+  btn.disabled = true;
+  btn.textContent = "Converting pages into ZIP...";
+  try {
+    const pdf = await pdfjsLib.getDocument({ data: pdfFileBytes }).promise;
+    const zip = new JSZip();
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 2.0 });
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+      zip.file(`${fileName}-page-${i}.jpg`, dataUrl.replace(/^data:image\/jpeg;base64,/, ""), { base64: true });
+    }
+    const content = await zip.generateAsync({ type: "blob" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(content);
+    a.download = `${fileName}-images.zip`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    btn.textContent = "Success! Downloaded ZIP";
+  } catch (err) {
+    alert("Error: " + err.message);
+    btn.textContent = "Convert to JPG & Download ZIP";
+  } finally {
+    btn.disabled = false;
+  }
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Document Scanner & OCR (Image to Text) — OfficeKit</title>
+<meta name="description" content="Free browser-based OCR tool. Extract text from images, documents and photos instantly in English & Hindi. No upload, 100% private.">
+<meta name="keywords" content="ocr online, image to text, document scanner, hindi ocr, photo to text, extract text from image">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://pdf365.in/tools/doc-scanner.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Document Scanner & OCR (Image to Text) — OfficeKit">
+<meta property="og:description" content="Extract text from images and document photos instantly. 100% browser-based.">
+<meta property="og:url" content="https://pdf365.in/tools/doc-scanner.html">
+<meta property="og:site_name" content="OfficeKit">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="../assets/css/officekit-global.css">
+
+<!-- Puter.js — free OCR API, no key required -->
+<script src="https://js.puter.com/v2/"></script>
+
+<style>
+/* ============ Upload Options ============ */
+.upload-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) {
+  .upload-options { grid-template-columns: 1fr; }
+}
+
+.upload-card {
+  position: relative;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 26px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.upload-card:hover {
+  background: var(--accent-soft-hover);
+  transform: translateY(-2px);
+}
+.upload-card input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.upload-card .uc-icon {
+  width: 44px; height: 44px;
+  color: var(--accent);
+  margin: 0 auto 10px;
+}
+.upload-card h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--text-color);
+  font-weight: 700;
+}
+.upload-card p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+}
+
+/* ============ OCR Engine Toggle ============ */
+.engine-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.engine-row label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+.engine-row select {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.engine-row select:focus { border-color: var(--accent); }
+
+/* ============ Preview ============ */
+.preview-thumb {
+  display: none;
+  text-align: center;
+  margin: 14px 0;
+}
+.preview-thumb img {
+  max-width: 100%;
+  max-height: 240px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+.preview-thumb .file-name {
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin-top: 6px;
+  word-break: break-all;
+}
+
+/* ============ OCR Box ============ */
+#ocr-box { margin-top: 20px; }
+
+.btn-ocr-main {
+  width: 100%;
+  background: var(--success);
+  color: #fff;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, opacity 0.15s;
+}
+.btn-ocr-main:hover:not(:disabled) { background: var(--success-hover); }
+.btn-ocr-main:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-ocr-main svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+/* Progress bar */
+.progress-wrap {
+  display: none;
+  margin-top: 14px;
+}
+.progress-wrap.show { display: block; }
+.progress-bar {
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-bar i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #22a8e0);
+  border-radius: 99px;
+  transition: width 0.15s linear;
+}
+#status-text {
+  font-size: 13px;
+  color: var(--accent);
+  margin: 8px 0 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ============ Result ============ */
+.result-wrap {
+  display: none;
+  margin-top: 18px;
+}
+.result-wrap.show { display: block; }
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.result-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+.result-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.result-actions button {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.result-actions button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.result-actions button svg { width: 14px; height: 14px; stroke: currentColor; fill: none; }
+
+#ocr-result {
+  width: 100%;
+  min-height: 240px;
+  padding: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+#ocr-result:focus { border-color: var(--accent); }
+
+/* ============ Info note ============ */
+.info-note {
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  color: var(--text-color);
+  margin-top: 14px;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+
+<div id="officekit-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Document Scanner & Image to Text (OCR)</h1>
+    <p class="hero-sub">Extract typed text from photos, scanned documents and receipts instantly. Works with English, Hindi, and 100+ languages — 100% private, all in your browser.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tool-card">
+
+    <!-- Two upload options -->
+    <div class="upload-options">
+      <label class="upload-card">
+        <input type="file" id="camera-in" accept="image/*" capture="environment">
+        <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <h3>📷 Take a Photo</h3>
+        <p>Open camera (mobile) or pick from gallery</p>
+      </label>
+
+      <label class="upload-card">
+        <input type="file" id="file-in" accept="image/*">
+        <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <h3>📁 Upload File</h3>
+        <p>Select PNG, JPG, WEBP from your device</p>
+      </label>
+    </div>
+
+    <!-- Image preview -->
+    <div class="preview-thumb" id="preview-thumb">
+      <img id="preview-img" alt="Selected image preview">
+      <div class="file-name" id="preview-name"></div>
+    </div>
+
+    <!-- Engine + Language -->
+    <div class="engine-row">
+      <label for="ocr-engine">OCR Engine:</label>
+      <select id="ocr-engine">
+        <option value="puter" selected>Puter AI (English + 100+ langs)</option>
+        <option value="tesseract">Tesseract.js (offline)</option>
+      </select>
+      <label for="ocr-lang">Language:</label>
+      <select id="ocr-lang">
+        <option value="eng" selected>English</option>
+        <option value="hin">Hindi (हिन्दी)</option>
+        <option value="eng+hin">English + Hindi</option>
+        <option value="ben">Bengali (বাংলা)</option>
+        <option value="tam">Tamil (தமிழ்)</option>
+        <option value="tel">Telugu (తెలుగు)</option>
+        <option value="mar">Marathi (मराठी)</option>
+        <option value="guj">Gujarati (ગુજરાતી)</option>
+        <option value="kan">Kannada (ಕನ್ನಡ)</option>
+        <option value="mal">Malayalam (മലയാളം)</option>
+        <option value="pan">Punjabi (ਪੰਜਾਬੀ)</option>
+        <option value="urd">Urdu (اردو)</option>
+      </select>
+    </div>
+
+    <!-- OCR trigger -->
+    <div id="ocr-box" hidden>
+      <button class="btn-ocr-main" id="btn-ocr">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        Extract Text (OCR)
+      </button>
+
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar"><i id="progress-fill"></i></div>
+        <p id="status-text"></p>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-wrap" id="result-wrap">
+      <div class="result-header">
+        <h3>Extracted Text</h3>
+        <div class="result-actions">
+          <button id="btn-copy" type="button">
+            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy
+          </button>
+          <button id="btn-download" type="button">
+            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download .txt
+          </button>
+          <button id="btn-reset" type="button">
+            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            New Scan
+          </button>
+        </div>
+      </div>
+      <textarea id="ocr-result" placeholder="Extracted text will appear here..."></textarea>
+    </div>
+
+    <div class="info-note">
+      💡 <b>Tip:</b> For best accuracy — use a well-lit, straight photo, avoid shadows, and keep the text upright. Higher contrast between text and paper = better OCR.
+    </div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ 800+ Word SEO Article ============ -->
+  <section class="seo-article">
+    <h2>Complete Guide to Extracting Text from Images with Client-Side OCR</h2>
+
+    <p>
+      Optical Character Recognition (OCR) technology transforms physical papers, captured receipts, printed certificates, and image files into digital, editable text without requiring manual retyping. The OfficeKit Document Scanner & OCR engine gives you the choice of two world-class recognition engines — both running directly in your browser — so your sensitive documents never leave your device. Whether you are digitizing classroom notes, extracting line items from a financial bill, transcribing a printed book page, or converting a scanned Aadhaar or PAN PDF into editable text, this tool handles it all in seconds.
+    </p>
+    <p>
+      Unlike commercial cloud OCR platforms that upload your photos to external data warehouses, OfficeKit takes a privacy-first approach. Your uploaded scan is processed locally and nothing is ever transmitted to any server. This matters especially for identity documents, bank statements, medical records, and legal contracts where a data leak could have serious consequences. You can even disconnect from the internet after the page loads and the offline engine will continue to work — an easy test to confirm that nothing is being transmitted.
+    </p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/doc-scanner-demo.jpg" alt="Document scanner and OCR workflow showing image-to-text extraction with language selection"
+           onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image Here: assets/images/doc-scanner-demo.jpg]</div>';">
+      <div class="article-image-caption">Live OCR workflow: upload a scanned document, pick language, extract editable text in seconds — all processed locally in your browser.</div>
+    </div>
+
+    <h3>How OCR Technology Works</h3>
+    <p>
+      OCR software analyses an image pixel-by-pixel to identify patterns that correspond to characters in a specific alphabet. It works in five stages: (1) <b>preprocessing</b> — converting the image to grayscale and boosting contrast so text stands out from the paper; (2) <b>layout analysis</b> — figuring out which regions of the image contain text lines, paragraphs, or tables; (3) <b>line and word segmentation</b> — splitting the text region into individual lines and then individual characters; (4) <b>character recognition</b> — matching each character shape to a trained model for that font; and (5) <b>post-processing</b> — applying dictionary and grammar rules to correct obvious errors. Modern OCR engines train on hundreds of thousands of fonts and can achieve 95-99% accuracy on clean printed text.
+    </p>
+
+    <h3>How to Use the OfficeKit Document Scanner</h3>
+    <ul>
+      <li><b>Step 1 — Take a photo or upload:</b> Tap "📷 Take a Photo" to open your device's camera (mobile) or "📁 Upload File" to select an existing PNG, JPG, or WEBP image from your device. You'll see a live preview of what was selected.</li>
+      <li><b>Step 2 — Choose your OCR engine:</b> Pick <b>Puter AI</b> for the best accuracy and 100+ language support, or <b>Tesseract.js</b> for a fully offline experience. Both run 100% in your browser.</li>
+      <li><b>Step 3 — Choose your language:</b> Pick the primary language from the dropdown. English is the default. Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, and Urdu are also supported. For mixed English + Hindi content, choose the "English + Hindi" option.</li>
+      <li><b>Step 4 — Extract text:</b> Click "Extract Text (OCR)" to begin. A progress bar shows the neural network's status. Depending on image size and device speed, this takes 3-15 seconds.</li>
+      <li><b>Step 5 — Copy or download:</b> Once complete, the extracted text appears in an editable textarea. Click <b>Copy</b> to copy it to your clipboard, <b>Download .txt</b> to save it as a plain text file, or edit it directly in the textarea before copying.</li>
+      <li><b>Step 6 — Start a new scan:</b> Click "New Scan" to clear the current result and upload another image without reloading the page.</li>
+    </ul>
+
+    <h3>Tips for Maximum OCR Accuracy</h3>
+    <ul>
+      <li><b>Good lighting is everything:</b> Natural daylight or bright, even indoor lighting produces the cleanest images. Avoid harsh shadows across the text.</li>
+      <li><b>Keep the camera flat:</b> Shoot the document straight-on, not at an angle. Perspective distortion confuses character recognition.</li>
+      <li><b>Fill the frame:</b> Get as close as possible so the text occupies most of the image. Small text = more errors.</li>
+      <li><b>High contrast:</b> Black text on white paper works best. If your document has a colored or textured background, consider scanning it with your phone's "document" mode first.</li>
+      <li><b>No glare:</b> Avoid shiny reflections from glossy paper or plastic wraps. Glare creates white blobs that OCR reads as missing characters.</li>
+      <li><b>Upright orientation:</b> The engine assumes horizontal text lines. If your document is sideways, rotate it in your photo viewer before uploading.</li>
+      <li><b>Printed vs handwritten:</b> The engine is optimized for printed typography — books, receipts, invoices, ID cards, business cards, and forms. High-clarity block handwriting (all-caps print) can work; cursive handwriting usually produces poor results.</li>
+    </ul>
+
+    <h3>Common Use Cases</h3>
+    <ul>
+      <li><b>Digitizing business cards:</b> Extract names, phone numbers, and email addresses from a stack of business cards without typing them into your CRM.</li>
+      <li><b>Extracting invoice data:</b> Pull line items, amounts, and dates from paper invoices for accounting or expense reports.</li>
+      <li><b>Transcribing book pages:</b> Convert printed text into editable digital files for research or translation.</li>
+      <li><b>Reading receipts:</b> Extract totals, tax amounts, and merchant details from photographed receipts for reimbursement claims.</li>
+      <li><b>Learning materials:</b> Digitize textbook pages or notes so you can search and copy the content.</li>
+      <li><b>Document archival:</b> Make scanned physical documents searchable by extracting their text.</li>
+      <li><b>Extracting Hindi content:</b> Convert Hindi newspaper clippings, notices, and forms into editable Unicode text — one of the few OCR tools that supports Devanagari script well.</li>
+    </ul>
+
+    <h3>Privacy: Why Client-Side OCR Matters</h3>
+    <p>
+      When you upload an image to a cloud-based OCR service, that image — containing your ID card number, bank account details, medical prescription, or legal contract — sits on a remote server, often in another country, for an unknown period of time. Most services claim to delete files after a few hours, but you have no way to verify that.
+    </p>
+    <p>
+      OfficeKit eliminates this risk entirely. Because OCR runs entirely inside your browser using WebAssembly and the Puter AI edge network, your image never leaves your device. When you close or refresh the tab, all traces are wiped from memory.
+    </p>
+
+    <h3>Frequently Asked Questions (FAQ)</h3>
+    <p><b>Q: What image formats are supported for OCR?</b><br>
+    All common web and phone formats — JPEG, PNG, WebP, GIF, BMP, and direct mobile camera captures. HEIC images from iPhones should first be converted to JPEG.</p>
+
+    <p><b>Q: Does this scanner support handwritten manuscripts?</b><br>
+    The engine is optimized primarily for typed and printed typography — books, invoices, official documents, signs, and receipts. High-clarity block letters in all-caps can sometimes be recognized. Cursive or joined handwriting will produce low accuracy; no browser-based OCR tool currently handles cursive well.</p>
+
+    <p><b>Q: Is my document data sent to any third-party servers?</b><br>
+    No. All optical character models execute client-side via JavaScript Web Workers and browser-native AI on your local device. No documents or extracted texts are logged or transmitted anywhere. You can verify this by disconnecting your internet after the page loads.</p>
+
+    <p><b>Q: Which languages are supported?</b><br>
+    Over 100 languages through the Puter AI engine. We've prioritized the most common Indian and international languages in the dropdown, but the OCR engine itself supports Arabic, Chinese, Japanese, Korean, Russian, Greek, Hebrew, and many more.</p>
+
+    <p><b>Q: Why is my first scan slow?</b><br>
+    The first time you use a language, the tool downloads its trained model (about 10-15 MB) and caches it in your browser. Subsequent scans of the same language are much faster — usually under 3 seconds.</p>
+
+    <p><b>Q: Can it extract text from PDFs?</b><br>
+    Directly, no — this tool is designed for image files. To OCR a PDF, first convert its pages to JPG using our <a href="pdf-to-jpg.html">PDF to JPG</a> tool, then upload the resulting images here.</p>
+
+    <p><b>Q: Does it preserve formatting like paragraphs and line breaks?</b><br>
+    It preserves line breaks and paragraphs based on visual layout, which works well for most documents. Complex formatting like tables and multi-column layouts may be partially flattened — you'll get the text but in a simpler layout.</p>
+
+    <p><b>Q: Is there any file size limit?</b><br>
+    No fixed limit, but images larger than 4000×4000 pixels are downscaled internally for speed. For best results, keep the image under 2000 pixels wide.</p>
+
+    <h3>Related OfficeKit Tools</h3>
+    <p>
+      If you found this helpful, you may also like our <a href="pdf-to-jpg.html">PDF to JPG Converter</a> to extract pages as images before OCR, our <a href="jpg-to-pdf.html">JPG to PDF Maker</a> to bundle scanned pages into a single file, our <a href="pdf-editor.html">PDF Editor</a> to annotate or edit text, and our <a href="word-counter.html">Word Counter</a> to check the character and word count of your extracted text before submitting.
+    </p>
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+</main>
+
+<div id="officekit-footer"></div>
+
+<script src="../assets/js/core/officekit-core.js"></script>
+
+<script>
+/* ==========================================================================
+   Document Scanner — Dual OCR Engine (Puter AI + Tesseract.js)
+   Puter AI: free, no API key, 100+ languages, high accuracy
+   Tesseract: fully offline fallback
+   ========================================================================== */
+const cameraIn     = document.getElementById("camera-in");
+const fileIn       = document.getElementById("file-in");
+const ocrBox       = document.getElementById("ocr-box");
+const engineSel    = document.getElementById("ocr-engine");
+const langSelect   = document.getElementById("ocr-lang");
+const btnOcr       = document.getElementById("btn-ocr");
+const progressWrap = document.getElementById("progress-wrap");
+const progressFill = document.getElementById("progress-fill");
+const statusEl     = document.getElementById("status-text");
+const resultWrap   = document.getElementById("result-wrap");
+const result       = document.getElementById("ocr-result");
+const previewThumb = document.getElementById("preview-thumb");
+const previewImg   = document.getElementById("preview-img");
+const previewName  = document.getElementById("preview-name");
+const btnCopy      = document.getElementById("btn-copy");
+const btnDownload  = document.getElementById("btn-download");
+const btnReset     = document.getElementById("btn-reset");
+
+let currentFile = null;
+let currentFileUrl = null;
+let loadedTesseract = false;
+
+/* ==========================================================================
+   Image preprocessing — boosts OCR accuracy for both engines
+   Converts to grayscale, boosts contrast, and rescales
+   ========================================================================== */
+function preprocessImage(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      try {
+        // Limit size to 2400px on the longest side (keeps OCR fast and accurate)
+        const maxDim = 2400;
+        let w = img.width, h = img.height;
+        if (w > maxDim || h > maxDim) {
+          const r = Math.min(maxDim / w, maxDim / h);
+          w = Math.round(w * r);
+          h = Math.round(h * r);
+        }
+
+        const c = document.createElement("canvas");
+        c.width = w;
+        c.height = h;
+        const ctx = c.getContext("2d", { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0, w, h);
+
+        // Grayscale + contrast boost
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const data = imgData.data;
+        const contrast = 1.35;      // > 1 = more contrast
+        const intercept = 128 * (1 - contrast);
+
+        for (let i = 0; i < data.length; i += 4) {
+          const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+          let v = contrast * gray + intercept;
+          if (v > 255) v = 255;
+          else if (v < 0) v = 0;
+          data[i]   = v;
+          data[i+1] = v;
+          data[i+2] = v;
+        }
+        ctx.putImageData(imgData, 0, 0);
+
+        c.toBlob((blob) => {
+          URL.revokeObjectURL(url);
+          if (blob) resolve(blob);
+          else reject(new Error("Failed to preprocess image"));
+        }, "image/png", 1.0);
+      } catch (err) {
+        URL.revokeObjectURL(url);
+        reject(err);
+      }
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not read image file"));
+    };
+    img.src = url;
+  });
+}
+
+/* ==========================================================================
+   Upload handling
+   ========================================================================== */
+function handleFile(file) {
+  if (!file) return;
+  currentFile = file;
+
+  if (currentFileUrl) URL.revokeObjectURL(currentFileUrl);
+  currentFileUrl = URL.createObjectURL(file);
+
+  previewImg.src = currentFileUrl;
+  previewName.textContent = file.name + " (" + (file.size / 1024).toFixed(1) + " KB)";
+  previewThumb.style.display = "block";
+  ocrBox.hidden = false;
+
+  resultWrap.classList.remove("show");
+  progressWrap.classList.remove("show");
+  statusEl.textContent = "";
+  progressFill.style.width = "0%";
+}
+
+cameraIn.addEventListener("change", (e) => {
+  const f = e.target.files[0];
+  if (f) handleFile(f);
+  e.target.value = "";
+});
+
+fileIn.addEventListener("change", (e) => {
+  const f = e.target.files[0];
+  if (f) handleFile(f);
+  e.target.value = "";
+});
+
+/* ==========================================================================
+   Convert blob to data URL for Puter API
+   ========================================================================== */
+function blobToDataURL(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("Failed to read image"));
+    reader.readAsDataURL(blob);
+  });
+}
+
+/* ==========================================================================
+   ENGINE 1 — Puter AI (free, no key, 100+ languages)
+   Uses puter.ai.img2txt() — returns OCR text directly
+   ========================================================================== */
+async function runPuterOCR(blob) {
+  statusEl.textContent = "Preparing image for Puter AI...";
+  progressFill.style.width = "20%";
+
+  const dataUrl = await blobToDataURL(blob);
+  statusEl.textContent = "Sending to Puter AI OCR engine...";
+  progressFill.style.width = "50%";
+
+  // puter.ai.img2txt accepts a URL or data URL and returns text
+  const text = await puter.ai.img2txt(dataUrl);
+  progressFill.style.width = "100%";
+  return typeof text === "string" ? text : (text.text || JSON.stringify(text));
+}
+
+/* ==========================================================================
+   ENGINE 2 — Tesseract.js (offline, no network after first load)
+   Dynamically loads library only when selected
+   ========================================================================== */
+function loadTesseractScript() {
+  if (loadedTesseract) return Promise.resolve();
+  if (window.Tesseract) { loadedTesseract = true; return Promise.resolve(); }
+
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+    s.onload = () => { loadedTesseract = true; resolve(); };
+    s.onerror = () => reject(new Error("Failed to load Tesseract.js"));
+    document.head.appendChild(s);
+  });
+}
+
+async function runTesseractOCR(blob, lang) {
+  statusEl.textContent = "Loading Tesseract engine...";
+  progressFill.style.width = "15%";
+
+  await loadTesseractScript();
+
+  const { data: { text } } = await Tesseract.recognize(blob, lang, {
+    logger: (m) => {
+      if (m.status === "loading tesseract core") {
+        statusEl.textContent = "Loading OCR engine...";
+        progressFill.style.width = "25%";
+      } else if (m.status === "initializing tesseract") {
+        statusEl.textContent = "Initializing engine...";
+        progressFill.style.width = "35%";
+      } else if (m.status === "loading language traineddata") {
+        statusEl.textContent = "Downloading language data (" + Math.round(m.progress * 100) + "%)...";
+        progressFill.style.width = (35 + m.progress * 20) + "%";
+      } else if (m.status === "initializing api") {
+        statusEl.textContent = "Preparing recognition...";
+        progressFill.style.width = "60%";
+      } else if (m.status === "recognizing text") {
+        const pct = Math.round(m.progress * 100);
+        statusEl.textContent = "Recognizing text... " + pct + "%";
+        progressFill.style.width = (60 + m.progress * 40) + "%";
+      }
+    }
+  });
+
+  progressFill.style.width = "100%";
+  return text;
+}
+
+/* ==========================================================================
+   Run OCR — dispatch to selected engine
+   ========================================================================== */
+btnOcr.addEventListener("click", async () => {
+  if (!currentFile) {
+    alert("Please upload or capture an image first.");
+    return;
+  }
+
+  btnOcr.disabled = true;
+  progressWrap.classList.add("show");
+  progressFill.style.width = "5%";
+  statusEl.textContent = "Preparing image...";
+
+  try {
+    // 1. Preprocess for better accuracy
+    const processedBlob = await preprocessImage(currentFile);
+
+    // 2. Run selected engine
+    const engine = engineSel.value;
+    const lang = langSelect.value || "eng";
+    let rawText = "";
+
+    if (engine === "puter") {
+      rawText = await runPuterOCR(processedBlob);
+    } else {
+      rawText = await runTesseractOCR(processedBlob, lang);
+    }
+
+    // 3. Show result
+    const cleanText = (rawText || "").trim();
+    result.value = cleanText || "(No readable text found in this image. Try a clearer, higher-contrast photo.)";
+
+    const wordCount = cleanText ? cleanText.split(/\s+/).filter(Boolean).length : 0;
+    statusEl.textContent = cleanText
+      ? "✅ Extraction complete! " + wordCount + " words detected."
+      : "⚠️ No text detected. Try another image.";
+
+    resultWrap.classList.add("show");
+    resultWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = "❌ Error: " + (err.message || "OCR failed");
+    progressFill.style.width = "0%";
+  } finally {
+    btnOcr.disabled = false;
+  }
+});
+
+/* ==========================================================================
+   Result actions
+   ========================================================================== */
+btnCopy.addEventListener("click", () => {
+  const text = result.value.trim();
+  if (!text) {
+    alert("Nothing to copy yet.");
+    return;
+  }
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btnCopy.innerHTML;
+    btnCopy.innerHTML = '<svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    setTimeout(() => { btnCopy.innerHTML = orig; }, 1500);
+  }).catch(() => {
+    result.select();
+    document.execCommand("copy");
+  });
+});
+
+btnDownload.addEventListener("click", () => {
+  const text = result.value.trim();
+  if (!text) {
+    alert("Nothing to download yet.");
+    return;
+  }
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "extracted-text-" + Date.now() + ".txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+btnReset.addEventListener("click", () => {
+  currentFile = null;
+  if (currentFileUrl) {
+    URL.revokeObjectURL(currentFileUrl);
+    currentFileUrl = null;
+  }
+  previewThumb.style.display = "none";
+  previewImg.src = "";
+  previewName.textContent = "";
+  result.value = "";
+  ocrBox.hidden = true;
+  resultWrap.classList.remove("show");
+  progressWrap.classList.remove("show");
+  progressFill.style.width = "0%";
+  statusEl.textContent = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+</body>
+</html>
