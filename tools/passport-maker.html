@@ -9,8 +9,8 @@
 
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
+<!-- IS-Net Background Removal Library (High Quality) -->
+<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.8/dist/bundle.js"></script>
 
 <style>
 :root {
@@ -224,6 +224,8 @@
   justify-content: center;
   flex-direction: column;
   gap: 14px;
+  padding: 20px;
+  text-align: center;
 }
 .spinner {
   width: 50px; height: 50px;
@@ -274,8 +276,8 @@
 
 <div id="ai-loader">
   <div class="spinner"></div>
-  <div id="loader-text" style="font-size:16px; font-weight:800; color:#fff; letter-spacing:0.3px;">AI Removing Background...</div>
-  <div style="font-size:12.5px; color:#94a3b8;">Processing hair & fine edges locally with neural AI</div>
+  <div id="loader-text" style="font-size:16px; font-weight:800; color:#fff; letter-spacing:0.3px;">Loading AI Model (First Time)...</div>
+  <div id="loader-subtext" style="font-size:12.5px; color:#94a3b8; max-width:320px;">Initial download is ~40 MB. It will be cached for future use.</div>
 </div>
 
 <div id="officekit-header"></div>
@@ -297,6 +299,7 @@
       </svg>
       <h3 style="font-size:17px; font-weight:800;">Select Photo from Camera or Gallery</h3>
       <p style="margin-top:6px; font-size:13px;">AI automatically isolates hair & contours for professional studio background replacement</p>
+      <p style="margin-top:8px; font-size:11.5px; color:var(--subtext-color); font-weight:500;">⚡ First use: downloads AI model (~40 MB, one-time)</p>
     </div>
   </div>
 
@@ -499,7 +502,7 @@
 
   <section class="seo-article">
     <h2>Complete Guide to Generating Studio Quality Passport & Visa Photos Online</h2>
-    <p>Creating official government-compliant passport photographs at home has never been easier. The OfficeKit Passport Photo Studio operates 100% locally in your web browser, utilizing state-of-the-art client-side AI body segmentation models. Whether you need standard 35x45 mm photographs for national passports, competitive exams, and government recruitment portals, or 2x2 inch square photographs for US and Schengen visa documentation, our system renders high-density 300 DPI output instantly.</p>
+    <p>Creating official government-compliant passport photographs at home has never been easier. The OfficeKit Passport Photo Studio operates 100% locally in your web browser, utilizing state-of-the-art IS-Net neural network for precise subject segmentation. Whether you need standard 35x45 mm photographs for national passports, competitive exams, and government recruitment portals, or 2x2 inch square photographs for US and Schengen visa documentation, our system renders high-density 300 DPI output instantly.</p>
 
     <div class="article-image-box">
       <img src="../assets/images/passport-maker-demo.jpg" alt="Passport Maker Studio Workflow and Sheet Print Layout" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo / Grid Sheet Graphic Here: assets/images/passport-maker-demo.jpg]</div>';">
@@ -511,16 +514,19 @@
     <h3>Step-by-Step Instructions:</h3>
     <ul>
       <li><b>Step 1 - Upload Photo:</b> Click the upload area or drag and drop any clear, front-facing mobile selfie or camera portrait.</li>
-      <li><b>Step 2 - Background Replacement:</b> Choose from standard government-approved background colors like Royal Blue, Passport Red, or Clean Pure White.</li>
-      <li><b>Step 3 - Border & Spacing:</b> Toggle the 2px–4px black border option to ensure your photo stands out cleanly when printed on paper.</li>
-      <li><b>Step 4 - Choose Paper Sheet:</b> Select A4 or 4x6 (4R) paper size to automatically tile dozens of photos across a single page, ready for immediate color printing.</li>
+      <li><b>Step 2 - Wait for AI Processing:</b> The first time you use this tool, it will download a ~40 MB AI model (one-time, cached after). Subsequent uses are much faster.</li>
+      <li><b>Step 3 - Background Replacement:</b> Choose from standard government-approved background colors like Royal Blue, Passport Red, or Clean Pure White.</li>
+      <li><b>Step 4 - Border & Spacing:</b> Toggle the 2px–4px black border option to ensure your photo stands out cleanly when printed on paper.</li>
+      <li><b>Step 5 - Choose Paper Sheet:</b> Select A4 or 4x6 (4R) paper size to automatically tile dozens of photos across a single page, ready for immediate color printing.</li>
     </ul>
 
     <h3>Frequently Asked Questions (FAQ):</h3>
     <p><b>Q: What are the exact dimensions for standard passport and identity photos?</b><br>
     The standard official dimension is 35 mm in width by 45 mm in height (3.5 cm x 4.5 cm). The face should cover 70% to 80% of the vertical area.</p>
+    <p><b>Q: Why does the first use take longer?</b><br>
+    The first time you use this tool, it downloads the IS-Net AI model (~40 MB). This is a one-time download that your browser caches, so subsequent uses are instant.</p>
     <p><b>Q: Will my photo lose quality or look pixelated?</b><br>
-    No. All single-image downloads and complete printable sheets are generated at a sharp 300 DPI print resolution.</p>
+    No. All single-image downloads and complete printable sheets are generated at a sharp 300 DPI print resolution with smooth, natural edges.</p>
     <p><b>Q: Are my photos uploaded or stored anywhere?</b><br>
     No. All calculations run strictly client-side on your device. When you refresh or close the tab, all memory is immediately wiped.</p>
   </section>
@@ -561,13 +567,15 @@
 
 <script>
 /* ==========================================================================
-   Passport Photo Studio — Smooth Mask (Fixed Jagged Edges)
+   Passport Photo Studio — IS-Net Background Removal (High Quality)
+   Uses @imgly/background-removal library (IS-Net model)
    ========================================================================== */
 const fileIn = document.getElementById("photo-in");
 const uploadScreen = document.getElementById("upload-screen");
 const workspace = document.getElementById("workspace");
 const aiLoader = document.getElementById("ai-loader");
 const loaderText = document.getElementById("loader-text");
+const loaderSubtext = document.getElementById("loader-subtext");
 
 const canvas = document.getElementById("preview-canvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -611,8 +619,8 @@ const btnDownloadPhoto = document.getElementById("btn-download-photo");
 const btnReset = document.getElementById("btn-reset");
 const btnUploadAnother = document.getElementById("btn-upload-another");
 
-let rawImg = null;
-let personMaskCanvas = null;
+let rawImg = null;             // Original uploaded image
+let cutoutImg = null;          // Transparent-background image (from IS-Net)
 let useAiBg = true;
 let activeColor = "#1d4ed8";
 let currentW_mm = 35;
@@ -623,61 +631,68 @@ let selectedPaperH_mm = 297;
 let selectedPaperName = "A4 Paper";
 
 /* ==========================================================================
-   MediaPipe
-   ========================================================================== */
-let selfieSegmentation = null;
-
-function initMediaPipe() {
-  if (selfieSegmentation) return;
-  selfieSegmentation = new SelfieSegmentation({
-    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`
-  });
-  selfieSegmentation.setOptions({ modelSelection: 1 });
-
-  selfieSegmentation.onResults((results) => {
-    personMaskCanvas = document.createElement("canvas");
-    personMaskCanvas.width = results.image.width;
-    personMaskCanvas.height = results.image.height;
-    personMaskCanvas.getContext("2d").drawImage(results.segmentationMask, 0, 0);
-
-    aiLoader.style.display = "none";
-    uploadScreen.hidden = true;
-    workspace.hidden = false;
-    renderPhoto();
-  });
-}
-
-/* ==========================================================================
-   File upload
+   File upload — uses IS-Net background removal
    ========================================================================== */
 fileIn.onchange = async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
   aiLoader.style.display = "flex";
-  loaderText.innerText = "Loading AI model...";
+  loaderText.innerText = "Loading AI Model...";
+  loaderSubtext.innerText = "First use: downloads ~40 MB. It will be cached for future.";
 
   try {
-    const imgUrl = await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (ev) => resolve(ev.target.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-
+    // Show original image
+    const originalUrl = URL.createObjectURL(file);
     rawImg = new Image();
     await new Promise((resolve, reject) => {
       rawImg.onload = resolve;
       rawImg.onerror = reject;
-      rawImg.src = imgUrl;
+      rawImg.src = originalUrl;
     });
 
-    initMediaPipe();
-    loaderText.innerText = "Segmenting person from background...";
-    await selfieSegmentation.send({ image: rawImg });
+    // Run IS-Net background removal
+    loaderText.innerText = "Removing Background with AI...";
+    loaderSubtext.innerText = "This may take 5-15 seconds depending on image size.";
+
+    // @imgly/background-removal exposes window.imglyRemoveBackground
+    const removalFn = window.imglyRemoveBackground || (window.default && window.default.removeBackground);
+    if (!removalFn) {
+      throw new Error("Background removal library not loaded. Please check your internet connection and refresh.");
+    }
+
+    // Progress callback
+    const removeOpts = {
+      progress: (key, current, total) => {
+        if (total) {
+          const pct = Math.round((current / total) * 100);
+          loaderSubtext.innerText = `${key}: ${pct}%`;
+        }
+      },
+      // 'small' = fastest, 'medium' = balanced, 'large' = best quality
+      // Use 'medium' as default for best balance
+      model: 'isnet'
+    };
+
+    const blob = await removalFn(file, removeOpts);
+
+    // Load the resulting transparent PNG
+    const cutoutUrl = URL.createObjectURL(blob);
+    cutoutImg = new Image();
+    await new Promise((resolve, reject) => {
+      cutoutImg.onload = resolve;
+      cutoutImg.onerror = reject;
+      cutoutImg.src = cutoutUrl;
+    });
+
+    // Show workspace
+    aiLoader.style.display = "none";
+    uploadScreen.hidden = true;
+    workspace.hidden = false;
+    renderPhoto();
   } catch (err) {
-    console.error(err);
-    alert("Could not process image. Please try another photo.");
+    console.error("Background removal error:", err);
+    alert("Could not process image. Please check your internet connection and try again.\n\nError: " + (err.message || err));
     aiLoader.style.display = "none";
   }
 };
@@ -831,7 +846,7 @@ gridGapInput.oninput = () => {
 };
 
 /* ==========================================================================
-   renderPhoto — SMOOTH MASK (no halo, no jagged edges)
+   renderPhoto — Uses IS-Net transparent cutout
    ========================================================================== */
 function renderPhoto() {
   if (!rawImg) return;
@@ -842,61 +857,20 @@ function renderPhoto() {
   canvas.width = targetW;
   canvas.height = targetH;
 
+  // Fill background
   ctx.fillStyle = useAiBg ? activeColor : "#ffffff";
   ctx.fillRect(0, 0, targetW, targetH);
 
-  const scale = Math.max(targetW / rawImg.width, targetH / rawImg.height);
-  const dw = rawImg.width * scale;
-  const dh = rawImg.height * scale;
+  // Use cutoutImg if AI BG is on and cutout is ready, else use rawImg
+  const sourceImg = (useAiBg && cutoutImg) ? cutoutImg : rawImg;
+
+  const scale = Math.max(targetW / sourceImg.width, targetH / sourceImg.height);
+  const dw = sourceImg.width * scale;
+  const dh = sourceImg.height * scale;
   const dx = (targetW - dw) / 2;
   const dy = (targetH - dh) / 2;
 
-  if (useAiBg && personMaskCanvas) {
-    // ---- STEP 1: Build cutout canvas (person only) ----
-    const cutout = document.createElement("canvas");
-    cutout.width = targetW;
-    cutout.height = targetH;
-    const cCtx = cutout.getContext("2d");
-
-    cCtx.drawImage(rawImg, dx, dy, dw, dh);
-
-    // ---- STEP 2: Build SMOOTH mask (smoothstep feathering) ----
-    const maskCanvas = document.createElement("canvas");
-    maskCanvas.width = targetW;
-    maskCanvas.height = targetH;
-    const mCtx = maskCanvas.getContext("2d");
-    mCtx.drawImage(personMaskCanvas, dx, dy, dw, dh);
-
-    const maskData = mCtx.getImageData(0, 0, targetW, targetH);
-    const md = maskData.data;
-    for (let i = 0; i < md.length; i += 4) {
-      const v = md[i];
-      let a;
-      if (v <= 80) {
-        a = 0;
-      } else if (v >= 200) {
-        a = 255;
-      } else {
-        const t = (v - 80) / (200 - 80);
-        a = Math.round(t * t * (3 - 2 * t) * 255);
-      }
-      md[i] = 255;
-      md[i+1] = 255;
-      md[i+2] = 255;
-      md[i+3] = a;
-    }
-    mCtx.putImageData(maskData, 0, 0);
-
-    // ---- STEP 3: Apply smooth mask to cutout ----
-    cCtx.globalCompositeOperation = "destination-in";
-    cCtx.drawImage(maskCanvas, 0, 0);
-    cCtx.globalCompositeOperation = "source-over";
-
-    // ---- STEP 4: Draw clean cutout on colored background ----
-    ctx.drawImage(cutout, 0, 0);
-  } else {
-    ctx.drawImage(rawImg, dx, dy, dw, dh);
-  }
+  ctx.drawImage(sourceImg, dx, dy, dw, dh);
 
   applyImageAdjustments(targetW, targetH);
 
@@ -1020,7 +994,7 @@ btnReset.onclick = () => {
 btnUploadAnother.onclick = () => {
   fileIn.value = "";
   rawImg = null;
-  personMaskCanvas = null;
+  cutoutImg = null;
   workspace.hidden = true;
   sheetPreviewWrap.hidden = true;
   uploadScreen.hidden = false;
@@ -1028,4 +1002,4 @@ btnUploadAnother.onclick = () => {
 };
 </script>
 </body>
-</html>
+                                                                                            </html>
