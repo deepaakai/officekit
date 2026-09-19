@@ -58,10 +58,15 @@
   background:var(--ok-card);
   border:1px solid var(--ok-border);
   touch-action:none;
+  user-select:none;
+  cursor:pointer;
   transition:transform .15s ease, box-shadow .15s ease;
 }
+.jpe-thumb img{
+  pointer-events:none;
+  width:100%; height:100%; object-fit:cover; display:block;
+}
 .jpe-thumb.dragging{ opacity:.55; transform:scale(1.04); box-shadow:0 8px 24px rgba(0,0,0,.4); z-index:5; }
-.jpe-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
 .jpe-thumb .jpe-page-no{
   position:absolute; top:6px; left:6px;
   background:rgba(11,19,41,.8); color:var(--ok-text);
@@ -168,7 +173,7 @@
 }
 .jpe-preview-inner{ position:relative; max-width:100%; max-height:100%; }
 #editor-canvas{
-  display:block; max-width:100%; max-height:76vh;
+  display:block; max-width:100%; max-height:60vh;
   border-radius:6px; box-shadow:0 4px 24px rgba(0,0,0,.4);
   touch-action:none;
   background:#000;
@@ -186,32 +191,92 @@
 .jpe-tabpanel{
   flex:0 0 auto; padding:14px 16px 8px; overflow-y:auto; max-height:34vh;
 }
-.jpe-panel-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px; }
-.jpe-panel-btn{
-  flex:1 1 auto; min-width:110px;
-  background:var(--ok-bg); border:1px solid var(--ok-border); color:var(--ok-text);
-  padding:10px 12px; border-radius:10px; font-size:13px; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; gap:6px;
-  transition:border-color .15s ease, background .15s ease;
+.jpe-panel-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
 }
-.jpe-panel-btn svg{ width:16px; height:16px; }
-.jpe-panel-btn:hover{ border-color:var(--ok-accent); }
-.jpe-panel-btn.jpe-primary{ background:var(--ok-accent); color:#04101f; border-color:var(--ok-accent); font-weight:700; }
+.jpe-panel-btn{
+  flex: 1 1 130px;
+  min-height: 46px;
+  background: var(--ok-card);
+  border: 1.5px solid var(--ok-border);
+  color: var(--ok-text);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: border-color .15s, background .15s, transform .1s;
+}
+.jpe-panel-btn svg{
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.jpe-panel-btn:hover{
+  border-color: var(--ok-accent);
+  background: rgba(56,189,248,.06);
+}
+.jpe-panel-btn:active{
+  transform: scale(.97);
+}
+.jpe-panel-btn.jpe-primary{
+  background: var(--ok-accent);
+  color: #04101f;
+  border-color: var(--ok-accent);
+  font-weight: 800;
+}
+.jpe-panel-btn.jpe-primary:hover{
+  background: var(--ok-accent-dark);
+}
 .jpe-panel-note{ font-size:12px; color:var(--ok-subtext); margin:0 0 10px; }
 
 .jpe-filter-row{
   display:flex; gap:12px; overflow-x:auto; padding:4px 2px 10px; scrollbar-width:thin;
 }
 .jpe-filter-opt{
-  flex:0 0 auto; width:72px; text-align:center; cursor:pointer; background:none; border:none; padding:0; color:var(--ok-subtext);
+  flex:0 0 auto;
+  width:88px;
+  text-align:center;
+  cursor:pointer;
+  background:none;
+  border:none;
+  padding:0;
+  color:var(--ok-subtext);
 }
 .jpe-filter-opt canvas{
-  width:72px; height:72px; border-radius:10px; object-fit:cover;
-  border:2px solid var(--ok-border); display:block; background:#000;
+  width:88px;
+  height:88px;
+  border-radius:10px;
+  object-fit:cover;
+  border:3px solid var(--ok-border);
+  display:block;
+  background:#000;
+  transition:border-color .15s, transform .15s;
 }
-.jpe-filter-opt.active canvas{ border-color:var(--ok-accent); }
-.jpe-filter-opt.active{ color:var(--ok-text); }
-.jpe-filter-opt span{ display:block; font-size:11px; margin-top:6px; }
+.jpe-filter-opt:hover canvas{
+  border-color: var(--ok-accent-dark);
+  transform: scale(1.04);
+}
+.jpe-filter-opt.active canvas{
+  border-color: var(--ok-accent);
+  box-shadow: 0 0 0 3px rgba(56,189,248,.25);
+}
+.jpe-filter-opt.active{
+  color:var(--ok-accent);
+  font-weight:700;
+}
+.jpe-filter-opt span{
+  display:block;
+  font-size:11.5px;
+  margin-top:8px;
+}
 
 .jpe-adjust-row{ margin-bottom:16px; }
 .jpe-adjust-row label{
@@ -226,15 +291,29 @@
   display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:10px;
 }
 .jpe-reorder-item{
-  position:relative; border-radius:10px; overflow:hidden; aspect-ratio:3/4;
-  border:1px solid var(--ok-border); background:var(--ok-bg); touch-action:none;
+  position:relative;
+  border-radius:10px;
+  overflow:hidden;
+  aspect-ratio:3/4;
+  border:1px solid var(--ok-border);
+  background:var(--ok-bg);
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
 }
-.jpe-reorder-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+.jpe-reorder-item.dragging{
+  opacity: 0.7;
+  box-shadow: 0 12px 30px rgba(0,0,0,.6);
+  cursor: grabbing;
+}
+.jpe-reorder-item img{
+  pointer-events: none;
+  width:100%; height:100%; object-fit:cover; display:block;
+}
 .jpe-reorder-item .jpe-page-no{
   position:absolute; top:5px; left:5px; background:rgba(11,19,41,.85);
   color:var(--ok-text); font-size:11px; font-weight:700; padding:2px 7px; border-radius:20px;
 }
-.jpe-reorder-item.dragging{ opacity:.5; transform:scale(1.05); z-index:5; }
 
 .jpe-tabs{
   flex:0 0 auto; display:flex; border-top:1px solid var(--ok-border);
@@ -390,12 +469,12 @@
       Apply filter to all pages
     </label>
     <div class="jpe-filter-row" id="filter-row">
-      <button class="jpe-filter-opt" id="filter-original" data-filter="original"><canvas width="72" height="72"></canvas><span>Original</span></button>
-      <button class="jpe-filter-opt" id="filter-auto-color" data-filter="auto-color"><canvas width="72" height="72"></canvas><span>Auto-color</span></button>
-      <button class="jpe-filter-opt" id="filter-light-text" data-filter="light-text"><canvas width="72" height="72"></canvas><span>Light text</span></button>
-      <button class="jpe-filter-opt" id="filter-grayscale" data-filter="grayscale"><canvas width="72" height="72"></canvas><span>Grayscale</span></button>
-      <button class="jpe-filter-opt" id="filter-whiteboard" data-filter="whiteboard"><canvas width="72" height="72"></canvas><span>Whiteboard</span></button>
-      <button class="jpe-filter-opt" id="filter-enhance" data-filter="enhance"><canvas width="72" height="72"></canvas><span>Enhance</span></button>
+      <button class="jpe-filter-opt" id="filter-original" data-filter="original"><canvas width="100" height="100"></canvas><span>Original</span></button>
+      <button class="jpe-filter-opt" id="filter-auto-color" data-filter="auto-color"><canvas width="100" height="100"></canvas><span>Auto-color</span></button>
+      <button class="jpe-filter-opt" id="filter-light-text" data-filter="light-text"><canvas width="100" height="100"></canvas><span>Light text</span></button>
+      <button class="jpe-filter-opt" id="filter-grayscale" data-filter="grayscale"><canvas width="100" height="100"></canvas><span>Grayscale</span></button>
+      <button class="jpe-filter-opt" id="filter-whiteboard" data-filter="whiteboard"><canvas width="100" height="100"></canvas><span>Whiteboard</span></button>
+      <button class="jpe-filter-opt" id="filter-enhance" data-filter="enhance"><canvas width="100" height="100"></canvas><span>Enhance</span></button>
     </div>
   </div>
 
@@ -454,15 +533,15 @@
 /* =====================================================================
    CONSTANTS & STATE
 ===================================================================== */
-var MAX_DIM = 1600;          // working resolution cap (perf vs quality)
-var THUMB_DIM = 220;         // queue thumbnail render size
-var FILTER_THUMB_DIM = 72;
+var MAX_DIM = 1600;
+var THUMB_DIM = 220;
+var FILTER_THUMB_DIM = 100;
 
-var queueImages = [];        // {id, name, img, rotation, crop, filter, brightness, contrast, saturation, thumbURL, processedBase}
+var queueImages = [];
 var nextId = 1;
 var activeIndex = -1;
 var activeTab = "crop";
-var cropDraft = null;        // {tl,tr,br,bl} in baseCanvas space while editing
+var cropDraft = null;
 var handleDrag = null;
 
 /* =====================================================================
@@ -511,7 +590,7 @@ function showToast(msg){
 }
 
 /* =====================================================================
-   FILE UPLOAD / DROP ZONE
+   FILE UPLOAD
 ===================================================================== */
 uploadInput.addEventListener("change", function(e){
   handleFiles(e.target.files);
@@ -593,11 +672,8 @@ function updateToolbarVisibility(){
 }
 
 /* =====================================================================
-   IMAGE PROCESSING PIPELINE
-   original image -> rotate -> crop (perspective warp) -> processedBase
-   processedBase -> filter preset + manual sliders -> final canvas
+   IMAGE PROCESSING
 ===================================================================== */
-
 function downscaleToMax(canvas, maxDim){
   var w = canvas.width, h = canvas.height;
   var scale = Math.min(1, maxDim / Math.max(w,h));
@@ -694,12 +770,12 @@ function invalidateProcessedBase(entry){
 
 function getPresetAdjustments(preset){
   switch(preset){
-    case "auto-color": return {brightness:8, contrast:8, saturation:24, gray:false};
-    case "light-text": return {brightness:20, contrast:36, saturation:-12, gray:false};
-    case "grayscale": return {brightness:0, contrast:6, saturation:-100, gray:true};
-    case "whiteboard": return {brightness:16, contrast:62, saturation:-100, gray:true};
-    case "enhance": return {brightness:10, contrast:22, saturation:18, gray:false};
-    default: return {brightness:0, contrast:0, saturation:0, gray:false};
+    case "auto-color":  return {brightness: 12, contrast: 15, saturation: 45,  gray: false};
+    case "light-text":  return {brightness: 30, contrast: 55, saturation: -30, gray: false};
+    case "grayscale":   return {brightness: 5,  contrast: 20, saturation: -100, gray: true};
+    case "whiteboard":  return {brightness: 25, contrast: 85, saturation: -100, gray: true};
+    case "enhance":     return {brightness: 15, contrast: 35, saturation: 30,  gray: false};
+    default:            return {brightness: 0,  contrast: 0,  saturation: 0,   gray: false};
   }
 }
 
@@ -708,27 +784,46 @@ function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
 function applyPixelAdjustments(canvas, brightness, contrast, saturation){
   var w = canvas.width, h = canvas.height;
   if (w === 0 || h === 0) return canvas;
+
   var ctx = canvas.getContext("2d");
   var imageData = ctx.getImageData(0, 0, w, h);
   var data = imageData.data;
-  var c255 = clamp(contrast, -100, 100) * 2.55;
-  var contrastFactor = (259 * (c255 + 255)) / (255 * (259 - c255));
-  var brightAdd = clamp(brightness, -100, 100) * 2.55;
-  var satFactor = 1 + clamp(saturation, -100, 100) / 100;
-  for (var i=0; i<data.length; i+=4){
-    var r = data[i], g = data[i+1], b = data[i+2];
-    var gray = 0.299*r + 0.587*g + 0.114*b;
-    r = gray + (r - gray) * satFactor;
-    g = gray + (g - gray) * satFactor;
-    b = gray + (b - gray) * satFactor;
-    r = contrastFactor * (r - 128) + 128;
-    g = contrastFactor * (g - 128) + 128;
-    b = contrastFactor * (b - 128) + 128;
-    r += brightAdd; g += brightAdd; b += brightAdd;
-    data[i] = clamp(r, 0, 255);
-    data[i+1] = clamp(g, 0, 255);
-    data[i+2] = clamp(b, 0, 255);
+
+  var b = clamp(brightness, -100, 100);
+  var c = clamp(contrast, -100, 100);
+  var s = clamp(saturation, -100, 100);
+
+  var brightAdd = (b / 100) * 128;
+  var contrastFactor = (259 * ((c * 2.55) + 255)) / (255 * (259 - (c * 2.55)));
+  var satFactor = 1 + (s / 100);
+
+  for (var i = 0; i < data.length; i += 4){
+    var r = data[i], g = data[i+1], bl = data[i+2];
+
+    if (s !== 0){
+      var gray = 0.299 * r + 0.587 * g + 0.114 * bl;
+      r = gray + (r - gray) * satFactor;
+      g = gray + (g - gray) * satFactor;
+      bl = gray + (bl - gray) * satFactor;
+    }
+
+    if (c !== 0){
+      r = contrastFactor * (r - 128) + 128;
+      g = contrastFactor * (g - 128) + 128;
+      bl = contrastFactor * (bl - 128) + 128;
+    }
+
+    if (b !== 0){
+      r += brightAdd;
+      g += brightAdd;
+      bl += brightAdd;
+    }
+
+    data[i] = clamp(Math.round(r), 0, 255);
+    data[i+1] = clamp(Math.round(g), 0, 255);
+    data[i+2] = clamp(Math.round(bl), 0, 255);
   }
+
   ctx.putImageData(imageData, 0, 0);
   return canvas;
 }
@@ -736,13 +831,20 @@ function applyPixelAdjustments(canvas, brightness, contrast, saturation){
 function getFinalCanvas(entry){
   var base = getProcessedBase(entry);
   var out = document.createElement("canvas");
-  out.width = base.width; out.height = base.height;
-  out.getContext("2d").drawImage(base, 0, 0);
+  out.width = base.width;
+  out.height = base.height;
+  var ctx = out.getContext("2d");
+  ctx.drawImage(base, 0, 0);
+
   var preset = getPresetAdjustments(entry.filter);
   var brightness = clamp(preset.brightness + entry.brightness, -100, 100);
   var contrast = clamp(preset.contrast + entry.contrast, -100, 100);
   var saturation = clamp(preset.saturation + entry.saturation, -100, 100);
-  applyPixelAdjustments(out, brightness, contrast, saturation);
+
+  if (brightness !== 0 || contrast !== 0 || saturation !== 0){
+    applyPixelAdjustments(out, brightness, contrast, saturation);
+  }
+
   return out;
 }
 
@@ -766,64 +868,81 @@ function regenerateThumb(entry){
 }
 
 /* =====================================================================
-   AUTO-DETECT (simple background-contrast heuristic)
+   AUTO-DETECT (Sobel edge-based)
 ===================================================================== */
 function autoDetectCorners(canvas){
   var w = canvas.width, h = canvas.height;
-  var scale = Math.min(1, 400 / Math.max(w, h));
-  var sw = Math.max(10, Math.round(w*scale)), sh = Math.max(10, Math.round(h*scale));
+  var scale = Math.min(1, 500 / Math.max(w, h));
+  var sw = Math.max(20, Math.round(w * scale));
+  var sh = Math.max(20, Math.round(h * scale));
+
   var off = document.createElement("canvas");
   off.width = sw; off.height = sh;
   var octx = off.getContext("2d");
   octx.drawImage(canvas, 0, 0, sw, sh);
-  var data = octx.getImageData(0, 0, sw, sh).data;
 
-  function at(x, y){
-    var i = (y*sw + x) * 4;
-    return [data[i], data[i+1], data[i+2]];
+  var imgData = octx.getImageData(0, 0, sw, sh).data;
+  var gray = new Uint8Array(sw * sh);
+  for (var i = 0, j = 0; i < imgData.length; i += 4, j++){
+    gray[j] = Math.round(0.299*imgData[i] + 0.587*imgData[i+1] + 0.114*imgData[i+2]);
   }
-  var samples = [at(1,1), at(sw-2,1), at(1,sh-2), at(sw-2,sh-2)];
-  var bg = [0,1,2].map(function(c){
-    return samples.reduce(function(s,p){ return s+p[c]; }, 0) / samples.length;
-  });
 
-  var threshold = 42;
-  var rowCount = new Array(sh).fill(0);
-  var colCount = new Array(sw).fill(0);
-  for (var y=0; y<sh; y++){
-    for (var x=0; x<sw; x++){
-      var i = (y*sw+x)*4;
-      var d = Math.sqrt(Math.pow(data[i]-bg[0],2) + Math.pow(data[i+1]-bg[1],2) + Math.pow(data[i+2]-bg[2],2));
-      if (d > threshold){ rowCount[y]++; colCount[x]++; }
+  var edges = new Uint8Array(sw * sh);
+  for (var y = 1; y < sh - 1; y++){
+    for (var x = 1; x < sw - 1; x++){
+      var gx = -gray[(y-1)*sw + (x-1)] + gray[(y-1)*sw + (x+1)]
+             - 2*gray[y*sw + (x-1)] + 2*gray[y*sw + (x+1)]
+             - gray[(y+1)*sw + (x-1)] + gray[(y+1)*sw + (x+1)];
+      var gy = -gray[(y-1)*sw + (x-1)] - 2*gray[(y-1)*sw + x] - gray[(y-1)*sw + (x+1)]
+             + gray[(y+1)*sw + (x-1)] + 2*gray[(y+1)*sw + x] + gray[(y+1)*sw + (x+1)];
+      var mag = Math.sqrt(gx*gx + gy*gy);
+      edges[y*sw + x] = mag > 60 ? 255 : 0;
     }
   }
-  var rowThresh = sw * 0.035, colThresh = sh * 0.035;
-  var minY=-1, maxY=-1, minX=-1, maxX=-1;
-  for (y=0; y<sh; y++){
-    if (rowCount[y] > rowThresh){ if (minY<0) minY=y; maxY=y; }
-  }
-  for (x=0; x<sw; x++){
-    if (colCount[x] > colThresh){ if (minX<0) minX=x; maxX=x; }
+
+  var rowCount = new Uint16Array(sh);
+  var colCount = new Uint16Array(sw);
+  for (var y2 = 0; y2 < sh; y2++){
+    for (var x2 = 0; x2 < sw; x2++){
+      if (edges[y2*sw + x2]){ rowCount[y2]++; colCount[x2]++; }
+    }
   }
 
-  if (minX<0 || minY<0 || maxX<=minX || maxY<=minY){
-    var m = 0.04;
+  var rowThresh = Math.max(sw * 0.05, 3);
+  var colThresh = Math.max(sh * 0.05, 3);
+
+  var minY = -1, maxY = -1, minX = -1, maxX = -1;
+  for (var yy = 0; yy < sh; yy++){
+    if (rowCount[yy] > rowThresh){ if (minY < 0) minY = yy; maxY = yy; }
+  }
+  for (var xx = 0; xx < sw; xx++){
+    if (colCount[xx] > colThresh){ if (minX < 0) minX = xx; maxX = xx; }
+  }
+
+  var failed = (minX < 0 || minY < 0 || maxX <= minX || maxY <= minY
+             || (maxX - minX) < sw * 0.3 || (maxY - minY) < sh * 0.3);
+
+  if (failed){
+    var m = 0.05;
     return {
-      tl:{x:w*m, y:h*m}, tr:{x:w*(1-m), y:h*m},
-      br:{x:w*(1-m), y:h*(1-m)}, bl:{x:w*m, y:h*(1-m)}
+      tl: {x: w*m,     y: h*m},
+      tr: {x: w*(1-m), y: h*m},
+      br: {x: w*(1-m), y: h*(1-m)},
+      bl: {x: w*m,     y: h*(1-m)}
     };
   }
-  var rx = 1/scale;
+
+  var rx = 1 / scale;
   return {
-    tl: {x:minX*rx, y:minY*rx},
-    tr: {x:maxX*rx, y:minY*rx},
-    br: {x:maxX*rx, y:maxY*rx},
-    bl: {x:minX*rx, y:maxY*rx}
+    tl: {x: minX * rx,       y: minY * rx},
+    tr: {x: (maxX+1) * rx,   y: minY * rx},
+    br: {x: (maxX+1) * rx,   y: (maxY+1) * rx},
+    bl: {x: minX * rx,       y: (maxY+1) * rx}
   };
 }
 
 /* =====================================================================
-   QUEUE STRIP RENDER + REORDER (main thumbnail strip)
+   QUEUE STRIP + REORDER
 ===================================================================== */
 function renderQueueStrip(){
   queueStrip.innerHTML = "";
@@ -843,10 +962,12 @@ function renderQueueStrip(){
       if (e.target.closest(".no-drag")) return;
       openEditor(queueImages.indexOf(entry));
     });
-    div.querySelector(".jpe-edit-btn").addEventListener("click", function(){
+    div.querySelector(".jpe-edit-btn").addEventListener("click", function(e){
+      e.stopPropagation();
       openEditor(queueImages.indexOf(entry));
     });
-    div.querySelector(".jpe-delete-btn").addEventListener("click", function(){
+    div.querySelector(".jpe-delete-btn").addEventListener("click", function(e){
+      e.stopPropagation();
       var i = queueImages.indexOf(entry);
       if (i > -1){ queueImages.splice(i,1); renderQueueStrip(); updateToolbarVisibility(); }
     });
@@ -862,44 +983,77 @@ function escapeHtml(str){
 
 function makeReorderable(container, onOrderChange){
   var dragEl = null;
+  var startX = 0, startY = 0;
+
   container.addEventListener("pointerdown", function(e){
     var item = e.target.closest("[data-id]");
     if (!item || e.target.closest(".no-drag")) return;
+
     dragEl = item;
-    try{ item.setPointerCapture(e.pointerId); } catch(err){}
+    startX = e.clientX;
+    startY = e.clientY;
+
+    item.style.transition = "none";
     item.classList.add("dragging");
+    e.preventDefault();
   });
+
   container.addEventListener("pointermove", function(e){
     if (!dragEl) return;
+    e.preventDefault();
+
+    var dx = e.clientX - startX;
+    var dy = e.clientY - startY;
+    dragEl.style.transform = "translate(" + dx + "px, " + dy + "px) scale(1.05)";
+    dragEl.style.zIndex = "9999";
+
+    var el = document.elementFromPoint(e.clientX, e.clientY);
+    if (!el) return;
+    var targetItem = el.closest("[data-id]");
+    if (!targetItem || targetItem === dragEl) return;
+
     var items = Array.from(container.children);
     var dragIndex = items.indexOf(dragEl);
-    for (var k=0; k<items.length; k++){
-      var other = items[k];
-      if (other === dragEl) continue;
-      var rect = other.getBoundingClientRect();
-      if (e.clientX > rect.left && e.clientX < rect.right && e.clientY > rect.top && e.clientY < rect.bottom){
-        var overIndex = items.indexOf(other);
-        if (overIndex < dragIndex) container.insertBefore(dragEl, other);
-        else container.insertBefore(dragEl, other.nextSibling);
-        break;
-      }
+    var targetIndex = items.indexOf(targetItem);
+
+    if (dragIndex < targetIndex){
+      container.insertBefore(dragEl, targetItem.nextSibling);
+    } else {
+      container.insertBefore(dragEl, targetItem);
     }
+
+    startX = e.clientX;
+    startY = e.clientY;
+    dragEl.style.transform = "translate(0,0) scale(1.05)";
   });
+
   function finish(){
     if (!dragEl) return;
+    dragEl.style.transform = "";
+    dragEl.style.zIndex = "";
+    dragEl.style.transition = "";
     dragEl.classList.remove("dragging");
-    var order = Array.from(container.children).map(function(el){ return el.dataset.id; });
     dragEl = null;
+
+    var order = Array.from(container.children).map(function(el){
+      return el.dataset.id;
+    });
     onOrderChange(order);
   }
+
   container.addEventListener("pointerup", finish);
   container.addEventListener("pointercancel", finish);
+  container.addEventListener("pointerleave", finish);
 }
 
 function reorderQueueByIdList(idOrder){
   var map = {};
   queueImages.forEach(function(e){ map[e.id] = e; });
-  queueImages = idOrder.map(function(id){ return map[id]; }).filter(Boolean);
+  var newOrder = [];
+  idOrder.forEach(function(id){
+    if (map[id]) newOrder.push(map[id]);
+  });
+  queueImages = newOrder;
   renderQueueStrip();
   if (activeIndex > -1) renderReorderGrid();
 }
@@ -907,9 +1061,6 @@ function reorderQueueByIdList(idOrder){
 makeReorderable(queueStrip, reorderQueueByIdList);
 makeReorderable(reorderGrid, reorderQueueByIdList);
 
-/* =====================================================================
-   REORDER TAB GRID
-===================================================================== */
 function renderReorderGrid(){
   reorderGrid.innerHTML = "";
   queueImages.forEach(function(entry, idx){
@@ -986,7 +1137,6 @@ function renderEditorPreview(){
   editorCtx.drawImage(final, 0, 0);
 }
 
-/* ---------- Tabs ---------- */
 var tabButtons = document.querySelectorAll(".jpe-tab-btn");
 var tabPanels = {
   crop: document.getElementById("tabpanel-crop"),
@@ -1013,7 +1163,7 @@ function setTab(tab){
   if (tab === "reorder") renderReorderGrid();
 }
 
-/* ---------- CROP TAB ---------- */
+/* ---------- CROP ---------- */
 function enterCropTab(){
   var entry = currentEntry();
   if (!entry) return;
@@ -1044,20 +1194,48 @@ function renderCropCanvas(base){
 
 function renderHandles(){
   cropHandlesEl.innerHTML = "";
-  var base = getProcessedBase(currentEntry());
+  var entry = currentEntry();
+  if (!entry) return;
+  var base = getProcessedBase(entry);
   var order = ["tl","tr","br","bl"];
+
   order.forEach(function(key){
     var handle = document.createElement("div");
     handle.className = "jpe-corner-handle";
     handle.dataset.corner = key;
     positionHandle(handle, cropDraft[key], base);
+    cropHandlesEl.appendChild(handle);
+
     handle.addEventListener("pointerdown", function(e){
+      e.preventDefault();
       e.stopPropagation();
       handleDrag = key;
-      try{ handle.setPointerCapture(e.pointerId); } catch(err){}
+      try { handle.setPointerCapture(e.pointerId); } catch(err){}
+
+      function onMove(ev){
+        if (!handleDrag) return;
+        var baseNow = getProcessedBase(currentEntry());
+        var rect = editorCanvas.getBoundingClientRect();
+        var relX = clamp((ev.clientX - rect.left) / rect.width, 0, 1);
+        var relY = clamp((ev.clientY - rect.top)  / rect.height, 0, 1);
+        cropDraft[handleDrag] = {x: relX * baseNow.width, y: relY * baseNow.height};
+        positionHandle(handle, cropDraft[handleDrag], baseNow);
+        updateQuadPolygon(baseNow);
+      }
+
+      function onUp(){
+        handleDrag = null;
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("pointerup", onUp);
+        window.removeEventListener("pointercancel", onUp);
+      }
+
+      window.addEventListener("pointermove", onMove);
+      window.addEventListener("pointerup", onUp);
+      window.addEventListener("pointercancel", onUp);
     });
-    cropHandlesEl.appendChild(handle);
   });
+
   updateQuadPolygon(base);
 }
 
@@ -1065,22 +1243,6 @@ function positionHandle(el, corner, base){
   el.style.left = (corner.x / base.width * 100) + "%";
   el.style.top = (corner.y / base.height * 100) + "%";
 }
-
-previewInner.addEventListener("pointermove", function(e){
-  if (!handleDrag) return;
-  var entry = currentEntry();
-  if (!entry) return;
-  var base = getProcessedBase(entry);
-  var rect = editorCanvas.getBoundingClientRect();
-  var relX = clamp((e.clientX - rect.left) / rect.width, 0, 1);
-  var relY = clamp((e.clientY - rect.top) / rect.height, 0, 1);
-  cropDraft[handleDrag] = {x: relX*base.width, y: relY*base.height};
-  var el = cropHandlesEl.querySelector('[data-corner="'+handleDrag+'"]');
-  if (el) positionHandle(el, cropDraft[handleDrag], base);
-  updateQuadPolygon(base);
-});
-window.addEventListener("pointerup", function(){ handleDrag = null; });
-window.addEventListener("pointercancel", function(){ handleDrag = null; });
 
 function updateQuadPolygon(base){
   var pts = ["tl","tr","br","bl"].map(function(k){
@@ -1119,8 +1281,6 @@ function commitCrop(){
   var isFull = cornersAreFull(cropDraft, base);
   if (!isFull){
     var warped = warpQuadToRect(base, cropDraft);
-    // Flatten rotation + crop into a new source canvas so future rotations
-    // and crops start from a clean, undistorted coordinate space.
     entry.source = warped;
     entry.rotation = 0;
     entry.crop = null;
@@ -1151,7 +1311,7 @@ function cornersAreFull(c, base){
          Math.abs(c.bl.x-0)<tol && Math.abs(c.bl.y-base.height)<tol;
 }
 
-/* ---------- ROTATE TAB ---------- */
+/* ---------- ROTATE ---------- */
 function rotateEntry(entry, delta){
   entry.rotation = ((entry.rotation + delta) % 360 + 360) % 360;
   entry.crop = null;
@@ -1170,28 +1330,35 @@ document.getElementById("btn-rotate-180").addEventListener("click", function(){
   var e = currentEntry(); if (e) rotateEntry(e, 180);
 });
 
-/* ---------- FILTERS TAB ---------- */
+/* ---------- FILTERS ---------- */
 function renderFilterThumbs(){
   var entry = currentEntry();
   if (!entry) return;
   var base = getProcessedBase(entry);
-  var small = renderThumbCanvas(base, FILTER_THUMB_DIM);
+  var small = renderThumbCanvas(base, 120);
+
   var opts = filterRow.querySelectorAll(".jpe-filter-opt");
   opts.forEach(function(opt){
     var preset = opt.dataset.filter;
     var canvas = opt.querySelector("canvas");
-    canvas.width = FILTER_THUMB_DIM; canvas.height = FILTER_THUMB_DIM;
-    var ctx = canvas.getContext("2d");
+    canvas.width = 100;
+    canvas.height = 100;
+
     var copy = document.createElement("canvas");
-    copy.width = small.width; copy.height = small.height;
+    copy.width = small.width;
+    copy.height = small.height;
     copy.getContext("2d").drawImage(small, 0, 0);
+
     var adj = getPresetAdjustments(preset);
     applyPixelAdjustments(copy, adj.brightness, adj.contrast, adj.saturation);
-    ctx.clearRect(0,0,FILTER_THUMB_DIM,FILTER_THUMB_DIM);
-    var dx = (FILTER_THUMB_DIM - copy.width)/2, dy = (FILTER_THUMB_DIM - copy.height)/2;
-    ctx.fillStyle = "#000"; ctx.fillRect(0,0,FILTER_THUMB_DIM,FILTER_THUMB_DIM);
-    ctx.drawImage(copy, dx, dy);
+
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, 100, 100);
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, 100, 100);
+    ctx.drawImage(copy, (100 - copy.width) / 2, (100 - copy.height) / 2);
   });
+
   updateFilterActiveState();
 }
 
@@ -1207,6 +1374,7 @@ filterRow.addEventListener("click", function(e){
   var opt = e.target.closest(".jpe-filter-opt");
   if (!opt) return;
   var preset = opt.dataset.filter;
+
   if (applyAllToggle.checked){
     queueImages.forEach(function(entry){
       entry.filter = preset;
@@ -1214,15 +1382,18 @@ filterRow.addEventListener("click", function(e){
     });
     renderQueueStrip();
   } else {
-    currentEntry().filter = preset;
-    regenerateThumb(currentEntry());
+    var entry = currentEntry();
+    if (!entry) return;
+    entry.filter = preset;
+    regenerateThumb(entry);
     renderQueueStrip();
   }
+
   updateFilterActiveState();
   renderEditorPreview();
 });
 
-/* ---------- ADJUST TAB ---------- */
+/* ---------- ADJUST ---------- */
 var adjustDebounce = null;
 function bindSlider(slider, valEl, key){
   slider.addEventListener("input", function(){
@@ -1236,7 +1407,9 @@ function bindSlider(slider, valEl, key){
     }, 30);
   });
   slider.addEventListener("change", function(){
-    regenerateThumb(currentEntry());
+    var entry = currentEntry();
+    if (!entry) return;
+    regenerateThumb(entry);
     renderQueueStrip();
   });
 }
