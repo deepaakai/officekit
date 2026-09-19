@@ -330,8 +330,35 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;hei
     </div>
   </section>
 
+  <!-- HOW TO USE / TUTORIAL SECTION (500-700 words) -->
+  <section class="section card" style="padding: 24px; margin-top: 40px;">
+    <h2>How to Use JPG to PDF &amp; Document Scanner</h2>
+    <p class="muted" style="margin-top: 6px; margin-bottom: 16px;">Complete guide on scanning and compiling images into high-quality PDFs securely in your browser.</p>
+    
+    <div style="text-align: center; margin: 20px 0;">
+      <!-- Synced Dynamic Preview / Demo Image Placeholder -->
+      <img id="tutorial-demo-img" src="demo.jpg" alt="JPG to PDF Demo Scanner Workflow" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--bd);" onerror="this.style.display='none'">
+    </div>
+
+    <div style="font-size: 14px; line-height: 1.6; color: var(--tx);">
+      <p>Welcome to the ultimate client-side Document Scanner and <strong>JPG to PDF</strong> conversion tool. Whether you are dealing with multi-page handwritten notes, important invoices, identity papers, certificates, or formal receipts, this tool lets you process everything directly within your web browser without uploading a single byte to any remote server. Your files remain 100% private, secure, and under your absolute control.</p>
+
+      <h3 style="margin-top: 16px; font-size: 15px; color: var(--accent);">Step-by-Step Instructions</h3>
+      <ol style="padding-left: 20px; margin-top: 6px;">
+        <li><strong>Upload or Capture:</strong> Click on the "Camera capture" button to take live photos using your smartphone camera or select "Gallery / Files" to pick multiple images (JPG, PNG, WEBP) at once. You can also drag and drop your image files directly into the upload drop zone box.</li>
+        <li><strong>Crop and Perspective Correction:</strong> Tap on any thumbnail page in your grid to open the live editor. Drag the four corner handles to perfectly align the boundaries with your document edges. This removes unwanted background spaces and corrects awkward camera angles instantly.</li>
+        <li><strong>Apply Filters &amp; Adjustments:</strong> Switch to the filter tab to enhance readability. Choose presets like <em>Auto Color</em>, <em>Light Text</em>, <em>Grayscale</em>, or <em>Whiteboard</em>. You can also apply these filters across all loaded pages simultaneously using the "Apply All Pages" button. Fine-tune brightness, contrast, and saturation using the slide controls.</li>
+        <li><strong>Organize &amp; Reorder:</strong> Easily reorder pages by dragging and dropping them into your preferred sequence, or use the move and duplicate tools. You can also add blank pages if necessary.</li>
+        <li><strong>Export to PDF:</strong> Configure your page size (A4, A3, Letter, or Auto), adjust margins, select image compression quality, and click "Save PDF". Your document compiles instantly and downloads straight to your local device.</li>
+      </ol>
+
+      <h3 style="margin-top: 16px; font-size: 15px; color: var(--accent);">Why Choose Client-Side Processing?</h3>
+      <p>Traditional online tools require you to upload personal documents over the internet, posing severe privacy risks. Our advanced browser utility uses modern Web APIs, client-side canvas transformations, and script engines to compile everything locally. There are no limits, no subscription fees, no intrusive watermarks on your document layout, and no waiting queues.</p>
+    </div>
+  </section>
+
   <p class="hint center" style="margin-top: 34px; font-size: 12.5px;">
-    Made with love by <a href="https://pdf365.in" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600;">Deepaak Kumar</a> (100% Privacy, Client-side)
+    100% Privacy, Client-side Document Processing
   </p>
 </main>
 
@@ -390,6 +417,10 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;hei
         <button class="chip" data-filter="gray" type="button"><svg class="ic"><use href="#i-contrast"/></svg><span>Grayscale</span></button>
         <button class="chip" data-filter="whiteboard" type="button"><svg class="ic"><use href="#i-monitor"/></svg><span>Whiteboard</span></button>
         <button class="chip" data-filter="enhance" type="button"><svg class="ic"><use href="#i-zap"/></svg><span>Enhance</span></button>
+      </div>
+      <!-- APPLY TO ALL PAGES BUTTON FOR FILTERS -->
+      <div style="margin-top: 14px;">
+        <button class="btn btn-primary btn-sm btn-block" id="btn-apply-filter-all" type="button">Apply Filter to All Pages</button>
       </div>
     </div>
     <div class="panel" data-panel="adjust">
@@ -510,7 +541,7 @@ var state = {
   editorOpen: false,
   dirty: false
 };
-window.state = state; // Global state access
+window.state = state;
 var uid = 0;
 
 function currentPage() { return state.pages[state.current] || null; }
@@ -914,34 +945,30 @@ async function exportPDF() {
       var dw = img.width * k, dh = img.height * k;
       page.drawImage(img, { x: (pw - dw) / 2, y: (ph - dh) / 2, width: dw, height: dh });
 
-      // ---- Watermark (केवल PDF पेज पर, बिना किसी एन्कोडिंग एरर के) ----
+      // ---- बहुत छोटा वाटरमार्क (8-9 पॉइंट साइज, लेफ्ट/राइट कॉर्नर पर) ----
       var wmText = 'pdf365.in';
-      var wmSize = Math.min(pw, ph) * 0.09;
-      var wmFont = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-      var wmWidth = wmFont.widthOfTextAtSize(wmText, wmSize);
-      var wmHeight = wmFont.heightAtSize(wmSize);
+      var wmSize = 9; // 8-9 Point size requested
+      var wmFont = await doc.embedFont(PDFLib.StandardFonts.Helvetica);
       
       page.drawText(wmText, {
-        x: (pw - wmWidth * Math.cos(Math.PI / 6)) / 2,
-        y: (ph - wmHeight * Math.sin(Math.PI / 6)) / 2,
+        x: marginPt + 10, // Left corner
+        y: ph - marginPt - 15, // Top-left corner
         size: wmSize,
         font: wmFont,
-        color: PDFLib.rgb(0.75, 0.75, 0.75),
-        opacity: 0.22,
-        rotate: PDFLib.degrees(30)
+        color: PDFLib.rgb(0.7, 0.7, 0.7),
+        opacity: 0.4
       });
 
-      // ---- Footer Credit (Safe Text) ----
-      var creditText = 'Made with love by Deepaak Kumar | pdf365.in';
-      var creditSize = Math.min(pw, ph) * 0.022;
-      var creditWidth = wmFont.widthOfTextAtSize(creditText, creditSize);
-      page.drawText(creditText, {
-        x: (pw - creditWidth) / 2,
-        y: marginPt * 0.55,
-        size: creditSize,
+      // ---- बहुत छोटा फुटर टेक्स्ट (9 पॉइंट) ----
+      var footerText = 'pdf365.in';
+      var footerSize = 8;
+      page.drawText(footerText, {
+        x: marginPt + 10,
+        y: marginPt + 5,
+        size: footerSize,
         font: wmFont,
-        color: PDFLib.rgb(0.6, 0.6, 0.6),
-        opacity: 0.8
+        color: PDFLib.rgb(0.7, 0.7, 0.7),
+        opacity: 0.4
       });
 
       setProgress((i + 1) / pages.length, true);
@@ -1119,10 +1146,18 @@ function updatePreview() {
     box.innerHTML = '<span class="preview-empty">Preview</span>';
     $('preview-title').textContent = 'No pages yet';
     $('preview-sub').textContent = 'Add pages to build a document';
+    
+    // Sync tutorial demo image source with first page or fallback to demo.jpg
+    var demoImg = $('tutorial-demo-img');
+    if (demoImg) demoImg.src = 'demo.jpg';
     return;
   }
   if (state.pages[0].thumb) {
     box.innerHTML = '<img alt="Preview" src="' + state.pages[0].thumb + '">';
+    
+    // Sync tutorial demo image dynamically with the uploaded/scanned page preview
+    var demoImg = $('tutorial-demo-img');
+    if (demoImg) demoImg.src = state.pages[0].thumb;
   } else {
     box.innerHTML = '<span class="preview-empty">Preview</span>';
   }
@@ -1458,6 +1493,19 @@ function wireEvents() {
       qsa('#filter-grid .chip').forEach(function (c) { c.classList.toggle('active', c === chip); });
       renderEditor();
     });
+  });
+
+  // Apply Filter to All Pages Feature Click Handler
+  $('btn-apply-filter-all').addEventListener('click', function () {
+    var p = currentPage();
+    if (!p) return;
+    var currentFilter = p.filter;
+    state.pages.forEach(function (page) {
+      page.filter = currentFilter;
+      ensureProcessed(page, true);
+    });
+    renderEditor();
+    toast('Filter applied to all pages!', 'ok');
   });
 
   var adjustApply = debounce(function () { renderEditor(); }, 110);
