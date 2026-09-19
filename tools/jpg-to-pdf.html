@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Convert JPG to PDF Online Free — OfficeKit</title>
-<meta name="description" content="Convert JPG / PNG / WEBP images into a single PDF document. 100% browser-based, private, free.">
+<title>JPG to PDF with Image Editor — OfficeKit</title>
+<meta name="description" content="Convert JPG, PNG or WEBP photos into a polished PDF. Crop, straighten, rotate and enhance every page with a free, 100% browser-based scanner-style editor.">
 <link rel="canonical" href="https://pdf365.in/tools/jpg-to-pdf.html">
 
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
@@ -12,18 +12,262 @@
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
 <style>
-.queue-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 10px 14px;
-  border-radius: 6px;
-  font-size: 13.5px;
-  color: var(--text-color);
+:root{
+  --ok-bg: var(--bg-color, #0b1329);
+  --ok-card: var(--card-bg, #111e38);
+  --ok-border: var(--border-color, #1e2a4a);
+  --ok-text: var(--text-color, #e6edf7);
+  --ok-subtext: var(--subtext-color, #93a3c2);
+  --ok-accent: var(--accent, #38bdf8);
+  --ok-accent-dark: #0ea5e9;
+  --ok-danger: #f87171;
 }
-.queue-del-btn { color: #f87171; cursor: pointer; font-weight: 700; font-size: 16px; margin-left: 10px; }
+
+/* ---------- Upload & queue ---------- */
+.jpe-drop-zone{
+  position:relative;
+  border:2px dashed var(--ok-border);
+  border-radius:12px;
+  padding:34px 18px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s ease, background .2s ease;
+  background:rgba(56,189,248,.03);
+}
+.jpe-drop-zone.dragover{ border-color:var(--ok-accent); background:rgba(56,189,248,.08); }
+.jpe-drop-zone input[type=file]{ position:absolute; inset:0; opacity:0; cursor:pointer; }
+.jpe-drop-zone svg{ width:44px; height:44px; color:var(--ok-accent); margin:0 auto 10px; display:block; }
+.jpe-drop-zone h3{ margin:0 0 6px; color:var(--ok-text); font-size:16px; }
+.jpe-drop-zone p{ margin:0; color:var(--ok-subtext); font-size:13px; }
+
+.jpe-queue-strip{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:14px 2px;
+  margin-top:8px;
+  scrollbar-width:thin;
+}
+.jpe-thumb{
+  position:relative;
+  flex:0 0 auto;
+  width:96px;
+  height:120px;
+  border-radius:12px;
+  overflow:hidden;
+  background:var(--ok-card);
+  border:1px solid var(--ok-border);
+  touch-action:none;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.jpe-thumb.dragging{ opacity:.55; transform:scale(1.04); box-shadow:0 8px 24px rgba(0,0,0,.4); z-index:5; }
+.jpe-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.jpe-thumb .jpe-page-no{
+  position:absolute; top:6px; left:6px;
+  background:rgba(11,19,41,.8); color:var(--ok-text);
+  font-size:11px; font-weight:600; padding:2px 7px; border-radius:20px;
+}
+.jpe-thumb .jpe-thumb-actions{
+  position:absolute; top:4px; right:4px; display:flex; gap:4px;
+}
+.jpe-icon-btn{
+  width:26px; height:26px; border-radius:50%;
+  background:rgba(11,19,41,.85); border:1px solid var(--ok-border);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--ok-text); padding:0;
+}
+.jpe-icon-btn svg{ width:14px; height:14px; }
+.jpe-icon-btn.jpe-delete{ color:var(--ok-danger); }
+.jpe-icon-btn:active{ transform:scale(.92); }
+.jpe-thumb-name{
+  position:absolute; bottom:0; left:0; right:0;
+  font-size:10px; color:var(--ok-subtext);
+  background:linear-gradient(transparent, rgba(11,19,41,.9));
+  padding:10px 6px 4px; text-align:center;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+.jpe-toolbar{
+  display:flex; flex-wrap:wrap; align-items:center; gap:12px;
+  margin-top:16px; padding-top:16px; border-top:1px solid var(--ok-border);
+}
+.jpe-toolbar-group{ display:flex; align-items:center; gap:8px; }
+.jpe-select{
+  background:var(--ok-bg); color:var(--ok-text); border:1px solid var(--ok-border);
+  border-radius:8px; padding:8px 10px; font-size:13px;
+}
+.jpe-toggle-label{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ok-subtext); cursor:pointer; }
+.jpe-switch{
+  position:relative; width:38px; height:22px; border-radius:20px;
+  background:var(--ok-border); flex:0 0 auto; transition:background .2s ease;
+}
+.jpe-switch::after{
+  content:""; position:absolute; top:2px; left:2px; width:18px; height:18px;
+  border-radius:50%; background:#fff; transition:transform .2s ease;
+}
+.jpe-toggle-input{ display:none; }
+.jpe-toggle-input:checked + .jpe-switch{ background:var(--ok-accent); }
+.jpe-toggle-input:checked + .jpe-switch::after{ transform:translateX(16px); }
+
+.jpe-save-btn{ margin-left:auto; }
+.jpe-hint{ font-size:12px; color:var(--ok-subtext); margin-top:8px; }
+
+/* ---------- Editor bottom sheet ---------- */
+.jpe-overlay{
+  position:fixed; inset:0; background:rgba(4,8,20,.72);
+  z-index:998; opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.jpe-overlay.open{ opacity:1; pointer-events:auto; }
+
+.jpe-sheet{
+  position:fixed; left:0; right:0; bottom:0;
+  max-width:640px; margin:0 auto;
+  background:var(--ok-card);
+  border-radius:20px 20px 0 0;
+  border:1px solid var(--ok-border); border-bottom:none;
+  box-shadow:0 -12px 40px rgba(0,0,0,.5);
+  z-index:999;
+  display:flex; flex-direction:column;
+  height:min(92vh, 760px);
+  transform:translateY(102%);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1);
+}
+.jpe-sheet.open{ transform:translateY(0); }
+
+.jpe-sheet-header{
+  display:flex; align-items:center; gap:10px;
+  padding:14px 14px 10px;
+  border-bottom:1px solid var(--ok-border);
+  flex:0 0 auto;
+}
+.jpe-sheet-header .jpe-title{
+  flex:1; text-align:center; font-size:14px; font-weight:600; color:var(--ok-text);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.jpe-plain-btn{
+  background:none; border:none; color:var(--ok-subtext); font-size:20px; line-height:1;
+  cursor:pointer; padding:6px 8px; border-radius:8px;
+}
+.jpe-plain-btn:hover{ color:var(--ok-text); }
+.jpe-nav-btn{ font-size:16px; }
+.jpe-done-btn{
+  background:var(--ok-accent); color:#04101f; border:none; font-weight:700;
+  font-size:13px; padding:8px 16px; border-radius:8px; cursor:pointer;
+}
+
+.jpe-preview-wrap{
+  flex:1 1 auto; min-height:0;
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  background:
+    linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%) 0 0/16px 16px,
+    linear-gradient(-45deg, rgba(255,255,255,.03) 25%, transparent 25%) 0 0/16px 16px,
+    var(--ok-bg);
+  padding:14px;
+  overflow:hidden;
+}
+.jpe-preview-inner{ position:relative; max-width:100%; max-height:100%; }
+#editor-canvas{
+  display:block; max-width:100%; max-height:76vh;
+  border-radius:6px; box-shadow:0 4px 24px rgba(0,0,0,.4);
+  touch-action:none;
+  background:#000;
+}
+.jpe-quad-overlay{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.jpe-quad-overlay polygon{ fill:rgba(56,189,248,.15); stroke:var(--ok-accent); stroke-width:2; vector-effect:non-scaling-stroke; }
+.jpe-corner-handle{
+  position:absolute; width:26px; height:26px; margin:-13px 0 0 -13px;
+  border-radius:50%; background:var(--ok-accent); border:3px solid #04101f;
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+  touch-action:none; cursor:grab; z-index:2;
+}
+.jpe-corner-handle:active{ cursor:grabbing; transform:scale(1.15); }
+
+.jpe-tabpanel{
+  flex:0 0 auto; padding:14px 16px 8px; overflow-y:auto; max-height:34vh;
+}
+.jpe-panel-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px; }
+.jpe-panel-btn{
+  flex:1 1 auto; min-width:110px;
+  background:var(--ok-bg); border:1px solid var(--ok-border); color:var(--ok-text);
+  padding:10px 12px; border-radius:10px; font-size:13px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:border-color .15s ease, background .15s ease;
+}
+.jpe-panel-btn svg{ width:16px; height:16px; }
+.jpe-panel-btn:hover{ border-color:var(--ok-accent); }
+.jpe-panel-btn.jpe-primary{ background:var(--ok-accent); color:#04101f; border-color:var(--ok-accent); font-weight:700; }
+.jpe-panel-note{ font-size:12px; color:var(--ok-subtext); margin:0 0 10px; }
+
+.jpe-filter-row{
+  display:flex; gap:12px; overflow-x:auto; padding:4px 2px 10px; scrollbar-width:thin;
+}
+.jpe-filter-opt{
+  flex:0 0 auto; width:72px; text-align:center; cursor:pointer; background:none; border:none; padding:0; color:var(--ok-subtext);
+}
+.jpe-filter-opt canvas{
+  width:72px; height:72px; border-radius:10px; object-fit:cover;
+  border:2px solid var(--ok-border); display:block; background:#000;
+}
+.jpe-filter-opt.active canvas{ border-color:var(--ok-accent); }
+.jpe-filter-opt.active{ color:var(--ok-text); }
+.jpe-filter-opt span{ display:block; font-size:11px; margin-top:6px; }
+
+.jpe-adjust-row{ margin-bottom:16px; }
+.jpe-adjust-row label{
+  display:flex; justify-content:space-between; font-size:13px; color:var(--ok-text); margin-bottom:6px;
+}
+.jpe-adjust-row label span.val{ color:var(--ok-accent); font-weight:600; }
+.jpe-adjust-row input[type=range]{
+  width:100%; accent-color:var(--ok-accent);
+}
+
+.jpe-reorder-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:10px;
+}
+.jpe-reorder-item{
+  position:relative; border-radius:10px; overflow:hidden; aspect-ratio:3/4;
+  border:1px solid var(--ok-border); background:var(--ok-bg); touch-action:none;
+}
+.jpe-reorder-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+.jpe-reorder-item .jpe-page-no{
+  position:absolute; top:5px; left:5px; background:rgba(11,19,41,.85);
+  color:var(--ok-text); font-size:11px; font-weight:700; padding:2px 7px; border-radius:20px;
+}
+.jpe-reorder-item.dragging{ opacity:.5; transform:scale(1.05); z-index:5; }
+
+.jpe-tabs{
+  flex:0 0 auto; display:flex; border-top:1px solid var(--ok-border);
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+  background:var(--ok-card);
+}
+.jpe-tab-btn{
+  flex:1; background:none; border:none; color:var(--ok-subtext);
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  font-size:10.5px; padding:8px 2px; cursor:pointer; border-radius:10px;
+}
+.jpe-tab-btn svg{ width:20px; height:20px; }
+.jpe-tab-btn.active{ color:var(--ok-accent); background:rgba(56,189,248,.08); }
+
+.jpe-toast{
+  position:fixed; left:50%; bottom:28px; transform:translate(-50%,12px);
+  background:var(--ok-card); color:var(--ok-text); border:1px solid var(--ok-border);
+  padding:10px 18px; border-radius:30px; font-size:13px; z-index:1200;
+  opacity:0; transition:opacity .2s ease, transform .2s ease; pointer-events:none;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.jpe-toast.show{ opacity:1; transform:translate(-50%,0); }
+
+.jpe-output-card{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  background:var(--ok-bg); border:1px solid var(--ok-border); border-radius:12px;
+  padding:16px; margin-top:16px;
+}
+
+@media (max-width:480px){
+  .jpe-thumb{ width:82px; height:104px; }
+  .jpe-save-btn{ margin-left:0; width:100%; }
+}
 </style>
 </head>
 <body>
@@ -32,58 +276,57 @@
 
 <main class="main-wrap">
   <div class="hero-box">
-    <h1 class="hero-title">Convert JPG Images to PDF</h1>
-    <p class="hero-sub">Transform multiple JPG or PNG images into a single professional PDF document — 100% in your browser.</p>
+    <h1 class="hero-title">JPG to PDF with Image Editor</h1>
+    <p class="hero-sub">Scan-style cropping, straightening, filters and enhancement — combine your photos into one clean PDF, entirely in your browser.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
   <div class="tool-card" style="max-width:900px; margin:0 auto;">
-    <div class="drop-zone">
-      <input type="file" id="jpg-in" accept="image/jpeg,image/png,image/webp" multiple>
-      <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      <h3>Select or Drop JPG / PNG Images</h3>
-      <p>Add single or multiple files to compile into a single PDF</p>
+
+    <div class="jpe-drop-zone" id="drop-zone">
+      <input type="file" id="upload-input" accept="image/jpeg,image/png,image/webp" multiple>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <h3>Select or drop JPG / PNG / WEBP images</h3>
+      <p>Tap a page afterwards to crop, straighten, rotate or apply a filter</p>
     </div>
 
-    <div id="queue" style="margin:15px 0; display:flex; flex-direction:column; gap:6px;"></div>
-    <button class="primary-button" id="btn-convert" style="display:none; width:100%; margin-top:10px;">Convert to PDF Now</button>
-    <div id="output" style="margin-top:15px;"></div>
+    <div class="jpe-queue-strip" id="queue-strip"></div>
+
+    <div class="jpe-toolbar" id="jpe-toolbar" hidden>
+      <div class="jpe-toolbar-group">
+        <label for="page-size-select" style="font-size:12.5px;color:var(--ok-subtext);">Page size</label>
+        <select class="jpe-select" id="page-size-select">
+          <option value="auto">Auto-fit (image size)</option>
+          <option value="a4p">A4 Portrait</option>
+          <option value="a4l">A4 Landscape</option>
+          <option value="a3p">A3 Portrait</option>
+          <option value="a3l">A3 Landscape</option>
+        </select>
+      </div>
+      <button class="primary-button jpe-save-btn" id="pdf-save">Save PDF</button>
+    </div>
+    <p class="jpe-hint" id="queue-count-hint" hidden></p>
+
+    <div id="output"></div>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
   <section class="seo-article">
-    <h2>Complete Guide: Merge & Convert Multiple JPG/PNG Images into PDF Online</h2>
-    <p>Converting physical paperwork, smartphone camera snapshots, fee receipts, and certificate photos into a clean, unified PDF is essential when submitting documents to universities, government employment boards, and visa embassies. While traditional converters send personal files to external servers or enforce strict file-size paywalls, the OfficeKit JPG to PDF Converter builds standard PDF documents directly in your browser using pure WebAssembly binary encoding.</p>
-
-    <div class="article-image-box">
-      <img src="../assets/images/jpg-to-pdf-demo.jpg" alt="JPG to PDF Converter Workflow Diagram" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/jpg-to-pdf-demo.jpg]</div>';">
-      <div class="article-image-caption">Visual demonstration showing multi-image sequencing and lossless packaging into a unified PDF file.</div>
-    </div>
-
-    <h3>Step-by-Step Instructions:</h3>
+    <h2>Turn Photos Into a Polished PDF — With a Built-In Document Editor</h2>
+    <p>Phone photos of paperwork rarely look print-ready straight out of the camera: the page is skewed, the lighting is uneven, and the edges of the desk sneak into the shot. OfficeKit's JPG to PDF tool adds a scan-style editor on top of the usual image-to-PDF conversion, so every page can be squared up, brightened and cleaned before it's compiled — all inside your browser, with nothing uploaded to a server.</p>
+    <h3>What you can do before exporting</h3>
     <ul>
-      <li><b>Step 1 - Select or Drag Photos:</b> Click the upload zone to choose one or more JPG, PNG, or WebP pictures.</li>
-      <li><b>Step 2 - Verify Your File Queue:</b> Inspect the loaded files list. Remove any unwanted pages using the red cross icon.</li>
-      <li><b>Step 3 - Click Convert:</b> Hit the "Convert to PDF Now" action button to trigger instant client-side binary page embedding.</li>
-      <li><b>Step 4 - Instant Download:</b> Download the generated PDF directly to your device storage.</li>
+      <li><b>Crop and straighten:</b> auto-detect the document edges or drag the four corner handles yourself to correct perspective.</li>
+      <li><b>Rotate:</b> fix sideways or upside-down photos in one tap.</li>
+      <li><b>Apply a filter:</b> Auto-color, Light Text, Grayscale, Whiteboard or Enhance — with an option to apply the same look to every page.</li>
+      <li><b>Fine-tune:</b> adjust brightness, contrast and saturation with live sliders.</li>
+      <li><b>Reorder pages:</b> drag thumbnails into the order you want them to appear in the final PDF.</li>
     </ul>
-
-    <h3>Why Choose OfficeKit JPG to PDF?</h3>
-    <ul>
-      <li><b>Zero Cloud Storage:</b> Your sensitive photos are compiled in your device RAM and never uploaded to any remote host.</li>
-      <li><b>Lossless Dimension Retention:</b> Each page dynamically adjusts to match the original image dimensions.</li>
-      <li><b>Fast Client-Side Execution:</b> Powered by PDF-Lib, conversions happen in milliseconds.</li>
-    </ul>
-
     <h3>FAQ</h3>
-    <p><b>Q: Is there any limit on how many images I can convert?</b><br>
-    No. You can compile dozens of pages in a single queue, bounded only by your device's browser memory.</p>
-    <p><b>Q: Can I combine both PNG and JPG pictures into the same PDF?</b><br>
-    Yes. The embedded converter recognizes both formats automatically.</p>
-    <p><b>Q: Are my documents private?</b><br>
-    Absolutely. No file content is saved, logged, or sent over the internet.</p>
+    <p><b>Is anything uploaded to a server?</b><br>No — every crop, filter and the final PDF are generated locally in your browser using the Canvas API and pdf-lib.</p>
+    <p><b>Can I mix JPG, PNG and WEBP files in one PDF?</b><br>Yes, they can all be combined into a single document.</p>
   </section>
 
   <div class="ad-slot-container">Advertisement</div>
@@ -91,71 +334,994 @@
 
 <div id="officekit-footer"></div>
 
+<!-- ================= Editor bottom sheet ================= -->
+<div class="jpe-overlay" id="editor-overlay"></div>
+<div class="jpe-sheet" id="editor-sheet" role="dialog" aria-label="Image editor">
+  <div class="jpe-sheet-header">
+    <button class="jpe-plain-btn jpe-nav-btn" id="editor-prev" title="Previous image">&#8249;</button>
+    <button class="jpe-plain-btn" id="editor-close" title="Close editor">&#10005;</button>
+    <span class="jpe-title" id="editor-title">Edit image</span>
+    <button class="jpe-done-btn" id="editor-done">Done</button>
+    <button class="jpe-plain-btn jpe-nav-btn" id="editor-next" title="Next image">&#8250;</button>
+  </div>
+
+  <div class="jpe-preview-wrap">
+    <div class="jpe-preview-inner" id="preview-inner">
+      <canvas id="editor-canvas"></canvas>
+      <svg class="jpe-quad-overlay" id="quad-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" hidden>
+        <polygon id="quad-polygon" points="0,0 100,0 100,100 0,100"></polygon>
+      </svg>
+      <div id="crop-handles"></div>
+    </div>
+  </div>
+
+  <div class="jpe-tabpanel" id="tabpanel-crop">
+    <p class="jpe-panel-note">Drag the corner handles onto the edges of your document, or try auto-detect.</p>
+    <div class="jpe-panel-row">
+      <button class="jpe-panel-btn" id="btn-auto-detect">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+        Auto-detect
+      </button>
+      <button class="jpe-panel-btn" id="btn-reset-crop">Reset</button>
+    </div>
+    <div class="jpe-panel-row">
+      <button class="jpe-panel-btn jpe-primary" id="btn-apply-crop">Apply crop</button>
+    </div>
+  </div>
+
+  <div class="jpe-tabpanel" id="tabpanel-rotate" hidden>
+    <div class="jpe-panel-row">
+      <button class="jpe-panel-btn" id="btn-rotate-left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-2"/></svg>
+        Left 90°
+      </button>
+      <button class="jpe-panel-btn" id="btn-rotate-right">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14l5-5-5-5"/><path d="M20 9H10A6 6 0 0 0 10 21h2"/></svg>
+        Right 90°
+      </button>
+      <button class="jpe-panel-btn" id="btn-rotate-180">Rotate 180°</button>
+    </div>
+  </div>
+
+  <div class="jpe-tabpanel" id="tabpanel-filters" hidden>
+    <label class="jpe-toggle-label" style="margin-bottom:12px;">
+      <input type="checkbox" class="jpe-toggle-input" id="toggle-apply-all">
+      <span class="jpe-switch"></span>
+      Apply filter to all pages
+    </label>
+    <div class="jpe-filter-row" id="filter-row">
+      <button class="jpe-filter-opt" id="filter-original" data-filter="original"><canvas width="72" height="72"></canvas><span>Original</span></button>
+      <button class="jpe-filter-opt" id="filter-auto-color" data-filter="auto-color"><canvas width="72" height="72"></canvas><span>Auto-color</span></button>
+      <button class="jpe-filter-opt" id="filter-light-text" data-filter="light-text"><canvas width="72" height="72"></canvas><span>Light text</span></button>
+      <button class="jpe-filter-opt" id="filter-grayscale" data-filter="grayscale"><canvas width="72" height="72"></canvas><span>Grayscale</span></button>
+      <button class="jpe-filter-opt" id="filter-whiteboard" data-filter="whiteboard"><canvas width="72" height="72"></canvas><span>Whiteboard</span></button>
+      <button class="jpe-filter-opt" id="filter-enhance" data-filter="enhance"><canvas width="72" height="72"></canvas><span>Enhance</span></button>
+    </div>
+  </div>
+
+  <div class="jpe-tabpanel" id="tabpanel-adjust" hidden>
+    <div class="jpe-adjust-row">
+      <label>Brightness <span class="val" id="val-brightness">0</span></label>
+      <input type="range" id="slider-brightness" min="-100" max="100" value="0">
+    </div>
+    <div class="jpe-adjust-row">
+      <label>Contrast <span class="val" id="val-contrast">0</span></label>
+      <input type="range" id="slider-contrast" min="-100" max="100" value="0">
+    </div>
+    <div class="jpe-adjust-row">
+      <label>Saturation <span class="val" id="val-saturation">0</span></label>
+      <input type="range" id="slider-saturation" min="-100" max="100" value="0">
+    </div>
+  </div>
+
+  <div class="jpe-tabpanel" id="tabpanel-reorder" hidden>
+    <p class="jpe-panel-note">Drag pages to change their order in the PDF.</p>
+    <div class="jpe-reorder-grid" id="reorder-grid"></div>
+  </div>
+
+  <div class="jpe-tabs">
+    <button class="jpe-tab-btn active" id="crop-btn" data-tab="crop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+      Crop
+    </button>
+    <button class="jpe-tab-btn" id="rotate-btn" data-tab="rotate">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+      Rotate
+    </button>
+    <button class="jpe-tab-btn" id="filters-btn" data-tab="filters">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z"/></svg>
+      Filters
+    </button>
+    <button class="jpe-tab-btn" id="adjust-btn" data-tab="adjust">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.8" fill="currentColor"/><circle cx="16" cy="12" r="1.8" fill="currentColor"/><circle cx="10" cy="18" r="1.8" fill="currentColor"/></svg>
+      Adjust
+    </button>
+    <button class="jpe-tab-btn" id="reorder-btn" data-tab="reorder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Reorder
+    </button>
+  </div>
+</div>
+
+<div class="jpe-toast" id="jpe-toast"></div>
+
 <script src="../assets/js/core/officekit-core.js"></script>
 
 <script>
-const fileIn = document.getElementById("jpg-in");
-const queue = document.getElementById("queue");
-const btn = document.getElementById("btn-convert");
-const output = document.getElementById("output");
-let files = [];
+(function(){
+"use strict";
 
-fileIn.addEventListener("change", (e) => {
-  files = [...files, ...Array.from(e.target.files)];
-  render();
-  fileIn.value = "";
-});
+/* =====================================================================
+   CONSTANTS & STATE
+===================================================================== */
+var MAX_DIM = 1600;          // working resolution cap (perf vs quality)
+var THUMB_DIM = 220;         // queue thumbnail render size
+var FILTER_THUMB_DIM = 72;
 
-function render() {
-  queue.innerHTML = "";
-  files.forEach((f, idx) => {
-    const div = document.createElement("div");
-    div.className = "queue-item";
-    div.innerHTML = `<span>${idx + 1}. ${f.name}</span><span class="queue-del-btn" title="Remove">✕</span>`;
-    div.querySelector(".queue-del-btn").onclick = () => { files.splice(idx, 1); render(); };
-    queue.appendChild(div);
-  });
-  btn.style.display = files.length > 0 ? "block" : "none";
+var queueImages = [];        // {id, name, img, rotation, crop, filter, brightness, contrast, saturation, thumbURL, processedBase}
+var nextId = 1;
+var activeIndex = -1;
+var activeTab = "crop";
+var cropDraft = null;        // {tl,tr,br,bl} in baseCanvas space while editing
+var handleDrag = null;
+
+/* =====================================================================
+   DOM REFS
+===================================================================== */
+var dropZone = document.getElementById("drop-zone");
+var uploadInput = document.getElementById("upload-input");
+var queueStrip = document.getElementById("queue-strip");
+var toolbar = document.getElementById("jpe-toolbar");
+var queueCountHint = document.getElementById("queue-count-hint");
+var pageSizeSelect = document.getElementById("page-size-select");
+var pdfSaveBtn = document.getElementById("pdf-save");
+var outputEl = document.getElementById("output");
+
+var overlay = document.getElementById("editor-overlay");
+var sheet = document.getElementById("editor-sheet");
+var editorTitle = document.getElementById("editor-title");
+var editorCanvas = document.getElementById("editor-canvas");
+var editorCtx = editorCanvas.getContext("2d");
+var previewInner = document.getElementById("preview-inner");
+var quadOverlay = document.getElementById("quad-overlay");
+var quadPolygon = document.getElementById("quad-polygon");
+var cropHandlesEl = document.getElementById("crop-handles");
+var filterRow = document.getElementById("filter-row");
+var applyAllToggle = document.getElementById("toggle-apply-all");
+var reorderGrid = document.getElementById("reorder-grid");
+
+var sliderBrightness = document.getElementById("slider-brightness");
+var sliderContrast = document.getElementById("slider-contrast");
+var sliderSaturation = document.getElementById("slider-saturation");
+var valBrightness = document.getElementById("val-brightness");
+var valContrast = document.getElementById("val-contrast");
+var valSaturation = document.getElementById("val-saturation");
+
+var toastEl = document.getElementById("jpe-toast");
+var toastTimer = null;
+
+/* =====================================================================
+   TOAST
+===================================================================== */
+function showToast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 2400);
 }
 
-btn.onclick = async () => {
-  btn.disabled = true;
-  btn.textContent = "Creating PDF...";
-  try {
-    const pdfDoc = await PDFLib.PDFDocument.create();
-    for (const file of files) {
-      const buf = await file.arrayBuffer();
-      let img;
-      if (file.type === "image/png") img = await pdfDoc.embedPng(buf);
-      else img = await pdfDoc.embedJpg(buf);
-      const page = pdfDoc.addPage([img.width, img.height]);
-      page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+/* =====================================================================
+   FILE UPLOAD / DROP ZONE
+===================================================================== */
+uploadInput.addEventListener("change", function(e){
+  handleFiles(e.target.files);
+  uploadInput.value = "";
+});
+
+["dragenter","dragover"].forEach(function(evt){
+  dropZone.addEventListener(evt, function(e){
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+  });
+});
+["dragleave","drop"].forEach(function(evt){
+  dropZone.addEventListener(evt, function(e){
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+  });
+});
+dropZone.addEventListener("drop", function(e){
+  if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length){
+    handleFiles(e.dataTransfer.files);
+  }
+});
+
+function handleFiles(fileList){
+  var files = Array.from(fileList).filter(function(f){
+    return /^image\/(jpeg|png|webp)$/.test(f.type);
+  });
+  if (!files.length){
+    showToast("Please choose JPG, PNG or WEBP images");
+    return;
+  }
+  files.forEach(loadFile);
+}
+
+function loadFile(file){
+  var url = URL.createObjectURL(file);
+  var img = new Image();
+  img.onload = function(){
+    var w = img.naturalWidth, h = img.naturalHeight;
+    var scale = Math.min(1, MAX_DIM / Math.max(w, h));
+    var srcCanvas = document.createElement("canvas");
+    srcCanvas.width = Math.max(1, Math.round(w*scale));
+    srcCanvas.height = Math.max(1, Math.round(h*scale));
+    srcCanvas.getContext("2d").drawImage(img, 0, 0, srcCanvas.width, srcCanvas.height);
+    var entry = {
+      id: "img" + (nextId++),
+      name: file.name,
+      source: srcCanvas,
+      rotation: 0,
+      crop: null,
+      filter: "original",
+      brightness: 0,
+      contrast: 0,
+      saturation: 0,
+      thumbURL: null,
+      processedBase: null
+    };
+    queueImages.push(entry);
+    regenerateThumb(entry);
+    renderQueueStrip();
+    updateToolbarVisibility();
+    URL.revokeObjectURL(url);
+  };
+  img.onerror = function(){
+    showToast("Could not load " + file.name);
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+}
+
+function updateToolbarVisibility(){
+  var has = queueImages.length > 0;
+  toolbar.hidden = !has;
+  queueCountHint.hidden = !has;
+  if (has){
+    queueCountHint.textContent = queueImages.length + " page" + (queueImages.length>1?"s":"") + " ready — tap a page to edit it";
+  }
+}
+
+/* =====================================================================
+   IMAGE PROCESSING PIPELINE
+   original image -> rotate -> crop (perspective warp) -> processedBase
+   processedBase -> filter preset + manual sliders -> final canvas
+===================================================================== */
+
+function downscaleToMax(canvas, maxDim){
+  var w = canvas.width, h = canvas.height;
+  var scale = Math.min(1, maxDim / Math.max(w,h));
+  if (scale >= 1) return canvas;
+  var out = document.createElement("canvas");
+  out.width = Math.round(w*scale);
+  out.height = Math.round(h*scale);
+  out.getContext("2d").drawImage(canvas, 0, 0, out.width, out.height);
+  return out;
+}
+
+function getRotatedCanvas(source, rotation){
+  var w = source.width, h = source.height;
+  var canvas = document.createElement("canvas");
+  var ctx = canvas.getContext("2d");
+  if (rotation === 90 || rotation === 270){
+    canvas.width = h; canvas.height = w;
+  } else {
+    canvas.width = w; canvas.height = h;
+  }
+  ctx.save();
+  if (rotation === 90){
+    ctx.translate(canvas.width, 0);
+    ctx.rotate(Math.PI/2);
+  } else if (rotation === 180){
+    ctx.translate(canvas.width, canvas.height);
+    ctx.rotate(Math.PI);
+  } else if (rotation === 270){
+    ctx.translate(0, canvas.height);
+    ctx.rotate(-Math.PI/2);
+  }
+  ctx.drawImage(source, 0, 0, w, h);
+  ctx.restore();
+  return downscaleToMax(canvas, MAX_DIM);
+}
+
+function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
+
+function getAffineTransform(src, dst){
+  var x0=src[0].x, y0=src[0].y, x1=src[1].x, y1=src[1].y, x2=src[2].x, y2=src[2].y;
+  var u0=dst[0].x, u1=dst[1].x, u2=dst[2].x;
+  var v0=dst[0].y, v1=dst[1].y, v2=dst[2].y;
+  var denom = x0*(y1-y2) - x1*(y0-y2) + x2*(y0-y1);
+  if (Math.abs(denom) < 1e-6) denom = 1e-6;
+  var a = (u0*(y1-y2) - u1*(y0-y2) + u2*(y0-y1)) / denom;
+  var c = (x0*(u1-u2) - x1*(u0-u2) + x2*(u0-u1)) / denom;
+  var e = (x0*(y1*u2 - y2*u1) - x1*(y0*u2 - y2*u0) + x2*(y0*u1 - y1*u0)) / denom;
+  var b = (v0*(y1-y2) - v1*(y0-y2) + v2*(y0-y1)) / denom;
+  var d = (x0*(v1-v2) - x1*(v0-v2) + x2*(v0-v1)) / denom;
+  var f = (x0*(y1*v2 - y2*v1) - x1*(y0*v2 - y2*v0) + x2*(y0*v1 - y1*v0)) / denom;
+  return {a:a,b:b,c:c,d:d,e:e,f:f};
+}
+
+function drawTriangleWarp(ctx, sourceCanvas, srcPts, dstPts){
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(dstPts[0].x, dstPts[0].y);
+  ctx.lineTo(dstPts[1].x, dstPts[1].y);
+  ctx.lineTo(dstPts[2].x, dstPts[2].y);
+  ctx.closePath();
+  ctx.clip();
+  var m = getAffineTransform(srcPts, dstPts);
+  ctx.setTransform(m.a, m.b, m.c, m.d, m.e, m.f);
+  ctx.drawImage(sourceCanvas, 0, 0);
+  ctx.restore();
+}
+
+function warpQuadToRect(sourceCanvas, corners){
+  var tl=corners.tl, tr=corners.tr, br=corners.br, bl=corners.bl;
+  var outW = Math.max(20, Math.round((dist(tl,tr)+dist(bl,br))/2));
+  var outH = Math.max(20, Math.round((dist(tl,bl)+dist(tr,br))/2));
+  var out = document.createElement("canvas");
+  out.width = outW; out.height = outH;
+  var ctx = out.getContext("2d");
+  drawTriangleWarp(ctx, sourceCanvas, [tl,tr,bl], [{x:0,y:0},{x:outW,y:0},{x:0,y:outH}]);
+  drawTriangleWarp(ctx, sourceCanvas, [tr,br,bl], [{x:outW,y:0},{x:outW,y:outH},{x:0,y:outH}]);
+  return out;
+}
+
+function getProcessedBase(entry){
+  if (entry.processedBase) return entry.processedBase;
+  var rotated = getRotatedCanvas(entry.source, entry.rotation);
+  var base = rotated;
+  if (entry.crop){
+    base = warpQuadToRect(rotated, entry.crop);
+  }
+  entry.processedBase = base;
+  return base;
+}
+
+function invalidateProcessedBase(entry){
+  entry.processedBase = null;
+}
+
+function getPresetAdjustments(preset){
+  switch(preset){
+    case "auto-color": return {brightness:8, contrast:8, saturation:24, gray:false};
+    case "light-text": return {brightness:20, contrast:36, saturation:-12, gray:false};
+    case "grayscale": return {brightness:0, contrast:6, saturation:-100, gray:true};
+    case "whiteboard": return {brightness:16, contrast:62, saturation:-100, gray:true};
+    case "enhance": return {brightness:10, contrast:22, saturation:18, gray:false};
+    default: return {brightness:0, contrast:0, saturation:0, gray:false};
+  }
+}
+
+function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+
+function applyPixelAdjustments(canvas, brightness, contrast, saturation){
+  var w = canvas.width, h = canvas.height;
+  if (w === 0 || h === 0) return canvas;
+  var ctx = canvas.getContext("2d");
+  var imageData = ctx.getImageData(0, 0, w, h);
+  var data = imageData.data;
+  var c255 = clamp(contrast, -100, 100) * 2.55;
+  var contrastFactor = (259 * (c255 + 255)) / (255 * (259 - c255));
+  var brightAdd = clamp(brightness, -100, 100) * 2.55;
+  var satFactor = 1 + clamp(saturation, -100, 100) / 100;
+  for (var i=0; i<data.length; i+=4){
+    var r = data[i], g = data[i+1], b = data[i+2];
+    var gray = 0.299*r + 0.587*g + 0.114*b;
+    r = gray + (r - gray) * satFactor;
+    g = gray + (g - gray) * satFactor;
+    b = gray + (b - gray) * satFactor;
+    r = contrastFactor * (r - 128) + 128;
+    g = contrastFactor * (g - 128) + 128;
+    b = contrastFactor * (b - 128) + 128;
+    r += brightAdd; g += brightAdd; b += brightAdd;
+    data[i] = clamp(r, 0, 255);
+    data[i+1] = clamp(g, 0, 255);
+    data[i+2] = clamp(b, 0, 255);
+  }
+  ctx.putImageData(imageData, 0, 0);
+  return canvas;
+}
+
+function getFinalCanvas(entry){
+  var base = getProcessedBase(entry);
+  var out = document.createElement("canvas");
+  out.width = base.width; out.height = base.height;
+  out.getContext("2d").drawImage(base, 0, 0);
+  var preset = getPresetAdjustments(entry.filter);
+  var brightness = clamp(preset.brightness + entry.brightness, -100, 100);
+  var contrast = clamp(preset.contrast + entry.contrast, -100, 100);
+  var saturation = clamp(preset.saturation + entry.saturation, -100, 100);
+  applyPixelAdjustments(out, brightness, contrast, saturation);
+  return out;
+}
+
+function renderThumbCanvas(sourceCanvas, maxDim){
+  var scale = Math.min(1, maxDim / Math.max(sourceCanvas.width, sourceCanvas.height));
+  var out = document.createElement("canvas");
+  out.width = Math.max(1, Math.round(sourceCanvas.width*scale));
+  out.height = Math.max(1, Math.round(sourceCanvas.height*scale));
+  out.getContext("2d").drawImage(sourceCanvas, 0, 0, out.width, out.height);
+  return out;
+}
+
+function regenerateThumb(entry){
+  try{
+    var final = getFinalCanvas(entry);
+    var thumb = renderThumbCanvas(final, THUMB_DIM);
+    entry.thumbURL = thumb.toDataURL("image/jpeg", 0.85);
+  } catch(err){
+    console.error("Thumbnail render failed", err);
+  }
+}
+
+/* =====================================================================
+   AUTO-DETECT (simple background-contrast heuristic)
+===================================================================== */
+function autoDetectCorners(canvas){
+  var w = canvas.width, h = canvas.height;
+  var scale = Math.min(1, 400 / Math.max(w, h));
+  var sw = Math.max(10, Math.round(w*scale)), sh = Math.max(10, Math.round(h*scale));
+  var off = document.createElement("canvas");
+  off.width = sw; off.height = sh;
+  var octx = off.getContext("2d");
+  octx.drawImage(canvas, 0, 0, sw, sh);
+  var data = octx.getImageData(0, 0, sw, sh).data;
+
+  function at(x, y){
+    var i = (y*sw + x) * 4;
+    return [data[i], data[i+1], data[i+2]];
+  }
+  var samples = [at(1,1), at(sw-2,1), at(1,sh-2), at(sw-2,sh-2)];
+  var bg = [0,1,2].map(function(c){
+    return samples.reduce(function(s,p){ return s+p[c]; }, 0) / samples.length;
+  });
+
+  var threshold = 42;
+  var rowCount = new Array(sh).fill(0);
+  var colCount = new Array(sw).fill(0);
+  for (var y=0; y<sh; y++){
+    for (var x=0; x<sw; x++){
+      var i = (y*sw+x)*4;
+      var d = Math.sqrt(Math.pow(data[i]-bg[0],2) + Math.pow(data[i+1]-bg[1],2) + Math.pow(data[i+2]-bg[2],2));
+      if (d > threshold){ rowCount[y]++; colCount[x]++; }
     }
-    const bytes = await pdfDoc.save();
-    const blob = new Blob([bytes], { type: "application/pdf" });
-    output.innerHTML = `
-      <div class="pdf-queue-item" style="align-items:center; gap:14px; flex-wrap:wrap;">
-        <div>
-          <strong style="color:var(--text-color);">Ready: converted-document.pdf</strong><br>
-          <span style="color:var(--subtext-color); font-size:12.5px;">${files.length} page(s) compiled</span>
-        </div>
-        <button class="primary-button" id="dl">Download PDF</button>
-      </div>`;
-    document.getElementById("dl").onclick = () => {
-      const a = document.createElement("a");
+  }
+  var rowThresh = sw * 0.035, colThresh = sh * 0.035;
+  var minY=-1, maxY=-1, minX=-1, maxX=-1;
+  for (y=0; y<sh; y++){
+    if (rowCount[y] > rowThresh){ if (minY<0) minY=y; maxY=y; }
+  }
+  for (x=0; x<sw; x++){
+    if (colCount[x] > colThresh){ if (minX<0) minX=x; maxX=x; }
+  }
+
+  if (minX<0 || minY<0 || maxX<=minX || maxY<=minY){
+    var m = 0.04;
+    return {
+      tl:{x:w*m, y:h*m}, tr:{x:w*(1-m), y:h*m},
+      br:{x:w*(1-m), y:h*(1-m)}, bl:{x:w*m, y:h*(1-m)}
+    };
+  }
+  var rx = 1/scale;
+  return {
+    tl: {x:minX*rx, y:minY*rx},
+    tr: {x:maxX*rx, y:minY*rx},
+    br: {x:maxX*rx, y:maxY*rx},
+    bl: {x:minX*rx, y:maxY*rx}
+  };
+}
+
+/* =====================================================================
+   QUEUE STRIP RENDER + REORDER (main thumbnail strip)
+===================================================================== */
+function renderQueueStrip(){
+  queueStrip.innerHTML = "";
+  queueImages.forEach(function(entry, idx){
+    var div = document.createElement("div");
+    div.className = "jpe-thumb";
+    div.dataset.id = entry.id;
+    div.innerHTML =
+      '<span class="jpe-page-no">' + (idx+1) + '</span>' +
+      '<img src="' + (entry.thumbURL || "") + '" alt="' + escapeHtml(entry.name) + '">' +
+      '<div class="jpe-thumb-actions">' +
+        '<button class="jpe-icon-btn no-drag jpe-edit-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>' +
+        '<button class="jpe-icon-btn jpe-delete no-drag jpe-delete-btn" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>' +
+      '</div>' +
+      '<div class="jpe-thumb-name">' + escapeHtml(entry.name) + '</div>';
+    div.addEventListener("click", function(e){
+      if (e.target.closest(".no-drag")) return;
+      openEditor(queueImages.indexOf(entry));
+    });
+    div.querySelector(".jpe-edit-btn").addEventListener("click", function(){
+      openEditor(queueImages.indexOf(entry));
+    });
+    div.querySelector(".jpe-delete-btn").addEventListener("click", function(){
+      var i = queueImages.indexOf(entry);
+      if (i > -1){ queueImages.splice(i,1); renderQueueStrip(); updateToolbarVisibility(); }
+    });
+    queueStrip.appendChild(div);
+  });
+}
+
+function escapeHtml(str){
+  var d = document.createElement("div");
+  d.textContent = str || "";
+  return d.innerHTML;
+}
+
+function makeReorderable(container, onOrderChange){
+  var dragEl = null;
+  container.addEventListener("pointerdown", function(e){
+    var item = e.target.closest("[data-id]");
+    if (!item || e.target.closest(".no-drag")) return;
+    dragEl = item;
+    try{ item.setPointerCapture(e.pointerId); } catch(err){}
+    item.classList.add("dragging");
+  });
+  container.addEventListener("pointermove", function(e){
+    if (!dragEl) return;
+    var items = Array.from(container.children);
+    var dragIndex = items.indexOf(dragEl);
+    for (var k=0; k<items.length; k++){
+      var other = items[k];
+      if (other === dragEl) continue;
+      var rect = other.getBoundingClientRect();
+      if (e.clientX > rect.left && e.clientX < rect.right && e.clientY > rect.top && e.clientY < rect.bottom){
+        var overIndex = items.indexOf(other);
+        if (overIndex < dragIndex) container.insertBefore(dragEl, other);
+        else container.insertBefore(dragEl, other.nextSibling);
+        break;
+      }
+    }
+  });
+  function finish(){
+    if (!dragEl) return;
+    dragEl.classList.remove("dragging");
+    var order = Array.from(container.children).map(function(el){ return el.dataset.id; });
+    dragEl = null;
+    onOrderChange(order);
+  }
+  container.addEventListener("pointerup", finish);
+  container.addEventListener("pointercancel", finish);
+}
+
+function reorderQueueByIdList(idOrder){
+  var map = {};
+  queueImages.forEach(function(e){ map[e.id] = e; });
+  queueImages = idOrder.map(function(id){ return map[id]; }).filter(Boolean);
+  renderQueueStrip();
+  if (activeIndex > -1) renderReorderGrid();
+}
+
+makeReorderable(queueStrip, reorderQueueByIdList);
+makeReorderable(reorderGrid, reorderQueueByIdList);
+
+/* =====================================================================
+   REORDER TAB GRID
+===================================================================== */
+function renderReorderGrid(){
+  reorderGrid.innerHTML = "";
+  queueImages.forEach(function(entry, idx){
+    var div = document.createElement("div");
+    div.className = "jpe-reorder-item";
+    div.dataset.id = entry.id;
+    div.innerHTML =
+      '<span class="jpe-page-no">' + (idx+1) + '</span>' +
+      '<img src="' + (entry.thumbURL || "") + '" alt="' + escapeHtml(entry.name) + '">';
+    reorderGrid.appendChild(div);
+  });
+}
+
+/* =====================================================================
+   EDITOR SHEET
+===================================================================== */
+function openEditor(index){
+  if (index < 0 || index >= queueImages.length) return;
+  activeIndex = index;
+  overlay.classList.add("open");
+  sheet.classList.add("open");
+  setTab("crop");
+  loadEditorState();
+}
+
+function closeEditor(){
+  commitCropIfNeeded();
+  overlay.classList.remove("open");
+  sheet.classList.remove("open");
+  if (activeIndex > -1){
+    regenerateThumb(queueImages[activeIndex]);
+    renderQueueStrip();
+  }
+  activeIndex = -1;
+  cropDraft = null;
+}
+
+document.getElementById("editor-close").addEventListener("click", closeEditor);
+document.getElementById("editor-done").addEventListener("click", closeEditor);
+overlay.addEventListener("click", closeEditor);
+document.getElementById("editor-prev").addEventListener("click", function(){
+  if (activeIndex > 0){ commitCropIfNeeded(); openEditor(activeIndex-1); }
+});
+document.getElementById("editor-next").addEventListener("click", function(){
+  if (activeIndex < queueImages.length-1){ commitCropIfNeeded(); openEditor(activeIndex+1); }
+});
+
+function currentEntry(){ return queueImages[activeIndex]; }
+
+function loadEditorState(){
+  var entry = currentEntry();
+  if (!entry) return;
+  editorTitle.textContent = entry.name;
+  sliderBrightness.value = entry.brightness;
+  sliderContrast.value = entry.contrast;
+  sliderSaturation.value = entry.saturation;
+  valBrightness.textContent = entry.brightness;
+  valContrast.textContent = entry.contrast;
+  valSaturation.textContent = entry.saturation;
+  cropDraft = null;
+  renderEditorPreview();
+  updateFilterActiveState();
+  if (activeTab === "crop") enterCropTab();
+  if (activeTab === "reorder") renderReorderGrid();
+}
+
+function renderEditorPreview(){
+  var entry = currentEntry();
+  if (!entry) return;
+  var final = getFinalCanvas(entry);
+  editorCanvas.width = final.width;
+  editorCanvas.height = final.height;
+  editorCtx.clearRect(0,0,final.width, final.height);
+  editorCtx.drawImage(final, 0, 0);
+}
+
+/* ---------- Tabs ---------- */
+var tabButtons = document.querySelectorAll(".jpe-tab-btn");
+var tabPanels = {
+  crop: document.getElementById("tabpanel-crop"),
+  rotate: document.getElementById("tabpanel-rotate"),
+  filters: document.getElementById("tabpanel-filters"),
+  adjust: document.getElementById("tabpanel-adjust"),
+  reorder: document.getElementById("tabpanel-reorder")
+};
+tabButtons.forEach(function(btn){
+  btn.addEventListener("click", function(){
+    commitCropIfNeeded();
+    setTab(btn.dataset.tab);
+  });
+});
+
+function setTab(tab){
+  activeTab = tab;
+  tabButtons.forEach(function(b){ b.classList.toggle("active", b.dataset.tab === tab); });
+  Object.keys(tabPanels).forEach(function(k){ tabPanels[k].hidden = (k !== tab); });
+  quadOverlay.hidden = (tab !== "crop");
+  cropHandlesEl.style.display = (tab === "crop") ? "" : "none";
+  if (tab === "crop") enterCropTab();
+  if (tab === "filters") renderFilterThumbs();
+  if (tab === "reorder") renderReorderGrid();
+}
+
+/* ---------- CROP TAB ---------- */
+function enterCropTab(){
+  var entry = currentEntry();
+  if (!entry) return;
+  var base = getProcessedBase(entry);
+  if (!cropDraft){
+    cropDraft = entry.crop ? cloneCorners(entry.crop) : fullCorners(base);
+  }
+  renderCropCanvas(base);
+  renderHandles();
+}
+
+function cloneCorners(c){
+  return {tl:{x:c.tl.x,y:c.tl.y}, tr:{x:c.tr.x,y:c.tr.y}, br:{x:c.br.x,y:c.br.y}, bl:{x:c.bl.x,y:c.bl.y}};
+}
+function fullCorners(canvas){
+  return {
+    tl:{x:0,y:0}, tr:{x:canvas.width,y:0},
+    br:{x:canvas.width,y:canvas.height}, bl:{x:0,y:canvas.height}
+  };
+}
+
+function renderCropCanvas(base){
+  editorCanvas.width = base.width;
+  editorCanvas.height = base.height;
+  editorCtx.clearRect(0,0,base.width, base.height);
+  editorCtx.drawImage(base, 0, 0);
+}
+
+function renderHandles(){
+  cropHandlesEl.innerHTML = "";
+  var base = getProcessedBase(currentEntry());
+  var order = ["tl","tr","br","bl"];
+  order.forEach(function(key){
+    var handle = document.createElement("div");
+    handle.className = "jpe-corner-handle";
+    handle.dataset.corner = key;
+    positionHandle(handle, cropDraft[key], base);
+    handle.addEventListener("pointerdown", function(e){
+      e.stopPropagation();
+      handleDrag = key;
+      try{ handle.setPointerCapture(e.pointerId); } catch(err){}
+    });
+    cropHandlesEl.appendChild(handle);
+  });
+  updateQuadPolygon(base);
+}
+
+function positionHandle(el, corner, base){
+  el.style.left = (corner.x / base.width * 100) + "%";
+  el.style.top = (corner.y / base.height * 100) + "%";
+}
+
+previewInner.addEventListener("pointermove", function(e){
+  if (!handleDrag) return;
+  var entry = currentEntry();
+  if (!entry) return;
+  var base = getProcessedBase(entry);
+  var rect = editorCanvas.getBoundingClientRect();
+  var relX = clamp((e.clientX - rect.left) / rect.width, 0, 1);
+  var relY = clamp((e.clientY - rect.top) / rect.height, 0, 1);
+  cropDraft[handleDrag] = {x: relX*base.width, y: relY*base.height};
+  var el = cropHandlesEl.querySelector('[data-corner="'+handleDrag+'"]');
+  if (el) positionHandle(el, cropDraft[handleDrag], base);
+  updateQuadPolygon(base);
+});
+window.addEventListener("pointerup", function(){ handleDrag = null; });
+window.addEventListener("pointercancel", function(){ handleDrag = null; });
+
+function updateQuadPolygon(base){
+  var pts = ["tl","tr","br","bl"].map(function(k){
+    var c = cropDraft[k];
+    return (c.x/base.width*100) + "," + (c.y/base.height*100);
+  }).join(" ");
+  quadPolygon.setAttribute("points", pts);
+  quadOverlay.hidden = false;
+}
+
+document.getElementById("btn-auto-detect").addEventListener("click", function(){
+  var entry = currentEntry();
+  if (!entry) return;
+  var base = getProcessedBase(entry);
+  cropDraft = autoDetectCorners(base);
+  renderHandles();
+  showToast("Edges detected — adjust if needed");
+});
+
+document.getElementById("btn-reset-crop").addEventListener("click", function(){
+  var entry = currentEntry();
+  if (!entry) return;
+  cropDraft = fullCorners(getProcessedBase(entry));
+  renderHandles();
+});
+
+document.getElementById("btn-apply-crop").addEventListener("click", function(){
+  commitCrop();
+  showToast("Crop applied");
+});
+
+function commitCrop(){
+  var entry = currentEntry();
+  if (!entry || !cropDraft) return;
+  var base = getProcessedBase(entry);
+  var isFull = cornersAreFull(cropDraft, base);
+  if (!isFull){
+    var warped = warpQuadToRect(base, cropDraft);
+    // Flatten rotation + crop into a new source canvas so future rotations
+    // and crops start from a clean, undistorted coordinate space.
+    entry.source = warped;
+    entry.rotation = 0;
+    entry.crop = null;
+    entry.processedBase = warped;
+  }
+  cropDraft = null;
+  renderEditorPreview();
+  regenerateThumb(entry);
+  renderQueueStrip();
+}
+
+function commitCropIfNeeded(){
+  if (activeTab === "crop" && cropDraft){
+    var entry = currentEntry();
+    if (entry){
+      var base = getProcessedBase(entry);
+      if (!cornersAreFull(cropDraft, base)) commitCrop();
+    }
+    cropDraft = null;
+  }
+}
+
+function cornersAreFull(c, base){
+  var tol = 1;
+  return Math.abs(c.tl.x-0)<tol && Math.abs(c.tl.y-0)<tol &&
+         Math.abs(c.tr.x-base.width)<tol && Math.abs(c.tr.y-0)<tol &&
+         Math.abs(c.br.x-base.width)<tol && Math.abs(c.br.y-base.height)<tol &&
+         Math.abs(c.bl.x-0)<tol && Math.abs(c.bl.y-base.height)<tol;
+}
+
+/* ---------- ROTATE TAB ---------- */
+function rotateEntry(entry, delta){
+  entry.rotation = ((entry.rotation + delta) % 360 + 360) % 360;
+  entry.crop = null;
+  invalidateProcessedBase(entry);
+  renderEditorPreview();
+  regenerateThumb(entry);
+  renderQueueStrip();
+}
+document.getElementById("btn-rotate-left").addEventListener("click", function(){
+  var e = currentEntry(); if (e) rotateEntry(e, -90);
+});
+document.getElementById("btn-rotate-right").addEventListener("click", function(){
+  var e = currentEntry(); if (e) rotateEntry(e, 90);
+});
+document.getElementById("btn-rotate-180").addEventListener("click", function(){
+  var e = currentEntry(); if (e) rotateEntry(e, 180);
+});
+
+/* ---------- FILTERS TAB ---------- */
+function renderFilterThumbs(){
+  var entry = currentEntry();
+  if (!entry) return;
+  var base = getProcessedBase(entry);
+  var small = renderThumbCanvas(base, FILTER_THUMB_DIM);
+  var opts = filterRow.querySelectorAll(".jpe-filter-opt");
+  opts.forEach(function(opt){
+    var preset = opt.dataset.filter;
+    var canvas = opt.querySelector("canvas");
+    canvas.width = FILTER_THUMB_DIM; canvas.height = FILTER_THUMB_DIM;
+    var ctx = canvas.getContext("2d");
+    var copy = document.createElement("canvas");
+    copy.width = small.width; copy.height = small.height;
+    copy.getContext("2d").drawImage(small, 0, 0);
+    var adj = getPresetAdjustments(preset);
+    applyPixelAdjustments(copy, adj.brightness, adj.contrast, adj.saturation);
+    ctx.clearRect(0,0,FILTER_THUMB_DIM,FILTER_THUMB_DIM);
+    var dx = (FILTER_THUMB_DIM - copy.width)/2, dy = (FILTER_THUMB_DIM - copy.height)/2;
+    ctx.fillStyle = "#000"; ctx.fillRect(0,0,FILTER_THUMB_DIM,FILTER_THUMB_DIM);
+    ctx.drawImage(copy, dx, dy);
+  });
+  updateFilterActiveState();
+}
+
+function updateFilterActiveState(){
+  var entry = currentEntry();
+  if (!entry) return;
+  filterRow.querySelectorAll(".jpe-filter-opt").forEach(function(opt){
+    opt.classList.toggle("active", opt.dataset.filter === entry.filter);
+  });
+}
+
+filterRow.addEventListener("click", function(e){
+  var opt = e.target.closest(".jpe-filter-opt");
+  if (!opt) return;
+  var preset = opt.dataset.filter;
+  if (applyAllToggle.checked){
+    queueImages.forEach(function(entry){
+      entry.filter = preset;
+      regenerateThumb(entry);
+    });
+    renderQueueStrip();
+  } else {
+    currentEntry().filter = preset;
+    regenerateThumb(currentEntry());
+    renderQueueStrip();
+  }
+  updateFilterActiveState();
+  renderEditorPreview();
+});
+
+/* ---------- ADJUST TAB ---------- */
+var adjustDebounce = null;
+function bindSlider(slider, valEl, key){
+  slider.addEventListener("input", function(){
+    valEl.textContent = slider.value;
+    clearTimeout(adjustDebounce);
+    adjustDebounce = setTimeout(function(){
+      var entry = currentEntry();
+      if (!entry) return;
+      entry[key] = parseInt(slider.value, 10);
+      renderEditorPreview();
+    }, 30);
+  });
+  slider.addEventListener("change", function(){
+    regenerateThumb(currentEntry());
+    renderQueueStrip();
+  });
+}
+bindSlider(sliderBrightness, valBrightness, "brightness");
+bindSlider(sliderContrast, valContrast, "contrast");
+bindSlider(sliderSaturation, valSaturation, "saturation");
+
+/* =====================================================================
+   PDF GENERATION
+===================================================================== */
+var PAGE_SIZES = {
+  a4p: [595.28, 841.89],
+  a4l: [841.89, 595.28],
+  a3p: [841.89, 1190.55],
+  a3l: [1190.55, 841.89]
+};
+
+function canvasToJpegBytes(canvas, quality){
+  return new Promise(function(resolve, reject){
+    canvas.toBlob(function(blob){
+      if (!blob){ reject(new Error("Canvas export failed")); return; }
+      blob.arrayBuffer().then(resolve, reject);
+    }, "image/jpeg", quality);
+  });
+}
+
+pdfSaveBtn.addEventListener("click", async function(){
+  if (!queueImages.length){
+    showToast("Add at least one image first");
+    return;
+  }
+  pdfSaveBtn.disabled = true;
+  var originalLabel = pdfSaveBtn.textContent;
+  pdfSaveBtn.textContent = "Creating PDF...";
+  try{
+    var pdfDoc = await PDFLib.PDFDocument.create();
+    var mode = pageSizeSelect.value;
+    for (var i=0; i<queueImages.length; i++){
+      var entry = queueImages[i];
+      var finalCanvas = getFinalCanvas(entry);
+      var jpegBytes = await canvasToJpegBytes(finalCanvas, 0.92);
+      var embedded = await pdfDoc.embedJpg(jpegBytes);
+      var pageW, pageH, drawW, drawH, x, y;
+      if (mode === "auto"){
+        pageW = finalCanvas.width; pageH = finalCanvas.height;
+        drawW = pageW; drawH = pageH; x = 0; y = 0;
+      } else {
+        var size = PAGE_SIZES[mode] || PAGE_SIZES.a4p;
+        pageW = size[0]; pageH = size[1];
+        var scale = Math.min(pageW/finalCanvas.width, pageH/finalCanvas.height);
+        drawW = finalCanvas.width*scale; drawH = finalCanvas.height*scale;
+        x = (pageW-drawW)/2; y = (pageH-drawH)/2;
+      }
+      var page = pdfDoc.addPage([pageW, pageH]);
+      page.drawImage(embedded, {x:x, y:y, width:drawW, height:drawH});
+    }
+    var bytes = await pdfDoc.save();
+    var blob = new Blob([bytes], {type:"application/pdf"});
+    outputEl.innerHTML =
+      '<div class="jpe-output-card">' +
+        '<div>' +
+          '<strong style="color:var(--ok-text);">Ready: officekit-scan.pdf</strong><br>' +
+          '<span style="color:var(--ok-subtext); font-size:12.5px;">' + queueImages.length + ' page(s) compiled</span>' +
+        '</div>' +
+        '<button class="primary-button" id="jpe-download">Download PDF</button>' +
+      '</div>';
+    document.getElementById("jpe-download").addEventListener("click", function(){
+      var a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "converted-document.pdf";
+      a.download = "officekit-scan.pdf";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    };
-  } catch (err) {
-    alert("Error compiling PDF: " + err.message);
+    });
+    showToast("PDF ready to download");
+  } catch(err){
+    console.error(err);
+    showToast("Could not create PDF: " + err.message);
   } finally {
-    btn.disabled = false;
-    btn.textContent = "Convert to PDF Now";
+    pdfSaveBtn.disabled = false;
+    pdfSaveBtn.textContent = originalLabel;
   }
-};
+});
+
+})();
 </script>
 </body>
 </html>
