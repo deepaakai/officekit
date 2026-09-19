@@ -13,212 +13,148 @@
 <script defer src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
 <style>
-/* ==================================================================
-   All colors come from officekit-global.css variables:
-   --bg-color, --card-bg, --card-hover, --text-color,
-   --subtext-color, --border-color, --accent
-   ================================================================== */
+.j2p-wrap{max-width:900px;margin:0 auto;}
+.j2p-drop{
+  position:relative;
+  border:2px dashed var(--border-color);
+  border-radius:12px;
+  padding:36px 20px;
+  text-align:center;
+  cursor:pointer;
+  background:var(--card-bg);
+  transition:border-color .2s, background .2s;
+}
+.j2p-drop:hover,.j2p-drop.drag{border-color:var(--accent);background:var(--card-hover);}
+.j2p-drop input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;}
+.j2p-drop svg{width:48px;height:48px;color:var(--accent);margin:0 auto 12px;display:block;stroke-width:1.6;fill:none;stroke:currentColor;}
+.j2p-drop h3{margin:0 0 6px;color:var(--text-color);font-size:17px;font-weight:700;}
+.j2p-drop p{margin:0;color:var(--subtext-color);font-size:13px;}
 
-.j2p-wrap { max-width: 900px; margin: 0 auto; }
-
-/* ---------------- Drop zone ---------------- */
-.j2p-drop {
-  position: relative;
-  border: 2px dashed var(--border-color);
-  border-radius: 12px;
-  padding: 36px 20px;
-  text-align: center;
-  cursor: pointer;
-  background: var(--card-bg);
-  transition: border-color .2s, background .2s;
+.j2p-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:12px;
+  margin:20px 0;
 }
-.j2p-drop:hover,
-.j2p-drop.drag {
-  border-color: var(--accent);
-  background: var(--card-hover);
+.j2p-card{
+  position:relative;
+  background:var(--card-bg);
+  border:1px solid var(--border-color);
+  border-radius:10px;
+  padding:8px;
+  text-align:center;
 }
-.j2p-drop input {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  opacity: 0;
-  cursor: pointer;
+.j2p-card img{
+  width:100%;
+  height:110px;
+  object-fit:contain;
+  border-radius:6px;
+  background:var(--bg-color);
+  display:block;
 }
-.j2p-drop svg {
-  width: 48px; height: 48px;
-  color: var(--accent);
-  margin: 0 auto 12px;
-  display: block;
+.j2p-num{
+  display:block;
+  font-size:11.5px;
+  font-weight:700;
+  color:var(--subtext-color);
+  margin-top:6px;
 }
-.j2p-drop h3 {
-  margin: 0 0 6px;
-  color: var(--text-color);
-  font-size: 17px;
-  font-weight: 700;
+.j2p-actions{display:flex;gap:4px;margin-top:6px;}
+.j2p-btn{
+  flex:1;
+  background:var(--card-hover);
+  border:1px solid var(--border-color);
+  color:var(--text-color);
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+  padding:6px 0;
+  cursor:pointer;
+  transition:all .15s;
 }
-.j2p-drop p {
-  margin: 0;
-  color: var(--subtext-color);
-  font-size: 13px;
-}
-
-/* ---------------- Preview grid ---------------- */
-.j2p-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
-  margin: 20px 0;
-}
-.j2p-card {
-  position: relative;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 8px;
-  text-align: center;
-  transition: border-color .15s;
-}
-.j2p-card:hover { border-color: var(--accent); }
-.j2p-card img {
-  width: 100%;
-  height: 110px;
-  object-fit: contain;
-  border-radius: 6px;
-  background: var(--bg-color);
-  display: block;
-}
-.j2p-num {
-  display: block;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--subtext-color);
-  margin-top: 6px;
-}
-.j2p-actions {
-  display: flex;
-  gap: 4px;
-  margin-top: 6px;
-}
-.j2p-btn {
-  flex: 1;
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 6px 0;
-  cursor: pointer;
-  transition: border-color .15s, color .15s;
-}
-.j2p-btn:hover:not(:disabled) {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.j2p-btn:disabled {
-  opacity: .35;
-  cursor: not-allowed;
-}
-.j2p-del {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 22px;
-  height: 22px;
-  background: #dc2626;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 13px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  line-height: 1;
+.j2p-btn:hover{border-color:var(--accent);color:var(--accent);}
+.j2p-btn:disabled{opacity:.35;cursor:not-allowed;}
+.j2p-del{
+  position:absolute;
+  top:4px;
+  right:4px;
+  width:22px;
+  height:22px;
+  background:rgba(220,38,38,.9);
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  font-size:13px;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  padding:0;
+  line-height:1;
 }
 
-/* ---------------- Action bar ---------------- */
-.j2p-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  margin-top: 12px;
+.j2p-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--card-bg);
+  border:1px solid var(--border-color);
+  border-radius:12px;
+  padding:16px;
+  margin-top:12px;
 }
-.j2p-bar label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.j2p-bar label{font-size:13px;font-weight:700;color:var(--text-color);display:flex;align-items:center;gap:8px;}
+.j2p-bar select{
+  background:var(--bg-color);
+  color:var(--text-color);
+  border:1px solid var(--border-color);
+  border-radius:8px;
+  padding:8px 12px;
+  font-size:13px;
+  cursor:pointer;
 }
-.j2p-bar select {
-  background: var(--bg-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 13px;
-  cursor: pointer;
+.j2p-save{
+  background:var(--success, #16a34a);
+  color:#fff;
+  border:none;
+  padding:11px 26px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .15s;
 }
+.j2p-save:hover{background:#15803d;}
+.j2p-save:disabled{opacity:.6;cursor:not-allowed;}
 
-/* Primary action button */
-.j2p-save {
-  background: #16a34a;
-  color: #fff;
-  border: none;
-  padding: 11px 26px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .15s;
+.j2p-status{
+  text-align:center;
+  font-size:13px;
+  color:var(--subtext-color);
+  margin-top:10px;
+  min-height:20px;
 }
-.j2p-save:hover { background: #15803d; }
-.j2p-save:disabled { opacity: .6; cursor: not-allowed; }
+.j2p-status.ok{color:#16a34a;font-weight:700;}
 
-/* ---------------- Status ---------------- */
-.j2p-status {
-  text-align: center;
-  font-size: 13px;
-  color: var(--subtext-color);
-  margin-top: 10px;
-  min-height: 20px;
+.j2p-result{
+  background:var(--card-bg);
+  border:1px solid var(--border-color);
+  border-radius:12px;
+  padding:16px;
+  margin-top:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
-.j2p-status.ok { color: #16a34a; font-weight: 700; }
+.j2p-result strong{display:block;color:var(--text-color);font-size:14px;}
+.j2p-result small{color:var(--subtext-color);font-size:12.5px;}
 
-/* ---------------- Result ---------------- */
-.j2p-result {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  margin-top: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.j2p-result strong {
-  display: block;
-  color: var(--text-color);
-  font-size: 14px;
-}
-.j2p-result small {
-  color: var(--subtext-color);
-  font-size: 12.5px;
-}
-
-@media (max-width: 480px) {
-  .j2p-bar { flex-direction: column; align-items: stretch; }
-  .j2p-save { width: 100%; }
+@media(max-width:480px){
+  .j2p-bar{flex-direction:column;align-items:stretch;}
+  .j2p-save{width:100%;}
 }
 </style>
 </head>
@@ -236,9 +172,9 @@
 
   <div class="tool-card j2p-wrap">
 
-    <div class="j2p-drop" id="drop" tabindex="0" role="button" aria-label="Add images">
+    <div class="j2p-drop" id="drop">
       <input type="file" id="file-in" accept="image/jpeg,image/png,image/webp" multiple>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
         <polyline points="14 2 14 8 20 8"/>
       </svg>
@@ -323,13 +259,13 @@
 
   var pages = [];   // { name, dataURL, w, h }
 
-  /* ---------- status ---------- */
+  /* ---------- status helpers ---------- */
   function setStatus(msg, ok){
     statusEl.textContent = msg || "";
     statusEl.className = "j2p-status" + (ok ? " ok" : "");
   }
 
-  /* ---------- read image file ---------- */
+  /* ---------- read file as image ---------- */
   function readFile(file){
     return new Promise(function(resolve, reject){
       var reader = new FileReader();
@@ -367,6 +303,7 @@
     }
     if (files.length > room){
       files = files.slice(0, room);
+      setStatus("Added first " + room + " of the selected files.");
     }
 
     saveBtn.disabled = true;
@@ -386,7 +323,7 @@
     saveBtn.disabled = false;
 
     if (failed >= files.length){
-      setStatus("Those images could not be read.");
+      setStatus("Those images could not be read.", false);
     } else if (failed){
       setStatus(failed + " file(s) skipped. Ready to save.", true);
     } else {
@@ -459,7 +396,7 @@
     bar.hidden = pages.length === 0;
   }
 
-  /* ---------- load pdf-lib ---------- */
+  /* ---------- load pdf-lib on demand ---------- */
   function loadPdfLib(){
     if (window.PDFLib && window.PDFLib.PDFDocument) return Promise.resolve();
     return new Promise(function(resolve, reject){
@@ -512,6 +449,7 @@
           var d = SIZES[sizeKey] || SIZES.a4;
           pw = d[0];
           ph = d[1];
+          // centre the image inside the page
         }
         var page = doc.addPage([pw, ph]);
 
@@ -531,7 +469,7 @@
 
         setStatus("Rendering page " + (i + 1) + " of " + pages.length + "…");
 
-        // breathe between pages so browser stays responsive
+        // small breathe so the browser doesn't freeze on big documents
         await new Promise(function(r){ setTimeout(r, 0); });
       }
 
@@ -561,7 +499,7 @@
       setStatus("PDF ready — tap download.", true);
     } catch (err){
       console.error(err);
-      setStatus("Could not create PDF: " + err.message);
+      setStatus("Could not create PDF: " + err.message, false);
     } finally {
       saveBtn.disabled = false;
     }
@@ -580,6 +518,8 @@
       fileIn.click();
     }
   });
+  drop.tabIndex = 0;
+  drop.setAttribute("role", "button");
 
   ["dragenter","dragover"].forEach(function(ev){
     drop.addEventListener(ev, function(e){
