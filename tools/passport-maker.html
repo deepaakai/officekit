@@ -10,6 +10,29 @@
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
 <style>
+/* ============ Smooth Global Animations + Times New Roman ============ */
+* {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.3s ease,
+              color 0.25s ease,
+              opacity 0.25s ease;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, label, button, input, select, span, div, li, small {
+  font-family: 'Times New Roman', Times, serif !important;
+}
+
+#dim-label, .mono {
+  font-family: ui-monospace, 'Courier New', monospace !important;
+}
+
+:root {
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --primary-glow: rgba(37, 99, 235, 0.15);
+}
+
 /* ============ Tool-specific ============ */
 .work-grid {
   display: grid;
@@ -22,7 +45,7 @@
 .tool-tabs {
   display: flex;
   background: var(--card-bg);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 4px;
   gap: 4px;
   margin-bottom: 15px;
@@ -38,7 +61,7 @@
   border: none;
   color: var(--subtext-color);
   padding: 9px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
@@ -47,10 +70,16 @@
   justify-content: center;
   gap: 7px;
   white-space: nowrap;
-  transition: all 0.15s;
 }
 .tool-tabs .tab-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; flex-shrink: 0; }
-.tool-tabs .tab-btn.active { background: var(--accent); color: #fff; }
+.tool-tabs .tab-btn:hover { color: var(--text-color); background: var(--card-hover); transform: scale(1.03); }
+.tool-tabs .tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 12px var(--primary-glow);
+  transform: scale(1.05);
+}
+.tool-tabs .tab-btn:active { transform: scale(0.96); }
 
 .color-category-label {
   font-size: 12px;
@@ -64,37 +93,46 @@
 .swatch-group { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 10px; }
 .swatch-dot {
   width: 34px; height: 34px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 2px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.15s;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-.swatch-dot:hover { transform: translateY(-2px); border-color: var(--accent); }
-.swatch-dot.active { border-color: var(--accent); transform: scale(1.12); box-shadow: 0 0 12px var(--accent); }
+.swatch-dot:hover { transform: translateY(-3px) scale(1.08); border-color: var(--accent); }
+.swatch-dot.active {
+  border-color: var(--accent);
+  transform: scale(1.12);
+  box-shadow: 0 0 14px var(--accent);
+}
+.swatch-dot:active { transform: scale(0.95); }
 
 .paper-list-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-height: 290px; overflow-y: auto; padding-right: 4px; }
 .paper-item-btn {
   background: var(--card-hover);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 9px 10px;
   color: var(--text-color);
   font-size: 12.5px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
-  transition: all 0.15s;
 }
-.paper-item-btn:hover { border-color: var(--accent); }
-.paper-item-btn.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.paper-item-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+.paper-item-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: scale(1.02);
+}
+.paper-item-btn:active { transform: scale(0.97); }
 .paper-item-btn small { display: block; color: var(--subtext-color); font-size: 11px; margin-top: 2px; }
 
 .grid-presets { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
 .p-btn {
   background: var(--card-hover);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 8px 10px;
   color: var(--text-color);
   font-size: 12.5px;
@@ -102,7 +140,14 @@
   text-align: left;
   cursor: pointer;
 }
-.p-btn.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.p-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+.p-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: scale(1.02);
+}
+.p-btn:active { transform: scale(0.97); }
 .p-btn small { display: block; color: var(--subtext-color); font-size: 11px; }
 
 .beauty-levels { display: flex; gap: 8px; margin-top: 6px; }
@@ -112,7 +157,7 @@
   border: 1px solid var(--border-color);
   color: var(--text-color);
   padding: 7px 0;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -120,24 +165,42 @@
   justify-content: center;
   gap: 6px;
   font-size: 12.5px;
-  transition: all 0.15s;
 }
-.b-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.b-pill:hover { border-color: var(--accent); transform: translateY(-2px) scale(1.04); }
+.b-pill.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: scale(1.06);
+}
+.b-pill:active { transform: scale(0.95); }
+.b-pill:disabled { opacity: .45; cursor: not-allowed; }
 
 .canvas-column { position: sticky; top: 70px; text-align: center; }
 .preview-box {
   background: var(--bg-color);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 16px;
   position: relative;
   display: inline-block;
   box-shadow: var(--shadow-md);
 }
-#preview-canvas { display: block; max-width: 100%; max-height: 360px; background: #ffffff; border-radius: 4px; cursor: grab; touch-action: none; }
+.preview-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+#preview-canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 360px;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: grab;
+  touch-action: none;
+}
 #preview-canvas:active { cursor: grabbing; }
 .canvas-wrap { position: relative; display: inline-block; line-height: 0; }
-.b-pill:disabled { opacity: .45; cursor: not-allowed; }
 .ai-note { font-size: 12px; color: #f59e0b; margin: 0 0 10px; line-height: 1.4; }
 .drag-hint { font-size: 11.5px; color: var(--subtext-color); margin-top: 8px; }
 
@@ -153,11 +216,11 @@
 
 .btn-print-sheet {
   width: 100%;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #1d4ed8);
   color: #fff;
   border: none;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
@@ -166,7 +229,10 @@
   align-items: center;
   justify-content: center;
   gap: 7px;
+  box-shadow: 0 6px 16px var(--primary-glow);
 }
+.btn-print-sheet:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 24px var(--primary-glow); }
+.btn-print-sheet:active { transform: scale(0.97); }
 .btn-print-sheet svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
 
 .modal-overlay {
@@ -178,42 +244,69 @@
   justify-content: center;
   z-index: 3000;
 }
+.modal-overlay.open { display: flex; animation: fadeIn 0.3s ease; }
 .modal-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 14px;
   width: 90%;
   max-width: 380px;
   padding: 22px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: bounceIn 0.5s var(--spring);
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+  60% { opacity: 1; transform: scale(1.03) translateY(-4px); }
+  100% { transform: scale(1) translateY(0); }
 }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .modal-header h3 { margin: 0; font-size: 17px; color: var(--text-color); }
-.btn-close-modal { background: none; border: none; color: var(--subtext-color); font-size: 20px; cursor: pointer; }
+.btn-close-modal {
+  background: none;
+  border: none;
+  color: var(--subtext-color);
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+.btn-close-modal:hover { color: #ef4444; background: var(--card-hover); transform: rotate(90deg); }
+
 .unit-selector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 16px; }
 .u-btn {
   background: var(--card-hover);
   border: 1px solid var(--border-color);
   color: var(--text-color);
   padding: 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   text-align: center;
 }
-.u-btn.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+.u-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+.u-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.04);
+}
 
 #ai-loader {
   display: none;
   position: fixed; inset: 0;
-  background: rgba(11,19,41,0.85);
+  background: rgba(11,19,41,0.88);
+  backdrop-filter: blur(6px);
   z-index: 4000;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 12px;
 }
+#ai-loader.show { display: flex; animation: fadeIn 0.3s ease; }
 .spinner {
   width: 44px; height: 44px;
   border: 4px solid var(--border-color);
@@ -227,9 +320,14 @@
   margin-top: 25px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 18px;
   text-align: center;
+  animation: slideUp 0.5s var(--spring);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 #sheet-canvas {
   max-width: 100%;
@@ -241,19 +339,48 @@
 
 .switch-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
 .switch-toggle input { display: none; }
-.toggle-slider { width: 36px; height: 20px; background: var(--border-color); border-radius: 20px; position: relative; transition: background 0.2s; }
+.toggle-slider {
+  width: 38px; height: 22px;
+  background: var(--border-color);
+  border-radius: 22px;
+  position: relative;
+}
 .toggle-slider:before {
-  content: ""; position: absolute; width: 14px; height: 14px; border-radius: 50%;
-  top: 3px; left: 3px; background: #fff; transition: transform 0.2s;
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  top: 3px; left: 3px;
+  background: #fff;
+  transition: transform 0.4s var(--spring);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 .switch-toggle input:checked + .toggle-slider { background: var(--accent); }
 .switch-toggle input:checked + .toggle-slider:before { transform: translateX(16px); }
 
 .slider-row { margin-bottom: 12px; }
 .slider-row label { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--text-color); font-weight: 600; margin-bottom: 4px; }
-.slider-row input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: var(--border-color); accent-color: var(--accent); cursor: pointer; }
+.slider-row input[type="range"] {
+  width: 100%; height: 6px; border-radius: 3px;
+  background: var(--border-color);
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.slider-row input[type="range"]:hover { transform: scaleY(1.5); }
+.slider-row input[type="range"]:active { transform: scaleY(1.9); }
 
-#dim-label { font-size: 12px; color: var(--subtext-color); font-family: ui-monospace, monospace; margin-top: 6px; }
+#dim-label { font-size: 12px; color: var(--subtext-color); margin-top: 6px; }
+
+.tool-card[id^="tab-"] { animation: cardFadeIn 0.4s var(--spring); }
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.primary-button:hover { transform: translateY(-3px) scale(1.02); }
+.primary-button:active { transform: scale(0.97); }
+.btn-secondary:hover { transform: translateY(-2px) scale(1.02); }
+.btn-secondary:active { transform: scale(0.97); }
 </style>
 </head>
 <body>
@@ -274,7 +401,6 @@
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- Upload Screen -->
   <div id="upload-screen" class="tool-card" style="max-width:600px; margin:30px auto;">
     <div class="drop-zone">
       <input type="file" id="photo-in" accept="image/*">
@@ -287,7 +413,6 @@
     </div>
   </div>
 
-  <!-- Workspace -->
   <div id="workspace" hidden>
     <div class="tool-tabs">
       <button class="tab-btn active" data-tab="tab-bg">
@@ -322,7 +447,6 @@
 
     <div class="work-grid">
       <div>
-        <!-- BG Tab -->
         <div id="tab-bg" class="tool-card">
           <p class="ai-note" id="ai-note" hidden>AI cutout couldn't load (offline or blocked?). You can still use the original background — try uploading again once you're online.</p>
           <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
@@ -369,7 +493,6 @@
           </div>
         </div>
 
-        <!-- Border Tab -->
         <div id="tab-border" class="tool-card" hidden>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border-color);">
             <span style="font-size:13.5px; font-weight:700; color:var(--accent);">Enable Photo Border</span>
@@ -395,7 +518,6 @@
           </div>
         </div>
 
-        <!-- Paper Tab -->
         <div id="tab-paper" class="tool-card" hidden>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
             <span style="font-size:13px; font-weight:700; color:var(--accent);">Select Paper Size</span>
@@ -412,18 +534,20 @@
           <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border-color);">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
               <div class="slider-row">
-                <label>Columns: <span id="col-val">Auto</span></label>
-                <input type="range" id="grid-cols" min="0" max="8" value="0">
+                <label>Rows: <span id="row-val">Auto</span></label>
+                <input type="range" id="grid-rows" min="0" max="10" value="0">
               </div>
               <div class="slider-row">
                 <label>Photo Gap: <span id="gap-val">3 mm</span></label>
                 <input type="range" id="grid-gap" min="1" max="10" value="3">
               </div>
             </div>
+            <p style="font-size:11.5px; color:var(--subtext-color); margin-top:8px; line-height:1.5;">
+              💡 <b>Tip:</b> Choose how many rows of photos you want. When you pick a specific number, photos print at the <b>top</b> of the sheet.
+            </p>
           </div>
         </div>
 
-        <!-- Size Tab -->
         <div id="tab-size" class="tool-card" hidden>
           <div class="grid-presets">
             <button class="p-btn active" data-w="35" data-h="45">Passport / Visa<small>35 × 45 mm</small></button>
@@ -433,7 +557,6 @@
           </div>
         </div>
 
-        <!-- Position Tab -->
         <div id="tab-position" class="tool-card" hidden>
           <div class="slider-row">
             <label>Zoom: <span id="zoom-val">100%</span></label>
@@ -450,7 +573,6 @@
           <div class="drag-hint">Tip: you can also drag the photo preview. Keep the head between the top and chin guides (70–80% of the height).</div>
         </div>
 
-        <!-- Adjust Tab -->
         <div id="tab-adjust" class="tool-card" hidden>
           <div class="slider-row">
             <label>Brightness: <span id="bright-val">0%</span></label>
@@ -466,7 +588,6 @@
           </div>
         </div>
 
-        <!-- Beauty Tab -->
         <div id="tab-beauty" class="tool-card" hidden>
           <div class="beauty-levels">
             <button class="b-pill active" data-beauty="0">0</button>
@@ -535,7 +656,7 @@
       <li><b>Step 1 - Upload Photo:</b> Click the upload area or drag and drop any clear, front-facing mobile selfie or camera portrait.</li>
       <li><b>Step 2 - Background Replacement:</b> Choose from standard government-approved background colors like Royal Blue, Passport Red, or Clean Pure White.</li>
       <li><b>Step 3 - Border & Spacing:</b> Toggle the 2px–4px black border option to ensure your photo stands out cleanly when printed on paper.</li>
-      <li><b>Step 4 - Choose Paper Sheet:</b> Select A4 or 4x6 (4R) paper size to automatically tile dozens of photos across a single page, ready for immediate color printing.</li>
+      <li><b>Step 4 - Choose Paper Sheet:</b> Select A4 or 4x6 (4R) paper size and choose how many rows of photos you want on the sheet.</li>
     </ul>
 
     <h3>Frequently Asked Questions (FAQ):</h3>
@@ -552,7 +673,6 @@
 
 <div id="officekit-footer"></div>
 
-<!-- Custom Paper Modal -->
 <div class="modal-overlay" id="custom-paper-modal">
   <div class="modal-card">
     <div class="modal-header">
@@ -590,7 +710,7 @@
    ============================================================ */
 const TRANSFORMERS_URL = "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1";
 const MODEL_ID = "Xenova/modnet";
-const MAX_SRC = 2000;   // longest side of working image (plenty for 300 DPI passport crops)
+const MAX_SRC = 2000;
 const DPI = 300;
 
 const $ = (id) => document.getElementById(id);
@@ -598,7 +718,6 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const mmToPx = (mm) => Math.round((mm / 25.4) * DPI);
 const supportsFilter = "filter" in CanvasRenderingContext2D.prototype;
 
-/* ---------- Elements ---------- */
 const fileIn = $("photo-in");
 const uploadScreen = $("upload-screen");
 const workspace = $("workspace");
@@ -640,12 +759,11 @@ const satInput = $("saturation");
 const zoomInput = $("zoom");
 const panXInput = $("pan-x");
 const panYInput = $("pan-y");
-const gridColsInput = $("grid-cols");
+const gridRowsInput = $("grid-rows");   // CHANGED from grid-cols to grid-rows
 const gridGapInput = $("grid-gap");
 
-/* ---------- State ---------- */
-let srcCanvas = null;      // downscaled, orientation-corrected source photo
-let matteCanvas = null;    // same size as srcCanvas; alpha channel = person matte
+let srcCanvas = null;
+let matteCanvas = null;
 let useAiBg = true;
 let activeColor = "#1d4ed8";
 let activeBorderColor = "#111827";
@@ -654,7 +772,6 @@ let beautyLevel = 0;
 let selectedPaperW_mm = 210, selectedPaperH_mm = 297, selectedPaperName = "A4 Paper";
 let modalUnit = "mm";
 
-/* ---------- Loader ---------- */
 function showLoader(msg, sub = "") {
   loaderMsg.textContent = msg;
   loaderSub.textContent = sub;
@@ -662,9 +779,6 @@ function showLoader(msg, sub = "") {
 }
 const hideLoader = () => { aiLoader.style.display = "none"; };
 
-/* ============================================================
-   AI background removal (MODNet portrait matting)
-   ============================================================ */
 let modelPromise = null;
 let progressHandler = null;
 
@@ -700,7 +814,6 @@ async function segmentPerson(source) {
   const { output } = await model({ input: pixel_values });
   const mask = await tf.RawImage.fromTensor(output[0].mul(255).to("uint8")).resize(image.width, image.height);
 
-  // Build an alpha-only canvas from the matte (with a light levels tweak to cut background halos)
   const w = image.width, h = image.height, stride = mask.channels || 1;
   const out = document.createElement("canvas");
   out.width = w; out.height = h;
@@ -714,15 +827,12 @@ async function segmentPerson(source) {
   return out;
 }
 
-/* ============================================================
-   Loading a photo
-   ============================================================ */
 async function loadSource(file) {
   const url = URL.createObjectURL(file);
   try {
     const img = new Image();
     img.src = url;
-    await img.decode();                                   // honours EXIF rotation in modern browsers
+    await img.decode();
     const s = Math.min(1, MAX_SRC / Math.max(img.naturalWidth, img.naturalHeight));
     const c = document.createElement("canvas");
     c.width = Math.round(img.naturalWidth * s);
@@ -772,9 +882,6 @@ fileIn.onchange = async (e) => {
   renderPhoto();
 };
 
-/* ============================================================
-   Rendering
-   ============================================================ */
 function drawPersonLayer(tw, th) {
   const layer = document.createElement("canvas");
   layer.width = tw; layer.height = th;
@@ -811,7 +918,6 @@ function applyAdjustments(layer, lc, w, h) {
   const imgData = lc.getImageData(0, 0, w, h);
   const d = imgData.data;
 
-  // Skin smoothing: blend a blurred copy in, only on skin-toned pixels
   let bd = null;
   const smoothAmt = smooth ? (smooth / 5) * 0.75 : 0;
   if (smooth) {
@@ -865,7 +971,6 @@ function renderPhoto() {
   canvas.width = tw;
   canvas.height = th;
 
-  // Background colour stays exact; adjustments only touch the person layer
   ctx.fillStyle = activeColor;
   ctx.fillRect(0, 0, tw, th);
   ctx.drawImage(drawPersonLayer(tw, th), 0, 0);
@@ -888,7 +993,7 @@ function scheduleRender() {
 }
 
 /* ============================================================
-   Printable sheet
+   Printable sheet — ROWS selection + TOP alignment
    ============================================================ */
 function generateSheet(scroll = true) {
   sheetCanvas.width = mmToPx(selectedPaperW_mm);
@@ -900,15 +1005,29 @@ function generateSheet(scroll = true) {
   const gap = mmToPx(parseFloat(gridGapInput.value));
   const margin = mmToPx(5);
 
+  // Auto-calculate max columns based on paper width
   const maxCols = Math.max(1, Math.floor((sheetCanvas.width - margin * 2 + gap) / (pw + gap)));
-  const rows = Math.max(1, Math.floor((sheetCanvas.height - margin * 2 + gap) / (ph + gap)));
-  const wanted = parseInt(gridColsInput.value);
-  const cols = wanted === 0 ? maxCols : Math.min(wanted, maxCols);
+  const maxRows = Math.max(1, Math.floor((sheetCanvas.height - margin * 2 + gap) / (ph + gap)));
+
+  // User-selected rows: 0 = Auto (fill sheet), 1+ = specific rows (TOP-aligned)
+  const rowsWanted = parseInt(gridRowsInput.value);
+  const isAutoRows = (rowsWanted === 0);
+  const rows = isAutoRows ? maxRows : Math.min(rowsWanted, maxRows);
+  const cols = maxCols;
 
   const gridW = cols * pw + (cols - 1) * gap;
   const gridH = rows * ph + (rows - 1) * gap;
+
+  // Horizontal: always center
   const x0 = Math.max(0, Math.floor((sheetCanvas.width - gridW) / 2));
-  const y0 = Math.max(0, Math.floor((sheetCanvas.height - gridH) / 2));
+
+  // Vertical: Auto = center; Specific rows = TOP aligned
+  let y0;
+  if (isAutoRows) {
+    y0 = Math.max(0, Math.floor((sheetCanvas.height - gridH) / 2));
+  } else {
+    y0 = margin; // TOP
+  }
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -916,23 +1035,20 @@ function generateSheet(scroll = true) {
     }
   }
 
-  sheetTitle.textContent = `${selectedPaperName} — ${cols * rows} photos`;
+  sheetTitle.textContent = `${selectedPaperName} — ${cols * rows} photos (${rows} row${rows > 1 ? "s" : ""})`;
   sheetPreviewWrap.hidden = false;
   if (scroll) sheetPreviewWrap.scrollIntoView({ behavior: "smooth" });
 }
 
-/* ============================================================
-   Export (JPEG with real 300 DPI metadata so printers scale correctly)
-   ============================================================ */
 function setJpegDpi(bytes, dpi) {
   if (bytes[0] !== 0xFF || bytes[1] !== 0xD8) return bytes;
   const hi = dpi >> 8, lo = dpi & 255;
   const isJfif = bytes[2] === 0xFF && bytes[3] === 0xE0 &&
     bytes[6] === 0x4A && bytes[7] === 0x46 && bytes[8] === 0x49 && bytes[9] === 0x46 && bytes[10] === 0;
   if (isJfif) {
-    bytes[13] = 1;                      // units = dots per inch
-    bytes[14] = hi; bytes[15] = lo;     // X density
-    bytes[16] = hi; bytes[17] = lo;     // Y density
+    bytes[13] = 1;
+    bytes[14] = hi; bytes[15] = lo;
+    bytes[16] = hi; bytes[17] = lo;
     return bytes;
   }
   const app0 = [0xFF, 0xE0, 0, 16, 0x4A, 0x46, 0x49, 0x46, 0, 1, 1, 1, hi, lo, hi, lo, 0, 0];
@@ -962,9 +1078,6 @@ $("btn-download-sheet").onclick = () =>
   downloadCanvas(sheetCanvas, `print-sheet-${selectedPaperName.replace(/[^a-zA-Z0-9]+/g, "_")}-300dpi.jpg`);
 $("btn-render-sheet").onclick = () => generateSheet(true);
 
-/* ============================================================
-   UI wiring
-   ============================================================ */
 document.querySelectorAll(".tool-tabs .tab-btn").forEach((btn) => {
   btn.onclick = () => {
     document.querySelectorAll(".tool-tabs .tab-btn").forEach((b) => b.classList.remove("active"));
@@ -974,7 +1087,6 @@ document.querySelectorAll(".tool-tabs .tab-btn").forEach((btn) => {
   };
 });
 
-/* Background colour */
 function setColor(color) {
   activeColor = color;
   document.querySelectorAll(".swatch-dot").forEach((d) =>
@@ -1007,7 +1119,6 @@ btnToggleGuide.onclick = () => {
   btnToggleGuide.classList.toggle("active", show);
 };
 
-/* Border */
 function syncBorderUi() {
   borderControlsBox.style.opacity = borderEnable.checked ? "1" : "0.4";
   borderControlsBox.style.pointerEvents = borderEnable.checked ? "auto" : "none";
@@ -1029,7 +1140,6 @@ borderCustomColor.oninput = (e) => {
   scheduleRender();
 };
 
-/* Paper */
 $("paper-list").addEventListener("click", (e) => {
   const btn = e.target.closest(".paper-item-btn");
   if (!btn) return;
@@ -1040,9 +1150,9 @@ $("paper-list").addEventListener("click", (e) => {
   selectedPaperName = btn.dataset.name;
   if (!sheetPreviewWrap.hidden) generateSheet(false);
 });
-$("btn-open-custom-paper").onclick = () => { customPaperModal.style.display = "flex"; };
-$("btn-close-modal").onclick = () => { customPaperModal.style.display = "none"; };
-customPaperModal.addEventListener("click", (e) => { if (e.target === customPaperModal) customPaperModal.style.display = "none"; });
+$("btn-open-custom-paper").onclick = () => { customPaperModal.classList.add("open"); };
+$("btn-close-modal").onclick = () => { customPaperModal.classList.remove("open"); };
+customPaperModal.addEventListener("click", (e) => { if (e.target === customPaperModal) customPaperModal.classList.remove("open"); });
 $("modal-unit-grid").addEventListener("click", (e) => {
   const btn = e.target.closest(".u-btn");
   if (!btn) return;
@@ -1058,11 +1168,14 @@ $("btn-apply-custom-paper").onclick = () => {
   selectedPaperH_mm = Math.max(20, hVal * k);
   selectedPaperName = `Custom (${wVal}×${hVal} ${modalUnit})`;
   document.querySelectorAll(".paper-item-btn").forEach((b) => b.classList.remove("active"));
-  customPaperModal.style.display = "none";
+  customPaperModal.classList.remove("open");
   if (!sheetPreviewWrap.hidden) generateSheet(false);
 };
-gridColsInput.oninput = () => {
-  $("col-val").textContent = gridColsInput.value === "0" ? "Auto" : gridColsInput.value;
+
+/* ROWS slider (changed from columns) */
+gridRowsInput.oninput = () => {
+  const v = gridRowsInput.value;
+  $("row-val").textContent = v === "0" ? "Auto" : v + (v === "1" ? " row" : " rows");
   if (!sheetPreviewWrap.hidden) generateSheet(false);
 };
 gridGapInput.oninput = () => {
@@ -1070,7 +1183,6 @@ gridGapInput.oninput = () => {
   if (!sheetPreviewWrap.hidden) generateSheet(false);
 };
 
-/* Photo size */
 document.querySelectorAll(".p-btn").forEach((btn) => {
   btn.onclick = () => {
     document.querySelectorAll(".p-btn").forEach((b) => b.classList.remove("active"));
@@ -1081,7 +1193,6 @@ document.querySelectorAll(".p-btn").forEach((btn) => {
   };
 });
 
-/* Beauty */
 document.querySelectorAll(".b-pill[data-beauty]").forEach((pill) => {
   pill.onclick = () => {
     document.querySelectorAll(".b-pill[data-beauty]").forEach((p) => p.classList.remove("active"));
@@ -1091,7 +1202,6 @@ document.querySelectorAll(".b-pill[data-beauty]").forEach((pill) => {
   };
 });
 
-/* Adjust / feather / position sliders */
 function syncSliderLabels() {
   $("bright-val").textContent = brightInput.value + "%";
   $("contrast-val").textContent = contrastInput.value + "%";
@@ -1110,7 +1220,6 @@ function resetPosition() {
   syncSliderLabels();
 }
 
-/* Drag the preview to reposition the face */
 let drag = null;
 canvas.addEventListener("pointerdown", (e) => {
   drag = { x: e.clientX, y: e.clientY, px: +panXInput.value, py: +panYInput.value };
@@ -1126,7 +1235,6 @@ canvas.addEventListener("pointermove", (e) => {
 });
 ["pointerup", "pointercancel"].forEach((t) => canvas.addEventListener(t, () => { drag = null; }));
 
-/* Reset / upload another */
 $("btn-reset").onclick = () => {
   [brightInput, contrastInput, satInput].forEach((el) => (el.value = 0));
   featherInput.value = 2;
@@ -1148,7 +1256,7 @@ $("btn-reset").onclick = () => {
     b.classList.toggle("active", b.dataset.bcol === activeBorderColor));
   syncBorderUi();
 
-  gridColsInput.value = 0; $("col-val").textContent = "Auto";
+  gridRowsInput.value = 0; $("row-val").textContent = "Auto";
   gridGapInput.value = 3; $("gap-val").textContent = "3 mm";
 
   renderPhoto();
