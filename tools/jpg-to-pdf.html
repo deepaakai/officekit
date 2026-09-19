@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>JPG to PDF with Image Editor — OfficeKit</title>
-<meta name="description" content="Convert JPG, PNG or WEBP photos into a polished PDF. Crop, straighten, rotate and enhance every page with a free, 100% browser-based scanner-style editor.">
+<title>OfficeKit Document Scanner & JPG to PDF</title>
+<meta name="description" content="Scan documents, crop, apply filters, reorder, and convert to PDF 100% free and client-side.">
 <link rel="canonical" href="https://pdf365.in/tools/jpg-to-pdf.html">
 
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
@@ -12,539 +12,105 @@
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
 <style>
-/* ============================================================
-   JPG to PDF — Clean, modern, minimal
-   Uses OfficeKit theme variables (--bg-color, --card-bg, etc.)
-   ============================================================ */
-
-* { box-sizing: border-box; }
-
-.jpe-wrap {
-  max-width: 900px;
-  margin: 0 auto;
+.scanner-container { max-width: 900px; margin: 0 auto; }
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
 }
-
-/* -------- Upload box -------- */
-.jpe-drop {
-  position: relative;
-  border: 2px dashed var(--border-color);
-  border-radius: 14px;
-  padding: 40px 20px;
-  text-align: center;
-  cursor: pointer;
-  background: var(--card-bg);
-  transition: border-color .2s, background .2s;
-}
-.jpe-drop:hover,
-.jpe-drop.drag { border-color: var(--accent); background: var(--card-hover); }
-.jpe-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.jpe-drop svg { width: 48px; height: 48px; color: var(--accent); margin-bottom: 12px; }
-.jpe-drop h3 {
-  margin: 0 0 6px;
-  color: var(--text-color);
-  font-size: 17px;
-  font-weight: 700;
-}
-.jpe-drop p {
-  margin: 0;
-  color: var(--subtext-color);
-  font-size: 13px;
-}
-
-/* -------- Thumbnails strip -------- */
-.jpe-strip {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 16px 2px;
-  margin-top: 12px;
-  scrollbar-width: thin;
-}
-.jpe-strip::-webkit-scrollbar { height: 6px; }
-.jpe-strip::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
-
-.jpe-thumb {
-  position: relative;
-  flex: 0 0 auto;
-  width: 90px;
-  height: 110px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
-  cursor: pointer;
-  transition: transform .15s, border-color .15s;
-}
-.jpe-thumb:hover { border-color: var(--accent); transform: translateY(-2px); }
-.jpe-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-}
-.jpe-thumb .num {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  background: var(--accent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 20px;
-  line-height: 1.2;
-}
-.jpe-thumb .del {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #dc2626;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  line-height: 1;
-  padding: 0;
-}
-.jpe-thumb .edit {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 0;
-  letter-spacing: .3px;
-  text-transform: uppercase;
-}
-.jpe-thumb .edit:hover { background: var(--accent-hover, var(--accent)); filter: brightness(1.1); }
-
-/* -------- Toolbar -------- */
-.jpe-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-color);
-}
-.jpe-bar.hidden { display: none; }
-.jpe-bar label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.jpe-bar select {
-  background: var(--card-bg);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.jpe-save {
-  background: #16a34a;
-  color: #fff;
-  border: none;
-  padding: 10px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .15s;
-}
-.jpe-save:hover { background: #15803d; }
-.jpe-save:disabled { opacity: .6; cursor: not-allowed; }
-
-.jpe-hint {
-  margin: 10px 0 0;
-  font-size: 12px;
-  color: var(--subtext-color);
-  text-align: center;
-}
-
-/* -------- Editor sheet -------- */
-.jpe-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, .7);
-  z-index: 9998;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s;
-}
-.jpe-overlay.on { opacity: 1; pointer-events: auto; }
-
-.jpe-sheet {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-width: 700px;
-  margin: 0 auto;
-  height: 94vh;
-  background: var(--card-bg);
-  border-radius: 20px 20px 0 0;
-  border: 1px solid var(--border-color);
-  border-bottom: none;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  transform: translateY(102%);
-  transition: transform .3s cubic-bezier(.2, .8, .2, 1);
-}
-.jpe-sheet.on { transform: translateY(0); }
-
-.jpe-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border-color);
-  flex: 0 0 auto;
-}
-.jpe-head .close {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  font-size: 22px;
-  cursor: pointer;
-  padding: 4px 8px;
-  line-height: 1;
-}
-.jpe-head .title {
-  flex: 1;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-color);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.jpe-head .done {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 7px 16px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-}
-.jpe-head .nav {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  font-size: 18px;
-  cursor: pointer;
-  padding: 4px 8px;
-  line-height: 1;
-}
-.jpe-head .nav:disabled { opacity: .3; cursor: default; }
-
-/* -------- Canvas preview -------- */
-.jpe-stage {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  background: var(--bg-color);
-  overflow: hidden;
-  position: relative;
-}
-.jpe-stage-inner {
-  position: relative;
-  max-width: 100%;
-  max-height: 100%;
-  display: inline-block;
-}
-#jpeCanvas {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  border-radius: 6px;
-  background: #000;
-  touch-action: none;
-  user-select: none;
-}
-
-/* -------- Crop overlay -------- */
-.jpe-quad {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-.jpe-quad polygon {
-  fill: rgba(56, 189, 248, .15);
-  stroke: #38bdf8;
-  stroke-width: 2;
-  vector-effect: non-scaling-stroke;
-}
-.jpe-handle {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  margin: -12px 0 0 -12px;
-  border-radius: 50%;
-  background: #38bdf8;
-  border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
-  cursor: grab;
-  z-index: 3;
-  touch-action: none;
-}
-.jpe-handle:active { cursor: grabbing; }
-
-/* -------- Tab panels -------- */
-.jpe-body {
-  flex: 0 0 auto;
-  padding: 14px 16px 6px;
-  border-top: 1px solid var(--border-color);
-  max-height: 40vh;
-  overflow-y: auto;
-}
-.jpe-panel { display: none; }
-.jpe-panel.on { display: block; }
-
-.jpe-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.jpe-btn {
-  flex: 1 1 120px;
-  min-height: 42px;
+.preview-card {
   background: var(--card-bg);
   border: 1.5px solid var(--border-color);
-  color: var(--text-color);
-  padding: 10px 14px;
   border-radius: 10px;
-  font-size: 13px;
-  font-weight: 600;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+.preview-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #f1f5f9;
+}
+.preview-card .page-num {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--subtext-color);
+  margin-top: 6px;
+  display: block;
+}
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 4px;
+}
+.action-btn {
+  flex: 1;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-color);
   cursor: pointer;
-  display: inline-flex;
+  padding: 4px 0;
+  transition: all 0.15s;
+}
+.action-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.del-card-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(239, 68, 68, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  transition: border-color .15s, background .15s;
-}
-.jpe-btn:hover { border-color: var(--accent); background: var(--card-hover); }
-.jpe-btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-  font-weight: 700;
-}
-.jpe-btn.primary:hover { filter: brightness(1.1); }
-.jpe-btn svg { width: 16px; height: 16px; }
-
-.jpe-note {
-  font-size: 12.5px;
-  color: var(--subtext-color);
-  margin: 0 0 10px;
-  line-height: 1.5;
 }
 
-/* -------- Filter thumbnails -------- */
-.jpe-filters {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 4px 2px 12px;
-  scrollbar-width: thin;
+/* Modal for Editing / Filtering */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(11,19,41,0.85);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 15px;
 }
-.jpe-filters::-webkit-scrollbar { height: 6px; }
-.jpe-filters::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
-
-.jpe-fopt {
-  flex: 0 0 auto;
-  width: 80px;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+.modal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 500px;
+  padding: 24px;
+  box-shadow: var(--shadow-md);
   text-align: center;
-  color: var(--subtext-color);
 }
-.jpe-fopt canvas {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
-  display: block;
-  border: 3px solid var(--border-color);
-  background: #000;
-  transition: border-color .15s, transform .15s;
-  object-fit: cover;
-}
-.jpe-fopt:hover canvas { transform: scale(1.05); border-color: var(--accent-hover, var(--accent)); }
-.jpe-fopt.on canvas { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56, 189, 248, .3); }
-.jpe-fopt.on { color: var(--accent); font-weight: 700; }
-.jpe-fopt span {
-  display: block;
-  font-size: 11px;
-  margin-top: 6px;
-  line-height: 1.2;
-}
-
-/* -------- Adjust sliders -------- */
-.jpe-slider {
-  margin-bottom: 14px;
-}
-.jpe-slider label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-color);
-  margin-bottom: 6px;
-}
-.jpe-slider label span { color: var(--accent); }
-.jpe-slider input[type=range] {
-  width: 100%;
-  accent-color: var(--accent);
-}
-
-/* -------- Reorder grid -------- */
-.jpe-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
-  padding: 4px;
-}
-.jpe-grid-item {
-  position: relative;
-  aspect-ratio: 4/5;
-  border-radius: 10px;
+.modal-canvas-wrap {
+  max-height: 320px;
   overflow: hidden;
-  border: 2px solid var(--border-color);
-  background: var(--card-bg);
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
-}
-.jpe-grid-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-}
-.jpe-grid-item .num {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  background: var(--accent);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 20px;
-}
-.jpe-grid-item.dragging {
-  opacity: .5;
-  transform: scale(1.05);
-  z-index: 10;
-}
-.jpe-grid-item.over {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, .4);
-}
-
-/* -------- Tab bar -------- */
-.jpe-tabs {
-  flex: 0 0 auto;
-  display: flex;
-  border-top: 1px solid var(--border-color);
-  padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-  background: var(--card-bg);
-}
-.jpe-tab {
-  flex: 1;
-  background: none;
-  border: none;
-  color: var(--subtext-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 8px 4px;
-  font-size: 10.5px;
-  font-weight: 600;
-  cursor: pointer;
+  margin: 15px 0;
+  background: #000;
   border-radius: 8px;
-}
-.jpe-tab svg { width: 20px; height: 20px; }
-.jpe-tab.on { color: var(--accent); background: var(--card-hover); }
-
-/* -------- Toast -------- */
-.jpe-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translate(-50%, 20px);
-  background: var(--card-bg);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  padding: 10px 18px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 600;
-  z-index: 10000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s, transform .2s;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .3);
-}
-.jpe-toast.on { opacity: 1; transform: translate(-50%, 0); }
-
-/* -------- Output card -------- */
-.jpe-output {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  margin-top: 16px;
+  justify-content: center;
 }
-.jpe-output strong { color: var(--text-color); font-size: 14px; }
-.jpe-output small { color: var(--subtext-color); font-size: 12.5px; display: block; margin-top: 2px; }
-
-@media (max-width: 480px) {
-  .jpe-bar { flex-direction: column; align-items: stretch; }
-  .jpe-save { width: 100%; }
-  .jpe-fopt { width: 68px; }
-  .jpe-fopt canvas { width: 68px; height: 68px; }
-}
+#edit-canvas { max-width: 100%; max-height: 300px; display: block; }
+.filter-row { display: flex; gap: 8px; margin-bottom: 15px; justify-content: center; flex-wrap: wrap; }
 </style>
 </head>
 <body>
@@ -553,184 +119,268 @@
 
 <main class="main-wrap">
   <div class="hero-box">
-    <h1 class="hero-title">JPG to PDF with Image Editor</h1>
-    <p class="hero-sub">Scan-style cropping, straightening, filters and enhancement — combine your photos into one clean PDF, entirely in your browser.</p>
+    <h1 class="hero-title">Document Scanner & JPG to PDF</h1>
+    <p class="hero-sub">Scan documents, adjust filters, reorder pages, and convert into a professional PDF — 100% private & browser-based.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <div class="tool-card jpe-wrap">
-
-    <div class="jpe-drop" id="dropZone">
-      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-      </svg>
-      <h3>Select or drop JPG / PNG / WEBP images</h3>
-      <p>Tap a page afterwards to crop, straighten, rotate or apply a filter</p>
+  <div class="tool-card scanner-container">
+    <div class="drop-zone">
+      <input type="file" id="jpg-in" accept="image/jpeg,image/png,image/webp" multiple>
+      <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <h3>Select or Drop Document Photos</h3>
+      <p>Add receipts, IDs, certificates, or multiple pages to compile</p>
     </div>
 
-    <div class="jpe-strip" id="strip"></div>
-
-    <div class="jpe-bar hidden" id="bar">
-      <label>
-        Page size
-        <select id="pageSize">
-          <option value="auto">Auto-fit (image size)</option>
-          <option value="a4p">A4 Portrait</option>
-          <option value="a4l">A4 Landscape</option>
-          <option value="a3p">A3 Portrait</option>
-          <option value="a3l">A3 Landscape</option>
-        </select>
-      </label>
-      <button class="jpe-save" id="savePdf">Save PDF</button>
-    </div>
-    <p class="jpe-hint hidden" id="hint"></p>
-
-    <div id="output"></div>
+    <div class="preview-grid" id="queue"></div>
+    <button class="primary-button" id="btn-convert" style="display:none; width:100%; margin-top:15px; font-weight:800; padding:13px;">Convert to PDF Now</button>
+    <div id="output" style="margin-top:15px;"></div>
   </div>
-
-  <div class="ad-slot-container">Advertisement</div>
-
-  <section class="seo-article">
-    <h2>Turn Photos Into a Polished PDF — With a Built-In Document Editor</h2>
-    <p>Phone photos of paperwork rarely look print-ready straight out of the camera: the page is skewed, the lighting is uneven, and the edges of the desk sneak into the shot. OfficeKit's JPG to PDF tool adds a scan-style editor on top of the usual image-to-PDF conversion, so every page can be squared up, brightened and cleaned before it's compiled — all inside your browser, with nothing uploaded to a server.</p>
-
-    <h3>What you can do before exporting</h3>
-    <ul>
-      <li><b>Crop and straighten:</b> auto-detect the document edges or drag the four corner handles yourself to correct perspective.</li>
-      <li><b>Rotate:</b> fix sideways or upside-down photos in one tap.</li>
-      <li><b>Apply a filter:</b> Auto-color, Light Text, Grayscale, Whiteboard or Enhance — with an option to apply the same look to every page.</li>
-      <li><b>Fine-tune:</b> adjust brightness, contrast and saturation with live sliders.</li>
-      <li><b>Reorder pages:</b> drag thumbnails into the order you want them to appear in the final PDF.</li>
-    </ul>
-
-    <h3>FAQ</h3>
-    <p><b>Is anything uploaded to a server?</b><br>No — every crop, filter and the final PDF are generated locally in your browser using the Canvas API and pdf-lib.</p>
-    <p><b>Can I mix JPG, PNG and WEBP files in one PDF?</b><br>Yes, they can all be combined into a single document.</p>
-  </section>
 
   <div class="ad-slot-container">Advertisement</div>
 </main>
 
 <div id="officekit-footer"></div>
 
-<!-- ==================== Editor Sheet ==================== -->
-<div class="jpe-overlay" id="overlay"></div>
-
-<div class="jpe-sheet" id="sheet" role="dialog" aria-label="Image editor">
-
-  <div class="jpe-head">
-    <button class="nav" id="prevBtn" title="Previous">&#8249;</button>
-    <button class="close" id="closeBtn" title="Close">&#10005;</button>
-    <span class="title" id="sheetTitle">Edit Image</span>
-    <button class="done" id="doneBtn">Done</button>
-    <button class="nav" id="nextBtn" title="Next">&#8250;</button>
-  </div>
-
-  <div class="jpe-stage">
-    <div class="jpe-stage-inner" id="stageInner">
-      <canvas id="jpeCanvas"></canvas>
-      <svg class="jpe-quad" id="quadOverlay" viewBox="0 0 100 100" preserveAspectRatio="none" style="display:none">
-        <polygon id="quadPoly" points="0,0 100,0 100,100 0,100"></polygon>
-      </svg>
-      <div id="handles"></div>
+<!-- Edit / Filter Modal -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <h3 style="margin:0; font-size:18px; color:var(--text-color); font-weight:800;">Edit & Filter Document</h3>
+      <button id="close-modal" style="background:none; border:none; color:var(--subtext-color); font-size:22px; cursor:pointer;">✕</button>
     </div>
-  </div>
-
-  <div class="jpe-body">
-
-    <!-- CROP -->
-    <div class="jpe-panel on" id="panel-crop">
-      <p class="jpe-note">Drag the corner handles onto the edges of your document, or try Auto-detect.</p>
-      <div class="jpe-row">
-        <button class="jpe-btn" id="btnAuto">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
-          Auto-detect
-        </button>
-        <button class="jpe-btn" id="btnReset">Reset</button>
-      </div>
-      <div class="jpe-row">
-        <button class="jpe-btn primary" id="btnApplyCrop">Apply Crop</button>
-      </div>
+    
+    <div class="modal-canvas-wrap">
+      <canvas id="edit-canvas"></canvas>
     </div>
 
-    <!-- ROTATE -->
-    <div class="jpe-panel" id="panel-rotate">
-      <div class="jpe-row">
-        <button class="jpe-btn" id="btnLeft">Rotate Left 90°</button>
-        <button class="jpe-btn" id="btnRight">Rotate Right 90°</button>
-        <button class="jpe-btn" id="btnFlip">Rotate 180°</button>
-      </div>
+    <div class="filter-row">
+      <button class="action-btn active-filter" data-filter="normal">Original</button>
+      <button class="action-btn" data-filter="magic">Magic BW</button>
+      <button class="action-btn" data-filter="grayscale">Grayscale</button>
+      <button class="action-btn" data-filter="brighten">Enhance</button>
     </div>
 
-    <!-- FILTERS -->
-    <div class="jpe-panel" id="panel-filter">
-      <div class="jpe-filters" id="filterRow">
-        <button class="jpe-fopt on" data-filter="original"><canvas width="80" height="80"></canvas><span>Original</span></button>
-        <button class="jpe-fopt" data-filter="auto-color"><canvas width="80" height="80"></canvas><span>Auto Color</span></button>
-        <button class="jpe-fopt" data-filter="light-text"><canvas width="80" height="80"></canvas><span>Light Text</span></button>
-        <button class="jpe-fopt" data-filter="grayscale"><canvas width="80" height="80"></canvas><span>Grayscale</span></button>
-        <button class="jpe-fopt" data-filter="whiteboard"><canvas width="80" height="80"></canvas><span>Whiteboard</span></button>
-        <button class="jpe-fopt" data-filter="enhance"><canvas width="80" height="80"></canvas><span>Enhance</span></button>
-      </div>
+    <div style="display:flex; gap:10px;">
+      <button class="action-btn" id="btn-rotate" style="padding:10px; font-weight:700;">🔄 Rotate 90°</button>
+      <button class="primary-button" id="btn-save-edit" style="flex:2; font-weight:800;">Save Changes</button>
     </div>
-
-    <!-- ADJUST -->
-    <div class="jpe-panel" id="panel-adjust">
-      <div class="jpe-slider">
-        <label>Brightness <span id="vBright">0</span></label>
-        <input type="range" id="sBright" min="-100" max="100" value="0">
-      </div>
-      <div class="jpe-slider">
-        <label>Contrast <span id="vContrast">0</span></label>
-        <input type="range" id="sContrast" min="-100" max="100" value="0">
-      </div>
-      <div class="jpe-slider">
-        <label>Saturation <span id="vSat">0</span></label>
-        <input type="range" id="sSat" min="-100" max="100" value="0">
-      </div>
-    </div>
-
-    <!-- REORDER -->
-    <div class="jpe-panel" id="panel-reorder">
-      <p class="jpe-note">Drag any page onto another page to swap their positions.</p>
-      <div class="jpe-grid" id="grid"></div>
-    </div>
-  </div>
-
-  <div class="jpe-tabs">
-    <button class="jpe-tab on" data-tab="crop">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
-      Crop
-    </button>
-    <button class="jpe-tab" data-tab="rotate">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
-      Rotate
-    </button>
-    <button class="jpe-tab" data-tab="filter">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z"/></svg>
-      Filter
-    </button>
-    <button class="jpe-tab" data-tab="adjust">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.8" fill="currentColor"/><circle cx="16" cy="12" r="1.8" fill="currentColor"/><circle cx="10" cy="18" r="1.8" fill="currentColor"/></svg>
-      Adjust
-    </button>
-    <button class="jpe-tab" data-tab="reorder">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Reorder
-    </button>
   </div>
 </div>
 
-<div class="jpe-toast" id="toast"></div>
-
-<!-- =================================================================
-     JAVASCRIPT — Message 2 mein aayega
-     ================================================================= -->
 <script src="../assets/js/core/officekit-core.js"></script>
 
-<!-- JS SECTION — Next message -->
+<script>
+const fileIn = document.getElementById("jpg-in");
+const queue = document.getElementById("queue");
+const btn = document.getElementById("btn-convert");
+const output = document.getElementById("output");
+
+const editModal = document.getElementById("edit-modal");
+const closeModal = document.getElementById("close-modal");
+const editCanvas = document.getElementById("edit-canvas");
+const eCtx = editCanvas.getContext("2d", { willReadFrequently: true });
+const btnRotate = document.getElementById("btn-rotate");
+const btnSaveEdit = document.getElementById("btn-save-edit");
+
+let pages = []; // Stores { dataUrl, file, currentFilter, rotation }
+let editingIndex = null;
+let currentRotation = 0;
+let activeFilterType = "normal";
+
+fileIn.addEventListener("change", async (e) => {
+  const newFiles = Array.from(e.target.files);
+  for (const file of newFiles) {
+    const dataUrl = await readFileAsDataURL(file);
+    pages.push({
+      file: file,
+      dataUrl: dataUrl,
+      processedDataUrl: dataUrl,
+      filter: "normal",
+      rotation: 0
+    });
+  }
+  renderQueue();
+  fileIn.value = "";
+});
+
+function readFileAsDataURL(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderQueue() {
+  queue.innerHTML = "";
+  pages.forEach((p, idx) => {
+    const card = document.createElement("div");
+    card.className = "preview-card";
+    card.innerHTML = `
+      <button class="del-card-btn" onclick="removePage(${idx})">✕</button>
+      <img src="${p.processedDataUrl}" alt="Page ${idx + 1}">
+      <span class="page-num">Page ${idx + 1}</span>
+      <div class="card-actions">
+        <button class="action-btn" onclick="openEditor(${idx})">✏️ Edit</button>
+        <button class="action-btn" ${idx === 0 ? 'style="opacity:0.3;pointer-events:none;"' : ''} onclick="movePage(${idx}, -1)">◀</button>
+        <button class="action-btn" ${idx === pages.length - 1 ? 'style="opacity:0.3;pointer-events:none;"' : ''} onclick="movePage(${idx}, 1)">▶</button>
+      </div>
+    `;
+    queue.appendChild(card);
+  });
+  btn.style.display = pages.length > 0 ? "block" : "none";
+}
+
+window.removePage = function(idx) {
+  pages.splice(idx, 1);
+  renderQueue();
+};
+
+window.movePage = function(idx, dir) {
+  const target = idx + dir;
+  if (target < 0 || target >= pages.length) return;
+  const temp = pages[idx];
+  pages[idx] = pages[target];
+  pages[target] = temp;
+  renderQueue();
+};
+
+// Editor Modal Handling
+window.openEditor = function(idx) {
+  editingIndex = idx;
+  const p = pages[idx];
+  currentRotation = p.rotation;
+  activeFilterType = p.filter;
+
+  const img = new Image();
+  img.onload = () => {
+    drawImageToEditCanvas(img, currentRotation, activeFilterType);
+    editModal.style.display = "flex";
+  };
+  img.src = p.dataUrl;
+};
+
+closeModal.onclick = () => { editModal.style.display = "none"; };
+
+function drawImageToEditCanvas(img, rot, filter) {
+  let w = img.width;
+  let h = img.height;
+
+  if (rot === 90 || rot === 270) {
+    editCanvas.width = h;
+    editCanvas.height = w;
+  } else {
+    editCanvas.width = w;
+    editCanvas.height = h;
+  }
+
+  eCtx.clearRect(0, 0, editCanvas.width, editCanvas.height);
+  eCtx.save();
+  eCtx.translate(editCanvas.width / 2, editCanvas.height / 2);
+  eCtx.rotate((rot * Math.PI) / 180);
+  eCtx.drawImage(img, -w / 2, -h / 2);
+  eCtx.restore();
+
+  applyCanvasFilter(filter);
+}
+
+function applyCanvasFilter(type) {
+  if (type === "normal") return;
+  const imgData = eCtx.getImageData(0, 0, editCanvas.width, editCanvas.height);
+  const data = imgData.data;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i+1], b = data[i+2];
+    if (type === "grayscale") {
+      const v = 0.3 * r + 0.59 * g + 0.11 * b;
+      data[i] = v; data[i+1] = v; data[i+2] = v;
+    } else if (type === "magic") {
+      // High contrast B&W document scan filter
+      let v = 0.3 * r + 0.59 * g + 0.11 * b;
+      v = v < 130 ? 0 : 255;
+      data[i] = v; data[i+1] = v; data[i+2] = v;
+    } else if (type === "brighten") {
+      data[i] = Math.min(255, r * 1.2);
+      data[i+1] = Math.min(255, g * 1.2);
+      data[i+2] = Math.min(255, b * 1.2);
+    }
+  }
+  eCtx.putImageData(imgData, 0, 0);
+}
+
+document.querySelectorAll(".filter-row .action-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".filter-row .action-btn").forEach(b => b.style.background = "");
+    btn.style.background = "var(--accent)";
+    btn.style.color = "#fff";
+    activeFilterType = btn.dataset.filter;
+    
+    const p = pages[editingIndex];
+    const img = new Image();
+    img.onload = () => drawImageToEditCanvas(img, currentRotation, activeFilterType);
+    img.src = p.dataUrl;
+  };
+});
+
+btnRotate.onclick = () => {
+  currentRotation = (currentRotation + 90) % 360;
+  const p = pages[editingIndex];
+  const img = new Image();
+  img.onload = () => drawImageToEditCanvas(img, currentRotation, activeFilterType);
+  img.src = p.dataUrl;
+};
+
+btnSaveEdit.onclick = () => {
+  if (editingIndex === null) return;
+  pages[editingIndex].processedDataUrl = editCanvas.toDataURL("image/jpeg", 0.95);
+  pages[editingIndex].rotation = currentRotation;
+  pages[editingIndex].filter = activeFilterType;
+  editModal.style.display = "none";
+  renderQueue();
+};
+
+// PDF Conversion
+btn.onclick = async () => {
+  btn.disabled = true;
+  btn.textContent = "Creating PDF...";
+  try {
+    const pdfDoc = await PDFLib.PDFDocument.create();
+    for (const p of pages) {
+      const resp = await fetch(p.processedDataUrl);
+      const buf = await resp.arrayBuffer();
+      const img = await pdfDoc.embedJpg(buf);
+      const page = pdfDoc.addPage([img.width, img.height]);
+      page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+    }
+    const bytes = await pdfDoc.save();
+    const blob = new Blob([bytes], { type: "application/pdf" });
+    
+    output.innerHTML = `
+      <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:16px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <strong style="color:var(--text-color);">Ready: scanned-document.pdf</strong><br>
+          <span style="color:var(--subtext-color); font-size:12.5px;">${pages.length} page(s) successfully compiled</span>
+        </div>
+        <button class="primary-button" id="dl" style="font-weight:800; padding:10px 20px;">Download PDF</button>
+      </div>`;
+    
+    document.getElementById("dl").onclick = () => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "scanned-document.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+  } catch (err) {
+    alert("Error generating PDF: " + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Convert to PDF Now";
+  }
+};
+</script>
 </body>
 </html>
