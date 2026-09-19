@@ -713,9 +713,8 @@ async function fileToCanvas(file, maxDim) {
  * ------------------------------------------------------------------ */
 
 /**
- * Load OpenCV.js from the first CDN that answers, then wait for the
- * WebAssembly runtime. The UI never blocks on this: the editor simply
- * falls back to manual cropping while the engine is still warming up.
+ * Load OpenCV.js asynchronously with non-blocking pauses to prevent 
+ * "Page Unresponsive" warnings on slower browsers or devices.
  */
 async function initOpenCV() {
   var urls = [
@@ -726,6 +725,7 @@ async function initOpenCV() {
   for (var i = 0; i < urls.length; i++) {
     try {
       await loadScript(urls[i]);
+      await new Promise(function(r) { setTimeout(r, 120); }); // Non-blocking breathing room
       var mod = await waitForCv(30000);
       if (mod) return mod;
     } catch (e) { /* try the next mirror */ }
@@ -750,7 +750,7 @@ function waitForCv(timeout) {
         if (c.Mat && c.imread) { resolve(c); return; }   // official build, runtime ready
       }
       if (Date.now() - t0 > timeout) { reject(new Error('OpenCV init timeout')); return; }
-      setTimeout(check, 80);
+      setTimeout(check, 120);
     })();
   });
 }
