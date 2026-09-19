@@ -376,6 +376,10 @@ input[type="range"]::-moz-range-thumb{width:16px;height:16px;border:2px solid va
       <p class="hint center"><svg class="ic"><use href="#i-shield"/></svg>Pages are compiled locally, then downloaded straight to your device.</p>
     </div>
   </section>
+
+  <p class="hint center" style="margin-top: 34px; font-size: 12.5px;">
+    Made with ❤️ by <a href="https://pdf365.in" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600;">Deepaak Kumar</a> (100% Privacy, Client-side)
+  </p>
 </main>
 
 <!-- ================================ EDITOR ================================ -->
@@ -935,7 +939,7 @@ function clonePage(p) {
 }
 
 /* ------------------------------------------------------------------ *
- * 8. PDF EXPORT
+ * 8. PDF EXPORT (with watermark)
  * ------------------------------------------------------------------ */
 async function ensurePdfLib() {
   if (window.PDFLib && window.PDFLib.PDFDocument) return window.PDFLib;
@@ -1002,6 +1006,36 @@ async function exportPDF() {
       var k = Math.min(availW / img.width, availH / img.height);
       var dw = img.width * k, dh = img.height * k;
       page.drawImage(img, { x: (pw - dw) / 2, y: (ph - dh) / 2, width: dw, height: dh });
+
+      // ---- Watermark ----
+      var wmText = 'pdf365.in';
+      var wmSize = Math.min(pw, ph) * 0.09;
+      var wmFont = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      var wmWidth = wmFont.widthOfTextAtSize(wmText, wmSize);
+      var wmHeight = wmFont.heightAtSize(wmSize);
+      // Draw a soft diagonal watermark at the center
+      page.drawText(wmText, {
+        x: (pw - wmWidth * Math.cos(Math.PI / 6)) / 2,
+        y: (ph - wmHeight * Math.sin(Math.PI / 6)) / 2,
+        size: wmSize,
+        font: wmFont,
+        color: PDFLib.rgb(0.75, 0.75, 0.75),
+        opacity: 0.22,
+        rotate: PDFLib.degrees(30)
+      });
+
+      // ---- Footer credit line ----
+      var creditText = 'Made with \u2764 by Deepaak Kumar  |  pdf365.in';
+      var creditSize = Math.min(pw, ph) * 0.022;
+      var creditWidth = wmFont.widthOfTextAtSize(creditText, creditSize);
+      page.drawText(creditText, {
+        x: (pw - creditWidth) / 2,
+        y: marginPt * 0.55,
+        size: creditSize,
+        font: wmFont,
+        color: PDFLib.rgb(0.6, 0.6, 0.6),
+        opacity: 0.8
+      });
 
       setProgress((i + 1) / pages.length, true);
       await nextTick();
@@ -1694,4 +1728,4 @@ else start();
 })();
 </script>
 </body>
-  </html>
+</html>
