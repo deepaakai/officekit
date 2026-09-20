@@ -1,6 +1,6 @@
 /* ==========================================================================
    DocEasy Core — Auto-injects header + footer + theme toggle on every page.
-   Update this ONE file and every page across the site updates.
+   Made with ❤️ by Deepaak Kumar · https://deepaakai.github.io/portfolio/
    ========================================================================== */
 (function () {
   'use strict';
@@ -18,6 +18,8 @@
   var CONFIG = {
     brand: 'DocEasy',
     domain: 'doceasy.org',
+    author: 'Deepaak Kumar',
+    authorPortfolio: 'https://deepaakai.github.io/portfolio/',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
     topNav: [
@@ -102,7 +104,7 @@
     '</div></header>';
   }
 
-  /* ---------- Footer ---------- */
+  /* ---------- Footer (with Deepaak credit — preserved) ---------- */
   function buildFooter() {
     function col(title, items, isRoot) {
       var lis = items.map(function (it) {
@@ -125,8 +127,13 @@
       '</div>' +
       '<div class="footer-bottom-bar">' +
         '<div>© <span id="de-year"></span> ' + CONFIG.brand + '. All rights reserved.</div>' +
-        '<div><a class="made-with-love-link" href="https://' + CONFIG.domain +
-        '" target="_blank" rel="noopener noreferrer">' + CONFIG.domain + '</a></div>' +
+        '<div>' +
+          '<a class="made-with-love-link" ' +
+            'href="' + CONFIG.authorPortfolio + '" ' +
+            'target="_blank" rel="noopener noreferrer">' +
+            'Made with ❤️ by ' + CONFIG.author +
+          '</a>' +
+        '</div>' +
       '</div>' +
     '</footer>';
   }
@@ -162,7 +169,7 @@
     }
   };
 
-  /* Legacy alias — safe if any old code calls it */
+  /* Legacy alias — safe if any old code still calls it */
   window.officekitToggleTheme = window.docEasyToggleTheme;
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
