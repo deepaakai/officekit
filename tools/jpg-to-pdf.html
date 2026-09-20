@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Document Scanner &amp; PDF Maker — OfficeKit</title>
+<title>JPG to PDF &amp; Document Scanner — OfficeKit</title>
 <meta name="description" content="Scan documents from photos: manual crop, perspective correction, filters and multi-page PDF export. 100% in your browser — nothing is uploaded.">
+<meta name="theme-color" content="#0b1329">
 <link rel="canonical" href="https://pdf365.in/tools/jpg-to-pdf.html">
 
+<!-- ============ GLOBAL STYLESHEET (same as index + passport-maker) ============ -->
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
 <!-- PDF generation library (pdf-lib). Deferred + runtime CDN fallback. -->
@@ -16,392 +18,443 @@
 <script>window.__OPENCV_DISABLED = true;</script>
 
 <style>
-/* ===================== THEME TOKENS (Light Theme matching Screenshots) ===================== */
-*,*::before,*::after{box-sizing:border-box}
-[hidden]{display:none!important}
-:root{
-  --r-s:8px; --r-m:12px; --r-l:18px;
-  --t:.24s cubic-bezier(.4,0,.2,1);
-  --maxw:1060px;
+/* ============ TOOL-SPECIFIC STYLES — powered by global theme variables ============ */
+.main-wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; }
 
-  /* Light Theme Colors */
-  --bg:#f8fafc; 
-  --bg2:#f1f5f9; 
-  --card:#ffffff; 
-  --card2:#f8fafc;
-  --bd:#e2e8f0; 
-  --tx:#0f172a; 
-  --sub:#64748b;
-  --accent:#2563eb; 
-  --accent-ink:#ffffff; 
-  --accent-soft:#eff6ff;
-  --danger:#ef4444; 
-  --ok:#10b981; 
-  --warn:#f59e0b;
-  
-  --sh:0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -2px rgba(0,0,0,.05);
-  --stage:#1e293b; 
-  --line:#2563eb; 
-  --veil:rgba(255,255,255,.8);
-
-  /* Header/Footer Dark Blue */
-  --hdr-bg:#1e3a8a;
-  --hdr-tx:#ffffff;
+.hero-box { text-align: center; padding: 8px 0 20px; }
+.hero-title {
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+.hero-sub {
+  color: var(--subtext-color);
+  font-size: 14.5px;
+  margin: 0 0 18px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-html,body{margin:0;padding:0}
-body{
-  background:var(--bg); color:var(--tx);
-  font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased; min-height:100dvh;
-}
-button,input,select{font:inherit;color:inherit}
-button{cursor:pointer;border:0;background:none}
-h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.01em}
-a{color:var(--accent)}
-
-.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;display:block;flex:none}
-.ic-lg{width:26px;height:26px}
-.ic-xl{width:44px;height:44px;stroke-width:1.5}
-.sprite{display:none}
-.muted{color:var(--sub)}
-.center{text-align:center}
-
-/* ===================== HEADER / FOOTER (Dark Blue) ===================== */
-#officekit-header { background: var(--hdr-bg); color: var(--hdr-tx); padding: 12px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-#officekit-header * { color: var(--hdr-tx); }
-#officekit-footer { background: var(--hdr-bg); color: var(--hdr-tx); padding: 24px 0; margin-top: 40px; text-align: center; font-size: 14px; }
-#officekit-footer * { color: var(--hdr-tx); }
-
-/* ===================== LAYOUT ===================== */
-.scanner-wrap{
-  max-width:var(--maxw); margin:0 auto;
-  padding:18px max(14px,env(safe-area-inset-left)) 90px max(14px,env(safe-area-inset-right));
+/* Card wrapper (matches .tool-card used in passport-maker) */
+.tool-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
 }
 
-.hero-box{text-align:center;padding:24px 6px 30px}
-.hero-title{font-size:clamp(24px,5.4vw,36px); color: #1e293b;}
-.hero-sub{color:var(--sub);margin:10px auto 0;max-width:600px;font-size:14.5px}
-
-.tool-card{
-  background:var(--card); border:1px solid var(--bd); border-radius:var(--r-l);
-  box-shadow:var(--sh); padding:24px;
+/* Ad slot (identical to index) */
+.ad-slot-container {
+  background: var(--card-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+  margin: 24px 0;
+  color: var(--subtext-color);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ===================== BUTTONS ===================== */
-.primary-button,.btn-primary{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:11px 18px;border-radius:var(--r-m);font-weight:600;font-size:14px;
-  background:var(--accent);color:var(--accent-ink);
-  border:1px solid transparent;box-shadow:0 2px 4px rgba(37,99,235,.2);
-  transition:var(--t);
+/* ============ DROP ZONE ============ */
+.drop-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 34px 20px;
+  text-align: center;
+  transition: 0.22s;
+  cursor: pointer;
+  background: var(--card-hover);
 }
-.primary-button:hover,.btn-primary:hover{background:#1d4ed8; box-shadow:0 4px 6px rgba(37,99,235,.3);}
-.primary-button:disabled{opacity:.5;cursor:progress}
-.primary-button .ic{stroke:var(--accent-ink)}
+.drop-zone:hover, .drop-zone:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  outline: none;
+}
+.dz-icon {
+  width: 70px; height: 70px; margin: 0 auto 12px; border-radius: 20px;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.dz-title { font-size: 17px; color: var(--text-color); margin: 0; }
+.dz-sub { color: var(--subtext-color); font-size: 13px; margin: 7px 0 16px; }
+.dz-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-.btn-secondary,.btn-ghost{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:11px 18px;border-radius:var(--r-m);font-weight:600;font-size:14px;
-  background:var(--card);border:1px solid var(--bd);color:var(--tx);
-  transition:var(--t);
+/* Buttons */
+.primary-button, .btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 14px;
+  background: var(--accent); color: #fff;
+  border: 1px solid var(--accent);
+  cursor: pointer; transition: 0.18s;
 }
-.btn-secondary:hover,.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.primary-button:hover, .btn-primary:hover { filter: brightness(1.08); }
+.primary-button:disabled { opacity: 0.55; cursor: progress; }
+.primary-button svg, .btn-primary svg { stroke: #fff; fill: none; width: 18px; height: 18px; }
 
-.btn-danger-ghost{background:var(--card);border:1px solid var(--bd);color:var(--danger)}
-.btn-danger-ghost:hover{border-color:var(--danger);color:var(--danger);background:#fef2f2}
+.btn-secondary, .btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 14px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  color: var(--text-color); cursor: pointer; transition: 0.18s;
+}
+.btn-secondary:hover, .btn-ghost:hover {
+  border-color: var(--accent); color: var(--accent); background: var(--accent-soft);
+}
+.btn-danger-ghost { color: var(--error); border-color: var(--border-color); background: var(--card-bg); }
+.btn-danger-ghost:hover { border-color: var(--error); color: var(--error); background: rgba(239,68,68,0.08); }
 
-.btn-sm{padding:9px 14px;font-size:13.5px}
-.btn-mini{padding:7px 12px;font-size:12.5px;border-radius:var(--r-s)}
-.btn-block{width:100%;margin-top:6px}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn-sm { padding: 9px 14px; font-size: 13px; }
+.btn-mini { padding: 7px 12px; font-size: 12.5px; border-radius: 6px; }
+.btn-block { width: 100%; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* ===================== DROP ZONE ===================== */
-.drop-zone{
-  border:2px dashed var(--bd);border-radius:var(--r-m);
-  padding:34px 20px;text-align:center;
-  transition:var(--t);cursor:pointer;background:var(--card2);
+/* Section head */
+.section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.section-head h2 { font-size: 17px; margin: 0 auto 0 0; color: var(--text-color); }
+.count-badge {
+  display: inline-block; min-width: 24px; padding: 1px 8px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 13px; font-weight: 700; text-align: center;
 }
-.drop-zone:hover,.drop-zone:focus-visible{
-  border-color:var(--accent);background:var(--accent-soft);outline:none;
+.hint {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--subtext-color); font-size: 12.5px; margin: 0 0 12px;
 }
-.dz-icon{
-  width:70px;height:70px;margin:0 auto 12px;border-radius:20px;
-  display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);
-}
-.dz-title{font-size:17px; color: #1e293b;}
-.dz-sub{color:var(--sub);font-size:13px;margin:7px 0 16px}
-.dz-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hint svg { width: 15px; height: 15px; stroke: currentColor; fill: none; }
+.hint.center { justify-content: center; margin-top: 12px; }
 
-/* ===================== SECTION HEAD ===================== */
-.section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.section-head h2{font-size:17px;margin-right:auto; color: #1e293b;}
-.count-badge{
-  display:inline-block;min-width:24px;padding:1px 8px;border-radius:999px;
-  background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;text-align:center;
+/* ============ PAGE GRID ============ */
+.page-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+  gap: 12px; margin-top: 12px;
 }
-.hint{display:flex;align-items:center;gap:8px;color:var(--sub);font-size:12.5px;margin:0 0 12px}
-.hint .ic{width:15px;height:15px}
-.hint.center{justify-content:center;margin-top:12px}
+.page-card {
+  position: relative; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: 10px;
+  overflow: hidden; transition: 0.2s; cursor: pointer;
+}
+.page-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.page-card.dragging { opacity: 0.45; }
+.page-card.drop-target { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.card-thumb-wrap {
+  position: relative; aspect-ratio: 3/4;
+  background: var(--bg-color); display: grid; place-items: center; overflow: hidden;
+}
+.card-thumb { max-width: 100%; max-height: 100%; display: block; object-fit: contain; }
+.card-index {
+  position: absolute; top: 7px; left: 7px; min-width: 22px; padding: 1px 7px;
+  border-radius: 999px; background: rgba(15,23,42,0.72); color: #fff;
+  font-size: 11.5px; font-weight: 700; text-align: center;
+}
+.card-bar { display: flex; border-top: 1px solid var(--border-color); }
+.card-btn {
+  flex: 1; padding: 9px 0; display: grid; place-items: center;
+  color: var(--subtext-color); transition: 0.18s; cursor: pointer;
+}
+.card-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+.card-btn:hover { background: var(--card-hover); color: var(--accent); }
+.card-btn.danger:hover { color: var(--error); }
 
-/* ===================== PAGE GRID ===================== */
-.page-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));
-  gap:12px;margin-top:12px;
+/* ============ FORM FIELDS ============ */
+.field-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.field, .f-group { display: flex; flex-direction: column; gap: 6px; flex: 1 1 150px; min-width: 130px; }
+.field label, .f-group label {
+  font-size: 12.5px; font-weight: 600; color: var(--subtext-color);
+  display: flex; justify-content: space-between; gap: 8px;
 }
-.page-card{
-  position:relative;background:var(--card);border:1px solid var(--bd);
-  border-radius:var(--r-m);overflow:hidden;transition:var(--t);cursor:pointer;
+.field output, .f-group output { color: var(--accent); font-weight: 700; }
+select, input[type="text"] {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 8px; padding: 10px 12px; width: 100%;
+  color: var(--text-color); font-size: 14px; transition: 0.18s;
 }
-.page-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--sh)}
-.page-card.dragging{opacity:.45}
-.page-card.drop-target{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
-.card-thumb-wrap{
-  position:relative;aspect-ratio:3/4;background:var(--bg2);
-  display:grid;place-items:center;overflow:hidden;
+select:focus, input[type="text"]:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
-.card-thumb{max-width:100%;max-height:100%;display:block;object-fit:contain}
-.card-index{
-  position:absolute;top:7px;left:7px;min-width:22px;padding:1px 7px;border-radius:999px;
-  background:rgba(15,23,42,.7);color:#fff;font-size:11.5px;font-weight:700;text-align:center;
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 26px; background: transparent; cursor: pointer;
 }
-.card-bar{display:flex;border-top:1px solid var(--bd)}
-.card-btn{
-  flex:1;padding:9px 0;display:grid;place-items:center;
-  color:var(--sub);transition:var(--t);
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px; border-radius: 3px; background: var(--border-color);
 }
-.card-btn .ic{width:16px;height:16px}
-.card-btn:hover{background:var(--bg2);color:var(--accent)}
-.card-btn.danger:hover{color:var(--danger)}
-
-/* ===================== FORM FIELDS ===================== */
-.field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.field,.f-group{display:flex;flex-direction:column;gap:6px;flex:1 1 150px;min-width:130px}
-.field label,.f-group label{
-  font-size:12.5px;font-weight:600;color:var(--sub);
-  display:flex;justify-content:space-between;gap:8px;
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 19px; height: 19px; margin-top: -7px;
+  border-radius: 50%; background: var(--accent); border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2); cursor: pointer;
 }
-.field output,.f-group output{color:var(--accent);font-weight:700}
-select,input[type="text"]{
-  background:var(--card);border:1px solid var(--bd);border-radius:var(--r-m);
-  padding:10px 12px;width:100%;transition:var(--t);color:var(--tx);
-}
-select:focus,input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:26px;background:transparent}
-input[type="range"]::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--bd)}
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:19px;height:19px;margin-top:-7px;border-radius:50%;
-  background:var(--accent);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:pointer;
-}
-input[type="range"]::-moz-range-track{height:5px;border-radius:3px;background:var(--bd)}
-input[type="range"]::-moz-range-thumb{
-  width:19px;height:19px;border-radius:50%;background:var(--accent);border:2px solid #fff;cursor:pointer;
-}
-
-.progress{
-  height:7px;border-radius:4px;background:var(--bg2);overflow:hidden;
-  border:1px solid var(--bd);margin:12px 0;
-}
-.progress-bar{height:100%;width:0%;background:var(--accent);transition:width .18s linear}
-
-/* ===================== EDITOR MODAL (Dark Stage, Light Panels) ===================== */
-.editor{
-  position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:var(--bg);
-  transform:translateY(100%);visibility:hidden;
-  transition:transform .3s cubic-bezier(.4,0,.2,1),visibility .3s;
-}
-.editor.open{transform:none;visibility:visible}
-
-.ed-top{
-  display:flex;align-items:center;gap:6px;padding:8px 10px;
-  padding-top:max(8px,env(safe-area-inset-top));
-  border-bottom:1px solid var(--bd);background:var(--card);
-}
-.ed-top-mid{flex:1;min-width:0;padding:0 6px;text-align:center}
-.ed-title{display:block;font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; color: #1e293b;}
-.ed-state{display:block;font-size:11.5px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-.icon-btn{
-  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
-  color:var(--sub);transition:var(--t);
-}
-.icon-btn:hover{color:var(--accent);background:var(--bg2)}
-
-.ed-stage{
-  flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
-  position:relative;background:var(--stage);padding:12px;overflow:hidden;
-}
-.stage-inner{position:relative;display:inline-block;max-width:100%;max-height:100%;line-height:0}
-#ed-canvas{display:block;max-width:100%;max-height:100%;border-radius:6px;box-shadow:0 8px 28px rgba(0,0,0,.35)}
-
-.crop-svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;overflow:visible}
-.crop-svg[hidden]{display:none}
-.crop-svg .mask{fill:rgba(4,10,22,.6);fill-rule:evenodd}
-.crop-svg polygon.frame{fill:none;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke}
-.crop-handle{fill:#fff;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke;cursor:grab}
-
-.ed-panels{background:var(--card);border-top:1px solid var(--bd);max-height:44vh;overflow-y:auto}
-.panel{display:none;padding:14px}
-.panel.active{display:block}
-.panel-hint{color:var(--sub);font-size:12.5px;margin:0 0 12px;line-height:1.5}
-
-.chip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
-.chip{
-  display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;
-  border:1px solid var(--bd);border-radius:var(--r-m);background:var(--card2);
-  font-size:12px;font-weight:600;color:var(--sub);transition:var(--t);
-}
-.chip:hover{border-color:var(--accent);color:var(--tx);background:var(--bg2)}
-.chip.active{
-  border-color:var(--accent);background:var(--accent-soft);color:var(--accent);
-  box-shadow:0 0 0 1px var(--accent) inset;
+input[type="range"]::-moz-range-track { height: 5px; border-radius: 3px; background: var(--border-color); }
+input[type="range"]::-moz-range-thumb {
+  width: 19px; height: 19px; border-radius: 50%; background: var(--accent);
+  border: 2px solid #fff; cursor: pointer;
 }
 
-.mini-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:8px;
-  max-height:190px;overflow-y:auto;padding:4px 2px;
+.progress {
+  height: 7px; border-radius: 4px; background: var(--card-hover);
+  overflow: hidden; border: 1px solid var(--border-color); margin: 12px 0;
 }
-.mini-card{
-  position:relative;border:1px solid var(--bd);border-radius:var(--r-s);overflow:hidden;
-  aspect-ratio:3/4;background:var(--card2);cursor:pointer;transition:var(--t);
+.progress-bar { height: 100%; width: 0%; background: var(--accent); transition: width .18s linear; }
+
+/* ============ EDITOR MODAL ============ */
+.editor {
+  position: fixed; inset: 0; z-index: 3000;
+  display: flex; flex-direction: column;
+  background: var(--bg-color);
+  transform: translateY(100%); visibility: hidden;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), visibility .3s;
 }
-.mini-card img{width:100%;height:100%;object-fit:contain;display:block}
-.mini-card.current{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
-.mini-card.dragging{opacity:.45}
-.mini-card.drop-target{border-color:var(--accent)}
-.mini-idx{
-  position:absolute;bottom:2px;right:3px;font-size:10px;font-weight:700;
-  background:rgba(15,23,42,.7);color:#fff;border-radius:5px;padding:0 4px;
+.editor.open { transform: none; visibility: visible; }
+
+.ed-top {
+  display: flex; align-items: center; gap: 6px; padding: 8px 10px;
+  padding-top: max(8px, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+}
+.ed-top-mid { flex: 1; min-width: 0; padding: 0 6px; text-align: center; }
+.ed-title {
+  display: block; font-weight: 700; font-size: 13.5px;
+  color: var(--text-color);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ed-state {
+  display: block; font-size: 11.5px; color: var(--accent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-.ed-tabs{
-  display:flex;border-top:1px solid var(--bd);background:var(--card);
-  padding-bottom:env(safe-area-inset-bottom);
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center;
+  color: var(--subtext-color); transition: 0.18s; cursor: pointer;
 }
-.tab{
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px;
-  color:var(--sub);font-size:10.5px;font-weight:600;transition:var(--t);
-  border-top:2px solid transparent;
-}
-.tab .ic{width:19px;height:19px}
-.tab.active{color:var(--accent);border-top-color:var(--accent);background:var(--accent-soft)}
+.icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
+.icon-btn:hover { color: var(--accent); background: var(--card-hover); }
 
-/* ===================== TOASTS / BUSY ===================== */
-.toasts{
-  position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));
-  transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;
-  align-items:center;pointer-events:none;width:min(92vw,420px);
+.ed-stage {
+  flex: 1; min-height: 0; display: flex; align-items: center;
+  justify-content: center; position: relative;
+  background: #070d1c; padding: 12px; overflow: hidden;
 }
-.toast{
-  display:flex;align-items:center;gap:9px;padding:11px 15px;border-radius:var(--r-m);
-  background:var(--card);border:1px solid var(--bd);box-shadow:var(--sh);
-  font-size:13.5px;font-weight:600;
-  opacity:0;transform:translateY(12px);transition:var(--t);max-width:100%;
+.stage-inner { position: relative; display: inline-block; max-width: 100%; max-height: 100%; line-height: 0; }
+#ed-canvas {
+  display: block; max-width: 100%; max-height: 100%;
+  border-radius: 6px; box-shadow: 0 8px 28px rgba(0,0,0,.35);
 }
-.toast.show{opacity:1;transform:none}
-.toast.ok{border-color:var(--ok); color: var(--ok);}
-.toast.warn{border-color:var(--warn); color: var(--warn);}
-.toast.error{border-color:var(--danger); color: var(--danger);}
+.crop-svg { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; overflow: visible; }
+.crop-svg[hidden] { display: none; }
+.crop-svg .mask { fill: rgba(4,10,22,0.62); fill-rule: evenodd; }
+.crop-svg polygon.frame {
+  fill: none; stroke: #38bdf8; stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.crop-handle {
+  fill: #fff; stroke: #38bdf8; stroke-width: 2;
+  vector-effect: non-scaling-stroke; cursor: grab;
+}
 
-.busy{position:fixed;inset:0;z-index:95;display:grid;place-items:center;background:var(--veil);backdrop-filter:blur(3px)}
-.busy-card{
-  background:var(--card);border:1px solid var(--bd);border-radius:var(--r-l);
-  padding:26px 32px;text-align:center;box-shadow:var(--sh);min-width:210px;
+.ed-panels {
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  max-height: 44vh; overflow-y: auto;
 }
-.spinner{
-  width:34px;height:34px;border:3px solid var(--bd);border-top-color:var(--accent);
-  border-radius:50%;animation:spin .8s linear infinite;display:inline-block;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
+.panel { display: none; padding: 14px; }
+.panel.active { display: block; }
+.panel-hint { color: var(--subtext-color); font-size: 12.5px; margin: 0 0 12px; line-height: 1.5; }
 
-/* ===================== SEO / TUTORIAL ===================== */
-.seo-article{
-  margin-top:40px;background:var(--card);border:1px solid var(--bd);
-  border-radius:var(--r-l);box-shadow:var(--sh);padding:30px;
+.chip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.chip {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 12px 6px; border: 1px solid var(--border-color);
+  border-radius: 8px; background: var(--card-hover);
+  font-size: 12px; font-weight: 600; color: var(--subtext-color);
+  transition: 0.18s; cursor: pointer;
 }
-.seo-article h2{font-size:22px;margin-bottom:10px; color: #1e293b;}
-.seo-article h3{margin-top:24px;font-size:16px;color:var(--accent)}
-.seo-article p{font-size:14.5px;line-height:1.7;color:var(--tx)}
-.seo-article ul,.seo-article ol{padding-left:20px;font-size:14.5px;line-height:1.7}
-.seo-article li{margin-bottom:6px}
-.article-image-box{
-  margin:24px 0;text-align:center;border:1px dashed var(--bd);
-  border-radius:var(--r-m);padding:12px;background:var(--card2);
+.chip svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
+.chip:hover { border-color: var(--accent); color: var(--text-color); }
+.chip.active {
+  border-color: var(--accent); background: var(--accent-soft);
+  color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset;
 }
-.article-image-box img{max-width:100%;height:auto;border-radius:var(--r-s);display:block;margin:0 auto}
-.article-image-caption{font-size:12.5px;color:var(--sub);padding:8px 4px 2px}
+
+.mini-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+  gap: 8px; max-height: 190px; overflow-y: auto; padding: 4px 2px;
+}
+.mini-card {
+  position: relative; border: 1px solid var(--border-color);
+  border-radius: 6px; overflow: hidden; aspect-ratio: 3/4;
+  background: var(--card-hover); cursor: pointer; transition: 0.18s;
+}
+.mini-card img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.mini-card.current { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.mini-card.dragging { opacity: 0.45; }
+.mini-card.drop-target { border-color: var(--accent); }
+.mini-idx {
+  position: absolute; bottom: 2px; right: 3px; font-size: 10px; font-weight: 700;
+  background: rgba(15,23,42,0.72); color: #fff;
+  border-radius: 5px; padding: 0 4px;
+}
+
+.ed-tabs {
+  display: flex; border-top: 1px solid var(--border-color);
+  background: var(--card-bg);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 9px 2px; color: var(--subtext-color);
+  font-size: 10.5px; font-weight: 600;
+  transition: 0.18s; border-top: 2px solid transparent;
+  cursor: pointer; background: none; border-left: none; border-right: none; border-bottom: none;
+}
+.tab svg { width: 19px; height: 19px; stroke: currentColor; fill: none; }
+.tab.active {
+  color: var(--accent); border-top-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ============ TOASTS / BUSY ============ */
+.toasts {
+  position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
+  transform: translateX(-50%); z-index: 4000;
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  pointer-events: none; width: min(92vw, 420px);
+}
+.toast {
+  display: flex; align-items: center; gap: 9px;
+  padding: 11px 15px; border-radius: 8px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  font-size: 13.5px; font-weight: 600;
+  opacity: 0; transform: translateY(12px); transition: 0.24s;
+  max-width: 100%;
+}
+.toast.show { opacity: 1; transform: none; }
+.toast.ok { border-color: #10b981; color: #10b981; }
+.toast.warn { border-color: #f59e0b; color: #f59e0b; }
+.toast.error { border-color: var(--error); color: var(--error); }
+
+.busy {
+  position: fixed; inset: 0; z-index: 5000;
+  display: grid; place-items: center;
+  background: rgba(15,23,42,0.65); backdrop-filter: blur(3px);
+}
+.busy-card {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 12px; padding: 26px 32px; text-align: center;
+  box-shadow: var(--shadow-md); min-width: 210px;
+}
+.spinner {
+  width: 34px; height: 34px; border: 3px solid var(--border-color);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.8s linear infinite; display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  margin-top: 40px; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: 12px;
+  padding: 30px; box-shadow: var(--shadow-md);
+}
+.seo-article h2 { font-size: 22px; margin: 0 0 10px; color: var(--text-color); }
+.seo-article h3 { margin-top: 24px; font-size: 16px; color: var(--accent); }
+.seo-article p { font-size: 14.5px; line-height: 1.7; color: var(--text-color); }
+.seo-article ul, .seo-article ol { padding-left: 20px; font-size: 14.5px; line-height: 1.7; color: var(--text-color); }
+.seo-article li { margin-bottom: 6px; }
+
+.article-image-box {
+  margin: 24px 0; text-align: center;
+  border: 1px dashed var(--border-color); border-radius: 10px;
+  padding: 12px; background: var(--card-hover);
+}
+.article-image-box img {
+  max-width: 100%; height: auto; border-radius: 8px;
+  display: block; margin: 0 auto;
+}
+.article-image-caption {
+  font-size: 12.5px; color: var(--subtext-color);
+  padding: 8px 4px 2px;
+}
 </style>
 </head>
 <body>
 
-<!-- ===================== SVG SPRITE ===================== -->
-<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-<symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.5l2-3h7l2 3H21a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="3.6"/></symbol>
-<symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 15.5l-4.5-4.5L5.5 21"/></symbol>
-<symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v13"/></symbol>
-<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M8 6V4h8v2M10 11v6M14 11v6"/></symbol>
-<symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
-<symbol id="i-crop" viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></symbol>
-<symbol id="i-rotate" viewBox="0 0 24 24"><path d="M23 4v6h-6M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></symbol>
-<symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.5V19l4 2v-8.5L22 3z"/></symbol>
-<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
-<symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
-<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
-<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
-<symbol id="i-move" viewBox="0 0 24 24"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></symbol>
-<symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
-<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
-<symbol id="i-file-plus" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6M9 15h6"/></symbol>
-<symbol id="i-chev-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
-<symbol id="i-chev-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
-<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
-<symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 2.7l5.7 5.7a8 8 0 1 1-11.4 0z"/></symbol>
-<symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M9 20h6M12 4v16"/></symbol>
-<symbol id="i-contrast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 2.5v19a9.5 9.5 0 0 0 0-19z" fill="currentColor" stroke="none"/></symbol>
-<symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
-<symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
-</svg>
-
+<!-- ============ HEADER — AUTO-INJECTED ============ -->
 <div id="officekit-header"></div>
 
-<main class="scanner-wrap">
-  <!-- ===================== HERO ===================== -->
-  <section class="hero-box">
+<main class="main-wrap">
+  <div class="hero-box">
     <h1 class="hero-title">JPG to PDF &amp; Document Scanner</h1>
     <p class="hero-sub">Securely scan, crop, and convert your photos into high-quality multi-page PDF documents entirely in your browser. Nothing is ever uploaded.</p>
-  </section>
+  </div>
 
-  <!-- ===================== UPLOAD ===================== -->
+  <!-- Upload -->
   <section class="tool-card" id="upload-card">
     <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Add pages: choose files or drop images here">
-      <div class="dz-icon"><svg class="ic ic-xl"><use href="#i-upload"/></svg></div>
+      <div class="dz-icon">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v13"/>
+        </svg>
+      </div>
       <h3 class="dz-title">Add pages to scan</h3>
       <p class="dz-sub">Drop images here, or pick a source. JPG, PNG and WEBP supported — up to 30 pages per document.</p>
       <div class="dz-actions">
-        <button class="primary-button" id="btn-camera" type="button"><svg class="ic"><use href="#i-camera"/></svg> Camera Capture</button>
-        <button class="btn-secondary" id="btn-gallery" type="button"><svg class="ic"><use href="#i-image"/></svg> Gallery / Files</button>
+        <button class="primary-button" id="btn-camera" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.5l2-3h7l2 3H21a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="3.6"/></svg>
+          Camera Capture
+        </button>
+        <button class="btn-secondary" id="btn-gallery" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 15.5l-4.5-4.5L5.5 21"/></svg>
+          Gallery / Files
+        </button>
       </div>
     </div>
     <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden>
     <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
   </section>
 
-  <!-- ===================== PAGES ===================== -->
+  <!-- Ad -->
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- Pages -->
   <section id="pages-section" hidden>
-    <div class="section-head" style="margin-top:26px">
+    <div class="section-head" style="margin-top:10px">
       <h2>Pages <span class="count-badge" id="page-count">0</span></h2>
       <div class="btn-row">
-        <button class="btn-secondary btn-mini" id="btn-add-blank" type="button"><svg class="ic" style="width:15px;height:15px"><use href="#i-file-plus"/></svg> Blank page</button>
-        <button class="btn-danger-ghost btn-mini" id="btn-clear-all" type="button"><svg class="ic" style="width:15px;height:15px"><use href="#i-trash"/></svg> Clear all</button>
+        <button class="btn-secondary btn-mini" id="btn-add-blank" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6M9 15h6"/></svg>
+          Blank page
+        </button>
+        <button class="btn-danger-ghost btn-mini" id="btn-clear-all" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M8 6V4h8v2M10 11v6M14 11v6"/></svg>
+          Clear all
+        </button>
       </div>
     </div>
-    <p class="hint"><svg class="ic"><use href="#i-move"/></svg> Tap a page to open the editor. Drag a page onto another to swap their order.</p>
+    <p class="hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>
+      Tap a page to open the editor. Drag a page onto another to swap their order.
+    </p>
     <div class="page-grid" id="page-grid"></div>
   </section>
 
-  <!-- ===================== EXPORT ===================== -->
-  <section class="tool-card" id="export-section" hidden style="margin-top:30px;">
-    <h3 style="margin-bottom:15px;color:var(--accent);font-size:17px;">Export PDF</h3>
+  <!-- Export -->
+  <section class="tool-card" id="export-section" hidden style="margin-top:24px;">
+    <h3 style="margin:0 0 15px;color:var(--accent);font-size:17px;">Export PDF</h3>
 
     <div class="field-row">
       <div class="f-group">
@@ -443,95 +496,48 @@ input[type="range"]::-moz-range-thumb{
     <div class="progress" id="progress-wrap" hidden><div class="progress-bar" id="progress-bar"></div></div>
 
     <button class="primary-button" id="btn-save" style="width:100%;height:52px;font-size:16px;">
-      <svg class="ic"><use href="#i-download"/></svg> Create &amp; Save PDF
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Create &amp; Save PDF
     </button>
-    <p class="hint center"><svg class="ic"><use href="#i-shield"/></svg> Pages are compiled locally, then downloaded straight to your device.</p>
+    <p class="hint center">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Pages are compiled locally, then downloaded straight to your device.
+    </p>
   </section>
 
-  <!-- ===================== SEO / TUTORIAL (with Custom SVG Illustration) ===================== -->
+  <!-- SEO / Tutorial -->
   <section class="seo-article">
     <h2>Complete Guide to JPG to PDF &amp; Document Scanner</h2>
-    <p class="muted" style="margin-top:6px;">Creating official multi-page PDFs at home has never been easier. The OfficeKit Document Scanner operates 100% locally in your web browser, utilizing state-of-the-art client-side canvas transformations and image processing. Whether you need standard A4 documents, competitive exam sheets, or formal receipts, our system renders high-density output instantly.</p>
+    <p style="color:var(--subtext-color);margin-top:6px;">
+      Creating official multi-page PDFs at home has never been easier. The OfficeKit Document Scanner operates 100% locally in your web browser, utilizing state-of-the-art client-side canvas transformations and image processing.
+    </p>
 
-    <!-- Custom SVG Illustration matching Screenshot 1 -->
-    <div class="article-image-box" id="tutorial-demo-box">
-      <svg viewBox="0 0 800 320" style="width:100%; height:auto; border-radius: 12px; display: block; background: #0f172a;">
-        <!-- Background -->
-        <rect width="800" height="320" fill="#0f172a" rx="12"/>
-        
-        <!-- Left Side: Input Document -->
-        <rect x="60" y="50" width="140" height="180" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
-        <rect x="80" y="70" width="100" height="140" rx="4" fill="#0f172a"/>
-        <!-- Face Placeholder -->
-        <circle cx="130" cy="110" r="24" fill="#38bdf8"/>
-        <path d="M100 170 Q130 140 160 170" fill="#38bdf8"/>
-        <text x="130" y="270" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">35x45mm</text>
-        
-        <!-- Arrow 1 -->
-        <polygon points="230,150 260,150 260,130 290,160 260,190 260,170 230,170" fill="#38bdf8"/>
-        
-        <!-- Middle: Smartphone Scanner -->
-        <rect x="310" y="40" width="180" height="220" rx="16" fill="#0f172a" stroke="#38bdf8" stroke-width="4"/>
-        <rect x="330" y="60" width="140" height="180" rx="8" fill="#1e293b"/>
-        <!-- Scan Frame -->
-        <path d="M350 90 L350 80 L360 80" stroke="#38bdf8" stroke-width="3" fill="none"/>
-        <path d="M450 90 L450 80 L440 80" stroke="#38bdf8" stroke-width="3" fill="none"/>
-        <path d="M350 210 L350 220 L360 220" stroke="#38bdf8" stroke-width="3" fill="none"/>
-        <path d="M450 210 L450 220 L440 220" stroke="#38bdf8" stroke-width="3" fill="none"/>
-        <!-- Face in Phone -->
-        <circle cx="400" cy="150" r="30" fill="#38bdf8"/>
-        <path d="M370 200 Q400 170 430 200" fill="#38bdf8"/>
-        <!-- Camera Lens -->
-        <rect x="380" y="235" width="40" height="15" rx="7" fill="#38bdf8"/>
-        <circle cx="400" cy="242" r="4" fill="#0f172a"/>
-        
-        <!-- Arrow 2 -->
-        <polygon points="520,150 550,150 550,130 580,160 550,190 550,170 520,170" fill="#38bdf8"/>
-        
-        <!-- Right Side: Output Grid -->
-        <rect x="610" y="40" width="160" height="220" fill="#ffffff" rx="6"/>
-        <!-- 4x4 Grid of Photos -->
-        <g fill="#1e293b">
-          <!-- Row 1 -->
-          <rect x="620" y="50" width="30" height="40" rx="3"/><rect x="655" y="50" width="30" height="40" rx="3"/><rect x="690" y="50" width="30" height="40" rx="3"/><rect x="725" y="50" width="30" height="40" rx="3"/>
-          <!-- Row 2 -->
-          <rect x="620" y="95" width="30" height="40" rx="3"/><rect x="655" y="95" width="30" height="40" rx="3"/><rect x="690" y="95" width="30" height="40" rx="3"/><rect x="725" y="95" width="30" height="40" rx="3"/>
-          <!-- Row 3 -->
-          <rect x="620" y="140" width="30" height="40" rx="3"/><rect x="655" y="140" width="30" height="40" rx="3"/><rect x="690" y="140" width="30" height="40" rx="3"/><rect x="725" y="140" width="30" height="40" rx="3"/>
-          <!-- Row 4 -->
-          <rect x="620" y="185" width="30" height="40" rx="3"/><rect x="655" y="185" width="30" height="40" rx="3"/><rect x="690" y="185" width="30" height="40" rx="3"/><rect x="725" y="185" width="30" height="40" rx="3"/>
-        </g>
-        <!-- Face placeholders in grid -->
-        <g fill="#38bdf8">
-          <circle cx="635" cy="65" r="6"/><circle cx="670" cy="65" r="6"/><circle cx="705" cy="65" r="6"/><circle cx="740" cy="65" r="6"/>
-          <circle cx="635" cy="110" r="6"/><circle cx="670" cy="110" r="6"/><circle cx="705" cy="110" r="6"/><circle cx="740" cy="110" r="6"/>
-          <circle cx="635" cy="155" r="6"/><circle cx="670" cy="155" r="6"/><circle cx="705" cy="155" r="6"/><circle cx="740" cy="155" r="6"/>
-          <circle cx="635" cy="200" r="6"/><circle cx="670" cy="200" r="6"/><circle cx="705" cy="200" r="6"/><circle cx="740" cy="200" r="6"/>
-        </g>
-      </svg>
-      <div class="article-image-caption">Demonstration of AI background color isolation, 300 DPI crop presets, and multi-up printing sheets.</div>
+    <div class="article-image-box">
+      <img id="tutorial-demo-img"
+           src="../assets/images/jpg-to-pdf-demo.jpg"
+           alt="JPG to PDF Demo Scanner Workflow"
+           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>JPG · PNG · WEBP → PDF</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place jpg-to-pdf-demo.jpg in assets/images/</text></svg>';">
+      <div class="article-image-caption">JPG, PNG and WEBP images compiled into a single print-ready PDF — all processed locally.</div>
     </div>
 
     <p>Welcome to the ultimate client-side Document Scanner and <strong>JPG to PDF</strong> conversion tool. Whether you are dealing with multi-page handwritten notes, important invoices, identity papers, certificates, or formal receipts, this tool lets you process everything directly within your web browser without uploading a single byte to any remote server. Your files remain 100% private, secure, and under your absolute control.</p>
 
-    <p>Traditional online converters require you to upload sensitive documents to a remote server, which poses a significant privacy risk. Our tool uses modern web APIs, client-side canvas transformations, and PDF generation libraries that run entirely on your device. There are no limits, no subscription fees, no intrusive watermarks, and no waiting queues. You can scan, edit, and export as many documents as you like, completely offline.</p>
+    <p>Traditional online converters require you to upload sensitive documents to a remote server, which poses a significant privacy risk. Our tool uses modern web APIs, client-side canvas transformations, and PDF generation libraries that run entirely on your device. There are no limits, no subscription fees, and no waiting queues. You can scan, edit, and export as many documents as you like, completely offline.</p>
 
     <h3>Step-by-Step Instructions</h3>
     <ol>
       <li><b>Upload or Capture:</b> Click "Camera Capture" to take live photos using your smartphone camera, or select "Gallery / Files" to pick multiple images (JPG, PNG, WEBP) at once. You can also drag and drop image files directly into the drop zone. The tool supports up to 30 pages per document.</li>
-      <li><b>Crop and Perspective Correction:</b> Tap any thumbnail page to open the live editor. Drag the four corner handles to align the boundaries with your document edges. This removes unwanted background space and corrects awkward camera angles instantly. For best results, ensure the document is well-lit and the camera is parallel to the paper.</li>
+      <li><b>Crop and Perspective Correction:</b> Tap any thumbnail page to open the live editor. Drag the four corner handles to align the boundaries with your document edges. This removes unwanted background space and corrects awkward camera angles instantly.</li>
       <li><b>Apply Filters &amp; Adjustments:</b> Switch to the Filter tab to enhance readability. Choose presets like <em>Auto Color</em>, <em>Light Text</em>, <em>Grayscale</em>, or <em>Whiteboard</em>. You can also apply a filter across all loaded pages using "Apply Filter to All Pages". Fine-tune brightness, contrast, and saturation with the sliders.</li>
-      <li><b>Organize &amp; Reorder:</b> Easily reorder pages by dragging and dropping them into your preferred sequence, or use the move and duplicate tools. You can also add blank pages if needed. The mini-grid in the editor gives you a quick overview of all pages.</li>
+      <li><b>Organize &amp; Reorder:</b> Easily reorder pages by dragging and dropping them into your preferred sequence, or use the move and duplicate tools. You can also add blank pages if needed.</li>
       <li><b>Export to PDF:</b> Configure page size (A4, A3, Letter, or Auto), adjust margins, select image compression quality, and click "Create &amp; Save PDF". Your document compiles instantly and downloads straight to your local device.</li>
     </ol>
 
     <h3>Understanding the Filters and Adjustments</h3>
     <p>Each filter is designed for a specific type of document. <strong>Original</strong> keeps the image as-is. <strong>Auto Color</strong> boosts saturation and contrast, making colorful receipts pop. <strong>Light Text</strong> brightens the background and darkens text, ideal for faded documents. <strong>Grayscale</strong> removes color for a clean, professional look. <strong>Whiteboard</strong> converts the image to high-contrast black and white, perfect for whiteboard photos. <strong>Enhance</strong> adds sharpness and slight color correction.</p>
 
-    <p>You can further fine-tune each page with the adjustment sliders: brightness, contrast, and saturation. These are non-destructive, so you can always revert by resetting the sliders. The changes are applied in real-time on the preview canvas.</p>
-
     <h3>Page Size, Orientation, and Quality</h3>
-    <p>When exporting, you can choose a fixed page size like A4, A3, or Letter, or let the tool match the image dimensions (Auto). For mixed documents, Auto is often best. Orientation can be portrait or landscape. The quality slider controls JPEG compression: lower quality means smaller file size but reduced clarity; higher quality preserves details but increases file size. Medium (0.85) is a good balance for most documents.</p>
+    <p>When exporting, you can choose a fixed page size like A4, A3, or Letter, or let the tool match the image dimensions (Auto). Orientation can be portrait or landscape. The quality slider controls JPEG compression: lower quality means smaller file size but reduced clarity; higher quality preserves details but increases file size. Medium (0.85) is a good balance for most documents.</p>
 
     <h3>Privacy and Security</h3>
     <p>All processing happens locally in your browser. No images or PDFs are ever uploaded to our servers. This means your sensitive documents—ID cards, contracts, medical records—never leave your device. You can even use this tool offline after the page has loaded.</p>
@@ -546,28 +552,32 @@ input[type="range"]::-moz-range-thumb{
     </ul>
 
     <h3>Troubleshooting</h3>
-    <p>If the PDF fails to generate, check that the pdf-lib library has loaded (requires an internet connection for the first load). If an image fails to load, ensure it is a valid JPG, PNG, or WEBP file. For very large images, the tool automatically resizes them to maintain performance. If you encounter any issues, try refreshing the page.</p>
-
-    <p>With this tool, you can turn your phone into a powerful document scanner. Whether you're a student, professional, or just someone who needs to digitize paperwork, our JPG to PDF converter delivers fast, private, and high-quality results.</p>
+    <p>If the PDF fails to generate, check that the pdf-lib library has loaded (requires an internet connection for the first load). If an image fails to load, ensure it is a valid JPG, PNG, or WEBP file. For very large images, the tool automatically resizes them to maintain performance.</p>
   </section>
 
-  <p class="hint center" style="margin-top:34px;font-size:12.5px;">
-    100% Privacy, Client-side Document Processing
-  </p>
+  <div class="ad-slot-container">Advertisement</div>
 </main>
 
-<!-- ===================== EDITOR MODAL ===================== -->
+<!-- ============ EDITOR MODAL ============ -->
 <div class="editor" id="editor" aria-hidden="true" role="dialog" aria-label="Page editor">
   <div class="ed-top">
-    <button class="icon-btn" id="ed-prev" title="Previous page" aria-label="Previous page"><svg class="ic"><use href="#i-chev-left"/></svg></button>
+    <button class="icon-btn" id="ed-prev" title="Previous page" aria-label="Previous page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
     <div class="ed-top-mid">
       <span class="ed-title" id="ed-title">Page 1 of 1</span>
       <span class="ed-state" id="ed-state"></span>
     </div>
     <button class="primary-button btn-sm" id="ed-done" type="button" style="padding:7px 16px;">Done</button>
-    <button class="icon-btn" id="ed-next" title="Next page" aria-label="Next page"><svg class="ic"><use href="#i-chev-right"/></svg></button>
-    <button class="icon-btn" id="ed-delete" title="Delete this page" aria-label="Delete this page"><svg class="ic"><use href="#i-trash"/></svg></button>
-    <button class="icon-btn" id="ed-close" title="Close editor" aria-label="Close editor"><svg class="ic"><use href="#i-x"/></svg></button>
+    <button class="icon-btn" id="ed-next" title="Next page" aria-label="Next page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <button class="icon-btn" id="ed-delete" title="Delete this page" aria-label="Delete this page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M8 6V4h8v2M10 11v6M14 11v6"/></svg>
+    </button>
+    <button class="icon-btn" id="ed-close" title="Close editor" aria-label="Close editor">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
   </div>
 
   <div class="ed-stage" id="ed-stage">
@@ -588,16 +598,31 @@ input[type="range"]::-moz-range-thumb{
     <div class="panel active" data-panel="crop">
       <p class="panel-hint">Drag the four corner handles so the frame hugs the document. Then tap Apply &amp; preview.</p>
       <div class="btn-row">
-        <button class="btn-secondary btn-sm" id="btn-fullrect" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-expand"/></svg> Full page</button>
-        <button class="primary-button btn-sm" id="btn-crop-apply" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-check"/></svg> Apply &amp; preview</button>
+        <button class="btn-secondary btn-sm" id="btn-fullrect" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          Full page
+        </button>
+        <button class="primary-button btn-sm" id="btn-crop-apply" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Apply &amp; preview
+        </button>
       </div>
     </div>
 
     <div class="panel" data-panel="rotate">
       <div class="btn-row">
-        <button class="btn-secondary btn-sm" id="btn-rot-left" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-rotate"/></svg> Left 90°</button>
-        <button class="btn-secondary btn-sm" id="btn-rot-right" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-rotate"/></svg> Right 90°</button>
-        <button class="btn-secondary btn-sm" id="btn-rot-180" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-rotate"/></svg> 180°</button>
+        <button class="btn-secondary btn-sm" id="btn-rot-left" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></svg>
+          Left 90°
+        </button>
+        <button class="btn-secondary btn-sm" id="btn-rot-right" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></svg>
+          Right 90°
+        </button>
+        <button class="btn-secondary btn-sm" id="btn-rot-180" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></svg>
+          180°
+        </button>
       </div>
       <div class="f-group" style="margin-top:12px;">
         <label for="straighten">Straighten <output id="straighten-out">0.0 deg</output></label>
@@ -608,12 +633,12 @@ input[type="range"]::-moz-range-thumb{
     <div class="panel" data-panel="filter">
       <p class="panel-hint">Pick a look. Filters are non-destructive.</p>
       <div class="chip-grid" id="filter-grid">
-        <button class="chip active" data-filter="original" type="button"><svg class="ic"><use href="#i-image"/></svg><span>Original</span></button>
-        <button class="chip" data-filter="autocolor" type="button"><svg class="ic"><use href="#i-droplet"/></svg><span>Auto Color</span></button>
-        <button class="chip" data-filter="light" type="button"><svg class="ic"><use href="#i-type"/></svg><span>Light Text</span></button>
-        <button class="chip" data-filter="gray" type="button"><svg class="ic"><use href="#i-contrast"/></svg><span>Grayscale</span></button>
-        <button class="chip" data-filter="whiteboard" type="button"><svg class="ic"><use href="#i-monitor"/></svg><span>Whiteboard</span></button>
-        <button class="chip" data-filter="enhance" type="button"><svg class="ic"><use href="#i-zap"/></svg><span>Enhance</span></button>
+        <button class="chip active" data-filter="original" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 15.5l-4.5-4.5L5.5 21"/></svg><span>Original</span></button>
+        <button class="chip" data-filter="autocolor" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7l5.7 5.7a8 8 0 1 1-11.4 0z"/></svg><span>Auto Color</span></button>
+        <button class="chip" data-filter="light" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6M12 4v16"/></svg><span>Light Text</span></button>
+        <button class="chip" data-filter="gray" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 2.5v19a9.5 9.5 0 0 0 0-19z" fill="currentColor" stroke="none"/></svg><span>Grayscale</span></button>
+        <button class="chip" data-filter="whiteboard" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>Whiteboard</span></button>
+        <button class="chip" data-filter="enhance" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><span>Enhance</span></button>
       </div>
       <div style="margin-top:14px;">
         <button class="primary-button btn-sm btn-block" id="btn-apply-filter-all" type="button">Apply Filter to All Pages</button>
@@ -634,7 +659,10 @@ input[type="range"]::-moz-range-thumb{
         <input type="range" id="adj-sat" min="-100" max="100" step="1" value="0">
       </div>
       <div class="btn-row" style="margin-top:12px;">
-        <button class="btn-secondary btn-sm" id="adj-reset" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-rotate"/></svg> Reset sliders</button>
+        <button class="btn-secondary btn-sm" id="adj-reset" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></svg>
+          Reset sliders
+        </button>
       </div>
     </div>
 
@@ -642,20 +670,32 @@ input[type="range"]::-moz-range-thumb{
       <p class="panel-hint">Drag one page onto another to swap their positions.</p>
       <div class="mini-grid" id="mini-grid"></div>
       <div class="btn-row" style="margin-top:12px;">
-        <button class="btn-secondary btn-sm" id="btn-move-prev" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-chev-left"/></svg> Move earlier</button>
-        <button class="btn-secondary btn-sm" id="btn-move-next" type="button">Move later<svg class="ic" style="width:16px;height:16px"><use href="#i-chev-right"/></svg></button>
-        <button class="btn-secondary btn-sm" id="btn-dup" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-copy"/></svg> Duplicate</button>
-        <button class="btn-danger-ghost btn-sm" id="btn-del2" type="button"><svg class="ic" style="width:16px;height:16px"><use href="#i-trash"/></svg> Delete</button>
+        <button class="btn-secondary btn-sm" id="btn-move-prev" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          Move earlier
+        </button>
+        <button class="btn-secondary btn-sm" id="btn-move-next" type="button">
+          Move later
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <button class="btn-secondary btn-sm" id="btn-dup" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Duplicate
+        </button>
+        <button class="btn-danger-ghost btn-sm" id="btn-del2" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M8 6V4h8v2M10 11v6M14 11v6"/></svg>
+          Delete
+        </button>
       </div>
     </div>
   </div>
 
   <nav class="ed-tabs" id="ed-tabs">
-    <button class="tab active" data-tab="crop" type="button"><svg class="ic"><use href="#i-crop"/></svg><span>Crop</span></button>
-    <button class="tab" data-tab="rotate" type="button"><svg class="ic"><use href="#i-rotate"/></svg><span>Rotate</span></button>
-    <button class="tab" data-tab="filter" type="button"><svg class="ic"><use href="#i-filter"/></svg><span>Filter</span></button>
-    <button class="tab" data-tab="adjust" type="button"><svg class="ic"><use href="#i-sliders"/></svg><span>Adjust</span></button>
-    <button class="tab" data-tab="reorder" type="button"><svg class="ic"><use href="#i-grid"/></svg><span>Manage</span></button>
+    <button class="tab active" data-tab="crop" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg><span>Crop</span></button>
+    <button class="tab" data-tab="rotate" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></svg><span>Rotate</span></button>
+    <button class="tab" data-tab="filter" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.5V19l4 2v-8.5L22 3z"/></svg><span>Filter</span></button>
+    <button class="tab" data-tab="adjust" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg><span>Adjust</span></button>
+    <button class="tab" data-tab="reorder" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg><span>Manage</span></button>
   </nav>
 </div>
 
@@ -668,8 +708,10 @@ input[type="range"]::-moz-range-thumb{
   </div>
 </div>
 
+<!-- ============ FOOTER — AUTO-INJECTED ============ -->
 <div id="officekit-footer"></div>
 
+<!-- ============ CORE SCRIPT (injects header + footer + theme toggle) ============ -->
 <script src="../assets/js/core/officekit-core.js"></script>
 
 <script>
@@ -1169,15 +1211,28 @@ async function exportPDF() {
         x: (pw - dw) / 2, y: (ph - dh) / 2, width: dw, height: dh
       });
 
-      /* Small watermark + footer (pdf365.in) */
+      /* ---- 8-point pdf365.in watermark on every page ---- */
       var wmColor = PDFLib.rgb(0.7, 0.7, 0.7);
-      page.drawText('pdf365.in', {
-        x: marginPt + 10, y: ph - marginPt - 15,
-        size: 9, font: wmFont, color: wmColor, opacity: 0.4
+      var wmSize  = 8;
+      var wmText  = 'pdf365.in';
+
+      // Top-left corner
+      page.drawText(wmText, {
+        x: marginPt + 10,
+        y: ph - marginPt - 15,
+        size: wmSize,
+        font: wmFont,
+        color: wmColor,
+        opacity: 0.4
       });
-      page.drawText('pdf365.in', {
-        x: marginPt + 10, y: marginPt + 5,
-        size: 8, font: wmFont, color: wmColor, opacity: 0.4
+      // Bottom-left footer
+      page.drawText(wmText, {
+        x: marginPt + 10,
+        y: marginPt + 5,
+        size: wmSize,
+        font: wmFont,
+        color: wmColor,
+        opacity: 0.4
       });
 
       setProgress((i + 1) / pages.length, true);
@@ -1266,13 +1321,13 @@ function renderGrid() {
     var bEdit = document.createElement('button');
     bEdit.className = 'card-btn';
     bEdit.type = 'button';
-    bEdit.innerHTML = '<svg class="ic"><use href="#i-sliders"/></svg>';
+    bEdit.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>';
     bEdit.addEventListener('click', function (e) { e.stopPropagation(); openEditor(idx, 'crop'); });
 
     var bDel = document.createElement('button');
     bDel.className = 'card-btn danger';
     bDel.type = 'button';
-    bDel.innerHTML = '<svg class="ic"><use href="#i-trash"/></svg>';
+    bDel.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M8 6V4h8v2M10 11v6M14 11v6"/></svg>';
     bDel.addEventListener('click', function (e) { e.stopPropagation(); deletePage(idx); });
 
     bar.appendChild(bEdit);
@@ -1310,10 +1365,11 @@ function renderMiniGrid() {
 
 function updatePreview() {
   var n = state.pages.length;
-  var demoBox = $('tutorial-demo-box');
+  var demoImg = $('tutorial-demo-img');
 
-  if (n && state.pages[0].thumb && demoBox) {
-    demoBox.innerHTML = '<img src="' + state.pages[0].thumb + '" style="width:100%; height:auto; border-radius:12px; display:block;">';
+  if (n && state.pages[0].thumb && demoImg) {
+    demoImg.src = state.pages[0].thumb;
+    demoImg.style.display = 'block';
   }
 }
 
@@ -1518,7 +1574,6 @@ function renderEditor() {
     drawQuad(page, size.w, size.h);
   }
 
-  /* Sync all controls */
   $('adj-bright').value  = page.bright;
   $('adj-contrast').value= page.contrast;
   $('adj-sat').value     = page.sat;
