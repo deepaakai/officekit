@@ -8,10 +8,8 @@
 <meta name="theme-color" content="#0b1329">
 <link rel="canonical" href="https://pdf365.in/tools/jpg-to-pdf.html">
 
-<!-- ============ GLOBAL STYLESHEET (same as index + passport-maker) ============ -->
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
-<!-- OpenCV disabled for performance -->
 <script>window.__OPENCV_DISABLED = true;</script>
 
 <style>
@@ -62,7 +60,6 @@
   justify-content: center;
 }
 
-/* DROP ZONE */
 .drop-zone {
   border: 2px dashed var(--border-color);
   border-radius: 12px;
@@ -86,7 +83,6 @@
 .dz-sub { color: var(--subtext-color); font-size: 13px; margin: 7px 0 16px; }
 .dz-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-/* Buttons */
 .primary-button, .btn-primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 14px;
@@ -129,7 +125,6 @@
 .hint svg { width: 15px; height: 15px; stroke: currentColor; fill: none; }
 .hint.center { justify-content: center; margin-top: 12px; }
 
-/* PAGE GRID */
 .page-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   gap: 12px; margin-top: 12px;
@@ -161,7 +156,6 @@
 .card-btn:hover { background: var(--card-hover); color: var(--accent); }
 .card-btn.danger:hover { color: var(--error); }
 
-/* FORM FIELDS */
 .field-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
 .field, .f-group { display: flex; flex-direction: column; gap: 6px; flex: 1 1 150px; min-width: 130px; }
 .field label, .f-group label {
@@ -202,7 +196,6 @@ input[type="range"]::-moz-range-thumb {
 }
 .progress-bar { height: 100%; width: 0%; background: var(--accent); transition: width .18s linear; }
 
-/* EDITOR MODAL */
 .editor {
   position: fixed; inset: 0; z-index: 3000;
   display: flex; flex-direction: column;
@@ -320,7 +313,6 @@ input[type="range"]::-moz-range-thumb {
   background: var(--accent-soft);
 }
 
-/* TOASTS / BUSY */
 .toasts {
   position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
   transform: translateX(-50%); z-index: 4000;
@@ -343,7 +335,7 @@ input[type="range"]::-moz-range-thumb {
 
 .busy {
   position: fixed; inset: 0; z-index: 5000;
-  display: none;                /* ✅ inline display:none as default */
+  display: none;
   place-items: center;
   background: rgba(15,23,42,0.65); backdrop-filter: blur(3px);
 }
@@ -360,7 +352,6 @@ input[type="range"]::-moz-range-thumb {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* SEO ARTICLE */
 .seo-article {
   margin-top: 40px; background: var(--card-bg);
   border: 1px solid var(--border-color); border-radius: 12px;
@@ -389,7 +380,6 @@ input[type="range"]::-moz-range-thumb {
 </head>
 <body>
 
-<!-- ============ HEADER — AUTO-INJECTED ============ -->
 <div id="officekit-header"></div>
 
 <main class="main-wrap">
@@ -398,7 +388,6 @@ input[type="range"]::-moz-range-thumb {
     <p class="hero-sub">Securely scan, crop, and convert your photos into high-quality multi-page PDF documents entirely in your browser. Nothing is ever uploaded.</p>
   </div>
 
-  <!-- Upload -->
   <section class="tool-card" id="upload-card">
     <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Add pages: choose files or drop images here">
       <div class="dz-icon">
@@ -423,10 +412,8 @@ input[type="range"]::-moz-range-thumb {
     <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
   </section>
 
-  <!-- Ad -->
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- Pages -->
   <section id="pages-section" hidden>
     <div class="section-head" style="margin-top:10px">
       <h2>Pages <span class="count-badge" id="page-count">0</span></h2>
@@ -448,7 +435,6 @@ input[type="range"]::-moz-range-thumb {
     <div class="page-grid" id="page-grid"></div>
   </section>
 
-  <!-- Export -->
   <section class="tool-card" id="export-section" hidden style="margin-top:24px;">
     <h3 style="margin:0 0 15px;color:var(--accent);font-size:17px;">Export PDF</h3>
 
@@ -501,7 +487,6 @@ input[type="range"]::-moz-range-thumb {
     </p>
   </section>
 
-  <!-- SEO / Tutorial -->
   <section class="seo-article">
     <h2>Complete Guide to JPG to PDF &amp; Document Scanner</h2>
     <p style="color:var(--subtext-color);margin-top:6px;">
@@ -554,7 +539,6 @@ input[type="range"]::-moz-range-thumb {
   <div class="ad-slot-container">Advertisement</div>
 </main>
 
-<!-- ============ EDITOR MODAL ============ -->
 <div class="editor" id="editor" aria-hidden="true" role="dialog" aria-label="Page editor">
   <div class="ed-top">
     <button class="icon-btn" id="ed-prev" title="Previous page" aria-label="Previous page">
@@ -697,7 +681,6 @@ input[type="range"]::-moz-range-thumb {
 
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
-<!-- ✅ FIXED BUSY: display:none by default; JS adds .show class to reveal -->
 <div class="busy" id="busy">
   <div class="busy-card">
     <span class="spinner"></span>
@@ -705,10 +688,8 @@ input[type="range"]::-moz-range-thumb {
   </div>
 </div>
 
-<!-- ============ FOOTER — AUTO-INJECTED ============ -->
 <div id="officekit-footer"></div>
 
-<!-- ============ CORE SCRIPT (injects header + footer + theme toggle) ============ -->
 <script src="../assets/js/core/officekit-core.js"></script>
 
 <script>
@@ -732,7 +713,6 @@ function debounce(fn, wait) {
   };
 }
 
-/* ------------------------- Canvas helpers ------------------------- */
 function makeCanvas(w, h) {
   var c = document.createElement('canvas');
   c.width  = Math.max(1, Math.round(w));
@@ -764,7 +744,6 @@ function loadScript(src) {
 }
 function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
 
-/* ------------------------- Constants / state ------------------------- */
 var MAX_PAGES  = 30;
 var SOURCE_CAP = 2200;
 var SIZES = {
@@ -794,7 +773,6 @@ function fullQuad() {
   ];
 }
 
-/* ------------------------- File loading ------------------------- */
 function loadImageEl(src) {
   return new Promise(function (res, rej) {
     var i = new Image();
@@ -835,7 +813,6 @@ async function fileToCanvas(file, maxDim) {
   return c;
 }
 
-/* ------------------------- Homography + warp ------------------------- */
 function solveHomography(dst, src) {
   var A = [], b = [], i;
   for (i = 0; i < 4; i++) {
@@ -927,7 +904,6 @@ function warpFromQuad(sourceCanvas, quadNorm) {
   return jsWarp(sourceCanvas, scaled, outW, outH);
 }
 
-/* ------------------------- Rotate / Straighten ------------------------- */
 function rotateCanvas(src, deg) {
   deg = ((deg % 360) + 360) % 360;
   if (!deg) return src;
@@ -964,7 +940,6 @@ function looksLikeSidewaysPage(w, h) {
   return ratio >= 0.6 && ratio <= 0.85;
 }
 
-/* ------------------------- Filters ------------------------- */
 var PRESETS = {
   original:   { b: 0,  c: 0.00, s: 1.00, gray: false, sharpen: false, mono: false },
   autocolor:  { b: 14, c: 0.16, s: 1.28, gray: false, sharpen: false, mono: false },
@@ -1041,7 +1016,6 @@ function filterCanvas(src, filter, bright, contrast, sat) {
   return c;
 }
 
-/* ------------------------- Pipeline caches ------------------------- */
 function ensureWarp(page) {
   if (page._warp) return page._warp;
   page._warp = warpFromQuad(page.source, page.quad);
@@ -1096,7 +1070,6 @@ function blankSource() {
   return c;
 }
 
-/* ------------------------- Page builders ------------------------- */
 async function buildPage(file) {
   var src = await fileToCanvas(file, SOURCE_CAP);
   var page = {
@@ -1135,7 +1108,6 @@ function clonePage(p) {
   return c;
 }
 
-/* ------------------------- PDF lib loader ------------------------- */
 async function ensurePdfLib() {
   if (window.PDFLib && window.PDFLib.PDFDocument) return window.PDFLib;
   var urls = [
@@ -1157,7 +1129,6 @@ function safeName(s) {
   return s || 'scanned-document';
 }
 
-/* ------------------------- Export ------------------------- */
 async function exportPDF() {
   var pages = state.pages;
   if (!pages.length) { toast('Add at least one page first', 'warn'); return; }
@@ -1208,18 +1179,31 @@ async function exportPDF() {
         x: (pw - dw) / 2, y: (ph - dh) / 2, width: dw, height: dh
       });
 
-      /* ---- 8-point pdf365.in watermark on every page ---- */
-      var wmColor = PDFLib.rgb(0.7, 0.7, 0.7);
-      var wmSize  = 8;
+      /* ============================================
+         ✅ VISIBLE WATERMARK — dark gray, 8pt, on white page
+         ============================================ */
+      var wmColor = PDFLib.rgb(0.15, 0.15, 0.15);   // very dark gray — clearly visible on white
+      var wmSize  = 8;                               // 8-point as requested
       var wmText  = 'pdf365.in';
 
+      // Top-left corner
       page.drawText(wmText, {
-        x: marginPt + 10, y: ph - marginPt - 15,
-        size: wmSize, font: wmFont, color: wmColor, opacity: 0.4
+        x: marginPt + 10,
+        y: ph - marginPt - 15,
+        size: wmSize,
+        font: wmFont,
+        color: wmColor,
+        opacity: 0.55
       });
+
+      // Bottom-left footer
       page.drawText(wmText, {
-        x: marginPt + 10, y: marginPt + 5,
-        size: wmSize, font: wmFont, color: wmColor, opacity: 0.4
+        x: marginPt + 10,
+        y: marginPt + 5,
+        size: wmSize,
+        font: wmFont,
+        color: wmColor,
+        opacity: 0.55
       });
 
       setProgress((i + 1) / pages.length, true);
@@ -1248,7 +1232,6 @@ async function exportPDF() {
   }
 }
 
-/* ------------------------- UI helpers ------------------------- */
 function toast(msg, kind) {
   var el = document.createElement('div');
   el.className = 'toast ' + (kind || 'ok');
@@ -1261,7 +1244,6 @@ function toast(msg, kind) {
   }, 2600);
 }
 
-/* ✅ FIXED setBusy — uses .show class instead of hidden attribute */
 function setBusy(on, text) {
   var b = $('busy');
   if (!b) return;
@@ -1287,7 +1269,6 @@ function closestEl(node, sel) {
   return null;
 }
 
-/* ------------------------- Grid rendering ------------------------- */
 function renderGrid() {
   var grid = $('page-grid');
   grid.innerHTML = '';
@@ -1380,7 +1361,6 @@ function updateDocumentUI() {
   updatePreview();
 }
 
-/* ------------------------- Page ops ------------------------- */
 function swapPages(i, j) {
   if (i === j || i < 0 || j < 0 || i >= state.pages.length || j >= state.pages.length) return;
   var t = state.pages[i];
@@ -1437,7 +1417,6 @@ function addBlankPage() {
   toast('Blank page added', 'ok');
 }
 
-/* ------------------------- Drag-to-swap ------------------------- */
 function wireSwap(container, selector, getIndex) {
   var srcEl = null;
   function clearTargets() {
@@ -1474,7 +1453,6 @@ function wireSwap(container, selector, getIndex) {
   });
 }
 
-/* ------------------------- Editor ------------------------- */
 var dragState = null;
 
 function openEditor(idx, tab) {
@@ -1641,7 +1619,6 @@ function initCropDragging() {
   svg.addEventListener('pointercancel', endDrag);
 }
 
-/* ------------------------- File ingest ------------------------- */
 var ACCEPT = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 function isImageFile(f) {
   if (f.type && ACCEPT.indexOf(f.type) >= 0) return true;
@@ -1679,7 +1656,6 @@ async function addFiles(fileList) {
   else toast('Page added', 'ok');
 }
 
-/* ------------------------- Event wiring ------------------------- */
 function wireEvents() {
   var fileInput = $('file-input'), camInput = $('camera-input');
 
@@ -1833,9 +1809,7 @@ function wireEvents() {
   });
 }
 
-/* ------------------------- Boot ------------------------- */
 function start() {
-  // Force-hide the busy overlay before anything else
   var b = $('busy');
   if (b) { b.classList.remove('show'); b.style.display = 'none'; }
 
