@@ -1,52 +1,56 @@
 /* ==========================================================================
-   OfficeKit Core — Auto-injects header, footer, theme toggle on every page.
-   Update this single file and ALL pages update automatically.
+   DocEasy Core — Auto-injects header + footer + theme toggle on every page.
+   Update this ONE file and every page across the site updates.
    ========================================================================== */
 (function () {
   'use strict';
 
-  /* ---------- Early theme restore (no flash) ---------- */
+  /* ---------- Early theme restore ---------- */
   try {
-    var saved = localStorage.getItem('officekit_theme') || 'light';
+    var saved = localStorage.getItem('doceasy_theme') || 'light';
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
   } catch (e) {}
 
   /* ========================================================================
-     CONFIG — Ye change karo, saare pages pe apply ho jayega
+     CONFIG — Edit here, everything updates everywhere.
      ======================================================================== */
   var CONFIG = {
-    brand: 'OfficeKit',
+    brand: 'DocEasy',
+    domain: 'doceasy.org',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
     topNav: [
-      { href: 'card-cropper.html',         label: 'ID & PAN Cropper',  page: 'card-cropper' },
-      { href: 'passport-maker.html',       label: 'Passport Maker',    page: 'passport-maker' },
-      { href: 'signature-bg-remover.html', label: 'Signature BG',      page: 'signature-bg-remover' },
-      { href: 'invoice-generator.html',    label: 'GST Invoice',       page: 'invoice-generator' },
-      { href: 'pdf-editor.html',           label: 'PDF Editor',        page: 'pdf-editor' }
+      { href: 'jpg-to-pdf.html',        label: 'JPG to PDF',       page: 'jpg-to-pdf' },
+      { href: 'pdf-editor.html',        label: 'PDF Editor',       page: 'pdf-editor' },
+      { href: 'pdf-merge.html',         label: 'Merge PDF',        page: 'pdf-merge' },
+      { href: 'image-compressor.html',  label: 'Image Compressor', page: 'image-compressor' },
+      { href: 'passport-maker.html',    label: 'Passport Photo',   page: 'passport-maker' },
+      { href: 'invoice-generator.html', label: 'Invoice',          page: 'invoice-generator' }
     ],
 
     footer: {
+      pdfTools: [
+        { href: 'pdf-editor.html',      label: 'Edit PDF' },
+        { href: 'pdf-merge.html',       label: 'Merge PDF' },
+        { href: 'pdf-split.html',       label: 'Split PDF' },
+        { href: 'jpg-to-pdf.html',      label: 'JPG to PDF' },
+        { href: 'pdf-to-jpg.html',      label: 'PDF to JPG' },
+        { href: 'image-converter.html', label: 'Format Converter' }
+      ],
       imageTools: [
-        { href: 'image-compressor.html',     label: 'Image Compressor' },
-        { href: 'signature-resize.html',     label: 'Target KB Resizer' },
-        { href: 'image-bg-remover.html',     label: 'Background Remover' },
-        { href: 'image-converter.html',      label: 'Format Converter' },
-        { href: 'image-beautifier.html',     label: 'Image Beautifier' }
+        { href: 'image-compressor.html',      label: 'Compress Image' },
+        { href: 'image-bg-remover.html',      label: 'Background Remover' },
+        { href: 'image-beautifier.html',      label: 'AI Photo Beautifier' },
+        { href: 'signature-resize.html',      label: 'Signature Resize' },
+        { href: 'signature-bg-remover.html',  label: 'Signature BG Remover' },
+        { href: 'card-cropper.html',          label: 'ID Card Cropper' }
       ],
-      documentTools: [
-        { href: 'invoice-generator.html',    label: 'GST Invoice Generator' },
-        { href: 'pdf-merge.html',            label: 'Merge PDF' },
-        { href: 'pdf-split.html',            label: 'Split PDF' },
-        { href: 'jpg-to-pdf.html',           label: 'JPG to PDF' },
-        { href: 'pdf-to-jpg.html',           label: 'PDF to JPG (ZIP)' },
-        { href: 'doc-scanner.html',          label: 'Document Scanner OCR' }
-      ],
-      legal: [
-        { href: 'terms.html',                label: 'Terms & Conditions',  root: true },
-        { href: 'privacy.html',              label: 'Privacy Policy',      root: true },
-        { href: 'about.html',                label: 'About Us',            root: true },
-        { href: 'contact.html',              label: 'Contact',             root: true }
+      company: [
+        { href: 'about.html',    label: 'About Us',           root: true },
+        { href: 'contact.html',  label: 'Contact',            root: true },
+        { href: 'privacy.html',  label: 'Privacy Policy',     root: true },
+        { href: 'terms.html',    label: 'Terms & Conditions', root: true }
       ]
     }
   };
@@ -58,84 +62,108 @@
     if (!isRoot && CONFIG.isSubPage) return href;
     if (isRoot && CONFIG.isSubPage) return '../' + href;
     if (!isRoot && !CONFIG.isSubPage && /\.html$/.test(href)) {
-      var TOOL_PAGES = ['image-compressor','signature-resize','image-bg-remover','image-converter','image-beautifier',
-                        'invoice-generator','pdf-merge','pdf-split','jpg-to-pdf','pdf-to-jpg','doc-scanner',
-                        'card-cropper','passport-maker','signature-bg-remover','pdf-editor','qr-generator',
-                        'qr-scanner','word-counter'];
+      var TOOL_PAGES = [
+        'image-compressor','signature-resize','image-bg-remover','image-converter',
+        'image-beautifier','invoice-generator','pdf-merge','pdf-split','jpg-to-pdf',
+        'pdf-to-jpg','doc-scanner','card-cropper','passport-maker','signature-bg-remover',
+        'pdf-editor','qr-generator','qr-scanner','word-counter'
+      ];
       var name = href.replace('.html', '');
       if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
     }
     return href;
   }
 
-  var LOGO_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>';
+  var LOGO_SVG =
+    '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>' +
+    '<polyline points="14 2 14 8 20 8"/>' +
+    '</svg>';
 
+  /* ---------- Header ---------- */
   function buildHeader() {
     var nav = CONFIG.topNav.map(function (item) {
-      return '<a href="' + resolvePath(item.href, false) + '" data-page="' + item.page + '">' + item.label + '</a>';
+      return '<a href="' + resolvePath(item.href, false) + '" data-page="' + item.page + '">' +
+             item.label + '</a>';
     }).join('');
     var homeHref = resolvePath('index.html', true);
 
     return '<header class="site-header"><div class="header-inner">' +
       '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
-        '<span class="brand-badge">' + LOGO_SVG + CONFIG.brand + '</span></a>' +
+        '<span class="brand-badge">' + LOGO_SVG + CONFIG.brand + '</span>' +
+      '</a>' +
       '<div class="nav-right">' +
         '<nav class="top-nav" aria-label="Quick tools">' + nav + '</nav>' +
         '<label class="theme-switch" aria-label="Toggle theme">' +
-          '<input type="checkbox" id="theme-checkbox" onchange="officekitToggleTheme()">' +
-          '<span class="slider"></span></label>' +
-      '</div></div></header>';
+          '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
+          '<span class="slider"></span>' +
+        '</label>' +
+      '</div>' +
+    '</div></header>';
   }
 
+  /* ---------- Footer ---------- */
   function buildFooter() {
     function col(title, items, isRoot) {
       var lis = items.map(function (it) {
-        return '<li><a href="' + resolvePath(it.href, isRoot || it.root) + '">' + it.label + '</a></li>';
+        return '<li><a href="' + resolvePath(it.href, isRoot || it.root) + '">' +
+               it.label + '</a></li>';
       }).join('');
       return '<div class="footer-col"><h5>' + title + '</h5><ul>' + lis + '</ul></div>';
     }
-    return '<footer class="site-footer"><div class="footer-container">' +
-      '<div><div class="footer-brand-box">' + LOGO_SVG + CONFIG.brand + '</div>' +
-      '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">100% client-side browser processing. Your files never leave your device.</p></div>' +
-      col('Image Tools',    CONFIG.footer.imageTools,    false) +
-      col('Document Tools', CONFIG.footer.documentTools, false) +
-      col('Legal & Info',   CONFIG.footer.legal,         true)  +
-      '</div><div class="footer-bottom-bar">' +
-        '<div>© <span id="ok-year"></span> ' + CONFIG.brand + '. All rights reserved.</div>' +
-        '<div><a class="made-with-love-link" href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Made with ❤️ by Deepaak Kumar</a></div>' +
-      '</div></footer>';
+    return '<footer class="site-footer">' +
+      '<div class="footer-container">' +
+        '<div>' +
+          '<div class="footer-brand-box">' + LOGO_SVG + CONFIG.brand + '</div>' +
+          '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">' +
+          '100% client-side browser processing. Your files never leave your device.' +
+          '</p>' +
+        '</div>' +
+        col('PDF Tools',    CONFIG.footer.pdfTools,   false) +
+        col('Image Tools',  CONFIG.footer.imageTools, false) +
+        col('Company',      CONFIG.footer.company,    true)  +
+      '</div>' +
+      '<div class="footer-bottom-bar">' +
+        '<div>© <span id="de-year"></span> ' + CONFIG.brand + '. All rights reserved.</div>' +
+        '<div><a class="made-with-love-link" href="https://' + CONFIG.domain +
+        '" target="_blank" rel="noopener noreferrer">' + CONFIG.domain + '</a></div>' +
+      '</div>' +
+    '</footer>';
   }
 
+  /* ---------- Inject ---------- */
   function inject() {
-    var h = document.getElementById('officekit-header');
+    var h = document.getElementById('doceasy-header');
     if (h && !h.querySelector('.site-header')) h.innerHTML = buildHeader();
-    var f = document.getElementById('officekit-footer');
+    var f = document.getElementById('doceasy-footer');
     if (f && !f.querySelector('.site-footer')) f.innerHTML = buildFooter();
 
     var current = location.pathname.split('/').pop().replace('.html', '');
     document.querySelectorAll('.top-nav a[data-page]').forEach(function (a) {
-      if (a.getAttribute('data-page') === current) {
-        a.style.background = 'rgba(255,255,255,0.16)';
-        a.style.fontWeight = '600';
-      }
+      if (a.getAttribute('data-page') === current) a.classList.add('active');
     });
 
     var cb = document.getElementById('theme-checkbox');
     if (cb) cb.checked = document.documentElement.getAttribute('data-theme') === 'dark';
-    var y = document.getElementById('ok-year');
+
+    var y = document.getElementById('de-year');
     if (y) y.textContent = new Date().getFullYear();
   }
 
-  window.officekitToggleTheme = function () {
+  /* ---------- Theme toggle ---------- */
+  window.docEasyToggleTheme = function () {
     var cb = document.getElementById('theme-checkbox');
     if (cb && cb.checked) {
       document.documentElement.setAttribute('data-theme', 'dark');
-      try { localStorage.setItem('officekit_theme', 'dark'); } catch (e) {}
+      try { localStorage.setItem('doceasy_theme', 'dark'); } catch (e) {}
     } else {
       document.documentElement.removeAttribute('data-theme');
-      try { localStorage.setItem('officekit_theme', 'light'); } catch (e) {}
+      try { localStorage.setItem('doceasy_theme', 'light'); } catch (e) {}
     }
   };
+
+  /* Legacy alias — safe if any old code calls it */
+  window.officekitToggleTheme = window.docEasyToggleTheme;
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
   else inject();
