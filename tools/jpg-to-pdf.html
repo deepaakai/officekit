@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Document Scanner &amp; PDF Maker — OfficeKit</title>
 <meta name="description" content="Scan documents from photos: manual crop, perspective correction, filters and multi-page PDF export. 100% in your browser — nothing is uploaded.">
-<meta name="theme-color" content="#0b1329">
 <link rel="canonical" href="https://pdf365.in/tools/jpg-to-pdf.html">
 
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
@@ -17,7 +16,7 @@
 <script>window.__OPENCV_DISABLED = true;</script>
 
 <style>
-/* ===================== THEME TOKENS (matches OfficeKit suite) ===================== */
+/* ===================== THEME TOKENS (Light Theme matching Screenshots) ===================== */
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
 :root{
@@ -25,12 +24,29 @@
   --t:.24s cubic-bezier(.4,0,.2,1);
   --maxw:1060px;
 
-  --bg:#0b1329; --bg2:#0e1832; --card:#111e38; --card2:#16264a;
-  --bd:#1e3054; --tx:#e6eefc; --sub:#8ba3c7;
-  --accent:#38bdf8; --accent-ink:#04121f; --accent-soft:rgba(56,189,248,.14);
-  --danger:#f87171; --ok:#34d399; --warn:#fbbf24;
-  --sh:0 12px 34px rgba(0,0,0,.5);
-  --stage:#070d1c; --line:rgba(56,189,248,.95); --veil:rgba(4,10,22,.62);
+  /* Light Theme Colors */
+  --bg:#f8fafc; 
+  --bg2:#f1f5f9; 
+  --card:#ffffff; 
+  --card2:#f8fafc;
+  --bd:#e2e8f0; 
+  --tx:#0f172a; 
+  --sub:#64748b;
+  --accent:#2563eb; 
+  --accent-ink:#ffffff; 
+  --accent-soft:#eff6ff;
+  --danger:#ef4444; 
+  --ok:#10b981; 
+  --warn:#f59e0b;
+  
+  --sh:0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -2px rgba(0,0,0,.05);
+  --stage:#1e293b; 
+  --line:#2563eb; 
+  --veil:rgba(255,255,255,.8);
+
+  /* Header/Footer Dark Blue */
+  --hdr-bg:#1e3a8a;
+  --hdr-tx:#ffffff;
 }
 
 html,body{margin:0;padding:0}
@@ -51,19 +67,25 @@ a{color:var(--accent)}
 .muted{color:var(--sub)}
 .center{text-align:center}
 
+/* ===================== HEADER / FOOTER (Dark Blue) ===================== */
+#officekit-header { background: var(--hdr-bg); color: var(--hdr-tx); padding: 12px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+#officekit-header * { color: var(--hdr-tx); }
+#officekit-footer { background: var(--hdr-bg); color: var(--hdr-tx); padding: 24px 0; margin-top: 40px; text-align: center; font-size: 14px; }
+#officekit-footer * { color: var(--hdr-tx); }
+
 /* ===================== LAYOUT ===================== */
 .scanner-wrap{
   max-width:var(--maxw); margin:0 auto;
   padding:18px max(14px,env(safe-area-inset-left)) 90px max(14px,env(safe-area-inset-right));
 }
 
-.hero-box{text-align:center;padding:14px 6px 22px}
-.hero-title{font-size:clamp(24px,5.4vw,36px)}
+.hero-box{text-align:center;padding:24px 6px 30px}
+.hero-title{font-size:clamp(24px,5.4vw,36px); color: #1e293b;}
 .hero-sub{color:var(--sub);margin:10px auto 0;max-width:600px;font-size:14.5px}
 
 .tool-card{
   background:var(--card); border:1px solid var(--bd); border-radius:var(--r-l);
-  box-shadow:var(--sh); padding:18px;
+  box-shadow:var(--sh); padding:24px;
 }
 
 /* ===================== BUTTONS ===================== */
@@ -71,23 +93,23 @@ a{color:var(--accent)}
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:11px 18px;border-radius:var(--r-m);font-weight:600;font-size:14px;
   background:var(--accent);color:var(--accent-ink);
-  border:1px solid transparent;box-shadow:0 6px 18px -6px var(--accent);
+  border:1px solid transparent;box-shadow:0 2px 4px rgba(37,99,235,.2);
   transition:var(--t);
 }
-.primary-button:hover,.btn-primary:hover{filter:brightness(1.08)}
-.primary-button:disabled{opacity:.5;filter:grayscale(.4);cursor:progress}
+.primary-button:hover,.btn-primary:hover{background:#1d4ed8; box-shadow:0 4px 6px rgba(37,99,235,.3);}
+.primary-button:disabled{opacity:.5;cursor:progress}
 .primary-button .ic{stroke:var(--accent-ink)}
 
 .btn-secondary,.btn-ghost{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:11px 18px;border-radius:var(--r-m);font-weight:600;font-size:14px;
-  background:var(--card2);border:1px solid var(--bd);color:var(--tx);
+  background:var(--card);border:1px solid var(--bd);color:var(--tx);
   transition:var(--t);
 }
-.btn-secondary:hover,.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-secondary:hover,.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 
-.btn-danger-ghost{background:var(--card2);border:1px solid var(--bd);color:var(--danger)}
-.btn-danger-ghost:hover{border-color:var(--danger);color:var(--danger)}
+.btn-danger-ghost{background:var(--card);border:1px solid var(--bd);color:var(--danger)}
+.btn-danger-ghost:hover{border-color:var(--danger);color:var(--danger);background:#fef2f2}
 
 .btn-sm{padding:9px 14px;font-size:13.5px}
 .btn-mini{padding:7px 12px;font-size:12.5px;border-radius:var(--r-s)}
@@ -107,13 +129,13 @@ a{color:var(--accent)}
   width:70px;height:70px;margin:0 auto 12px;border-radius:20px;
   display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);
 }
-.dz-title{font-size:17px}
+.dz-title{font-size:17px; color: #1e293b;}
 .dz-sub{color:var(--sub);font-size:13px;margin:7px 0 16px}
 .dz-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 
 /* ===================== SECTION HEAD ===================== */
 .section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.section-head h2{font-size:17px;margin-right:auto}
+.section-head h2{font-size:17px;margin-right:auto; color: #1e293b;}
 .count-badge{
   display:inline-block;min-width:24px;padding:1px 8px;border-radius:999px;
   background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:700;text-align:center;
@@ -131,17 +153,17 @@ a{color:var(--accent)}
   position:relative;background:var(--card);border:1px solid var(--bd);
   border-radius:var(--r-m);overflow:hidden;transition:var(--t);cursor:pointer;
 }
-.page-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.page-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--sh)}
 .page-card.dragging{opacity:.45}
 .page-card.drop-target{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .card-thumb-wrap{
-  position:relative;aspect-ratio:3/4;background:var(--card2);
+  position:relative;aspect-ratio:3/4;background:var(--bg2);
   display:grid;place-items:center;overflow:hidden;
 }
 .card-thumb{max-width:100%;max-height:100%;display:block;object-fit:contain}
 .card-index{
   position:absolute;top:7px;left:7px;min-width:22px;padding:1px 7px;border-radius:999px;
-  background:rgba(4,10,22,.72);color:#fff;font-size:11.5px;font-weight:700;text-align:center;
+  background:rgba(15,23,42,.7);color:#fff;font-size:11.5px;font-weight:700;text-align:center;
 }
 .card-bar{display:flex;border-top:1px solid var(--bd)}
 .card-btn{
@@ -149,7 +171,7 @@ a{color:var(--accent)}
   color:var(--sub);transition:var(--t);
 }
 .card-btn .ic{width:16px;height:16px}
-.card-btn:hover{background:var(--card2);color:var(--accent)}
+.card-btn:hover{background:var(--bg2);color:var(--accent)}
 .card-btn.danger:hover{color:var(--danger)}
 
 /* ===================== FORM FIELDS ===================== */
@@ -161,28 +183,28 @@ a{color:var(--accent)}
 }
 .field output,.f-group output{color:var(--accent);font-weight:700}
 select,input[type="text"]{
-  background:var(--card2);border:1px solid var(--bd);border-radius:var(--r-m);
-  padding:10px 12px;width:100%;transition:var(--t);
+  background:var(--card);border:1px solid var(--bd);border-radius:var(--r-m);
+  padding:10px 12px;width:100%;transition:var(--t);color:var(--tx);
 }
-select:focus,input[type="text"]:focus{outline:none;border-color:var(--accent)}
+select:focus,input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:26px;background:transparent}
 input[type="range"]::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--bd)}
 input[type="range"]::-webkit-slider-thumb{
   -webkit-appearance:none;width:19px;height:19px;margin-top:-7px;border-radius:50%;
-  background:var(--accent);border:2px solid var(--card);cursor:pointer;
+  background:var(--accent);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:pointer;
 }
 input[type="range"]::-moz-range-track{height:5px;border-radius:3px;background:var(--bd)}
 input[type="range"]::-moz-range-thumb{
-  width:19px;height:19px;border-radius:50%;background:var(--accent);border:2px solid var(--card);cursor:pointer;
+  width:19px;height:19px;border-radius:50%;background:var(--accent);border:2px solid #fff;cursor:pointer;
 }
 
 .progress{
-  height:7px;border-radius:4px;background:var(--card2);overflow:hidden;
+  height:7px;border-radius:4px;background:var(--bg2);overflow:hidden;
   border:1px solid var(--bd);margin:12px 0;
 }
 .progress-bar{height:100%;width:0%;background:var(--accent);transition:width .18s linear}
 
-/* ===================== EDITOR MODAL ===================== */
+/* ===================== EDITOR MODAL (Dark Stage, Light Panels) ===================== */
 .editor{
   position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:var(--bg);
   transform:translateY(100%);visibility:hidden;
@@ -196,14 +218,14 @@ input[type="range"]::-moz-range-thumb{
   border-bottom:1px solid var(--bd);background:var(--card);
 }
 .ed-top-mid{flex:1;min-width:0;padding:0 6px;text-align:center}
-.ed-title{display:block;font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ed-title{display:block;font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; color: #1e293b;}
 .ed-state{display:block;font-size:11.5px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .icon-btn{
   width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
   color:var(--sub);transition:var(--t);
 }
-.icon-btn:hover{color:var(--accent);background:var(--card2)}
+.icon-btn:hover{color:var(--accent);background:var(--bg2)}
 
 .ed-stage{
   flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
@@ -214,9 +236,9 @@ input[type="range"]::-moz-range-thumb{
 
 .crop-svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;overflow:visible}
 .crop-svg[hidden]{display:none}
-.crop-svg .mask{fill:var(--veil);fill-rule:evenodd}
-.crop-svg polygon.frame{fill:none;stroke:var(--line);stroke-width:2;vector-effect:non-scaling-stroke}
-.crop-handle{fill:var(--card);stroke:var(--line);stroke-width:2;vector-effect:non-scaling-stroke;cursor:grab}
+.crop-svg .mask{fill:rgba(4,10,22,.6);fill-rule:evenodd}
+.crop-svg polygon.frame{fill:none;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke}
+.crop-handle{fill:#fff;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke;cursor:grab}
 
 .ed-panels{background:var(--card);border-top:1px solid var(--bd);max-height:44vh;overflow-y:auto}
 .panel{display:none;padding:14px}
@@ -229,7 +251,7 @@ input[type="range"]::-moz-range-thumb{
   border:1px solid var(--bd);border-radius:var(--r-m);background:var(--card2);
   font-size:12px;font-weight:600;color:var(--sub);transition:var(--t);
 }
-.chip:hover{border-color:var(--accent);color:var(--tx)}
+.chip:hover{border-color:var(--accent);color:var(--tx);background:var(--bg2)}
 .chip.active{
   border-color:var(--accent);background:var(--accent-soft);color:var(--accent);
   box-shadow:0 0 0 1px var(--accent) inset;
@@ -249,7 +271,7 @@ input[type="range"]::-moz-range-thumb{
 .mini-card.drop-target{border-color:var(--accent)}
 .mini-idx{
   position:absolute;bottom:2px;right:3px;font-size:10px;font-weight:700;
-  background:rgba(4,10,22,.7);color:#fff;border-radius:5px;padding:0 4px;
+  background:rgba(15,23,42,.7);color:#fff;border-radius:5px;padding:0 4px;
 }
 
 .ed-tabs{
@@ -277,9 +299,9 @@ input[type="range"]::-moz-range-thumb{
   opacity:0;transform:translateY(12px);transition:var(--t);max-width:100%;
 }
 .toast.show{opacity:1;transform:none}
-.toast.ok{border-color:var(--ok)}
-.toast.warn{border-color:var(--warn)}
-.toast.error{border-color:var(--danger)}
+.toast.ok{border-color:var(--ok); color: var(--ok);}
+.toast.warn{border-color:var(--warn); color: var(--warn);}
+.toast.error{border-color:var(--danger); color: var(--danger);}
 
 .busy{position:fixed;inset:0;z-index:95;display:grid;place-items:center;background:var(--veil);backdrop-filter:blur(3px)}
 .busy-card{
@@ -295,16 +317,16 @@ input[type="range"]::-moz-range-thumb{
 /* ===================== SEO / TUTORIAL ===================== */
 .seo-article{
   margin-top:40px;background:var(--card);border:1px solid var(--bd);
-  border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;
+  border-radius:var(--r-l);box-shadow:var(--sh);padding:30px;
 }
-.seo-article h2{font-size:20px;margin-bottom:6px}
-.seo-article h3{margin-top:18px;font-size:15.5px;color:var(--accent)}
-.seo-article p{font-size:14.5px;line-height:1.65;color:var(--tx)}
+.seo-article h2{font-size:22px;margin-bottom:10px; color: #1e293b;}
+.seo-article h3{margin-top:24px;font-size:16px;color:var(--accent)}
+.seo-article p{font-size:14.5px;line-height:1.7;color:var(--tx)}
 .seo-article ul,.seo-article ol{padding-left:20px;font-size:14.5px;line-height:1.7}
 .seo-article li{margin-bottom:6px}
 .article-image-box{
-  margin:20px 0;text-align:center;border:1px dashed var(--bd);
-  border-radius:var(--r-m);padding:8px;background:var(--card2);
+  margin:24px 0;text-align:center;border:1px dashed var(--bd);
+  border-radius:var(--r-m);padding:12px;background:var(--card2);
 }
 .article-image-box img{max-width:100%;height:auto;border-radius:var(--r-s);display:block;margin:0 auto}
 .article-image-caption{font-size:12.5px;color:var(--sub);padding:8px 4px 2px}
@@ -426,18 +448,68 @@ input[type="range"]::-moz-range-thumb{
     <p class="hint center"><svg class="ic"><use href="#i-shield"/></svg> Pages are compiled locally, then downloaded straight to your device.</p>
   </section>
 
-  <!-- ===================== SEO / TUTORIAL (700+ words) ===================== -->
+  <!-- ===================== SEO / TUTORIAL (with Custom SVG Illustration) ===================== -->
   <section class="seo-article">
-    <h2>How to Use JPG to PDF &amp; Document Scanner</h2>
-    <p class="muted" style="margin-top:6px;">Complete guide on scanning and compiling images into high-quality PDFs securely in your browser.</p>
+    <h2>Complete Guide to JPG to PDF &amp; Document Scanner</h2>
+    <p class="muted" style="margin-top:6px;">Creating official multi-page PDFs at home has never been easier. The OfficeKit Document Scanner operates 100% locally in your web browser, utilizing state-of-the-art client-side canvas transformations and image processing. Whether you need standard A4 documents, competitive exam sheets, or formal receipts, our system renders high-density output instantly.</p>
 
-    <div class="article-image-box">
-      <!-- Dynamic demo image with a guaranteed fallback if the file is missing -->
-      <img id="tutorial-demo-img"
-           src="jpg-to-pdf-demo.jpg"
-           alt="JPG to PDF Demo Scanner Workflow"
-           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22300%22 viewBox=%220 0 600 300%22><rect width=%22600%22 height=%22300%22 fill=%22%2311182e%22/><text x=%22300%22 y=%22150%22 font-family=%22sans-serif%22 font-size=%2220%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22>Demo Image (jpg-to-pdf-demo.jpg)</text><text x=%22300%22 y=%22185%22 font-family=%22sans-serif%22 font-size=%2214%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place your screenshot here</text></svg>';">
-      <div class="article-image-caption">Interactive browser-based scanner interface with perspective crop and filters.</div>
+    <!-- Custom SVG Illustration matching Screenshot 1 -->
+    <div class="article-image-box" id="tutorial-demo-box">
+      <svg viewBox="0 0 800 320" style="width:100%; height:auto; border-radius: 12px; display: block; background: #0f172a;">
+        <!-- Background -->
+        <rect width="800" height="320" fill="#0f172a" rx="12"/>
+        
+        <!-- Left Side: Input Document -->
+        <rect x="60" y="50" width="140" height="180" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+        <rect x="80" y="70" width="100" height="140" rx="4" fill="#0f172a"/>
+        <!-- Face Placeholder -->
+        <circle cx="130" cy="110" r="24" fill="#38bdf8"/>
+        <path d="M100 170 Q130 140 160 170" fill="#38bdf8"/>
+        <text x="130" y="270" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">35x45mm</text>
+        
+        <!-- Arrow 1 -->
+        <polygon points="230,150 260,150 260,130 290,160 260,190 260,170 230,170" fill="#38bdf8"/>
+        
+        <!-- Middle: Smartphone Scanner -->
+        <rect x="310" y="40" width="180" height="220" rx="16" fill="#0f172a" stroke="#38bdf8" stroke-width="4"/>
+        <rect x="330" y="60" width="140" height="180" rx="8" fill="#1e293b"/>
+        <!-- Scan Frame -->
+        <path d="M350 90 L350 80 L360 80" stroke="#38bdf8" stroke-width="3" fill="none"/>
+        <path d="M450 90 L450 80 L440 80" stroke="#38bdf8" stroke-width="3" fill="none"/>
+        <path d="M350 210 L350 220 L360 220" stroke="#38bdf8" stroke-width="3" fill="none"/>
+        <path d="M450 210 L450 220 L440 220" stroke="#38bdf8" stroke-width="3" fill="none"/>
+        <!-- Face in Phone -->
+        <circle cx="400" cy="150" r="30" fill="#38bdf8"/>
+        <path d="M370 200 Q400 170 430 200" fill="#38bdf8"/>
+        <!-- Camera Lens -->
+        <rect x="380" y="235" width="40" height="15" rx="7" fill="#38bdf8"/>
+        <circle cx="400" cy="242" r="4" fill="#0f172a"/>
+        
+        <!-- Arrow 2 -->
+        <polygon points="520,150 550,150 550,130 580,160 550,190 550,170 520,170" fill="#38bdf8"/>
+        
+        <!-- Right Side: Output Grid -->
+        <rect x="610" y="40" width="160" height="220" fill="#ffffff" rx="6"/>
+        <!-- 4x4 Grid of Photos -->
+        <g fill="#1e293b">
+          <!-- Row 1 -->
+          <rect x="620" y="50" width="30" height="40" rx="3"/><rect x="655" y="50" width="30" height="40" rx="3"/><rect x="690" y="50" width="30" height="40" rx="3"/><rect x="725" y="50" width="30" height="40" rx="3"/>
+          <!-- Row 2 -->
+          <rect x="620" y="95" width="30" height="40" rx="3"/><rect x="655" y="95" width="30" height="40" rx="3"/><rect x="690" y="95" width="30" height="40" rx="3"/><rect x="725" y="95" width="30" height="40" rx="3"/>
+          <!-- Row 3 -->
+          <rect x="620" y="140" width="30" height="40" rx="3"/><rect x="655" y="140" width="30" height="40" rx="3"/><rect x="690" y="140" width="30" height="40" rx="3"/><rect x="725" y="140" width="30" height="40" rx="3"/>
+          <!-- Row 4 -->
+          <rect x="620" y="185" width="30" height="40" rx="3"/><rect x="655" y="185" width="30" height="40" rx="3"/><rect x="690" y="185" width="30" height="40" rx="3"/><rect x="725" y="185" width="30" height="40" rx="3"/>
+        </g>
+        <!-- Face placeholders in grid -->
+        <g fill="#38bdf8">
+          <circle cx="635" cy="65" r="6"/><circle cx="670" cy="65" r="6"/><circle cx="705" cy="65" r="6"/><circle cx="740" cy="65" r="6"/>
+          <circle cx="635" cy="110" r="6"/><circle cx="670" cy="110" r="6"/><circle cx="705" cy="110" r="6"/><circle cx="740" cy="110" r="6"/>
+          <circle cx="635" cy="155" r="6"/><circle cx="670" cy="155" r="6"/><circle cx="705" cy="155" r="6"/><circle cx="740" cy="155" r="6"/>
+          <circle cx="635" cy="200" r="6"/><circle cx="670" cy="200" r="6"/><circle cx="705" cy="200" r="6"/><circle cx="740" cy="200" r="6"/>
+        </g>
+      </svg>
+      <div class="article-image-caption">Demonstration of AI background color isolation, 300 DPI crop presets, and multi-up printing sheets.</div>
     </div>
 
     <p>Welcome to the ultimate client-side Document Scanner and <strong>JPG to PDF</strong> conversion tool. Whether you are dealing with multi-page handwritten notes, important invoices, identity papers, certificates, or formal receipts, this tool lets you process everything directly within your web browser without uploading a single byte to any remote server. Your files remain 100% private, secure, and under your absolute control.</p>
@@ -1238,10 +1310,10 @@ function renderMiniGrid() {
 
 function updatePreview() {
   var n = state.pages.length;
-  var demoImg = $('tutorial-demo-img');
+  var demoBox = $('tutorial-demo-box');
 
-  if (n && state.pages[0].thumb && demoImg) {
-    demoImg.src = state.pages[0].thumb;
+  if (n && state.pages[0].thumb && demoBox) {
+    demoBox.innerHTML = '<img src="' + state.pages[0].thumb + '" style="width:100%; height:auto; border-radius:12px; display:block;">';
   }
 }
 
