@@ -1,517 +1,1162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>OfficeKit — Free Online Image, PDF & Invoice Tools (No Upload, 100% Private)</title>
-  <meta name="description" content="Free online tools to compress, resize, crop images, remove background, make passport photos, generate GST invoices, merge PDFs, and more. 100% browser-based — files never leave your device.">
-  <meta name="keywords" content="image compressor, passport photo maker, signature resize, PDF merge, GST invoice generator, ID card cropper, background remover, image converter, word counter">
-  <meta name="author" content="Deepaak Kumar">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://pdf365.in/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DocEasy | Online PDF Editor & Document Tools for Everyone</title>
+<meta name="description" content="Edit, convert, sign, compress, and organize PDF documents online, anywhere in the world. 100% browser-based — your files never leave your device.">
+<meta name="keywords" content="pdf editor, online pdf tools, jpg to pdf, pdf to word, compress pdf, merge pdf, split pdf, sign pdf, passport photo, invoice generator, document scanner">
+<meta name="author" content="DocEasy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://doceasy.org/">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="OfficeKit — Free Online Image, PDF & Invoice Tools">
-  <meta property="og:description" content="100% browser-based tools. Compress, resize, crop, remove BG, make invoices — free, fast, private.">
-  <meta property="og:url" content="https://pdf365.in/">
-  <meta property="og:image" content="https://pdf365.in/og-cover.png">
-  <meta property="og:site_name" content="OfficeKit">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="DocEasy — Free Online PDF & Document Tools">
+<meta property="og:description" content="Edit, convert, sign, compress and organize PDF documents online, anywhere in the world. No install needed.">
+<meta property="og:url" content="https://doceasy.org/">
+<meta property="og:image" content="https://doceasy.org/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="OfficeKit — Free Online Image & PDF Tools">
-  <meta name="twitter:description" content="100% browser-based. No upload. No signup. Completely free.">
-  <meta name="twitter:image" content="https://pdf365.in/og-cover.png">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DocEasy — Free Online PDF & Document Tools">
+<meta name="twitter:description" content="100% browser-based. No upload. No signup. Works worldwide.">
+<meta name="twitter:image" content="https://doceasy.org/og-cover.png">
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "OfficeKit",
-    "url": "https://pdf365.in/",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Any (Web)",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-    "description": "Free online image, PDF and invoice tools — 100% browser-based.",
-    "featureList": [
-      "Image Compressor", "Passport Photo Maker", "Signature Background Remover",
-      "PDF Merge", "PDF Split", "GST Invoice Generator", "ID Card Cropper",
-      "Image Converter", "QR Code Generator", "Word Counter"
-    ]
-  }
-  </script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "DocEasy",
+  "url": "https://doceasy.org/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free online PDF and document tools, worldwide. 100% browser-based.",
+  "featureList": [
+    "Edit PDF", "Merge PDF", "Split PDF", "Compress PDF", "Sign PDF",
+    "JPG to PDF", "PNG to PDF", "Word to PDF", "Excel to PDF", "PowerPoint to PDF",
+    "PDF to Word", "PDF to JPG", "PDF to Excel", "PDF to PowerPoint",
+    "Image Compressor", "Background Remover", "Passport Photo Maker",
+    "QR Code Generator", "Word Counter", "Document Scanner"
+  ]
+}
+</script>
 
-  <!-- Global Stylesheet -->
-  <link rel="stylesheet" href="assets/css/officekit-global.css">
+<link rel="stylesheet" href="assets/css/officekit-global.css">
 
-  <!-- Early theme restore (runs before paint — no FOUC) -->
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem('officekit_theme') || 'light';
-        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) {}
-    })();
-  </script>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('officekit_theme') || 'light';
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
+  })();
+</script>
 
-  <style>
-    /* ============ INDEX-ONLY STYLES (header/footer styles are in officekit-global.css) ============ */
+<style>
+/* ============ DOCEASY — Doclio-inspired worldwide layout ============ */
+.main-wrap { max-width: 1200px; margin: 0 auto; padding: 0 18px 80px; }
 
-    /* MAIN */
-    .main-wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; }
+/* ---------- NAV ---------- */
+.dnav {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 14px;
+  margin: 18px auto 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  max-width: 780px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+.dnav a {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--subtext-color);
+  text-decoration: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.dnav a:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
 
-    .hero-box { text-align: center; padding: 8px 0 20px; }
-    .hero-title {
-      font-size: clamp(22px, 4vw, 30px);
-      font-weight: 800;
-      color: var(--text-color);
-      margin: 0 0 8px;
-      letter-spacing: -0.5px;
-    }
-    .hero-sub {
-      color: var(--subtext-color);
-      font-size: 14.5px;
-      margin: 0 0 18px;
-      max-width: 640px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+/* ---------- HERO ---------- */
+.dhero {
+  text-align: center;
+  padding: 46px 0 26px;
+}
+.dhero h1 {
+  font-size: clamp(32px, 6vw, 58px);
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 0 0 18px;
+  letter-spacing: -1.5px;
+  line-height: 1.03;
+}
+.dhero h1 .accent {
+  background: linear-gradient(135deg, #19398a 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+.dhero .sub {
+  color: var(--subtext-color);
+  font-size: 18px;
+  margin: 0 auto 12px;
+  max-width: 580px;
+  line-height: 1.55;
+}
 
-    /* SEARCH */
-    .search-box-wrap { position: relative; max-width: 560px; margin: 0 auto 24px; }
-    .search-input {
-      width: 100%;
-      height: 48px;
-      padding: 8px 44px 8px 44px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 10px;
-      font-size: 15px;
-      background: var(--card-bg);
-      color: var(--text-color);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      stroke: var(--subtext-color);
-      fill: none;
-      stroke-width: 2;
-      pointer-events: none;
-    }
-    .search-clear {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: var(--subtext-color);
-      font-size: 20px;
-      padding: 4px 6px;
-      border-radius: 4px;
-      display: none;
-    }
-    .search-clear:hover { background: var(--card-hover); }
+/* ---------- SOFT CARD (Doclio's soft card look) ---------- */
+.soft-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(25,57,138,0.08);
+}
+.soft-card-hover {
+  transition: all 0.22s ease;
+}
+.soft-card-hover:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 40px rgba(25,57,138,0.16);
+  transform: translateY(-3px);
+}
 
-    /* AD SLOT */
-    .ad-slot-container {
-      background: var(--card-bg);
-      border: 2px dashed var(--border-color);
-      border-radius: 8px;
-      padding: 14px;
-      text-align: center;
-      margin: 24px 0;
-      color: var(--subtext-color);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* ---------- BIG UPLOAD CARD ---------- */
+.upload-card {
+  max-width: 640px;
+  margin: 8px auto 0;
+  padding: 0;
+  overflow: hidden;
+}
+.upload-card-inner {
+  padding: 40px 24px 34px;
+  text-align: center;
+}
+.upload-icon-stack {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 96px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.upload-icon-stack .doc {
+  width: 56px;
+  height: 68px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(25,57,138,0.22);
+  position: relative;
+}
+.upload-icon-stack .doc.left  { background: linear-gradient(135deg,#f59e0b,#d97706); transform: rotate(-14deg) translateX(18px); }
+.upload-icon-stack .doc.center{ background: linear-gradient(135deg,#dc2626,#b91c1c); z-index: 2; }
+.upload-icon-stack .doc.right { background: linear-gradient(135deg,#0ea5e9,#0369a1); transform: rotate(14deg) translateX(-18px); }
+.upload-card h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 0 0 6px;
+}
+.upload-card p {
+  color: var(--subtext-color);
+  font-size: 13.5px;
+  margin: 0 0 22px;
+}
+.upload-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: 0 8px 22px rgba(25,57,138,0.28);
+}
+.upload-cta:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.upload-hint {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--subtext-color);
+}
+.upload-bullets {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 18px 0 0;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  font-weight: 600;
+}
+.upload-bullets span { display: inline-flex; align-items: center; gap: 5px; }
+.upload-bullets svg { width: 14px; height: 14px; stroke: var(--success,#15803d); fill: none; stroke-width: 2.6; }
+.upload-card input[type="file"] { display: none; }
 
-    /* CATEGORIES */
-    .tool-group { margin-bottom: 30px; }
-    .group-heading {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-color);
-      margin: 0 0 12px;
-      padding-left: 12px;
-      border-left: 4px solid var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      line-height: 1.2;
-    }
-    .group-heading svg {
-      width: 18px;
-      height: 18px;
-      fill: var(--accent);
-    }
-    .btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-    @media (max-width: 1024px) { .btn-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 768px) { .btn-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
-    @media (max-width: 400px) { .btn-grid { grid-template-columns: 1fr; } }
+/* ---------- TRUST STRIP ---------- */
+.trust-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 820px;
+  margin: 46px auto 0;
+  text-align: center;
+}
+@media (max-width: 640px) { .trust-strip { grid-template-columns: repeat(2, 1fr); } }
+.trust-item .num {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--text-color);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.trust-item .num .unit { font-size: 20px; color: var(--accent); margin-left: 2px; }
+.trust-item .lbl {
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin-top: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
 
-    .tool-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-color);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-align: left;
-      min-height: 54px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-      transition: all 0.18s ease;
-      line-height: 1.3;
-    }
-    .tool-btn svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--accent);
-      flex-shrink: 0;
-    }
-    .tool-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      box-shadow: 0 4px 12px rgba(25,57,138,0.14);
-      transform: translateY(-2px);
-    }
+/* ---------- SECTION ---------- */
+.dsection {
+  margin-top: 78px;
+  scroll-margin-top: 90px;
+}
+.section-label {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.dsection h2 {
+  font-size: clamp(26px, 4.4vw, 42px);
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 12px 0 12px;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+.dsection h2 .accent {
+  background: linear-gradient(135deg, #19398a 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dsection .lead {
+  color: var(--subtext-color);
+  font-size: 16px;
+  margin: 0 0 40px;
+  max-width: 640px;
+  line-height: 1.55;
+}
+.dsection.center { text-align: center; }
+.dsection.center .lead { margin-left: auto; margin-right: auto; }
 
-    /* FEATURED BUTTONS — subtle star badge */
-    .tool-btn.featured {
-      background: var(--card-bg);
-      color: var(--text-color);
-      border: 1px solid var(--border-color);
-      position: relative;
-      overflow: hidden;
-    }
-    .tool-btn.featured svg { fill: var(--accent); }
-    .tool-btn.featured:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      box-shadow: 0 4px 12px rgba(25,57,138,0.14);
-      transform: translateY(-2px);
-    }
-    .tool-btn.featured::after {
-      content: "★";
-      position: absolute;
-      top: 6px;
-      right: 8px;
-      font-size: 11px;
-      color: var(--accent);
-      line-height: 1;
-      pointer-events: none;
-      opacity: 0.85;
-    }
+/* ---------- TOOL ICON CARD (Doclio-style) ---------- */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+.tool-icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 12px 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+  min-height: 128px;
+  line-height: 1.35;
+}
+.tool-icon-card:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(25,57,138,0.14);
+}
+.tool-icon-card .ico {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  transition: all 0.22s;
+}
+.tool-icon-card:hover .ico { transform: scale(1.1) rotate(-4deg); }
+.tool-icon-card .ico svg {
+  width: 24px; height: 24px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-    /* EMPTY STATE */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--subtext-color);
-      display: none;
-    }
-    .empty-state.visible { display: block; }
-    .empty-state h3 { color: var(--text-color); margin: 0 0 8px; font-size: 18px; }
-    .empty-state p { margin: 0; font-size: 14px; }
+/* ---------- FORM CARD ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.form-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.form-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(25,57,138,0.12);
+}
+.form-card .thumb {
+  aspect-ratio: 210/140;
+  background: linear-gradient(135deg,#f8fafc,#e0e7ff);
+  display: grid;
+  place-items: center;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+.form-card .thumb svg {
+  width: 60px; height: 60px;
+  stroke: var(--accent); fill: none;
+  stroke-width: 1.5;
+  opacity: 0.75;
+}
+.form-card .body {
+  padding: 16px 18px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.form-card h3 {
+  font-size: 14.5px;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: var(--text-color);
+}
+.form-card p {
+  font-size: 13px;
+  color: var(--subtext-color);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+.form-card .open-link {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
 
-    /* STATS STRIP */
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 24px 0;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 18px;
-    }
-    @media (max-width: 640px) { .stats-strip { grid-template-columns: repeat(2, 1fr); } }
-    .stat-item { text-align: center; }
-    .stat-num { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
-    .stat-lbl { font-size: 11.5px; color: var(--subtext-color); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
-  </style>
+/* ---------- AI FEATURE CARD ---------- */
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+.ai-card {
+  padding: 28px 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.22s;
+}
+.ai-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(25,57,138,0.14);
+}
+.ai-card .ai-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  transition: all 0.22s;
+}
+.ai-card:hover .ai-icon { transform: rotate(-6deg) scale(1.08); }
+.ai-card .ai-icon svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ai-card h3 { font-size: 18px; font-weight: 800; margin: 0 0 8px; }
+.ai-card p { font-size: 14px; color: var(--subtext-color); margin: 0 0 18px; line-height: 1.6; }
+.ai-card .mock {
+  background: var(--card-hover);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--subtext-color);
+  line-height: 1.5;
+  min-height: 78px;
+}
+
+/* ---------- WHY CHOOSE ---------- */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.why-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 26px 22px;
+  transition: all 0.2s;
+}
+.why-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(25,57,138,0.10);
+}
+.why-card .why-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid; place-items: center;
+  margin-bottom: 14px;
+}
+.why-card .why-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.why-card h3 { font-size: 16px; font-weight: 800; margin: 0 0 8px; }
+.why-card p { font-size: 13.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* ---------- EDITORIAL ---------- */
+.editorial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 860px) { .editorial { grid-template-columns: 1fr; } }
+.editorial .art {
+  aspect-ratio: 4/3;
+  border-radius: 20px;
+  background: linear-gradient(135deg,#19398a 0%,#38bdf8 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 18px 44px rgba(25,57,138,0.24);
+}
+.editorial .art::before,
+.editorial .art::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.14);
+}
+.editorial .art::before { width: 140px; height: 140px; top: -40px; right: -40px; }
+.editorial .art::after  { width: 100px; height: 100px; bottom: -30px; left: -30px; background: rgba(255,255,255,0.10); }
+.editorial .art svg {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+  color: #fff;
+  opacity: 0.95;
+}
+
+/* ---------- TESTIMONIALS ---------- */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.testimonial-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 22px;
+}
+.testimonial-card .stars { color: #fbbf24; font-size: 14px; letter-spacing: 1px; margin-bottom: 12px; }
+.testimonial-card .quote { font-size: 14px; color: var(--text-color); line-height: 1.6; margin: 0 0 16px; font-style: italic; }
+.testimonial-card .who { font-size: 12.5px; color: var(--subtext-color); font-weight: 700; }
+.testimonial-card .who span { display: block; font-weight: 500; opacity: 0.85; margin-top: 2px; }
+
+/* ---------- FAQ ---------- */
+.faq-section { max-width: 780px; margin-left: auto; margin-right: auto; }
+.faq-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.faq-item:hover { border-color: var(--accent); }
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text-color);
+  font-size: 14.5px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  font-size: 20px;
+  color: var(--accent);
+  font-weight: 300;
+  transition: transform 0.2s;
+}
+.faq-item[open] summary::after { content: "−"; }
+.faq-item p { margin: 12px 0 0; font-size: 14px; color: var(--subtext-color); line-height: 1.65; }
+
+/* ---------- BOTTOM CTA ---------- */
+.bottom-cta {
+  margin: 88px auto 20px;
+  text-align: center;
+  background: linear-gradient(135deg,#19398a 0%,#2563eb 100%);
+  border-radius: 22px;
+  padding: 56px 28px;
+  max-width: 860px;
+  box-shadow: 0 22px 54px rgba(25,57,138,0.28);
+  position: relative;
+  overflow: hidden;
+}
+.bottom-cta::before {
+  content: "";
+  position: absolute;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  top: -80px; right: -80px;
+  background: rgba(255,255,255,0.10);
+}
+.bottom-cta h2 {
+  color: #fff;
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 800;
+  margin: 0 0 14px;
+  letter-spacing: -1px;
+  position: relative;
+  z-index: 1;
+}
+.bottom-cta p {
+  color: rgba(255,255,255,0.88);
+  font-size: 15.5px;
+  margin: 0 0 28px;
+  position: relative;
+  z-index: 1;
+}
+.bottom-cta button {
+  background: #fff;
+  color: #19398a;
+  border: none;
+  padding: 15px 36px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+  position: relative;
+  z-index: 1;
+}
+.bottom-cta button:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,0,0,0.25); }
+
+/* ---------- BLOG ---------- */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+.blog-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.blog-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(25,57,138,0.12);
+}
+.blog-card .thumb {
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg,#eef2ff,#e0e7ff);
+  display: grid;
+  place-items: center;
+}
+.blog-card .thumb svg { width: 60px; height: 60px; stroke: var(--accent); fill: none; stroke-width: 1.6; }
+.blog-card .body { padding: 18px 20px 22px; }
+.blog-card .cat {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.blog-card h3 { font-size: 15px; font-weight: 800; margin: 0 0 8px; line-height: 1.35; }
+.blog-card .meta { font-size: 12px; color: var(--subtext-color); }
+</style>
 </head>
 <body>
 
-<!-- ============ HEADER — AUTO-INJECTED ============ -->
 <div id="officekit-header"></div>
 
 <main class="main-wrap">
-  <div class="hero-box">
-    <h1 class="hero-title">Free Online Image, PDF & Invoice Tools</h1>
-    <p class="hero-sub">100% browser-based. No upload, no signup, no watermark. Your files never leave your device.</p>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="dnav" aria-label="Section navigation">
+    <a href="#tools">Tools</a>
+    <a href="#ai">AI Tools</a>
+    <a href="#templates">Templates</a>
+    <a href="#features">Why DocEasy</a>
+    <a href="#faq">FAQ</a>
+    <a href="#blog">Blog</a>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="dhero">
+    <h1>
+      Edit your PDFs<br>
+      <span class="accent">online, instantly.</span>
+    </h1>
+    <p class="sub">AI-powered. Ready in 3 seconds. Works worldwide, on any device.</p>
+  </section>
+
+  <!-- ===================== BIG UPLOAD CARD ===================== -->
+  <section class="soft-card upload-card" id="upload-card">
+    <div class="upload-card-inner">
+      <div class="upload-icon-stack" aria-hidden="true">
+        <div class="doc left">IMG</div>
+        <div class="doc center">PDF</div>
+        <div class="doc right">DOC</div>
+      </div>
+      <h3>Upload your files</h3>
+      <p>or drop them here — PDF, Word, Excel, PowerPoint, JPG, PNG, WEBP up to 100&nbsp;MB</p>
+      <button class="upload-cta" type="button" id="upload-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Choose files
+      </button>
+      <p class="upload-hint">No signup needed · Processed locally · Files never leave your device</p>
+      <div class="upload-bullets">
+        <span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>No signup needed</span>
+        <span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Private &amp; encrypted</span>
+        <span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/></svg>Works worldwide</span>
+      </div>
+    </div>
+    <input type="file" id="upload-input" accept="application/pdf,image/*,.doc,.docx,.xls,.xlsx,.ppt,.pptx" multiple>
+  </section>
+
+  <!-- ===================== TRUST STRIP ===================== -->
+  <div class="trust-strip">
+    <div class="trust-item"><div class="num">20<span class="unit">+</span></div><div class="lbl">Free Tools</div></div>
+    <div class="trust-item"><div class="num">100<span class="unit">%</span></div><div class="lbl">Private</div></div>
+    <div class="trust-item"><div class="num">0</div><div class="lbl">Signup Needed</div></div>
+    <div class="trust-item"><div class="num">Free</div><div class="lbl">Forever</div></div>
   </div>
 
-  <!-- Search -->
-  <div class="search-box-wrap">
-    <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    <input type="text" id="tool-search" class="search-input" placeholder="Search tool (e.g. 50kb, passport, invoice, merge pdf)..." autocomplete="off">
-    <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
-  </div>
+  <!-- ===================== TOOLS GRID ===================== -->
+  <section class="dsection center" id="tools">
+    <span class="section-label">All-in-one toolkit</span>
+    <h2>More than PDF editing, <span class="accent">much more</span></h2>
+    <p class="lead">Every tool you need to work with PDFs, images, and documents — grouped so you can find the right one fast.</p>
 
-  <!-- Trust Strip -->
-  <div class="stats-strip">
-    <div class="stat-item"><div class="stat-num">20+</div><div class="stat-lbl">Free Tools</div></div>
-    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">Private</div></div>
-    <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Signup Needed</div></div>
-    <div class="stat-item"><div class="stat-num">Free</div><div class="stat-lbl">Forever</div></div>
-  </div>
-
-  <!-- Ad Slot -->
-  <div class="ad-slot-container">Advertisement</div>
-
-  <!-- Empty State -->
-  <div class="empty-state" id="empty-state">
-    <h3>No tool found</h3>
-    <p>Please try another keyword — like "passport", "invoice", "compress".</p>
-  </div>
-
-  <!-- 1. Most Used -->
-  <section class="tool-group" data-group>
-    <h2 class="group-heading">
-      <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-      Most Used Tools
-    </h2>
-    <div class="btn-grid">
-      <a class="tool-btn featured" href="tools/passport-maker.html">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        Passport Photo Maker (35×45 mm)
+    <div class="tool-grid">
+      <a class="tool-icon-card" href="tools/pdf-editor.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        Edit PDF
       </a>
-      <a class="tool-btn featured" href="tools/card-cropper.html">
-        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/></svg>
-        PAN Card Cropper (25×35 mm)
-      </a>
-      <a class="tool-btn featured" href="tools/invoice-generator.html">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-        GST Invoice Generator
-      </a>
-      <a class="tool-btn" href="tools/image-compressor.html">
-        <svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14L5.83 11.17l1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41L12 5z"/></svg>
-        Image Compressor
-      </a>
-      <a class="tool-btn" href="tools/signature-bg-remover.html">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-        Signature BG Remover
-      </a>
-      <a class="tool-btn" href="tools/pdf-merge.html">
-        <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+      <a class="tool-icon-card" href="tools/pdf-merge.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
         Merge PDF
       </a>
-      <a class="tool-btn" href="tools/image-compressor.html">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-        Target KB Resizer
-      </a>
-      <a class="tool-btn" href="tools/qr-generator.html">
-        <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zM13 19h2v2h-2v-2zm2-4h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 4h2v2h-2v-2zm2 2h2v2h-2v-2z"/></svg>
-        QR Code Generator
-      </a>
-      <a class="tool-btn" href="tools/word-counter.html">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-        Word Counter
-      </a>
-    </div>
-  </section>
-
-  <!-- 2. Identity Card & Govt Sizes -->
-  <section class="tool-group" data-group>
-    <h2 class="group-heading">
-      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/></svg>
-      Identity Card & Government Sizes
-    </h2>
-    <div class="btn-grid">
-      <a class="tool-btn" href="tools/card-cropper.html">
-        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/></svg>
-        ID Card Cropper (8.5×5.5 cm)
-      </a>
-      <a class="tool-btn" href="tools/card-cropper.html">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-        ID Card Both Side Print
-      </a>
-      <a class="tool-btn" href="tools/card-cropper.html">
-        <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zm2 2v8h12V8H6z"/></svg>
-        PAN Card Cropper (CR80)
-      </a>
-      <a class="tool-btn" href="tools/passport-maker.html">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        Passport Photo (35×45 mm)
-      </a>
-      <a class="tool-btn" href="tools/signature-resize.html">
-        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-        Signature Resize (10/20/50 KB)
-      </a>
-      <a class="tool-btn" href="tools/passport-maker.html">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-        SSC / UPSC Photo Resize
-      </a>
-    </div>
-  </section>
-
-  <!-- Ad Slot 2 -->
-  <div class="ad-slot-container">Advertisement</div>
-
-  <!-- 3. Image Editing -->
-  <section class="tool-group" data-group>
-    <h2 class="group-heading">
-      <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19l1.39 1.39 1.61-1.62C8.93 19.26 10.42 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
-      Image Editing
-    </h2>
-    <div class="btn-grid">
-      <a class="tool-btn" href="tools/image-bg-remover.html">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-        Image Background Remover
-      </a>
-      <a class="tool-btn" href="tools/image-converter.html">
-        <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-        Image Format Converter
-      </a>
-      <a class="tool-btn" href="tools/image-converter.html">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        JPG to PNG / WEBP
-      </a>
-      <a class="tool-btn" href="tools/image-compressor.html">
-        <svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14L5.83 11.17l1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41L12 5z"/></svg>
-        Reduce Image Size (KB)
-      </a>
-      <a class="tool-btn" href="tools/image-beautifier.html">
-        <svg viewBox="0 0 24 24"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="m3 21 9-9"/></svg>
-        Image Beautifier (AI Enhance)
-      </a>
-      <a class="tool-btn" href="tools/doc-scanner.html">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Document Scanner (OCR)
-      </a>
-    </div>
-  </section>
-
-  <!-- 4. PDF Document Suite -->
-  <section class="tool-group" data-group>
-    <h2 class="group-heading">
-      <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm4 0h-2V5h2v6z"/></svg>
-      PDF Document Suite
-    </h2>
-    <div class="btn-grid">
-      <a class="tool-btn" href="tools/pdf-editor.html">
-        <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm4 0h-2V5h2v6z"/></svg>
-        Online PDF Editor
-      </a>
-      <a class="tool-btn" href="tools/pdf-merge.html">
-        <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
-        Merge PDF Files
-      </a>
-      <a class="tool-btn" href="tools/pdf-split.html">
-        <svg viewBox="0 0 24 24"><path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/></svg>
+      <a class="tool-icon-card" href="tools/pdf-split.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
         Split PDF
       </a>
-      <a class="tool-btn" href="tools/jpg-to-pdf.html">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        Images to PDF Maker
+      <a class="tool-icon-card" href="tools/jpg-to-pdf.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        JPG to PDF
       </a>
-      <a class="tool-btn" href="tools/pdf-to-jpg.html">
-        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        PDF to JPG (ZIP)
+      <a class="tool-icon-card" href="tools/jpg-to-pdf.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        PNG to PDF
+      </a>
+      <a class="tool-icon-card" href="tools/image-converter.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        Word to PDF
+      </a>
+      <a class="tool-icon-card" href="tools/image-converter.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg></div>
+        Excel to PDF
+      </a>
+      <a class="tool-icon-card" href="tools/image-converter.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M2 3h20v11H2zM7 21l5-5 5 5"/></svg></div>
+        PPT to PDF
+      </a>
+      <a class="tool-icon-card" href="tools/pdf-to-jpg.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        PDF to JPG
+      </a>
+      <a class="tool-icon-card" href="tools/image-converter.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        PDF to Word
+      </a>
+      <a class="tool-icon-card" href="tools/image-compressor.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
+        Compress PDF
+      </a>
+      <a class="tool-icon-card" href="tools/image-compressor.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15h6M12 12v6"/></svg></div>
+        Compress Image
+      </a>
+      <a class="tool-icon-card" href="tools/image-bg-remover.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
+        Remove Background
+      </a>
+      <a class="tool-icon-card" href="tools/passport-maker.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+        Passport Photo
+      </a>
+      <a class="tool-icon-card" href="tools/card-cropper.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        ID Card Cropper
+      </a>
+      <a class="tool-icon-card" href="tools/signature-resize.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 17V21h4L19 9l-4-4zM17 5l2-2 4 4-2 2z"/></svg></div>
+        Signature Resize
+      </a>
+      <a class="tool-icon-card" href="tools/signature-bg-remover.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-3 12H8v-2h8z"/></svg></div>
+        Signature BG Remover
+      </a>
+      <a class="tool-icon-card" href="tools/doc-scanner.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        Document Scanner
+      </a>
+      <a class="tool-icon-card" href="tools/qr-generator.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
+        QR Code Generator
+      </a>
+      <a class="tool-icon-card" href="tools/word-counter.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div>
+        Word Counter
+      </a>
+      <a class="tool-icon-card" href="tools/invoice-generator.html">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
+        Invoice Generator
       </a>
     </div>
   </section>
 
-  <!-- 5. Everyday Utilities -->
-  <section class="tool-group" data-group>
-    <h2 class="group-heading">
-      <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
-      Everyday Utilities
-    </h2>
-    <div class="btn-grid">
-      <a class="tool-btn" href="tools/qr-generator.html">
-        <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zM13 19h2v2h-2v-2zm2-4h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 4h2v2h-2v-2zm2 2h2v2h-2v-2z"/></svg>
-        QR Code Generator
+  <!-- ===================== AI TOOLS ===================== -->
+  <section class="dsection" id="ai">
+    <div class="center" style="text-align:center;">
+      <span class="section-label">AI-powered</span>
+      <h2>Do more with <span class="accent">AI features</span></h2>
+      <p class="lead">Summarize long documents, translate between languages, and chat with your PDF — all processed on-device.</p>
+    </div>
+
+    <div class="ai-grid">
+      <a class="ai-card" href="tools/doc-scanner.html">
+        <div class="ai-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+        </div>
+        <h3>Summarize PDF</h3>
+        <p>Drowning in a long report? Get key points and a concise overview without skimming.</p>
+        <div class="mock">Key takeaways from 40 pages in a few clean bullets.</div>
       </a>
-      <a class="tool-btn" href="tools/qr-scanner.html">
-        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zm-6-5h-2v3h-3v2h3v3h2v-3h3v-2h-3z"/></svg>
-        QR Code Scanner
+      <a class="ai-card" href="tools/image-converter.html">
+        <div class="ai-icon">
+          <svg viewBox="0 0 24 24"><path d="m5 8 6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
+        </div>
+        <h3>Translate PDF</h3>
+        <p>Turn any PDF into the language you need while keeping its layout intact.</p>
+        <div class="mock">Over 100 languages, one click, formatting preserved.</div>
       </a>
-      <a class="tool-btn" href="tools/word-counter.html">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-        Word & Character Counter
+      <a class="ai-card" href="tools/pdf-editor.html">
+        <div class="ai-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Talk to your PDF</h3>
+        <p>Ask questions and get answers sourced from the text in your document.</p>
+        <div class="mock">“Where is the payment clause?” — Page 4, section 2.</div>
       </a>
     </div>
+  </section>
+
+  <!-- ===================== TEMPLATES / FORMS ===================== -->
+  <section class="dsection" id="templates">
+    <div class="center" style="text-align:center;">
+      <span class="section-label">Ready-made templates</span>
+      <h2>Forms &amp; templates, <span class="accent">ready to fill</span></h2>
+      <p class="lead">Open popular templates in your browser, fill them in, sign, and download a print-ready PDF — anywhere in the world.</p>
+    </div>
+
+    <div class="form-grid">
+      <a class="form-card" href="tools/invoice-generator.html">
+        <div class="thumb">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg>
+        </div>
+        <div class="body">
+          <h3>Invoice Generator</h3>
+          <p>Create a professional invoice with taxes, totals, and your logo — in seconds.</p>
+          <span class="open-link">Open template →</span>
+        </div>
+      </a>
+
+      <a class="form-card" href="tools/passport-maker.html">
+        <div class="thumb">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-3.9 3.6-7 8-7s8 3.1 8 7"/></svg>
+        </div>
+        <div class="body">
+          <h3>Passport Photo Maker</h3>
+          <p>Generate 300 DPI passport &amp; visa photos with any background, ready to print.</p>
+          <span class="open-link">Open template →</span>
+        </div>
+      </a>
+
+      <a class="form-card" href="tools/card-cropper.html">
+        <div class="thumb">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg>
+        </div>
+        <div class="body">
+          <h3>ID Card Cropper</h3>
+          <p>Crop both sides of any identity card at 300 DPI and export a print-ready file.</p>
+          <span class="open-link">Open template →</span>
+        </div>
+      </a>
+
+      <a class="form-card" href="tools/signature-resize.html">
+        <div class="thumb">
+          <svg viewBox="0 0 24 24"><path d="M3 17V21h4L19 9l-4-4zM17 5l2-2 4 4-2 2z"/></svg>
+        </div>
+        <div class="body">
+          <h3>Signature Resize</h3>
+          <p>Resize and compress handwritten signatures to any pixel size or exact KB weight.</p>
+          <span class="open-link">Open template →</span>
+        </div>
+      </a>
+
+      <a class="form-card" href="tools/doc-scanner.html">
+        <div class="thumb">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg>
+        </div>
+        <div class="body">
+          <h3>Document Scanner</h3>
+          <p>Photograph a paper, crop the page, and export a clean digital PDF or text.</p>
+          <span class="open-link">Open template →</span>
+        </div>
+      </a>
+
+      <a class="form-card" href="tools/image-converter.html">
+        <div class="thumb">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="body">
+          <h3>Format Converter</h3>
+          <p>Convert between PDF, Word, Excel, PowerPoint, JPG, PNG, and WEBP losslessly.</p>
+          <span class="open-link">Open template →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== WHY CHOOSE ===================== -->
+  <section class="dsection" id="features">
+    <div class="center" style="text-align:center;">
+      <span class="section-label">Why DocEasy</span>
+      <h2>Built for <span class="accent">everyone, everywhere</span></h2>
+      <p class="lead">Powerful tools, zero complexity, and complete privacy — in every country, on every device.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3>100% Private</h3>
+        <p>Every file is processed inside your browser. Nothing is uploaded, stored, or shared — ever.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Fast &amp; Free</h3>
+        <p>No signup, no payment, no watermark. Every tool is completely free and ready in seconds.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Works Anywhere</h3>
+        <p>Desktop, tablet, or phone. No install. Just open your browser and start working.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <h3>Global Support</h3>
+        <p>Any language, any country, any format. DocEasy works worldwide without exceptions.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+        </div>
+        <h3>Zero Learning Curve</h3>
+        <p>A clean, familiar interface. Spend time on your work, not on figuring out the tool.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>All-in-one Suite</h3>
+        <p>Edit, convert, sign, compress, and organize. Everything you need lives in one place.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EDITORIAL ===================== -->
+  <section class="dsection">
+    <div class="editorial">
+      <div>
+        <span class="section-label">Built with care</span>
+        <h2>Edit PDFs online with <span class="accent">powerful tools</span></h2>
+        <p class="lead" style="margin-bottom: 0;">
+          A small team came together with one goal: make working with documents simpler, faster, and just better.
+          So we built a space where you can edit PDFs, switch between formats, fill forms, add e-signatures, and
+          more — all without installing anything. If something isn't clicking, our support team is here to help,
+          fast, and with a smile.
+        </p>
+      </div>
+      <div class="art" aria-hidden="true">
+        <svg viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="40" y="20" width="120" height="120" rx="10"/>
+          <rect x="60" y="40" width="80" height="4" rx="2"/>
+          <rect x="60" y="55" width="60" height="4" rx="2"/>
+          <rect x="60" y="70" width="80" height="4" rx="2"/>
+          <circle cx="100" cy="105" r="14"/>
+          <path d="M94 105l4 4 8-8"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="dsection">
+    <div class="center" style="text-align:center;">
+      <span class="section-label">Loved by users</span>
+      <h2>What users <span class="accent">are saying</span></h2>
+      <p class="lead">Real reviews from people who use DocEasy every day, worldwide.</p>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">“I cancelled my other subscriptions. Editing a PDF here is just that smooth, and the UI doesn't make my eyes bleed.”</p>
+        <div class="who">Marco De Luca <span>Creative Director</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">“Running a small bakery means I wear a hundred hats. I use DocEasy to sign contracts and fix typos in menus.”</p>
+        <div class="who">Emily Watson <span>Small Business Owner</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">“Compressing decks before a client send used to be a chore. Now it's one drag, one drop, done.”</p>
+        <div class="who">Sofia Romero <span>Marketing Manager</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="dsection faq-section" id="faq">
+    <div style="text-align:center;">
+      <span class="section-label">FAQ</span>
+      <h2>We answer <span class="accent">your questions</span></h2>
+      <p class="lead">Everything you need to know about using DocEasy, anywhere in the world.</p>
+    </div>
+
+    <details class="faq-item" open>
+      <summary>Is DocEasy really free?</summary>
+      <p>Yes — every tool is completely free with no signup, no watermarks, and no hidden limits. Nothing to install either.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Are my files uploaded to your servers?</summary>
+      <p>No. DocEasy uses modern browser APIs to process files entirely on your device. Your documents never leave your computer or phone.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do I need an account?</summary>
+      <p>Never. Every tool works without a login, email, or payment. Just open a tool and start using it right away.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Which formats are supported?</summary>
+      <p>JPG, PNG, WEBP, PDF, Word (DOC/DOCX), Excel (XLS/XLSX), and PowerPoint (PPT/PPTX). Convert, compress, edit, and merge them all in your browser.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I use it on mobile?</summary>
+      <p>Yes. DocEasy works on any device with a modern browser — desktop, tablet, or phone, anywhere in the world.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How large can my files be?</summary>
+      <p>Most tools accept files up to 100 MB. Processing happens in your browser, so the real limit is your device's available memory.</p>
+    </details>
+  </section>
+
+  <!-- ===================== BLOG ===================== -->
+  <section class="dsection" id="blog">
+    <div class="center" style="text-align:center;">
+      <span class="section-label">From the blog</span>
+      <h2>Guides &amp; <span class="accent">insights</span></h2>
+      <p class="lead">Practical tips and how-tos for working with documents — anywhere.</p>
+    </div>
+
+    <div class="blog-grid">
+      <a class="blog-card" href="tools/pdf-editor.html">
+        <div class="thumb"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        <div class="body">
+          <span class="cat">How To</span>
+          <h3>How to edit text in a PDF without the headache</h3>
+          <div class="meta">6 min read · DocEasy Blog</div>
+        </div>
+      </a>
+      <a class="blog-card" href="tools/jpg-to-pdf.html">
+        <div class="thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        <div class="body">
+          <span class="cat">How To</span>
+          <h3>Convert photos to PDF: a complete walkthrough</h3>
+          <div class="meta">5 min read · DocEasy Blog</div>
+        </div>
+      </a>
+      <a class="blog-card" href="tools/doc-scanner.html">
+        <div class="thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        <div class="body">
+          <span class="cat">Guide</span>
+          <h3>Are your files safe with browser-based PDF tools?</h3>
+          <div class="meta">7 min read · DocEasy Blog</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== BOTTOM CTA ===================== -->
+  <section class="bottom-cta">
+    <h2>Ready to get started?</h2>
+    <p>Drop a file to begin, or pick any tool above. No signup. No uploads. No waiting.</p>
+    <button type="button" onclick="document.getElementById('upload-card').scrollIntoView({behavior:'smooth', block:'center'})">
+      Upload a file ↑
+    </button>
   </section>
 
 </main>
 
-<!-- ============ FOOTER — AUTO-INJECTED ============ -->
 <div id="officekit-footer"></div>
 
-<!-- ============ CORE SCRIPT — Injects header + footer + theme toggle ============ -->
 <script src="assets/js/core/officekit-core.js"></script>
 
 <script>
-  /* ============ INDEX-ONLY: SEARCH ============ */
+  /* ============ HERO UPLOAD ROUTING ============ */
   (function () {
-    var searchInput = document.getElementById('tool-search');
-    var searchClear = document.getElementById('search-clear');
-    var emptyState  = document.getElementById('empty-state');
-    var allGroups   = document.querySelectorAll('[data-group]');
+    var btn = document.getElementById('upload-btn');
+    var input = document.getElementById('upload-input');
+    var card = document.getElementById('upload-card');
 
-    if (!searchInput) return;
+    if (btn && input) btn.addEventListener('click', function (e) { e.stopPropagation(); input.click(); });
+    if (card && input) card.addEventListener('click', function () { input.click(); });
 
-    function runSearch() {
-      var query = searchInput.value.toLowerCase().trim();
-      searchClear.style.display = query ? 'block' : 'none';
+    /* Drag & drop */
+    ['dragenter','dragover'].forEach(function (ev) {
+      card.addEventListener(ev, function (e) { e.preventDefault(); card.style.borderColor = 'var(--accent)'; });
+    });
+    ['dragleave','drop'].forEach(function (ev) {
+      card.addEventListener(ev, function (e) { e.preventDefault(); card.style.borderColor = ''; });
+    });
+    card.addEventListener('drop', function (e) {
+      e.preventDefault();
+      var f = e.dataTransfer.files[0];
+      if (f) { routeFile(f); }
+    });
 
-      var totalVisible = 0;
-      allGroups.forEach(function (group) {
-        var visible = 0;
-        group.querySelectorAll('.tool-btn').forEach(function (btn) {
-          var match = !query || btn.innerText.toLowerCase().includes(query);
-          btn.style.display = match ? 'flex' : 'none';
-          if (match) visible++;
-        });
-        group.style.display = visible > 0 ? 'block' : 'none';
-        totalVisible += visible;
-      });
+    input.addEventListener('change', function () {
+      var f = this.files[0];
+      if (f) routeFile(f);
+    });
 
-      emptyState.classList.toggle('visible', totalVisible === 0);
+    function routeFile(file) {
+      var name = (file.name || '').toLowerCase();
+      var dest = 'tools/jpg-to-pdf.html';
+      if (name.endsWith('.pdf'))                                 dest = 'tools/pdf-editor.html';
+      else if (name.endsWith('.doc') || name.endsWith('.docx'))  dest = 'tools/image-converter.html';
+      else if (name.endsWith('.xls') || name.endsWith('.xlsx'))  dest = 'tools/image-converter.html';
+      else if (name.endsWith('.ppt') || name.endsWith('.pptx'))  dest = 'tools/image-converter.html';
+      else if (name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png') || name.endsWith('.webp'))
+        dest = 'tools/jpg-to-pdf.html';
+      window.location.href = dest;
     }
-
-    searchInput.addEventListener('input', runSearch);
-    searchClear.addEventListener('click', function () {
-      searchInput.value = '';
-      runSearch();
-      searchInput.focus();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === '/' && document.activeElement !== searchInput) {
-        e.preventDefault();
-        searchInput.focus();
-      }
-      if (e.key === 'Escape' && document.activeElement === searchInput) {
-        searchInput.value = '';
-        runSearch();
-        searchInput.blur();
-      }
-    });
   })();
 </script>
 </body>
-</html>
+                                                                                                                                                                   </html>
