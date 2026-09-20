@@ -11,14 +11,11 @@
 <!-- ============ GLOBAL STYLESHEET (same as index + passport-maker) ============ -->
 <link rel="stylesheet" href="../assets/css/officekit-global.css">
 
-<!-- PDF generation library (pdf-lib). Deferred + runtime CDN fallback. -->
-<script defer src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-
 <!-- OpenCV disabled for performance -->
 <script>window.__OPENCV_DISABLED = true;</script>
 
 <style>
-/* ============ TOOL-SPECIFIC STYLES — powered by global theme variables ============ */
+/* ============ TOOL-SPECIFIC STYLES — uses global theme variables ============ */
 .main-wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; }
 
 .hero-box { text-align: center; padding: 8px 0 20px; }
@@ -38,7 +35,6 @@
   margin-right: auto;
 }
 
-/* Card wrapper (matches .tool-card used in passport-maker) */
 .tool-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -48,7 +44,6 @@
   margin-bottom: 20px;
 }
 
-/* Ad slot (identical to index) */
 .ad-slot-container {
   background: var(--card-bg);
   border: 2px dashed var(--border-color);
@@ -67,7 +62,7 @@
   justify-content: center;
 }
 
-/* ============ DROP ZONE ============ */
+/* DROP ZONE */
 .drop-zone {
   border: 2px dashed var(--border-color);
   border-radius: 12px;
@@ -120,7 +115,6 @@
 .btn-block { width: 100%; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* Section head */
 .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
 .section-head h2 { font-size: 17px; margin: 0 auto 0 0; color: var(--text-color); }
 .count-badge {
@@ -135,7 +129,7 @@
 .hint svg { width: 15px; height: 15px; stroke: currentColor; fill: none; }
 .hint.center { justify-content: center; margin-top: 12px; }
 
-/* ============ PAGE GRID ============ */
+/* PAGE GRID */
 .page-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   gap: 12px; margin-top: 12px;
@@ -167,7 +161,7 @@
 .card-btn:hover { background: var(--card-hover); color: var(--accent); }
 .card-btn.danger:hover { color: var(--error); }
 
-/* ============ FORM FIELDS ============ */
+/* FORM FIELDS */
 .field-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
 .field, .f-group { display: flex; flex-direction: column; gap: 6px; flex: 1 1 150px; min-width: 130px; }
 .field label, .f-group label {
@@ -208,7 +202,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .progress-bar { height: 100%; width: 0%; background: var(--accent); transition: width .18s linear; }
 
-/* ============ EDITOR MODAL ============ */
+/* EDITOR MODAL */
 .editor {
   position: fixed; inset: 0; z-index: 3000;
   display: flex; flex-direction: column;
@@ -326,7 +320,7 @@ input[type="range"]::-moz-range-thumb {
   background: var(--accent-soft);
 }
 
-/* ============ TOASTS / BUSY ============ */
+/* TOASTS / BUSY */
 .toasts {
   position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
   transform: translateX(-50%); z-index: 4000;
@@ -349,9 +343,11 @@ input[type="range"]::-moz-range-thumb {
 
 .busy {
   position: fixed; inset: 0; z-index: 5000;
-  display: grid; place-items: center;
+  display: none;                /* ✅ inline display:none as default */
+  place-items: center;
   background: rgba(15,23,42,0.65); backdrop-filter: blur(3px);
 }
+.busy.show { display: grid; }
 .busy-card {
   background: var(--card-bg); border: 1px solid var(--border-color);
   border-radius: 12px; padding: 26px 32px; text-align: center;
@@ -364,7 +360,7 @@ input[type="range"]::-moz-range-thumb {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ============ SEO ARTICLE ============ */
+/* SEO ARTICLE */
 .seo-article {
   margin-top: 40px; background: var(--card-bg);
   border: 1px solid var(--border-color); border-radius: 12px;
@@ -701,7 +697,8 @@ input[type="range"]::-moz-range-thumb {
 
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
-<div class="busy" id="busy" hidden>
+<!-- ✅ FIXED BUSY: display:none by default; JS adds .show class to reveal -->
+<div class="busy" id="busy">
   <div class="busy-card">
     <span class="spinner"></span>
     <p id="busy-text" style="margin-top:12px;font-weight:700;">Working…</p>
@@ -1216,23 +1213,13 @@ async function exportPDF() {
       var wmSize  = 8;
       var wmText  = 'pdf365.in';
 
-      // Top-left corner
       page.drawText(wmText, {
-        x: marginPt + 10,
-        y: ph - marginPt - 15,
-        size: wmSize,
-        font: wmFont,
-        color: wmColor,
-        opacity: 0.4
+        x: marginPt + 10, y: ph - marginPt - 15,
+        size: wmSize, font: wmFont, color: wmColor, opacity: 0.4
       });
-      // Bottom-left footer
       page.drawText(wmText, {
-        x: marginPt + 10,
-        y: marginPt + 5,
-        size: wmSize,
-        font: wmFont,
-        color: wmColor,
-        opacity: 0.4
+        x: marginPt + 10, y: marginPt + 5,
+        size: wmSize, font: wmFont, color: wmColor, opacity: 0.4
       });
 
       setProgress((i + 1) / pages.length, true);
@@ -1273,11 +1260,21 @@ function toast(msg, kind) {
     setTimeout(function () { el.remove(); }, 300);
   }, 2600);
 }
+
+/* ✅ FIXED setBusy — uses .show class instead of hidden attribute */
 function setBusy(on, text) {
   var b = $('busy');
+  if (!b) return;
   if (text) $('busy-text').textContent = text;
-  b.hidden = !on;
+  if (on) {
+    b.classList.add('show');
+    b.style.display = 'grid';
+  } else {
+    b.classList.remove('show');
+    b.style.display = 'none';
+  }
 }
+
 function setProgress(frac, show) {
   $('progress-wrap').hidden = !show;
   $('progress-bar').style.width = Math.round(clamp(frac, 0, 1) * 100) + '%';
@@ -1693,7 +1690,6 @@ function wireEvents() {
   fileInput.addEventListener('change', function () { addFiles(fileInput.files); fileInput.value = ''; });
   camInput.addEventListener('change',  function () { addFiles(camInput.files);  camInput.value  = ''; });
 
-  /* Drag-and-drop files onto the drop zone */
   var dz = $('drop-zone');
   ['dragenter', 'dragover'].forEach(function (ev) {
     dz.addEventListener(ev, function (e) { e.preventDefault(); dz.style.borderColor = 'var(--accent)'; });
@@ -1717,7 +1713,6 @@ function wireEvents() {
 
   wireSwap($('page-grid'), '.page-card', function (el) { return +el.dataset.idx; });
 
-  /* Editor top bar */
   $('ed-close').addEventListener('click', function () { commitCurrent(); closeEditor(); });
   $('ed-done').addEventListener('click', function () {
     if (state.tab === 'crop') {
@@ -1735,7 +1730,6 @@ function wireEvents() {
     b.addEventListener('click', function () { setTab(b.dataset.tab); });
   });
 
-  /* Crop tab */
   $('btn-fullrect').addEventListener('click', function () {
     var page = currentPage();
     if (!page) return;
@@ -1751,7 +1745,6 @@ function wireEvents() {
   });
   initCropDragging();
 
-  /* Rotate tab */
   $('btn-rot-left').addEventListener('click', function () {
     var p = currentPage(); if (!p) return;
     p.rot = ((p.rot - 90) % 360 + 360) % 360; p.userRot = true; invalidate(p); renderEditor();
@@ -1776,7 +1769,6 @@ function wireEvents() {
     straightenApply();
   });
 
-  /* Filter tab */
   qsa('#filter-grid .chip').forEach(function (chip) {
     chip.addEventListener('click', function () {
       var p = currentPage(); if (!p) return;
@@ -1798,7 +1790,6 @@ function wireEvents() {
     toast('Filter applied to all pages!', 'ok');
   });
 
-  /* Adjust tab */
   var adjustApply = debounce(function () { renderEditor(); }, 110);
   function bindSlider(id, key, outId) {
     $(id).addEventListener('input', function () {
@@ -1823,14 +1814,12 @@ function wireEvents() {
     renderEditor();
   });
 
-  /* Reorder tab */
   wireSwap($('mini-grid'), '.mini-card', function (el) { return +el.dataset.idx; });
   $('btn-move-prev').addEventListener('click', function () { movePage(-1); });
   $('btn-move-next').addEventListener('click', function () { movePage(1); });
   $('btn-dup').addEventListener('click', duplicateCurrent);
   $('btn-del2').addEventListener('click', function () { deletePage(state.current); });
 
-  /* Export config */
   $('margin').addEventListener('input', function () {
     $('margin-out').textContent = this.value + ' mm';
   });
@@ -1839,7 +1828,6 @@ function wireEvents() {
   });
   $('btn-save').addEventListener('click', exportPDF);
 
-  /* Esc to close editor */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && state.editorOpen) { commitCurrent(); closeEditor(); }
   });
@@ -1847,10 +1835,17 @@ function wireEvents() {
 
 /* ------------------------- Boot ------------------------- */
 function start() {
+  // Force-hide the busy overlay before anything else
+  var b = $('busy');
+  if (b) { b.classList.remove('show'); b.style.display = 'none'; }
+
   wireEvents();
   updateDocumentUI();
   updatePreview();
+  setBusy(false);
+  setProgress(0, false);
 }
+
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
 else start();
 
