@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -17,7 +17,7 @@
 <script>window.__OPENCV_DISABLED = true;</script>
 
 <style>
-/* ===================== THEME TOKENS ===================== */
+/* ===================== THEME TOKENS (matches OfficeKit suite) ===================== */
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
 :root{
@@ -426,31 +426,57 @@ input[type="range"]::-moz-range-thumb{
     <p class="hint center"><svg class="ic"><use href="#i-shield"/></svg> Pages are compiled locally, then downloaded straight to your device.</p>
   </section>
 
-  <!-- ===================== SEO / TUTORIAL ===================== -->
+  <!-- ===================== SEO / TUTORIAL (700+ words) ===================== -->
   <section class="seo-article">
     <h2>How to Use JPG to PDF &amp; Document Scanner</h2>
     <p class="muted" style="margin-top:6px;">Complete guide on scanning and compiling images into high-quality PDFs securely in your browser.</p>
 
     <div class="article-image-box">
-      <!-- Synced Dynamic Preview / Demo Image Placeholder -->
-      <img id="tutorial-demo-img" src="demo.jpg" alt="JPG to PDF Demo Scanner Workflow"
-           onerror="this.style.display='none'">
+      <!-- Dynamic demo image with a guaranteed fallback if the file is missing -->
+      <img id="tutorial-demo-img"
+           src="jpg-to-pdf-demo.jpg"
+           alt="JPG to PDF Demo Scanner Workflow"
+           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22300%22 viewBox=%220 0 600 300%22><rect width=%22600%22 height=%22300%22 fill=%22%2311182e%22/><text x=%22300%22 y=%22150%22 font-family=%22sans-serif%22 font-size=%2220%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22>Demo Image (jpg-to-pdf-demo.jpg)</text><text x=%22300%22 y=%22185%22 font-family=%22sans-serif%22 font-size=%2214%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place your screenshot here</text></svg>';">
       <div class="article-image-caption">Interactive browser-based scanner interface with perspective crop and filters.</div>
     </div>
 
     <p>Welcome to the ultimate client-side Document Scanner and <strong>JPG to PDF</strong> conversion tool. Whether you are dealing with multi-page handwritten notes, important invoices, identity papers, certificates, or formal receipts, this tool lets you process everything directly within your web browser without uploading a single byte to any remote server. Your files remain 100% private, secure, and under your absolute control.</p>
 
+    <p>Traditional online converters require you to upload sensitive documents to a remote server, which poses a significant privacy risk. Our tool uses modern web APIs, client-side canvas transformations, and PDF generation libraries that run entirely on your device. There are no limits, no subscription fees, no intrusive watermarks, and no waiting queues. You can scan, edit, and export as many documents as you like, completely offline.</p>
+
     <h3>Step-by-Step Instructions</h3>
     <ol>
-      <li><b>Upload or Capture:</b> Click "Camera Capture" to take live photos using your smartphone camera, or select "Gallery / Files" to pick multiple images (JPG, PNG, WEBP) at once. You can also drag and drop image files directly into the drop zone.</li>
-      <li><b>Crop and Perspective Correction:</b> Tap any thumbnail page to open the live editor. Drag the four corner handles to align the boundaries with your document edges. This removes unwanted background space and corrects awkward camera angles instantly.</li>
+      <li><b>Upload or Capture:</b> Click "Camera Capture" to take live photos using your smartphone camera, or select "Gallery / Files" to pick multiple images (JPG, PNG, WEBP) at once. You can also drag and drop image files directly into the drop zone. The tool supports up to 30 pages per document.</li>
+      <li><b>Crop and Perspective Correction:</b> Tap any thumbnail page to open the live editor. Drag the four corner handles to align the boundaries with your document edges. This removes unwanted background space and corrects awkward camera angles instantly. For best results, ensure the document is well-lit and the camera is parallel to the paper.</li>
       <li><b>Apply Filters &amp; Adjustments:</b> Switch to the Filter tab to enhance readability. Choose presets like <em>Auto Color</em>, <em>Light Text</em>, <em>Grayscale</em>, or <em>Whiteboard</em>. You can also apply a filter across all loaded pages using "Apply Filter to All Pages". Fine-tune brightness, contrast, and saturation with the sliders.</li>
-      <li><b>Organize &amp; Reorder:</b> Easily reorder pages by dragging and dropping them into your preferred sequence, or use the move and duplicate tools. You can also add blank pages if needed.</li>
+      <li><b>Organize &amp; Reorder:</b> Easily reorder pages by dragging and dropping them into your preferred sequence, or use the move and duplicate tools. You can also add blank pages if needed. The mini-grid in the editor gives you a quick overview of all pages.</li>
       <li><b>Export to PDF:</b> Configure page size (A4, A3, Letter, or Auto), adjust margins, select image compression quality, and click "Create &amp; Save PDF". Your document compiles instantly and downloads straight to your local device.</li>
     </ol>
 
-    <h3>Why Choose Client-Side Processing?</h3>
-    <p>Traditional online tools require you to upload personal documents over the internet, posing severe privacy risks. Our advanced browser utility uses modern Web APIs, client-side canvas transformations, and script engines to compile everything locally. There are no limits, no subscription fees, no intrusive watermarks, and no waiting queues.</p>
+    <h3>Understanding the Filters and Adjustments</h3>
+    <p>Each filter is designed for a specific type of document. <strong>Original</strong> keeps the image as-is. <strong>Auto Color</strong> boosts saturation and contrast, making colorful receipts pop. <strong>Light Text</strong> brightens the background and darkens text, ideal for faded documents. <strong>Grayscale</strong> removes color for a clean, professional look. <strong>Whiteboard</strong> converts the image to high-contrast black and white, perfect for whiteboard photos. <strong>Enhance</strong> adds sharpness and slight color correction.</p>
+
+    <p>You can further fine-tune each page with the adjustment sliders: brightness, contrast, and saturation. These are non-destructive, so you can always revert by resetting the sliders. The changes are applied in real-time on the preview canvas.</p>
+
+    <h3>Page Size, Orientation, and Quality</h3>
+    <p>When exporting, you can choose a fixed page size like A4, A3, or Letter, or let the tool match the image dimensions (Auto). For mixed documents, Auto is often best. Orientation can be portrait or landscape. The quality slider controls JPEG compression: lower quality means smaller file size but reduced clarity; higher quality preserves details but increases file size. Medium (0.85) is a good balance for most documents.</p>
+
+    <h3>Privacy and Security</h3>
+    <p>All processing happens locally in your browser. No images or PDFs are ever uploaded to our servers. This means your sensitive documents—ID cards, contracts, medical records—never leave your device. You can even use this tool offline after the page has loaded.</p>
+
+    <h3>Tips for Best Results</h3>
+    <ul>
+      <li>Use a plain, contrasting background (e.g., a dark table for white paper).</li>
+      <li>Ensure even lighting to avoid shadows and glare.</li>
+      <li>Hold the camera as parallel to the document as possible.</li>
+      <li>Use the crop tool to trim away background clutter.</li>
+      <li>For multi-page documents, keep the order consistent before exporting.</li>
+    </ul>
+
+    <h3>Troubleshooting</h3>
+    <p>If the PDF fails to generate, check that the pdf-lib library has loaded (requires an internet connection for the first load). If an image fails to load, ensure it is a valid JPG, PNG, or WEBP file. For very large images, the tool automatically resizes them to maintain performance. If you encounter any issues, try refreshing the page.</p>
+
+    <p>With this tool, you can turn your phone into a powerful document scanner. Whether you're a student, professional, or just someone who needs to digitize paperwork, our JPG to PDF converter delivers fast, private, and high-quality results.</p>
   </section>
 
   <p class="hint center" style="margin-top:34px;font-size:12.5px;">
