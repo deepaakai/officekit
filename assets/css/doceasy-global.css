@@ -1,5 +1,6 @@
 /* ==========================================================================
    DocEasy — Global Theme (Light + Dark, worldwide)
+   Header/Footer styled like Doclio (smooth, curved, floating)
    ========================================================================== */
 
 /* ===================== LIGHT THEME ===================== */
@@ -23,7 +24,6 @@
   --shadow-md: 0 4px 12px rgba(25,57,138,0.14);
   --shadow-lg: 0 12px 34px rgba(0,0,0,0.20);
 
-  /* Legacy aliases */
   --bg-primary: var(--bg-color);
   --text-main: var(--text-color);
   --text-muted: var(--subtext-color);
@@ -75,19 +75,21 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 input, select, textarea { font: inherit; color: inherit; }
 
 /* ==========================================================================
-   HEADER (Smooth & Curved to match index.html)
+   HEADER (Smooth, Floating & Curved)
    ========================================================================== */
 .site-header {
+  position: sticky;
+  top: 10px;
+  z-index: 1000;
   background: var(--header-bg);
   color: #fff;
-  position: sticky;
-  top: 10px; /* Floating effect */
-  z-index: 1000;
-  box-shadow: 0 8px 26px rgba(25,57,138,0.15); /* Soft shadow like soft-card */
-  border-radius: 16px; /* Curved corners */
-  max-width: 1240px; /* Match main-wrap width */
-  margin: 0 auto; /* Center align */
+  max-width: 1240px;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(25,57,138,0.15);
+  transition: all 0.3s ease;
 }
+
 .header-inner {
   max-width: 100%;
   margin: 0 auto;
@@ -97,6 +99,7 @@ input, select, textarea { font: inherit; color: inherit; }
   justify-content: space-between;
   gap: 12px;
 }
+
 .brand-link {
   display: inline-flex;
   align-items: center;
@@ -107,6 +110,7 @@ input, select, textarea { font: inherit; color: inherit; }
   font-size: 17px;
   flex-shrink: 0;
 }
+
 .brand-badge {
   background: #fff;
   color: #19398a;
@@ -119,11 +123,13 @@ input, select, textarea { font: inherit; color: inherit; }
   gap: 6px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
+
 .brand-badge svg { width: 17px; height: 17px; fill: #19398a; }
 
 .nav-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
 .top-nav { display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; }
 .top-nav::-webkit-scrollbar { display: none; }
+
 .top-nav a {
   color: #e0e7ff;
   text-decoration: none;
@@ -134,23 +140,27 @@ input, select, textarea { font: inherit; color: inherit; }
   white-space: nowrap;
   transition: background 0.15s;
 }
+
 .top-nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
 .top-nav a.active { background: rgba(255,255,255,0.16); color: #fff; font-weight: 600; }
 
 .theme-switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
+
 .theme-switch .slider {
   position: absolute; cursor: pointer; inset: 0;
   background-color: rgba(255,255,255,0.25);
   transition: .3s; border-radius: 34px;
   border: 1px solid rgba(255,255,255,0.4);
 }
+
 .theme-switch .slider:before {
   position: absolute; content: "";
   height: 18px; width: 18px; left: 3px; bottom: 3px;
   background-color: #fff; transition: .3s; border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
 .theme-switch input:checked + .slider { background-color: #38bdf8; }
 .theme-switch input:checked + .slider:before { transform: translateX(23px); }
 
@@ -329,45 +339,55 @@ input:focus, textarea:focus, select:focus {
 .queue-del-btn { color: #f87171; cursor: pointer; font-weight: 700; font-size: 16px; }
 
 /* ==========================================================================
-   FOOTER (Smooth & Curved to match index.html)
+   FOOTER (Smooth, Curved & Floating)
    ========================================================================== */
 .site-footer {
-  background: #19398a; color: #fff;
-  padding: 40px 24px 20px; 
-  font-size: 13px; 
-  border-radius: 20px 20px 0 0; /* Curved top corners */
+  background: #19398a;
+  color: #fff;
+  padding: 50px 24px 20px;
+  font-size: 13px;
   max-width: 1240px;
-  margin: 40px auto 0;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+  margin: 40px auto 20px;
+  border-radius: 20px;
+  box-shadow: 0 12px 34px rgba(25,57,138,0.18);
 }
+
 [data-theme="dark"] .site-footer { background: #0f172a; }
+
 .footer-container {
   max-width: 1200px; margin: 0 auto;
   display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 30px;
 }
+
 @media (max-width: 880px) { .footer-container { grid-template-columns: 1fr 1fr; gap: 24px; } }
 @media (max-width: 520px) { .footer-container { grid-template-columns: 1fr; } }
+
 .footer-brand-box {
   background: #fff; color: #19398a;
   font-weight: 900; font-size: 16px;
   padding: 6px 12px; border-radius: 7px;
   display: inline-flex; align-items: center; gap: 7px; margin-bottom: 12px;
 }
+
 .footer-brand-box svg { width: 17px; height: 17px; fill: #19398a; }
 .footer-col h5 { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: #fff; }
 .footer-col ul { list-style: none; padding: 0; margin: 0; }
 .footer-col ul li { margin-bottom: 9px; }
+
 .footer-col ul li a {
   color: #e0e7ff; text-decoration: none;
   font-size: 12.5px; transition: color 0.15s;
 }
+
 .footer-col ul li a:hover { color: #fff; text-decoration: underline; }
+
 .footer-bottom-bar {
   max-width: 1200px; margin: 30px auto 0;
   padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.22);
   display: flex; justify-content: space-between; align-items: center;
   gap: 14px; font-size: 12.5px; color: #e0e7ff; flex-wrap: wrap;
 }
+
 .made-with-love-link { color: #fff; text-decoration: none; font-weight: 700; }
 .made-with-love-link:hover { text-decoration: underline; }
 
