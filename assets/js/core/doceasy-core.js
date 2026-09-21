@@ -22,6 +22,16 @@
     authorPortfolio: 'https://deepaakai.github.io/portfolio/',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
+    // Floating pill navigation (like Doclio's center nav)
+    pillNav: [
+      { href: '#tools',     label: 'Tools' },
+      { href: '#ai',        label: 'AI Tools' },
+      { href: '#templates', label: 'Templates' },
+      { href: '#features',  label: 'Why DocEasy' },
+      { href: '#faq',       label: 'FAQ' },
+      { href: '#blog',      label: 'Blog' }
+    ],
+
     topNav: [
       { href: 'jpg-to-pdf.html',        label: 'JPG to PDF',       page: 'jpg-to-pdf' },
       { href: 'pdf-editor.html',        label: 'PDF Editor',       page: 'pdf-editor' },
@@ -82,20 +92,29 @@
     '<polyline points="14 2 14 8 20 8"/>' +
     '</svg>';
 
-  /* ---------- Header ---------- */
+  /* ---------- Header (Doclio-style: floating pill nav + search) ---------- */
   function buildHeader() {
-    var nav = CONFIG.topNav.map(function (item) {
+    var pillLinks = CONFIG.pillNav.map(function (item) {
+      return '<a href="' + item.href + '">' + item.label + '</a>';
+    }).join('');
+
+    var toolLinks = CONFIG.topNav.map(function (item) {
       return '<a href="' + resolvePath(item.href, false) + '" data-page="' + item.page + '">' +
              item.label + '</a>';
     }).join('');
+
     var homeHref = resolvePath('index.html', true);
 
     return '<header class="site-header"><div class="header-inner">' +
       '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
         '<span class="brand-badge">' + LOGO_SVG + CONFIG.brand + '</span>' +
       '</a>' +
+
+      // Center floating pill (like Doclio)
+      '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
+
       '<div class="nav-right">' +
-        '<nav class="top-nav" aria-label="Quick tools">' + nav + '</nav>' +
+        '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
         '<label class="theme-switch" aria-label="Toggle theme">' +
           '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
           '<span class="slider"></span>' +
@@ -104,7 +123,7 @@
     '</div></header>';
   }
 
-  /* ---------- Footer (with Deepaak credit — preserved) ---------- */
+  /* ---------- Footer ---------- */
   function buildFooter() {
     function col(title, items, isRoot) {
       var lis = items.map(function (it) {
@@ -140,9 +159,10 @@
 
   /* ---------- Inject ---------- */
   function inject() {
-    var h = document.getElementById('doceasy-header');
+    var h = document.getElementById('doceasy-header') || document.getElementById('-header');
     if (h && !h.querySelector('.site-header')) h.innerHTML = buildHeader();
-    var f = document.getElementById('doceasy-footer');
+
+    var f = document.getElementById('doceasy-footer') || document.getElementById('-footer');
     if (f && !f.querySelector('.site-footer')) f.innerHTML = buildFooter();
 
     var current = location.pathname.split('/').pop().replace('.html', '');
