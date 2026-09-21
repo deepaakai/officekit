@@ -102,8 +102,7 @@
     return '<header class="site-header"><div class="header-inner">' +
      '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
   '<span class="brand-badge">' +
-    '<img src="' + resolvePath('assets/images/logo-icon.png', true) + '" alt="DocEasy" style="width:18px;height:18px;display:block;">' +
-    CONFIG.brand +
+    '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:22px;width:auto;display:block;">' +
   '</span>' +
 '</a>' +
       '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
@@ -130,10 +129,9 @@
     return '<footer class="site-footer">' +
       '<div class="footer-container">' +
         '<div>' +
-          '<div class="footer-brand-box">' +
-            '<img src="' + resolvePath('assets/images/logo-icon.png', true) + '" alt="DocEasy" style="width:18px;height:18px;display:block;">' +
-            CONFIG.brand +
-          '</div>' +
+         '<div class="footer-brand-box">' +
+  '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:20px;width:auto;display:block;">' +
+'</div>' +
           '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">' +
             '100% client-side browser processing. Your files never leave your device.' +
           '</p>' +
