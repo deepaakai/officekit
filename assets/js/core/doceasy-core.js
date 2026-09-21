@@ -1,20 +1,15 @@
 /* ==========================================================================
    DocEasy Core — Auto-injects header + footer + theme toggle on every page.
-   Made with ❤️ by Deepaak Kumar · https://deepaakai.github.io/portfolio/
    ========================================================================== */
 (function () {
   'use strict';
 
-  /* ---------- Early theme restore ---------- */
   try {
     var saved = localStorage.getItem('doceasy_theme') || 'light';
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     else document.documentElement.removeAttribute('data-theme');
   } catch (e) {}
 
-  /* ========================================================================
-     CONFIG — Edit here, everything updates everywhere.
-     ======================================================================== */
   var CONFIG = {
     brand: 'DocEasy',
     domain: 'doceasy.org',
@@ -22,7 +17,6 @@
     authorPortfolio: 'https://deepaakai.github.io/portfolio/',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
-    // Floating pill navigation (like Doclio's center nav)
     pillNav: [
       { href: '#tools',     label: 'Tools' },
       { href: '#ai',        label: 'AI Tools' },
@@ -67,7 +61,6 @@
     }
   };
 
-  /* ---------- Path resolver ---------- */
   function resolvePath(href, isRoot) {
     if (!href) return '#';
     if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
@@ -86,7 +79,7 @@
     return href;
   }
 
-  /* ---------- Header (Doclio-style: floating pill nav + search) ---------- */
+  /* ---------- HEADER ---------- */
   function buildHeader() {
     var pillLinks = CONFIG.pillNav.map(function (item) {
       return '<a href="' + item.href + '">' + item.label + '</a>';
@@ -100,11 +93,11 @@
     var homeHref = resolvePath('index.html', true);
 
     return '<header class="site-header"><div class="header-inner">' +
-     '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
-  '<span class="brand-badge">' +
-    '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:22px;width:auto;display:block;">' +
-  '</span>' +
-'</a>' +
+      '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
+        '<span class="brand-badge">' +
+          '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:22px;width:auto;display:block;">' +
+        '</span>' +
+      '</a>' +
       '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
       '<div class="nav-right">' +
         '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
@@ -116,7 +109,7 @@
     '</div></header>';
   }
 
-  /* ---------- Footer ---------- */
+  /* ---------- FOOTER ---------- */
   function buildFooter() {
     function col(title, items, isRoot) {
       var lis = items.map(function (it) {
@@ -125,15 +118,15 @@
       }).join('');
       return '<div class="footer-col"><h5>' + title + '</h5><ul>' + lis + '</ul></div>';
     }
-    
+
     return '<footer class="site-footer">' +
       '<div class="footer-container">' +
         '<div>' +
-         '<div class="footer-brand-box">' +
-  '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:20px;width:auto;display:block;">' +
-'</div>' +
+          '<div class="footer-brand-box">' +
+            '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:20px;width:auto;display:block;">' +
+          '</div>' +
           '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">' +
-            '100% client-side browser processing. Your files never leave your device.' +
+          '100% client-side browser processing. Your files never leave your device.' +
           '</p>' +
         '</div>' +
         col('PDF Tools',    CONFIG.footer.pdfTools,   false) +
@@ -153,7 +146,7 @@
     '</footer>';
   }
 
-  /* ---------- Inject ---------- */
+  /* ---------- INJECT ---------- */
   function inject() {
     var h = document.getElementById('doceasy-header') || document.getElementById('-header');
     if (h && !h.querySelector('.site-header')) h.innerHTML = buildHeader();
@@ -173,7 +166,6 @@
     if (y) y.textContent = new Date().getFullYear();
   }
 
-  /* ---------- Theme toggle ---------- */
   window.docEasyToggleTheme = function () {
     var cb = document.getElementById('theme-checkbox');
     if (cb && cb.checked) {
@@ -185,7 +177,6 @@
     }
   };
 
-  /* Legacy alias — safe if any old code still calls it */
   window.officekitToggleTheme = window.docEasyToggleTheme;
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
