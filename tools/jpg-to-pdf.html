@@ -6,7 +6,7 @@
 <title>JPG to PDF &amp; Document Scanner — DocEasy</title>
 <meta name="description" content="Scan documents from photos: manual crop, perspective correction, filters and multi-page PDF export. 100% in your browser — nothing is uploaded.">
 <meta name="theme-color" content="#0b1329">
-<link rel="canonical" href="https://pdf365.in/tools/jpg-to-pdf.html">
+<link rel="canonical" href="https://doceay.org/tools/jpg-to-pdf.html">
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
@@ -1182,23 +1182,14 @@ async function exportPDF() {
       /* ============================================
          ✅ VISIBLE WATERMARK — dark gray, 8pt, on white page
          ============================================ */
-      var wmColor = PDFLib.rgb(0.15, 0.15, 0.15);   // very dark gray — clearly visible on white
+      var wmColor = PDFLib.rgb(0, 0, 0);   // pure black color — clearly visible on white
       var wmSize  = 8;                               // 8-point as requested
-      var wmText  = 'pdf365.in';
+      var wmText  = 'doceasy.org';
 
-      // Top-left corner
-      page.drawText(wmText, {
-        x: marginPt + 10,
-        y: ph - marginPt - 15,
-        size: wmSize,
-        font: wmFont,
-        color: wmColor,
-        opacity: 0.55
-      });
 
-      // Bottom-left footer
+      // Bottom-right footer
       page.drawText(wmText, {
-        x: marginPt + 10,
+        x: pw - marginPt - 80,
         y: marginPt + 5,
         size: wmSize,
         font: wmFont,
