@@ -145,7 +145,10 @@
     return '<footer class="site-footer">' +
       '<div class="footer-container">' +
         '<div>' +
-          '<div class="footer-brand-box">' + LOGO_SVG + CONFIG.brand + '</div>' +
+        '<div class="footer-brand-box">' +
+  '<img src="' + resolvePath('assets/images/logo-icon.png', true) + '" alt="DocEasy" style="width:18px;height:18px;display:block;">' +
+  CONFIG.brand +
+'</div>' +
           '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">' +
           '100% client-side browser processing. Your files never leave your device.' +
           '</p>' +
