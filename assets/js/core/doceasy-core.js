@@ -100,11 +100,12 @@
     var homeHref = resolvePath('index.html', true);
 
     return '<header class="site-header"><div class="header-inner">' +
-      '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
-        '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" ' +
-        'alt="' + CONFIG.brand + '" ' +
-        'style="height:32px;width:auto;display:block;">' +
-      '</a>' +
+     '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
+  '<span class="brand-badge">' +
+    '<img src="' + resolvePath('assets/images/logo-icon.png', true) + '" alt="DocEasy" style="width:18px;height:18px;display:block;">' +
+    CONFIG.brand +
+  '</span>' +
+'</a>' +
       '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
       '<div class="nav-right">' +
         '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
