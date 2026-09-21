@@ -86,12 +86,6 @@
     return href;
   }
 
-  var LOGO_SVG =
-    '<svg viewBox="0 0 24 24" aria-hidden="true">' +
-    '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>' +
-    '<polyline points="14 2 14 8 20 8"/>' +
-    '</svg>';
-
   /* ---------- Header (Doclio-style: floating pill nav + search) ---------- */
   function buildHeader() {
     var pillLinks = CONFIG.pillNav.map(function (item) {
@@ -105,24 +99,13 @@
 
     var homeHref = resolvePath('index.html', true);
 
-   return '<header class="site-header"><div class="header-inner">' +
-  '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
-    '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" ' +
-    'alt="' + CONFIG.brand + '" ' +
-    'style="height:32px;width:auto;display:block;">' +
-  '</a>' +
-  '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
-  '<div class="nav-right">' +
-    '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
-    '<label class="theme-switch" aria-label="Toggle theme">' +
-      '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
-      '<span class="slider"></span>' +
-    '</label>' +
-  '</div>' +
-'</div></header>';
-      // Center floating pill (like Doclio)
+    return '<header class="site-header"><div class="header-inner">' +
+      '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
+        '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" ' +
+        'alt="' + CONFIG.brand + '" ' +
+        'style="height:32px;width:auto;display:block;">' +
+      '</a>' +
       '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
-
       '<div class="nav-right">' +
         '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
         '<label class="theme-switch" aria-label="Toggle theme">' +
@@ -142,15 +125,16 @@
       }).join('');
       return '<div class="footer-col"><h5>' + title + '</h5><ul>' + lis + '</ul></div>';
     }
+    
     return '<footer class="site-footer">' +
       '<div class="footer-container">' +
         '<div>' +
-        '<div class="footer-brand-box">' +
-  '<img src="' + resolvePath('assets/images/logo-icon.png', true) + '" alt="DocEasy" style="width:18px;height:18px;display:block;">' +
-  CONFIG.brand +
-'</div>' +
+          '<div class="footer-brand-box">' +
+            '<img src="' + resolvePath('assets/images/logo-icon.png', true) + '" alt="DocEasy" style="width:18px;height:18px;display:block;">' +
+            CONFIG.brand +
+          '</div>' +
           '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">' +
-          '100% client-side browser processing. Your files never leave your device.' +
+            '100% client-side browser processing. Your files never leave your device.' +
           '</p>' +
         '</div>' +
         col('PDF Tools',    CONFIG.footer.pdfTools,   false) +
