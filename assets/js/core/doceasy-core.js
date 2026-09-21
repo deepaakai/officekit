@@ -105,11 +105,21 @@
 
     var homeHref = resolvePath('index.html', true);
 
-    return '<header class="site-header"><div class="header-inner">' +
-      '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
-        '<span class="brand-badge">' + LOGO_SVG + CONFIG.brand + '</span>' +
-      '</a>' +
-
+   return '<header class="site-header"><div class="header-inner">' +
+  '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
+    '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" ' +
+    'alt="' + CONFIG.brand + '" ' +
+    'style="height:32px;width:auto;display:block;">' +
+  '</a>' +
+  '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
+  '<div class="nav-right">' +
+    '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
+    '<label class="theme-switch" aria-label="Toggle theme">' +
+      '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
+      '<span class="slider"></span>' +
+    '</label>' +
+  '</div>' +
+'</div></header>';
       // Center floating pill (like Doclio)
       '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
 
