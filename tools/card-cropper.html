@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Aadhaar & PAN Dual-Side Cropper (Ultra HD 300 DPI) — DocEasy</title>
-<meta name="description" content="Crop Aadhaar & PAN card both sides at ultra HD 300 DPI. Password-protected e-Aadhaar & PAN PDF support. Free, browser-based, 100% private.">
-<meta name="keywords" content="aadhaar cropper, pan card cropper, id card cropper, 300 dpi aadhaar, dual side id crop">
+<title>ID Card Dual-Side Cropper (Ultra HD 300 DPI) — DocEasy</title>
+<meta name="description" content="Crop both sides of any ID card — Aadhaar, PAN, Voter ID, Driving Licence, Shram Card — at ultra HD 300 DPI. Password-protected PDF support. Free, browser-based, 100% private.">
+<meta name="keywords" content="id card cropper, aadhaar cropper, pan card cropper, voter id cropper, driving licence cropper, shram card cropper, 300 dpi id crop">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://doceasy.org/tools/card-cropper.html">
 
@@ -23,6 +23,56 @@
 <style>
 /* ============ Tool-specific styles ============ */
 .cropper-container { text-align: center; }
+
+/* ---------- Top Notification Banner ---------- */
+.hd-banner {
+  max-width: 780px;
+  margin: 0 auto 22px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #19398a 0%, #2563eb 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 10px 26px rgba(25,57,138,0.28);
+  text-align: left;
+}
+.hd-banner .hd-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.16);
+  display: grid;
+  place-items: center;
+}
+.hd-banner .hd-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #ffffff;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hd-banner .hd-text {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.hd-banner .hd-text b { color: #fef08a; }
+.hd-banner .hd-text small {
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.82);
+  margin-top: 3px;
+}
+@media (max-width: 520px) {
+  .hd-banner { padding: 12px 14px; gap: 10px; }
+  .hd-banner .hd-icon { width: 38px; height: 38px; }
+  .hd-banner .hd-text { font-size: 12.5px; }
+}
 
 .upload-box {
   max-width: 620px;
@@ -49,7 +99,6 @@
 .drop-zone h3 { color: var(--text-color); }
 .drop-zone p { color: var(--subtext-color); }
 
-/* Password card */
 .password-card {
   background: #fff7ed;
   border: 1px solid #fed7aa;
@@ -97,7 +146,6 @@
 }
 .btn-unlock:hover { background: #c2410c; }
 
-/* Sticky toolbar */
 .cropper-toolbar {
   position: sticky;
   top: 62px;
@@ -177,7 +225,6 @@
 }
 [data-theme="dark"] .hd-note { color: #4ade80; }
 
-/* Viewport & crop boxes */
 .viewport-box {
   position: relative;
   margin: 15px auto 20px;
@@ -270,19 +317,22 @@
 }
 .btn-bottom-upload:hover { background: var(--accent-soft-hover); }
 
-/* ============ PRINT STYLES — BORDERLESS ============ */
+/* ============ PRINT STYLES — Top-Left, Borderless ============ */
 @media print {
   body * { visibility: hidden; }
   #print-area, #print-area * { visibility: visible; }
+
   #print-area {
     position: absolute;
-    top: 20mm;
-    left: 15mm;
+    top: 10mm;
+    left: 10mm;
     display: flex !important;
-    gap: 10mm;
+    flex-direction: row;
+    gap: 5mm;
     margin: 0;
     padding: 0;
   }
+
   .card-print-img {
     width: 85mm !important;
     height: 55mm !important;
@@ -304,8 +354,21 @@
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">Aadhaar & PAN Dual-Side Cropper</h1>
-    <p class="hero-sub">Ultra HD 300 DPI rendering. Crop both sides of your ID card with pixel-perfect precision — right in your browser. No upload, no signup, 100% private.</p>
+    <h1 class="hero-title">ID Card Dual-Side Cropper</h1>
+    <p class="hero-sub">Crop both sides of any ID card — Aadhaar, PAN, Voter ID, Driving Licence, Shram Card — at Ultra HD 300 DPI. No upload, no signup, 100% private.</p>
+  </div>
+
+  <!-- ====== TOP HD NOTIFICATION BANNER ====== -->
+  <div class="hd-banner">
+    <div class="hd-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+    </div>
+    <div class="hd-text">
+      <b>Ultra HD 300 DPI Output — No Photoshop Needed</b>
+      <small>Every card is rendered at professional print resolution. Sharp text, clear QR codes, and crisp photos — ready for government portals, banks, and exam forms.</small>
+    </div>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
@@ -323,21 +386,21 @@
           <line x1="15" y1="12" x2="17" y2="12"></line>
           <line x1="7" y1="16" x2="17" y2="16"></line>
         </svg>
-        <h3 style="margin:0 0 6px; font-size:18px;">Drop Aadhaar / PAN PDF or Image</h3>
-        <p style="margin:0; font-size:13.5px;">Ultra HD 300 DPI rendering. No pixel loss, zero blur print guaranteed.</p>
+        <h3 style="margin:0 0 6px; font-size:18px;">Drop your ID Card PDF or Image</h3>
+        <p style="margin:0; font-size:13.5px;">Aadhaar, PAN, Voter ID, Driving Licence, Shram Card — any ID card works.</p>
       </div>
 
-      <!-- Password Card with Aadhaar + PAN formats -->
+      <!-- Password Card -->
       <div id="password-box" class="password-card" hidden>
         <div class="pc-title">🔒 Password Protected PDF Detected</div>
         <div class="pc-hint">
           <p style="margin: 6px 0 10px; font-weight: 600;">
-            Dono formats neeche diye hain. Apne document ke hisaab se sahi password daalein.
+            Below are the common password formats. Enter the one that matches your document.
           </p>
 
           <div style="margin-bottom: 10px;">
             <b>1. Aadhaar Card (e-Aadhaar):</b><br>
-            Pehle <b>4 letters of name in CAPITALS</b> + <b>Birth Year</b><br>
+            First <b>4 letters of name in CAPITALS</b> + <b>Birth Year</b><br>
             Example: Name <b>Deepak</b>, Birth Year <b>1998</b> → <code>DEEP1998</code>
           </div>
 
@@ -355,7 +418,7 @@
         </div>
 
         <div class="password-input-group">
-          <input type="password" id="pdf-password" placeholder="Enter Aadhaar or PAN password">
+          <input type="password" id="pdf-password" placeholder="Enter PDF password">
           <button class="btn-unlock" id="btn-unlock">Unlock &amp; Load</button>
         </div>
       </div>
@@ -390,7 +453,7 @@
       </div>
 
       <div class="hd-note">
-        ✨ <b>300 DPI Studio Quality:</b> Box ko card par set karein. Printing ke waqt yeh original PDF se full crystal clear pixels nikaalega.
+        ✨ <b>300 DPI Studio Quality:</b> Drag each box onto the corresponding card. The export uses the original PDF's full-resolution pixels — no Photoshop needed.
       </div>
 
       <div class="viewport-box" id="viewport-wrap">
@@ -445,23 +508,35 @@
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ SEO ARTICLE + TUTORIAL ============ -->
+  <!-- ============ SEO ARTICLE ============ -->
   <section class="seo-article">
-    <h2>Complete Guide: Crop Aadhaar & PAN Cards at 300 DPI Online</h2>
+    <h2>Complete Guide: Crop Any ID Card at 300 DPI Online</h2>
 
-    <p>Applying for a government exam, opening a bank account, or verifying your identity on a job portal almost always demands clean, correctly-sized copies of your Aadhaar card and PAN card — both front and back. The DocEasy Aadhaar & PAN Dual-Side Cropper solves all of this in one browser-based tool that produces ultra HD 300 DPI output — without ever uploading your sensitive identity documents to any server.</p>
+    <p>Applying for a government exam, opening a bank account, submitting KYC to a fintech app, or verifying your identity on a job portal almost always demands clean, correctly-sized copies of your ID card — both front and back. Whether it's an Aadhaar card, PAN card, Voter ID, Driving Licence, Shram Card, or any other government-issued identity document, the DocEasy ID Card Cropper solves all of this in one browser-based tool that produces Ultra HD 300 DPI output — without ever uploading your sensitive identity documents to any server.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/card-cropper-demo.jpg" alt="Aadhaar and PAN card dual-side cropping workflow showing front and back crop boxes at 300 DPI"
+      <img src="../assets/images/card-cropper-demo.jpg" alt="Dual-side ID card cropping workflow showing front and back crop boxes at 300 DPI"
            onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image Here: assets/images/card-cropper-demo.jpg]</div>';">
-      <div class="article-image-caption">Dual-side crop boxes over a scanned Aadhaar card, exporting at exactly 8.5 × 5.5 cm (CR80) in 300 DPI print resolution.</div>
+      <div class="article-image-caption">Dual-side crop boxes over a scanned ID card, exporting at exactly 8.5 × 5.5 cm (CR80) in 300 DPI print resolution.</div>
     </div>
 
     <h3>Why 300 DPI Matters</h3>
     <p>DPI (Dots Per Inch) determines the physical print quality of an image. Government portals, exam authorities, and banks usually specify 200–300 DPI for uploaded ID cards so that text, QR codes, and photos remain legible. This tool renders your cards at 300 DPI by internally using the original PDF's vector data at up to 4× display resolution — guaranteeing razor-sharp output every time.</p>
 
-    <h3>Password Formats — Aadhaar vs PAN</h3>
-    <p>Both Aadhaar and PAN PDFs are often password-protected when downloaded. But the password formats differ:</p>
+    <h3>Works With Any ID Card</h3>
+    <ul>
+      <li>Aadhaar Card (both front and back)</li>
+      <li>PAN Card</li>
+      <li>Voter ID Card</li>
+      <li>Driving Licence</li>
+      <li>Shram Card / Labour Card</li>
+      <li>Ration Card</li>
+      <li>Government Employee ID Cards</li>
+      <li>And any other ID in the standard CR80 size (8.5 × 5.5 cm)</li>
+    </ul>
+
+    <h3>Password Formats — Common Cases</h3>
+    <p>Many ID card PDFs (especially e-Aadhaar and PAN) are password-protected when downloaded. But the password formats differ:</p>
     <ul>
       <li><b>Aadhaar (e-Aadhaar):</b> First 4 letters of your name in CAPITALS + Birth Year.<br>
         <i>Example:</i> Name <b>Deepak</b>, Birth Year <b>1998</b> → <code>DEEP1998</code></li>
@@ -469,17 +544,16 @@
         <i>Example:</i> DOB <b>15 January 1998</b> → <code>15011998</code></li>
       <li><b>Any Other Protected PDF:</b> The password your provider gave you. Common patterns are <code>DOB</code>, <code>PAN number</code>, <code>Name + DOB</code>, or <code>PAN + DOB</code>.</li>
     </ul>
-    <p>If you see a password prompt after uploading your file, just enter the correct format for your document type and click "Unlock & Load".</p>
 
     <h3>Step-by-Step Instructions</h3>
     <ul>
-      <li><b>Step 1 — Upload:</b> Drag-and-drop your Aadhaar / PAN PDF, scanned JPG, or phone photo.</li>
+      <li><b>Step 1 — Upload:</b> Drag-and-drop your ID card PDF, scanned JPG, or phone photo.</li>
       <li><b>Step 2 — Enter password (if prompted):</b> Use the correct format for your document (see above).</li>
       <li><b>Step 3 — Position crop boxes:</b> Green = Front, Blue = Back. Drag each box to sit over the corresponding card.</li>
       <li><b>Step 4 — Adjust size (optional):</b> Default 8.5 × 5.5 cm (CR80 standard).</li>
       <li><b>Step 5 — Fine-tune:</b> Use the 8 handles around each box to align edges precisely.</li>
       <li><b>Step 6 — Multi-page PDFs:</b> Use Prev/Next page navigation.</li>
-      <li><b>Step 7 — Download or print:</b> "Save HD Images" downloads two 1004×650 PNGs with a small <code>doceasy.org</code> watermark, or "Print Ultra HD" opens the print dialog with both cards on A4 (borderless).</li>
+      <li><b>Step 7 — Download or print:</b> "Save HD Images" downloads two 1004×650 PNGs with a small <code>doceasy.org</code> watermark, or "Print Ultra HD" opens the print dialog with both cards positioned at the top-left corner of an A4 sheet (borderless).</li>
     </ul>
 
     <h3>How to Move and Resize the Crop Boxes</h3>
@@ -490,9 +564,15 @@
       <li><b>Mobile support:</b> On phones and tablets, use one finger to drag the box or its handles.</li>
     </ul>
 
+    <h3>No Photoshop Needed</h3>
+    <p>Because the export renders at true 300 DPI from the original PDF's vector data, there is no need for any external image editor. The tool produces print-ready cards directly. You can upload them to a government portal, print them on paper, or share them digitally — all with razor-sharp text, clear QR codes, and crisp photographs.</p>
+
     <h3>Frequently Asked Questions</h3>
-    <p><b>Q: Is my Aadhaar / PAN data safe?</b><br>
+    <p><b>Q: Is my ID card data safe?</b><br>
     Yes. Everything happens in your browser. Nothing is uploaded, stored, or shared.</p>
+
+    <p><b>Q: Which ID cards are supported?</b><br>
+    Any ID card in the standard CR80 size (8.5 × 5.5 cm) — Aadhaar, PAN, Voter ID, Driving Licence, Shram Card, Ration Card, and more.</p>
 
     <p><b>Q: How do I know my e-Aadhaar password?</b><br>
     First four letters of your name in CAPITALS + year of birth. Example: "Deepak" born 1998 → <code>DEEP1998</code>.</p>
@@ -501,17 +581,17 @@
     Usually your Date of Birth in DDMMYYYY format. Example: DOB 15/01/1998 → <code>15011998</code>.</p>
 
     <p><b>Q: Will the print have a border?</b><br>
-    No. The print output is borderless — just the cropped card images at their true 8.5 × 5.5 cm size on an A4 sheet.</p>
+    No. The print output is borderless — cards are placed at the top-left corner of an A4 sheet at their true 8.5 × 5.5 cm size.</p>
 
     <p><b>Q: Is there a watermark on the images?</b><br>
-    Yes. A small <code>doceasy.org</code> watermark appears at the bottom-right corner of the exported images and the printed output — subtle, but present.</p>
+    Yes. A small <code>doceasy.org</code> watermark appears ~1 cm above the bottom edge of each exported image — subtle, but present.</p>
 
     <p><b>Q: Can I use this on mobile?</b><br>
     Yes. The crop boxes and handles are fully touch-enabled.</p>
 
     <h3>Pro Tips</h3>
     <ul>
-      <li>Scan Aadhaar at 300 DPI in your scanner settings for the sharpest results.</li>
+      <li>Scan your ID card at 300 DPI in your scanner settings for the sharpest results.</li>
       <li>Place the card on a matte dark surface in daylight to avoid glare and shadows.</li>
       <li>Always place the green box on the front and blue on the back for organised downloads.</li>
       <li>After cropping, zoom to 200% to verify the card number and QR code are readable before submitting.</li>
@@ -753,7 +833,7 @@ boxWInput.oninput = syncSizeFromInputs;
 boxHInput.oninput = syncSizeFromInputs;
 
 /* ==========================================================================
-   INTERACTIVE CROP BOX — Pointer Events (mouse + touch + pen)
+   INTERACTIVE CROP BOX — Pointer Events
    ========================================================================== */
 function setupInteractiveBox(box) {
   let activeMode = null;
@@ -857,13 +937,13 @@ function getUltraHdCroppedCanvas(boxEl) {
     0, 0, outCanvas.width, outCanvas.height
   );
 
-  // Watermark
-  outCtx.font = "bold 22px -apple-system, Segoe UI, Roboto, Arial, sans-serif";
-  outCtx.textAlign = "right";
+  // Watermark — ~1 cm above bottom edge, centered
+  outCtx.font = "bold 20px -apple-system, Segoe UI, Roboto, Arial, sans-serif";
+  outCtx.textAlign = "center";
   outCtx.textBaseline = "bottom";
   outCtx.globalAlpha = 0.55;
   outCtx.fillStyle = "#19398a";
-  outCtx.fillText("doceasy.org", outCanvas.width - 14, outCanvas.height - 10);
+  outCtx.fillText("doceasy.org", outCanvas.width / 2, outCanvas.height - 118);
   outCtx.globalAlpha = 1.0;
 
   return outCanvas;
