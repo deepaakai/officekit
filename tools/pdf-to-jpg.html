@@ -35,7 +35,8 @@
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
-.format-row select {
+.format-row select,
+.format-row input[type="password"] {
   padding: 10px 12px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -46,11 +47,26 @@
   transition: border-color 0.15s;
   width: 100%;
 }
-.format-row select:focus {
+.format-row select:focus,
+.format-row input[type="password"]:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
+.password-hint {
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.password-error {
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 4px;
+  font-weight: 600;
+  display: none;
+}
+.password-error.show { display: block; }
 </style>
 </head>
 <body>
@@ -75,6 +91,14 @@
 
     <div id="controls" hidden>
       <p id="info" style="font-weight:600; color:var(--accent); font-size:14px; margin:0;"></p>
+
+      <!-- Password field (hidden by default, shown only if PDF is encrypted) -->
+      <div class="f-group" id="passwordBox" style="display:none; margin-top:16px;">
+        <label for="pdf-password">PDF Password</label>
+        <input type="password" id="pdf-password" placeholder="Enter password" autocomplete="off">
+        <p class="password-hint">This PDF is password-protected. Enter the password to unlock it.</p>
+        <p class="password-error" id="passwordError">Incorrect password. Please try again.</p>
+      </div>
 
       <div class="format-row">
         <div class="f-group">
@@ -110,6 +134,9 @@
       <div class="article-image-caption">High-resolution canvas extraction, sequential page naming, and ZIP bundling.</div>
     </div>
 
+    <h3>Password-Protected PDFs</h3>
+    <p>If your PDF is password-protected, the tool detects this automatically and shows a password input field. Enter the correct password, and the conversion proceeds normally. No password is stored or transmitted anywhere — it is used only in your browser to unlock the file.</p>
+
     <h3>Choose Your Image Format</h3>
     <ul>
       <li><b>JPG:</b> Best for photos and documents where file size matters.</li>
@@ -126,8 +153,10 @@
     <h3>FAQ</h3>
     <p><b>Q: Do the images have watermarks?</b><br>
     No. Images are clean and watermark-free.</p>
+    <p><b>Q: Can I convert a password-protected PDF?</b><br>
+    Yes. Enter the password when prompted, and the tool will unlock the file in your browser.</p>
     <p><b>Q: Are my files uploaded?</b><br>
-    Never. Everything runs purely client-side.</p>
+    Never. Everything runs purely client-side, including password entry.</p>
   </section>
 
   <div class="ad-slot-container">Advertisement</div>
@@ -141,20 +170,25 @@
 (function () {
   'use strict';
 
-  var fileIn      = document.getElementById('pdf-in');
-  var controls    = document.getElementById('controls');
-  var info        = document.getElementById('info');
-  var btn         = document.getElementById('btn-extract');
-  var formatSel   = document.getElementById('output-format');
-  var qualitySel  = document.getElementById('image-quality');
+  var fileIn       = document.getElementById('pdf-in');
+  var controls     = document.getElementById('controls');
+  var info         = document.getElementById('info');
+  var btn          = document.getElementById('btn-extract');
+  var formatSel    = document.getElementById('output-format');
+  var qualitySel   = document.getElementById('image-quality');
+  var passwordBox  = document.getElementById('passwordBox');
+  var passwordIn   = document.getElementById('pdf-password');
+  var passwordError= document.getElementById('passwordError');
 
   var pdfFileBytes = null;
   var fileName = '';
+  var isEncrypted = false;
 
   fileIn.addEventListener('change', async function (e) {
     var file = e.target.files[0];
     if (!file) return;
-    // Sanitize filename: remove special chars, spaces → dashes, limit to 40 chars
+
+    // Sanitize filename
     fileName = file.name.replace(/\.[^/.]+$/, '')
       .replace(/[^a-zA-Z0-9\s\-_]/g, '')
       .replace(/\s+/g, '-')
@@ -162,15 +196,34 @@
       .replace(/^-|-$/g, '')
       .slice(0, 40);
     if (!fileName) fileName = 'document';
+
     pdfFileBytes = await file.arrayBuffer();
+
+    // Detect encryption: try loading without password
+    isEncrypted = false;
+    passwordBox.style.display = 'none';
+    passwordError.classList.remove('show');
+    passwordIn.value = '';
+
+    try {
+      await pdfjsLib.getDocument({ data: pdfFileBytes.slice(0) }).promise;
+    } catch (err) {
+      if (err && err.name === 'PasswordException') {
+        isEncrypted = true;
+        passwordBox.style.display = 'flex';
+      }
+    }
+
     controls.hidden = false;
-    info.textContent = 'Loaded: ' + file.name;
+    info.textContent = 'Loaded: ' + file.name + (isEncrypted ? ' (password-protected)' : '');
   });
 
   btn.onclick = async function () {
     if (!pdfFileBytes) return;
+
     btn.disabled = true;
     btn.textContent = 'Converting pages into ZIP...';
+    passwordError.classList.remove('show');
 
     try {
       var format  = formatSel.value;
@@ -193,7 +246,39 @@
         alert('This format is not supported in your browser. Using JPG instead.');
       }
 
-      var pdf = await pdfjsLib.getDocument({ data: pdfFileBytes }).promise;
+      // Build the getDocument options
+      var loadOptions = { data: pdfFileBytes.slice(0) };
+      if (isEncrypted) {
+        var pwd = passwordIn.value;
+        if (!pwd) {
+          passwordError.textContent = 'Please enter the password.';
+          passwordError.classList.add('show');
+          btn.disabled = false;
+          btn.textContent = 'Convert & Download ZIP';
+          return;
+        }
+        loadOptions.password = pwd;
+      }
+
+      // Load PDF
+      var pdf;
+      try {
+        pdf = await pdfjsLib.getDocument(loadOptions).promise;
+      } catch (err) {
+        if (err && err.name === 'PasswordException') {
+          passwordError.textContent = 'Incorrect password. Please try again.';
+          passwordError.classList.add('show');
+          passwordBox.style.display = 'flex';
+          btn.disabled = false;
+          btn.textContent = 'Convert & Download ZIP';
+          return;
+        }
+        throw err;
+      }
+
+      // If we got here, password was correct (or not needed)
+      passwordError.classList.remove('show');
+
       var zip = new JSZip();
 
       for (var i = 1; i <= pdf.numPages; i++) {
@@ -220,9 +305,7 @@
         zip.file(fileName + '-page-' + i + fileExt, base64, { base64: true });
       }
 
-      // ============================================================
-      // README.html — A4 friendly, 12pt, fits in half a page
-      // ============================================================
+      // README.html — A4 friendly, 12pt
       var readmeHtml =
         '<!DOCTYPE html>\n' +
         '<html>\n' +
