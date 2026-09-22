@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Word to PDF — Convert DOCX to PDF Online Free | DocEasy</title>
+<meta name="description" content="Convert Word documents (DOC/DOCX) to PDF online. 100% browser-based, no upload, no signup. Fast, private, and free forever.">
+<meta name="keywords" content="word to pdf, docx to pdf, doc to pdf, convert word to pdf, free word to pdf converter, online word to pdf">
+<meta name="author" content="DocEasy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://doceasy.org/tools/word-to-pdf.html">
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('doceasy_theme') || 'light';
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+/* ============ WORD TO PDF — Tool styles ============ */
+.main-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+.hero-box { text-align: center; padding: 8px 0 24px; }
+.hero-title {
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 800; color: var(--text-color);
+  margin: 0 0 10px; letter-spacing: -0.5px;
+}
+.hero-sub {
+  color: var(--subtext-color); font-size: 15px;
+  margin: 0 auto; max-width: 620px; line-height: 1.6;
+}
+
+.tool-card {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 28px 22px;
+  box-shadow: var(--shadow-md); margin-bottom: 22px;
+}
+
+.drop-zone {
+  border: 2px dashed var(--border-color); border-radius: 12px;
+  padding: 42px 20px; text-align: center;
+  transition: all 0.22s ease; cursor: pointer;
+  background: var(--card-hover); position: relative;
+}
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px);
+}
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer;
+}
+.dz-icon {
+  width: 72px; height: 72px; margin: 0 auto 16px;
+  border-radius: 20px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.dz-icon svg { width: 36px; height: 36px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.dz-title { font-size: 18px; font-weight: 700; color: var(--text-color); margin: 0 0 6px; }
+.dz-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0 0 20px; }
+.dz-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px;
+  background: var(--accent); color: #fff; border: none;
+  cursor: pointer; transition: all 0.18s ease;
+  box-shadow: 0 4px 14px rgba(25,57,138,0.25);
+}
+.dz-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.dz-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; }
+
+.file-info {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; background: var(--accent-soft);
+  border: 1px solid var(--accent); border-radius: 10px; margin-top: 18px;
+}
+.file-info svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; flex-shrink: 0; }
+.file-info .fi-name {
+  font-weight: 700; color: var(--text-color); font-size: 14px;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.file-info .fi-size { color: var(--subtext-color); font-size: 12.5px; font-weight: 600; }
+.file-info .fi-remove {
+  background: transparent; border: none; color: var(--error);
+  cursor: pointer; padding: 4px; display: grid; place-items: center;
+  border-radius: 6px; transition: background 0.15s;
+}
+.file-info .fi-remove:hover { background: rgba(220,38,38,0.1); }
+.file-info .fi-remove svg { stroke: var(--error); width: 18px; height: 18px; }
+
+.progress-wrap { margin-top: 20px; display: none; }
+.progress-wrap.show { display: block; }
+.progress-bar-outer {
+  height: 8px; border-radius: 4px; background: var(--card-hover);
+  overflow: hidden; border: 1px solid var(--border-color);
+}
+.progress-bar-inner {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  transition: width 0.2s ease; border-radius: 4px;
+}
+.progress-text {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--subtext-color); font-weight: 600;
+}
+
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.btn-primary, .btn-secondary {
+  flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px;
+  font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.18s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none;
+}
+.btn-primary { background: var(--success); color: #fff; box-shadow: 0 4px 14px rgba(21,128,61,0.25); }
+.btn-primary:hover:not(:disabled) { background: var(--success-hover); transform: translateY(-2px); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-secondary {
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.btn-primary svg, .btn-secondary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color); padding: 14px 22px; border-radius: 10px;
+  box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.ok { border-color: var(--success); color: var(--success); }
+.toast.error { border-color: var(--error); color: var(--error); }
+.toast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; flex-shrink: 0; }
+
+/* SEO Article */
+.seo-article {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 30px 26px; margin: 30px auto 0;
+  line-height: 1.75; box-shadow: var(--shadow-sm);
+}
+.seo-article h2 { color: var(--text-color); font-size: 22px; margin: 0 0 14px; }
+.seo-article h3 { color: var(--accent); font-size: 17px; margin: 26px 0 10px; }
+.seo-article p, .seo-article ul, .seo-article ol, .seo-article li {
+  font-size: 14.5px; color: var(--subtext-color); line-height: 1.75;
+}
+.seo-article ol, .seo-article ul { padding-left: 22px; }
+.seo-article li { margin-bottom: 8px; }
+.seo-article b, .seo-article strong { color: var(--text-color); }
+.seo-article code {
+  background: var(--card-hover); padding: 2px 6px;
+  border-radius: 4px; font-size: 13px; color: var(--accent);
+}
+
+.article-image-box {
+  margin: 24px 0; border-radius: 10px; overflow: hidden;
+  border: 1px dashed var(--border-color);
+  background: var(--card-hover); padding: 12px; text-align: center;
+}
+.article-image-box img {
+  max-width: 100%; height: auto; border-radius: 8px;
+  display: block; margin: 0 auto;
+}
+.article-image-caption {
+  font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px;
+}
+
+/* Info box */
+.info-box {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 12px; padding: 20px 22px; margin-top: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.info-box h3 {
+  font-size: 15px; font-weight: 700; color: var(--accent);
+  margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+}
+.info-box h3 svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
+.info-box ul {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;
+}
+.info-box li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; color: var(--subtext-color); line-height: 1.5;
+}
+.info-box li svg {
+  width: 16px; height: 16px; stroke: var(--success); fill: none;
+  flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Word to PDF</h1>
+    <p class="hero-sub">Convert your Word documents (DOC / DOCX) to PDF instantly. 100% browser-based — your files never leave your device.</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+      <div class="dz-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="9" y1="13" x2="15" y2="13"/>
+          <line x1="9" y1="17" x2="15" y2="17"/>
+        </svg>
+      </div>
+      <h3 class="dz-title">Drop your Word file here</h3>
+      <p class="dz-sub">or click to browse · DOC and DOCX supported · Max 25 MB</p>
+      <button class="dz-btn" type="button" id="chooseBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Choose Word File
+      </button>
+    </div>
+
+    <div class="file-info" id="fileInfo" style="display:none;">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <span class="fi-name" id="fileName">document.docx</span>
+      <span class="fi-size" id="fileSize">0 KB</span>
+      <button class="fi-remove" id="removeFile" title="Remove file">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressBar"></div>
+      </div>
+      <p class="progress-text" id="progressText">Processing…</p>
+    </div>
+
+    <div class="btn-row" id="actionRow" style="display:none;">
+      <button class="btn-secondary" type="button" id="resetBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Convert Another
+      </button>
+      <button class="btn-primary" type="button" id="convertBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Convert to PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3>
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Why use DocEasy for Word to PDF?
+    </h3>
+    <ul>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — files never leave your device</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> No signup, no email, no limits</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Works on any browser, any device</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free forever — no hidden charges</li>
+    </ul>
+  </div>
+
+  <!-- ===================== SEO TUTORIAL ===================== -->
+  <section class="seo-article">
+    <h2>How to Convert Word to PDF: Complete Guide</h2>
+    <p>Converting a Word document into a PDF is one of the most common tasks in modern work life. Whether you are a student submitting an assignment, a freelancer sending a contract, or a business sharing an invoice, PDFs guarantee that your document will look the same on every device. This guide walks you through exactly how to use the DocEasy Word to PDF tool, why PDFs matter, and how to get the best possible results.</p>
+
+    <div class="article-image-box">
+      <img id="tutorial-demo-img"
+           src="../assets/images/word-to-pdf-demo.jpg"
+           alt="Word to PDF Conversion Demo - DocEasy"
+           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>DOCX → PDF</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place word-to-pdf-demo.jpg in assets/images/</text></svg>';">
+      <div class="article-image-caption">Word documents converted to clean, print-ready PDFs — all processed locally in your browser.</div>
+    </div>
+
+    <h3>Why Convert Word to PDF?</h3>
+    <p>Word documents are editable, which is great when you are writing, but it also means the file can shift its layout the moment it is opened on a different computer. Fonts may be missing, tables may overflow, and spacing may change. A PDF locks every line, image, and table in place. That makes it the safest format for anything that needs to look identical everywhere — job applications, legal contracts, academic papers, invoices, and official forms.</p>
+
+    <p>Another reason is security. PDFs can be protected, and they discourage casual editing. When you send a Word file, the receiver can easily change its contents. When you send a PDF, your document stays exactly as you created it.</p>
+
+    <h3>Step-by-Step: How to Use the DocEasy Word to PDF Tool</h3>
+    <ol>
+      <li><b>Upload Your Word File:</b> Drag and drop your <code>.doc</code> or <code>.docx</code> file onto the upload zone, or click the "Choose Word File" button to browse your computer. Files up to 25 MB are supported.</li>
+      <li><b>Automatic Text Extraction:</b> The tool reads the text content from your Word document using Mammoth, a lightweight JavaScript library that runs entirely inside your browser. Paragraphs, headings, and basic formatting are preserved without any server interaction.</li>
+      <li><b>PDF Generation:</b> Once the text is ready, a second library called PDF-Lib builds a clean, A4-sized PDF. Long documents automatically flow onto multiple pages, so nothing is lost.</li>
+      <li><b>Watermark Applied:</b> A small <b>doceasy.org</b> watermark appears discreetly at the bottom-right of every page. This keeps your document branded and lets the reader know where it came from.</li>
+      <li><b>Download Instantly:</b> Your PDF is created as a Blob and downloaded straight to your device. No waiting, no email, no signup required.</li>
+    </ol>
+
+    <h3>What Kind of Documents Can You Convert?</h3>
+    <ul>
+      <li><b>Resumes and CVs:</b> Convert a Word resume into a polished PDF that recruiters can open on any device.</li>
+      <li><b>Assignments and essays:</b> Submit college or school work in a fixed, tamper-resistant format.</li>
+      <li><b>Contracts and agreements:</b> Lock a legal document's layout before sending it to a client or partner.</li>
+      <li><b>Invoices and receipts:</b> Turn a Word template into a professional PDF for billing.</li>
+      <li><b>Reports and proposals:</b> Share business documents that look the same on every screen.</li>
+      <li><b>Letters and cover notes:</b> Send formal letters in a format that preserves formatting.</li>
+    </ul>
+
+    <h3>Privacy First — Always</h3>
+    <p>The biggest advantage of DocEasy is privacy. Because everything runs in your browser, your document is never uploaded to any server. There is no account to create, no email to verify, and no file sitting in a remote database. When you close the tab, the file is gone from memory. This makes DocEasy suitable for sensitive documents like ID proofs, financial statements, medical records, and legal agreements.</p>
+
+    <h3>Tips for the Best Results</h3>
+    <ul>
+      <li>Use a <code>.docx</code> file rather than an old <code>.doc</code> file whenever possible — modern DOCX files convert more reliably.</li>
+      <li>Keep your document under 25 MB for the fastest conversion.</li>
+      <li>For heavily formatted documents with tables, columns, or images, check the resulting PDF and make small tweaks if needed.</li>
+      <li>If your Word file contains only images, consider using our JPG to PDF tool instead.</li>
+      <li>Always keep a backup of your original Word file — you may want to edit it again later.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <p><b>Is the Word to PDF converter free?</b><br>
+    Yes. DocEasy is completely free with no signup, no watermark fees, and no hidden limits.</p>
+
+    <p><b>Are my files uploaded to your servers?</b><br>
+    No. Everything runs inside your browser. Your Word document never leaves your device.</p>
+
+    <p><b>Will the formatting be preserved?</b><br>
+    Text, headings, paragraphs, and basic formatting (bold, italic, lists) are preserved. Complex layouts with tables, images, or multi-column designs may need light adjustments after conversion.</p>
+
+    <p><b>What is the maximum file size?</b><br>
+    You can upload Word files up to 25 MB. For larger files, try splitting the document or compressing images first.</p>
+
+    <p><b>Does it work on mobile?</b><br>
+    Yes. DocEasy works on any modern browser — desktop, tablet, or smartphone — with no app install required.</p>
+
+    <p><b>Can I remove the watermark?</b><br>
+    The doceasy.org watermark is a small branding mark that helps readers identify the source of the converted document. It is intentionally subtle so it does not interfere with your content.</p>
+
+    <h3>Try It Now</h3>
+    <p>Ready to convert your Word document? Scroll up and drop your file into the upload zone. The whole process takes just a few seconds, and your PDF will be ready to download immediately. If you find this tool useful, share it with friends and colleagues who need a fast, private way to convert documents.</p>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="toastIcon">
+    <path d="M20 6L9 17l-5-5"/>
+  </svg>
+  <span id="toastMsg">Done</span>
+</div>
+
+<!-- PDF-Lib -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<!-- Mammoth.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var fileInput   = $('fileInput');
+  var dropZone    = $('dropZone');
+  var fileInfo    = $('fileInfo');
+  var fileName    = $('fileName');
+  var fileSize    = $('fileSize');
+  var removeFile  = $('removeFile');
+  var actionRow   = $('actionRow');
+  var convertBtn  = $('convertBtn');
+  var resetBtn    = $('resetBtn');
+  var progressWrap= $('progressWrap');
+  var progressBar = $('progressBar');
+  var progressText= $('progressText');
+  var toast       = $('toast');
+  var toastMsg    = $('toastMsg');
+  var toastIcon   = $('toastIcon');
+
+  var currentFile = null;
+
+  function showToast(msg, type) {
+    toastMsg.textContent = msg;
+    toast.className = 'toast show ' + (type || 'ok');
+    if (type === 'error') {
+      toastIcon.innerHTML = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+    } else {
+      toastIcon.innerHTML = '<path d="M20 6L9 17l-5-5"/>';
+    }
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    var name = (file.name || '').toLowerCase();
+    if (!name.endsWith('.doc') && !name.endsWith('.docx')) {
+      showToast('Please select a .doc or .docx file', 'error');
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      showToast('File too large. Maximum 25 MB.', 'error');
+      return;
+    }
+    currentFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = formatBytes(file.size);
+    fileInfo.style.display = 'flex';
+    actionRow.style.display = 'flex';
+    dropZone.style.display = 'none';
+  }
+
+  function resetAll() {
+    currentFile = null;
+    fileInput.value = '';
+    fileInfo.style.display = 'none';
+    actionRow.style.display = 'none';
+    dropZone.style.display = 'block';
+    progressWrap.classList.remove('show');
+    progressBar.style.width = '0%';
+    progressText.textContent = 'Processing…';
+  }
+
+  fileInput.addEventListener('change', function () { handleFile(this.files[0]); });
+
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.remove('dragover');
+    });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  removeFile.addEventListener('click', function (e) { e.stopPropagation(); resetAll(); });
+  resetBtn.addEventListener('click', resetAll);
+
+  async function convertToPdf() {
+    if (!currentFile) return;
+    if (!window.PDFLib || !window.mammoth) {
+      showToast('Libraries still loading. Please wait a moment.', 'error');
+      return;
+    }
+
+    convertBtn.disabled = true;
+    progressWrap.classList.add('show');
+    progressBar.style.width = '15%';
+    progressText.textContent = 'Reading Word document…';
+
+    try {
+      var arrayBuffer = await currentFile.arrayBuffer();
+
+      progressBar.style.width = '35%';
+      progressText.textContent = 'Extracting text and formatting…';
+
+      var result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+      var text = (result.value || '').trim();
+      if (!text) throw new Error('No readable text found in this document.');
+
+      progressBar.style.width = '60%';
+      progressText.textContent = 'Building PDF…';
+
+      var pdfDoc = await PDFLib.PDFDocument.create();
+      pdfDoc.setTitle(currentFile.name.replace(/\.(docx?|DOCX?)$/, ''));
+      pdfDoc.setProducer('DocEasy Word to PDF');
+      pdfDoc.setCreator('DocEasy');
+
+      var font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+
+      var fontSize = 11;
+      var lineHeight = 16;
+      var pageWidth = 595.28;
+      var pageHeight = 841.89;
+      var margin = 56;
+      var maxWidth = pageWidth - margin * 2;
+
+      var paragraphs = text.split(/\r?\n/);
+      var lines = [];
+      paragraphs.forEach(function (para) {
+        var trimmed = para.trim();
+        if (!trimmed) { lines.push(''); return; }
+        var words = trimmed.split(/\s+/);
+        var currentLine = '';
+        words.forEach(function (word) {
+          var testLine = currentLine ? currentLine + ' ' + word : word;
+          if (font.widthOfTextAtSize(testLine, fontSize) > maxWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine = testLine;
+          }
+        });
+        if (currentLine) lines.push(currentLine);
+      });
+
+      var page = pdfDoc.addPage([pageWidth, pageHeight]);
+      var y = pageHeight - margin;
+
+      lines.forEach(function (line) {
+        if (y < margin + lineHeight) {
+          page = pdfDoc.addPage([pageWidth, pageHeight]);
+          y = pageHeight - margin;
+        }
+        if (line) {
+          page.drawText(line, {
+            x: margin, y: y, size: fontSize, font: font,
+            color: PDFLib.rgb(0.12, 0.16, 0.24)
+          });
+        }
+        y -= lineHeight;
+      });
+
+      // Watermark
+      var pages = pdfDoc.getPages();
+      pages.forEach(function (p) {
+        p.drawText('doceasy.org', {
+          x: p.getWidth() - margin - 60,
+          y: 24, size: 8, font: font,
+          color: PDFLib.rgb(0, 0, 0),
+          opacity: 0.5
+        });
+      });
+
+      progressBar.style.width = '85%';
+      progressText.textContent = 'Saving PDF…';
+
+      var pdfBytes = await pdfDoc.save();
+      var blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = currentFile.name.replace(/\.(docx?|DOCX?)$/, '') + '.pdf';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+
+      progressBar.style.width = '100%';
+      progressText.textContent = 'Done!';
+      showToast('PDF created successfully', 'ok');
+
+      setTimeout(function () {
+        progressWrap.classList.remove('show');
+        progressBar.style.width = '0%';
+      }, 1500);
+
+    } catch (err) {
+      console.error(err);
+      showToast('Conversion failed: ' + (err.message || 'Unknown error'), 'error');
+      progressWrap.classList.remove('show');
+      progressBar.style.width = '0%';
+    } finally {
+      convertBtn.disabled = false;
+    }
+  }
+
+  convertBtn.addEventListener('click', convertToPdf);
+})();
+</script>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+</body>
+</html>
