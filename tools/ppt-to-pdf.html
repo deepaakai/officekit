@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PowerPoint to PDF — Convert PPTX to PDF Online Free | DocEasy</title>
+<meta name="description" content="Convert PowerPoint presentations (PPT/PPTX) to PDF online. 100% browser-based, no upload, no signup. Extract slides into a clean PDF.">
+<meta name="keywords" content="ppt to pdf, pptx to pdf, powerpoint to pdf, convert ppt to pdf, presentation to pdf, free ppt to pdf converter">
+<meta name="author" content="DocEasy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://doceasy.org/tools/ppt-to-pdf.html">
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('doceasy_theme') || 'light';
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+/* ============ PPT TO PDF — Tool styles ============ */
+.main-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+.hero-box { text-align: center; padding: 8px 0 24px; }
+.hero-title {
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 800; color: var(--text-color);
+  margin: 0 0 10px; letter-spacing: -0.5px;
+}
+.hero-sub {
+  color: var(--subtext-color); font-size: 15px;
+  margin: 0 auto; max-width: 620px; line-height: 1.6;
+}
+
+.tool-card {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 28px 22px;
+  box-shadow: var(--shadow-md); margin-bottom: 22px;
+}
+
+.drop-zone {
+  border: 2px dashed var(--border-color); border-radius: 12px;
+  padding: 42px 20px; text-align: center;
+  transition: all 0.22s ease; cursor: pointer;
+  background: var(--card-hover); position: relative;
+}
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px);
+}
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer;
+}
+.dz-icon {
+  width: 72px; height: 72px; margin: 0 auto 16px;
+  border-radius: 20px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.dz-icon svg { width: 36px; height: 36px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.dz-title { font-size: 18px; font-weight: 700; color: var(--text-color); margin: 0 0 6px; }
+.dz-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0 0 20px; }
+.dz-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px;
+  background: var(--accent); color: #fff; border: none;
+  cursor: pointer; transition: all 0.18s ease;
+  box-shadow: 0 4px 14px rgba(25,57,138,0.25);
+}
+.dz-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.dz-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; }
+
+.file-info {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; background: var(--accent-soft);
+  border: 1px solid var(--accent); border-radius: 10px; margin-top: 18px;
+}
+.file-info svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; flex-shrink: 0; }
+.file-info .fi-name {
+  font-weight: 700; color: var(--text-color); font-size: 14px;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.file-info .fi-size { color: var(--subtext-color); font-size: 12.5px; font-weight: 600; }
+.file-info .fi-remove {
+  background: transparent; border: none; color: var(--error);
+  cursor: pointer; padding: 4px; display: grid; place-items: center;
+  border-radius: 6px; transition: background 0.15s;
+}
+.file-info .fi-remove:hover { background: rgba(220,38,38,0.1); }
+.file-info .fi-remove svg { stroke: var(--error); width: 18px; height: 18px; }
+
+.notice-box {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 16px; margin-top: 16px;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.35);
+  border-radius: 10px;
+  font-size: 12.5px; color: var(--text-color);
+  line-height: 1.55;
+}
+.notice-box svg { width: 18px; height: 18px; stroke: #f59e0b; fill: none; flex-shrink: 0; margin-top: 1px; }
+.notice-box b { color: #b45309; }
+
+.progress-wrap { margin-top: 20px; display: none; }
+.progress-wrap.show { display: block; }
+.progress-bar-outer {
+  height: 8px; border-radius: 4px; background: var(--card-hover);
+  overflow: hidden; border: 1px solid var(--border-color);
+}
+.progress-bar-inner {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  transition: width 0.2s ease; border-radius: 4px;
+}
+.progress-text {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--subtext-color); font-weight: 600;
+}
+
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.btn-primary, .btn-secondary {
+  flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px;
+  font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.18s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none;
+}
+.btn-primary { background: var(--success); color: #fff; box-shadow: 0 4px 14px rgba(21,128,61,0.25); }
+.btn-primary:hover:not(:disabled) { background: var(--success-hover); transform: translateY(-2px); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-secondary {
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.btn-primary svg, .btn-secondary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color); padding: 14px 22px; border-radius: 10px;
+  box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.ok { border-color: var(--success); color: var(--success); }
+.toast.error { border-color: var(--error); color: var(--error); }
+.toast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; flex-shrink: 0; }
+
+.info-box {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 12px; padding: 20px 22px; margin-top: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.info-box h3 {
+  font-size: 15px; font-weight: 700; color: var(--accent);
+  margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+}
+.info-box h3 svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
+.info-box ul {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;
+}
+.info-box li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; color: var(--subtext-color); line-height: 1.5;
+}
+.info-box li svg {
+  width: 16px; height: 16px; stroke: var(--success); fill: none;
+  flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
+}
+
+/* SEO Article */
+.seo-article {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 30px 26px; margin: 30px auto 0;
+  line-height: 1.75; box-shadow: var(--shadow-sm);
+}
+.seo-article h2 { color: var(--text-color); font-size: 22px; margin: 0 0 14px; }
+.seo-article h3 { color: var(--accent); font-size: 17px; margin: 26px 0 10px; }
+.seo-article p, .seo-article ul, .seo-article ol, .seo-article li {
+  font-size: 14.5px; color: var(--subtext-color); line-height: 1.75;
+}
+.seo-article ol, .seo-article ul { padding-left: 22px; }
+.seo-article li { margin-bottom: 8px; }
+.seo-article b, .seo-article strong { color: var(--text-color); }
+.seo-article code {
+  background: var(--card-hover); padding: 2px 6px;
+  border-radius: 4px; font-size: 13px; color: var(--accent);
+}
+
+.article-image-box {
+  margin: 24px 0; border-radius: 10px; overflow: hidden;
+  border: 1px dashed var(--border-color);
+  background: var(--card-hover); padding: 12px; text-align: center;
+}
+.article-image-box img {
+  max-width: 100%; height: auto; border-radius: 8px;
+  display: block; margin: 0 auto;
+}
+.article-image-caption {
+  font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px;
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">PowerPoint to PDF</h1>
+    <p class="hero-sub">Convert PowerPoint presentations (PPT / PPTX) to PDF instantly. 100% browser-based — your files never leave your device.</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept=".ppt,.pptx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation">
+      <div class="dz-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h20"/>
+          <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/>
+          <path d="m7 21 5-5 5 5"/>
+        </svg>
+      </div>
+      <h3 class="dz-title">Drop your PowerPoint file here</h3>
+      <p class="dz-sub">or click to browse · PPTX supported · Max 25 MB</p>
+      <button class="dz-btn" type="button" id="chooseBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Choose PowerPoint File
+      </button>
+    </div>
+
+    <div class="file-info" id="fileInfo" style="display:none;">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h20"/>
+        <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/>
+        <path d="m7 21 5-5 5 5"/>
+      </svg>
+      <span class="fi-name" id="fileName">presentation.pptx</span>
+      <span class="fi-size" id="fileSize">0 KB</span>
+      <button class="fi-remove" id="removeFile" title="Remove file">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="notice-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 9v4M12 17h.01"/>
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      </svg>
+      <div>
+        <b>Basic conversion:</b> This tool extracts the text content from each slide and renders it as a clean PDF. Images, animations, and complex slide layouts are not preserved. For text-heavy presentations, the output looks great.
+      </div>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressBar"></div>
+      </div>
+      <p class="progress-text" id="progressText">Processing…</p>
+    </div>
+
+    <div class="btn-row" id="actionRow" style="display:none;">
+      <button class="btn-secondary" type="button" id="resetBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Convert Another
+      </button>
+      <button class="btn-primary" type="button" id="convertBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Convert to PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3>
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Why use DocEasy for PowerPoint to PDF?
+    </h3>
+    <ul>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — files never leave your device</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Every slide becomes a clean PDF page</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Perfect for text-heavy presentations</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free forever — no signup required</li>
+    </ul>
+  </div>
+
+  <!-- ===================== SEO TUTORIAL ===================== -->
+  <section class="seo-article">
+    <h2>How to Convert PowerPoint to PDF: Complete Guide</h2>
+    <p>PowerPoint presentations are one of the most widely used formats for business meetings, lectures, and pitch decks. But when it is time to share a presentation, a PDF is often the smarter choice. PDFs preserve the content, open on any device without needing PowerPoint, and cannot be accidentally edited. This guide walks you through how the DocEasy PowerPoint to PDF tool works, when to use it, and what to expect from the output.</p>
+
+    <div class="article-image-box">
+      <img id="tutorial-demo-img"
+           src="../assets/images/ppt-to-pdf-demo.jpg"
+           alt="PowerPoint to PDF Conversion Demo - DocEasy"
+           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>PPTX → PDF</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place ppt-to-pdf-demo.jpg in assets/images/</text></svg>';">
+      <div class="article-image-caption">PowerPoint slides converted to clean PDF pages — processed entirely in your browser.</div>
+    </div>
+
+    <h3>Why Convert PowerPoint to PDF?</h3>
+    <p>PowerPoint files are designed for presenting, not for sharing. When you send a .pptx file to someone, several problems can arise: they may not have PowerPoint installed, fonts may not render correctly on their machine, or slide layouts may shift. A PDF solves all of these problems at once.</p>
+    <p>PDFs are the universal format for documents. They open in every browser, on every device, without needing any special software. They also look exactly the same no matter who opens them, which makes them ideal for sending presentations to clients, professors, or colleagues. Finally, PDFs discourage casual editing — the receiver cannot accidentally change your slides.</p>
+
+    <h3>Step-by-Step: How to Use the PowerPoint to PDF Tool</h3>
+    <ol>
+      <li><b>Upload Your PowerPoint File:</b> Drag and drop your <code>.pptx</code> file onto the upload zone, or click "Choose PowerPoint File" to browse. Files up to 25 MB are supported.</li>
+      <li><b>Automatic Slide Extraction:</b> The tool reads your presentation using a JavaScript library that parses PPTX files directly in your browser. Every slide's title and text content is captured.</li>
+      <li><b>Slide Rendering:</b> Each slide becomes a page in the PDF. The slide title appears as a heading, and bullet points are rendered as a clean list below it.</li>
+      <li><b>Watermark Applied:</b> A small <b>doceasy.org</b> watermark appears at the bottom of every page, keeping your document branded.</li>
+      <li><b>Download Instantly:</b> Your PDF is created and downloaded to your device in seconds. No server, no email, no waiting.</li>
+    </ol>
+
+    <h3>What Kind of Presentations Work Best?</h3>
+    <ul>
+      <li><b>Lecture notes and study material:</b> Slides with headings and bullet points convert cleanly.</li>
+      <li><b>Business reports and summaries:</b> Text-heavy presentations with clear structure.</li>
+      <li><b>Meeting agendas and plans:</b> Simple slide decks that emphasize content over design.</li>
+      <li><b>Training material:</b> Instructional slides with step-by-step points.</li>
+      <li><b>Simple pitch decks:</b> Decks that focus on written information rather than visuals.</li>
+    </ul>
+
+    <h3>Understanding the Limitations</h3>
+    <p>This tool performs a <b>content extraction</b>, not a pixel-perfect conversion. That means:</p>
+    <ul>
+      <li><b>Text is preserved:</b> Slide titles, bullet points, and body text come through clearly.</li>
+      <li><b>Images are not preserved:</b> Photos, charts, and graphics embedded in slides are not included.</li>
+      <li><b>Animations and transitions:</b> Not applicable in a PDF, so they are ignored.</li>
+      <li><b>Complex layouts:</b> Multi-column slides, floating text boxes, and overlapping elements are simplified.</li>
+      <li><b>Speaker notes:</b> Not extracted by this tool.</li>
+    </ul>
+    <p>If your presentation relies heavily on visuals, a desktop tool like Microsoft PowerPoint's built-in "Save as PDF" or LibreOffice will give you more accurate results. But for text-heavy decks — lecture notes, meeting agendas, structured reports — this tool produces a clean, useful PDF.</p>
+
+    <h3>Privacy First — Always</h3>
+    <p>Everything runs in your browser. Your PowerPoint file is never uploaded to any server. There is no account to create, no email to verify, and no file sitting in a remote database. When you close the tab, the file is gone from memory. This makes DocEasy suitable for sensitive presentations like internal business reports, confidential pitches, and personal lecture notes.</p>
+
+    <h3>Tips for the Best Results</h3>
+    <ul>
+      <li>Use a <code>.pptx</code> file rather than an old <code>.ppt</code> file whenever possible — modern PPTX files are supported better.</li>
+      <li>Keep your presentation under 25 MB for the fastest conversion.</li>
+      <li>Simplify your slides — focus on clear headings and bullet points rather than complex layouts.</li>
+      <li>Test the output — open the PDF and check that the text content is preserved as expected.</li>
+      <li>For image-heavy decks, use PowerPoint's built-in "Save as PDF" feature or LibreOffice for a closer match.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <p><b>Is the PowerPoint to PDF converter free?</b><br>
+    Yes. DocEasy is completely free with no signup, no watermark fees, and no hidden limits.</p>
+
+    <p><b>Are my files uploaded to your servers?</b><br>
+    No. Everything runs inside your browser. Your presentation never leaves your device.</p>
+
+    <p><b>Will images be preserved?</b><br>
+    No. This tool extracts text content only. Images, charts, and graphics are not included in the PDF. For image-heavy slides, use PowerPoint's built-in "Save as PDF" feature.</p>
+
+    <p><b>How many slides are supported?</b><br>
+    There is no hard limit on the number of slides, but very large presentations (over 25 MB) may take longer to process.</p>
+
+    <p><b>Will animations be preserved?</b><br>
+    Animations and transitions are not applicable in PDFs. The static content of each slide is what gets rendered.</p>
+
+    <p><b>Does it work on mobile?</b><br>
+    Yes. DocEasy works on any modern browser — desktop, tablet, or smartphone — with no app install required.</p>
+
+    <h3>Try It Now</h3>
+    <p>Ready to convert your presentation? Scroll up and drop your file into the upload zone. The whole process takes just a few seconds, and your PDF will be ready to download immediately. If you find this tool useful for text-heavy decks, share it with friends and colleagues.</p>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="toastIcon">
+    <path d="M20 6L9 17l-5-5"/>
+  </svg>
+  <span id="toastMsg">Done</span>
+</div>
+
+<!-- PDF-Lib -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<!-- JSZip (for reading pptx which is a zip) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var fileInput   = $('fileInput');
+  var dropZone    = $('dropZone');
+  var fileInfo    = $('fileInfo');
+  var fileName    = $('fileName');
+  var fileSize    = $('fileSize');
+  var removeFile  = $('removeFile');
+  var actionRow   = $('actionRow');
+  var convertBtn  = $('convertBtn');
+  var resetBtn    = $('resetBtn');
+  var progressWrap= $('progressWrap');
+  var progressBar = $('progressBar');
+  var progressText= $('progressText');
+  var toast       = $('toast');
+  var toastMsg    = $('toastMsg');
+  var toastIcon   = $('toastIcon');
+
+  var currentFile = null;
+
+  function showToast(msg, type) {
+    toastMsg.textContent = msg;
+    toast.className = 'toast show ' + (type || 'ok');
+    if (type === 'error') {
+      toastIcon.innerHTML = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+    } else {
+      toastIcon.innerHTML = '<path d="M20 6L9 17l-5-5"/>';
+    }
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    var name = (file.name || '').toLowerCase();
+    if (!name.endsWith('.ppt') && !name.endsWith('.pptx')) {
+      showToast('Please select a .ppt or .pptx file', 'error');
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      showToast('File too large. Maximum 25 MB.', 'error');
+      return;
+    }
+    currentFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = formatBytes(file.size);
+    fileInfo.style.display = 'flex';
+    actionRow.style.display = 'flex';
+    dropZone.style.display = 'none';
+  }
+
+  function resetAll() {
+    currentFile = null;
+    fileInput.value = '';
+    fileInfo.style.display = 'none';
+    actionRow.style.display = 'none';
+    dropZone.style.display = 'block';
+    progressWrap.classList.remove('show');
+    progressBar.style.width = '0%';
+    progressText.textContent = 'Processing…';
+  }
+
+  fileInput.addEventListener('change', function () { handleFile(this.files[0]); });
+
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.remove('dragover');
+    });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  removeFile.addEventListener('click', function (e) { e.stopPropagation(); resetAll(); });
+  resetBtn.addEventListener('click', resetAll);
+
+  /* ---------- Extract text from each PPTX slide ---------- */
+  async function extractSlides(zip) {
+    // Find slide files in ppt/slides/slideN.xml
+    var slideFiles = [];
+    zip.forEach(function (path, file) {
+      var m = path.match(/^ppt\/slides\/slide(\d+)\.xml$/);
+      if (m) slideFiles.push({ num: parseInt(m[1], 10), path: path, file: file });
+    });
+    slideFiles.sort(function (a, b) { return a.num - b.num; });
+    if (!slideFiles.length) throw new Error('No slides found. The file may not be a valid PPTX.');
+
+    var slides = [];
+    for (var i = 0; i < slideFiles.length; i++) {
+      var xml = await slideFiles[i].file.async('string');
+      var text = extractTextFromSlideXml(xml);
+      slides.push({ index: slideFiles[i].num, text: text });
+    }
+    return slides;
+  }
+
+  function extractTextFromSlideXml(xml) {
+    // Find all <a:t>...</a:t> text runs
+    var matches = xml.match(/<a:t[^>]*>([\s\S]*?)<\/a:t>/g);
+    if (!matches) return '';
+    return matches.map(function (m) {
+      var inner = m.replace(/<a:t[^>]*>/, '').replace(/<\/a:t>$/, '');
+      return decodeXmlEntities(inner);
+    }).join('\n');
+  }
+
+  function decodeXmlEntities(s) {
+    return s
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&apos;/g, "'")
+      .replace(/&#(\d+);/g, function (_, n) { return String.fromCharCode(parseInt(n, 10)); });
+  }
+
+  /* ---------- Convert to PDF ---------- */
+  async function convertToPdf() {
+    if (!currentFile) return;
+    if (!window.PDFLib || !window.JSZip) {
+      showToast('Libraries still loading. Please wait a moment.', 'error');
+      return;
+    }
+    var name = (currentFile.name || '').toLowerCase();
+    if (name.endsWith('.ppt')) {
+      showToast('Old .ppt format is not supported. Please save as .pptx first.', 'error');
+      return;
+    }
+
+    convertBtn.disabled = true;
+    progressWrap.classList.add('show');
+    progressBar.style.width = '10%';
+    progressText.textContent = 'Opening PowerPoint file…';
+
+    try {
+      var arrayBuffer = await currentFile.arrayBuffer();
+
+      progressBar.style.width = '25%';
+      progressText.textContent = 'Reading slides…';
+
+      var zip = await JSZip.loadAsync(arrayBuffer);
+      var slides = await extractSlides(zip);
+
+      if (!slides.length) throw new Error('No slides found.');
+
+      progressBar.style.width = '50%';
+      progressText.textContent = 'Building PDF…';
+
+      var pdfDoc = await PDFLib.PDFDocument.create();
+      pdfDoc.setTitle(currentFile.name.replace(/\.(pptx?|PPTX?)$/, ''));
+      pdfDoc.setProducer('DocEasy PowerPoint to PDF');
+      pdfDoc.setCreator('DocEasy');
+
+      var fontReg  = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      var fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+
+      var pageWidth = 595.28;
+      var pageHeight = 841.89;
+      var margin = 56;
+      var maxWidth = pageWidth - margin * 2;
+
+      slides.forEach(function (slide, i) {
+        var page = pdfDoc.addPage([pageWidth, pageHeight]);
+        var y = pageHeight - margin;
+
+        // Slide heading
+        page.drawText('Slide ' + slide.index, {
+          x: margin, y: y,
+          size: 16, font: fontBold,
+          color: PDFLib.rgb(0.10, 0.14, 0.22)
+        });
+        y -= 26;
+
+        // Slide text
+        var lines = (slide.text || '').split(/\r?\n/);
+        lines.forEach(function (line) {
+          var trimmed = line.trim();
+          if (!trimmed) { y -= 8; return; }
+
+          var words = trimmed.split(/\s+/);
+          var currentLine = '';
+          words.forEach(function (word) {
+            var testLine = currentLine ? currentLine + ' ' + word : word;
+            if (fontReg.widthOfTextAtSize(testLine, 11) > maxWidth && currentLine) {
+              if (y < margin + 16) {
+                page = pdfDoc.addPage([pageWidth, pageHeight]);
+                y = pageHeight - margin;
+              }
+              page.drawText(currentLine, {
+                x: margin, y: y, size: 11, font: fontReg,
+                color: PDFLib.rgb(0.20, 0.24, 0.32)
+              });
+              y -= 16;
+              currentLine = word;
+            } else {
+              currentLine = testLine;
+            }
+          });
+          if (currentLine) {
+            if (y < margin + 16) {
+              page = pdfDoc.addPage([pageWidth, pageHeight]);
+              y = pageHeight - margin;
+            }
+            page.drawText(currentLine, {
+              x: margin, y: y, size: 11, font: fontReg,
+              color: PDFLib.rgb(0.20, 0.24, 0.32)
+            });
+            y -= 16;
+          }
+        });
+
+        // Watermark on this page
+        page.drawText('doceasy.org', {
+          x: pageWidth - margin - 60, y: 24,
+          size: 8, font: fontReg,
+          color: PDFLib.rgb(0, 0, 0), opacity: 0.5
+        });
+
+        progressBar.style.width = String(50 + Math.round(((i + 1) / slides.length) * 35)) + '%';
+        progressText.textContent = 'Processing slide ' + (i + 1) + ' of ' + slides.length + '…';
+      });
+
+      progressBar.style.width = '90%';
+      progressText.textContent = 'Saving PDF…';
+
+      var pdfBytes = await pdfDoc.save();
+      var blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = currentFile.name.replace(/\.(pptx?|PPTX?)$/, '') + '.pdf';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+
+      progressBar.style.width = '100%';
+      progressText.textContent = 'Done!';
+      showToast('PDF created successfully', 'ok');
+
+      setTimeout(function () {
+        progressWrap.classList.remove('show');
+        progressBar.style.width = '0%';
+      }, 1500);
+
+    } catch (err) {
+      console.error(err);
+      showToast('Conversion failed: ' + (err.message || 'Unknown error'), 'error');
+      progressWrap.classList.remove('show');
+      progressBar.style.width = '0%';
+    } finally {
+      convertBtn.disabled = false;
+    }
+  }
+
+  convertBtn.addEventListener('click', convertToPdf);
+})();
+</script>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+</body>
+</html>
