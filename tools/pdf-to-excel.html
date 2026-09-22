@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDF to Excel — Convert PDF to XLSX Online Free | DocEasy</title>
+<meta name="description" content="Convert PDF tables and text into editable Excel (.xlsx) files online. 100% browser-based, no upload, no signup. Fast, private, and free.">
+<meta name="keywords" content="pdf to excel, pdf to xlsx, convert pdf to excel, pdf table to excel, free pdf to excel converter, extract table from pdf">
+<meta name="author" content="DocEasy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://doceasy.org/tools/pdf-to-excel.html">
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('doceasy_theme') || 'light';
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+/* ============ PDF TO EXCEL — Tool styles ============ */
+.main-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+.hero-box { text-align: center; padding: 8px 0 24px; }
+.hero-title {
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 800; color: var(--text-color);
+  margin: 0 0 10px; letter-spacing: -0.5px;
+}
+.hero-sub {
+  color: var(--subtext-color); font-size: 15px;
+  margin: 0 auto; max-width: 620px; line-height: 1.6;
+}
+
+.tool-card {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 28px 22px;
+  box-shadow: var(--shadow-md); margin-bottom: 22px;
+}
+
+.drop-zone {
+  border: 2px dashed var(--border-color); border-radius: 12px;
+  padding: 42px 20px; text-align: center;
+  transition: all 0.22s ease; cursor: pointer;
+  background: var(--card-hover); position: relative;
+}
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px);
+}
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer;
+}
+.dz-icon {
+  width: 72px; height: 72px; margin: 0 auto 16px;
+  border-radius: 20px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.dz-icon svg { width: 36px; height: 36px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.dz-title { font-size: 18px; font-weight: 700; color: var(--text-color); margin: 0 0 6px; }
+.dz-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0 0 20px; }
+.dz-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px;
+  background: var(--accent); color: #fff; border: none;
+  cursor: pointer; transition: all 0.18s ease;
+  box-shadow: 0 4px 14px rgba(25,57,138,0.25);
+}
+.dz-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.dz-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; }
+
+.file-info {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; background: var(--accent-soft);
+  border: 1px solid var(--accent); border-radius: 10px; margin-top: 18px;
+}
+.file-info svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; flex-shrink: 0; }
+.file-info .fi-name {
+  font-weight: 700; color: var(--text-color); font-size: 14px;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.file-info .fi-size { color: var(--subtext-color); font-size: 12.5px; font-weight: 600; }
+.file-info .fi-remove {
+  background: transparent; border: none; color: var(--error);
+  cursor: pointer; padding: 4px; display: grid; place-items: center;
+  border-radius: 6px; transition: background 0.15s;
+}
+.file-info .fi-remove:hover { background: rgba(220,38,38,0.1); }
+.file-info .fi-remove svg { stroke: var(--error); width: 18px; height: 18px; }
+
+.notice-box {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 16px; margin-top: 16px;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.35);
+  border-radius: 10px;
+  font-size: 12.5px; color: var(--text-color);
+  line-height: 1.55;
+}
+.notice-box svg { width: 18px; height: 18px; stroke: #f59e0b; fill: none; flex-shrink: 0; margin-top: 1px; }
+.notice-box b { color: #b45309; }
+
+.progress-wrap { margin-top: 20px; display: none; }
+.progress-wrap.show { display: block; }
+.progress-bar-outer {
+  height: 8px; border-radius: 4px; background: var(--card-hover);
+  overflow: hidden; border: 1px solid var(--border-color);
+}
+.progress-bar-inner {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  transition: width 0.2s ease; border-radius: 4px;
+}
+.progress-text {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--subtext-color); font-weight: 600;
+}
+
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.btn-primary, .btn-secondary {
+  flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px;
+  font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.18s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none;
+}
+.btn-primary { background: var(--success); color: #fff; box-shadow: 0 4px 14px rgba(21,128,61,0.25); }
+.btn-primary:hover:not(:disabled) { background: var(--success-hover); transform: translateY(-2px); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-secondary {
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.btn-primary svg, .btn-secondary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color); padding: 14px 22px; border-radius: 10px;
+  box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.ok { border-color: var(--success); color: var(--success); }
+.toast.error { border-color: var(--error); color: var(--error); }
+.toast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; flex-shrink: 0; }
+
+.info-box {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 12px; padding: 20px 22px; margin-top: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.info-box h3 {
+  font-size: 15px; font-weight: 700; color: var(--accent);
+  margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+}
+.info-box h3 svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
+.info-box ul {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;
+}
+.info-box li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; color: var(--subtext-color); line-height: 1.5;
+}
+.info-box li svg {
+  width: 16px; height: 16px; stroke: var(--success); fill: none;
+  flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
+}
+
+/* SEO Article */
+.seo-article {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 30px 26px; margin: 30px auto 0;
+  line-height: 1.75; box-shadow: var(--shadow-sm);
+}
+.seo-article h2 { color: var(--text-color); font-size: 22px; margin: 0 0 14px; }
+.seo-article h3 { color: var(--accent); font-size: 17px; margin: 26px 0 10px; }
+.seo-article p, .seo-article ul, .seo-article ol, .seo-article li {
+  font-size: 14.5px; color: var(--subtext-color); line-height: 1.75;
+}
+.seo-article ol, .seo-article ul { padding-left: 22px; }
+.seo-article li { margin-bottom: 8px; }
+.seo-article b, .seo-article strong { color: var(--text-color); }
+.seo-article code {
+  background: var(--card-hover); padding: 2px 6px;
+  border-radius: 4px; font-size: 13px; color: var(--accent);
+}
+
+.article-image-box {
+  margin: 24px 0; border-radius: 10px; overflow: hidden;
+  border: 1px dashed var(--border-color);
+  background: var(--card-hover); padding: 12px; text-align: center;
+}
+.article-image-box img {
+  max-width: 100%; height: auto; border-radius: 8px;
+  display: block; margin: 0 auto;
+}
+.article-image-caption {
+  font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px;
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">PDF to Excel</h1>
+    <p class="hero-sub">Extract tables and text from PDF into editable Excel (.xlsx) files. 100% browser-based — your files never leave your device.</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept=".pdf,application/pdf">
+      <div class="dz-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="9" y1="13" x2="15" y2="13"/>
+          <line x1="9" y1="17" x2="15" y2="17"/>
+        </svg>
+      </div>
+      <h3 class="dz-title">Drop your PDF file here</h3>
+      <p class="dz-sub">or click to browse · PDF supported · Max 25 MB</p>
+      <button class="dz-btn" type="button" id="chooseBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Choose PDF File
+      </button>
+    </div>
+
+    <div class="file-info" id="fileInfo" style="display:none;">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <span class="fi-name" id="fileName">document.pdf</span>
+      <span class="fi-size" id="fileSize">0 KB</span>
+      <button class="fi-remove" id="removeFile" title="Remove file">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="notice-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 9v4M12 17h.01"/>
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      </svg>
+      <div>
+        <b>Table extraction:</b> This tool detects columns by analyzing the horizontal positions of text in your PDF. Simple, well-spaced tables convert well. Complex layouts, merged cells, and scanned PDFs may need manual cleanup in Excel afterward.
+      </div>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressBar"></div>
+      </div>
+      <p class="progress-text" id="progressText">Processing…</p>
+    </div>
+
+    <div class="btn-row" id="actionRow" style="display:none;">
+      <button class="btn-secondary" type="button" id="resetBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Convert Another
+      </button>
+      <button class="btn-primary" type="button" id="convertBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Convert to Excel
+      </button>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3>
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Why use DocEasy for PDF to Excel?
+    </h3>
+    <ul>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — files never leave your device</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Real .xlsx files, opens in Excel or Sheets</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Each PDF page becomes a worksheet</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free forever — no signup required</li>
+    </ul>
+  </div>
+
+  <!-- ===================== SEO TUTORIAL ===================== -->
+  <section class="seo-article">
+    <h2>How to Convert PDF to Excel: Complete Guide</h2>
+    <p>PDFs are great for sharing tables because they lock the layout in place. But that same lock makes it almost impossible to work with the data — you cannot sort a column, run a formula, or update a number without retyping everything. Converting a PDF to Excel solves this. It turns a locked table into a real spreadsheet you can edit, filter, and analyze.</p>
+    <p>The DocEasy PDF to Excel tool runs entirely in your browser. Your PDF is never uploaded to any server, which makes it one of the safest ways to convert financial reports, invoices, and confidential data.</p>
+
+    <div class="article-image-box">
+      <img id="tutorial-demo-img"
+           src="../assets/images/pdf-to-excel-demo.jpg"
+           alt="PDF to Excel Conversion Demo - DocEasy"
+           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>PDF → XLSX</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place pdf-to-excel-demo.jpg in assets/images/</text></svg>';">
+      <div class="article-image-caption">Extract tables from PDF into editable Excel spreadsheets — processed entirely in your browser.</div>
+    </div>
+
+    <h3>Why Convert PDF to Excel?</h3>
+    <p>PDF is a presentation format. It preserves the look of a table but removes the underlying data structure. Once a table is inside a PDF, each cell is just a piece of text floating at a specific position on the page. There is no row, no column, no cell reference — just letters and numbers on a canvas.</p>
+    <p>An Excel spreadsheet is the opposite. Each value lives in a cell with a real address (A1, B2, C3). You can sort it, filter it, apply formulas, create charts, and share it with someone who will do the same. When you convert a PDF table to Excel, you get back the structure that was lost.</p>
+    <p>Common reasons to convert a PDF to Excel include:</p>
+    <ul>
+      <li><b>Financial reports:</b> Turn a PDF balance sheet into a spreadsheet for analysis.</li>
+      <li><b>Invoices and bills:</b> Extract line items into Excel for accounting.</li>
+      <li><b>Bank statements:</b> Pull transactions into a spreadsheet for budgeting.</li>
+      <li><b>Research data:</b> Convert published tables into data you can analyze.</li>
+      <li><b>Inventory lists:</b> Turn a PDF product list into an editable inventory sheet.</li>
+      <li><b>Sales reports:</b> Extract monthly numbers into Excel for charting.</li>
+    </ul>
+
+    <h3>Step-by-Step: How to Use the PDF to Excel Tool</h3>
+    <ol>
+      <li><b>Upload Your PDF File:</b> Drag and drop your <code>.pdf</code> file onto the upload zone, or click "Choose PDF File" to browse. Files up to 25 MB are supported.</li>
+      <li><b>Automatic Table Detection:</b> The tool reads your PDF using PDF.js and analyzes the horizontal positions of text. Items on the same line with a gap between them are treated as separate columns.</li>
+      <li><b>Row and Column Grouping:</b> Lines at the same vertical position become a row. Items separated by a wide gap become different cells in that row.</li>
+      <li><b>Excel Generation:</b> The structured data is packaged into a real .xlsx file — one worksheet for each page of the PDF — using the same Office Open XML format that Microsoft Excel creates.</li>
+      <li><b>Download Instantly:</b> Your .xlsx file is created as a Blob and downloaded straight to your device.</li>
+      <li><b>Open in Excel or Sheets:</b> Double-click the file to open it in Microsoft Excel, Google Sheets, LibreOffice Calc, or any other spreadsheet app.</li>
+    </ol>
+
+    <h3>What Kind of PDFs Work Best?</h3>
+    <ul>
+      <li><b>Well-spaced tables:</b> Tables with clear gaps between columns, generated from Word, Excel, or a layout tool.</li>
+      <li><b>Financial statements:</b> Balance sheets, income statements, and cash flow summaries with aligned numbers.</li>
+      <li><b>Simple invoices:</b> Line-item tables with clear columns.</li>
+      <li><b>Product catalogs:</b> Lists of items with prices in aligned columns.</li>
+      <li><b>Data exports:</b> PDFs created directly from a database or spreadsheet.</li>
+    </ul>
+
+    <h3>Understanding the Limitations</h3>
+    <p>This tool uses <b>positional text analysis</b>, not machine learning. That means:</p>
+    <ul>
+      <li><b>Simple tables convert well:</b> Columns with even spacing are detected correctly.</li>
+      <li><b>Wide gaps are important:</b> If two columns are very close together, they may be merged into one cell.</li>
+      <li><b>Merged cells are not detected:</b> Excel-style merged cells are treated as normal text.</li>
+      <li><b>Multi-line cells are tricky:</b> A cell that wraps onto two lines may become two rows.</li>
+      <li><b>Scanned PDFs are not supported:</b> If your PDF is an image of a page, there is no text to extract. You need OCR for that, which this tool does not perform.</li>
+      <li><b>Images and charts are ignored:</b> Only text is extracted, not embedded images.</li>
+    </ul>
+    <p>For simple, well-spaced tables — which covers the vast majority of financial reports and invoices — the output is clean and immediately usable. For complex layouts, expect to do a bit of cleanup in Excel after the conversion.</p>
+
+    <h3>Privacy First — Always</h3>
+    <p>Everything runs in your browser. Your PDF is never uploaded to any server. There is no account to create, no email to verify, and no file sitting in a remote database. When you close the tab, the file is gone from memory. This makes DocEasy suitable for sensitive documents like bank statements, tax returns, invoices, and internal reports.</p>
+
+    <h3>Tips for the Best Results</h3>
+    <ul>
+      <li>Use a text-based PDF — not a scanned one — for the cleanest output.</li>
+      <li>Keep your file under 25 MB for the fastest conversion.</li>
+      <li>After conversion, open the .xlsx in Excel and check the column alignment. Most simple tables need only minor tweaks.</li>
+      <li>For PDFs with very wide tables, expect some columns to be merged. Split the table into smaller PDFs if needed.</li>
+      <li>Always keep a copy of the original PDF, in case you need to re-extract data later.</li>
+      <li>If you only need to see the numbers, use our PDF to Word tool — it gives you a text version without needing Excel.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <p><b>Is the PDF to Excel converter free?</b><br>
+    Yes. DocEasy is completely free with no signup, no fees, and no hidden limits.</p>
+
+    <p><b>Are my files uploaded to your servers?</b><br>
+    No. Everything runs inside your browser. Your PDF never leaves your device.</p>
+
+    <p><b>Will the tables be perfectly preserved?</b><br>
+    Simple, well-spaced tables convert accurately. Complex layouts with merged cells, tight columns, and multi-line cells may need manual cleanup in Excel.</p>
+
+    <p><b>Can I convert a scanned PDF?</b><br>
+    Scanned PDFs are images of pages, not real text. This tool does not perform OCR, so text cannot be extracted from scanned PDFs.</p>
+
+    <p><b>How are multiple pages handled?</b><br>
+    Each page of the PDF becomes a separate worksheet in the Excel file, so you can work with one page's data at a time.</p>
+
+    <p><b>Does it work on mobile?</b><br>
+    Yes. DocEasy works on any modern browser — desktop, tablet, or smartphone — with no app install required.</p>
+
+    <h3>Try It Now</h3>
+    <p>Ready to convert your PDF into an editable Excel spreadsheet? Scroll up and drop your file into the upload zone. The whole process takes just a few seconds, and your .xlsx file will be ready to download immediately. If you find this tool useful, share it with friends and colleagues.</p>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="toastIcon">
+    <path d="M20 6L9 17l-5-5"/>
+  </svg>
+  <span id="toastMsg">Done</span>
+</div>
+
+<!-- JSZip for building .xlsx -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<!-- PDF.js for reading PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var fileInput   = $('fileInput');
+  var dropZone    = $('dropZone');
+  var fileInfo    = $('fileInfo');
+  var fileName    = $('fileName');
+  var fileSize    = $('fileSize');
+  var removeFile  = $('removeFile');
+  var actionRow   = $('actionRow');
+  var convertBtn  = $('convertBtn');
+  var resetBtn    = $('resetBtn');
+  var progressWrap= $('progressWrap');
+  var progressBar = $('progressBar');
+  var progressText= $('progressText');
+  var toast       = $('toast');
+  var toastMsg    = $('toastMsg');
+  var toastIcon   = $('toastIcon');
+
+  var currentFile = null;
+
+  function showToast(msg, type) {
+    toastMsg.textContent = msg;
+    toast.className = 'toast show ' + (type || 'ok');
+    if (type === 'error') {
+      toastIcon.innerHTML = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+    } else {
+      toastIcon.innerHTML = '<path d="M20 6L9 17l-5-5"/>';
+    }
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    var name = (file.name || '').toLowerCase();
+    if (!name.endsWith('.pdf')) {
+      showToast('Please select a .pdf file', 'error');
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      showToast('File too large. Maximum 25 MB.', 'error');
+      return;
+    }
+    currentFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = formatBytes(file.size);
+    fileInfo.style.display = 'flex';
+    actionRow.style.display = 'flex';
+    dropZone.style.display = 'none';
+  }
+
+  function resetAll() {
+    currentFile = null;
+    fileInput.value = '';
+    fileInfo.style.display = 'none';
+    actionRow.style.display = 'none';
+    dropZone.style.display = 'block';
+    progressWrap.classList.remove('show');
+    progressBar.style.width = '0%';
+    progressText.textContent = 'Processing…';
+  }
+
+  fileInput.addEventListener('change', function () { handleFile(this.files[0]); });
+
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.remove('dragover');
+    });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  removeFile.addEventListener('click', function (e) { e.stopPropagation(); resetAll(); });
+  resetBtn.addEventListener('click', resetAll);
+
+  /* ========================================================================
+     PDF → ROWS/COLUMNS EXTRACTION
+     ======================================================================== */
+  async function extractTableFromPdf(arrayBuffer) {
+    var pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    var totalPages = pdf.numPages;
+    var pagesData = [];
+
+    for (var p = 1; p <= totalPages; p++) {
+      var page = await pdf.getPage(p);
+      var textContent = await page.getTextContent();
+
+      // Convert items to {str, x, y, width}
+      var items = textContent.items.map(function (it) {
+        return {
+          str: it.str || '',
+          x: it.transform ? it.transform[4] : 0,
+          y: it.transform ? it.transform[5] : 0,
+          width: it.width || 0
+        };
+      }).filter(function (it) { return it.str.trim() !== ''; });
+
+      // Group items into rows by y-coordinate
+      var rows = [];
+      var usedY = [];
+      items.sort(function (a, b) { return b.y - a.y; });
+
+      items.forEach(function (item) {
+        var matched = null;
+        for (var k = 0; k < usedY.length; k++) {
+          if (Math.abs(usedY[k].y - item.y) < 4) {
+            matched = usedY[k];
+            break;
+          }
+        }
+        if (matched) {
+          matched.items.push(item);
+        } else {
+          var rowObj = { y: item.y, items: [item] };
+          usedY.push(rowObj);
+          rows.push(rowObj);
+        }
+      });
+
+      // Sort each row by x and split into columns based on gaps
+      var rowsData = rows.map(function (row) {
+        row.items.sort(function (a, b) { return a.x - b.x; });
+
+        var columns = [];
+        var currentCell = '';
+        var lastEnd = null;
+        var gapThreshold = 12; // pixels of gap between cells
+
+        row.items.forEach(function (item, idx) {
+          var gapBefore = lastEnd === null ? 0 : (item.x - lastEnd);
+          if (idx === 0 || gapBefore > gapThreshold) {
+            if (currentCell.trim()) columns.push(currentCell.trim());
+            currentCell = item.str;
+          } else {
+            currentCell += (currentCell.endsWith(' ') ? '' : ' ') + item.str;
+          }
+          lastEnd = item.x + (item.width || 0);
+        });
+        if (currentCell.trim()) columns.push(currentCell.trim());
+        return columns;
+      });
+
+      // Keep only rows with content
+      rowsData = rowsData.filter(function (r) { return r.length > 0; });
+
+      pagesData.push(rowsData);
+      progressBar.style.width = String(20 + Math.round((p / totalPages) * 40)) + '%';
+      progressText.textContent = 'Extracting page ' + p + ' of ' + totalPages + '…';
+    }
+
+    return pagesData;
+  }
+
+  /* ========================================================================
+     BUILD .XLSX (Office Open XML)
+     ======================================================================== */
+  function escapeXml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
+  function colLetter(n) {
+    var s = '';
+    n = n + 1;
+    while (n > 0) {
+      var m = (n - 1) % 26;
+      s = String.fromCharCode(65 + m) + s;
+      n = Math.floor((n - m) / 26);
+    }
+    return s;
+  }
+
+  function buildSheetXml(rows) {
+    var sheetData = '';
+    rows.forEach(function (row, rIdx) {
+      var rowNum = rIdx + 1;
+      var cellsXml = '';
+      row.forEach(function (cell, cIdx) {
+        var ref = colLetter(cIdx) + rowNum;
+        var safe = escapeXml(String(cell));
+        cellsXml += '<c r="' + ref + '" t="inlineStr"><is><t xml:space="preserve">' + safe + '</t></is></c>';
+      });
+      sheetData += '<row r="' + rowNum + '">' + cellsXml + '</row>';
+    });
+    return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
+      '<sheetData>' + sheetData + '</sheetData>' +
+      '</worksheet>';
+  }
+
+  async function buildXlsx(pagesData) {
+    var contentTypes = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+      '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>' +
+      '<Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>';
+
+    var sheetsOverride = '';
+    pagesData.forEach(function (_, i) {
+      sheetsOverride += '<Override PartName="/xl/worksheets/sheet' + (i + 1) + '.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>';
+    });
+    contentTypes += sheetsOverride + '</Types>';
+
+    var rels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>' +
+      '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>' +
+      '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>' +
+      '</Relationships>';
+
+    var sheetsXml = '';
+    var workbookSheets = '';
+    pagesData.forEach(function (_, i) {
+      sheetsXml += '<Relationship Id="rId' + (i + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet' + (i + 1) + '.xml"/>';
+      workbookSheets += '<sheet name="Page ' + (i + 1) + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>';
+    });
+
+    var workbookRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      sheetsXml +
+      '</Relationships>';
+
+    var workbookXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
+      '<sheets>' + workbookSheets + '</sheets>' +
+      '</workbook>';
+
+    var now = new Date().toISOString();
+    var coreXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+      '<dc:title>' + escapeXml((currentFile.name || '').replace(/\.pdf$/i, '')) + '</dc:title>' +
+      '<dc:creator>DocEasy PDF to Excel</dc:creator>' +
+      '<dcterms:created xsi:type="dcterms:W3CDTF">' + now + '</dcterms:created>' +
+      '<dcterms:modified xsi:type="dcterms:W3CDTF">' + now + '</dcterms:modified>' +
+      '</cp:coreProperties>';
+
+    var appXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties">' +
+      '<Application>DocEasy PDF to Excel</Application>' +
+      '</Properties>';
+
+    var zip = new JSZip();
+    zip.file('[Content_Types].xml', contentTypes);
+    zip.folder('_rels').file('.rels', rels);
+    zip.folder('xl').file('workbook.xml', workbookXml);
+    zip.folder('xl').folder('_rels').file('workbook.xml.rels', workbookRels);
+    pagesData.forEach(function (rows, i) {
+      zip.folder('xl').folder('worksheets').file('sheet' + (i + 1) + '.xml', buildSheetXml(rows));
+    });
+    zip.folder('docProps').file('core.xml', coreXml);
+    zip.folder('docProps').file('app.xml', appXml);
+
+    return await zip.generateAsync({
+      type: 'blob',
+      mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+  }
+
+  /* ========================================================================
+     MAIN CONVERSION
+     ======================================================================== */
+  async function convertToExcel() {
+    if (!currentFile) return;
+    if (!window.pdfjsLib || !window.JSZip) {
+      showToast('Libraries still loading. Please wait a moment.', 'error');
+      return;
+    }
+
+    convertBtn.disabled = true;
+    progressWrap.classList.add('show');
+    progressBar.style.width = '10%';
+    progressText.textContent = 'Opening PDF file…';
+
+    try {
+      var arrayBuffer = await currentFile.arrayBuffer();
+
+      progressBar.style.width = '20%';
+      progressText.textContent = 'Extracting tables from PDF…';
+
+      var pagesData = await extractTableFromPdf(arrayBuffer);
+
+      var totalRows = 0;
+      pagesData.forEach(function (rows) { totalRows += rows.length; });
+      if (totalRows === 0) {
+        throw new Error('No text found. This PDF may be scanned or image-based. OCR is not supported.');
+      }
+
+      progressBar.style.width = '70%';
+      progressText.textContent = 'Building Excel file…';
+
+      var blob = await buildXlsx(pagesData);
+
+      progressBar.style.width = '90%';
+      progressText.textContent = 'Saving .xlsx…';
+
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = currentFile.name.replace(/\.pdf$/i, '') + '.xlsx';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+
+      progressBar.style.width = '100%';
+      progressText.textContent = 'Done!';
+      showToast('Excel file created successfully', 'ok');
+
+      setTimeout(function () {
+        progressWrap.classList.remove('show');
+        progressBar.style.width = '0%';
+      }, 1500);
+
+    } catch (err) {
+      console.error(err);
+      showToast('Conversion failed: ' + (err.message || 'Unknown error'), 'error');
+      progressWrap.classList.remove('show');
+      progressBar.style.width = '0%';
+    } finally {
+      convertBtn.disabled = false;
+    }
+  }
+
+  convertBtn.addEventListener('click', convertToExcel);
+})();
+</script>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+</body>
+</html>
