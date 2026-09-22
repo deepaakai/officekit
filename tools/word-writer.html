@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Word Writer — Write and Export as Word or PDF | DocEasy</title>
+<meta name="description" content="Write documents online and download as Word (.docx) or PDF. Rich text editor with headings, lists, and formatting. 100% browser-based, no signup.">
+<meta name="keywords" content="word writer, write docx online, create word document, online word processor, free docx writer, text to docx, text to pdf">
+<meta name="author" content="DocEasy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://doceasy.org/tools/word-writer.html">
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('doceasy_theme') || 'light';
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+/* ============ WORD WRITER — Tool styles ============ */
+.main-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+.hero-box { text-align: center; padding: 8px 0 24px; }
+.hero-title {
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 800; color: var(--text-color);
+  margin: 0 0 10px; letter-spacing: -0.5px;
+}
+.hero-sub {
+  color: var(--subtext-color); font-size: 15px;
+  margin: 0 auto; max-width: 620px; line-height: 1.6;
+}
+
+.tool-card {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 28px 22px;
+  box-shadow: var(--shadow-md); margin-bottom: 22px;
+}
+
+/* Toolbar */
+.editor-toolbar {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  padding: 10px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+}
+.tb-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 38px; height: 38px; padding: 0 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 14px; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  gap: 6px;
+}
+.tb-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.tb-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.tb-btn svg {
+  width: 16px; height: 16px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.tb-sep {
+  width: 1px; height: 26px;
+  background: var(--border-color);
+  margin: 0 2px;
+}
+.tb-select {
+  height: 38px; padding: 0 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+}
+
+/* Editor */
+.editor-area {
+  min-height: 420px;
+  padding: 28px 32px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 0 0 10px 10px;
+  font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+  font-size: 12pt;
+  line-height: 1.5;
+  color: #1a1a1a;
+  outline: none;
+  overflow-y: auto;
+  max-height: 640px;
+}
+.editor-area:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.editor-area:empty:before {
+  content: attr(data-placeholder);
+  color: #999;
+  pointer-events: none;
+}
+.editor-area h1 { font-size: 24pt; font-weight: 700; margin: 0 0 12px; }
+.editor-area h2 { font-size: 18pt; font-weight: 700; margin: 18px 0 10px; }
+.editor-area h3 { font-size: 14pt; font-weight: 700; margin: 14px 0 8px; }
+.editor-area p { margin: 0 0 10px; }
+.editor-area ul, .editor-area ol { padding-left: 26px; margin: 10px 0; }
+.editor-area li { margin-bottom: 4px; }
+.editor-area blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 14px;
+  margin: 12px 0;
+  font-style: italic;
+  color: #555;
+}
+
+/* Status bar */
+.status-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; flex-wrap: wrap;
+  padding: 10px 16px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  font-size: 12.5px; color: var(--subtext-color); font-weight: 600;
+}
+.status-bar span { display: inline-flex; align-items: center; gap: 6px; }
+.status-bar svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+
+/* Settings row */
+.settings-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.setting {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.setting label {
+  font-size: 12px; font-weight: 700;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.setting input[type="text"] {
+  padding: 10px 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.setting input[type="text"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  outline: none;
+}
+
+/* Buttons */
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.btn-primary, .btn-secondary, .btn-docx {
+  flex: 1; min-width: 160px;
+  padding: 14px 20px; border-radius: 10px;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.18s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: none;
+}
+.btn-primary {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 4px 14px rgba(25,57,138,0.25);
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn-docx {
+  background: var(--success); color: #fff;
+  box-shadow: 0 4px 14px rgba(21,128,61,0.25);
+}
+.btn-docx:hover:not(:disabled) { background: var(--success-hover); transform: translateY(-2px); }
+.btn-docx:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn-secondary {
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color);
+  flex: 0 0 auto; min-width: 120px;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+.btn-primary svg, .btn-secondary svg, .btn-docx svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+/* Progress */
+.progress-wrap { margin-top: 20px; display: none; }
+.progress-wrap.show { display: block; }
+.progress-bar-outer {
+  height: 8px; border-radius: 4px;
+  background: var(--card-hover);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+.progress-bar-inner {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  transition: width 0.2s ease;
+  border-radius: 4px;
+}
+.progress-text {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--subtext-color); font-weight: 600;
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 14px 22px; border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  font-size: 14px; font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 9999;
+  display: flex; align-items: center; gap: 10px;
+  max-width: 90vw;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.ok { border-color: var(--success); color: var(--success); }
+.toast.error { border-color: var(--error); color: var(--error); }
+.toast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; flex-shrink: 0; }
+
+/* Info box */
+.info-box {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 12px; padding: 20px 22px; margin-top: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.info-box h3 {
+  font-size: 15px; font-weight: 700; color: var(--accent);
+  margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+}
+.info-box h3 svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
+.info-box ul {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;
+}
+.info-box li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; color: var(--subtext-color); line-height: 1.5;
+}
+.info-box li svg {
+  width: 16px; height: 16px; stroke: var(--success); fill: none;
+  flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
+}
+
+/* SEO Article */
+.seo-article {
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 14px; padding: 30px 26px; margin: 30px auto 0;
+  line-height: 1.75; box-shadow: var(--shadow-sm);
+}
+.seo-article h2 { color: var(--text-color); font-size: 22px; margin: 0 0 14px; }
+.seo-article h3 { color: var(--accent); font-size: 17px; margin: 26px 0 10px; }
+.seo-article p, .seo-article ul, .seo-article ol, .seo-article li {
+  font-size: 14.5px; color: var(--subtext-color); line-height: 1.75;
+}
+.seo-article ol, .seo-article ul { padding-left: 22px; }
+.seo-article li { margin-bottom: 8px; }
+.seo-article b, .seo-article strong { color: var(--text-color); }
+.seo-article code {
+  background: var(--card-hover); padding: 2px 6px;
+  border-radius: 4px; font-size: 13px; color: var(--accent);
+}
+
+.article-image-box {
+  margin: 24px 0; border-radius: 10px; overflow: hidden;
+  border: 1px dashed var(--border-color);
+  background: var(--card-hover); padding: 12px; text-align: center;
+}
+.article-image-box img {
+  max-width: 100%; height: auto; border-radius: 8px;
+  display: block; margin: 0 auto;
+}
+.article-image-caption {
+  font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px;
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Word Writer</h1>
+    <p class="hero-sub">Write documents in your browser and export them as Word (.docx) or PDF. No signup, no upload — 100% private.</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="editor-toolbar" id="toolbar">
+      <select class="tb-select" id="blockType" title="Text style">
+        <option value="p">Paragraph</option>
+        <option value="h1">Heading 1</option>
+        <option value="h2">Heading 2</option>
+        <option value="h3">Heading 3</option>
+        <option value="blockquote">Quote</option>
+      </select>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+      <button class="tb-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+      <button class="tb-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" data-cmd="justifyLeft" title="Align left">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <button class="tb-btn" data-cmd="justifyCenter" title="Align center">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <button class="tb-btn" data-cmd="justifyRight" title="Align right">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" data-cmd="insertUnorderedList" title="Bullet list">
+        <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/></svg>
+      </button>
+      <button class="tb-btn" data-cmd="insertOrderedList" title="Numbered list">
+        <svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><text x="3" y="8" font-size="7" font-weight="bold" fill="currentColor" stroke="none">1</text><text x="3" y="14" font-size="7" font-weight="bold" fill="currentColor" stroke="none">2</text><text x="3" y="20" font-size="7" font-weight="bold" fill="currentColor" stroke="none">3</text></svg>
+      </button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" data-cmd="undo" title="Undo">
+        <svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button class="tb-btn" data-cmd="redo" title="Redo">
+        <svg viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+      </button>
+    </div>
+    <div class="editor-area" id="editor" contenteditable="true" data-placeholder="Start writing your document here..."></div>
+    <div class="status-bar">
+      <span>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+        Words: <b id="wordCount">0</b>
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+        Characters: <b id="charCount">0</b>
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Reading: <b id="readTime">0</b> min
+      </span>
+    </div>
+
+    <div class="settings-row">
+      <div class="setting">
+        <label for="docTitle">Document Title</label>
+        <input type="text" id="docTitle" value="Untitled Document" spellcheck="false" autocomplete="off">
+      </div>
+      <div class="setting">
+        <label for="authorName">Author</label>
+        <input type="text" id="authorName" value="" placeholder="Your name" spellcheck="false" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressBar"></div>
+      </div>
+      <p class="progress-text" id="progressText">Processing…</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" type="button" id="clearBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6M14 11v6"/>
+        </svg>
+        Clear
+      </button>
+      <button class="btn-primary" type="button" id="downloadPdfBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        Save as PDF
+      </button>
+      <button class="btn-docx" type="button" id="downloadDocxBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Save as Word
+      </button>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3>
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Why use DocEasy Word Writer?
+    </h3>
+    <ul>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Export as Word (.docx) OR PDF — your choice</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Rich text formatting with live word count</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — never uploaded anywhere</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Opens in Word, Google Docs, or any PDF reader</li>
+    </ul>
+  </div>
+
+  <!-- ===================== SEO TUTORIAL ===================== -->
+  <section class="seo-article">
+    <h2>How to Write and Export Word or PDF Documents Online</h2>
+    <p>Writing a document used to require installing Microsoft Word on a computer. Today, you can write, format, and export professional documents directly in your browser — either as a Word (.docx) file or a PDF. No installation, no signup, and no upload. The DocEasy Word Writer gives you a clean editor, essential formatting tools, and instant download in both formats, all from any device.</p>
+
+    <div class="article-image-box">
+      <img id="tutorial-demo-img"
+           src="../assets/images/word-writer-demo.jpg"
+           alt="Word Writer Demo - DocEasy"
+           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>Write → DOCX or PDF</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place word-writer-demo.jpg in assets/images/</text></svg>';">
+      <div class="article-image-caption">Write in your browser and export as Word (.docx) or PDF — whichever you need.</div>
+    </div>
+
+    <h3>Why Use an Online Word Writer?</h3>
+    <p>Microsoft Word is powerful, but it is also heavy, expensive, and sometimes unavailable. If you are on a shared computer, a Chromebook, a tablet, or a phone, opening a full Word installation is not always practical. An online Word writer solves this by giving you the core editing tools you actually need — headings, formatting, and lists — inside a simple browser tab.</p>
+    <p>The DocEasy Word Writer is designed for people who just need to write and export a document. It skips the clutter. No account, no cloud sync, no distractions. Just you and your text.</p>
+
+    <h3>Step-by-Step: How to Use the Word Writer</h3>
+    <ol>
+      <li><b>Start Typing:</b> Click inside the editor area and start writing. The editor works like a standard word processor with a blinking cursor and familiar keyboard shortcuts.</li>
+      <li><b>Format Your Text:</b> Use the toolbar to apply bold, italic, or underline. Use the style dropdown to switch between Paragraph, Heading 1, Heading 2, and Heading 3.</li>
+      <li><b>Add Lists:</b> Create bullet lists or numbered lists with one click. Perfect for steps, checklists, and structured content.</li>
+      <li><b>Align Text:</b> Align paragraphs to the left, center, or right depending on your document type.</li>
+      <li><b>Name Your Document:</b> Enter a title in the "Document Title" field and optionally add an author name. These appear in the file's metadata.</li>
+      <li><b>Choose Your Export Format:</b> Click "Save as PDF" to get a print-ready PDF, or "Save as Word" to get an editable .docx file. Both are generated instantly in your browser.</li>
+    </ol>
+
+    <h3>PDF or Word — Which Should You Choose?</h3>
+    <p>Both formats are useful, and the right choice depends on what you plan to do next:</p>
+    <ul>
+      <li><b>Save as PDF</b> if you want to share a document that looks identical on every device. PDFs lock the layout and are ideal for resumes, contracts, invoices, and finished reports.</li>
+      <li><b>Save as Word (.docx)</b> if you plan to keep editing the document later, or need to send it to someone who will edit it in Microsoft Word, Google Docs, or LibreOffice.</li>
+    </ul>
+    <p>You can export the same document in both formats — write it once, download it twice.</p>
+
+    <h3>What Can You Write?</h3>
+    <ul>
+      <li><b>Cover letters and resumes:</b> Draft professional documents and export them as .docx or PDF.</li>
+      <li><b>Assignments and essays:</b> Write school or college work in a familiar Word format.</li>
+      <li><b>Reports and proposals:</b> Create business documents with headings and bullet points.</li>
+      <li><b>Meeting notes:</b> Structure notes with clear sections and lists.</li>
+      <li><b>Letters and applications:</b> Write formal or informal letters with proper formatting.</li>
+      <li><b>Blog drafts and scripts:</b> Type long-form content and export it for editing elsewhere.</li>
+    </ul>
+
+    <h3>Live Word Count and Reading Time</h3>
+    <p>At the bottom of the editor, you can see a live status bar that updates as you type. It shows the word count, the character count, and an estimated reading time. These are useful for essays with strict word limits, meta descriptions with character caps, and blog posts where reading time matters.</p>
+
+    <h3>Privacy First — Always</h3>
+    <p>Everything you type stays in your browser. There is no server, no account, and no tracking. When you close the tab, your text is gone from memory. This makes DocEasy Word Writer suitable for sensitive content like personal letters, private notes, internal reports, and confidential drafts.</p>
+
+    <h3>Tips for the Best Results</h3>
+    <ul>
+      <li>Use <b>Heading 1</b> for the main title of your document.</li>
+      <li>Use <b>Heading 2</b> and <b>Heading 3</b> for sections and subsections.</li>
+      <li>Keep paragraphs short — three to five lines each — for readability.</li>
+      <li>Use numbered lists for steps and bullet lists for unordered ideas.</li>
+      <li>Give your document a clear title before downloading.</li>
+      <li>Add an author name if you want your name to appear in the file's metadata.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <p><b>Is the Word Writer free?</b><br>
+    Yes. DocEasy is completely free with no signup, no fees, and no hidden limits.</p>
+
+    <p><b>Are my words uploaded to your servers?</b><br>
+    No. Everything runs inside your browser. Your document never leaves your device.</p>
+
+    <p><b>Can I export the same document as both PDF and Word?</b><br>
+    Yes. Write the document once, then click "Save as PDF" or "Save as Word" — you can download both formats.</p>
+
+    <p><b>Will the formatting be preserved?</b><br>
+    Yes. Headings, bold, italic, underline, lists, and alignment are preserved in both the PDF and .docx exports.</p>
+
+    <p><b>Can I open the .docx file in Google Docs?</b><br>
+    Yes. The file is a standard Word format that opens in Google Docs, Microsoft Word, LibreOffice, and Apple Pages.</p>
+
+    <p><b>Does it work on mobile?</b><br>
+    Yes. The editor works on any modern browser, including smartphones and tablets.</p>
+
+    <h3>Try It Now</h3>
+    <p>Ready to write your first document? Click inside the editor above, start typing, and use the toolbar to format your content. When you are done, choose whether to save it as a PDF or a Word file — or both. If you find this tool useful, share it with others who need a fast, private way to create documents online.</p>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="toastIcon">
+    <path d="M20 6L9 17l-5-5"/>
+  </svg>
+  <span id="toastMsg">Done</span>
+</div>
+
+<!-- PDF-Lib for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<!-- JSZip for DOCX export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var editor      = $('editor');
+  var toolbar     = $('toolbar');
+  var blockType   = $('blockType');
+  var docTitle    = $('docTitle');
+  var authorName  = $('authorName');
+  var clearBtn    = $('clearBtn');
+  var downloadPdfBtn  = $('downloadPdfBtn');
+  var downloadDocxBtn = $('downloadDocxBtn');
+  var progressWrap= $('progressWrap');
+  var progressBar = $('progressBar');
+  var progressText= $('progressText');
+  var toast       = $('toast');
+  var toastMsg    = $('toastMsg');
+  var toastIcon   = $('toastIcon');
+  var wordCountEl = $('wordCount');
+  var charCountEl = $('charCount');
+  var readTimeEl  = $('readTime');
+
+  function showToast(msg, type) {
+    toastMsg.textContent = msg;
+    toast.className = 'toast show ' + (type || 'ok');
+    if (type === 'error') {
+      toastIcon.innerHTML = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+    } else {
+      toastIcon.innerHTML = '<path d="M20 6L9 17l-5-5"/>';
+    }
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
+  }
+
+  /* ---------- Toolbar ---------- */
+  toolbar.querySelectorAll('[data-cmd]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      editor.focus();
+      document.execCommand(btn.dataset.cmd, false, null);
+      updateToolbarState();
+      updateCounts();
+    });
+  });
+
+  blockType.addEventListener('change', function () {
+    editor.focus();
+    document.execCommand('formatBlock', false, this.value);
+    updateCounts();
+  });
+
+  function updateToolbarState() {
+    toolbar.querySelectorAll('[data-cmd]').forEach(function (btn) {
+      try {
+        btn.classList.toggle('active', document.queryCommandState(btn.dataset.cmd));
+      } catch (e) {}
+    });
+  }
+  editor.addEventListener('keyup', updateToolbarState);
+  editor.addEventListener('mouseup', updateToolbarState);
+
+  /* ---------- Live counts ---------- */
+  function updateCounts() {
+    var text = editor.innerText || '';
+    var words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    var chars = text.length;
+    var mins  = Math.max(1, Math.round(words / 200));
+    wordCountEl.textContent = words;
+    charCountEl.textContent = chars;
+    readTimeEl.textContent  = words === 0 ? 0 : mins;
+  }
+  editor.addEventListener('input', updateCounts);
+  updateCounts();
+
+  /* ---------- Clear ---------- */
+  clearBtn.addEventListener('click', function () {
+    if (!editor.textContent.trim()) return;
+    if (confirm('Clear the entire document? This cannot be undone.')) {
+      editor.innerHTML = '';
+      updateCounts();
+      showToast('Editor cleared', 'ok');
+    }
+  });
+
+  /* ---------- Helpers ---------- */
+  function sanitizeFilename(name) {
+    return (name || 'document').replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-') || 'document';
+  }
+
+  function escapeXml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
+  function parseHtmlBlocks(root) {
+    var blocks = [];
+    function walk(node) {
+      if (node.nodeType === 3) {
+        var t = node.textContent.trim();
+        if (t) blocks.push({ type: 'p', text: t });
+        return;
+      }
+      if (node.nodeType !== 1) return;
+      var tag = node.tagName.toLowerCase();
+      var text = node.textContent || '';
+      if (/^h[1-6]$/.test(tag)) {
+        blocks.push({ type: tag, text: text });
+      } else if (tag === 'blockquote') {
+        blocks.push({ type: 'blockquote', text: text });
+      } else if (tag === 'li') {
+        blocks.push({ type: 'li', text: text });
+      } else if (tag === 'ul' || tag === 'ol') {
+        Array.prototype.forEach.call(node.children, function (li) {
+          blocks.push({ type: 'li', text: li.textContent || '' });
+        });
+      } else if (tag === 'br') {
+        blocks.push({ type: 'p', text: '' });
+      } else if (tag === 'div' || tag === 'p') {
+        if (node.children.length > 0) {
+          Array.prototype.forEach.call(node.childNodes, walk);
+        } else {
+          blocks.push({ type: 'p', text: text });
+        }
+      } else {
+        blocks.push({ type: 'p', text: text });
+      }
+    }
+    Array.prototype.forEach.call(root.childNodes, walk);
+    return blocks;
+  }
+
+  /* ========================================================================
+     PDF EXPORT
+     ======================================================================== */
+  async function exportPdf() {
+    if (!window.PDFLib) { showToast('PDF library still loading. Try again.', 'error'); return; }
+    if (!editor.textContent.trim()) { showToast('Write something first!', 'error'); return; }
+
+    downloadPdfBtn.disabled = true;
+    downloadDocxBtn.disabled = true;
+    progressWrap.classList.add('show');
+    progressBar.style.width = '15%';
+    progressText.textContent = 'Reading content…';
+
+    try {
+      var pageWidth = 595.28, pageHeight = 841.89;
+      var margin = 56;
+      var maxWidth = pageWidth - margin * 2;
+
+      var pdfDoc = await PDFLib.PDFDocument.create();
+      pdfDoc.setTitle(docTitle.value || 'Untitled Document');
+      pdfDoc.setProducer('DocEasy Word Writer');
+      pdfDoc.setCreator('DocEasy');
+      if (authorName.value) pdfDoc.setAuthor(authorName.value);
+
+      var fontReg  = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      var fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      var fontItal = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaOblique);
+
+      progressBar.style.width = '40%';
+      progressText.textContent = 'Building PDF…';
+
+      var blocks = parseHtmlBlocks(editor);
+      var page = pdfDoc.addPage([pageWidth, pageHeight]);
+      var y = pageHeight - margin;
+
+      function newPage() {
+        page = pdfDoc.addPage([pageWidth, pageHeight]);
+        y = pageHeight - margin;
+      }
+
+      function drawWrapped(text, font, size, color, lineHeight, indent) {
+        var words = text.split(/\s+/);
+        var currentLine = '';
+        words.forEach(function (word) {
+          var testLine = currentLine ? currentLine + ' ' + word : word;
+          if (font.widthOfTextAtSize(testLine, size) > maxWidth - (indent || 0) && currentLine) {
+            if (y < margin + lineHeight) newPage();
+            page.drawText(currentLine, {
+              x: margin + (indent || 0), y: y,
+              size: size, font: font, color: color
+            });
+            y -= lineHeight;
+            currentLine = word;
+          } else {
+            currentLine = testLine;
+          }
+        });
+        if (currentLine) {
+          if (y < margin + lineHeight) newPage();
+          page.drawText(currentLine, {
+            x: margin + (indent || 0), y: y,
+            size: size, font: font, color: color
+          });
+          y -= lineHeight;
+        }
+      }
+
+      blocks.forEach(function (block) {
+        var text = block.text.trim();
+        if (!text) { y -= 6; return; }
+        if (block.type === 'h1') {
+          y -= 4;
+          drawWrapped(text, fontBold, 20, PDFLib.rgb(0.10, 0.14, 0.22), 26, 0);
+          y -= 8;
+        } else if (block.type === 'h2') {
+          y -= 3;
+          drawWrapped(text, fontBold, 16, PDFLib.rgb(0.10, 0.14, 0.22), 22, 0);
+          y -= 6;
+        } else if (block.type === 'h3') {
+          y -= 2;
+          drawWrapped(text, fontBold, 13, PDFLib.rgb(0.10, 0.14, 0.22), 19, 0);
+          y -= 5;
+        } else if (block.type === 'blockquote') {
+          drawWrapped(text, fontItal, 11, PDFLib.rgb(0.35, 0.38, 0.45), 16, 16);
+          y -= 6;
+        } else if (block.type === 'li') {
+          if (y < margin + 16) newPage();
+          page.drawText('\u2022', {
+            x: margin, y: y, size: 11, font: fontReg,
+            color: PDFLib.rgb(0.10, 0.14, 0.22)
+          });
+          drawWrapped(text, fontReg, 11, PDFLib.rgb(0.10, 0.14, 0.22), 16, 16);
+          y -= 2;
+        } else {
+          drawWrapped(text, fontReg, 11, PDFLib.rgb(0.10, 0.14, 0.22), 16, 0);
+          y -= 6;
+        }
+      });
+
+      var pages = pdfDoc.getPages();
+      pages.forEach(function (p) {
+        p.drawText('doceasy.org', {
+          x: p.getWidth() - margin - 60, y: 24,
+          size: 8, font: fontReg,
+          color: PDFLib.rgb(0, 0, 0), opacity: 0.5
+        });
+      });
+
+      progressBar.style.width = '85%';
+      progressText.textContent = 'Saving PDF…';
+
+      var pdfBytes = await pdfDoc.save();
+      var blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = sanitizeFilename(docTitle.value) + '.pdf';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+
+      progressBar.style.width = '100%';
+      progressText.textContent = 'Done!';
+      showToast('PDF downloaded successfully', 'ok');
+
+      setTimeout(function () {
+        progressWrap.classList.remove('show');
+        progressBar.style.width = '0%';
+      }, 1500);
+
+    } catch (err) {
+      console.error(err);
+      showToast('PDF export failed: ' + (err.message || 'Unknown error'), 'error');
+      progressWrap.classList.remove('show');
+      progressBar.style.width = '0%';
+    } finally {
+      downloadPdfBtn.disabled = false;
+      downloadDocxBtn.disabled = false;
+    }
+  }
+
+  /* ========================================================================
+     DOCX EXPORT
+     ======================================================================== */
+  async function exportDocx() {
+    if (!window.JSZip) { showToast('DOCX library still loading. Try again.', 'error'); return; }
+    if (!editor.textContent.trim()) { showToast('Write something first!', 'error'); return; }
+
+    downloadPdfBtn.disabled = true;
+    downloadDocxBtn.disabled = true;
+    progressWrap.classList.add('show');
+    progressBar.style.width = '15%';
+    progressText.textContent = 'Reading content…';
+
+    try {
+      var blocks = parseHtmlBlocks(editor);
+
+      progressBar.style.width = '40%';
+      progressText.textContent = 'Building Word document…';
+
+      // Build body paragraphs XML
+      var bodyXml = '';
+      blocks.forEach(function (block) {
+        var text = escapeXml((block.text || '').trim());
+        if (!text && block.type !== 'p') return;
+
+        if (block.type === 'h1') {
+          bodyXml += '<w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="48"/></w:rPr><w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
+        } else if (block.type === 'h2') {
+          bodyXml += '<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="36"/></w:rPr><w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
+        } else if (block.type === 'h3') {
+          bodyXml += '<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
+        } else if (block.type === 'blockquote') {
+          bodyXml += '<w:p><w:pPr><w:ind w:left="720"/></w:pPr><w:r><w:rPr><w:i/></w:rPr><w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
+        } else if (block.type === 'li') {
+          bodyXml += '<w:p><w:pPr><w:ind w:left="720"/></w:pPr><w:r><w:t xml:space="preserve">• ' + text + '</w:t></w:r></w:p>';
+        } else if (text) {
+          bodyXml += '<w:p><w:r><w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
+        } else {
+          bodyXml += '<w:p/>';
+        }
+      });
+
+      var docXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+        '<w:body>' + bodyXml +
+        '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134"/></w:sectPr>' +
+        '</w:body></w:document>';
+
+      var contentTypes = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+        '<Default Extension="xml" ContentType="application/xml"/>' +
+        '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+        '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>' +
+        '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>' +
+        '<Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>' +
+        '</Types>';
+
+      var rels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+        '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>' +
+        '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>' +
+        '</Relationships>';
+
+      var docRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>' +
+        '</Relationships>';
+
+      var stylesXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+        '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:sz w:val="48"/></w:rPr></w:style>' +
+        '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/><w:sz w:val="36"/></w:rPr></w:style>' +
+        '<w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:b/><w:sz w:val="28"/></w:rPr></w:style>' +
+        '<w:style w:type="paragraph" w:styleId="Normal" w:default="1"><w:name w:val="Normal"/><w:rPr><w:sz w:val="24"/></w:rPr></w:style>' +
+        '</w:styles>';
+
+      var now = new Date().toISOString();
+      var coreXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+        '<dc:title>' + escapeXml(docTitle.value || 'Untitled Document') + '</dc:title>' +
+        '<dc:creator>' + escapeXml(authorName.value || 'DocEasy User') + '</dc:creator>' +
+        '<cp:lastModifiedBy>' + escapeXml(authorName.value || 'DocEasy User') + '</cp:lastModifiedBy>' +
+        '<dcterms:created xsi:type="dcterms:W3CDTF">' + now + '</dcterms:created>' +
+        '<dcterms:modified xsi:type="dcterms:W3CDTF">' + now + '</dcterms:modified>' +
+        '</cp:coreProperties>';
+
+      var appXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties">' +
+        '<Application>DocEasy Word Writer</Application>' +
+        '</Properties>';
+
+      progressBar.style.width = '75%';
+      progressText.textContent = 'Packaging .docx…';
+
+      var zip = new JSZip();
+      zip.file('[Content_Types].xml', contentTypes);
+      zip.folder('_rels').file('.rels', rels);
+      zip.folder('word').file('document.xml', docXml);
+      zip.folder('word').file('styles.xml', stylesXml);
+      zip.folder('word').folder('_rels').file('document.xml.rels', docRels);
+      zip.folder('docProps').file('core.xml', coreXml);
+      zip.folder('docProps').file('app.xml', appXml);
+
+      var blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = sanitizeFilename(docTitle.value) + '.docx';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+
+      progressBar.style.width = '100%';
+      progressText.textContent = 'Done!';
+      showToast('Word document downloaded successfully', 'ok');
+
+      setTimeout(function () {
+        progressWrap.classList.remove('show');
+        progressBar.style.width = '0%';
+      }, 1500);
+
+    } catch (err) {
+      console.error(err);
+      showToast('Word export failed: ' + (err.message || 'Unknown error'), 'error');
+      progressWrap.classList.remove('show');
+      progressBar.style.width = '0%';
+    } finally {
+      downloadPdfBtn.disabled = false;
+      downloadDocxBtn.disabled = false;
+    }
+  }
+
+  downloadPdfBtn.addEventListener('click', exportPdf);
+  downloadDocxBtn.addEventListener('click', exportDocx);
+
+})();
+</script>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+</body>
+</html>
