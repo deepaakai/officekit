@@ -23,309 +23,93 @@
 </script>
 
 <style>
-/* ============ QR SCANNER — Tool styles ============ */
 .main-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
-
 .hero-box { text-align: center; padding: 8px 0 24px; }
-.hero-title {
-  font-size: clamp(24px, 4vw, 34px);
-  font-weight: 800; color: var(--text-color);
-  margin: 0 0 10px; letter-spacing: -0.5px;
-}
-.hero-sub {
-  color: var(--subtext-color); font-size: 15px;
-  margin: 0 auto; max-width: 620px; line-height: 1.6;
-}
+.hero-title { font-size: clamp(24px, 4vw, 34px); font-weight: 800; color: var(--text-color); margin: 0 0 10px; letter-spacing: -0.5px; }
+.hero-sub { color: var(--subtext-color); font-size: 15px; margin: 0 auto; max-width: 620px; line-height: 1.6; }
 
-.tool-card {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 14px; padding: 28px 22px;
-  box-shadow: var(--shadow-md); margin-bottom: 22px;
-}
+.tool-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 28px 22px; box-shadow: var(--shadow-md); margin-bottom: 22px; }
 
-/* Initial chooser — both options hidden until a click */
-.qr-chooser {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 6px;
-}
-.qr-option {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 12px;
-  padding: 28px 20px;
-  background: var(--card-hover);
-  border: 2px dashed var(--border-color);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  text-align: center;
-}
-.qr-option:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-.qr-option .opt-icon {
-  width: 64px; height: 64px;
-  border-radius: 18px;
-  display: grid; place-items: center;
-  background: var(--accent-soft);
-  color: var(--accent);
-  transition: transform 0.22s ease;
-}
+.qr-chooser { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 6px; }
+.qr-option { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 28px 20px; background: var(--card-hover); border: 2px dashed var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.22s ease; text-align: center; }
+.qr-option:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.qr-option .opt-icon { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); transition: transform 0.22s ease; }
 .qr-option:hover .opt-icon { transform: scale(1.08) rotate(-4deg); }
 .qr-option .opt-icon svg { width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 1.8; }
-.qr-option h3 {
-  font-size: 16px; font-weight: 800;
-  color: var(--text-color); margin: 0;
-}
-.qr-option p {
-  font-size: 13px; color: var(--subtext-color);
-  margin: 0; line-height: 1.5;
-}
+.qr-option h3 { font-size: 16px; font-weight: 800; color: var(--text-color); margin: 0; }
+.qr-option p { font-size: 13px; color: var(--subtext-color); margin: 0; line-height: 1.5; }
 
-/* File drop zone (for upload option) */
-.drop-zone {
-  border: 2px dashed var(--border-color); border-radius: 12px;
-  padding: 42px 20px; text-align: center;
-  transition: all 0.22s ease; cursor: pointer;
-  background: var(--card-hover); position: relative;
-}
-.drop-zone:hover, .drop-zone.dragover {
-  border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px);
-}
-.drop-zone input[type="file"] {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  opacity: 0; cursor: pointer;
-}
-.dz-icon {
-  width: 72px; height: 72px; margin: 0 auto 16px;
-  border-radius: 20px; display: grid; place-items: center;
-  background: var(--accent-soft); color: var(--accent);
-}
+.drop-zone { border: 2px dashed var(--border-color); border-radius: 12px; padding: 42px 20px; text-align: center; transition: all 0.22s ease; cursor: pointer; background: var(--card-hover); position: relative; }
+.drop-zone:hover, .drop-zone.dragover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); }
+.drop-zone input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.dz-icon { width: 72px; height: 72px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
 .dz-icon svg { width: 36px; height: 36px; stroke: currentColor; fill: none; stroke-width: 1.8; }
 .dz-title { font-size: 18px; font-weight: 700; color: var(--text-color); margin: 0 0 6px; }
 .dz-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0 0 20px; }
-.dz-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px;
-  background: var(--accent); color: #fff; border: none;
-  cursor: pointer; transition: all 0.18s ease;
-  box-shadow: 0 4px 14px rgba(25,57,138,0.25);
-}
+.dz-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; background: var(--accent); color: #fff; border: none; cursor: pointer; transition: all 0.18s ease; box-shadow: 0 4px 14px rgba(25,57,138,0.25); }
 .dz-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
 .dz-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; }
 
-/* Camera preview */
-.camera-stage {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #000;
-  aspect-ratio: 4/3;
-  display: grid;
-  place-items: center;
-  margin-bottom: 16px;
-}
-.camera-stage video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.camera-stage .scan-frame {
-  position: absolute;
-  inset: 12%;
-  border: 2px solid rgba(56,189,248,0.9);
-  border-radius: 16px;
-  box-shadow: 0 0 0 9999px rgba(0,0,0,0.35);
-  pointer-events: none;
-}
-.camera-stage .scan-frame::before,
-.camera-stage .scan-frame::after {
-  content: "";
-  position: absolute;
-  width: 40px; height: 40px;
-  border: 4px solid #38bdf8;
-  border-radius: 8px;
-}
-.camera-stage .scan-frame::before {
-  top: -4px; left: -4px;
-  border-right: none; border-bottom: none;
-}
-.camera-stage .scan-frame::after {
-  bottom: -4px; right: -4px;
-  border-left: none; border-top: none;
-}
+.camera-stage { position: relative; border-radius: 12px; overflow: hidden; background: #000; aspect-ratio: 4/3; display: grid; place-items: center; margin-bottom: 16px; }
+.camera-stage video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.camera-stage .scan-frame { position: absolute; inset: 12%; border: 2px solid rgba(56,189,248,0.9); border-radius: 16px; box-shadow: 0 0 0 9999px rgba(0,0,0,0.35); pointer-events: none; }
+.camera-stage .scan-frame::before, .camera-stage .scan-frame::after { content: ""; position: absolute; width: 40px; height: 40px; border: 4px solid #38bdf8; border-radius: 8px; }
+.camera-stage .scan-frame::before { top: -4px; left: -4px; border-right: none; border-bottom: none; }
+.camera-stage .scan-frame::after { bottom: -4px; right: -4px; border-left: none; border-top: none; }
 
-/* Result box */
-.result-box {
-  margin-top: 20px;
-  background: var(--card-bg);
-  border: 1px solid var(--accent);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-.result-box h3 {
-  font-size: 14px; font-weight: 800;
-  color: var(--accent);
-  margin: 0 0 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.result-content {
-  display: flex; align-items: flex-start; gap: 10px;
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-family: ui-monospace, 'Courier New', monospace;
-  font-size: 13px;
-  color: var(--text-color);
-  word-break: break-all;
-  line-height: 1.55;
-  margin-bottom: 12px;
-}
-.result-content .result-text {
-  flex: 1;
-  white-space: pre-wrap;
-}
-.result-actions {
-  display: flex; gap: 10px; flex-wrap: wrap;
-}
-.result-actions button {
-  flex: 1; min-width: 130px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 13.5px; font-weight: 700;
-  cursor: pointer;
-  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-  transition: all 0.15s ease;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
-  color: var(--text-color);
-}
-.result-actions button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-soft);
-}
-.result-actions button.primary {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-}
+.result-box { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--accent); border-radius: 12px; padding: 20px; box-shadow: 0 0 0 3px var(--accent-soft); }
+.result-box h3 { font-size: 14px; font-weight: 800; color: var(--accent); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.result-content { display: flex; align-items: flex-start; gap: 10px; background: var(--card-hover); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 14px; font-family: ui-monospace, 'Courier New', monospace; font-size: 13px; color: var(--text-color); word-break: break-all; line-height: 1.55; margin-bottom: 12px; }
+.result-content .result-text { flex: 1; white-space: pre-wrap; }
+.result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.result-actions button { flex: 1; min-width: 130px; padding: 10px 16px; border-radius: 8px; font-size: 13.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px; transition: all 0.15s ease; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); }
+.result-actions button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.result-actions button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
 .result-actions button.primary:hover { filter: brightness(1.08); }
 .result-actions svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-/* Progress */
 .progress-wrap { margin-top: 20px; display: none; }
 .progress-wrap.show { display: block; }
-.progress-bar-outer {
-  height: 8px; border-radius: 4px; background: var(--card-hover);
-  overflow: hidden; border: 1px solid var(--border-color);
-}
-.progress-bar-inner {
-  height: 100%; width: 0%;
-  background: linear-gradient(90deg, var(--accent), #38bdf8);
-  transition: width 0.2s ease; border-radius: 4px;
-  animation: indeterminate 1.4s ease-in-out infinite;
-}
-@keyframes indeterminate {
-  0%   { margin-left: -40%; width: 40%; }
-  50%  { margin-left: 30%;  width: 45%; }
-  100% { margin-left: 100%; width: 40%; }
-}
-.progress-text {
-  margin-top: 10px; text-align: center;
-  font-size: 13px; color: var(--subtext-color); font-weight: 600;
-}
+.progress-bar-outer { height: 8px; border-radius: 4px; background: var(--card-hover); overflow: hidden; border: 1px solid var(--border-color); }
+.progress-bar-inner { height: 100%; width: 40%; background: linear-gradient(90deg, var(--accent), #38bdf8); transition: width 0.2s ease; border-radius: 4px; animation: indeterminate 1.4s ease-in-out infinite; }
+@keyframes indeterminate { 0% { margin-left: -40%; width: 40%; } 50% { margin-left: 30%; width: 45%; } 100% { margin-left: 100%; width: 40%; } }
+.progress-text { margin-top: 10px; text-align: center; font-size: 13px; color: var(--subtext-color); font-weight: 600; }
 
 .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
-.btn-primary, .btn-secondary {
-  flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px;
-  font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.18s ease;
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none;
-}
+.btn-primary, .btn-secondary { flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.18s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; }
 .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 14px rgba(25,57,138,0.25); }
 .btn-primary:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
 .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-.btn-secondary {
-  background: var(--card-bg); color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
+.btn-secondary { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); }
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .btn-primary svg, .btn-secondary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
 
-.toast {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-  background: var(--card-bg); color: var(--text-color);
-  border: 1px solid var(--border-color); padding: 14px 22px; border-radius: 10px;
-  box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw;
-}
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 14px 22px; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw; }
 .toast.show { transform: translateX(-50%) translateY(0); }
 .toast.ok { border-color: var(--success); color: var(--success); }
 .toast.error { border-color: var(--error); color: var(--error); }
 .toast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; flex-shrink: 0; }
 
-.info-box {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 12px; padding: 20px 22px; margin-top: 24px;
-  box-shadow: var(--shadow-sm);
-}
-.info-box h3 {
-  font-size: 15px; font-weight: 700; color: var(--accent);
-  margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
-}
+.info-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px 22px; margin-top: 24px; box-shadow: var(--shadow-sm); }
+.info-box h3 { font-size: 15px; font-weight: 700; color: var(--accent); margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
 .info-box h3 svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
-.info-box ul {
-  list-style: none; padding: 0; margin: 0;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;
-}
-.info-box li {
-  display: flex; align-items: flex-start; gap: 8px;
-  font-size: 13.5px; color: var(--subtext-color); line-height: 1.5;
-}
-.info-box li svg {
-  width: 16px; height: 16px; stroke: var(--success); fill: none;
-  flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
-}
+.info-box ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.info-box li { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--subtext-color); line-height: 1.5; }
+.info-box li svg { width: 16px; height: 16px; stroke: var(--success); fill: none; flex-shrink: 0; margin-top: 3px; stroke-width: 2.5; }
 
-/* SEO Article */
-.seo-article {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 14px; padding: 30px 26px; margin: 30px auto 0;
-  line-height: 1.75; box-shadow: var(--shadow-sm);
-}
+.seo-article { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 30px 26px; margin: 30px auto 0; line-height: 1.75; box-shadow: var(--shadow-sm); }
 .seo-article h2 { color: var(--text-color); font-size: 22px; margin: 0 0 14px; }
 .seo-article h3 { color: var(--accent); font-size: 17px; margin: 26px 0 10px; }
-.seo-article p, .seo-article ul, .seo-article ol, .seo-article li {
-  font-size: 14.5px; color: var(--subtext-color); line-height: 1.75;
-}
+.seo-article p, .seo-article ul, .seo-article ol, .seo-article li { font-size: 14.5px; color: var(--subtext-color); line-height: 1.75; }
 .seo-article ol, .seo-article ul { padding-left: 22px; }
 .seo-article li { margin-bottom: 8px; }
 .seo-article b, .seo-article strong { color: var(--text-color); }
-.seo-article code {
-  background: var(--card-hover); padding: 2px 6px;
-  border-radius: 4px; font-size: 13px; color: var(--accent);
-}
+.seo-article code { background: var(--card-hover); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); }
 
-.article-image-box {
-  margin: 24px 0; border-radius: 10px; overflow: hidden;
-  border: 1px dashed var(--border-color);
-  background: var(--card-hover); padding: 12px; text-align: center;
-}
-.article-image-box img {
-  max-width: 100%; height: auto; border-radius: 8px;
-  display: block; margin: 0 auto;
-}
-.article-image-caption {
-  font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px;
-}
+.article-image-box { margin: 24px 0; border-radius: 10px; overflow: hidden; border: 1px dashed var(--border-color); background: var(--card-hover); padding: 12px; text-align: center; }
+.article-image-box img { max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 0 auto; }
+.article-image-caption { font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px; }
 
-/* Screen sections — hidden by default, shown on click */
 .qr-screen { display: none; }
 .qr-screen.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -343,7 +127,6 @@
 
   <div class="tool-card">
 
-    <!-- ===================== CHOOSER SCREEN ===================== -->
     <div class="qr-screen active" id="screenChooser">
       <div class="qr-chooser">
         <div class="qr-option" id="optCamera">
@@ -371,7 +154,6 @@
       </div>
     </div>
 
-    <!-- ===================== CAMERA SCREEN ===================== -->
     <div class="qr-screen" id="screenCamera">
       <div class="camera-stage" id="cameraStage">
         <video id="video" playsinline autoplay muted></video>
@@ -387,7 +169,6 @@
       </div>
     </div>
 
-    <!-- ===================== UPLOAD SCREEN ===================== -->
     <div class="qr-screen" id="screenUpload">
       <div class="drop-zone" id="dropZone">
         <input type="file" id="fileInput" accept="image/*">
@@ -417,7 +198,6 @@
       </div>
     </div>
 
-    <!-- ===================== RESULT SCREEN ===================== -->
     <div class="qr-screen" id="screenResult">
       <div class="result-box" id="resultBox">
         <h3 id="resultHeading">Scanned QR Code</h3>
@@ -453,7 +233,6 @@
       </div>
     </div>
 
-    <!-- ===================== PROGRESS ===================== -->
     <div class="progress-wrap" id="progressWrap">
       <div class="progress-bar-outer">
         <div class="progress-bar-inner" id="progressBar"></div>
@@ -478,7 +257,6 @@
     </ul>
   </div>
 
-  <!-- ===================== SEO TUTORIAL ===================== -->
   <section class="seo-article">
     <h2>How to Scan a QR Code Online: Complete Guide</h2>
     <p>QR codes are everywhere — on product packaging, restaurant menus, business cards, event tickets, and payment screens. Scanning one used to require a dedicated app, but modern browsers can now scan QR codes directly. The DocEasy QR Scanner works on any device with a camera, and it can also read QR codes from image files you already have on your device.</p>
@@ -493,7 +271,6 @@
     </div>
 
     <h3>Why Use an Online QR Scanner?</h3>
-    <p>Most phones have a built-in QR scanner in their camera app, but there are many situations where that is not enough:</p>
     <ul>
       <li><b>Desktop computers:</b> No built-in QR scanner. An online scanner is the simplest way.</li>
       <li><b>Older phones:</b> Not all camera apps detect QR codes automatically.</li>
@@ -503,13 +280,12 @@
     </ul>
 
     <h3>Step-by-Step: How to Use the QR Scanner</h3>
-    <p>When you open the tool, you will see two options. Choose the one that fits your situation:</p>
     <ol>
-      <li><b>Scan with Camera:</b> Click this option to open the camera screen. Your browser will ask for permission to use the camera. Once granted, point your device at a QR code. The tool will detect and decode it automatically.</li>
-      <li><b>Upload Image:</b> Click this option to open the upload screen. Drag an image file into the drop zone or click to browse. The tool will decode the QR code inside the image and show the result.</li>
-      <li><b>View the Result:</b> Once the QR code is decoded, the result appears on a clean card. You will see the exact text or URL contained in the QR code.</li>
-      <li><b>Copy or Open:</b> Use the Copy button to copy the text to your clipboard, or the Open Link button to open a URL in a new tab.</li>
-      <li><b>Scan Another:</b> Click Scan Another to return to the chooser and start over with a new QR code.</li>
+      <li><b>Scan with Camera:</b> Click this option to open the camera screen. Allow camera access, then point your device at a QR code.</li>
+      <li><b>Upload Image:</b> Click this option to open the upload screen. Drag an image file into the drop zone or click to browse. The tool will decode the QR code inside the image.</li>
+      <li><b>View the Result:</b> Once decoded, the result appears on a clean card with the exact text or URL contained in the QR code.</li>
+      <li><b>Copy or Open:</b> Use the Copy button to copy the text, or the Open Link button to open a URL in a new tab.</li>
+      <li><b>Scan Another:</b> Click Scan Another to return to the chooser and start over.</li>
     </ol>
 
     <h3>What Kind of QR Codes Can You Scan?</h3>
@@ -522,25 +298,20 @@
       <li><b>Event tickets:</b> Ticket codes and check-in information.</li>
     </ul>
 
-    <h3>Understanding the Results</h3>
-    <p>When a QR code contains a URL, the tool shows the full URL so you can read it before opening it. This is one of the most useful features — it lets you check that a link is legitimate before clicking. If the URL looks suspicious, do not open it.</p>
-    <p>When a QR code contains text or contact data, the result is displayed as plain text. You can copy it and paste it into any app.</p>
-
-    <h3>Privacy First — Always</h3>
-    <p>Everything runs in your browser. Your camera feed is processed locally and never sent anywhere. When you upload an image, it stays on your device — it is not transmitted to any server. There is no account to create, no email to verify, and no data stored anywhere. When you close the tab, everything is gone.</p>
-
-    <h3>Tips for the Best Results</h3>
+    <h3>Improving Detection in Uploaded Images</h3>
+    <p>If the tool cannot decode a QR code from an uploaded image, the image might be blurry, have low contrast, or the QR might be inverted (white on black). This tool automatically retries with a high-contrast black-and-white version of the image to improve detection. For best results:</p>
     <ul>
-      <li>Hold your camera steady and make sure the QR code fills most of the frame.</li>
-      <li>Ensure even lighting — avoid shadows and glare on the QR code.</li>
-      <li>For image uploads, use a high-resolution photo. Blurry images may not decode.</li>
-      <li>If the camera scan does not detect a QR code, try moving closer or further away.</li>
-      <li>Always read the URL before opening it, especially if the QR code came from an untrusted source.</li>
-      <li>For payment QR codes, always verify the recipient name and amount inside your UPI app before paying.</li>
+      <li>Use a high-resolution photo or screenshot.</li>
+      <li>Make sure the QR code fills a large portion of the image.</li>
+      <li>Avoid glare, shadows, and blur.</li>
+      <li>If the QR code is small, crop the image closer before uploading.</li>
     </ul>
 
+    <h3>Privacy First — Always</h3>
+    <p>Everything runs in your browser. Your camera feed is processed locally and never sent anywhere. When you upload an image, it stays on your device. There is no account, no email, and no data stored anywhere. When you close the tab, everything is gone.</p>
+
     <h3>A Word of Caution</h3>
-    <p>QR codes are easy to fake. Scammers often stick fake QR codes over legitimate ones at parking meters, restaurant tables, or public posters. When you scan a QR code for a payment, always verify the recipient name and the amount shown inside your payment app. Never approve a payment that does not match what you expected. The DocEasy QR Scanner shows you the exact content of a QR code so you can make an informed decision before acting on it.</p>
+    <p>QR codes are easy to fake. Scammers often stick fake QR codes over legitimate ones at parking meters, restaurant tables, or public posters. When you scan a QR code for a payment, always verify the recipient name and the amount shown inside your payment app. Never approve a payment that does not match what you expected.</p>
 
     <h3>Frequently Asked Questions</h3>
     <p><b>Is the QR Scanner free?</b><br>
@@ -555,8 +326,8 @@
     <p><b>Can I scan QR codes from a screenshot?</b><br>
     Yes. Use the "Upload Image" option and select the screenshot. The tool will decode the QR code inside it.</p>
 
-    <p><b>Can I scan a QR code from a photo?</b><br>
-    Yes, as long as the QR code is clearly visible and not blurry. Higher resolution photos work better.</p>
+    <p><b>Why can't it decode my image?</b><br>
+    The image may be blurry, low-contrast, or the QR code may be too small. Try a clearer image, or scan with the camera option instead.</p>
 
     <p><b>Does it work on mobile?</b><br>
     Yes. The camera scan works on any modern smartphone browser. The upload scan works on any device.</p>
@@ -564,7 +335,6 @@
     <h3>Try It Now</h3>
     <p>Ready to scan a QR code? Click one of the two options above — camera or image upload — and the tool will guide you from there. If you find this tool useful, share it with friends and colleagues.</p>
   </section>
-
 </main>
 
 <div id="doceasy-footer"></div>
@@ -576,7 +346,6 @@
   <span id="toastMsg">Done</span>
 </div>
 
-<!-- jsQR for decoding -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
 
 <script>
@@ -619,7 +388,6 @@
   var scanCanvas = document.createElement('canvas');
   var scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true });
 
-  /* ---------- Toast ---------- */
   function showToast(msg, type) {
     toastMsg.textContent = msg;
     toast.className = 'toast show ' + (type || 'ok');
@@ -632,7 +400,6 @@
     toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
   }
 
-  /* ---------- Screen switching ---------- */
   function showScreen(name) {
     [screenChooser, screenCamera, screenUpload, screenResult].forEach(function (s) {
       s.classList.remove('active');
@@ -702,7 +469,7 @@
 
     try {
       var imgData = scanCtx.getImageData(0, 0, w, h);
-      var code = window.jsQR(imgData.data, w, h, { inversionAttempts: 'dontInvert' });
+      var code = window.jsQR(imgData.data, w, h, { inversionAttempts: 'attemptBoth' });
       if (code && code.data) {
         stopCamera();
         showResult(code.data);
@@ -713,7 +480,7 @@
     scanRAF = requestAnimationFrame(scanFrame);
   }
 
-  /* ---------- Image upload scan ---------- */
+  /* ---------- Image upload scan with retry ---------- */
   function scanImageFile(file) {
     if (!file) return;
     if (!/^image\//.test(file.type)) {
@@ -735,13 +502,37 @@
         scanCanvas.height = img.naturalHeight;
         scanCtx.drawImage(img, 0, 0);
         var imgData = scanCtx.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
-        var code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
+
+        var code = null;
+
+        // Attempt 1: normal, both inversions
+        code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, {
+          inversionAttempts: 'attemptBoth'
+        });
+
+        // Attempt 2: high-contrast black & white
+        if (!code) {
+          try {
+            var tempData = new Uint8ClampedArray(imgData.data);
+            var d = tempData;
+            for (var i = 0; i < d.length; i += 4) {
+              var gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+              var v = gray > 128 ? 255 : 0;
+              d[i] = d[i + 1] = d[i + 2] = v;
+            }
+            code = window.jsQR(d, scanCanvas.width, scanCanvas.height, {
+              inversionAttempts: 'attemptBoth'
+            });
+          } catch (e) { /* ignore */ }
+        }
+
         URL.revokeObjectURL(url);
         setProgress(false);
+
         if (code && code.data) {
           showResult(code.data);
         } else {
-          showToast('No QR code found in this image. Try another.', 'error');
+          showToast('No QR code found. Try a clearer image or use the camera.', 'error');
         }
       } catch (e) {
         console.error(e);
@@ -844,7 +635,6 @@
     window.open(url, '_blank', 'noopener,noreferrer');
   });
 
-  /* Cleanup on unload */
   window.addEventListener('beforeunload', stopCamera);
 
 })();
