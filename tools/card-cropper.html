@@ -938,13 +938,14 @@ function getUltraHdCroppedCanvas(boxEl) {
   );
 
   // Watermark — ~1 cm above bottom edge, centered
-  outCtx.font = "bold 20px -apple-system, Segoe UI, Roboto, Arial, sans-serif";
-  outCtx.textAlign = "center";
-  outCtx.textBaseline = "bottom";
-  outCtx.globalAlpha = 0.55;
-  outCtx.fillStyle = "#19398a";
-  outCtx.fillText("doceasy.org", outCanvas.width / 2, outCanvas.height - 118);
-  outCtx.globalAlpha = 1.0;
+  // Watermark — top-left corner, tight padding
+outCtx.font = "bold 16px -apple-system, Segoe UI, Roboto, Arial, sans-serif";
+outCtx.textAlign = "left";
+outCtx.textBaseline = "top";
+outCtx.globalAlpha = 0.30;
+outCtx.fillStyle = "#19398a";
+outCtx.fillText("doceasy.org", 8, 8);
+outCtx.globalAlpha = 1.0;
 
   return outCanvas;
 }
