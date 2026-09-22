@@ -15,7 +15,6 @@
 <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';</script>
 
 <style>
-/* ============ PDF TO IMAGE — extra styles ============ */
 .format-row {
   display: flex;
   gap: 12px;
@@ -104,45 +103,31 @@
 
   <section class="seo-article">
     <h2>Complete Guide: Convert PDF Pages into High-Resolution Images (ZIP)</h2>
-    <p>Extracting individual raster graphics, presentations, invoice records, and scanned document pages from multi-page PDFs is often necessary when embedding slides into web presentations, sharing images via social apps, or uploading pictures into document portals. The DocEasy PDF to Image Converter renders each vector page locally at high pixel density, packages the resulting image files into an organized file structure, and delivers a consolidated ZIP archive in seconds.</p>
+    <p>Extracting raster graphics, presentations, invoice records, and scanned document pages from multi-page PDFs is often necessary when embedding slides into web presentations, sharing images via social apps, or uploading pictures into document portals. The DocEasy PDF to Image Converter renders each vector page locally at high pixel density and delivers a consolidated ZIP archive in seconds.</p>
 
     <div class="article-image-box">
       <img src="../assets/images/pdf-to-jpg-demo.jpg" alt="DocEasy PDF to Image Conversion and ZIP Archiving Diagram" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/pdf-to-jpg-demo.jpg]</div>';">
-      <div class="article-image-caption">Visual sequence showing high-resolution canvas extraction, sequential page naming, and ZIP bundling.</div>
+      <div class="article-image-caption">High-resolution canvas extraction, sequential page naming, and ZIP bundling.</div>
     </div>
 
     <h3>Choose Your Image Format</h3>
-    <p>Different situations call for different image formats. The tool lets you pick the one that fits your workflow:</p>
     <ul>
-      <li><b>JPG:</b> Best for photos and documents where file size matters. Uses lossy compression. Great for email attachments and web uploads.</li>
-      <li><b>PNG:</b> Best for graphics, screenshots, and text-heavy pages. Uses lossless compression — larger files, but pixel-perfect quality. Supports transparency.</li>
-      <li><b>WEBP:</b> Modern format with excellent compression. Smaller files than JPG at the same quality, and widely supported in modern browsers.</li>
-    </ul>
-
-    <h3>Step-by-Step Instructions:</h3>
-    <ul>
-      <li><b>Step 1 - Upload PDF:</b> Select or drag your target document into the upload drop area.</li>
-      <li><b>Step 2 - Choose Format &amp; Quality:</b> Pick JPG, PNG, or WEBP, and choose your image quality level.</li>
-      <li><b>Step 3 - Extract &amp; Compress:</b> Press "Convert &amp; Download ZIP".</li>
-      <li><b>Step 4 - Download Archive:</b> Save the bundled <code>.zip</code> file containing numbered image files, plus a <code>README.txt</code> with usage info.</li>
+      <li><b>JPG:</b> Best for photos and documents where file size matters.</li>
+      <li><b>PNG:</b> Best for graphics, screenshots, and text-heavy pages.</li>
+      <li><b>WEBP:</b> Modern format with excellent compression.</li>
     </ul>
 
     <h3>What's Inside the ZIP?</h3>
-    <p>Inside the downloaded ZIP archive, you'll find:</p>
     <ul>
-      <li>One image per PDF page, named sequentially (<code>yourfile-page-1.jpg</code>, <code>yourfile-page-2.png</code>, etc.)</li>
-      <li>A <code>README.txt</code> file with the source link, creator info, and support details</li>
+      <li>One image per PDF page, named sequentially.</li>
+      <li>A <code>README.html</code> file with usage info and links.</li>
     </ul>
 
     <h3>FAQ</h3>
-    <p><b>Q: What image formats can I export?</b><br>
-    JPG, PNG, and WEBP. Choose based on whether you need small file size (JPG), lossless quality (PNG), or modern compression (WEBP).</p>
-    <p><b>Q: Is there a page or file size limit?</b><br>
-    No arbitrary quotas. Performance scales with available device RAM.</p>
-    <p><b>Q: Are my confidential records saved on your server?</b><br>
-    Never. Everything runs purely client-side.</p>
     <p><b>Q: Do the images have watermarks?</b><br>
-    No. Images are clean and watermark-free. Only a README.txt is included in the ZIP with source info.</p>
+    No. Images are clean and watermark-free.</p>
+    <p><b>Q: Are my files uploaded?</b><br>
+    Never. Everything runs purely client-side.</p>
   </section>
 
   <div class="ad-slot-container">Advertisement</div>
@@ -169,7 +154,14 @@
   fileIn.addEventListener('change', async function (e) {
     var file = e.target.files[0];
     if (!file) return;
-    fileName = file.name.replace(/\.[^/.]+$/, '');
+    // Sanitize filename: remove special chars, spaces → dashes, limit to 40 chars
+    fileName = file.name.replace(/\.[^/.]+$/, '')
+      .replace(/[^a-zA-Z0-9\s\-_]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 40);
+    if (!fileName) fileName = 'document';
     pdfFileBytes = await file.arrayBuffer();
     controls.hidden = false;
     info.textContent = 'Loaded: ' + file.name;
@@ -184,21 +176,13 @@
       var format  = formatSel.value;
       var quality = parseFloat(qualitySel.value) || 0.9;
 
-      var mimeMap = {
-        jpg:  'image/jpeg',
-        png:  'image/png',
-        webp: 'image/webp'
-      };
-      var extMap = {
-        jpg:  '.jpg',
-        png:  '.png',
-        webp: '.webp'
-      };
+      var mimeMap = { jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+      var extMap  = { jpg: '.jpg', png: '.png', webp: '.webp' };
 
       var mimeType = mimeMap[format] || 'image/jpeg';
       var fileExt  = extMap[format]  || '.jpg';
 
-      // Check browser support for the chosen format
+      // Browser support check
       var testCanvas = document.createElement('canvas');
       testCanvas.width = 1; testCanvas.height = 1;
       var testUrl = testCanvas.toDataURL(mimeType);
@@ -214,7 +198,6 @@
 
       for (var i = 1; i <= pdf.numPages; i++) {
         info.textContent = 'Converting page ' + i + ' of ' + pdf.numPages + '...';
-
         var page = await pdf.getPage(i);
         var viewport = page.getViewport({ scale: 2.0 });
 
@@ -225,7 +208,6 @@
 
         await page.render({ canvasContext: ctx, viewport: viewport }).promise;
 
-        // No watermark — clean images
         var dataUrl;
         if (format === 'png') {
           dataUrl = canvas.toDataURL('image/png');
@@ -235,43 +217,70 @@
 
         var prefix = 'data:' + mimeType + ';base64,';
         var base64 = dataUrl.replace(prefix, '');
-
         zip.file(fileName + '-page-' + i + fileExt, base64, { base64: true });
       }
 
       // ============================================================
-      // README.txt — with website, portfolio, and support links
+      // README.html — A4 friendly, 12pt, fits in half a page
       // ============================================================
-      var readmeText =
-  '====================================\n' +
-  '  DocEasy — PDF to Image Converter\n' +
-  '====================================\n\n' +
-  '  Website   : https://www.doceasy.org\n' +
-  '  Portfolio : https://deepaakai.github.io/portfolio/\n' +
-  '  Made by   : Deepaak Kumar\n\n' +
-  '------------------------------------\n' +
-  '  Support My Work\n' +
-  '------------------------------------\n' +
-  '  Buy me a coffee:\n' +
-  '  >>>  https://www.buymeacoffee.com/  <<<\n\n' +
-  '  Your support keeps DocEasy free\n' +
-  '  and ad-light for everyone.\n\n' +
-  '------------------------------------\n' +
-  '  Your Images\n' +
-  '------------------------------------\n' +
-  '  Format : ' + format.toUpperCase() + '\n' +
-  '  Pages  : ' + pdf.numPages + '\n' +
-  '  Date   : ' + new Date().toLocaleDateString('en-GB') + '\n\n' +
-  '  Each PDF page has been saved as\n' +
-  '  a separate image file, named:\n' +
-  '    ' + fileName + '-page-1' + fileExt + '\n' +
-  '    ' + fileName + '-page-2' + fileExt + '\n' +
-  '    ...and so on.\n\n' +
-  '====================================\n' +
-  '  More tools: https://www.doceasy.org\n' +
-  '====================================\n';
+      var readmeHtml =
+        '<!DOCTYPE html>\n' +
+        '<html>\n' +
+        '<head>\n' +
+        '<meta charset="UTF-8">\n' +
+        '<title>DocEasy — README</title>\n' +
+        '<style>\n' +
+        '  @page { size: A4; margin: 15mm; }\n' +
+        '  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 12pt; line-height: 1.5; color: #1e293b; max-width: 180mm; margin: 0 auto; padding: 8mm 0; }\n' +
+        '  h1 { font-size: 16pt; color: #19398a; margin: 0 0 10px; border-bottom: 2px solid #19398a; padding-bottom: 6px; }\n' +
+        '  h2 { font-size: 12pt; color: #19398a; margin: 12px 0 6px; }\n' +
+        '  p { margin: 4px 0; }\n' +
+        '  .label { font-weight: 700; color: #19398a; }\n' +
+        '  .box { background: #f1f5f9; border-left: 3px solid #19398a; padding: 8px 12px; margin: 8px 0; border-radius: 4px; }\n' +
+        '  .center { text-align: center; }\n' +
+        '  .small { font-size: 10pt; color: #64748b; }\n' +
+        '  .btn { display: inline-block; background: #19398a; color: #ffffff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 700; margin: 4px 4px 4px 0; }\n' +
+        '  .btn.green { background: #15803d; }\n' +
+        '  ul { margin: 4px 0; padding-left: 20px; }\n' +
+        '  li { margin-bottom: 2px; }\n' +
+        '</style>\n' +
+        '</head>\n' +
+        '<body>\n' +
+        '<h1>DocEasy — PDF to Image Converter</h1>\n' +
+        '<p>Thank you for using <strong>DocEasy</strong>!</p>\n' +
+        '<div class="box">\n' +
+        '  <p><span class="label">Website:</span> <a href="https://www.doceasy.org">www.doceasy.org</a></p>\n' +
+        '  <p><span class="label">Portfolio:</span> <a href="https://deepaakai.github.io/portfolio/">deepaakai.github.io/portfolio</a></p>\n' +
+        '  <p><span class="label">Made by:</span> Deepaak Kumar</p>\n' +
+        '</div>\n' +
+        '<h2>Your Images</h2>\n' +
+        '<p><span class="label">Format:</span> ' + format.toUpperCase() + '</p>\n' +
+        '<p><span class="label">Pages:</span> ' + pdf.numPages + '</p>\n' +
+        '<p><span class="label">Date:</span> ' + new Date().toLocaleDateString('en-GB') + '</p>\n' +
+        '<p>Each page has been saved as a separate image file:</p>\n' +
+        '<ul>\n' +
+        '  <li>' + fileName + '-page-1' + fileExt + '</li>\n' +
+        '  <li>' + fileName + '-page-2' + fileExt + '</li>\n' +
+        '  <li>...and so on</li>\n' +
+        '</ul>\n' +
+        '<h2>Support My Work</h2>\n' +
+        '<p>DocEasy is 100% free, ad-light, and privacy-first.</p>\n' +
+        '<p>If it saved you time, consider buying me a coffee:</p>\n' +
+        '<p class="center">\n' +
+        '  <a class="btn green" href="https://www.paypal.me/DPaswan198">Buy me a coffee →</a>\n' +
+        '</p>\n' +
+        '<h2>More Tools</h2>\n' +
+        '<p>Explore 25+ free tools for PDFs, images, and documents:</p>\n' +
+        '<p class="center">\n' +
+        '  <a class="btn" href="https://www.doceasy.org">Visit DocEasy →</a>\n' +
+        '</p>\n' +
+        '<p class="small center" style="margin-top:20px;">\n' +
+        '  Generated by DocEasy · 100% browser-based\n' +
+        '</p>\n' +
+        '</body>\n' +
+        '</html>\n';
 
-      zip.file('README.txt', readmeText);
+      zip.file('README.html', readmeHtml);
 
       info.textContent = 'Packaging ZIP...';
       var content = await zip.generateAsync({ type: 'blob' });
