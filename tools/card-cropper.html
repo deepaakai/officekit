@@ -3,24 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Aadhaar & PAN Dual-Side Cropper (Ultra HD 300 DPI) — OfficeKit</title>
-<meta name="description" content="Crop Aadhaar & PAN card both sides at ultra HD 300 DPI. Password-protected e-Aadhaar PDF support. Free, browser-based, 100% private.">
+<title>Aadhaar & PAN Dual-Side Cropper (Ultra HD 300 DPI) — DocEasy</title>
+<meta name="description" content="Crop Aadhaar & PAN card both sides at ultra HD 300 DPI. Password-protected e-Aadhaar & PAN PDF support. Free, browser-based, 100% private.">
 <meta name="keywords" content="aadhaar cropper, pan card cropper, id card cropper, 300 dpi aadhaar, dual side id crop">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://doceasy.org/tools/card-cropper.html">
 
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Aadhaar & PAN Dual-Side Cropper (300 DPI) — OfficeKit">
-<meta property="og:description" content="Crop both sides of Aadhaar / PAN at ultra HD 300 DPI. Free & private.">
-<meta property="og:url" content="https://doceasy.org/tools/card-cropper.html">
-<meta property="og:site_name" content="doceasy">
-
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EOK%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
-<!-- pdf.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <script>
   if (window.pdfjsLib) {
@@ -29,7 +21,7 @@
 </script>
 
 <style>
-/* ============ Tool-specific styles (theme comes from global CSS) ============ */
+/* ============ Tool-specific styles ============ */
 .cropper-container { text-align: center; }
 
 .upload-box {
@@ -63,7 +55,7 @@
   border: 1px solid #fed7aa;
   border-radius: 8px;
   padding: 16px 20px;
-  max-width: 500px;
+  max-width: 560px;
   margin: 15px auto;
   text-align: left;
 }
@@ -73,9 +65,16 @@
 }
 .password-card .pc-title { font-size: 13.5px; font-weight: 700; color: #c2410c; }
 [data-theme="dark"] .password-card .pc-title { color: #fdba74; }
-.password-card .pc-hint { font-size: 12.5px; color: #9a3412; margin-top: 2px; }
+.password-card .pc-hint { font-size: 12.5px; color: #9a3412; margin-top: 4px; line-height: 1.55; }
 [data-theme="dark"] .password-card .pc-hint { color: #fdba74; }
-.password-input-group { display: flex; gap: 8px; margin-top: 10px; }
+.password-card .pc-hint code {
+  background: rgba(0,0,0,0.06);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+}
+.password-input-group { display: flex; gap: 8px; margin-top: 12px; }
 .password-input-group input {
   flex: 1;
   height: 38px;
@@ -224,15 +223,16 @@
   border: 2px solid #0f172a;
   border-radius: 3px;
   z-index: 102;
+  touch-action: none;
 }
-.handle-tl { top: -6px; left: -6px; width: 12px; height: 12px; cursor: nwse-resize; }
-.handle-tr { top: -6px; right: -6px; width: 12px; height: 12px; cursor: nesw-resize; }
-.handle-bl { bottom: -6px; left: -6px; width: 12px; height: 12px; cursor: nesw-resize; }
-.handle-br { bottom: -6px; right: -6px; width: 12px; height: 12px; cursor: nwse-resize; }
-.handle-l { top: calc(50% - 10px); left: -6px; width: 10px; height: 20px; cursor: ew-resize; background: #0f172a; }
-.handle-r { top: calc(50% - 10px); right: -6px; width: 10px; height: 20px; cursor: ew-resize; background: #0f172a; }
-.handle-t { top: -6px; left: calc(50% - 10px); width: 20px; height: 10px; cursor: ns-resize; background: #0f172a; }
-.handle-b { bottom: -6px; left: calc(50% - 10px); width: 20px; height: 10px; cursor: ns-resize; background: #0f172a; }
+.handle-tl { top: -7px; left: -7px; width: 16px; height: 16px; cursor: nwse-resize; }
+.handle-tr { top: -7px; right: -7px; width: 16px; height: 16px; cursor: nesw-resize; }
+.handle-bl { bottom: -7px; left: -7px; width: 16px; height: 16px; cursor: nesw-resize; }
+.handle-br { bottom: -7px; right: -7px; width: 16px; height: 16px; cursor: nwse-resize; }
+.handle-l { top: calc(50% - 12px); left: -6px; width: 12px; height: 24px; cursor: ew-resize; background: #0f172a; }
+.handle-r { top: calc(50% - 12px); right: -6px; width: 12px; height: 24px; cursor: ew-resize; background: #0f172a; }
+.handle-t { top: -6px; left: calc(50% - 12px); width: 24px; height: 12px; cursor: ns-resize; background: #0f172a; }
+.handle-b { bottom: -6px; left: calc(50% - 12px); width: 24px; height: 12px; cursor: ns-resize; background: #0f172a; }
 
 .bottom-action-bar {
   margin: 15px auto 20px;
@@ -270,7 +270,7 @@
 }
 .btn-bottom-upload:hover { background: var(--accent-soft-hover); }
 
-/* Print */
+/* ============ PRINT STYLES — BORDERLESS ============ */
 @media print {
   body * { visibility: hidden; }
   #print-area, #print-area * { visibility: visible; }
@@ -286,7 +286,10 @@
   .card-print-img {
     width: 85mm !important;
     height: 55mm !important;
-    border: 1px dashed #94a3b8;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
     object-fit: fill;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
@@ -324,14 +327,36 @@
         <p style="margin:0; font-size:13.5px;">Ultra HD 300 DPI rendering. No pixel loss, zero blur print guaranteed.</p>
       </div>
 
+      <!-- Password Card with Aadhaar + PAN formats -->
       <div id="password-box" class="password-card" hidden>
         <div class="pc-title">🔒 Password Protected PDF Detected</div>
         <div class="pc-hint">
-          e-Aadhaar format: First 4 letters of name in CAPITAL + Birth Year (e.g. DEEP1998)
+          <p style="margin: 6px 0 10px; font-weight: 600;">
+            Dono formats neeche diye hain. Apne document ke hisaab se sahi password daalein.
+          </p>
+
+          <div style="margin-bottom: 10px;">
+            <b>1. Aadhaar Card (e-Aadhaar):</b><br>
+            Pehle <b>4 letters of name in CAPITALS</b> + <b>Birth Year</b><br>
+            Example: Name <b>Deepak</b>, Birth Year <b>1998</b> → <code>DEEP1998</code>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <b>2. PAN Card:</b><br>
+            Your <b>Date of Birth</b> in <b>DDMMYYYY</b> format<br>
+            Example: DOB <b>15 January 1998</b> → <code>15011998</code>
+          </div>
+
+          <div style="margin-bottom: 6px;">
+            <b>3. Any Other Protected PDF:</b><br>
+            The password your provider gave you. Common patterns:<br>
+            <code>DOB</code> · <code>PAN number</code> · <code>Name + DOB</code> · <code>PAN + DOB</code>
+          </div>
         </div>
+
         <div class="password-input-group">
-          <input type="password" id="pdf-password" placeholder="Enter password (e.g. DEEP1998)">
-          <button class="btn-unlock" id="btn-unlock">Unlock & Load</button>
+          <input type="password" id="pdf-password" placeholder="Enter Aadhaar or PAN password">
+          <button class="btn-unlock" id="btn-unlock">Unlock &amp; Load</button>
         </div>
       </div>
     </div>
@@ -365,7 +390,7 @@
       </div>
 
       <div class="hd-note">
-        ✨ <b>300 DPI Studio Quality:</b> बॉक्स को कार्ड पर सेट करें। प्रिंटिंग के समय यह ओरिजिनल PDF से फुल क्रिस्टल क्लियर पिक्सल निकालेगा।
+        ✨ <b>300 DPI Studio Quality:</b> Box ko card par set karein. Printing ke waqt yeh original PDF se full crystal clear pixels nikaalega.
       </div>
 
       <div class="viewport-box" id="viewport-wrap">
@@ -411,10 +436,8 @@
     </div>
   </div>
 
-  <!-- Hidden High-Res Master Canvas -->
   <canvas id="hd-master-canvas" style="display:none;"></canvas>
 
-  <!-- Print Area -->
   <div id="print-area" style="display:none;">
     <img id="print-front-img" class="card-print-img" alt="Front">
     <img id="print-back-img" class="card-print-img" alt="Back">
@@ -422,13 +445,11 @@
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ SEO ARTICLE (800+ words) ============ -->
+  <!-- ============ SEO ARTICLE + TUTORIAL ============ -->
   <section class="seo-article">
     <h2>Complete Guide: Crop Aadhaar & PAN Cards at 300 DPI Online</h2>
 
-    <p>
-      Applying for a government exam, opening a bank account, submitting KYC documents to a fintech app, or verifying your identity on a job portal almost always demands the same thing — clean, correctly-sized copies of your Aadhaar card and PAN card, showing both the front and back. But scanned Aadhaar PDFs are password-protected, phone photos come out blurry, and manually cropping two cards to exact dimensions is a headache. The OfficeKit Aadhaar & PAN Dual-Side Cropper solves all of this in one browser-based tool that produces ultra HD 300 DPI output — without ever uploading your sensitive identity documents to any server.
-    </p>
+    <p>Applying for a government exam, opening a bank account, or verifying your identity on a job portal almost always demands clean, correctly-sized copies of your Aadhaar card and PAN card — both front and back. The DocEasy Aadhaar & PAN Dual-Side Cropper solves all of this in one browser-based tool that produces ultra HD 300 DPI output — without ever uploading your sensitive identity documents to any server.</p>
 
     <div class="article-image-box">
       <img src="../assets/images/card-cropper-demo.jpg" alt="Aadhaar and PAN card dual-side cropping workflow showing front and back crop boxes at 300 DPI"
@@ -436,85 +457,69 @@
       <div class="article-image-caption">Dual-side crop boxes over a scanned Aadhaar card, exporting at exactly 8.5 × 5.5 cm (CR80) in 300 DPI print resolution.</div>
     </div>
 
-    <h3>Why 300 DPI Matters for Aadhaar & PAN Submissions</h3>
-    <p>
-      DPI stands for Dots Per Inch and determines the physical print quality of an image. Most government portals, exam authorities (UPSC, SSC, IBPS), and banks specify that uploaded ID card images must be at least 200–300 DPI to ensure all text, QR codes, and photo details remain legible. A phone photo taken at 72 DPI looks fine on a screen but produces blurry, unreadable text when printed or zoomed by a verifying officer. This tool renders your Aadhaar and PAN cards at 300 DPI by internally using the original PDF's vector data at up to 4× the display resolution — guaranteeing razor-sharp text, barcodes, and photographs every time.
-    </p>
-    <p>
-      Traditional online cropping tools downsample your PDF to a screen-sized bitmap before you crop, permanently losing pixel data. Even if you zoom in, the text gets blurry because the underlying information is gone. OfficeKit takes a completely different approach — it keeps a hidden ultra-HD master canvas at roughly 2480 pixels wide (the equivalent of A4 at 300 DPI) and extracts your crop from that master, not from the compressed on-screen preview.
-    </p>
+    <h3>Why 300 DPI Matters</h3>
+    <p>DPI (Dots Per Inch) determines the physical print quality of an image. Government portals, exam authorities, and banks usually specify 200–300 DPI for uploaded ID cards so that text, QR codes, and photos remain legible. This tool renders your cards at 300 DPI by internally using the original PDF's vector data at up to 4× display resolution — guaranteeing razor-sharp output every time.</p>
+
+    <h3>Password Formats — Aadhaar vs PAN</h3>
+    <p>Both Aadhaar and PAN PDFs are often password-protected when downloaded. But the password formats differ:</p>
+    <ul>
+      <li><b>Aadhaar (e-Aadhaar):</b> First 4 letters of your name in CAPITALS + Birth Year.<br>
+        <i>Example:</i> Name <b>Deepak</b>, Birth Year <b>1998</b> → <code>DEEP1998</code></li>
+      <li><b>PAN Card:</b> Your Date of Birth in DDMMYYYY format.<br>
+        <i>Example:</i> DOB <b>15 January 1998</b> → <code>15011998</code></li>
+      <li><b>Any Other Protected PDF:</b> The password your provider gave you. Common patterns are <code>DOB</code>, <code>PAN number</code>, <code>Name + DOB</code>, or <code>PAN + DOB</code>.</li>
+    </ul>
+    <p>If you see a password prompt after uploading your file, just enter the correct format for your document type and click "Unlock & Load".</p>
 
     <h3>Step-by-Step Instructions</h3>
     <ul>
-      <li><b>Step 1 — Upload your document:</b> Click the upload zone or drag-and-drop your e-Aadhaar PDF, scanned JPG, or phone photo of your Aadhaar / PAN card. Both PDF and image formats are supported.</li>
-      <li><b>Step 2 — Enter the e-Aadhaar password (if prompted):</b> Downloaded e-Aadhaar PDFs are password-protected using the format "first 4 letters of your name in CAPITALS + birth year" (e.g., for a person named Deepak born in 1998, the password would be <code>DEEPAK1998</code> — actually it's <code>DEEP1998</code>, the first 4 letters). Enter it to unlock the PDF. Everything is decrypted locally in your browser.</li>
-      <li><b>Step 3 — Position the two crop boxes:</b> Two draggable, resizable crop boxes appear automatically. The <b>green box</b> is for the front side (marked "Front") and the <b>blue box</b> is for the back side (marked "Back"). Drag each box to sit precisely over the corresponding card on the scanned page.</li>
-      <li><b>Step 4 — Adjust the size (optional):</b> The default target size is 8.5 × 5.5 cm, which matches the international CR80 standard (the size of a credit card, Aadhaar, PAN, driving licence, and voter ID). If your specific form asks for a different size, enter it in the "Target Size" fields.</li>
-      <li><b>Step 5 — Fine-tune the crop boundaries:</b> Use the 8 directional handles around each box — four corners for proportional resizing and four edges for single-axis adjustment — to align the box edges exactly with the card's physical boundaries. You can also drag the box from its center to move it without resizing.</li>
-      <li><b>Step 6 — Multi-page PDFs:</b> If your PDF has multiple pages (like a merged e-Aadhaar with front and back on different pages), use the Prev / Next page navigation in the toolbar to switch pages and crop each side separately.</li>
-      <li><b>Step 7 — Download or print:</b> Click <b>"Save HD Images"</b> to download two 1004 × 650 pixel PNG files (front and back at 300 DPI), or click <b>"Print Ultra HD"</b> to open your system print dialog with both cards laid out side-by-side on an A4 sheet at their true 8.5 × 5.5 cm size.</li>
+      <li><b>Step 1 — Upload:</b> Drag-and-drop your Aadhaar / PAN PDF, scanned JPG, or phone photo.</li>
+      <li><b>Step 2 — Enter password (if prompted):</b> Use the correct format for your document (see above).</li>
+      <li><b>Step 3 — Position crop boxes:</b> Green = Front, Blue = Back. Drag each box to sit over the corresponding card.</li>
+      <li><b>Step 4 — Adjust size (optional):</b> Default 8.5 × 5.5 cm (CR80 standard).</li>
+      <li><b>Step 5 — Fine-tune:</b> Use the 8 handles around each box to align edges precisely.</li>
+      <li><b>Step 6 — Multi-page PDFs:</b> Use Prev/Next page navigation.</li>
+      <li><b>Step 7 — Download or print:</b> "Save HD Images" downloads two 1004×650 PNGs with a small <code>doceasy.org</code> watermark, or "Print Ultra HD" opens the print dialog with both cards on A4 (borderless).</li>
     </ul>
 
-    <h3>What Makes doceasy's Cropper Different</h3>
+    <h3>How to Move and Resize the Crop Boxes</h3>
     <ul>
-      <li><b>True client-side processing:</b> Your Aadhaar and PAN card data is extremely sensitive — it contains your name, address, photo, biometric-linked number, and signature. OfficeKit never uploads any of it. Every pixel operation happens inside your browser's memory and is instantly wiped when you close the tab.</li>
-      <li><b>Dual-side cropping in one session:</b> Instead of processing front and back separately (which most tools force you to do), OfficeKit gives you two independent crop boxes on the same page, so both sides are done in a single smooth workflow.</li>
-      <li><b>Ultra HD 300 DPI output:</b> The exported PNG is exactly 1004 × 650 pixels — the correct physical size for a CR80 card at 300 DPI. Perfect for both digital uploads and physical printing without pixelation.</li>
-      <li><b>Password-protected PDF support:</b> Directly open downloaded e-Aadhaar files without needing to first decrypt them in an external tool.</li>
-      <li><b>A4 print layout:</b> The print feature automatically arranges both cards on an A4 sheet at their true physical size, with a light dashed cutting guide around each card — ideal for printing on photo paper or sticker sheets.</li>
-      <li><b>Works on any device:</b> Desktop, tablet, or mobile — the crop boxes and toolbar adapt to any screen size.</li>
+      <li><b>Move:</b> Click anywhere inside the crop box and drag it to the correct position.</li>
+      <li><b>Resize from corners:</b> Drag the four white square handles at each corner.</li>
+      <li><b>Resize from edges:</b> Drag the black bar handles in the middle of each side to stretch in one direction only.</li>
+      <li><b>Mobile support:</b> On phones and tablets, use one finger to drag the box or its handles.</li>
     </ul>
 
-    <h3>Common Use Cases</h3>
-    <ul>
-      <li><b>Government exam applications:</b> UPSC, SSC, IBPS, RRB, and state PSC portals require both sides of Aadhaar and PAN at specific dimensions.</li>
-      <li><b>Bank KYC submissions:</b> Physical or digital KYC forms for opening savings, current, and Demat accounts.</li>
-      <li><b>Fintech app verification:</b> UPI apps, wallets, and lending platforms require clean front-and-back card photos.</li>
-      <li><b>Job portal uploads:</b> Naukri, LinkedIn, and direct company ATS portals often ask for identity documents as part of background verification.</li>
-      <li><b>Visa & travel applications:</b> Embassies and visa facilitation centres require ID documents in specific sizes.</li>
-      <li><b>Insurance and loan applications:</b> Aadhaar and PAN copies are mandatory for policy issuance and loan processing.</li>
-    </ul>
-
-    <h3>Frequently Asked Questions (FAQ)</h3>
-    <p><b>Q: Is my Aadhaar / PAN data safe with this tool?</b><br>
-    Absolutely. DocEasy processes everything in your browser. Your files are never uploaded, never stored, and never seen by anyone — including us. You can verify this by disconnecting your internet after the page loads; the tool will still work completely.</p>
-
-    <p><b>Q: What is the exact size of an Aadhaar / PAN card?</b><br>
-    All Indian identity cards (Aadhaar, PAN, driving licence, voter ID) follow the CR80 standard: 85.6 mm × 54 mm, which is approximately 8.5 × 5.5 cm. This tool uses that size by default.</p>
+    <h3>Frequently Asked Questions</h3>
+    <p><b>Q: Is my Aadhaar / PAN data safe?</b><br>
+    Yes. Everything happens in your browser. Nothing is uploaded, stored, or shared.</p>
 
     <p><b>Q: How do I know my e-Aadhaar password?</b><br>
-    The standard e-Aadhaar password format is the first four letters of your name in CAPITAL letters followed by your year of birth. For example, if your name is "Deepak Kumar" and you were born in 1998, the password is <code>DEEP1998</code>. This password is set by UIDAI, not by us — we cannot recover or reset it.</p>
+    First four letters of your name in CAPITALS + year of birth. Example: "Deepak" born 1998 → <code>DEEP1998</code>.</p>
 
-    <p><b>Q: Can I crop PAN cards using the same tool?</b><br>
-    Yes. PAN cards are the same size as Aadhaar (CR80). The tool is called a "dual-side cropper" precisely because it works with both Aadhaar and PAN, and any other government ID in the same format.</p>
+    <p><b>Q: What is my PAN card PDF password?</b><br>
+    Usually your Date of Birth in DDMMYYYY format. Example: DOB 15/01/1998 → <code>15011998</code>.</p>
 
-    <p><b>Q: Will the downloaded image be blurry when printed?</b><br>
-    No. The output is rendered at 300 DPI from the original PDF's vector data, which is the industry standard for professional print. You can print at 100% size and the text will be razor-sharp.</p>
+    <p><b>Q: Will the print have a border?</b><br>
+    No. The print output is borderless — just the cropped card images at their true 8.5 × 5.5 cm size on an A4 sheet.</p>
 
-    <p><b>Q: Can I use this on a mobile phone?</b><br>
-    Yes. The interface is fully responsive. On mobile, tap and drag the crop boxes with your finger, and use the corner handles to resize. The HD rendering works identically on mobile and desktop.</p>
+    <p><b>Q: Is there a watermark on the images?</b><br>
+    Yes. A small <code>doceasy.org</code> watermark appears at the bottom-right corner of the exported images and the printed output — subtle, but present.</p>
 
-    <p><b>Q: What if my scanned Aadhaar is tilted or rotated?</b><br>
-    The crop boxes are axis-aligned rectangles, so they work best with upright documents. If your scan is tilted, re-scan it upright first, or rotate the image in a basic photo editor before uploading. Perfectly upright scans give the best results.</p>
+    <p><b>Q: Can I use this on mobile?</b><br>
+    Yes. The crop boxes and handles are fully touch-enabled.</p>
 
-    <p><b>Q: Is there any file size limit?</b><br>
-    No fixed limit. Very large PDFs (50+ pages) may take a few seconds to load and render on older devices, but the tool will handle them without crashing.</p>
-
-    <p><b>Q: Can I crop more than two cards at once?</b><br>
-    Currently the tool provides two crop boxes (front + back). If you have multiple cards on a single page (for example, family members' Aadhaar cards), you can process them in multiple sessions — crop two at a time, download, then re-upload for the next pair.</p>
-
-    <h3>Pro Tips for Best Results</h3>
+    <h3>Pro Tips</h3>
     <ul>
-      <li>Scan Aadhaar and PAN at 300 DPI in your scanner's settings before uploading, if possible. It costs the same file size and gives the sharpest output.</li>
-      <li>If using a phone camera, place the card on a dark matte surface in bright indirect daylight to avoid glare and shadows.</li>
-      <li>Always place the green box on the front and the blue box on the back to keep your downloads organized.</li>
-      <li>After cropping, open the downloaded PNG in an image viewer and zoom in to 200% to verify that the card number, QR code, and photo are all clearly readable before submitting.</li>
-      <li>Keep a master copy of your cropped PNGs in a secure folder so you never need to re-crop for future applications.</li>
+      <li>Scan Aadhaar at 300 DPI in your scanner settings for the sharpest results.</li>
+      <li>Place the card on a matte dark surface in daylight to avoid glare and shadows.</li>
+      <li>Always place the green box on the front and blue on the back for organised downloads.</li>
+      <li>After cropping, zoom to 200% to verify the card number and QR code are readable before submitting.</li>
     </ul>
 
     <h3>Related DocEasy Tools</h3>
     <p>
-      If you found this tool useful, you may also benefit from our <a href="passport-maker.html">Passport Photo Maker</a> for government-compliant 35×45 mm photos, our <a href="signature-resize.html">Signature Resize</a> tool to compress handwritten signatures to 10–50 KB, our <a href="doc-scanner.html">Document Scanner with OCR</a> to extract text from scanned Aadhaar PDFs, and our <a href="pdf-merge.html">PDF Merge</a> tool to combine multiple ID documents into a single submission file.
+      Also try our <a href="passport-maker.html">Passport Photo Maker</a>, <a href="signature-resize.html">Signature Resize</a>, <a href="doc-scanner.html">Document Scanner with OCR</a>, and <a href="pdf-merge.html">PDF Merge</a> tools.
     </p>
   </section>
 
@@ -747,15 +752,21 @@ function syncSizeFromInputs() {
 boxWInput.oninput = syncSizeFromInputs;
 boxHInput.oninput = syncSizeFromInputs;
 
+/* ==========================================================================
+   INTERACTIVE CROP BOX — Pointer Events (mouse + touch + pen)
+   ========================================================================== */
 function setupInteractiveBox(box) {
   let activeMode = null;
   let startX, startY, origX, origY, origW, origH;
+  let activePointerId = null;
 
-  box.addEventListener("mousedown", (e) => {
+  function onPointerDown(e) {
+    if (e.button !== undefined && e.button !== 0) return;
+
     startX = e.clientX;
     startY = e.clientY;
-    origX = parseFloat(box.style.left);
-    origY = parseFloat(box.style.top);
+    origX = parseFloat(box.style.left) || 0;
+    origY = parseFloat(box.style.top) || 0;
     origW = box.offsetWidth;
     origH = box.offsetHeight;
 
@@ -763,12 +774,17 @@ function setupInteractiveBox(box) {
       ? e.target.getAttribute("data-dir")
       : "drag";
 
+    activePointerId = e.pointerId;
+    try { box.setPointerCapture(e.pointerId); } catch (err) {}
+
     e.preventDefault();
     e.stopPropagation();
-  });
+  }
 
-  window.addEventListener("mousemove", (e) => {
+  function onPointerMove(e) {
     if (!activeMode) return;
+    if (activePointerId !== null && e.pointerId !== activePointerId) return;
+
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
@@ -779,24 +795,39 @@ function setupInteractiveBox(box) {
       box.style.top = newY + "px";
     } else {
       let newW = origW, newH = origH, newX = origX, newY = origY;
-      if (activeMode.includes("r")) newW = Math.max(80, origW + dx);
-      if (activeMode.includes("l")) {
+      const MIN_W = 60, MIN_H = 40;
+
+      if (activeMode.indexOf("r") !== -1) newW = Math.max(MIN_W, origW + dx);
+      if (activeMode.indexOf("l") !== -1) {
         const possibleW = origW - dx;
-        if (possibleW > 80) { newW = possibleW; newX = origX + dx; }
+        if (possibleW > MIN_W) { newW = possibleW; newX = origX + dx; }
       }
-      if (activeMode.includes("b")) newH = Math.max(50, origH + dy);
-      if (activeMode.includes("t")) {
+      if (activeMode.indexOf("b") !== -1) newH = Math.max(MIN_H, origH + dy);
+      if (activeMode.indexOf("t") !== -1) {
         const possibleH = origH - dy;
-        if (possibleH > 50) { newH = possibleH; newY = origY + dy; }
+        if (possibleH > MIN_H) { newH = possibleH; newY = origY + dy; }
       }
+
       box.style.width = newW + "px";
       box.style.height = newH + "px";
       box.style.left = newX + "px";
       box.style.top = newY + "px";
     }
-  });
 
-  window.addEventListener("mouseup", () => { activeMode = null; });
+    e.preventDefault();
+  }
+
+  function onPointerUp(e) {
+    if (activePointerId !== null && e.pointerId !== activePointerId) return;
+    activeMode = null;
+    activePointerId = null;
+  }
+
+  box.addEventListener("pointerdown", onPointerDown);
+  box.addEventListener("pointermove", onPointerMove);
+  box.addEventListener("pointerup", onPointerUp);
+  box.addEventListener("pointercancel", onPointerUp);
+  box.addEventListener("lostpointercapture", onPointerUp);
 }
 
 setupInteractiveBox(cropFront);
@@ -825,6 +856,15 @@ function getUltraHdCroppedCanvas(boxEl) {
     realX, realY, realW, realH,
     0, 0, outCanvas.width, outCanvas.height
   );
+
+  // Watermark
+  outCtx.font = "bold 22px -apple-system, Segoe UI, Roboto, Arial, sans-serif";
+  outCtx.textAlign = "right";
+  outCtx.textBaseline = "bottom";
+  outCtx.globalAlpha = 0.55;
+  outCtx.fillStyle = "#19398a";
+  outCtx.fillText("doceasy.org", outCanvas.width - 14, outCanvas.height - 10);
+  outCtx.globalAlpha = 1.0;
 
   return outCanvas;
 }
