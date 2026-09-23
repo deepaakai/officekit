@@ -1,142 +1,185 @@
 /* ==========================================================================
-   DocEasy — Core JS
-   Injects header and footer. Handles theme toggle.
-   Works on both GitHub Pages and custom domain.
+   DocEasy Core — Auto-injects header + footer + theme toggle on every page.
+   FIXED: outerHTML replaces the placeholder div properly so CSS works.
    ========================================================================== */
-
 (function () {
   'use strict';
 
-  /* ---------- Detect base path (for GitHub Pages) ---------- */
-  function getBasePath() {
-    var host = window.location.hostname;
-    var path = window.location.pathname;
-    // If on GitHub Pages like /officekit/...
-    if (host.indexOf('github.io') !== -1) {
-      var parts = path.split('/').filter(Boolean);
-      if (parts.length > 0) {
-        var first = parts[0];
-        if (first !== 'tools' && first !== 'assets' && first.indexOf('.') === -1) {
-          return '/' + first + '/';
-        }
-      }
+  try {
+    var saved = localStorage.getItem('doceasy_theme') || 'light';
+    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+  } catch (e) {}
+
+  var CONFIG = {
+    brand: 'DocEasy',
+    domain: 'doceasy.org',
+    author: 'Deepaak Kumar',
+    authorPortfolio: 'https://deepaakai.github.io/portfolio/',
+    isSubPage: location.pathname.indexOf('/tools/') !== -1,
+
+    pillNav: [
+      { href: '#tools',     label: 'Tools' },
+      { href: '#ai',        label: 'AI Tools' },
+      { href: '#templates', label: 'Templates' },
+      { href: '#features',  label: 'Why DocEasy' },
+      { href: '#faq',       label: 'FAQ' },
+      { href: '#blog',      label: 'Blog' }
+    ],
+
+    topNav: [
+      { href: 'jpg-to-pdf.html',        label: 'JPG to PDF',       page: 'jpg-to-pdf' },
+      { href: 'pdf-editor.html',        label: 'PDF Editor',       page: 'pdf-editor' },
+      { href: 'pdf-merge.html',         label: 'Merge PDF',        page: 'pdf-merge' },
+      { href: 'image-compressor.html',  label: 'Image Compressor', page: 'image-compressor' },
+      { href: 'passport-maker.html',    label: 'Passport Photo',   page: 'passport-maker' },
+      { href: 'invoice-generator.html', label: 'Invoice',          page: 'invoice-generator' }
+    ],
+
+    footer: {
+      pdfTools: [
+        { href: 'pdf-editor.html',      label: 'Edit PDF' },
+        { href: 'pdf-merge.html',       label: 'Merge PDF' },
+        { href: 'pdf-split.html',       label: 'Split PDF' },
+        { href: 'jpg-to-pdf.html',      label: 'JPG to PDF' },
+        { href: 'pdf-to-jpg.html',      label: 'PDF to JPG' },
+        { href: 'image-converter.html', label: 'Format Converter' }
+      ],
+      imageTools: [
+        { href: 'image-compressor.html',      label: 'Compress Image' },
+        { href: 'image-bg-remover.html',      label: 'Background Remover' },
+        { href: 'image-beautifier.html',      label: 'AI Photo Beautifier' },
+        { href: 'signature-resize.html',      label: 'Signature Resize' },
+        { href: 'signature-bg-remover.html',  label: 'Signature BG Remover' },
+        { href: 'card-cropper.html',          label: 'ID Card Cropper' }
+      ],
+      company: [
+        { href: 'about.html',    label: 'About Us',           root: true },
+        { href: 'contact.html',  label: 'Contact',            root: true },
+        { href: 'privacy.html',  label: 'Privacy Policy',     root: true },
+        { href: 'terms.html',    label: 'Terms & Conditions', root: true }
+      ]
     }
-    return '/';
+  };
+
+  function resolvePath(href, isRoot) {
+    if (!href) return '#';
+    if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
+    if (!isRoot && CONFIG.isSubPage) return href;
+    if (isRoot && CONFIG.isSubPage) return '../' + href;
+    if (!isRoot && !CONFIG.isSubPage && /\.html$/.test(href)) {
+      var TOOL_PAGES = [
+        'image-compressor','signature-resize','image-bg-remover','image-converter',
+        'image-beautifier','invoice-generator','pdf-merge','pdf-split','jpg-to-pdf',
+        'pdf-to-jpg','doc-scanner','card-cropper','passport-maker','signature-bg-remover',
+        'pdf-editor','qr-generator','qr-scanner','word-counter'
+      ];
+      var name = href.replace('.html', '');
+      if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
+    }
+    return href;
   }
 
-  var BASE = getBasePath();
-
   /* ---------- HEADER ---------- */
-  var headerEl = document.getElementById('doceasy-header');
-  if (headerEl) {
-    headerEl.outerHTML =
-      '<header class="site-header">' +
-        '<div class="header-inner">' +
-          '<a class="brand-link" href="' + BASE + '" aria-label="DocEasy home">' +
-            '<span class="brand-badge">' +
-              '<img src="' + BASE + 'assets/images/logo-full.png" alt="DocEasy" ' +
-                   'onerror="this.parentElement.innerHTML=\'DocEasy\'">' +
-            '</span>' +
-          '</a>' +
-          '<nav class="pill-nav" aria-label="Main navigation">' +
-            '<a href="' + BASE + '#tools">Tools</a>' +
-            '<a href="' + BASE + '#ai">AI Tools</a>' +
-            '<a href="' + BASE + '#templates">Templates</a>' +
-            '<a href="' + BASE + '#features">Why DocEasy</a>' +
-            '<a href="' + BASE + '#faq">FAQ</a>' +
-          '</nav>' +
-          '<div class="nav-right">' +
-            '<nav class="top-nav" aria-label="Tool shortcuts">' +
-              '<a href="' + BASE + 'tools/pdf-merge.html">Merge PDF</a>' +
-              '<a href="' + BASE + 'tools/pdf-compressor.html">Compress</a>' +
-              '<a href="' + BASE + 'tools/image-compressor.html">Compress Image</a>' +
-              '<a href="' + BASE + 'tools/image-bg-remover.html">BG Remover</a>' +
-              '<a href="' + BASE + 'tools/qr-generator.html">QR Code</a>' +
-            '</nav>' +
-            '<label class="theme-switch" aria-label="Toggle dark mode">' +
-              '<input type="checkbox" id="doceasy-theme-toggle">' +
-              '<span class="slider"></span>' +
-            '</label>' +
-          '</div>' +
-        '</div>' +
-      '</header>';
+  function buildHeader() {
+    var pillLinks = CONFIG.pillNav.map(function (item) {
+      return '<a href="' + item.href + '">' + item.label + '</a>';
+    }).join('');
+
+    var toolLinks = CONFIG.topNav.map(function (item) {
+      return '<a href="' + resolvePath(item.href, false) + '" data-page="' + item.page + '">' +
+             item.label + '</a>';
+    }).join('');
+
+    var homeHref = resolvePath('index.html', true);
+
+    return '<header class="site-header"><div class="header-inner">' +
+      '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
+        '<span class="brand-badge">' +
+          '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:22px;width:auto;display:block;">' +
+        '</span>' +
+      '</a>' +
+      '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
+      '<div class="nav-right">' +
+        '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
+        '<label class="theme-switch" aria-label="Toggle theme">' +
+          '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
+          '<span class="slider"></span>' +
+        '</label>' +
+      '</div>' +
+    '</div></header>';
   }
 
   /* ---------- FOOTER ---------- */
-  var footerEl = document.getElementById('doceasy-footer');
-  if (footerEl) {
-    footerEl.outerHTML =
-      '<footer class="site-footer">' +
-        '<div class="footer-container">' +
-          '<div class="footer-col">' +
-            '<span class="footer-brand-box">' +
-              '<img src="' + BASE + 'assets/images/logo-full.png" alt="DocEasy" ' +
-                   'onerror="this.parentElement.innerHTML=\'DocEasy\'">' +
-            '</span>' +
-            '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
-              'Free browser-based tools for PDFs, images, and documents. ' +
-              '100% private — your files never leave your device.' +
-            '</p>' +
+  function buildFooter() {
+    function col(title, items, isRoot) {
+      var lis = items.map(function (it) {
+        return '<li><a href="' + resolvePath(it.href, isRoot || it.root) + '">' +
+               it.label + '</a></li>';
+      }).join('');
+      return '<div class="footer-col"><h5>' + title + '</h5><ul>' + lis + '</ul></div>';
+    }
+
+    return '<footer class="site-footer">' +
+      '<div class="footer-container">' +
+        '<div>' +
+          '<div class="footer-brand-box">' +
+            '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:20px;width:auto;display:block;">' +
           '</div>' +
-          '<div class="footer-col">' +
-            '<h5>PDF Tools</h5>' +
-            '<ul>' +
-              '<li><a href="' + BASE + 'tools/pdf-merge.html">Merge PDF</a></li>' +
-              '<li><a href="' + BASE + 'tools/pdf-split.html">Split PDF</a></li>' +
-              '<li><a href="' + BASE + 'tools/pdf-compressor.html">Compress PDF</a></li>' +
-              '<li><a href="' + BASE + 'tools/pdf-editor.html">PDF Editor</a></li>' +
-              '<li><a href="' + BASE + 'tools/pdf-to-word.html">PDF to Word</a></li>' +
-            '</ul>' +
-          '</div>' +
-          '<div class="footer-col">' +
-            '<h5>Image Tools</h5>' +
-            '<ul>' +
-              '<li><a href="' + BASE + 'tools/image-compressor.html">Image Compressor</a></li>' +
-              '<li><a href="' + BASE + 'tools/image-bg-remover.html">Background Remover</a></li>' +
-              '<li><a href="' + BASE + 'tools/passport-maker.html">Passport Photo</a></li>' +
-              '<li><a href="' + BASE + 'tools/card-cropper.html">ID Card Cropper</a></li>' +
-              '<li><a href="' + BASE + 'tools/signature-resize.html">Signature Resize</a></li>' +
-            '</ul>' +
-          '</div>' +
-          '<div class="footer-col">' +
-            '<h5>Company</h5>' +
-            '<ul>' +
-              '<li><a href="' + BASE + 'about.html">About</a></li>' +
-              '<li><a href="' + BASE + 'contact.html">Contact</a></li>' +
-              '<li><a href="' + BASE + 'privacy.html">Privacy</a></li>' +
-              '<li><a href="' + BASE + 'terms.html">Terms</a></li>' +
-            '</ul>' +
-          '</div>' +
+          '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">' +
+          '100% client-side browser processing. Your files never leave your device.' +
+          '</p>' +
         '</div>' +
-        '<div class="footer-bottom-bar">' +
-          '<span>© 2026 DocEasy. All rights reserved.</span>' +
-          '<span>Made with ❤️ for the world</span>' +
+        col('PDF Tools',    CONFIG.footer.pdfTools,   false) +
+        col('Image Tools',  CONFIG.footer.imageTools, false) +
+        col('Company',      CONFIG.footer.company,    true)  +
+      '</div>' +
+      '<div class="footer-bottom-bar">' +
+        '<div>© <span id="de-year"></span> ' + CONFIG.brand + '. All rights reserved.</div>' +
+        '<div>' +
+          '<a class="made-with-love-link" ' +
+            'href="' + CONFIG.authorPortfolio + '" ' +
+            'target="_blank" rel="noopener noreferrer">' +
+            'Made with ❤️ by ' + CONFIG.author +
+          '</a>' +
         '</div>' +
-      '</footer>';
+      '</div>' +
+    '</footer>';
   }
 
-  /* ---------- THEME TOGGLE ---------- */
-  var toggle = document.getElementById('doceasy-theme-toggle');
-  var savedTheme = 'light';
-  try { savedTheme = localStorage.getItem('doceasy_theme') || 'light'; } catch (e) {}
+  /* ---------- INJECT (FIXED: outerHTML) ---------- */
+  function inject() {
+    var h = document.getElementById('doceasy-header') || document.getElementById('-header');
+    if (h && !document.querySelector('.site-header')) h.outerHTML = buildHeader();
 
-  function applyTheme(theme) {
-    if (theme === 'dark') {
+    var f = document.getElementById('doceasy-footer') || document.getElementById('-footer');
+    if (f && !document.querySelector('.site-footer')) f.outerHTML = buildFooter();
+
+    var current = location.pathname.split('/').pop().replace('.html', '');
+    document.querySelectorAll('.top-nav a[data-page]').forEach(function (a) {
+      if (a.getAttribute('data-page') === current) a.classList.add('active');
+    });
+
+    var cb = document.getElementById('theme-checkbox');
+    if (cb) cb.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+
+    var y = document.getElementById('de-year');
+    if (y) y.textContent = new Date().getFullYear();
+  }
+
+  window.docEasyToggleTheme = function () {
+    var cb = document.getElementById('theme-checkbox');
+    if (cb && cb.checked) {
       document.documentElement.setAttribute('data-theme', 'dark');
-      if (toggle) toggle.checked = true;
+      try { localStorage.setItem('doceasy_theme', 'dark'); } catch (e) {}
     } else {
       document.documentElement.removeAttribute('data-theme');
-      if (toggle) toggle.checked = false;
+      try { localStorage.setItem('doceasy_theme', 'light'); } catch (e) {}
     }
-  }
-  applyTheme(savedTheme);
+  };
 
-  if (toggle) {
-    toggle.addEventListener('change', function () {
-      var next = this.checked ? 'dark' : 'light';
-      try { localStorage.setItem('doceasy_theme', next); } catch (e) {}
-      applyTheme(next);
-    });
-  }
+  window.officekitToggleTheme = window.docEasyToggleTheme;
 
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
+  else inject();
 })();
