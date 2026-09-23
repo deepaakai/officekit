@@ -21,15 +21,16 @@
       { href: '#ai',        label: 'AI Tools' },
       { href: '#templates', label: 'Templates' },
       { href: '#features',  label: 'Why DocEasy' },
-      { href: '#faq',       label: 'FAQ' }
+      { href: '#faq',       label: 'FAQ' },
+      { href: '#blog',      label: 'Blog' }
     ],
 
     topNav: [
-      { href: 'pdf-merge.html',         label: 'Merge PDF',    page: 'pdf-merge' },
-      { href: 'pdf-compressor.html',    label: 'Compress PDF', page: 'pdf-compressor' },
+      { href: 'pdf-merge.html',         label: 'Merge PDF',      page: 'pdf-merge' },
+      { href: 'pdf-compressor.html',    label: 'Compress PDF',   page: 'pdf-compressor' },
       { href: 'image-compressor.html',  label: 'Compress Image', page: 'image-compressor' },
-      { href: 'image-bg-remover.html',  label: 'BG Remover',   page: 'image-bg-remover' },
-      { href: 'qr-generator.html',      label: 'QR Code',      page: 'qr-generator' }
+      { href: 'image-bg-remover.html',  label: 'BG Remover',     page: 'image-bg-remover' },
+      { href: 'qr-generator.html',      label: 'QR Code',        page: 'qr-generator' }
     ],
 
     footer: {
@@ -63,12 +64,14 @@
     if (!isRoot && CONFIG.isSubPage) return href;
     if (isRoot && CONFIG.isSubPage) return '../' + href;
     if (!isRoot && !CONFIG.isSubPage && /\.html$/.test(href)) {
-      var TOOL_PAGES = ['image-compressor','signature-resize','image-bg-remover','image-converter',
-        'image-beautifier','invoice-generator','pdf-merge','pdf-split','jpg-to-pdf','pdf-to-jpg',
-        'doc-scanner','card-cropper','passport-maker','signature-bg-remover','pdf-editor',
-        'pdf-compressor','pdf-to-word','pdf-to-jpg','pdf-to-excel','pdf-writer',
+      var TOOL_PAGES = [
+        'image-compressor','signature-resize','image-bg-remover','image-converter',
+        'image-beautifier','invoice-generator','pdf-merge','pdf-split','jpg-to-pdf',
+        'pdf-to-jpg','doc-scanner','card-cropper','passport-maker','signature-bg-remover',
+        'pdf-editor','pdf-compressor','pdf-to-word','pdf-to-excel','pdf-writer',
         'qr-generator','qr-scanner','word-counter','word-writer','word-to-pdf',
-        'excel-to-pdf','ppt-to-pdf'];
+        'excel-to-pdf','ppt-to-pdf'
+      ];
       var name = href.replace('.html', '');
       if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
     }
