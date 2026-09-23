@@ -1,116 +1,118 @@
 /* ==========================================================================
    DocEasy — Core JS
    Injects header and footer. Handles theme toggle.
-   Path-agnostic: works both on GitHub Pages and custom domain.
+   Works on both GitHub Pages and custom domain.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  /* ---------- Detect base path ---------- */
-  // Works both on /officekit/ (GitHub Pages) and / (custom domain)
-  var basePath = '';
-  if (window.location.hostname.indexOf('github.io') !== -1) {
-    // GitHub Pages: /officekit/
-    var pathParts = window.location.pathname.split('/').filter(Boolean);
-    if (pathParts.length > 0 && pathParts[0] !== 'tools' &&
-        pathParts[0] !== 'assets' && pathParts[0].indexOf('.') === -1) {
-      basePath = '/' + pathParts[0] + '/';
+  /* ---------- Detect base path (for GitHub Pages) ---------- */
+  function getBasePath() {
+    var host = window.location.hostname;
+    var path = window.location.pathname;
+    // If on GitHub Pages like /officekit/...
+    if (host.indexOf('github.io') !== -1) {
+      var parts = path.split('/').filter(Boolean);
+      if (parts.length > 0) {
+        var first = parts[0];
+        if (first !== 'tools' && first !== 'assets' && first.indexOf('.') === -1) {
+          return '/' + first + '/';
+        }
+      }
     }
+    return '/';
   }
 
-  function url(p) {
-    // Remove leading slash if basePath has trailing slash
-    p = p.replace(/^\//, '');
-    return basePath + p;
-  }
+  var BASE = getBasePath();
 
   /* ---------- HEADER ---------- */
   var headerEl = document.getElementById('doceasy-header');
   if (headerEl) {
-    headerEl.outerHTML = [
-      '<header class="site-header">',
-      '  <div class="header-inner">',
-      '    <a class="brand-link" href="' + url('/') + '" aria-label="DocEasy home">',
-      '      <span class="brand-badge">',
-      '        <img src="' + url('assets/images/logo-full.png') + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">',
-      '      </span>',
-      '    </a>',
-      '    <nav class="pill-nav" aria-label="Main navigation">',
-      '      <a href="' + url('/') + '#tools">Tools</a>',
-      '      <a href="' + url('/') + '#ai">AI Tools</a>',
-      '      <a href="' + url('/') + '#templates">Templates</a>',
-      '      <a href="' + url('/') + '#features">Why DocEasy</a>',
-      '      <a href="' + url('/') + '#faq">FAQ</a>',
-      '    </nav>',
-      '    <div class="nav-right">',
-      '      <nav class="top-nav" aria-label="Tool shortcuts">',
-      '        <a href="' + url('tools/pdf-merge.html') + '">Merge PDF</a>',
-      '        <a href="' + url('tools/pdf-compressor.html') + '">Compress</a>',
-      '        <a href="' + url('tools/image-compressor.html') + '">Compress Image</a>',
-      '        <a href="' + url('tools/image-bg-remover.html') + '">BG Remover</a>',
-      '        <a href="' + url('tools/qr-generator.html') + '">QR Code</a>',
-      '      </nav>',
-      '      <label class="theme-switch" aria-label="Toggle dark mode">',
-      '        <input type="checkbox" id="doceasy-theme-toggle">',
-      '        <span class="slider"></span>',
-      '      </label>',
-      '    </div>',
-      '  </div>',
-      '</header>'
-    ].join('\n');
+    headerEl.outerHTML =
+      '<header class="site-header">' +
+        '<div class="header-inner">' +
+          '<a class="brand-link" href="' + BASE + '" aria-label="DocEasy home">' +
+            '<span class="brand-badge">' +
+              '<img src="' + BASE + 'assets/images/logo-full.png" alt="DocEasy" ' +
+                   'onerror="this.parentElement.innerHTML=\'DocEasy\'">' +
+            '</span>' +
+          '</a>' +
+          '<nav class="pill-nav" aria-label="Main navigation">' +
+            '<a href="' + BASE + '#tools">Tools</a>' +
+            '<a href="' + BASE + '#ai">AI Tools</a>' +
+            '<a href="' + BASE + '#templates">Templates</a>' +
+            '<a href="' + BASE + '#features">Why DocEasy</a>' +
+            '<a href="' + BASE + '#faq">FAQ</a>' +
+          '</nav>' +
+          '<div class="nav-right">' +
+            '<nav class="top-nav" aria-label="Tool shortcuts">' +
+              '<a href="' + BASE + 'tools/pdf-merge.html">Merge PDF</a>' +
+              '<a href="' + BASE + 'tools/pdf-compressor.html">Compress</a>' +
+              '<a href="' + BASE + 'tools/image-compressor.html">Compress Image</a>' +
+              '<a href="' + BASE + 'tools/image-bg-remover.html">BG Remover</a>' +
+              '<a href="' + BASE + 'tools/qr-generator.html">QR Code</a>' +
+            '</nav>' +
+            '<label class="theme-switch" aria-label="Toggle dark mode">' +
+              '<input type="checkbox" id="doceasy-theme-toggle">' +
+              '<span class="slider"></span>' +
+            '</label>' +
+          '</div>' +
+        '</div>' +
+      '</header>';
   }
 
   /* ---------- FOOTER ---------- */
   var footerEl = document.getElementById('doceasy-footer');
   if (footerEl) {
-    footerEl.outerHTML = [
-      '<footer class="site-footer">',
-      '  <div class="footer-container">',
-      '    <div class="footer-col">',
-      '      <span class="footer-brand-box">',
-      '        <img src="' + url('assets/images/logo-full.png') + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">',
-      '      </span>',
-      '      <p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">',
-      '        25+ free browser-based tools for PDFs, images, and documents. 100% private — your files never leave your device.',
-      '      </p>',
-      '    </div>',
-      '    <div class="footer-col">',
-      '      <h5>PDF Tools</h5>',
-      '      <ul>',
-      '        <li><a href="' + url('tools/pdf-merge.html') + '">Merge PDF</a></li>',
-      '        <li><a href="' + url('tools/pdf-split.html') + '">Split PDF</a></li>',
-      '        <li><a href="' + url('tools/pdf-compressor.html') + '">Compress PDF</a></li>',
-      '        <li><a href="' + url('tools/pdf-editor.html') + '">PDF Editor</a></li>',
-      '        <li><a href="' + url('tools/pdf-to-word.html') + '">PDF to Word</a></li>',
-      '      </ul>',
-      '    </div>',
-      '    <div class="footer-col">',
-      '      <h5>Image Tools</h5>',
-      '      <ul>',
-      '        <li><a href="' + url('tools/image-compressor.html') + '">Image Compressor</a></li>',
-      '        <li><a href="' + url('tools/image-bg-remover.html') + '">Background Remover</a></li>',
-      '        <li><a href="' + url('tools/passport-maker.html') + '">Passport Photo</a></li>',
-      '        <li><a href="' + url('tools/card-cropper.html') + '">ID Card Cropper</a></li>',
-      '        <li><a href="' + url('tools/signature-resize.html') + '">Signature Resize</a></li>',
-      '      </ul>',
-      '    </div>',
-      '    <div class="footer-col">',
-      '      <h5>Company</h5>',
-      '      <ul>',
-      '        <li><a href="' + url('about.html') + '">About</a></li>',
-      '        <li><a href="' + url('contact.html') + '">Contact</a></li>',
-      '        <li><a href="' + url('privacy.html') + '">Privacy</a></li>',
-      '        <li><a href="' + url('terms.html') + '">Terms</a></li>',
-      '      </ul>',
-      '    </div>',
-      '  </div>',
-      '  <div class="footer-bottom-bar">',
-      '    <span>© 2026 DocEasy. All rights reserved.</span>',
-      '    <span>Made with ❤️ for the world</span>',
-      '  </div>',
-      '</footer>'
-    ].join('\n');
+    footerEl.outerHTML =
+      '<footer class="site-footer">' +
+        '<div class="footer-container">' +
+          '<div class="footer-col">' +
+            '<span class="footer-brand-box">' +
+              '<img src="' + BASE + 'assets/images/logo-full.png" alt="DocEasy" ' +
+                   'onerror="this.parentElement.innerHTML=\'DocEasy\'">' +
+            '</span>' +
+            '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
+              'Free browser-based tools for PDFs, images, and documents. ' +
+              '100% private — your files never leave your device.' +
+            '</p>' +
+          '</div>' +
+          '<div class="footer-col">' +
+            '<h5>PDF Tools</h5>' +
+            '<ul>' +
+              '<li><a href="' + BASE + 'tools/pdf-merge.html">Merge PDF</a></li>' +
+              '<li><a href="' + BASE + 'tools/pdf-split.html">Split PDF</a></li>' +
+              '<li><a href="' + BASE + 'tools/pdf-compressor.html">Compress PDF</a></li>' +
+              '<li><a href="' + BASE + 'tools/pdf-editor.html">PDF Editor</a></li>' +
+              '<li><a href="' + BASE + 'tools/pdf-to-word.html">PDF to Word</a></li>' +
+            '</ul>' +
+          '</div>' +
+          '<div class="footer-col">' +
+            '<h5>Image Tools</h5>' +
+            '<ul>' +
+              '<li><a href="' + BASE + 'tools/image-compressor.html">Image Compressor</a></li>' +
+              '<li><a href="' + BASE + 'tools/image-bg-remover.html">Background Remover</a></li>' +
+              '<li><a href="' + BASE + 'tools/passport-maker.html">Passport Photo</a></li>' +
+              '<li><a href="' + BASE + 'tools/card-cropper.html">ID Card Cropper</a></li>' +
+              '<li><a href="' + BASE + 'tools/signature-resize.html">Signature Resize</a></li>' +
+            '</ul>' +
+          '</div>' +
+          '<div class="footer-col">' +
+            '<h5>Company</h5>' +
+            '<ul>' +
+              '<li><a href="' + BASE + 'about.html">About</a></li>' +
+              '<li><a href="' + BASE + 'contact.html">Contact</a></li>' +
+              '<li><a href="' + BASE + 'privacy.html">Privacy</a></li>' +
+              '<li><a href="' + BASE + 'terms.html">Terms</a></li>' +
+            '</ul>' +
+          '</div>' +
+        '</div>' +
+        '<div class="footer-bottom-bar">' +
+          '<span>© 2026 DocEasy. All rights reserved.</span>' +
+          '<span>Made with ❤️ for the world</span>' +
+        '</div>' +
+      '</footer>';
   }
 
   /* ---------- THEME TOGGLE ---------- */
