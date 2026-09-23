@@ -1,21 +1,19 @@
 /* ==========================================================================
-   DocEasy Core — Auto-injects header + footer + theme toggle on every page.
-   FIXED: outerHTML replaces the placeholder div properly so CSS works.
+   DocEasy Core — Auto-injects header, footer, theme toggle on every page.
+   IDs: #doceasy-header, #doceasy-footer  |  Theme key: doceasy_theme
    ========================================================================== */
 (function () {
   'use strict';
 
+  /* ---------- Early theme restore ---------- */
   try {
     var saved = localStorage.getItem('doceasy_theme') || 'light';
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-    else document.documentElement.removeAttribute('data-theme');
   } catch (e) {}
 
+  /* ---------- Config ---------- */
   var CONFIG = {
     brand: 'DocEasy',
-    domain: 'doceasy.org',
-    author: 'Deepaak Kumar',
-    authorPortfolio: 'https://deepaakai.github.io/portfolio/',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
     pillNav: [
@@ -23,85 +21,81 @@
       { href: '#ai',        label: 'AI Tools' },
       { href: '#templates', label: 'Templates' },
       { href: '#features',  label: 'Why DocEasy' },
-      { href: '#faq',       label: 'FAQ' },
-      { href: '#blog',      label: 'Blog' }
+      { href: '#faq',       label: 'FAQ' }
     ],
 
     topNav: [
-      { href: 'jpg-to-pdf.html',        label: 'JPG to PDF',       page: 'jpg-to-pdf' },
-      { href: 'pdf-editor.html',        label: 'PDF Editor',       page: 'pdf-editor' },
-      { href: 'pdf-merge.html',         label: 'Merge PDF',        page: 'pdf-merge' },
-      { href: 'image-compressor.html',  label: 'Image Compressor', page: 'image-compressor' },
-      { href: 'passport-maker.html',    label: 'Passport Photo',   page: 'passport-maker' },
-      { href: 'invoice-generator.html', label: 'Invoice',          page: 'invoice-generator' }
+      { href: 'pdf-merge.html',         label: 'Merge PDF',    page: 'pdf-merge' },
+      { href: 'pdf-compressor.html',    label: 'Compress PDF', page: 'pdf-compressor' },
+      { href: 'image-compressor.html',  label: 'Compress Image', page: 'image-compressor' },
+      { href: 'image-bg-remover.html',  label: 'BG Remover',   page: 'image-bg-remover' },
+      { href: 'qr-generator.html',      label: 'QR Code',      page: 'qr-generator' }
     ],
 
     footer: {
       pdfTools: [
-        { href: 'pdf-editor.html',      label: 'Edit PDF' },
         { href: 'pdf-merge.html',       label: 'Merge PDF' },
         { href: 'pdf-split.html',       label: 'Split PDF' },
-        { href: 'jpg-to-pdf.html',      label: 'JPG to PDF' },
-        { href: 'pdf-to-jpg.html',      label: 'PDF to JPG' },
-        { href: 'image-converter.html', label: 'Format Converter' }
+        { href: 'pdf-compressor.html',  label: 'Compress PDF' },
+        { href: 'pdf-editor.html',      label: 'PDF Editor' },
+        { href: 'pdf-to-word.html',     label: 'PDF to Word' }
       ],
       imageTools: [
-        { href: 'image-compressor.html',      label: 'Compress Image' },
+        { href: 'image-compressor.html',      label: 'Image Compressor' },
         { href: 'image-bg-remover.html',      label: 'Background Remover' },
-        { href: 'image-beautifier.html',      label: 'AI Photo Beautifier' },
-        { href: 'signature-resize.html',      label: 'Signature Resize' },
-        { href: 'signature-bg-remover.html',  label: 'Signature BG Remover' },
-        { href: 'card-cropper.html',          label: 'ID Card Cropper' }
+        { href: 'passport-maker.html',        label: 'Passport Photo' },
+        { href: 'card-cropper.html',          label: 'ID Card Cropper' },
+        { href: 'signature-resize.html',      label: 'Signature Resize' }
       ],
-      company: [
-        { href: 'about.html',    label: 'About Us',           root: true },
-        { href: 'contact.html',  label: 'Contact',            root: true },
-        { href: 'privacy.html',  label: 'Privacy Policy',     root: true },
-        { href: 'terms.html',    label: 'Terms & Conditions', root: true }
+      legal: [
+        { href: 'about.html',   label: 'About',   root: true },
+        { href: 'contact.html', label: 'Contact', root: true },
+        { href: 'privacy.html', label: 'Privacy', root: true },
+        { href: 'terms.html',   label: 'Terms',   root: true }
       ]
     }
   };
 
+  /* ---------- Path resolver ---------- */
   function resolvePath(href, isRoot) {
     if (!href) return '#';
     if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
     if (!isRoot && CONFIG.isSubPage) return href;
     if (isRoot && CONFIG.isSubPage) return '../' + href;
     if (!isRoot && !CONFIG.isSubPage && /\.html$/.test(href)) {
-      var TOOL_PAGES = [
-        'image-compressor','signature-resize','image-bg-remover','image-converter',
-        'image-beautifier','invoice-generator','pdf-merge','pdf-split','jpg-to-pdf',
-        'pdf-to-jpg','doc-scanner','card-cropper','passport-maker','signature-bg-remover',
-        'pdf-editor','qr-generator','qr-scanner','word-counter'
-      ];
+      var TOOL_PAGES = ['image-compressor','signature-resize','image-bg-remover','image-converter',
+        'image-beautifier','invoice-generator','pdf-merge','pdf-split','jpg-to-pdf','pdf-to-jpg',
+        'doc-scanner','card-cropper','passport-maker','signature-bg-remover','pdf-editor',
+        'pdf-compressor','pdf-to-word','pdf-to-jpg','pdf-to-excel','pdf-writer',
+        'qr-generator','qr-scanner','word-counter','word-writer','word-to-pdf',
+        'excel-to-pdf','ppt-to-pdf'];
       var name = href.replace('.html', '');
       if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
     }
     return href;
   }
 
-  /* ---------- HEADER ---------- */
+  /* ---------- Header builder ---------- */
   function buildHeader() {
-    var pillLinks = CONFIG.pillNav.map(function (item) {
-      return '<a href="' + item.href + '">' + item.label + '</a>';
+    var pills = CONFIG.pillNav.map(function (p) {
+      return '<a href="' + p.href + '">' + p.label + '</a>';
     }).join('');
 
-    var toolLinks = CONFIG.topNav.map(function (item) {
-      return '<a href="' + resolvePath(item.href, false) + '" data-page="' + item.page + '">' +
-             item.label + '</a>';
+    var tools = CONFIG.topNav.map(function (t) {
+      return '<a href="' + resolvePath(t.href, false) + '" data-page="' + t.page + '">' + t.label + '</a>';
     }).join('');
 
     var homeHref = resolvePath('index.html', true);
 
     return '<header class="site-header"><div class="header-inner">' +
-      '<a class="brand-link" href="' + homeHref + '" aria-label="' + CONFIG.brand + ' Home">' +
+      '<a class="brand-link" href="' + homeHref + '" aria-label="DocEasy Home">' +
         '<span class="brand-badge">' +
-          '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:22px;width:auto;display:block;">' +
+          '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
         '</span>' +
       '</a>' +
-      '<nav class="pill-nav" aria-label="Sections">' + pillLinks + '</nav>' +
+      '<nav class="pill-nav" aria-label="Sections">' + pills + '</nav>' +
       '<div class="nav-right">' +
-        '<nav class="top-nav" aria-label="Quick tools">' + toolLinks + '</nav>' +
+        '<nav class="top-nav" aria-label="Quick tools">' + tools + '</nav>' +
         '<label class="theme-switch" aria-label="Toggle theme">' +
           '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
           '<span class="slider"></span>' +
@@ -110,63 +104,57 @@
     '</div></header>';
   }
 
-  /* ---------- FOOTER ---------- */
+  /* ---------- Footer builder ---------- */
   function buildFooter() {
     function col(title, items, isRoot) {
       var lis = items.map(function (it) {
-        return '<li><a href="' + resolvePath(it.href, isRoot || it.root) + '">' +
-               it.label + '</a></li>';
+        return '<li><a href="' + resolvePath(it.href, isRoot || it.root) + '">' + it.label + '</a></li>';
       }).join('');
       return '<div class="footer-col"><h5>' + title + '</h5><ul>' + lis + '</ul></div>';
     }
 
-    return '<footer class="site-footer">' +
-      '<div class="footer-container">' +
-        '<div>' +
-          '<div class="footer-brand-box">' +
-            '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="' + CONFIG.brand + '" style="height:20px;width:auto;display:block;">' +
-          '</div>' +
-          '<p style="font-size:12.5px; color:#e0e7ff; margin:0;">' +
-          '100% client-side browser processing. Your files never leave your device.' +
-          '</p>' +
-        '</div>' +
-        col('PDF Tools',    CONFIG.footer.pdfTools,   false) +
-        col('Image Tools',  CONFIG.footer.imageTools, false) +
-        col('Company',      CONFIG.footer.company,    true)  +
+    return '<footer class="site-footer"><div class="footer-container">' +
+      '<div class="footer-col">' +
+        '<span class="footer-brand-box">' +
+          '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
+        '</span>' +
+        '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
+          '25+ free browser-based tools for PDFs, images, and documents. 100% private — your files never leave your device.' +
+        '</p>' +
       '</div>' +
-      '<div class="footer-bottom-bar">' +
-        '<div>© <span id="de-year"></span> ' + CONFIG.brand + '. All rights reserved.</div>' +
-        '<div>' +
-          '<a class="made-with-love-link" ' +
-            'href="' + CONFIG.authorPortfolio + '" ' +
-            'target="_blank" rel="noopener noreferrer">' +
-            'Made with ❤️ by ' + CONFIG.author +
-          '</a>' +
-        '</div>' +
-      '</div>' +
-    '</footer>';
+      col('PDF Tools',   CONFIG.footer.pdfTools,   false) +
+      col('Image Tools', CONFIG.footer.imageTools, false) +
+      col('Company',     CONFIG.footer.legal,      true)  +
+      '</div><div class="footer-bottom-bar">' +
+        '<div>© <span id="de-year"></span> DocEasy. All rights reserved.</div>' +
+        '<div><a class="made-with-love-link" href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Made with ❤️ by Deepaak Kumar</a></div>' +
+      '</div></footer>';
   }
 
-  /* ---------- INJECT (FIXED: outerHTML) ---------- */
+  /* ---------- Inject (outerHTML = replace placeholder divs) ---------- */
   function inject() {
-    var h = document.getElementById('doceasy-header') || document.getElementById('-header');
+    var h = document.getElementById('doceasy-header');
     if (h && !document.querySelector('.site-header')) h.outerHTML = buildHeader();
 
-    var f = document.getElementById('doceasy-footer') || document.getElementById('-footer');
+    var f = document.getElementById('doceasy-footer');
     if (f && !document.querySelector('.site-footer')) f.outerHTML = buildFooter();
 
+    /* Mark active top-nav link */
     var current = location.pathname.split('/').pop().replace('.html', '');
     document.querySelectorAll('.top-nav a[data-page]').forEach(function (a) {
       if (a.getAttribute('data-page') === current) a.classList.add('active');
     });
 
+    /* Theme checkbox sync */
     var cb = document.getElementById('theme-checkbox');
     if (cb) cb.checked = document.documentElement.getAttribute('data-theme') === 'dark';
 
+    /* Year */
     var y = document.getElementById('de-year');
     if (y) y.textContent = new Date().getFullYear();
   }
 
+  /* ---------- Theme toggle ---------- */
   window.docEasyToggleTheme = function () {
     var cb = document.getElementById('theme-checkbox');
     if (cb && cb.checked) {
@@ -177,7 +165,6 @@
       try { localStorage.setItem('doceasy_theme', 'light'); } catch (e) {}
     }
   };
-
   window.officekitToggleTheme = window.docEasyToggleTheme;
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
