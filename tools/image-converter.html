@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Image Converter & PDF Studio — All-in-One Free | DocEasy</title>
-<meta name="description" content="All-in-one converter studio: image format converter (JPG/PNG/WEBP), images to PDF, PDF to JPG ZIP, and image-to-text OCR. 100% browser-based, free, private.">
-<meta name="keywords" content="image converter, jpg to png, png to jpg, webp converter, images to pdf, pdf to jpg, ocr, image to text">
+<title>Image Format Converter — JPG, PNG, WEBP Free | DocEasy</title>
+<meta name="description" content="Convert images between JPG, PNG, and WEBP formats online. 100% browser-based, free, no upload, no watermark.">
+<meta name="keywords" content="image converter, jpg to png, png to jpg, webp converter, image format converter">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/image-converter.html">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Image Converter & PDF Studio — DocEasy">
-<meta property="og:description" content="Convert image formats, merge to PDF, extract PDF pages, and OCR text — 100% in your browser.">
+<meta property="og:title" content="Image Format Converter — DocEasy">
+<meta property="og:description" content="Convert images between JPG, PNG, and WEBP formats instantly. 100% browser-based.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/image-converter.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/image-converter-demo.jpg">
 <meta property="og:site_name" content="DocEasy">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Image Converter & PDF Studio — DocEasy">
-<meta name="twitter:description" content="Convert image formats, merge to PDF, extract PDF pages, and OCR text.">
+<meta name="twitter:title" content="Image Format Converter — DocEasy">
+<meta name="twitter:description" content="Convert images between JPG, PNG, and WEBP formats.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/image-converter-demo.jpg">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
@@ -27,91 +27,21 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Image Converter & PDF Studio — DocEasy",
+  "name": "Image Format Converter — DocEasy",
   "url": "https://deepaakai.github.io/officekit/tools/image-converter.html",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any (Web)",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "All-in-one converter: image format, images to PDF, PDF to JPG, and OCR."
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
 </script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://unpkg.com/tesseract.js@v5.0.5/dist/tesseract.min.js"></script>
-
 <style>
-/* Hide ad slots until AdSense approval */
 .ad-slot-container,
 .ad-placeholder { display: none !important; }
 
-/* ============ Tabs ============ */
-.studio-tabs {
-  display: flex;
-  gap: 6px;
-  padding: 5px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.studio-tabs::-webkit-scrollbar { display: none; }
-.tab-btn {
-  flex: 1 1 0;
-  min-width: 130px;
-  padding: 12px 12px;
-  border: none;
-  background: transparent;
-  color: var(--subtext-color);
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 700;
-  border-radius: 7px;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-.tab-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; flex-shrink: 0; }
-.tab-btn:hover { color: var(--text-color); background: var(--card-hover); }
-.tab-btn.active {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
-}
-
-/* ============ Panel ============ */
-.converter-panel { display: none; }
-.converter-panel.active { display: block; }
-
-.panel-title {
-  margin: 0 0 6px;
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.panel-title svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; flex-shrink: 0; }
-.panel-sub {
-  margin: 0 0 18px;
-  font-size: 13px;
-  color: var(--subtext-color);
-  line-height: 1.5;
-}
-
-/* ============ Dropzone ============ */
-.dropzone {
+.upload-card {
   position: relative;
   display: block;
   box-sizing: border-box;
@@ -119,17 +49,17 @@
   border: 2px dashed var(--accent);
   background: var(--accent-soft);
   border-radius: 10px;
-  padding: 32px 20px;
+  padding: 40px 20px;
   text-align: center;
   cursor: pointer;
   transition: all 0.15s;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
-.dropzone:hover {
+.upload-card:hover {
   background: var(--accent-soft-hover, var(--accent-soft));
   transform: translateY(-2px);
 }
-.dropzone input[type="file"] {
+.upload-card input[type="file"] {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -137,40 +67,85 @@
   opacity: 0;
   cursor: pointer;
 }
-.dropzone .dz-icon {
-  width: 44px; height: 44px;
+.upload-card .uc-icon {
+  width: 52px; height: 52px;
   color: var(--accent);
-  margin: 0 auto 10px;
+  margin: 0 auto 14px;
   display: block;
 }
-.dropzone h4 {
-  margin: 0 0 4px;
-  font-size: 15px;
-  font-weight: 700;
+.upload-card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
   color: var(--text-color);
+  font-weight: 700;
 }
-.dropzone p {
+.upload-card p {
   margin: 0;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--subtext-color);
 }
 
-/* ============ Action Row ============ */
-.action-row {
+.file-info {
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: var(--card-hover);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+  word-break: break-all;
+  display: none;
+}
+.file-info.show { display: block; }
+.file-info b { color: var(--accent); }
+
+.preview-box {
+  margin: 20px 0;
+  text-align: center;
+  display: none;
+}
+.preview-box.show { display: block; }
+.preview-box img {
+  max-width: 100%;
+  max-height: 240px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  display: block;
+  margin: 0 auto;
+}
+
+.controls {
+  display: none;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+.controls.show { display: block; }
+
+.field-row {
   display: flex;
-  gap: 12px;
-  align-items: center;
+  gap: 14px;
   flex-wrap: wrap;
-  margin-top: 14px;
+  margin-bottom: 18px;
 }
-.action-row label {
-  font-size: 13px;
-  font-weight: 600;
+.f-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.f-group label {
+  font-size: 12px;
+  font-weight: 700;
   color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
-.action-row select {
-  height: 42px;
-  padding: 0 12px;
+.f-group select {
+  height: 46px;
+  padding: 0 14px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background: var(--card-bg);
@@ -178,22 +153,24 @@
   font-size: 14px;
   font-family: inherit;
   cursor: pointer;
-  min-width: 160px;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  width: 100%;
 }
-.action-row select:focus {
+.f-group select:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-/* ============ Buttons ============ */
 .btn-main {
+  width: 100%;
   background: var(--success, #16a34a);
   color: #fff;
   border: none;
-  padding: 12px 22px;
+  padding: 14px 20px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -202,80 +179,42 @@
   justify-content: center;
   gap: 8px;
   transition: filter 0.15s;
-  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
 }
 .btn-main:hover:not(:disabled) { filter: brightness(1.08); }
-.btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-main:disabled { opacity: 0.55; cursor: not-allowed; }
 .btn-main svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
 
 .btn-secondary {
+  width: 100%;
   background: var(--card-hover);
   color: var(--text-color);
   border: 1px solid var(--border-color);
-  padding: 10px 18px;
+  padding: 12px 20px;
   border-radius: 8px;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  margin-top: 10px;
   transition: all 0.15s;
+  box-sizing: border-box;
 }
 .btn-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
 
-/* ============ Preview ============ */
-.preview-box {
-  margin-top: 14px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.preview-box img {
-  width: 84px;
-  height: 84px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background: var(--card-hover);
-}
-
-/* ============ Status ============ */
-.status-text {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
-  margin: 10px 0;
-  line-height: 1.5;
-  min-height: 18px;
-}
-.file-name-display {
+.note {
   font-size: 12.5px;
   color: var(--subtext-color);
-  margin-bottom: 12px;
-  word-break: break-all;
-}
-
-/* ============ OCR Output ============ */
-.ocr-output {
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  padding: 14px;
-  border-radius: 8px;
-  min-height: 150px;
-  max-height: 400px;
-  overflow-y: auto;
-  font-family: ui-monospace, 'SF Mono', monospace;
-  font-size: 13px;
-  color: var(--text-color);
-  white-space: pre-wrap;
-  margin-top: 12px;
   line-height: 1.6;
+  padding: 12px 14px;
+  background: var(--accent-soft);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+  margin-top: 16px;
 }
 
 /* ============ SEO Article ============ */
@@ -432,7 +371,7 @@ details p {
   line-height: 1.7;
 }
 
-/* ============ Related Tools Grid ============ */
+/* ============ Related Tools ============ */
 .related-tools-section {
   max-width: 1100px;
   margin: 60px auto 20px;
@@ -520,8 +459,6 @@ details p {
   .seo-article .table-wrap table { min-width: 420px; }
   .seo-article th, .seo-article td { padding: 8px 10px; font-size: 13px; }
   .article-image-box img { max-height: 260px; padding: 14px; }
-  .tab-btn { font-size: 12.5px; padding: 11px 8px; gap: 5px; }
-  .tab-btn svg { width: 14px; height: 14px; }
   .related-tools-section { padding: 0 14px; margin-top: 48px; }
   .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .related-card { padding: 14px 12px; min-height: 100px; }
@@ -538,354 +475,315 @@ details p {
 
 <main class="main-wrap">
   <div class="hero-box">
-    <h1 class="hero-title">Image Converter &amp; PDF Studio</h1>
-    <p class="hero-sub">Convert image formats, merge images into PDF, extract PDF pages as JPG, and OCR text from images — 100% in your browser.</p>
+    <h1 class="hero-title">Image Format Converter</h1>
+    <p class="hero-sub">Convert images between JPG, PNG, and WEBP — 100% in your browser, nothing uploaded.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
   <div class="tool-card">
-    <div class="studio-tabs">
-      <button class="tab-btn active" data-target="panel-img-conv" type="button">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 4h4v2h-4zM14 10h2v4h-2z"/></svg>
-        Image Format
-      </button>
-      <button class="tab-btn" data-target="panel-img-pdf" type="button">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Images to PDF
-      </button>
-      <button class="tab-btn" data-target="panel-pdf-jpg" type="button">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg>
-        PDF to JPG
-      </button>
-      <button class="tab-btn" data-target="panel-ocr" type="button">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
-        Image to OCR
-      </button>
+    <label class="upload-card">
+      <input type="file" id="img-file-in" accept="image/*">
+      <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <h3>📁 Upload Image</h3>
+      <p>Click or drop a JPG, PNG, or WEBP file</p>
+    </label>
+
+    <div class="file-info" id="file-info"></div>
+
+    <div class="preview-box" id="preview-box">
+      <img id="preview-img" alt="Image preview">
     </div>
 
-    <!-- ============ PANEL 1: IMAGE FORMAT ============ -->
-    <div id="panel-img-conv" class="converter-panel active">
-      <h3 class="panel-title">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 4h4v2h-4zM14 10h2v4h-2z"/></svg>
-        Image Format Converter
-      </h3>
-      <p class="panel-sub">Convert any image between JPG, PNG, and WEBP instantly — quality preserved by default.</p>
+    <div class="controls" id="controls">
+      <div class="field-row">
+        <div class="f-group">
+          <label for="target-format">Convert To</label>
+          <select id="target-format">
+            <option value="image/jpeg">JPEG / JPG — smallest file</option>
+            <option value="image/png">PNG — lossless, transparency</option>
+            <option value="image/webp">WEBP — modern, best compression</option>
+          </select>
+        </div>
+      </div>
 
-      <label class="dropzone">
-        <input type="file" id="img-file-in" accept="image/*" onchange="previewSingleImg(event)">
-        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <button class="btn-main" id="convert-btn" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
-        <h4>Upload Image</h4>
-        <p>Click or drop a JPG, PNG, or WEBP file</p>
-      </label>
+        Convert &amp; Download
+      </button>
 
-      <div class="file-name-display" id="single-img-name"></div>
+      <button class="btn-secondary" id="reset-btn" type="button">Choose Another Image</button>
 
-      <div class="action-row">
-        <label for="target-img-fmt">Convert To:</label>
-        <select id="target-img-fmt">
-          <option value="image/jpeg">JPEG / JPG</option>
-          <option value="image/png">PNG</option>
-          <option value="image/webp">WEBP</option>
-        </select>
-        <button class="btn-main" onclick="convertSingleImage()">
-          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Convert &amp; Download
-        </button>
-      </div>
-      <canvas id="hidden-canvas" style="display:none;"></canvas>
-    </div>
-
-    <!-- ============ PANEL 2: IMAGES TO PDF ============ -->
-    <div id="panel-img-pdf" class="converter-panel">
-      <h3 class="panel-title">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Images to PDF Maker
-      </h3>
-      <p class="panel-sub">Combine multiple images into a single multi-page PDF document.</p>
-
-      <label class="dropzone">
-        <input type="file" id="pdf-files-in" accept="image/*" multiple onchange="previewMultipleImgs(event)">
-        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2.5"/>
-          <circle cx="8.5" cy="9" r="1.6"/>
-          <path d="M21 15.5l-4.5-4.5L5.5 21"/>
-        </svg>
-        <h4>Select Multiple Images</h4>
-        <p>Click or drop JPG / PNG / WEBP files</p>
-      </label>
-
-      <div class="file-name-display" id="multi-img-count">No images selected</div>
-      <div class="preview-box" id="pdf-preview-box"></div>
-
-      <div class="action-row">
-        <button class="btn-main" onclick="generatePDF()">
-          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Generate &amp; Download PDF
-        </button>
-      </div>
-    </div>
-
-    <!-- ============ PANEL 3: PDF TO JPG ============ -->
-    <div id="panel-pdf-jpg" class="converter-panel">
-      <h3 class="panel-title">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg>
-        PDF to JPG (ZIP Download)
-      </h3>
-      <p class="panel-sub">Extract every page of a PDF as a high-quality JPG image — bundled inside a ZIP archive.</p>
-
-      <label class="dropzone">
-        <input type="file" id="pdf-to-jpg-in" accept="application/pdf" onchange="convertPdfToJpgZip(event)">
-        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-        </svg>
-        <h4>Upload PDF File</h4>
-        <p>Multi-page PDFs supported · JPG output</p>
-      </label>
-
-      <div class="status-text" id="pdf-status"></div>
-    </div>
-
-    <!-- ============ PANEL 4: OCR ============ -->
-    <div id="panel-ocr" class="converter-panel">
-      <h3 class="panel-title">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
-        Image to Text (OCR)
-      </h3>
-      <p class="panel-sub">Extract typed text from images, screenshots, or scanned documents using browser OCR.</p>
-
-      <label class="dropzone">
-        <input type="file" id="ocr-file-in" accept="image/*" onchange="runRealOCR(event)">
-        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <path d="M8 12h8M8 8h8M8 16h4"/>
-        </svg>
-        <h4>Upload Image for OCR</h4>
-        <p>Best with clear, well-lit, high-contrast scans</p>
-      </label>
-
-      <div class="status-text" id="ocr-status"></div>
-      <div class="ocr-output" id="ocr-result-text">Scanned text will appear here…</div>
-
-      <div class="action-row">
-        <button class="btn-secondary" onclick="copyOcrText()">
-          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copy Text
-        </button>
+      <div class="note">
+        💡 <b>Tip:</b> Converting a PNG with transparency to JPG will fill transparent areas with white, since JPG doesn't support transparency. Use PNG or WEBP to keep transparent backgrounds.
       </div>
     </div>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ SEO ARTICLE ============ -->
+  <!-- ============ SEO ARTICLE — 2000+ WORDS ============ -->
   <section class="seo-article">
 
-    <h2>Complete Guide: Image Converter, PDF Maker &amp; OCR Studio (2026)</h2>
+    <h2>Complete Guide: Convert Images Between JPG, PNG &amp; WEBP (2026)</h2>
 
-    <p>Managing digital documents across desktop, mobile, and tablet devices often requires juggling multiple separate conversion utilities. Image format conversions, PDF merges, page extractions, and OCR scanning are all tasks that most people do weekly — yet most online tools force you to sign up, upload files to unknown servers, and wait through ads just to get a simple output.</p>
+    <p>Images are the most common file type on the internet — and also one of the most misunderstood. Every photo you take, every screenshot you capture, every logo you download comes in a specific format: JPG, PNG, or WEBP. Each has strengths and weaknesses, and choosing the wrong one can mean blurry photos, huge files that won't upload, or missing transparency.</p>
 
-    <p>The <strong>DocEasy Image Converter &amp; PDF Studio</strong> brings four essential tools into one clean interface — an <b>image format converter</b>, an <b>images-to-PDF maker</b>, a <b>PDF-to-JPG extractor</b>, and an <b>image-to-text OCR scanner</b>. Everything runs 100% inside your browser using modern web APIs. No uploads. No signup. No waiting.</p>
+    <p>The <strong>DocEasy Image Format Converter</strong> solves this in seconds. Upload any image, pick your target format, and get a converted file instantly — all inside your browser. No uploads to external servers, no signup, no watermark, no limits.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/image-converter-demo.jpg" alt="DocEasy All-in-One Converter Studio" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/image-converter-demo.jpg]</div>';">
-      <div class="article-image-caption">All-in-one conversion studio: image format, PDF compilation, page extraction, and OCR — running locally in your browser.</div>
+      <img src="../assets/images/image-converter-demo.jpg" alt="Image Format Converter — JPG to PNG to WEBP demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/image-converter-demo.jpg]</div>';">
+      <div class="article-image-caption">Convert JPG, PNG, and WEBP images instantly — 100% in your browser, no uploads.</div>
     </div>
 
     <h3>How to Use — Quick Start</h3>
     <ol>
-      <li><b>Choose your tool:</b> Tap any of the four tabs — <b>Image Format</b>, <b>Images to PDF</b>, <b>PDF to JPG</b>, or <b>Image to OCR</b>.</li>
-      <li><b>Upload files:</b> Click the drop zone (or drag files into it). Multiple files supported where applicable.</li>
-      <li><b>Configure:</b> Pick output format, quality, or language (OCR) as needed.</li>
-      <li><b>Run:</b> Click the green action button. Processing happens instantly in your browser.</li>
-      <li><b>Download:</b> Your converted file, PDF, ZIP, or extracted text is delivered directly to your device.</li>
+      <li><b>Upload:</b> Click the upload card or drag your image into it. JPG, PNG, and WEBP input formats are supported.</li>
+      <li><b>Choose target format:</b> From the dropdown, select JPEG, PNG, or WEBP.</li>
+      <li><b>Convert:</b> Click the green "Convert &amp; Download" button.</li>
+      <li><b>Done:</b> Your converted image downloads instantly to your device.</li>
     </ol>
 
-    <h3>1. What Is an Image Format Converter?</h3>
+    <h3>1. What Is an Image Format?</h3>
 
-    <p>An image format converter is a tool that takes an image in one file format (like JPG) and re-encodes it into another format (like PNG or WEBP). The pixel data stays the same, but the file structure, compression algorithm, and metadata change. This makes the image compatible with different platforms, reduces file size, or unlocks features like transparency.</p>
+    <p>An image format is a standardized way of storing image data in a file. The format defines how pixels are compressed, how colors are encoded, whether transparency is supported, and how metadata (like camera info or copyright) is stored. The three most common formats on the web are JPG, PNG, and WEBP.</p>
 
-    <p>Modern browsers support lossless conversion between the three major image formats through the HTML5 Canvas API. DocEasy uses this API to convert your images locally — no server round-trip, no privacy concerns, no upload limits.</p>
+    <p>When you take a photo with your phone, the camera app usually saves it as JPG. When you take a screenshot, the system typically saves it as PNG. When you download an image from a modern website, you often get WEBP (especially from Google services). Each format was designed for a different purpose, and each has trade-offs.</p>
 
     <h3>2. Why Convert Between Image Formats?</h3>
 
     <p>Different formats serve different purposes. Here are the most common reasons to convert:</p>
 
     <ul>
-      <li><b>JPG → PNG:</b> When you need transparency or lossless quality for logos, signatures, or graphics.</li>
-      <li><b>PNG → JPG:</b> When you want smaller file sizes for photographs or background-heavy images.</li>
-      <li><b>Any → WEBP:</b> When you're publishing to a modern website and want the smallest file size with good quality.</li>
-      <li><b>Platform compatibility:</b> Some government portals only accept JPG; some stock sites only accept PNG.</li>
-      <li><b>Exam forms:</b> Indian exam portals often require specific formats (mostly JPG) and pixel dimensions.</li>
-      <li><b>Web performance:</b> WEBP images load 25–35% faster than equivalent JPGs, improving SEO and user experience.</li>
+      <li><b>Website upload limits:</b> Some sites only accept JPG, others only PNG.</li>
+      <li><b>Exam &amp; government portals:</b> Indian exam forms usually require JPG with specific pixel dimensions and file size limits.</li>
+      <li><b>Smaller file size:</b> Converting to WEBP or JPG dramatically reduces file size for faster uploads.</li>
+      <li><b>Transparency support:</b> Only PNG and WEBP support transparent backgrounds.</li>
+      <li><b>Lossless quality:</b> Converting to PNG preserves every pixel perfectly.</li>
+      <li><b>Email attachments:</b> Gmail and Outlook have size limits — JPG is often the safest format.</li>
+      <li><b>Print preparation:</b> PNG is preferred for print because there's no compression artifact.</li>
+      <li><b>Animation:</b> WEBP supports animation (like GIF) at much smaller file sizes.</li>
     </ul>
 
-    <h3>3. Understanding the All-in-One Studio</h3>
+    <h3>3. JPG vs PNG vs WEBP — Full Comparison</h3>
 
-    <p>Instead of visiting four different websites for four different tasks, the DocEasy Studio bundles them into one interface:</p>
-
-    <ul>
-      <li><b>Image Format Converter:</b> Change an image's file format — JPG, PNG, or WEBP — with a single click. Original quality preserved by default.</li>
-      <li><b>Images to PDF:</b> Combine multiple JPG/PNG/WEBP images into one multi-page PDF. Perfect for scanning documents, creating photo albums, or bundling receipts.</li>
-      <li><b>PDF to JPG:</b> Extract every page of a multi-page PDF as an individual JPG image, packaged neatly inside a ZIP archive.</li>
-      <li><b>Image to OCR:</b> Extract typed text from images (screenshots, photos, scanned documents) using Tesseract.js.</li>
-    </ul>
-
-    <h3>4. JPG vs PNG vs WEBP — Which Format Should You Use?</h3>
+    <p>Choosing the right format is the single biggest decision for image quality and file size. Here's the full breakdown:</p>
 
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Format</th><th>Best For</th><th>Compression</th><th>Transparency</th><th>Typical Size</th></tr>
+          <tr><th>Feature</th><th>JPG</th><th>PNG</th><th>WEBP</th></tr>
         </thead>
         <tbody>
-          <tr><td><b>JPG</b></td><td>Photos, scans, exam photos</td><td>Lossy (excellent)</td><td>No</td><td>Small</td></tr>
-          <tr><td><b>PNG</b></td><td>Logos, screenshots, signatures</td><td>Lossless</td><td>Yes</td><td>Medium–Large</td></tr>
-          <tr><td><b>WEBP</b></td><td>Websites, modern apps</td><td>Lossy + Lossless</td><td>Yes</td><td>Smallest</td></tr>
+          <tr><td><b>Compression</b></td><td>Lossy</td><td>Lossless</td><td>Both lossy &amp; lossless</td></tr>
+          <tr><td><b>Transparency</b></td><td>No</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td><b>Animation</b></td><td>No</td><td>No (APNG only)</td><td>Yes</td></tr>
+          <tr><td><b>File size</b></td><td>Small</td><td>Large</td><td>Smallest</td></tr>
+          <tr><td><b>Browser support</b></td><td>Universal</td><td>Universal</td><td>All modern</td></tr>
+          <tr><td><b>Best for</b></td><td>Photos, exams</td><td>Logos, screenshots</td><td>Websites</td></tr>
+          <tr><td><b>Colors</b></td><td>16.7 million</td><td>16.7 million + alpha</td><td>16.7 million + alpha</td></tr>
         </tbody>
       </table>
     </div>
 
-    <p><b>Simple rule:</b> Photos → JPG. Graphics/signatures/logos → PNG. Modern website → WEBP.</p>
+    <h4>JPG (JPEG)</h4>
+    <p>JPG is the oldest and most widely supported format. Its lossy compression can shrink files by 90% with minimal visible quality loss. Perfect for photographs, exam photos, and any image where file size matters more than transparency.</p>
 
-    <h3>5. How to Use the Image Format Converter</h3>
-    <ol>
-      <li>Open the <b>Image Format</b> tab (already active by default).</li>
-      <li>Click the upload card or drag your image into it.</li>
-      <li>Choose your target format — JPEG, PNG, or WEBP — from the dropdown.</li>
-      <li>Click <b>Convert &amp; Download</b>. The converted image downloads instantly.</li>
-    </ol>
-    <p><b>Note:</b> PNG output preserves transparency. When converting a transparent PNG to JPG, the transparent areas automatically become white — because JPG doesn't support transparency.</p>
+    <h4>PNG</h4>
+    <p>PNG uses lossless compression, meaning every pixel is preserved perfectly. It supports transparency, making it ideal for logos, icons, signatures, and screenshots. The downside is file size — PNG files are often 3-5× larger than equivalent JPGs.</p>
 
-    <h3>6. How to Use Images to PDF</h3>
-    <ol>
-      <li>Open the <b>Images to PDF</b> tab.</li>
-      <li>Click the upload card and select multiple images at once.</li>
-      <li>You'll see thumbnails of all selected images and the total count.</li>
-      <li>Click <b>Generate &amp; Download PDF</b>. A print dialog opens with all pages laid out.</li>
-      <li>Choose "Save as PDF" as the destination and click Save.</li>
-    </ol>
-    <p>Each image becomes one page in the PDF, sized to fit A4 automatically. This is the same approach used by dedicated scanner apps. For a similar flow with camera capture and cropping, try our <a href="jpg-to-pdf.html">JPG to PDF scanner</a>.</p>
+    <h4>WEBP</h4>
+    <p>WEBP is Google's modern format, released in 2010. It supports both lossy and lossless compression, transparency, and animation — all with file sizes 25-35% smaller than JPG at the same visual quality. It's supported by all modern browsers (Chrome, Edge, Firefox, Safari 14+).</p>
 
-    <h3>7. How to Use PDF to JPG</h3>
-    <ol>
-      <li>Open the <b>PDF to JPG</b> tab.</li>
-      <li>Click the upload card and select your PDF file.</li>
-      <li>The tool renders every page as a JPG at 1.5× scale (sharp enough for printing).</li>
-      <li>Once complete, a ZIP file downloads automatically with all pages renamed <code>page-1.jpg</code>, <code>page-2.jpg</code>, and so on.</li>
-    </ol>
-    <p>Use this to convert PDF slides to images, extract charts, or share individual pages on social media. If you also need to combine multiple PDFs into one first, try our <a href="pdf-merge.html">PDF Merge</a> tool. To reduce the resulting PDF size, use our <a href="pdf-compressor.html">PDF Compressor</a>.</p>
+    <h3>4. When to Use Each Format</h3>
 
-    <h3>8. How to Use Image to OCR</h3>
-    <ol>
-      <li>Open the <b>Image to OCR</b> tab.</li>
-      <li>Upload a clear photo or screenshot containing typed text.</li>
-      <li>The browser downloads the OCR language model (~10 MB, first run only) and processes the image.</li>
-      <li>Extracted text appears in the output box. Click <b>Copy Text</b> to copy it.</li>
-    </ol>
-    <p><b>Best results:</b> use a straight, well-lit, high-contrast image. Printed text works best; handwriting is not well-supported by current OCR engines. For more advanced OCR workflows with language selection and pre-processing, try our <a href="doc-scanner.html">Document Scanner &amp; OCR</a>.</p>
-
-    <h3>9. Privacy &amp; Security</h3>
-
-    <p>Every operation in DocEasy runs entirely in your browser. Your files never leave your device. This is fundamentally different from most online converters, which upload your images to their servers.</p>
-
+    <h4>Use JPG When:</h4>
     <ul>
-      <li><b>No uploads:</b> All image, PDF, and OCR processing happens locally using HTML5 Canvas, PDF.js, JSZip, and Tesseract.js.</li>
-      <li><b>No storage:</b> Nothing is stored, logged, or cached on any server.</li>
-      <li><b>No tracking:</b> We don't log which files you process or when.</li>
-      <li><b>Offline capable:</b> After the page loads, you can disconnect from the internet and continue converting.</li>
+      <li>You're uploading a photo to a website, email, or social media</li>
+      <li>You're submitting an exam form or government portal upload (most require JPG)</li>
+      <li>File size matters and quality is acceptable at 80-90%</li>
+      <li>You're sending images via WhatsApp, Telegram, or SMS</li>
     </ul>
 
-    <h3>10. Common Use Cases</h3>
+    <h4>Use PNG When:</h4>
+    <ul>
+      <li>You need transparent backgrounds (logos, product shots, signatures)</li>
+      <li>You're working with screenshots containing text (PNG keeps text sharp)</li>
+      <li>You need lossless quality for printing or editing</li>
+      <li>You're saving digital art or graphics with sharp edges</li>
+    </ul>
+
+    <h4>Use WEBP When:</h4>
+    <ul>
+      <li>You're publishing images on a modern website</li>
+      <li>You want the smallest possible file size without quality loss</li>
+      <li>You need animation at smaller size than GIF</li>
+      <li>You're optimizing for Core Web Vitals (SEO benefit)</li>
+    </ul>
+
+    <h3>5. Lossy vs Lossless Compression</h3>
+
+    <p>The two types of compression are fundamentally different:</p>
+
+    <h4>Lossy Compression (JPG, WEBP)</h4>
+    <p>Lossy compression permanently removes some image data to achieve dramatic size reductions. The algorithm identifies details the human eye is unlikely to notice — subtle color variations, tiny edges — and discards them. A 3 MB photo can become 200 KB with no visible difference.</p>
+
+    <p>The problem: every time you re-save a JPG, it loses a bit more quality. This is called "generation loss." For this reason, always keep the original file and convert from it — don't repeatedly re-convert.</p>
+
+    <h4>Lossless Compression (PNG)</h4>
+    <p>Lossless compression reduces file size without losing any data. The pixels you see are exactly the pixels that were originally saved. PNG achieves this through algorithms that find patterns in the image data — like repeated colors in a large background — and store them more efficiently. Lossless files are always larger than lossy ones at the same dimensions.</p>
+
+    <h3>6. Transparency — The Hidden Difference</h3>
+
+    <p>Transparency is a crucial feature that only PNG and WEBP support. When you save an image with a transparent background as PNG, the "transparent" pixels are marked as see-through. When placed on a colored background (like a website), those areas show the background color.</p>
+
+    <p>JPG does not support transparency. If you convert a transparent PNG to JPG, the transparent areas will automatically be filled with a solid color — usually white, but sometimes black depending on the tool. Our converter uses white, which is generally the safest default.</p>
+
+    <p>If you need transparency, always use PNG or WEBP, never JPG.</p>
+
+    <h3>7. File Size Comparison — Real Numbers</h3>
+
+    <p>Here's how the same 2000×1500 photo looks in each format:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>File Size</th><th>Quality</th><th>Transparency</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PNG (lossless)</td><td>~4.5 MB</td><td>Perfect</td><td>Yes</td></tr>
+          <tr><td>JPG (quality 90)</td><td>~850 KB</td><td>Excellent</td><td>No</td></tr>
+          <tr><td>JPG (quality 75)</td><td>~450 KB</td><td>Very good</td><td>No</td></tr>
+          <tr><td>WEBP (quality 80)</td><td>~280 KB</td><td>Excellent</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>This shows why WEBP is winning: better compression than JPG with transparency support, at half the file size. As browser support has become universal (2020+), WEBP has become the default choice for modern websites.</p>
+
+    <h3>8. Common Conversion Scenarios</h3>
+
+    <h4>PNG Screenshot → JPG (for Email)</h4>
+    <p>Screenshots are usually saved as PNG. If you're emailing them, converting to JPG cuts file size by 70-85% with no visible quality loss (for images without fine text). Note that if the screenshot contains text, PNG will keep it sharper — only convert to JPG if file size is critical.</p>
+
+    <h4>JPG Photo → PNG (for Editing)</h4>
+    <p>If you plan to edit a photo, converting it to PNG first prevents further quality loss during saves. This is a common workflow: JPG → PNG → edit → export back to JPG or WEBP.</p>
+
+    <h4>PNG Logo → WEBP (for Website)</h4>
+    <p>Website logos are often 20-200 KB as PNG. Converting to WEBP cuts this by 40-60% without losing transparency. This speeds up your site's load time, improving SEO and user experience.</p>
+
+    <h4>JPG → WEBP (for Modern Websites)</h4>
+    <p>The single best optimization for any website: convert all your JPG photos to WEBP. You get 25-35% smaller files at the same visual quality, which directly improves your Core Web Vitals score — a ranking factor in Google Search.</p>
+
+    <h4>Any Format → PNG (for Signatures)</h4>
+    <p>Signatures need transparent backgrounds for exam forms and official documents. Convert any photo of your signature to PNG, then use our <a href="signature-bg-remover.html">Signature BG Remover</a> to clean up the background further.</p>
+
+    <h3>9. Why Client-Side Conversion Is Better</h3>
+
+    <p>Most online image converters upload your file to their servers, process it there, and return a download link. This has several problems:</p>
 
     <ul>
-      <li><b>Exam form submissions:</b> Convert photos to JPG with specific file sizes for <a href="image-compressor.html">SSC, IBPS, UPSC and other portals</a>.</li>
-      <li><b>Website optimization:</b> Convert PNGs to WEBP to reduce page load time and improve SEO.</li>
-      <li><b>Job applications:</b> Merge your resume, photo, and certificates into one PDF.</li>
-      <li><b>Business receipts:</b> Photograph receipts and merge into one PDF for expense reports.</li>
-      <li><b>Slide extraction:</b> Convert a PDF presentation into individual images for social media.</li>
-      <li><b>Document digitization:</b> Extract text from scanned documents into editable form.</li>
-      <li><b>Signature editing:</b> Convert a photographed signature to PNG with clean background.</li>
-      <li><b>ID card processing:</b> Crop and resize Aadhaar, PAN, voter ID with our <a href="card-cropper.html">ID Card Cropper</a>.</li>
-      <li><b>PAN applications:</b> Prepare photo and signature for UTI with our <a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature Resizer</a>.</li>
-      <li><b>Passport photos:</b> Create print-ready 35×45 mm photos with our <a href="passport-maker.html">Passport Photo Maker</a>.</li>
+      <li><b>Privacy risk:</b> Your image sits on a remote server, potentially logged or leaked.</li>
+      <li><b>Waiting time:</b> Upload + server processing + download takes 5-30 seconds for average files.</li>
+      <li><b>File size limits:</b> Most services cap uploads at 5-25 MB.</li>
+      <li><b>Rate limits:</b> Many allow only 2-5 conversions per hour for free users.</li>
+      <li><b>Ads and watermarks:</b> Some add watermarks or require watching ads.</li>
+    </ul>
+
+    <p>DocEasy takes the opposite approach. Using the HTML5 Canvas API, we convert images <b>inside your browser</b>. The file never leaves your device. The conversion is instant. There are no limits. And you can even use the tool offline after loading it once.</p>
+
+    <p>You can verify this yourself: open the browser's Developer Tools Network tab, then convert an image. You'll see no outbound requests — no file upload, no server communication.</p>
+
+    <h3>10. Best Practices for Image Conversion</h3>
+
+    <ul>
+      <li><b>Keep the original:</b> Never overwrite your original file. Always save the conversion as a new file.</li>
+      <li><b>Convert once:</b> Repeated conversions (JPG → PNG → JPG) cause cumulative quality loss with lossy formats.</li>
+      <li><b>Use PNG for editing:</b> If you plan to edit an image, convert it to PNG first for lossless intermediate saves.</li>
+      <li><b>Use WEBP for the web:</b> For any image displayed on a website, WEBP is the best choice today.</li>
+      <li><b>Use JPG for exams:</b> When a portal requires JPG, always use JPG (converting to PNG and renaming to .jpg won't work).</li>
+      <li><b>Watch out for transparency:</b> If your source has transparency, don't convert to JPG — the background will be lost.</li>
+      <li><b>Optimize dimensions first:</b> For smaller files, resize the image before converting. Use our <a href="image-compressor.html">Image Compressor &amp; Resizer</a>.</li>
+      <li><b>Test on target platform:</b> If converting for a specific website, verify the converted image actually works there.</li>
     </ul>
 
     <h3>11. Frequently Asked Questions</h3>
 
     <details>
-      <summary>Q: Is this tool really free?</summary>
-      <p>Yes, 100% free with no signup, no watermark, and no daily limits. Every feature runs entirely in your browser.</p>
+      <summary>Q: Is this image converter really free?</summary>
+      <p>Yes — 100% free, no signup, no watermark, no daily limits. All processing happens locally in your browser.</p>
     </details>
 
     <details>
-      <summary>Q: Are my files uploaded to a server?</summary>
-      <p>No. All conversion, PDF merging, ZIP creation, and OCR happen locally in your browser using WebAssembly and JavaScript. Your files never leave your device.</p>
+      <summary>Q: Are my images uploaded to a server?</summary>
+      <p>No. Everything runs locally in your browser using the HTML5 Canvas API. Your image never leaves your device.</p>
     </details>
 
     <details>
-      <summary>Q: Does image format conversion affect quality?</summary>
-      <p>Converting between PNG and WEBP is lossless by default — no quality loss. Converting to JPG uses high-quality compression (about 92% quality) that's visually indistinguishable from the original for most images.</p>
+      <summary>Q: Does converting between formats reduce image quality?</summary>
+      <p>PNG and WEBP support lossless conversion — perfect quality. When converting to JPG, high-quality compression (92%) is used, which is visually indistinguishable from the original for most images. Note that PNG → JPG loses transparency (transparent areas become white).</p>
+    </details>
+
+    <details>
+      <summary>Q: Will converting a PNG with transparency to JPG work?</summary>
+      <p>Yes, but the transparent areas will become white. JPG does not support transparency. If you need transparency, convert to PNG or WEBP instead.</p>
     </details>
 
     <details>
       <summary>Q: Can I convert HEIC (iPhone) photos?</summary>
-      <p>HEIC is not natively supported by web browsers. Convert HEIC to JPG on your phone first (Settings → Camera → Formats → Most Compatible), then upload here.</p>
+      <p>HEIC is not natively supported by web browsers. Convert HEIC to JPG on your phone first (iPhone: Settings → Camera → Formats → Most Compatible), then upload here.</p>
     </details>
 
     <details>
-      <summary>Q: How large can my PDF be for PDF-to-JPG conversion?</summary>
-      <p>No hard limit, but very large PDFs (100+ pages) may take a minute and consume significant RAM. For files under 50 pages, conversion typically completes in seconds.</p>
+      <summary>Q: What is WEBP and why should I use it?</summary>
+      <p>WEBP is a modern format developed by Google. It produces files 25-35% smaller than JPG at the same visual quality, and supports transparency like PNG. All modern browsers support it. For websites, WEBP is the best choice.</p>
     </details>
 
     <details>
-      <summary>Q: Does OCR work with handwritten text?</summary>
-      <p>No. Current browser-based OCR engines are optimized for printed typography. Handwriting accuracy is very low. For best results, use clear printed documents, screenshots, or scans.</p>
+      <summary>Q: Can I convert multiple images at once?</summary>
+      <p>Currently the tool processes one image at a time for maximum quality control. Batch conversion is on our roadmap.</p>
     </details>
 
     <details>
-      <summary>Q: What languages does OCR support?</summary>
-      <p>The default OCR engine supports English very well. For other languages (Hindi, Bengali, Tamil), try our <a href="doc-scanner.html">Document Scanner &amp; OCR</a> tool which supports multiple language packs.</p>
+      <summary>Q: Is there a file size limit?</summary>
+      <p>No hard limit — everything runs in browser memory. Very large files (50 MB+) may be slow on older devices, but modern phones and computers handle them fine.</p>
     </details>
 
     <details>
-      <summary>Q: Can I convert images to PDF on mobile?</summary>
-      <p>Yes. The entire studio is fully responsive and works on any modern Android, iOS, or iPad browser. No app installation required.</p>
-    </details>
-
-    <details>
-      <summary>Q: Can I convert multiple images to different formats at once?</summary>
-      <p>Currently each conversion processes one image at a time for maximum quality control. Batch format conversion is on our roadmap.</p>
+      <summary>Q: Can I use this on mobile?</summary>
+      <p>Yes. The tool works on any modern Android, iOS, or iPad browser. No app installation required.</p>
     </details>
 
     <details>
       <summary>Q: Does the tool work offline?</summary>
-      <p>After the page loads once, most features work offline. OCR requires downloading a language model on first use (cached afterward).</p>
+      <p>Yes — after the page loads, you can disconnect from the internet and continue converting. Everything runs locally.</p>
     </details>
 
-    <h3>Popular Right Now — Trending Tools</h3>
+    <h3>12. Popular Right Now — Trending Tools</h3>
     <ul>
       <li><a href="image-compressor.html">Image Compressor &amp; Resizer</a> — reduce image size for WhatsApp &amp; email</li>
       <li><a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature Resizer</a> — exact specs for UTI/NSDL PAN applications</li>
       <li><a href="card-cropper.html">ID Card Dual-Side Cropper</a> — Aadhaar, PAN at ultra HD 300 DPI</li>
+      <li><a href="doc-scanner.html">Document Scanner &amp; OCR</a> — extract text from scanned photos</li>
       <li><a href="pdf-merge.html">PDF Merge</a> — combine multiple PDFs into one clean file</li>
-      <li><a href="qr-scanner.html">QR Code Scanner</a> — scan QR from camera or image</li>
     </ul>
 
-    <h3>12. Related Tools You Might Need</h3>
+    <h3>13. Related Tools You Might Need</h3>
+    <p>If you found this useful, you may also like our <a href="image-compressor.html">Image Compressor &amp; Resizer</a> for reducing file size, our <a href="image-bg-remover.html">Background Remover</a> for removing backgrounds, our <a href="signature-bg-remover.html">Signature BG Remover</a> for cleaning signature backgrounds, our <a href="passport-maker.html">Passport Photo Maker</a> for 35×45 mm photos, our <a href="card-cropper.html">ID Card Cropper</a> for Aadhaar/PAN at 300 DPI, and our <a href="jpg-to-pdf.html">JPG to PDF</a> scanner to bundle images into PDFs.</p>
 
-    <p>If you found this studio useful, you may also like our dedicated <a href="image-compressor.html">Image Compressor &amp; Resizer</a>, <a href="pdf-merge.html">PDF Merge</a>, <a href="pdf-split.html">PDF Split</a>, <a href="pdf-compressor.html">PDF Compressor</a>, <a href="doc-scanner.html">Document Scanner &amp; OCR</a>, <a href="jpg-to-pdf.html">JPG to PDF</a>, <a href="pdf-to-jpg.html">PDF to JPG</a>, <a href="card-cropper.html">ID Card Cropper</a>, <a href="passport-maker.html">Passport Photo Maker</a>, <a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature Resizer</a>, and <a href="signature-bg-remover.html">Signature BG Remover</a>.</p>
+    <h3>14. Conclusion</h3>
 
-    <h3>13. Conclusion</h3>
+    <p>Image format conversion is one of those small but essential tasks that everyone runs into — whether submitting exam forms, optimizing a website, or sharing photos with friends. With the DocEasy Image Format Converter, you can convert between JPG, PNG, and WEBP in seconds, without uploading anything, without signing up, and without limits.</p>
 
-    <p>The DocEasy Image Converter &amp; PDF Studio replaces four separate paid tools with one clean, private, browser-based interface. Whether you're a student preparing exam forms, a freelancer organizing receipts, a developer optimizing a website, or anyone who deals with images and PDFs daily — everything you need is now one tab away.</p>
-
-    <p>No signup. No uploads. No limits. Just fast, high-quality conversion that respects your privacy and works on any device.</p>
+    <p>Bookmark this page and use it whenever you need to convert an image — all in one place, all in your browser.</p>
 
   </section>
 
@@ -903,46 +801,16 @@ details p {
         <p>Reduce image file size</p>
       </a>
 
-      <a class="related-card" href="pdf-merge.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
-        <h3>Merge PDF</h3>
-        <p>Combine PDFs into one</p>
+      <a class="related-card" href="image-bg-remover.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
+        <h3>BG Remover</h3>
+        <p>Remove background instantly</p>
       </a>
 
-      <a class="related-card" href="pdf-split.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
-        <h3>Split PDF</h3>
-        <p>Extract specific pages</p>
-      </a>
-
-      <a class="related-card" href="pdf-compressor.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
-        <h3>Compress PDF</h3>
-        <p>Reduce PDF file size</p>
-      </a>
-
-      <a class="related-card" href="pdf-to-jpg.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
-        <h3>PDF to JPG</h3>
-        <p>High-res page extraction</p>
-      </a>
-
-      <a class="related-card" href="jpg-to-pdf.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg></div>
-        <h3>JPG to PDF</h3>
-        <p>Multi-image to PDF scanner</p>
-      </a>
-
-      <a class="related-card" href="doc-scanner.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
-        <h3>Document Scanner</h3>
-        <p>Camera scan + OCR</p>
-      </a>
-
-      <a class="related-card" href="card-cropper.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
-        <h3>ID Card Cropper</h3>
-        <p>Aadhaar, PAN at 300 DPI</p>
+      <a class="related-card" href="signature-bg-remover.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M3 17V21h4L19 9l-4-4zM17 5l2-2 4 4-2 2z"/></svg></div>
+        <h3>Signature BG Remover</h3>
+        <p>Clean white signature</p>
       </a>
 
       <a class="related-card" href="passport-maker.html">
@@ -951,10 +819,10 @@ details p {
         <p>35×45mm at 300 DPI</p>
       </a>
 
-      <a class="related-card" href="image-bg-remover.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
-        <h3>BG Remover</h3>
-        <p>AI background removal</p>
+      <a class="related-card" href="card-cropper.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <h3>ID Card Cropper</h3>
+        <p>Aadhaar, PAN at 300 DPI</p>
       </a>
 
       <a class="related-card" href="pan-photo-signature-resizer.html">
@@ -963,10 +831,40 @@ details p {
         <p>213×213 &amp; 400×200 for UTI</p>
       </a>
 
+      <a class="related-card" href="jpg-to-pdf.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg></div>
+        <h3>JPG to PDF</h3>
+        <p>Multi-image to PDF scanner</p>
+      </a>
+
+      <a class="related-card" href="pdf-to-jpg.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        <h3>PDF to JPG</h3>
+        <p>High-res page extraction</p>
+      </a>
+
+      <a class="related-card" href="doc-scanner.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        <h3>Document Scanner</h3>
+        <p>Camera scan + OCR</p>
+      </a>
+
+      <a class="related-card" href="pdf-merge.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Merge PDF</h3>
+        <p>Combine PDFs into one</p>
+      </a>
+
       <a class="related-card" href="qr-scanner.html">
         <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
         <h3>QR Scanner</h3>
         <p>Camera + image scan</p>
+      </a>
+
+      <a class="related-card" href="image-beautifier.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg></div>
+        <h3>Image Beautifier</h3>
+        <p>Enhance and sharpen</p>
       </a>
 
     </div>
@@ -979,202 +877,123 @@ details p {
 <script src="../assets/js/core/doceasy-core.js"></script>
 
 <script>
-/* ==========================================================================
-   All-in-One Converter Studio — Image Format, Images→PDF, PDF→JPG, OCR
-   100% client-side. No uploads.
-   ========================================================================== */
 (function () {
   'use strict';
 
-  /* ---------- TAB SWITCHING ---------- */
-  document.querySelectorAll('.tab-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
-      document.querySelectorAll('.converter-panel').forEach(function (p) { p.classList.remove('active'); });
-      btn.classList.add('active');
-      var target = document.getElementById(btn.dataset.target);
-      if (target) target.classList.add('active');
-    });
+  var $ = function (id) { return document.getElementById(id); };
+
+  var fileInput   = $('img-file-in');
+  var fileInfo    = $('file-info');
+  var previewBox  = $('preview-box');
+  var previewImg  = $('preview-img');
+  var controls    = $('controls');
+  var targetFmt   = $('target-format');
+  var convertBtn  = $('convert-btn');
+  var resetBtn    = $('reset-btn');
+  var convertBtnOriginal = convertBtn.innerHTML;
+
+  var activeImage = null;
+  var activeFileName = '';
+  var activeFileSize = 0;
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function resetUI() {
+    activeImage = null;
+    activeFileName = '';
+    activeFileSize = 0;
+    fileInput.value = '';
+    fileInfo.classList.remove('show');
+    fileInfo.innerHTML = '';
+    previewBox.classList.remove('show');
+    previewImg.src = '';
+    controls.classList.remove('show');
+    convertBtn.innerHTML = convertBtnOriginal;
+    convertBtn.disabled = false;
+  }
+
+  resetBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    resetUI();
   });
 
-  /* ============================================================
-     1. IMAGE FORMAT CONVERTER
-     ============================================================ */
-  var activeImage = null;
-
-  window.previewSingleImg = function (e) {
-    var file = e.target.files[0];
+  fileInput.addEventListener('change', function () {
+    var file = this.files && this.files[0];
     if (!file) return;
-    document.getElementById('single-img-name').textContent = 'Loaded: ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file.');
+      return;
+    }
+
+    activeFileName = file.name;
+    activeFileSize = file.size;
+
     var reader = new FileReader();
     reader.onload = function (ev) {
-      activeImage = new Image();
-      activeImage.src = ev.target.result;
+      var img = new Image();
+      img.onload = function () {
+        activeImage = img;
+        fileInfo.innerHTML = '<b>Loaded:</b> ' + file.name +
+          ' &nbsp;·&nbsp; <b>' + img.naturalWidth + ' × ' + img.naturalHeight + ' px</b>' +
+          ' &nbsp;·&nbsp; <b>' + formatBytes(file.size) + '</b>';
+        fileInfo.classList.add('show');
+        previewImg.src = ev.target.result;
+        previewBox.classList.add('show');
+        controls.classList.add('show');
+      };
+      img.onerror = function () {
+        alert('Could not read this image. Please try another file.');
+        resetUI();
+      };
+      img.src = ev.target.result;
+    };
+    reader.onerror = function () {
+      alert('Could not read this file.');
+      resetUI();
     };
     reader.readAsDataURL(file);
-  };
+  });
 
-  window.convertSingleImage = function () {
-    if (!activeImage) { alert('Please upload an image first!'); return; }
-    var format = document.getElementById('target-img-fmt').value;
-    var canvas = document.getElementById('hidden-canvas');
-    canvas.width = activeImage.width;
-    canvas.height = activeImage.height;
+  convertBtn.addEventListener('click', function () {
+    if (!activeImage) { alert('Please upload an image first.'); return; }
+
+    var format = targetFmt.value;
+    var canvas = document.createElement('canvas');
+    canvas.width = activeImage.naturalWidth;
+    canvas.height = activeImage.naturalHeight;
     var ctx = canvas.getContext('2d');
+
     if (format === 'image/jpeg') {
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     ctx.drawImage(activeImage, 0, 0);
-    var dataUrl = canvas.toDataURL(format, 0.92);
-    var ext = format.split('/')[1].replace('jpeg', 'jpg');
-    var a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = 'converted-image.' + ext;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
 
-  /* ============================================================
-     2. IMAGES TO PDF
-     ============================================================ */
-  var selectedPdfImages = [];
-
-  window.previewMultipleImgs = function (e) {
-    var files = e.target.files;
-    if (!files.length) return;
-    selectedPdfImages = [];
-    var box = document.getElementById('pdf-preview-box');
-    box.innerHTML = '';
-    Array.prototype.forEach.call(files, function (file) {
-      var reader = new FileReader();
-      reader.onload = function (ev) {
-        selectedPdfImages.push(ev.target.result);
-        var img = document.createElement('img');
-        img.src = ev.target.result;
-        box.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    });
-    document.getElementById('multi-img-count').textContent = files.length + ' image(s) loaded ready for PDF';
-  };
-
-  window.generatePDF = function () {
-    if (selectedPdfImages.length === 0) { alert('Please select images first!'); return; }
-    var win = window.open('', '_blank');
-    if (!win) { alert('Please allow popups to generate PDF.'); return; }
-    var html = '<html><head><title>DocEasy — PDF</title><style>' +
-      '@page { size: A4; margin: 10mm; }' +
-      'body { margin: 0; padding: 0; text-align: center; background: #fff; }' +
-      'img { max-width: 100%; max-height: 277mm; height: auto; display: block; margin: 0 auto; page-break-after: always; object-fit: contain; }' +
-      'img:last-child { page-break-after: auto; }' +
-      '</style></head><body>';
-    selectedPdfImages.forEach(function (src) {
-      html += '<img src="' + src + '">';
-    });
-    html += '</body></html>';
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () { win.print(); }, 600);
-  };
-
-  /* ============================================================
-     3. PDF TO JPG (ZIP)
-     ============================================================ */
-  if (window.pdfjsLib) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-  }
-
-  window.convertPdfToJpgZip = async function (e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var statusEl = document.getElementById('pdf-status');
-    statusEl.textContent = 'Reading PDF file…';
-
-    var reader = new FileReader();
-    reader.onload = async function (ev) {
-      try {
-        var typedarray = new Uint8Array(ev.target.result);
-        var pdf = await pdfjsLib.getDocument(typedarray).promise;
-        var zip = new JSZip();
-        var imgFolder = zip.folder('pdf-pages-jpg');
-        var total = pdf.numPages;
-
-        for (var i = 1; i <= total; i++) {
-          statusEl.textContent = 'Processing page ' + i + ' of ' + total + '…';
-          var page = await pdf.getPage(i);
-          var viewport = page.getViewport({ scale: 1.5 });
-          var canvas = document.createElement('canvas');
-          var context = canvas.getContext('2d');
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          await page.render({ canvasContext: context, viewport: viewport }).promise;
-          var imgData = canvas.toDataURL('image/jpeg', 0.92).replace(/^data:image\/jpeg;base64,/, '');
-          imgFolder.file('page-' + i + '.jpg', imgData, { base64: true });
-        }
-
-        statusEl.textContent = 'Generating ZIP file…';
-        var content = await zip.generateAsync({ type: 'blob' });
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(content);
-        link.download = file.name.replace(/\.[^/.]+$/, '') + '-images.zip';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        setTimeout(function () { URL.revokeObjectURL(link.href); }, 4000);
-        statusEl.textContent = '✅ Success! ZIP downloaded (' + total + ' pages).';
-      } catch (err) {
-        console.error(err);
-        statusEl.textContent = '❌ Error processing PDF. Please try another file.';
+    canvas.toBlob(function (blob) {
+      if (!blob) {
+        alert('Conversion failed. Please try another image.');
+        return;
       }
-    };
-    reader.readAsArrayBuffer(file);
-  };
+      var ext = format.split('/')[1].replace('jpeg', 'jpg');
+      var baseName = (activeFileName || 'image').replace(/\.[^/.]+$/, '');
+      var url = URL.createObjectURL(blob);
 
-  /* ============================================================
-     4. IMAGE TO OCR
-     ============================================================ */
-  window.runRealOCR = async function (e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var statusEl = document.getElementById('ocr-status');
-    var resultEl = document.getElementById('ocr-result-text');
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = baseName + '-converted.' + ext;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
 
-    statusEl.textContent = 'Initializing OCR engine and scanning text…';
-    resultEl.textContent = 'Processing image pixels…';
-
-    try {
-      var result = await Tesseract.recognize(file, 'eng', {
-        logger: function (m) {
-          if (m.status) {
-            statusEl.textContent = m.status + ' (' + Math.round(m.progress * 100) + '%)';
-          }
-        }
-      });
-      var text = result && result.data && result.data.text ? result.data.text : '';
-      statusEl.textContent = '✅ Scan complete successfully!';
-      resultEl.textContent = text ? text : 'No readable text found in this image. Try a clearer, higher-contrast scan.';
-    } catch (err) {
-      console.error(err);
-      statusEl.textContent = '❌ Error during OCR scan.';
-      resultEl.textContent = 'Failed to extract text. Please try a clearer image.';
-    }
-  };
-
-  window.copyOcrText = function () {
-    var text = document.getElementById('ocr-result-text').textContent || '';
-    if (!text) { alert('No text to copy.'); return; }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () {
-        alert('Extracted text copied to clipboard!');
-      }).catch(function () {
-        alert('Copy failed. Please select and copy manually.');
-      });
-    } else {
-      alert('Clipboard not supported on this browser.');
-    }
-  };
+      convertBtn.textContent = '✓ Downloaded';
+      setTimeout(function () { convertBtn.innerHTML = convertBtnOriginal; }, 2000);
+    }, format, 0.92);
+  });
 
 })();
 </script>
