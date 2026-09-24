@@ -3,116 +3,460 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>QR Code Scanner — Scan QR Online Free | DocEasy</title>
-<meta name="description" content="Scan QR codes from your camera or image files online. 100% browser-based, no upload, no signup. Fast, private, and free.">
+<title>QR Code Scanner Online Free — Scan QR from Camera or Image | DocEasy</title>
+<meta name="description" content="Free online QR code scanner. Scan QR codes using your camera or from an image file. 100% browser-based, no upload, no signup.">
 <meta name="keywords" content="qr scanner, qr code scanner, scan qr online, camera qr scanner, qr reader, free qr scanner">
-<meta name="author" content="DocEasy">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://doceasy.org/tools/qr-scanner.html">
+<meta name="theme-color" content="#0b1329">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/qr-scanner.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="QR Code Scanner Online Free — DocEasy">
+<meta property="og:description" content="Scan QR codes from your camera or image files. 100% browser-based.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/qr-scanner.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/qr-scanner-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="QR Code Scanner Online Free — DocEasy">
+<meta name="twitter:description" content="Scan QR codes from camera or image files. 100% browser-based.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/qr-scanner-demo.jpg">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Code Scanner — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/qr-scanner.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
-<script>
-  (function () {
-    try {
-      var saved = localStorage.getItem('doceasy_theme') || 'light';
-      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-      else document.documentElement.removeAttribute('data-theme');
-    } catch (e) {}
-  })();
-</script>
-
 <style>
-.main-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
-.hero-box { text-align: center; padding: 8px 0 24px; }
-.hero-title { font-size: clamp(24px, 4vw, 34px); font-weight: 800; color: var(--text-color); margin: 0 0 10px; letter-spacing: -0.5px; }
-.hero-sub { color: var(--subtext-color); font-size: 15px; margin: 0 auto; max-width: 620px; line-height: 1.6; }
+.ad-slot-container,
+.ad-placeholder { display: none !important; }
 
-.tool-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 28px 22px; box-shadow: var(--shadow-md); margin-bottom: 22px; }
+.scanner-container { text-align: center; }
 
-.qr-chooser { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 6px; }
-.qr-option { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 28px 20px; background: var(--card-hover); border: 2px dashed var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.22s ease; text-align: center; }
-.qr-option:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-3px); box-shadow: var(--shadow-md); }
-.qr-option .opt-icon { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); transition: transform 0.22s ease; }
-.qr-option:hover .opt-icon { transform: scale(1.08) rotate(-4deg); }
-.qr-option .opt-icon svg { width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 1.8; }
-.qr-option h3 { font-size: 16px; font-weight: 800; color: var(--text-color); margin: 0; }
-.qr-option p { font-size: 13px; color: var(--subtext-color); margin: 0; line-height: 1.5; }
+.hd-banner {
+  max-width: 780px; margin: 0 auto 22px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #19398a 0%, #2563eb 100%);
+  color: #ffffff; border-radius: 12px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 10px 26px rgba(25,57,138,0.28);
+  text-align: left;
+}
+.hd-banner .hd-icon {
+  flex-shrink: 0; width: 44px; height: 44px;
+  border-radius: 12px; background: rgba(255,255,255,0.16);
+  display: grid; place-items: center;
+}
+.hd-banner .hd-icon svg {
+  width: 24px; height: 24px;
+  stroke: #ffffff; fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.hd-banner .hd-text { flex: 1; font-size: 14px; line-height: 1.55; }
+.hd-banner .hd-text b { color: #fef08a; }
+.hd-banner .hd-text small {
+  display: block; font-size: 12px;
+  color: rgba(255,255,255,0.82); margin-top: 3px;
+}
+@media (max-width: 520px) {
+  .hd-banner { padding: 12px 14px; gap: 10px; }
+  .hd-banner .hd-icon { width: 38px; height: 38px; }
+  .hd-banner .hd-text { font-size: 12.5px; }
+}
 
-.drop-zone { border: 2px dashed var(--border-color); border-radius: 12px; padding: 42px 20px; text-align: center; transition: all 0.22s ease; cursor: pointer; background: var(--card-hover); position: relative; }
-.drop-zone:hover, .drop-zone.dragover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); }
-.drop-zone input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-.dz-icon { width: 72px; height: 72px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
-.dz-icon svg { width: 36px; height: 36px; stroke: currentColor; fill: none; stroke-width: 1.8; }
-.dz-title { font-size: 18px; font-weight: 700; color: var(--text-color); margin: 0 0 6px; }
-.dz-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0 0 20px; }
-.dz-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; background: var(--accent); color: #fff; border: none; cursor: pointer; transition: all 0.18s ease; box-shadow: 0 4px 14px rgba(25,57,138,0.25); }
-.dz-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
-.dz-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; }
+/* ============ Main upload box ============ */
+.upload-box {
+  max-width: 620px; margin: 30px auto;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  border-radius: 12px; padding: 30px 20px;
+  box-shadow: var(--shadow-sm);
+}
 
-.camera-stage { position: relative; border-radius: 12px; overflow: hidden; background: #000; aspect-ratio: 4/3; display: grid; place-items: center; margin-bottom: 16px; }
-.camera-stage video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.camera-stage .scan-frame { position: absolute; inset: 12%; border: 2px solid rgba(56,189,248,0.9); border-radius: 16px; box-shadow: 0 0 0 9999px rgba(0,0,0,0.35); pointer-events: none; }
-.camera-stage .scan-frame::before, .camera-stage .scan-frame::after { content: ""; position: absolute; width: 40px; height: 40px; border: 4px solid #38bdf8; border-radius: 8px; }
+/* Drop zone — native mobile popup trigger */
+.drop-zone {
+  position: relative;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 40px 20px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: block;
+  text-align: center;
+}
+.drop-zone:hover { background: var(--accent-soft-hover); }
+.drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.drop-zone .dz-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.6);
+  color: var(--accent);
+  display: grid; place-items: center;
+  margin: 0 auto 14px;
+}
+.drop-zone .dz-icon svg {
+  width: 30px; height: 30px;
+  stroke: currentColor; fill: none; stroke-width: 1.8;
+}
+.drop-zone h3 {
+  color: var(--text-color); margin: 0 0 6px;
+  font-size: 18px; font-weight: 800;
+}
+.drop-zone p {
+  color: var(--subtext-color); margin: 0;
+  font-size: 13.5px;
+}
+
+/* ============ Divider ============ */
+.or-divider {
+  display: flex; align-items: center;
+  gap: 10px; margin: 20px 0;
+  color: var(--subtext-color);
+  font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.or-divider::before,
+.or-divider::after {
+  content: ""; flex: 1;
+  height: 1px; background: var(--border-color);
+}
+
+/* ============ Live camera button ============ */
+.btn-live-cam {
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 10px;
+  font-size: 14.5px; font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.btn-live-cam:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.btn-live-cam svg {
+  width: 18px; height: 18px;
+  stroke: currentColor; fill: none;
+}
+
+/* ============ Camera view ============ */
+.camera-stage {
+  position: relative; border-radius: 12px;
+  overflow: hidden; background: #000;
+  aspect-ratio: 4/3;
+  display: grid; place-items: center;
+  margin-bottom: 16px;
+}
+.camera-stage video {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.camera-stage .scan-frame {
+  position: absolute; inset: 12%;
+  border: 2px solid rgba(56,189,248,0.9);
+  border-radius: 16px;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.35);
+  pointer-events: none;
+}
+.camera-stage .scan-frame::before,
+.camera-stage .scan-frame::after {
+  content: ""; position: absolute;
+  width: 40px; height: 40px;
+  border: 4px solid #38bdf8; border-radius: 8px;
+}
 .camera-stage .scan-frame::before { top: -4px; left: -4px; border-right: none; border-bottom: none; }
-.camera-stage .scan-frame::after { bottom: -4px; right: -4px; border-left: none; border-top: none; }
+.camera-stage .scan-frame::after  { bottom: -4px; right: -4px; border-left: none; border-top: none; }
 
-.result-box { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--accent); border-radius: 12px; padding: 20px; box-shadow: 0 0 0 3px var(--accent-soft); }
-.result-box h3 { font-size: 14px; font-weight: 800; color: var(--accent); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-.result-content { display: flex; align-items: flex-start; gap: 10px; background: var(--card-hover); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 14px; font-family: ui-monospace, 'Courier New', monospace; font-size: 13px; color: var(--text-color); word-break: break-all; line-height: 1.55; margin-bottom: 12px; }
+/* ============ Result box ============ */
+.result-box {
+  margin-top: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  text-align: left;
+}
+.result-box h3 {
+  font-size: 13.5px; font-weight: 800;
+  color: var(--accent); margin: 0 0 10px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.result-content {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 13px; color: var(--text-color);
+  word-break: break-all; line-height: 1.55;
+  margin-bottom: 12px;
+}
 .result-content .result-text { flex: 1; white-space: pre-wrap; }
-.result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.result-actions button { flex: 1; min-width: 130px; padding: 10px 16px; border-radius: 8px; font-size: 13.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px; transition: all 0.15s ease; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); }
-.result-actions button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.result-actions button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.result-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.result-actions button {
+  flex: 1; min-width: 130px;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 13.5px; font-weight: 700;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-family: inherit;
+}
+.result-actions button:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: var(--accent-soft);
+}
+.result-actions button.primary {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
 .result-actions button.primary:hover { filter: brightness(1.08); }
 .result-actions svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-.progress-wrap { margin-top: 20px; display: none; }
+/* ============ Buttons ============ */
+.btn-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 20px;
+}
+.btn-secondary {
+  flex: 1; min-width: 160px;
+  padding: 13px 20px; border-radius: 10px;
+  font-size: 14.5px; font-weight: 700;
+  cursor: pointer; transition: all 0.18s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-family: inherit;
+}
+.btn-secondary:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: var(--accent-soft);
+}
+.btn-secondary svg {
+  width: 18px; height: 18px;
+  stroke: currentColor; fill: none;
+}
+
+/* ============ Progress ============ */
+.progress-wrap { margin-top: 18px; display: none; }
 .progress-wrap.show { display: block; }
-.progress-bar-outer { height: 8px; border-radius: 4px; background: var(--card-hover); overflow: hidden; border: 1px solid var(--border-color); }
-.progress-bar-inner { height: 100%; width: 40%; background: linear-gradient(90deg, var(--accent), #38bdf8); transition: width 0.2s ease; border-radius: 4px; animation: indeterminate 1.4s ease-in-out infinite; }
-@keyframes indeterminate { 0% { margin-left: -40%; width: 40%; } 50% { margin-left: 30%; width: 45%; } 100% { margin-left: 100%; width: 40%; } }
-.progress-text { margin-top: 10px; text-align: center; font-size: 13px; color: var(--subtext-color); font-weight: 600; }
+.progress-bar-outer {
+  height: 8px; border-radius: 4px;
+  background: var(--card-hover); overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+.progress-bar-inner {
+  height: 100%; width: 40%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  transition: width 0.2s ease; border-radius: 4px;
+  animation: indeterminate 1.4s ease-in-out infinite;
+}
+@keyframes indeterminate {
+  0%   { margin-left: -40%; width: 40%; }
+  50%  { margin-left: 30%;  width: 45%; }
+  100% { margin-left: 100%; width: 40%; }
+}
+.progress-text {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--subtext-color); font-weight: 600;
+}
 
-.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
-.btn-primary, .btn-secondary { flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.18s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; }
-.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 14px rgba(25,57,138,0.25); }
-.btn-primary:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
-.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-.btn-secondary { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); }
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.btn-primary svg, .btn-secondary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
-
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 14px 22px; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw; }
+/* ============ Toast ============ */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 14px 22px; border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  font-size: 14px; font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 9999; display: flex; align-items: center; gap: 10px;
+  max-width: 90vw;
+}
 .toast.show { transform: translateX(-50%) translateY(0); }
 .toast.ok { border-color: var(--success); color: var(--success); }
 .toast.error { border-color: var(--error); color: var(--error); }
 .toast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; flex-shrink: 0; }
 
-.info-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px 22px; margin-top: 24px; box-shadow: var(--shadow-sm); }
-.info-box h3 { font-size: 15px; font-weight: 700; color: var(--accent); margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+/* ============ Info box ============ */
+.info-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-top: 24px;
+  box-shadow: var(--shadow-sm);
+  max-width: 780px;
+  margin-left: auto; margin-right: auto;
+}
+.info-box h3 {
+  font-size: 15px; font-weight: 700;
+  color: var(--accent); margin: 0 0 12px;
+  display: flex; align-items: center; gap: 8px;
+}
 .info-box h3 svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
-.info-box ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
-.info-box li { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--subtext-color); line-height: 1.5; }
-.info-box li svg { width: 16px; height: 16px; stroke: var(--success); fill: none; flex-shrink: 0; margin-top: 3px; stroke-width: 2.5; }
+.info-box ul {
+  list-style: none; padding: 0; margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.info-box li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; color: var(--subtext-color); line-height: 1.5;
+}
+.info-box li svg {
+  width: 16px; height: 16px;
+  stroke: var(--success); fill: none;
+  flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
+}
 
-.seo-article { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 30px 26px; margin: 30px auto 0; line-height: 1.75; box-shadow: var(--shadow-sm); }
-.seo-article h2 { color: var(--text-color); font-size: 22px; margin: 0 0 14px; }
-.seo-article h3 { color: var(--accent); font-size: 17px; margin: 26px 0 10px; }
-.seo-article p, .seo-article ul, .seo-article ol, .seo-article li { font-size: 14.5px; color: var(--subtext-color); line-height: 1.75; }
-.seo-article ol, .seo-article ul { padding-left: 22px; }
-.seo-article li { margin-bottom: 8px; }
-.seo-article b, .seo-article strong { color: var(--text-color); }
-.seo-article code { background: var(--card-hover); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--accent); }
-
-.article-image-box { margin: 24px 0; border-radius: 10px; overflow: hidden; border: 1px dashed var(--border-color); background: var(--card-hover); padding: 12px; text-align: center; }
-.article-image-box img { max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 0 auto; }
-.article-image-caption { font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px; }
-
+/* ============ Screens ============ */
 .qr-screen { display: none; }
 .qr-screen.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+.seo-article h2 {
+  font-size: 26px !important; font-weight: 800;
+  color: var(--text-color); margin: 40px 0 20px;
+  letter-spacing: -0.5px; line-height: 1.3;
+  word-wrap: break-word;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important; font-weight: 700;
+  color: var(--accent); margin: 32px 0 16px;
+  line-height: 1.4; word-wrap: break-word;
+}
+.seo-article h4 {
+  font-size: 17px !important; font-weight: 700;
+  color: var(--text-color); margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important; color: var(--subtext-color);
+  margin: 0 0 20px; line-height: 1.8;
+  word-wrap: break-word;
+}
+.seo-article ul, .seo-article ol {
+  margin: 20px 0; padding-left: 24px;
+}
+.seo-article li {
+  font-size: 15.5px !important; color: var(--subtext-color);
+  margin-bottom: 12px; line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article a:hover { color: var(--accent-hover); }
+.seo-article code {
+  background: var(--card-hover); padding: 2px 8px;
+  border-radius: 5px; font-family: ui-monospace, monospace;
+  font-size: 14px; color: var(--accent);
+}
+
+.article-image-box {
+  margin: 32px auto; max-width: 720px;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff; text-align: center;
+}
+.article-image-box img {
+  width: 100%; max-height: 360px;
+  object-fit: contain; padding: 20px;
+  display: block; margin: 0 auto;
+  box-sizing: border-box;
+}
+.article-image-caption {
+  padding: 14px 18px; font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+
+.seo-article details {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 16px !important; font-weight: 700;
+  color: var(--text-color); cursor: pointer;
+  list-style: none; display: flex;
+  justify-content: space-between; align-items: center; gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+"; font-size: 22px;
+  color: var(--accent); font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 14px 0 0 !important;
+  font-size: 15px !important; line-height: 1.75;
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+}
 </style>
 </head>
 <body>
@@ -120,126 +464,120 @@
 <div id="doceasy-header"></div>
 
 <main class="main-wrap">
+
   <div class="hero-box">
     <h1 class="hero-title">QR Code Scanner</h1>
-    <p class="hero-sub">Scan QR codes from your camera or from image files. 100% browser-based — your data never leaves your device.</p>
+    <p class="hero-sub">Scan QR codes instantly from your camera or from image files. 100% browser-based — your data never leaves your device.</p>
   </div>
 
-  <div class="tool-card">
+  <div class="hd-banner">
+    <div class="hd-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/>
+        <path d="M14 14h3v3M19 19h2v2M14 19h2v2"/>
+      </svg>
+    </div>
+    <div class="hd-text">
+      <b>Instant QR Scan — Camera or Image Upload</b>
+      <small>Tap the box below to open the native Camera / Files chooser, or use Live Scan for continuous detection. Nothing is uploaded.</small>
+    </div>
+  </div>
 
-    <div class="qr-screen active" id="screenChooser">
-      <div class="qr-chooser">
-        <div class="qr-option" id="optCamera">
-          <div class="opt-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.5l2-3h7l2 3H21a2 2 0 0 1 2 2z"/>
-              <circle cx="12" cy="13" r="4"/>
-            </svg>
-          </div>
-          <h3>Scan with Camera</h3>
-          <p>Use your device camera to scan a QR code live</p>
-        </div>
+  <div class="ad-slot-container">Advertisement</div>
 
-        <div class="qr-option" id="optUpload">
-          <div class="opt-icon">
+  <div class="scanner-container">
+    <div class="upload-box">
+
+      <!-- MAIN SCREEN — Native popup trigger -->
+      <div class="qr-screen active" id="screenMain">
+
+        <label class="drop-zone" for="fileInput">
+          <input type="file" id="fileInput" accept="image/*">
+          <div class="dz-icon">
             <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <circle cx="8.5" cy="8.5" r="1.6"/>
               <path d="M21 15.5l-4.5-4.5L5.5 21"/>
             </svg>
           </div>
-          <h3>Upload Image</h3>
-          <p>Scan a QR code from a saved image file</p>
-        </div>
-      </div>
-    </div>
+          <h3>Tap to Take Photo or Choose Image</h3>
+          <p>Opens Camera or Files — PNG, JPG, WEBP supported</p>
+        </label>
 
-    <div class="qr-screen" id="screenCamera">
-      <div class="camera-stage" id="cameraStage">
-        <video id="video" playsinline autoplay muted></video>
-        <div class="scan-frame"></div>
-      </div>
-      <div class="btn-row" style="margin-top:0;">
-        <button class="btn-secondary" type="button" id="camStopBtn">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
-          Stop &amp; Go Back
-        </button>
-      </div>
-    </div>
+        <div class="or-divider">or</div>
 
-    <div class="qr-screen" id="screenUpload">
-      <div class="drop-zone" id="dropZone">
-        <input type="file" id="fileInput" accept="image/*">
-        <div class="dz-icon">
+        <button class="btn-live-cam" type="button" id="liveCamBtn">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <circle cx="8.5" cy="8.5" r="1.6"/>
-            <path d="M21 15.5l-4.5-4.5L5.5 21"/>
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.5l2-3h7l2 3H21a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
           </svg>
-        </div>
-        <h3 class="dz-title">Drop your QR image here</h3>
-        <p class="dz-sub">or click to browse · PNG, JPG, WEBP supported</p>
-        <button class="dz-btn" type="button" id="chooseBtn">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
-          </svg>
-          Choose Image
+          Live Camera Scan
         </button>
-      </div>
-      <div class="btn-row" style="margin-top:20px;">
-        <button class="btn-secondary" type="button" id="upBackBtn">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          Go Back
-        </button>
-      </div>
-    </div>
 
-    <div class="qr-screen" id="screenResult">
-      <div class="result-box" id="resultBox">
-        <h3 id="resultHeading">Scanned QR Code</h3>
-        <div class="result-content">
-          <span class="result-text" id="resultText">—</span>
+      </div>
+
+      <!-- CAMERA SCREEN -->
+      <div class="qr-screen" id="screenCamera">
+        <div class="camera-stage">
+          <video id="video" playsinline autoplay muted></video>
+          <div class="scan-frame"></div>
         </div>
-        <div class="result-actions">
-          <button type="button" id="copyBtn">
+        <div class="btn-row" style="margin-top:0;">
+          <button class="btn-secondary" type="button" id="camStopBtn">
             <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
-            Copy
-          </button>
-          <button type="button" id="openBtn" class="primary">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              <polyline points="15 3 21 3 21 9"/>
-              <line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-            Open Link
+            Stop &amp; Go Back
           </button>
         </div>
       </div>
-      <div class="btn-row">
-        <button class="btn-secondary" type="button" id="scanAgainBtn">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
-            <path d="M3 3v5h5"/>
-          </svg>
-          Scan Another
-        </button>
-      </div>
-    </div>
 
-    <div class="progress-wrap" id="progressWrap">
-      <div class="progress-bar-outer">
-        <div class="progress-bar-inner" id="progressBar"></div>
+      <!-- RESULT SCREEN -->
+      <div class="qr-screen" id="screenResult">
+        <div class="result-box">
+          <h3 id="resultHeading">Scanned QR Code</h3>
+          <div class="result-content">
+            <span class="result-text" id="resultText">—</span>
+          </div>
+          <div class="result-actions">
+            <button type="button" id="copyBtn">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Copy
+            </button>
+            <button type="button" id="openBtn" class="primary">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              Open Link
+            </button>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary" type="button" id="scanAgainBtn">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+            Scan Another
+          </button>
+        </div>
       </div>
-      <p class="progress-text" id="progressText">Scanning…</p>
-    </div>
 
+      <!-- PROGRESS -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="progressBar"></div>
+        </div>
+        <p class="progress-text" id="progressText">Scanning…</p>
+      </div>
+
+    </div>
   </div>
 
   <div class="info-box">
@@ -250,91 +588,279 @@
       Why use DocEasy QR Scanner?
     </h3>
     <ul>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Camera scan or image upload — your choice</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Native Camera / Files chooser</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Live camera scan for continuous detection</li>
       <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — nothing is uploaded</li>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Copy or open the result instantly</li>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Works on any device with a browser</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Copy or open result instantly</li>
     </ul>
   </div>
 
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ SEO ARTICLE — 2000+ WORDS ============ -->
   <section class="seo-article">
-    <h2>How to Scan a QR Code Online: Complete Guide</h2>
-    <p>QR codes are everywhere — on product packaging, restaurant menus, business cards, event tickets, and payment screens. Scanning one used to require a dedicated app, but modern browsers can now scan QR codes directly. The DocEasy QR Scanner works on any device with a camera, and it can also read QR codes from image files you already have on your device.</p>
-    <p>Unlike most online scanners, everything here runs inside your browser. No image is uploaded to any server, no camera feed is transmitted anywhere, and no account is required. Your data stays with you.</p>
+
+    <h2>Complete Guide: How to Scan QR Codes Online Free (2026)</h2>
+
+    <p>QR codes are everywhere. They are on product packaging, restaurant menus, business cards, event tickets, payment screens, boarding passes, government forms, and even on billboards. What started as a tool for tracking auto parts in Japanese factories has become the universal shortcut between the physical and digital world. Yet many people still do not know how to scan one without a dedicated app — or how to safely check a QR code before opening it.</p>
+
+    <p>The <strong>DocEasy QR Code Scanner</strong> solves both problems. It works entirely in your browser — no app installation, no signup, no upload. You can take a photo of a QR code directly with your phone camera, pick one from your files, or use Live Camera Scan for continuous detection. Everything happens locally on your device, and nothing is sent to any server.</p>
 
     <div class="article-image-box">
-      <img id="tutorial-demo-img"
-           src="../assets/images/qr-scanner-demo.jpg"
-           alt="QR Code Scanner Demo - DocEasy"
-           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>QR → Scan</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place qr-scanner-demo.jpg in assets/images/</text></svg>';">
+      <img src="../assets/images/qr-scanner-demo.jpg" alt="QR Code Scanner demo showing camera scan and image upload options" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/qr-scanner-demo.jpg]</div>';">
       <div class="article-image-caption">Scan QR codes with your camera or from image files — all processed locally in your browser.</div>
     </div>
 
-    <h3>Why Use an Online QR Scanner?</h3>
+    <h3>What is a QR Code?</h3>
+
+    <p>A QR code (short for "Quick Response code") is a two-dimensional barcode that stores data in a grid of black and white squares. Unlike a traditional linear barcode, which can only store a limited number of numeric characters, a QR code can hold up to 4,296 alphanumeric characters — enough to encode a long URL, a full contact card, a WiFi password, or a block of text.</p>
+
+    <p>QR codes were invented in 1994 by Masahiro Hara at Denso Wave, a Japanese automotive subsidiary. The original purpose was to track parts on a factory floor more efficiently than existing 1D barcodes. Hara's design was so effective that it spread far beyond manufacturing — by the 2010s, QR codes were used in marketing, payments, ticketing, and identity verification worldwide.</p>
+
+    <p>The 2020s saw explosive growth, especially in India where UPI payments made QR codes part of daily life. Today, over 2 billion QR codes are scanned every day globally.</p>
+
+    <h3>How Do QR Codes Work?</h3>
+
+    <p>A QR code is made up of several key parts:</p>
+
     <ul>
-      <li><b>Desktop computers:</b> No built-in QR scanner. An online scanner is the simplest way.</li>
-      <li><b>Older phones:</b> Not all camera apps detect QR codes automatically.</li>
-      <li><b>Screenshots:</b> You may have saved a QR code as an image and want to read it later.</li>
-      <li><b>Photos of QR codes:</b> You photographed a QR code from a distance and need to decode it.</li>
-      <li><b>Suspicious links:</b> You want to see the URL before opening it, not after.</li>
+      <li><b>Finder patterns:</b> The three large squares in the corners that tell the scanner where the code begins and how it is oriented.</li>
+      <li><b>Alignment patterns:</b> Smaller squares that help the scanner correct for perspective distortion.</li>
+      <li><b>Timing patterns:</b> Dotted lines that help the scanner determine the size of each module.</li>
+      <li><b>Data modules:</b> The actual black and white squares that encode the payload.</li>
+      <li><b>Error correction:</b> Reed-Solomon error correction codes that allow the QR to still be readable even if up to 30% of it is damaged or hidden.</li>
+      <li><b>Quiet zone:</b> The white border around the code that helps scanners isolate it from the background.</li>
     </ul>
 
-    <h3>Step-by-Step: How to Use the QR Scanner</h3>
+    <p>When you point a camera at a QR code, the scanner software (in this case, the jsQR JavaScript library running inside your browser) analyses the image frame by frame. It finds the three corner squares, determines the code's perspective, samples each module as black or white, and decodes the bit pattern back into text or a URL.</p>
+
+    <h3>Types of QR Codes You Can Scan</h3>
+
+    <p>QR codes are not all the same. They can store many types of data:</p>
+
+    <ul>
+      <li><b>URL QR codes:</b> Open a website, deep link, or app store link when scanned.</li>
+      <li><b>Text QR codes:</b> Plain text messages — often used for notes, instructions, or quotes.</li>
+      <li><b>vCard QR codes:</b> Store contact information (name, phone, email, company) in a single scan.</li>
+      <li><b>WiFi QR codes:</b> Provide network SSID and password so devices can auto-connect.</li>
+      <li><b>Payment QR codes:</b> Used by UPI, Paytm, PhonePe, Google Pay, and other payment systems.</li>
+      <li><b>Event ticket QR codes:</b> Contain unique check-in tokens for concerts, flights, and conferences.</li>
+      <li><b>Email/SMS QR codes:</b> Pre-fill an email or SMS draft when scanned.</li>
+      <li><b>GPS QR codes:</b> Open a map location directly.</li>
+      <li><b>App QR codes:</b> Link to an app in the Google Play Store or Apple App Store.</li>
+    </ul>
+
+    <p>DocEasy's scanner displays the raw content of any of these QR types. If the payload is a URL, the "Open Link" button appears automatically so you can visit it directly.</p>
+
+    <h3>Why Use an Online QR Scanner?</h3>
+
+    <p>Most modern smartphones have a built-in QR scanner in the camera app. But there are many situations where an online scanner is better:</p>
+
+    <ul>
+      <li><b>Desktop computers:</b> Laptops and desktops don't have built-in QR scanners. An online scanner is the simplest way to decode a QR code on a larger screen.</li>
+      <li><b>Older phones:</b> Not every Android device has QR detection in its camera. An online scanner works in any browser.</li>
+      <li><b>Screenshots:</b> You might have a QR code saved as a screenshot. Rather than pull it up on a phone and scan your own screen, just upload the image.</li>
+      <li><b>Photos of QR codes:</b> You photographed a QR code from a distance, and it is now sitting in your gallery. Upload it and decode it instantly.</li>
+      <li><b>Safety check:</b> Before opening a suspicious QR, you can use an online scanner to see the URL first — without your phone auto-opening it.</li>
+      <li><b>Shared computer:</b> On a public computer, you don't want to enter personal credentials into a random QR app. An online browser-based scanner keeps it safe.</li>
+    </ul>
+
+    <h3>How to Use the DocEasy QR Scanner</h3>
+
+    <p>Using the scanner takes only a few seconds. Here is the exact process:</p>
+
     <ol>
-      <li><b>Scan with Camera:</b> Click this option to open the camera screen. Allow camera access, then point your device at a QR code.</li>
-      <li><b>Upload Image:</b> Click this option to open the upload screen. Drag an image file into the drop zone or click to browse. The tool will decode the QR code inside the image.</li>
-      <li><b>View the Result:</b> Once decoded, the result appears on a clean card with the exact text or URL contained in the QR code.</li>
-      <li><b>Copy or Open:</b> Use the Copy button to copy the text, or the Open Link button to open a URL in a new tab.</li>
-      <li><b>Scan Another:</b> Click Scan Another to return to the chooser and start over.</li>
+      <li><b>Take photo or choose image:</b> Tap the large box at the top. On mobile, a native popup appears with <b>Camera</b> and <b>Files</b> options — pick Camera to snap a fresh photo, or Files to pick an existing image.</li>
+      <li><b>Live camera scan:</b> Prefer real-time detection? Tap "Live Camera Scan" below the box. Point your device at any QR code and the tool decodes it automatically in under a second.</li>
+      <li><b>View the result:</b> The decoded content appears in a clean result card. If it is a URL, the heading reads "Scanned URL"; otherwise it reads "Scanned QR Code".</li>
+      <li><b>Copy or open:</b> Click "Copy" to copy the text to your clipboard, or "Open Link" to open a URL in a new tab. The "Open Link" button only appears for URLs.</li>
+      <li><b>Scan another:</b> Click "Scan Another" to return to the main screen.</li>
     </ol>
 
-    <h3>What Kind of QR Codes Can You Scan?</h3>
-    <ul>
-      <li><b>URLs:</b> Website links, deep links, and app store links.</li>
-      <li><b>Text:</b> Plain text messages, notes, and instructions.</li>
-      <li><b>Contact information:</b> vCards with names, phone numbers, and email addresses.</li>
-      <li><b>WiFi credentials:</b> Network name and password.</li>
-      <li><b>Payment codes:</b> UPI and other payment links (see the warning below).</li>
-      <li><b>Event tickets:</b> Ticket codes and check-in information.</li>
-    </ul>
-
     <h3>Improving Detection in Uploaded Images</h3>
-    <p>If the tool cannot decode a QR code from an uploaded image, the image might be blurry, have low contrast, or the QR might be inverted (white on black). This tool automatically retries with a high-contrast black-and-white version of the image to improve detection. For best results:</p>
+
+    <p>Not every QR code photo is perfect. Blurry shots, poor lighting, and low-resolution screenshots can make decoding fail. DocEasy's scanner includes an automatic retry that helps in these cases:</p>
+
     <ul>
-      <li>Use a high-resolution photo or screenshot.</li>
-      <li>Make sure the QR code fills a large portion of the image.</li>
-      <li>Avoid glare, shadows, and blur.</li>
-      <li>If the QR code is small, crop the image closer before uploading.</li>
+      <li><b>Attempt 1:</b> The tool decodes the image as-is, checking both normal and inverted (white-on-black) QR codes.</li>
+      <li><b>Attempt 2:</b> If attempt 1 fails, the tool converts the image to high-contrast black-and-white and tries again. This fixes many glare, low-contrast, and colour-tint problems.</li>
     </ul>
 
-    <h3>Privacy First — Always</h3>
-    <p>Everything runs in your browser. Your camera feed is processed locally and never sent anywhere. When you upload an image, it stays on your device. There is no account, no email, and no data stored anywhere. When you close the tab, everything is gone.</p>
+    <p>If both attempts fail, the QR code is likely too damaged, too small, or too blurry to decode. For best results:</p>
 
-    <h3>A Word of Caution</h3>
-    <p>QR codes are easy to fake. Scammers often stick fake QR codes over legitimate ones at parking meters, restaurant tables, or public posters. When you scan a QR code for a payment, always verify the recipient name and the amount shown inside your payment app. Never approve a payment that does not match what you expected.</p>
+    <ul>
+      <li>Use a high-resolution screenshot or photograph.</li>
+      <li>Make sure the QR code fills most of the frame.</li>
+      <li>Avoid glare, shadows, blur, and rotation.</li>
+      <li>Crop the image closer to the QR before uploading.</li>
+      <li>If the QR is on a screen, increase the screen brightness and reduce glare.</li>
+    </ul>
+
+    <h3>Security Warning — Read This Before You Scan</h3>
+
+    <p>QR codes are one of the easiest targets for scammers. Because a QR code is just a picture of a link or a payment address, a fraudster can stick a fake QR sticker over a legitimate one at a parking meter, restaurant table, or public poster. The victim scans it and unwittingly makes a payment to the scammer, or lands on a phishing site that looks like a bank login.</p>
+
+    <p>Follow these simple rules to stay safe:</p>
+
+    <ul>
+      <li><b>Look before you scan:</b> If the QR code sticker looks freshly applied or is on top of another sticker, treat it with suspicion.</li>
+      <li><b>Verify the payment recipient:</b> When you scan a UPI or payment QR, always check the recipient name and amount shown inside your payment app before confirming.</li>
+      <li><b>Preview URLs first:</b> Use a scanner like DocEasy to see the URL before opening it. Never open a QR link on your phone if it auto-opens into your banking app.</li>
+      <li><b>Beware of shortened links:</b> If the QR opens a bit.ly, tinyurl, or other short link, be cautious. You cannot tell where it will take you until you click.</li>
+      <li><b>Never enter credentials on a page you reached from a QR:</b> Banks and financial institutions never ask for passwords after a QR scan.</li>
+      <li><b>Use HTTPS:</b> Legitimate URLs start with <code>https://</code>. If a QR opens a plain <code>http://</code> page asking for personal data, close it immediately.</li>
+    </ul>
+
+    <h3>Privacy — How DocEasy Keeps Your Data Safe</h3>
+
+    <p>Traditional online QR scanners upload your image to their server, process it there, and then return the decoded text. That means:</p>
+
+    <ul>
+      <li>Your image sits on an unknown server for an unknown amount of time.</li>
+      <li>Logs may record the image content, timestamp, and IP address.</li>
+      <li>For camera scans, some services even stream video frames continuously to the cloud.</li>
+    </ul>
+
+    <p>DocEasy takes a completely different approach. The QR decoder runs entirely in your browser using JavaScript. When you use Live Camera Scan, the video stream never leaves your device. When you upload an image, the FileReader API loads it into your browser's memory, the canvas API samples the pixels, and the jsQR library decodes them locally. At no point is your data transmitted to any server.</p>
+
+    <p>You can verify this yourself: load the scanner, open your browser's Developer Tools Network tab, then scan a QR code. You will see no network requests other than the initial page load.</p>
+
+    <h3>Common Use Cases</h3>
+
+    <p>QR scanning has become part of daily digital life. Some of the most common use cases:</p>
+
+    <ul>
+      <li><b>Restaurant menus:</b> Scan the table QR to open the digital menu on your phone.</li>
+      <li><b>Digital payments:</b> Scan a shop's UPI QR to pay instantly without typing an amount.</li>
+      <li><b>Event tickets:</b> Show the QR from your ticket at the venue gate to check in.</li>
+      <li><b>Boarding passes:</b> Airlines use QR codes for seamless check-in at airports.</li>
+      <li><b>WiFi access:</b> Hotels, cafes, and airports use QR codes to share WiFi credentials.</li>
+      <li><b>Contact sharing:</b> Business cards with vCard QR codes let you save a contact without typing.</li>
+      <li><b>Product verification:</b> Scan the QR on medicine boxes to check authenticity.</li>
+      <li><b>Government forms:</b> Many Indian government services now use QR codes for verification.</li>
+      <li><b>Hospitality:</b> Hotels use QR codes for room service, check-in, and loyalty programs.</li>
+      <li><b>Coupons and offers:</b> Retailers embed discount codes inside QR codes for instant redemption.</li>
+    </ul>
+
+    <h3>Differences Between Common QR Scanning Apps</h3>
+
+    <p>Many apps advertise themselves as "QR scanner" but behave very differently:</p>
+
+    <ul>
+      <li><b>Built-in camera apps:</b> Fast and private (nothing leaves the phone), but only available on modern smartphones and limited in features.</li>
+      <li><b>Dedicated QR apps:</b> Often bundled with ads, trackers, or unnecessary permissions. Some push you to visit sponsored links after scanning.</li>
+      <li><b>Cloud-based online scanners:</b> Convenient, but your files go to a server.</li>
+      <li><b>DocEasy:</b> Runs entirely in your browser — same privacy as a native camera app, but works on any device and adds extra features like URL preview, image upload, and instant decoding.</li>
+    </ul>
+
+    <h3>Technical Details (For Curious Readers)</h3>
+
+    <p>Under the hood, DocEasy uses the open-source jsQR library, which implements full QR code decoding according to the ISO/IEC 18004 standard. It supports:</p>
+
+    <ul>
+      <li>QR versions 1 through 40</li>
+      <li>All four error correction levels (L, M, Q, H)</li>
+      <li>Numeric, alphanumeric, byte, and Kanji encoding modes</li>
+      <li>Both normal and inverted QR codes</li>
+      <li>Micro QR codes and structured append</li>
+    </ul>
+
+    <p>The library is loaded from a CDN and runs as pure JavaScript — no WebAssembly, no native plugins, no server dependency. It analyses image data through the Canvas API's <code>getImageData</code> method, converts it to black and white bit patterns using adaptive thresholding, locates the finder patterns, applies perspective correction, and then reads the data modules.</p>
+
+    <p>For live scanning, DocEasy uses the <code>MediaStream API</code> to access the rear camera (via <code>facingMode: "environment"</code>), captures frames into a hidden canvas at 60 fps, and runs the decoder on each frame. The moment a QR code is detected, the loop stops and the camera stream is released — so battery drain is minimal.</p>
+
+    <h3>Tips for Best Scanning Results</h3>
+
+    <ul>
+      <li><b>Clean your camera lens:</b> A smudged lens is the number one reason QR codes fail to scan.</li>
+      <li><b>Fill the frame:</b> Point the camera so the QR code occupies at least 40% of the visible area inside the scan frame.</li>
+      <li><b>Hold steady:</b> Motion blur prevents detection. Hold your phone still for a second.</li>
+      <li><b>Avoid glare:</b> Reflections on shiny surfaces ruin the black-and-white contrast that QR decoders rely on.</li>
+      <li><b>Good lighting:</b> Bright, even light is ideal. Direct sunlight can wash out the QR; total darkness obviously fails.</li>
+      <li><b>Keep the QR flat:</b> Curved or bent QR codes are hard to decode.</li>
+      <li><b>If the code is very small, move closer:</b> Or upload a high-resolution photo and let the image mode handle it.</li>
+    </ul>
 
     <h3>Frequently Asked Questions</h3>
-    <p><b>Is the QR Scanner free?</b><br>
-    Yes. DocEasy is completely free with no signup, no fees, and no hidden limits.</p>
 
-    <p><b>Is my camera feed uploaded?</b><br>
-    No. The camera feed is processed entirely in your browser. No frames are sent to any server.</p>
+    <details>
+      <summary>Is the QR Scanner really free?</summary>
+      <p>Yes. DocEasy QR Scanner is completely free — no signup, no fees, no daily limits, no watermark, and no forced ads. It is built for speed and privacy.</p>
+    </details>
 
-    <p><b>Is my image uploaded?</b><br>
-    No. Images you upload for scanning are decoded locally in your browser.</p>
+    <details>
+      <summary>Is my camera feed uploaded anywhere?</summary>
+      <p>No. The camera stream is processed entirely inside your browser. Individual frames are drawn to a hidden canvas and decoded locally using the jsQR library. No frames are transmitted to any server.</p>
+    </details>
 
-    <p><b>Can I scan QR codes from a screenshot?</b><br>
-    Yes. Use the "Upload Image" option and select the screenshot. The tool will decode the QR code inside it.</p>
+    <details>
+      <summary>Is my uploaded image sent to a server?</summary>
+      <p>No. Images are read with the FileReader API, decoded into pixels with the Canvas API, and processed by local JavaScript. Your image never leaves your device.</p>
+    </details>
 
-    <p><b>Why can't it decode my image?</b><br>
-    The image may be blurry, low-contrast, or the QR code may be too small. Try a clearer image, or scan with the camera option instead.</p>
+    <details>
+      <summary>Can I scan QR codes from a screenshot?</summary>
+      <p>Yes. Tap the upload box and choose the screenshot from your Files. The tool decodes any QR code inside it, even if the QR is inverted (white on black) or low contrast.</p>
+    </details>
 
-    <p><b>Does it work on mobile?</b><br>
-    Yes. The camera scan works on any modern smartphone browser. The upload scan works on any device.</p>
+    <details>
+      <summary>Why can't it decode my QR code image?</summary>
+      <p>Common reasons: the image is blurry, the QR code is too small, the photo has strong glare or shadows, or the code is a damaged or unusual variant. Try a clearer, higher-resolution image, or use Live Camera Scan instead.</p>
+    </details>
 
-    <h3>Try It Now</h3>
-    <p>Ready to scan a QR code? Click one of the two options above — camera or image upload — and the tool will guide you from there. If you find this tool useful, share it with friends and colleagues.</p>
+    <details>
+      <summary>Does it work on mobile phones?</summary>
+      <p>Yes. Tapping the upload box opens the native Camera / Files chooser on both iOS and Android. Live Camera Scan also works on any modern mobile browser.</p>
+    </details>
+
+    <details>
+      <summary>What QR code formats are supported?</summary>
+      <p>The decoder supports all standard QR code versions (1 through 40), all four error correction levels, and both normal and inverted codes. It reads URLs, plain text, vCards, WiFi credentials, payment strings, and any other data encoded in a standard QR.</p>
+    </details>
+
+    <details>
+      <summary>Is it safe to open a URL I scanned?</summary>
+      <p>DocEasy shows you the exact URL before you open it. If the URL looks suspicious (short links, unknown domains, http instead of https), do not click. Never enter passwords or payment details on a page you reached by scanning a QR code in public.</p>
+    </details>
+
+    <details>
+      <summary>Do I need an internet connection?</summary>
+      <p>After the page loads, no. The QR decoding library and all logic run locally. You can disconnect from Wi-Fi and continue scanning.</p>
+    </details>
+
+    <details>
+      <summary>Can I scan multiple QR codes at once?</summary>
+      <p>Currently the tool decodes one QR code at a time — the first one it finds in the camera frame or uploaded image. Batch scanning is on our roadmap.</p>
+    </details>
+
+    <details>
+      <summary>Is the scanned data stored anywhere?</summary>
+      <p>No. Decoded content appears in the result card only. It is not logged, saved, or transmitted. Closing the tab erases everything from memory.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <p>If you found this QR scanner useful, you may also like our other free browser-based tools:</p>
+
+    <ul>
+      <li><a href="qr-generator.html">QR Code Generator</a> — Create custom QR codes with logos and colours</li>
+      <li><a href="doc-scanner.html">Document Scanner &amp; OCR</a> — Extract text from images and scanned documents</li>
+      <li><a href="card-cropper.html">ID Card Dual-Side Cropper</a> — Crop Aadhaar, PAN, Voter ID at 300 DPI</li>
+      <li><a href="pdf-merge.html">Merge PDF</a> — Combine multiple PDFs into one file</li>
+      <li><a href="pdf-compressor.html">Compress PDF</a> — Reduce PDF file size for upload</li>
+      <li><a href="image-compressor.html">Image Compressor</a> — Reduce image file size for WhatsApp or email</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>QR codes have become the simplest way to move information between the physical and digital world. With DocEasy's free online QR scanner, you can decode any QR code — whether it's live in front of you, stored as a screenshot, or photographed from a distance — without installing an app or uploading your data to a third-party server.</p>
+
+    <p>Tap the box to open the native Camera / Files chooser, or use Live Camera Scan for continuous detection. Instant results. Complete privacy. No signup. No fees. Bookmark this page and use it whenever you need to scan a QR code quickly and safely.</p>
+
   </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
 </main>
 
 <div id="doceasy-footer"></div>
@@ -346,7 +872,7 @@
   <span id="toastMsg">Done</span>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<script src="../assets/js/core/doceasy-core.js"></script>
 
 <script>
 (function () {
@@ -354,21 +880,16 @@
 
   var $ = function (id) { return document.getElementById(id); };
 
-  var screenChooser = $('screenChooser');
+  var screenMain    = $('screenMain');
   var screenCamera  = $('screenCamera');
-  var screenUpload  = $('screenUpload');
   var screenResult  = $('screenResult');
 
-  var optCamera     = $('optCamera');
-  var optUpload     = $('optUpload');
+  var liveCamBtn    = $('liveCamBtn');
   var camStopBtn    = $('camStopBtn');
-  var upBackBtn     = $('upBackBtn');
   var scanAgainBtn  = $('scanAgainBtn');
 
   var video         = $('video');
-  var cameraStage   = $('cameraStage');
   var fileInput     = $('fileInput');
-  var dropZone      = $('dropZone');
 
   var resultHeading = $('resultHeading');
   var resultText    = $('resultText');
@@ -376,7 +897,6 @@
   var openBtn       = $('openBtn');
 
   var progressWrap  = $('progressWrap');
-  var progressBar   = $('progressBar');
   var progressText  = $('progressText');
 
   var toast         = $('toast');
@@ -387,6 +907,34 @@
   var scanRAF = null;
   var scanCanvas = document.createElement('canvas');
   var scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true });
+
+  /* ---------- Load jsQR ---------- */
+  var jsQRReady = null;
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error('script failed: ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function ensureJsQR() {
+    if (jsQRReady) return jsQRReady;
+    jsQRReady = (async function () {
+      if (window.jsQR) return;
+      var urls = [
+        'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js',
+        'https://unpkg.com/jsqr@1.4.0/dist/jsQR.min.js'
+      ];
+      for (var i = 0; i < urls.length; i++) {
+        try { await loadScript(urls[i]); if (window.jsQR) return; } catch (e) {}
+      }
+      throw new Error('Could not load the QR decoder. Check your connection and try again.');
+    })();
+    return jsQRReady;
+  }
+  ensureJsQR().catch(function () {});
 
   function showToast(msg, type) {
     toastMsg.textContent = msg;
@@ -401,12 +949,11 @@
   }
 
   function showScreen(name) {
-    [screenChooser, screenCamera, screenUpload, screenResult].forEach(function (s) {
+    [screenMain, screenCamera, screenResult].forEach(function (s) {
       s.classList.remove('active');
     });
-    if (name === 'chooser') screenChooser.classList.add('active');
+    if (name === 'main') screenMain.classList.add('active');
     else if (name === 'camera') screenCamera.classList.add('active');
-    else if (name === 'upload') screenUpload.classList.add('active');
     else if (name === 'result') screenResult.classList.add('active');
   }
 
@@ -415,12 +962,13 @@
     if (text) progressText.textContent = text;
   }
 
-  /* ---------- Camera scan ---------- */
+  /* ---------- Live camera ---------- */
   async function startCamera() {
     showScreen('camera');
     setProgress(true, 'Starting camera…');
 
     try {
+      await ensureJsQR();
       stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: { ideal: 'environment' } },
         audio: false
@@ -432,11 +980,13 @@
     } catch (err) {
       console.error(err);
       setProgress(false);
-      showScreen('chooser');
-      if (err.name === 'NotAllowedError') {
+      showScreen('main');
+      if (err && err.name === 'NotAllowedError') {
         showToast('Camera permission denied. Please allow access.', 'error');
-      } else if (err.name === 'NotFoundError') {
+      } else if (err && err.name === 'NotFoundError') {
         showToast('No camera found on this device.', 'error');
+      } else if (err && /QR decoder/.test(err.message || '')) {
+        showToast(err.message, 'error');
       } else {
         showToast('Could not start camera. Try image upload instead.', 'error');
       }
@@ -459,7 +1009,7 @@
     }
     var w = video.videoWidth;
     var h = video.videoHeight;
-    if (!w || !h) {
+    if (!w || !h || !window.jsQR) {
       scanRAF = requestAnimationFrame(scanFrame);
       return;
     }
@@ -475,13 +1025,20 @@
         showResult(code.data);
         return;
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) {}
 
     scanRAF = requestAnimationFrame(scanFrame);
   }
 
-  /* ---------- Image upload scan with retry ---------- */
-  function scanImageFile(file) {
+  /* ---------- Image upload (native chooser → file) ---------- */
+  fileInput.addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+      scanImageFile(this.files[0]);
+    }
+    this.value = '';
+  });
+
+  async function scanImageFile(file) {
     if (!file) return;
     if (!/^image\//.test(file.type)) {
       showToast('Please select an image file', 'error');
@@ -494,6 +1051,14 @@
 
     setProgress(true, 'Decoding QR code…');
 
+    try {
+      await ensureJsQR();
+    } catch (err) {
+      setProgress(false);
+      showToast(err.message, 'error');
+      return;
+    }
+
     var url = URL.createObjectURL(file);
     var img = new Image();
     img.onload = function () {
@@ -503,14 +1068,10 @@
         scanCtx.drawImage(img, 0, 0);
         var imgData = scanCtx.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
 
-        var code = null;
-
-        // Attempt 1: normal, both inversions
-        code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, {
+        var code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, {
           inversionAttempts: 'attemptBoth'
         });
 
-        // Attempt 2: high-contrast black & white
         if (!code) {
           try {
             var tempData = new Uint8ClampedArray(imgData.data);
@@ -523,7 +1084,7 @@
             code = window.jsQR(d, scanCanvas.width, scanCanvas.height, {
               inversionAttempts: 'attemptBoth'
             });
-          } catch (e) { /* ignore */ }
+          } catch (e) {}
         }
 
         URL.revokeObjectURL(url);
@@ -532,7 +1093,7 @@
         if (code && code.data) {
           showResult(code.data);
         } else {
-          showToast('No QR code found. Try a clearer image or use the camera.', 'error');
+          showToast('No QR code found. Try a clearer image or use Live Camera.', 'error');
         }
       } catch (e) {
         console.error(e);
@@ -560,52 +1121,22 @@
   }
 
   /* ---------- Events ---------- */
-  optCamera.addEventListener('click', startCamera);
-  optUpload.addEventListener('click', function () { showScreen('upload'); });
+  liveCamBtn.addEventListener('click', startCamera);
 
   camStopBtn.addEventListener('click', function () {
     stopCamera();
-    showScreen('chooser');
-  });
-
-  upBackBtn.addEventListener('click', function () {
-    showScreen('chooser');
-    fileInput.value = '';
+    showScreen('main');
   });
 
   scanAgainBtn.addEventListener('click', function () {
     stopCamera();
-    fileInput.value = '';
     resultText.textContent = '—';
-    showScreen('chooser');
-  });
-
-  fileInput.addEventListener('change', function () {
-    if (this.files[0]) scanImageFile(this.files[0]);
-    this.value = '';
-  });
-
-  ['dragenter', 'dragover'].forEach(function (ev) {
-    dropZone.addEventListener(ev, function (e) {
-      e.preventDefault(); e.stopPropagation();
-      dropZone.classList.add('dragover');
-    });
-  });
-  ['dragleave', 'drop'].forEach(function (ev) {
-    dropZone.addEventListener(ev, function (e) {
-      e.preventDefault(); e.stopPropagation();
-      dropZone.classList.remove('dragover');
-    });
-  });
-  dropZone.addEventListener('drop', function (e) {
-    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-      scanImageFile(e.dataTransfer.files[0]);
-    }
+    showScreen('main');
   });
 
   copyBtn.addEventListener('click', function () {
     var txt = resultText.textContent || '';
-    if (!txt) return;
+    if (!txt || txt === '—') return;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(txt).then(function () {
         showToast('Copied to clipboard', 'ok');
@@ -639,7 +1170,5 @@
 
 })();
 </script>
-
-<script src="../assets/js/core/doceasy-core.js"></script>
 </body>
 </html>
