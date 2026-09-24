@@ -5,18 +5,16 @@
 (function () {
   'use strict';
 
-  /* ---------- Early theme restore ---------- */
   try {
     var saved = localStorage.getItem('doceasy_theme') || 'light';
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) {}
 
-  /* ---------- Config ---------- */
   var CONFIG = {
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
-    /* ---- Pill Nav (Row 1) — Home + sections ---- */
+    /* Pill Nav (Row 1) */
     pillNav: [
       { href: 'index.html', label: 'Home',       root: true },
       { href: '#tools',     label: 'Tools' },
@@ -26,7 +24,7 @@
       { href: '#blog',      label: 'Blog' }
     ],
 
-    /* ---- Top Nav (Row 2) — Quick tools (no overlap with pill nav) ---- */
+    /* Top Nav (Row 2) — Quick tools */
     topNav: [
       { href: 'pdf-merge.html',         label: 'Merge PDF',        page: 'pdf-merge' },
       { href: 'pdf-compressor.html',    label: 'Compress PDF',     page: 'pdf-compressor' },
@@ -36,6 +34,16 @@
       { href: 'image-bg-remover.html',  label: 'BG Remover',       page: 'image-bg-remover' },
       { href: 'card-cropper.html',      label: 'ID Card Crop',     page: 'card-cropper' },
       { href: 'qr-generator.html',      label: 'QR Code',          page: 'qr-generator' }
+    ],
+
+    /* Category Nav (Row 3) — Only on homepage */
+    categoryNav: [
+      { href: '#pdf-tools',       label: 'PDF' },
+      { href: '#image-tools',     label: 'Image' },
+      { href: '#id-tools',        label: 'ID Cards' },
+      { href: '#converter-tools', label: 'Converters' },
+      { href: '#utility-tools',   label: 'Utilities' },
+      { href: '#faq',             label: 'FAQ' }
     ],
 
     footer: {
@@ -62,7 +70,6 @@
     }
   };
 
-  /* ---------- Path resolver ---------- */
   function resolvePath(href, isRoot) {
     if (!href) return '#';
     if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
@@ -75,7 +82,7 @@
         'pdf-to-jpg','doc-scanner','card-cropper','passport-maker','signature-bg-remover',
         'pdf-editor','pdf-compressor','pdf-to-word','pdf-to-excel','pdf-writer',
         'qr-generator','qr-scanner','word-counter','word-writer','word-to-pdf',
-        'excel-to-pdf','ppt-to-pdf'
+        'excel-to-pdf','ppt-to-pdf','pan-photo-signature-resizer'
       ];
       var name = href.replace('.html', '');
       if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
@@ -83,7 +90,6 @@
     return href;
   }
 
-  /* ---------- Header builder ---------- */
   function buildHeader() {
     var pills = CONFIG.pillNav.map(function (p) {
       return '<a href="' + resolvePath(p.href, p.root) + '">' + p.label + '</a>';
@@ -91,6 +97,10 @@
 
     var tools = CONFIG.topNav.map(function (t) {
       return '<a href="' + resolvePath(t.href, false) + '" data-page="' + t.page + '">' + t.label + '</a>';
+    }).join('');
+
+    var catLinks = CONFIG.categoryNav.map(function (c) {
+      return '<a href="' + c.href + '">' + c.label + '</a>';
     }).join('');
 
     var homeHref = resolvePath('index.html', true);
@@ -109,10 +119,10 @@
         '</label>' +
       '</div>' +
       '<nav class="top-nav" aria-label="Quick tools">' + tools + '</nav>' +
+      (!CONFIG.isSubPage ? '<nav class="category-nav" aria-label="Categories">' + catLinks + '</nav>' : '') +
     '</header>';
   }
 
-  /* ---------- Footer builder ---------- */
   function buildFooter() {
     function col(title, items, isRoot) {
       var lis = items.map(function (it) {
@@ -139,7 +149,6 @@
       '</div></footer>';
   }
 
-  /* ---------- Inject ---------- */
   function inject() {
     var h = document.getElementById('doceasy-header');
     if (h && !document.querySelector('.site-header')) h.outerHTML = buildHeader();
@@ -147,22 +156,18 @@
     var f = document.getElementById('doceasy-footer');
     if (f && !document.querySelector('.site-footer')) f.outerHTML = buildFooter();
 
-    /* Mark active top-nav link */
     var current = location.pathname.split('/').pop().replace('.html', '');
     document.querySelectorAll('.top-nav a[data-page]').forEach(function (a) {
       if (a.getAttribute('data-page') === current) a.classList.add('active');
     });
 
-    /* Theme checkbox sync */
     var cb = document.getElementById('theme-checkbox');
     if (cb) cb.checked = document.documentElement.getAttribute('data-theme') === 'dark';
 
-    /* Year */
     var y = document.getElementById('de-year');
     if (y) y.textContent = new Date().getFullYear();
   }
 
-  /* ---------- Theme toggle ---------- */
   window.docEasyToggleTheme = function () {
     var cb = document.getElementById('theme-checkbox');
     if (cb && cb.checked) {
