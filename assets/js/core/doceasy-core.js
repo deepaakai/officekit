@@ -16,21 +16,26 @@
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
+    /* ---- Pill Nav (Row 1) — Home + sections ---- */
     pillNav: [
+      { href: 'index.html', label: 'Home',       root: true },
       { href: '#tools',     label: 'Tools' },
       { href: '#ai',        label: 'AI Tools' },
       { href: '#templates', label: 'Templates' },
-      { href: '#features',  label: 'Why DocEasy' },
       { href: '#faq',       label: 'FAQ' },
       { href: '#blog',      label: 'Blog' }
     ],
 
+    /* ---- Top Nav (Row 2) — Quick tools (no overlap with pill nav) ---- */
     topNav: [
-      { href: 'pdf-merge.html',         label: 'Merge PDF',      page: 'pdf-merge' },
-      { href: 'pdf-compressor.html',    label: 'Compress PDF',   page: 'pdf-compressor' },
-      { href: 'image-compressor.html',  label: 'Compress Image', page: 'image-compressor' },
-      { href: 'image-bg-remover.html',  label: 'BG Remover',     page: 'image-bg-remover' },
-      { href: 'qr-generator.html',      label: 'QR Code',        page: 'qr-generator' }
+      { href: 'pdf-merge.html',         label: 'Merge PDF',        page: 'pdf-merge' },
+      { href: 'pdf-compressor.html',    label: 'Compress PDF',     page: 'pdf-compressor' },
+      { href: 'image-compressor.html',  label: 'Compress Image',   page: 'image-compressor' },
+      { href: 'passport-maker.html',    label: 'Passport Photo',   page: 'passport-maker' },
+      { href: 'signature-resize.html',  label: 'Signature Resize', page: 'signature-resize' },
+      { href: 'image-bg-remover.html',  label: 'BG Remover',       page: 'image-bg-remover' },
+      { href: 'card-cropper.html',      label: 'ID Card Crop',     page: 'card-cropper' },
+      { href: 'qr-generator.html',      label: 'QR Code',          page: 'qr-generator' }
     ],
 
     footer: {
@@ -42,11 +47,11 @@
         { href: 'pdf-to-word.html',     label: 'PDF to Word' }
       ],
       imageTools: [
-        { href: 'image-compressor.html',      label: 'Image Compressor' },
-        { href: 'image-bg-remover.html',      label: 'Background Remover' },
-        { href: 'passport-maker.html',        label: 'Passport Photo' },
-        { href: 'card-cropper.html',          label: 'ID Card Cropper' },
-        { href: 'signature-resize.html',      label: 'Signature Resize' }
+        { href: 'image-compressor.html',  label: 'Image Compressor' },
+        { href: 'image-bg-remover.html',  label: 'Background Remover' },
+        { href: 'passport-maker.html',    label: 'Passport Photo' },
+        { href: 'card-cropper.html',      label: 'ID Card Cropper' },
+        { href: 'signature-resize.html',  label: 'Signature Resize' }
       ],
       legal: [
         { href: 'about.html',   label: 'About',   root: true },
@@ -81,7 +86,7 @@
   /* ---------- Header builder ---------- */
   function buildHeader() {
     var pills = CONFIG.pillNav.map(function (p) {
-      return '<a href="' + p.href + '">' + p.label + '</a>';
+      return '<a href="' + resolvePath(p.href, p.root) + '">' + p.label + '</a>';
     }).join('');
 
     var tools = CONFIG.topNav.map(function (t) {
@@ -90,16 +95,6 @@
 
     var homeHref = resolvePath('index.html', true);
 
-    /* ✅ NEW STRUCTURE:
-       <header>
-         <div class="header-inner">   ← Row 1
-           logo | pill-nav | toggle
-         </div>
-         <nav class="top-nav">        ← Row 2 (outside header-inner!)
-           quick tools
-         </nav>
-       </header>
-    */
     return '<header class="site-header">' +
       '<div class="header-inner">' +
         '<a class="brand-link" href="' + homeHref + '" aria-label="DocEasy Home">' +
