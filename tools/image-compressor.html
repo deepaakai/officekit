@@ -57,15 +57,18 @@
   border: 1px solid var(--border-color);
   border-radius: 10px;
   margin-bottom: 20px;
+  box-sizing: border-box;
+  width: 100%;
 }
 .tab-btn {
-  flex: 1;
-  padding: 12px 16px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 12px 12px;
   border: none;
   background: transparent;
   color: var(--subtext-color);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   border-radius: 7px;
   cursor: pointer;
@@ -73,9 +76,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.tab-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; }
+.tab-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; flex-shrink: 0; }
 .tab-btn:hover { color: var(--text-color); background: var(--card-hover); }
 .tab-btn.active {
   background: var(--accent);
@@ -86,6 +92,9 @@
 /* ============ Upload Card ============ */
 .upload-card {
   position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
   border: 2px dashed var(--accent);
   background: var(--accent-soft);
   border-radius: 10px;
@@ -111,6 +120,7 @@
   width: 48px; height: 48px;
   color: var(--accent);
   margin: 0 auto 12px;
+  display: block;
 }
 .upload-card h3 {
   margin: 0 0 4px;
@@ -139,6 +149,8 @@
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 12px;
+  box-sizing: border-box;
+  min-width: 0;
 }
 .preview-col h4 {
   font-size: 11.5px;
@@ -185,7 +197,7 @@
   flex-direction: column;
   gap: 6px;
   flex: 1 1 160px;
-  min-width: 130px;
+  min-width: 0;
 }
 .f-group label {
   font-size: 12px;
@@ -216,6 +228,8 @@
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.15s;
+  box-sizing: border-box;
+  width: 100%;
 }
 .f-group select:focus,
 .f-group input[type="number"]:focus {
@@ -291,6 +305,7 @@ input[type="range"]::-moz-range-thumb {
   gap: 8px;
   transition: background 0.15s, opacity 0.15s;
   margin-top: 8px;
+  box-sizing: border-box;
 }
 .btn-main:hover:not(:disabled) { filter: brightness(1.08); }
 .btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -309,13 +324,14 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   margin-top: 10px;
   transition: all 0.15s;
+  box-sizing: border-box;
 }
 .btn-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
 
-/* ============ SEO ARTICLE — Improved Typography ============ */
+/* ============ SEO ARTICLE ============ */
 .seo-article {
   max-width: 860px;
   margin: 48px auto;
@@ -376,7 +392,7 @@ input[type="range"]::-moz-range-thumb {
 .seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; word-break: break-word; }
 .seo-article a:hover { color: var(--accent-hover); }
 
-/* ============ Table — Mobile Scrollable Wrapper ============ */
+/* ============ Table Wrapper ============ */
 .seo-article .table-wrap {
   width: 100%;
   max-width: 100%;
@@ -388,9 +404,7 @@ input[type="range"]::-moz-range-thumb {
   box-sizing: border-box;
   scrollbar-width: thin;
 }
-.seo-article .table-wrap::-webkit-scrollbar {
-  height: 6px;
-}
+.seo-article .table-wrap::-webkit-scrollbar { height: 6px; }
 .seo-article .table-wrap::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 3px;
@@ -499,7 +513,8 @@ details p {
     font-size: 13px;
   }
   .article-image-box img { max-height: 260px; padding: 14px; }
-  .tab-btn { font-size: 13px; padding: 11px 10px; }
+  .tab-btn { font-size: 12.5px; padding: 11px 8px; gap: 5px; }
+  .tab-btn svg { width: 14px; height: 14px; }
 }
 </style>
 </head>
