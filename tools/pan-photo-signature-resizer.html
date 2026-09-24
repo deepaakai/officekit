@@ -66,6 +66,8 @@
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .pan-card.photo-card { border-top: 4px solid #2563eb; }
 .pan-card.sign-card  { border-top: 4px solid #16a34a; }
@@ -78,6 +80,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .pan-card h3 .badge {
   display: inline-block;
@@ -98,7 +101,7 @@
 }
 .pan-card .sub b { color: var(--accent); font-weight: 700; }
 
-/* ============ Upload zone (inside card) ============ */
+/* ============ Upload zone ============ */
 .pan-drop {
   position: relative;
   border: 2px dashed var(--border-color);
@@ -109,6 +112,9 @@
   cursor: pointer;
   transition: 0.18s;
   margin-bottom: 14px;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
 }
 .pan-drop:hover {
   border-color: var(--accent);
@@ -185,6 +191,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 .pan-field label {
   font-size: 11px;
@@ -242,18 +249,22 @@
   gap: 8px;
   transition: 0.15s;
   margin-top: auto;
+  box-sizing: border-box;
 }
 .pan-btn:hover:not(:disabled) { filter: brightness(1.08); }
 .pan-btn:disabled { opacity: 0.55; cursor: not-allowed; }
 .pan-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; }
 
-/* ============ Spec table (top section) ============ */
+/* ============ Spec table (top) — SCROLLABLE ============ */
 .spec-box {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 18px 20px;
   margin-bottom: 20px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 .spec-box h2 {
   margin: 0 0 12px;
@@ -261,23 +272,53 @@
   color: var(--text-color);
   font-weight: 800;
 }
-.spec-box table {
+
+.spec-scroll {
   width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+.spec-scroll::-webkit-scrollbar { height: 6px; }
+.spec-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+.spec-scroll table {
+  width: 100%;
+  min-width: 520px;
   border-collapse: collapse;
   font-size: 13px;
+  margin: 0;
 }
-.spec-box th, .spec-box td {
+.spec-scroll th, .spec-scroll td {
   padding: 9px 10px;
   border: 1px solid var(--border-color);
   text-align: left;
   color: var(--subtext-color);
+  word-break: break-word;
+  vertical-align: top;
 }
-.spec-box th {
+.spec-scroll th {
   background: var(--card-hover);
   color: var(--text-color);
   font-weight: 700;
+  white-space: nowrap;
 }
-.spec-box td b { color: var(--accent); }
+.spec-scroll td b { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .spec-box { padding: 14px 14px; }
+  .spec-scroll table { min-width: 460px; }
+  .spec-scroll th, .spec-scroll td {
+    padding: 7px 8px;
+    font-size: 12.5px;
+  }
+}
 
 /* ============ SEO ARTICLE ============ */
 .seo-article {
@@ -356,7 +397,7 @@
   line-height: 1.55;
 }
 
-/* ============ Table wrapper ============ */
+/* Article tables */
 .seo-article .table-wrap {
   width: 100%;
   max-width: 100%;
@@ -390,7 +431,7 @@
   white-space: nowrap;
 }
 
-/* ============ FAQ ============ */
+/* FAQ */
 details {
   margin: 12px 0;
   padding: 14px 16px;
@@ -454,46 +495,48 @@ details p {
   <!-- ============ SPEC BOX ============ -->
   <div class="spec-box">
     <h2>📋 UTI PAN Card Photo &amp; Signature Requirements</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Document</th>
-          <th>Dimensions</th>
-          <th>DPI</th>
-          <th>Max Size</th>
-          <th>Format</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><b>Photo</b></td>
-          <td>213 × 213 px</td>
-          <td>300 DPI</td>
-          <td>30 KB</td>
-          <td>JPEG</td>
-        </tr>
-        <tr>
-          <td><b>Signature</b></td>
-          <td>400 × 200 px</td>
-          <td>600 DPI</td>
-          <td>60 KB</td>
-          <td>JPEG</td>
-        </tr>
-        <tr>
-          <td><b>Documents</b></td>
-          <td>A4 (as scanned)</td>
-          <td>200 DPI</td>
-          <td>2 MB total</td>
-          <td>PDF</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="spec-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Dimensions</th>
+            <th>DPI</th>
+            <th>Max Size</th>
+            <th>Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Photo</b></td>
+            <td>213 × 213 px</td>
+            <td>300 DPI</td>
+            <td>30 KB</td>
+            <td>JPEG</td>
+          </tr>
+          <tr>
+            <td><b>Signature</b></td>
+            <td>400 × 200 px</td>
+            <td>600 DPI</td>
+            <td>60 KB</td>
+            <td>JPEG</td>
+          </tr>
+          <tr>
+            <td><b>Documents</b></td>
+            <td>A4 (as scanned)</td>
+            <td>200 DPI</td>
+            <td>2 MB total</td>
+            <td>PDF</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- ============ MAIN TOOL GRID ============ -->
   <div class="pan-grid">
 
-    <!-- ============ PHOTO CARD ============ -->
+    <!-- PHOTO CARD -->
     <div class="pan-card photo-card">
       <h3>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
@@ -543,7 +586,7 @@ details p {
       </button>
     </div>
 
-    <!-- ============ SIGNATURE CARD ============ -->
+    <!-- SIGNATURE CARD -->
     <div class="pan-card sign-card">
       <h3>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
@@ -897,62 +940,44 @@ details p {
     });
   }
 
-  /* ==================== DPI EMBEDDING ====================
-     Insert/modify JFIF APP0 header to embed the given DPI value.
-     JPEG stores DPI in JFIF header as dots per inch in a 16-bit field.
-     ===================================================== */
+  /* ==================== DPI EMBEDDING ==================== */
   function embedDpiInJpeg(jpegBytes, dpi) {
-    // jpegBytes is Uint8Array of raw JPEG data
-    // We need to locate APP0 (JFIF) marker: FF E0
-    var i = 2; // skip SOI (FF D8)
+    var i = 2;
     var len = jpegBytes.length;
 
-    // Look for APP0
     while (i < len) {
       if (jpegBytes[i] !== 0xFF) break;
       var marker = jpegBytes[i + 1];
 
-      // Skip padding 0xFF bytes
       while (marker === 0xFF && i + 2 < len) {
         i++;
         marker = jpegBytes[i + 1];
       }
 
       if (marker === 0xE0) {
-        // Found APP0 JFIF segment
-        // Structure: FF E0 [len:2] [ident:5 "JFIF\0"] [version:2] [units:1] [xdens:2] [ydens:2] ...
-        var segStart = i;
-        var segLen = (jpegBytes[i + 2] << 8) | jpegBytes[i + 3];
         var identStart = i + 4;
 
-        // Check if it is JFIF
         if (jpegBytes[identStart] === 0x4A && jpegBytes[identStart + 1] === 0x46 &&
             jpegBytes[identStart + 2] === 0x49 && jpegBytes[identStart + 3] === 0x46 &&
             jpegBytes[identStart + 4] === 0x00) {
 
-          // Units field is at offset identStart + 7 (after version 2 bytes)
           var unitsOffset = identStart + 7;
-          jpegBytes[unitsOffset] = 0x01; // 1 = dots per inch
+          jpegBytes[unitsOffset] = 0x01;
 
-          // X density (16-bit big-endian)
           var xOff = unitsOffset + 1;
           jpegBytes[xOff]     = (dpi >> 8) & 0xFF;
           jpegBytes[xOff + 1] = dpi & 0xFF;
 
-          // Y density (16-bit big-endian)
           var yOff = xOff + 2;
           jpegBytes[yOff]     = (dpi >> 8) & 0xFF;
           jpegBytes[yOff + 1] = dpi & 0xFF;
 
           return jpegBytes;
         } else {
-          // APP0 exists but not JFIF — need to insert our own or skip
-          // For simplicity, break and return without embedding
           return jpegBytes;
         }
       }
 
-      // Skip this segment
       if (marker === 0xD8 || marker === 0xD9) {
         i += 2;
         continue;
@@ -962,8 +987,6 @@ details p {
       i += 2 + segLen2;
     }
 
-    // No JFIF header found — canvas JPEG usually includes one, so this path
-    // only occurs for unusual inputs. Return unchanged.
     return jpegBytes;
   }
 
@@ -972,11 +995,10 @@ details p {
     return new Uint8Array(buf);
   }
 
-  /* ==================== CORE RESIZE + COMPRESS ==================== */
+  /* ==================== CORE RESIZE ==================== */
   async function resizeAndDownload(data, targetW, targetH, dpi, targetKB, fileName) {
     var img = data.img;
 
-    // Draw to canvas at exact target size
     var canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
@@ -984,13 +1006,11 @@ details p {
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
 
-    // White background (in case PNG with transparency)
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, targetW, targetH);
 
     ctx.drawImage(img, 0, 0, targetW, targetH);
 
-    // Iteratively reduce quality until under target size
     var targetBytes = targetKB * 1024;
     var qualities = [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3, 0.25, 0.2];
     var bestBlob = null;
@@ -1006,7 +1026,6 @@ details p {
         bestBlob = blob;
         break;
       }
-      // Keep the smallest found so far (in case last iteration is not under limit)
       if (!bestBlob || blob.size < bestBlob.size) bestBlob = blob;
     }
 
@@ -1015,7 +1034,6 @@ details p {
       return;
     }
 
-    // Embed DPI in JPEG header
     var bytes = await blobToUint8(bestBlob);
     bytes = embedDpiInJpeg(bytes, dpi);
 
@@ -1133,4 +1151,4 @@ details p {
 })();
 </script>
 </body>
-                                                                                                                                                                                                          </html>
+</html>
