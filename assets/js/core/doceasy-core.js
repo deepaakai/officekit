@@ -90,21 +90,31 @@
 
     var homeHref = resolvePath('index.html', true);
 
-    return '<header class="site-header"><div class="header-inner">' +
-      '<a class="brand-link" href="' + homeHref + '" aria-label="DocEasy Home">' +
-        '<span class="brand-badge">' +
-          '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
-        '</span>' +
-      '</a>' +
-      '<nav class="pill-nav" aria-label="Sections">' + pills + '</nav>' +
-      '<div class="nav-right">' +
-        '<nav class="top-nav" aria-label="Quick tools">' + tools + '</nav>' +
+    /* ✅ NEW STRUCTURE:
+       <header>
+         <div class="header-inner">   ← Row 1
+           logo | pill-nav | toggle
+         </div>
+         <nav class="top-nav">        ← Row 2 (outside header-inner!)
+           quick tools
+         </nav>
+       </header>
+    */
+    return '<header class="site-header">' +
+      '<div class="header-inner">' +
+        '<a class="brand-link" href="' + homeHref + '" aria-label="DocEasy Home">' +
+          '<span class="brand-badge">' +
+            '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
+          '</span>' +
+        '</a>' +
+        '<nav class="pill-nav" aria-label="Sections">' + pills + '</nav>' +
         '<label class="theme-switch" aria-label="Toggle theme">' +
           '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
           '<span class="slider"></span>' +
         '</label>' +
       '</div>' +
-    '</div></header>';
+      '<nav class="top-nav" aria-label="Quick tools">' + tools + '</nav>' +
+    '</header>';
   }
 
   /* ---------- Footer builder ---------- */
@@ -134,7 +144,7 @@
       '</div></footer>';
   }
 
-  /* ---------- Inject (outerHTML = replace placeholder divs) ---------- */
+  /* ---------- Inject ---------- */
   function inject() {
     var h = document.getElementById('doceasy-header');
     if (h && !document.querySelector('.site-header')) h.outerHTML = buildHeader();
