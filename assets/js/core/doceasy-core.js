@@ -128,11 +128,11 @@
             '<div class="sm-pay-box">' +
               '<span class="sm-badge-country">🇮🇳 India (UPI)</span>' +
               '<div class="sm-qr-frame">' +
-                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=deepaakai@dbs%26pn=DocEasy%26am=80%26cu=INR" alt="UPI QR Code" class="sm-upi-qr">' +
+                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=deepaakai@dbs%26pn=DocEasy%26am=110%26cu=INR" alt="UPI QR Code" class="sm-upi-qr">' +
               '</div>' +
               '<p class="sm-upi-id">deepaakai@dbs</p>' +
               '<p class="sm-upi-text">GPay / PhonePe / Paytm</p>' +
-              '<span class="sm-amount-tag">☕ ₹80 (1 Coffee)</span>' +
+              '<span class="sm-amount-tag">☕ ₹110 (1 Coffee)</span>' +
             '</div>' +
             '<div class="sm-pay-box">' +
               '<span class="sm-badge-country">🌍 Worldwide</span>' +
@@ -186,6 +186,9 @@
         '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
           '25+ free browser-based tools for PDFs, images, and documents. 100% private — your files never leave your device.' +
         '</p>' +
+        '<button type="button" class="footer-support-btn" onclick="docEasyOpenSupport()">' +
+          '<span>☕</span> Support DocEasy' +
+        '</button>' +
       '</div>' +
       col('PDF Tools',   CONFIG.footer.pdfTools,   false) +
       col('Image Tools', CONFIG.footer.imageTools, false) +
