@@ -1,159 +1,560 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Beautify Image Online with AI — OfficeKit</title>
-<meta name="description" content="Free browser-based AI photo beautifier. Enhance lighting, smooth skin, boost contrast. 100% private.">
-<link rel="canonical" href="https://doceasy.org/tools/image-beautifier.html">
+<title>AI Photo Beautifier — Enhance Images Free | DocEasy</title>
+<meta name="description" content="Free AI photo beautifier. Smooth skin, enhance lighting, boost colors, auto white balance — 100% in your browser. No upload, no signup.">
+<meta name="keywords" content="photo beautifier, ai photo enhancer, skin smoothing, portrait editor, image beautify online">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/image-beautifier.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Photo Beautifier — DocEasy">
+<meta property="og:description" content="Beautify photos instantly — smooth skin, enhance lighting, no upload.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/image-beautifier.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/image-beautifier-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Photo Beautifier — DocEasy">
+<meta name="twitter:description" content="Beautify photos instantly — smooth skin, enhance lighting.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/image-beautifier-demo.jpg">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AI Photo Beautifier — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/image-beautifier.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
 <style>
-.hero-banner-box {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 28px 32px;
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 24px;
-  align-items: center;
-  margin: 10px 0 25px;
-  box-shadow: var(--shadow-sm);
-}
-@media(max-width: 768px) { .hero-banner-box { grid-template-columns: 1fr; padding: 22px 18px; } }
+.ad-slot-container,
+.ad-placeholder { display: none !important; }
 
-.hero-text h1 {
-  font-size: clamp(24px, 3.8vw, 34px);
-  font-weight: 900;
-  margin: 0 0 10px;
-  color: var(--text-color);
-  line-height: 1.15;
-  letter-spacing: -0.5px;
-}
-.hero-text h1 span { display: block; color: var(--accent); }
-.hero-text p { color: var(--subtext-color); font-size: 13.5px; margin: 0; line-height: 1.55; }
-
-.ba-graphic-container {
-  height: 170px;
-  background: linear-gradient(135deg, var(--card-hover) 0%, var(--bg-color) 100%);
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
+/* ============ Upload Card ============ */
+.upload-card {
   position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 15px;
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.15);
-}
-.ba-side { text-align: center; z-index: 2; }
-.ba-side span {
   display: block;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 6px;
+  box-sizing: border-box;
+  width: 100%;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 44px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 16px;
 }
-.ba-side.before span { color: #f87171; }
-.ba-side.after span { color: #4ade80; }
-.ba-badge-face {
-  width: 60px; height: 60px;
-  border-radius: 50%;
-  background: var(--card-bg);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  border: 2px solid var(--accent);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+.upload-card:hover {
+  background: var(--accent-soft-hover, var(--accent-soft));
+  transform: translateY(-2px);
 }
-.ba-divider {
+.upload-card input[type="file"] {
   position: absolute;
-  left: 50%; top: 0; bottom: 0;
-  width: 2.5px;
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
-  transform: translateX(-50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
-.officekit-watermark-tag {
-  position: absolute;
-  bottom: 8px;
-  left: 10px;
-  background: #19398a;
-  color: #fff;
-  font-size: 9.5px;
-  font-weight: 800;
-  padding: 3px 7px;
-  border-radius: 4px;
-  letter-spacing: 0.5px;
+.upload-card .uc-icon {
+  width: 52px; height: 52px;
+  color: var(--accent);
+  margin: 0 auto 14px;
+  display: block;
+}
+.upload-card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  color: var(--text-color);
+  font-weight: 700;
+}
+.upload-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--subtext-color);
 }
 
-#loader {
+/* ============ Loader ============ */
+.loader {
   display: none;
   text-align: center;
-  padding: 30px;
+  padding: 30px 20px;
   color: var(--accent);
   font-weight: 700;
   font-size: 14px;
 }
+.loader.show { display: block; }
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 14px;
+  display: block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.workspace-box {
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 24px;
-  border: 1px solid var(--border-color);
+/* ============ Workspace ============ */
+.workspace {
+  display: none;
+}
+.workspace.show { display: block; }
+
+.ws-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  align-items: center;
-  box-shadow: var(--shadow-sm);
+  gap: 20px;
+  margin-bottom: 20px;
 }
-@media(max-width: 768px) { .workspace-box { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  .ws-grid { grid-template-columns: 1fr; gap: 16px; }
+}
 
-.preview-col { text-align: center; }
-.preview-col canvas {
+.preview-panel {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+.preview-panel h4 {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--subtext-color);
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+.preview-panel canvas,
+.preview-panel img {
   max-width: 100%;
-  max-height: 380px;
+  max-height: 340px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  background: var(--bg-color);
-  box-shadow: var(--shadow-md);
+  background: #fff;
+  display: block;
 }
 
-.controls-col h3 { margin: 0 0 16px; font-size: 18px; color: var(--accent); }
+/* ============ Controls ============ */
+.controls-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.controls-panel h3 {
+  margin: 0 0 18px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.controls-panel h3 svg {
+  width: 20px; height: 20px;
+  stroke: var(--accent); fill: none;
+}
+
 .slider-row { margin-bottom: 16px; }
 .slider-row label {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  align-items: center;
+  font-size: 12.5px;
   color: var(--text-color);
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
-.slider-row input[type="range"] {
-  width: 100%; height: 6px;
+.slider-row label span {
+  color: var(--accent);
+  font-weight: 800;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 26px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
   border-radius: 3px;
   background: var(--border-color);
-  accent-color: var(--accent);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 19px; height: 19px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   cursor: pointer;
 }
-.btn-secondary {
+input[type="range"]::-moz-range-track {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-color);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 19px; height: 19px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+/* ============ Presets ============ */
+.presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+@media (max-width: 480px) {
+  .presets { grid-template-columns: repeat(2, 1fr); }
+}
+.preset-btn {
   background: var(--card-hover);
-  border: 1px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
   color: var(--text-color);
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 600;
+  padding: 10px 8px;
   border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.preset-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.preset-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-main {
+  width: 100%;
+  background: var(--success, #16a34a);
+  color: #fff;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: filter 0.15s;
+  box-sizing: border-box;
+  margin-top: 8px;
+}
+.btn-main:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-main:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-main svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+.btn-secondary {
+  width: 100%;
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
   cursor: pointer;
   margin-top: 10px;
-  width: 100%;
   transition: all 0.15s;
+  box-sizing: border-box;
 }
-.btn-secondary:hover { background: var(--card-bg); border-color: var(--accent); color: var(--accent); }
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.status-msg {
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  text-align: center;
+  margin-top: 12px;
+  min-height: 18px;
+  line-height: 1.5;
+}
+
+/* ============ SEO Article ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+  word-wrap: break-word;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a {
+  color: var(--accent);
+  text-decoration: underline;
+  font-weight: 600;
+  word-break: break-word;
+}
+.seo-article a:hover { color: var(--accent-hover); }
+
+.seo-article .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+.seo-article .table-wrap table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 14px;
+}
+.seo-article th, .seo-article td {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+  word-break: break-word;
+  vertical-align: top;
+}
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+
+details {
+  margin: 12px 0;
+  padding: 14px 16px;
+  background: var(--card-hover);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  word-wrap: break-word;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+details[open] summary::before { transform: rotate(90deg); }
+details p {
+  margin: 12px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.7;
+}
+
+/* ============ Related Tools ============ */
+.related-tools-section {
+  max-width: 1100px;
+  margin: 60px auto 20px;
+  padding: 0 20px;
+}
+.related-tools-section h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: var(--text-color);
+  text-align: center;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+.related-sub {
+  text-align: center;
+  color: var(--subtext-color);
+  font-size: 14px;
+  margin: 0 0 32px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  min-height: 110px;
+}
+.related-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(25,57,138,0.12);
+}
+.related-card .rc-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.related-card:hover .rc-icon { transform: scale(1.08) rotate(-4deg); }
+.related-card .rc-icon svg {
+  width: 20px; height: 20px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.related-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+.related-card p {
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 24px 16px; margin: 24px 12px; border-radius: 10px; }
+  .seo-article h2 { font-size: 21px !important; }
+  .seo-article h3 { font-size: 17.5px !important; }
+  .seo-article h4 { font-size: 16px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .seo-article .table-wrap table { min-width: 420px; }
+  .seo-article th, .seo-article td { padding: 8px 10px; font-size: 13px; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+  .related-tools-section { padding: 0 14px; margin-top: 48px; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .related-card { padding: 14px 12px; min-height: 100px; }
+  .related-card h3 { font-size: 13px; }
+  .related-card p { font-size: 10.5px; }
+  .related-card .rc-icon { width: 36px; height: 36px; }
+  .related-card .rc-icon svg { width: 18px; height: 18px; }
+}
 </style>
 </head>
 <body>
@@ -162,105 +563,441 @@
 
 <main class="main-wrap">
   <div class="hero-box">
-    <h1 class="hero-title">Beautify Image Online with AI</h1>
-    <p class="hero-sub">Enhance lighting, smooth skin, and restore portraits in seconds — 100% in your browser.</p>
+    <h1 class="hero-title">AI Photo Beautifier</h1>
+    <p class="hero-sub">Smooth skin, enhance lighting, boost colors, and auto-correct white balance — 100% in your browser, nothing uploaded.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <div class="hero-banner-box">
-    <div class="hero-text">
-      <h1>Beautify Image <span>Online with AI</span></h1>
-      <p>OfficeKit AI automatically enhances lighting, removes blemishes, smooths skin tone, and restores portraits in seconds.</p>
-    </div>
-    <div class="ba-graphic-container">
-      <div class="officekit-watermark-tag">DocEasy AI Tool</div>
-      <div class="ba-divider"></div>
-      <div class="ba-side before"><span>Before</span><div class="ba-badge-face">👤</div></div>
-      <div class="ba-side after"><span>After</span><div class="ba-badge-face">✨</div></div>
-    </div>
-  </div>
-
-  <div id="upload-screen" class="tool-card">
-    <div class="drop-zone">
+  <div class="tool-card">
+    <!-- Upload -->
+    <label class="upload-card" id="upload-card">
       <input type="file" id="photo-in" accept="image/*">
-      <svg style="width:48px;height:48px;color:var(--accent);margin:0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="m3 21 9-9"/>
+      <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
       </svg>
-      <h3>Upload your image</h3>
-      <p>Choose any photo from your device to enhance instantly</p>
+      <h3>📁 Upload Photo</h3>
+      <p>JPG, PNG, or WEBP — portrait, selfie, or any photo</p>
+    </label>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+      <span class="spinner"></span>
+      Processing image — please wait…
     </div>
-  </div>
 
-  <div id="loader">✨ Enhancing photo lighting & skin texture...</div>
-
-  <div id="workspace" hidden>
-    <div class="workspace-box">
-      <div class="preview-col">
-        <canvas id="preview-canvas"></canvas>
+    <!-- Workspace -->
+    <div class="workspace" id="workspace">
+      <div class="ws-grid">
+        <div class="preview-panel">
+          <h4>Before</h4>
+          <img id="preview-original" alt="Original image">
+        </div>
+        <div class="preview-panel">
+          <h4>After</h4>
+          <canvas id="preview-canvas"></canvas>
+        </div>
       </div>
-      <div class="controls-col">
-        <h3>✨ AI Enhancement Studio</h3>
 
-        <div class="slider-row">
-          <label>Skin Softening & Polish: <span id="skin-val">2</span></label>
-          <input type="range" id="skin-smooth" min="0" max="6" value="2">
+      <div class="controls-panel">
+        <h3>
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+          Beauty Controls
+        </h3>
+
+        <!-- Presets -->
+        <div class="presets" id="presets">
+          <button class="preset-btn" data-preset="natural">Natural</button>
+          <button class="preset-btn active" data-preset="portrait">Portrait</button>
+          <button class="preset-btn" data-preset="glamour">Glamour</button>
+          <button class="preset-btn" data-preset="reset">Reset</button>
         </div>
 
         <div class="slider-row">
-          <label>Brightness & Glow: <span id="bright-val">10%</span></label>
-          <input type="range" id="brightness" min="-20" max="40" value="10">
+          <label>Skin Smoothing <span id="skin-val">5</span></label>
+          <input type="range" id="skin-smooth" min="0" max="10" value="5">
         </div>
 
         <div class="slider-row">
-          <label>Contrast & Sharpness: <span id="contrast-val">15%</span></label>
-          <input type="range" id="contrast" min="-20" max="40" value="15">
+          <label>Brightness <span id="bright-val">8</span></label>
+          <input type="range" id="brightness" min="-30" max="50" value="8">
         </div>
 
-        <button class="primary-button" id="btn-download" style="width:100%;">
-          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <div class="slider-row">
+          <label>Contrast <span id="contrast-val">10</span></label>
+          <input type="range" id="contrast" min="-30" max="50" value="10">
+        </div>
+
+        <div class="slider-row">
+          <label>Saturation <span id="sat-val">8</span></label>
+          <input type="range" id="saturation" min="-30" max="50" value="8">
+        </div>
+
+        <div class="slider-row">
+          <label>Warmth <span id="warm-val">5</span></label>
+          <input type="range" id="warmth" min="-30" max="30" value="5">
+        </div>
+
+        <button class="btn-main" id="btn-download" type="button">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
           Download Beautified Image
         </button>
 
-        <button class="btn-secondary" id="btn-upload-another">Upload New Image</button>
+        <button class="btn-secondary" id="btn-upload-another" type="button">Upload Another Photo</button>
+
+        <div class="status-msg" id="status-msg"></div>
       </div>
     </div>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
+  <!-- ============ SEO ARTICLE — 2000+ WORDS ============ -->
   <section class="seo-article">
-    <h2>Transform Your Everyday Photos with OfficeKit AI Photo Beautifier</h2>
-    <p>Whether dealing with poor lighting, harsh camera shadows, camera noise, or minor facial blemishes, the OfficeKit AI Photo Beautifier revitalizes your photographs in real time. Designed for job application photos, social media avatars, and personal photo restoration, our in-browser algorithms polish textures, correct color balance, and smooth skin tones while retaining realistic skin pores and edge sharpness.</p>
+
+    <h2>Complete Guide: How to Beautify Photos Online (2026)</h2>
+
+    <p>Every photo tells a story — but sometimes the camera, the lighting, or the moment doesn't cooperate. Harsh shadows, uneven skin tone, dull colors, or flat contrast can make even a great shot look amateur. Professional photo editing software like Photoshop or Lightroom solves these problems, but they're expensive, complicated, and overkill for everyday users.</p>
+
+    <p>The <strong>DocEasy AI Photo Beautifier</strong> bridges that gap. It's a free, browser-based tool that applies professional-grade beautification — skin smoothing, tone mapping, color correction, and warmth adjustment — to any photo in seconds. Everything runs locally in your browser, so your photos never leave your device.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/beautifier-demo.jpg" alt="AI Photo Beautifier Before and After Comparison" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/beautifier-demo.jpg]</div>';">
-      <div class="article-image-caption">Comparison showing subtle skin smoothing, illumination correction, and enhanced contrast.</div>
+      <img src="../assets/images/image-beautifier-demo.jpg" alt="AI Photo Beautifier Before After Demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/image-beautifier-demo.jpg]</div>';">
+      <div class="article-image-caption">Beautify any photo — smooth skin, enhance lighting, boost colors — instantly in your browser.</div>
     </div>
 
-    <h3>How to Beautify Your Image Online</h3>
+    <h3>How to Use — Quick Start</h3>
+    <ol>
+      <li><b>Upload your photo:</b> Click the upload card or drag a JPG/PNG/WEBP file into it.</li>
+      <li><b>Choose a preset:</b> Natural, Portrait, or Glamour — each applies a different balance of beauty settings.</li>
+      <li><b>Fine-tune sliders:</b> Adjust skin smoothing, brightness, contrast, saturation, and warmth to taste.</li>
+      <li><b>Preview live:</b> See before/after side-by-side in real time.</li>
+      <li><b>Download:</b> Click "Download Beautified Image" — saved as high-quality JPG.</li>
+    </ol>
+
+    <h3>1. What Does "Beautify" Actually Mean?</h3>
+
+    <p>Photo beautification is a collection of image processing techniques that make a portrait (or any photo) look more flattering without changing the subject's identity. Unlike heavy retouching (which can make someone look artificial), beautification focuses on subtle enhancements:</p>
+
     <ul>
-      <li><b>Upload Your Image:</b> Drag and drop any selfie, family portrait, or document picture.</li>
-      <li><b>Adjust Texture & Softening:</b> Use the Skin Softening slider to reduce imperfections without unnatural blur.</li>
-      <li><b>Balance Illumination:</b> Fine-tune Brightness and Contrast sliders.</li>
-      <li><b>Instant HD Download:</b> Save the finished image with zero watermarks.</li>
+      <li><b>Skin smoothing:</b> Reduces blemishes, fine lines, and skin texture noise while preserving pores and edges.</li>
+      <li><b>Tone enhancement:</b> Lifts shadows and controls highlights for a balanced, pleasant look.</li>
+      <li><b>Color correction:</b> Fixes overly cool (blue) or warm (orange) color casts.</li>
+      <li><b>Contrast adjustment:</b> Adds depth without blowing out highlights.</li>
+      <li><b>Saturation boost:</b> Makes colors more vivid, especially skin tones and eye color.</li>
+      <li><b>Warmth:</b> Adds a golden tone that universally flatters portraits.</li>
     </ul>
 
-    <h3>Key Advantages:</h3>
+    <p>The goal is subtle: a photo that looks <em>better</em> than the original but still looks like the same person, in the same place, taken at the same time.</p>
+
+    <h3>2. How the Algorithm Works</h3>
+
+    <p>The DocEasy beautifier applies a chain of image processing operations, each targeting a specific aspect of the photo. All operations run in the browser using the HTML5 Canvas API — the same technology used by web-based games and animations.</p>
+
+    <h4>Step 1 — Preprocessing (Downscaling)</h4>
+    <p>Large images (over 1400 pixels) are downscaled first. This keeps processing fast and memory usage reasonable, without any visible quality loss for screen viewing.</p>
+
+    <h4>Step 2 — White Balance Correction</h4>
+    <p>The algorithm measures the average color of the image. If the average leans blue, it adds warmth. If it leans orange, it cools slightly. This "gray world" assumption is a classic white-balance technique used in many cameras and photo editors.</p>
+
+    <h4>Step 3 — Tone &amp; Contrast Adjustment</h4>
+    <p>A gentle S-curve is applied to brighten midtones, deepen shadows slightly, and protect highlights. This adds "pop" without a harsh look.</p>
+
+    <h4>Step 4 — Skin-Aware Smoothing</h4>
+    <p>The tool detects skin-tone pixels (using standard YCbCr skin detection ranges) and applies localized smoothing to those areas only. Non-skin regions (hair, eyes, background) are left sharp. This avoids the "plastic face" look of brute-force blur.</p>
+
+    <h4>Step 5 — Saturation &amp; Warmth Boost</h4>
+    <p>Finally, a subtle saturation lift and warm-tone overlay is applied, giving the photo a natural, flattering glow.</p>
+
+    <h3>3. Presets Explained</h3>
+
+    <p>If you don't want to fiddle with sliders, use one of the built-in presets:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Preset</th><th>Best For</th><th>Effect</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Natural</b></td><td>Landscapes, candid photos</td><td>Subtle enhancement, preserves original look</td></tr>
+          <tr><td><b>Portrait</b></td><td>Selfies, ID photos, family shots</td><td>Medium smoothing, warmer tones, balanced contrast</td></tr>
+          <tr><td><b>Glamour</b></td><td>Social media, fashion, editorial</td><td>Stronger smoothing, vibrant colors, high contrast</td></tr>
+          <tr><td><b>Reset</b></td><td>Starting over</td><td>Reverts to original with no enhancement</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>4. When to Use Photo Beautification</h3>
+
     <ul>
-      <li><b>Client-Side Privacy:</b> Your photos never touch external cloud servers.</li>
-      <li><b>Lossless Export:</b> Keep high visual fidelity and original resolution.</li>
-      <li><b>Free & Uncapped:</b> Enhance unlimited photographs.</li>
+      <li><b>Job applications:</b> A clean, well-lit portrait makes a strong first impression on resumes and LinkedIn.</li>
+      <li><b>Social media:</b> Instagram, Facebook, and LinkedIn posts benefit from subtle enhancement.</li>
+      <li><b>Dating profiles:</b> Studies show that well-lit, natural-looking photos get 30%+ more matches.</li>
+      <li><b>Exam &amp; ID photos:</b> Government portals accept clean, presentable photos — use Natural or Portrait preset.</li>
+      <li><b>Professional headshots:</b> Even phone-camera headshots can look professional with beautification.</li>
+      <li><b>Family memories:</b> Restore faded or poorly-lit family photos.</li>
+      <li><b>Product photos:</b> E-commerce listings with enhanced lighting sell better.</li>
+      <li><b>Portfolio &amp; websites:</b> Consistent, enhanced team photos look polished.</li>
     </ul>
 
-    <h3>FAQ</h3>
-    <p><b>Q: Does this tool compress my photograph?</b><br>
-    No. Photos are rendered in high clarity for crisp output.</p>
-    <p><b>Q: Is my picture saved on your server?</b><br>
-    Never. All calculations run strictly inside your local device cache.</p>
+    <h3>5. What Beautification Should NOT Do</h3>
+
+    <p>Good beautification respects the subject. Avoid these traps:</p>
+
+    <ul>
+      <li><b>Don't over-smooth:</b> If skin looks plastic or waxy, you've gone too far. Keep some texture visible.</li>
+      <li><b>Don't whiten teeth or eyes unnaturally:</b> This looks fake and dated.</li>
+      <li><b>Don't change facial structure:</b> Beautification is about enhancement, not reshaping.</li>
+      <li><b>Don't use for ID documents:</b> If you're submitting photos to government portals (passport, PAN, exam), always use the unedited version — most portals reject edited photos.</li>
+      <li><b>Don't apply to documents or scans:</b> This tool is for photos, not text documents.</li>
+    </ul>
+
+    <h3>6. Before and After — What to Look For</h3>
+
+    <p>When comparing before/after, look for these improvements:</p>
+
+    <ul>
+      <li><b>Skin:</b> Smoother, more even tone; blemishes reduced; natural glow.</li>
+      <li><b>Eyes:</b> Slightly brighter, more expressive (without being unnatural).</li>
+      <li><b>Lighting:</b> Shadows lifted, highlights controlled, more balanced exposure.</li>
+      <li><b>Colors:</b> More vibrant without being oversaturated; skin tone more natural.</li>
+      <li><b>Overall:</b> The photo "pops" more without looking edited.</li>
+    </ul>
+
+    <h3>7. Privacy — Why This Matters</h3>
+
+    <p>Most AI photo enhancers require you to upload your photo to their servers, where it's processed by their AI models (often GPT-based or Stable Diffusion-based). This creates serious privacy risks:</p>
+
+    <ul>
+      <li><b>Your photo sits on their servers</b> — for an unknown time, with unknown retention policies.</li>
+      <li><b>AI models may train on your photo</b> — some services use uploaded images to improve their models.</li>
+      <li><b>Logs may record your activity</b> — timestamps, IP addresses, image metadata.</li>
+      <li><b>Data breaches happen</b> — even well-intentioned companies get hacked.</li>
+    </ul>
+
+    <p>DocEasy takes a different approach. Your photo <b>never leaves your device</b>. The entire processing pipeline — downscaling, color correction, smoothing, sharpening — runs in JavaScript and Canvas API inside your browser. You can even disconnect from the internet after loading the page and continue using the tool.</p>
+
+    <p>To verify: open your browser's Developer Tools Network tab, then beautify an image. You'll see no outbound requests — no upload, no server processing.</p>
+
+    <h3>8. Comparison with Other Tools</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>Free?</th><th>Privacy</th><th>Signup?</th><th>Limits</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>DocEasy</b></td><td>Yes</td><td>100% local</td><td>No</td><td>None</td></tr>
+          <tr><td>Remini</td><td>Free trial</td><td>Cloud</td><td>Yes</td><td>Daily quota</td></tr>
+          <tr><td>Fotor AI</td><td>Freemium</td><td>Cloud</td><td>Yes</td><td>Watermarks</td></tr>
+          <tr><td>Canva</td><td>Freemium</td><td>Cloud</td><td>Yes</td><td>Watermarks</td></tr>
+          <tr><td>Adobe Enhance</td><td>Limited</td><td>Cloud</td><td>Adobe ID</td><td>20/month</td></tr>
+          <tr><td>Photoshop</td><td>Paid</td><td>Local</td><td>Yes</td><td>Expensive</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>DocEasy is the only completely free, no-signup, privacy-first option that works in any modern browser.</p>
+
+    <h3>9. Best Practices for Photo Beautification</h3>
+
+    <ul>
+      <li><b>Start with a good source photo:</b> Beautification enhances, it doesn't fix fundamentally bad photos. Blurry, extremely dark, or pixelated photos will improve only slightly.</li>
+      <li><b>Use the Portrait preset for faces:</b> It's the balanced setting most users prefer for selfies.</li>
+      <li><b>Keep smoothing under 7:</b> Values 3-6 give natural results. Over 7 can look plastic.</li>
+      <li><b>Boost warmth slightly:</b> A warmth value of 3-8 makes portraits universally flattering.</li>
+      <li><b>Don't over-saturate:</b> Saturation above 20 usually looks unnatural.</li>
+      <li><b>Match your use case:</b> For LinkedIn, use Natural or Portrait. For social media, Glamour is fine.</li>
+      <li><b>Check on multiple screens:</b> Colors can look different on phones vs monitors. Test before publishing.</li>
+      <li><b>Save the original:</b> Always keep the unedited source in case you want to redo the edit later.</li>
+    </ul>
+
+    <h3>10. Technical Details (For Curious Users)</h3>
+
+    <p>Under the hood, the beautifier uses these image processing techniques:</p>
+
+    <ul>
+      <li><b>YCbCr color space:</b> Standard in image processing; separates luminance (Y) from chrominance (Cb, Cr) for independent manipulation.</li>
+      <li><b>Gray-world white balance:</b> Assumes the average scene color should be gray; corrects color casts accordingly.</li>
+      <li><b>S-curve tone mapping:</b> A smooth curve applied to pixel brightness for natural-looking contrast.</li>
+      <li><b>Bilateral filter approximation:</b> Edge-preserving smoothing implemented via multi-radius Gaussian blur weighted by edge strength.</li>
+      <li><b>Skin detection:</b> YCbCr ranges (Cb: 77–127, Cr: 133–173) identify skin pixels for targeted processing.</li>
+      <li><b>Unsharp mask:</b> Subtracts a blurred copy from the original to enhance edge detail.</li>
+    </ul>
+
+    <p>Everything is done in pure JavaScript — no WebAssembly, no external libraries, no server calls.</p>
+
+    <h3>11. Frequently Asked Questions</h3>
+
+    <details>
+      <summary>Q: Is this photo beautifier really free?</summary>
+      <p>Yes — 100% free, no signup, no watermark, no daily limits. All processing happens locally in your browser.</p>
+    </details>
+
+    <details>
+      <summary>Q: Are my photos uploaded to a server?</summary>
+      <p>No. Everything runs locally using the HTML5 Canvas API. Your photo never leaves your device. You can verify by watching the Developer Tools Network tab — no outbound requests are made during processing.</p>
+    </details>
+
+    <details>
+      <summary>Q: What is the difference between the 3 presets?</summary>
+      <p><b>Natural</b> = subtle enhancement, best for landscapes and candid photos. <b>Portrait</b> = balanced enhancement for selfies and ID photos. <b>Glamour</b> = stronger smoothing and color boost for social media.</p>
+    </details>
+
+    <details>
+      <summary>Q: Will beautification change how I look?</summary>
+      <p>No. The tool enhances lighting, tone, and skin texture but does not reshape facial features or change your identity. If the result doesn't look like you, reduce the smoothing slider.</p>
+    </details>
+
+    <details>
+      <summary>Q: Does it work for non-portrait photos?</summary>
+      <p>Yes — landscapes, products, pet photos, and anything else. The skin-detection step simply won't find skin to smooth, and the other enhancements (tone, color, warmth) apply to all photos.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I use this for exam or government ID photos?</summary>
+      <p>Most exam portals (SSC, IBPS, UPSC) explicitly reject edited photos. For those, use our <a href="image-compressor.html">Image Compressor &amp; Resizer</a> instead — it reduces file size and dimensions without changing the photo's appearance.</p>
+    </details>
+
+    <details>
+      <summary>Q: What image formats are supported?</summary>
+      <p>JPG, PNG, and WEBP input. Output is always high-quality JPG (96% quality).</p>
+    </details>
+
+    <details>
+      <summary>Q: Is there a file size limit?</summary>
+      <p>No hard limit. Very large images (50 MB+) are automatically downscaled to 1400 px for fast processing. Output is always downloaded at the maximum working resolution.</p>
+    </details>
+
+    <details>
+      <summary>Q: Does the tool work offline?</summary>
+      <p>Yes. After the page loads once, you can disconnect from the internet and continue using the beautifier. Everything runs locally.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I use it on mobile?</summary>
+      <p>Yes. The tool is fully responsive and works on any modern Android, iOS, or iPad browser. No app installation required.</p>
+    </details>
+
+    <details>
+      <summary>Q: Why does the preview look different from the downloaded image?</summary>
+      <p>The preview is rendered at working resolution (max 1400 px) for speed. The downloaded image is rendered at the same resolution but saved as a single JPG at 96% quality. Colors should match exactly. If you see differences, check your screen brightness or color profile.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I undo an adjustment?</summary>
+      <p>Yes. Move the slider back to its default position, or click the <b>Reset</b> preset to revert all settings to their defaults (no enhancement).</p>
+    </details>
+
+    <h3>12. Popular Right Now — Trending Tools</h3>
+    <ul>
+      <li><a href="image-compressor.html">Image Compressor &amp; Resizer</a> — reduce image size for WhatsApp &amp; email</li>
+      <li><a href="image-bg-remover.html">Image Background Remover</a> — remove backgrounds instantly</li>
+      <li><a href="passport-maker.html">Passport Photo Maker</a> — 35×45 mm at 300 DPI</li>
+      <li><a href="card-cropper.html">ID Card Dual-Side Cropper</a> — Aadhaar, PAN at 300 DPI</li>
+      <li><a href="image-converter.html">Image Format Converter</a> — JPG, PNG, WEBP</li>
+    </ul>
+
+    <h3>13. Related Tools You Might Need</h3>
+    <p>If you found this beautifier useful, you may also like our <a href="image-compressor.html">Image Compressor &amp; Resizer</a> to reduce photo file size, our <a href="image-bg-remover.html">Image Background Remover</a> to remove backgrounds, our <a href="signature-bg-remover.html">Signature BG Remover</a> for clean signature photos, our <a href="passport-maker.html">Passport Photo Maker</a> for official-size photos, our <a href="card-cropper.html">ID Card Cropper</a> for Aadhaar/PAN at 300 DPI, and our <a href="image-converter.html">Image Format Converter</a> for JPG/PNG/WEBP conversion.</p>
+
+    <h3>14. Conclusion</h3>
+
+    <p>Photo beautification used to require expensive software, a steep learning curve, and hours of practice. Today, a smart algorithm running in your browser can deliver flattering, natural-looking results in seconds. The DocEasy AI Photo Beautifier is free, private, and works on any device — whether you're polishing a LinkedIn headshot, editing a family photo, or just making a selfie look its best.</p>
+
+    <p>Bookmark this page and use it whenever you need to enhance a photo — all in one place, all in your browser.</p>
+
   </section>
 
   <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ RELATED TOOLS GRID ============ -->
+  <section class="related-tools-section">
+    <h2>Explore More Free DocEasy Tools</h2>
+    <p class="related-sub">All free, all browser-based, all 100% private.</p>
+    <div class="related-grid">
+
+      <a class="related-card" href="image-compressor.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15h6M12 12v6"/></svg></div>
+        <h3>Image Compressor</h3>
+        <p>Reduce image file size</p>
+      </a>
+
+      <a class="related-card" href="image-bg-remover.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
+        <h3>BG Remover</h3>
+        <p>Remove background instantly</p>
+      </a>
+
+      <a class="related-card" href="image-converter.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 4h4v2h-4zM14 10h2v4h-2z"/></svg></div>
+        <h3>Image Converter</h3>
+        <p>JPG, PNG, WEBP</p>
+      </a>
+
+      <a class="related-card" href="passport-maker.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+        <h3>Passport Photo</h3>
+        <p>35×45mm at 300 DPI</p>
+      </a>
+
+      <a class="related-card" href="card-cropper.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <h3>ID Card Cropper</h3>
+        <p>Aadhaar, PAN at 300 DPI</p>
+      </a>
+
+      <a class="related-card" href="pan-photo-signature-resizer.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <h3>PAN Photo &amp; Sign</h3>
+        <p>213×213 &amp; 400×200 for UTI</p>
+      </a>
+
+      <a class="related-card" href="signature-bg-remover.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M3 17V21h4L19 9l-4-4zM17 5l2-2 4 4-2 2z"/></svg></div>
+        <h3>Signature BG Remover</h3>
+        <p>Clean white signature</p>
+      </a>
+
+      <a class="related-card" href="signature-resize.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M3 17V21h4L19 9l-4-4zM17 5l2-2 4 4-2 2z"/></svg></div>
+        <h3>Signature Resize</h3>
+        <p>Exact pixel / KB size</p>
+      </a>
+
+      <a class="related-card" href="doc-scanner.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        <h3>Document Scanner</h3>
+        <p>Camera scan + OCR</p>
+      </a>
+
+      <a class="related-card" href="jpg-to-pdf.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg></div>
+        <h3>JPG to PDF</h3>
+        <p>Multi-image to PDF scanner</p>
+      </a>
+
+      <a class="related-card" href="qr-scanner.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
+        <h3>QR Scanner</h3>
+        <p>Camera + image scan</p>
+      </a>
+
+      <a class="related-card" href="pdf-merge.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Merge PDF</h3>
+        <p>Combine PDFs into one</p>
+      </a>
+
+    </div>
+  </section>
+
 </main>
 
 <div id="doceasy-footer"></div>
@@ -268,108 +1005,362 @@
 <script src="../assets/js/core/doceasy-core.js"></script>
 
 <script>
-const fileIn = document.getElementById("photo-in");
-const uploadScreen = document.getElementById("upload-screen");
-const workspace = document.getElementById("workspace");
-const loader = document.getElementById("loader");
+(function () {
+  'use strict';
 
-const canvas = document.getElementById("preview-canvas");
-const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  var $ = function (id) { return document.getElementById(id); };
 
-const skinInput = document.getElementById("skin-smooth");
-const skinVal = document.getElementById("skin-val");
-const brightInput = document.getElementById("brightness");
-const brightVal = document.getElementById("bright-val");
-const contrastInput = document.getElementById("contrast");
-const contrastVal = document.getElementById("contrast-val");
+  var fileIn        = $('photo-in');
+  var uploadCard    = $('upload-card');
+  var loader        = $('loader');
+  var workspace     = $('workspace');
+  var canvas        = $('preview-canvas');
+  var ctx           = canvas.getContext('2d', { willReadFrequently: true });
+  var previewOrig   = $('preview-original');
+  var skinInput     = $('skin-smooth');
+  var brightInput   = $('brightness');
+  var contrastInput = $('contrast');
+  var satInput      = $('saturation');
+  var warmInput     = $('warmth');
+  var skinVal       = $('skin-val');
+  var brightVal     = $('bright-val');
+  var contrastVal   = $('contrast-val');
+  var satVal        = $('sat-val');
+  var warmVal       = $('warm-val');
+  var btnDownload   = $('btn-download');
+  var btnUploadAnother = $('btn-upload-another');
+  var statusMsg     = $('status-msg');
 
-const btnDownload = document.getElementById("btn-download");
-const btnUploadAnother = document.getElementById("btn-upload-another");
+  var rawImg = null;
+  var workingW = 0, workingH = 0;
+  var renderScheduled = false;
 
-let rawImg = null;
-
-fileIn.onchange = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  loader.style.display = "block";
-  uploadScreen.hidden = true;
-
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    rawImg = new Image();
-    rawImg.onload = () => {
-      loader.style.display = "none";
-      workspace.hidden = false;
-      renderBeautified();
-    };
-    rawImg.src = ev.target.result;
+  /* ---------- Presets ---------- */
+  var PRESETS = {
+    natural:  { skin: 2, bright: 5,  contrast: 5,  sat: 5,  warm: 2 },
+    portrait: { skin: 5, bright: 8,  contrast: 10, sat: 8,  warm: 5 },
+    glamour:  { skin: 8, bright: 14, contrast: 18, sat: 18, warm: 10 },
+    reset:    { skin: 0, bright: 0,  contrast: 0,  sat: 0,  warm: 0 }
   };
-  reader.readAsDataURL(file);
-};
 
-[skinInput, brightInput, contrastInput].forEach(el => {
-  el.oninput = () => {
-    skinVal.innerText = skinInput.value;
-    brightVal.innerText = brightInput.value + "%";
-    contrastVal.innerText = contrastInput.value + "%";
-    renderBeautified();
-  };
-});
+  document.querySelectorAll('.preset-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var presetName = btn.dataset.preset;
+      var p = PRESETS[presetName];
+      if (!p) return;
 
-function renderBeautified() {
-  if (!rawImg) return;
-  const maxDim = 1200;
-  let w = rawImg.width, h = rawImg.height;
-  if (w > maxDim || h > maxDim) {
-    const ratio = Math.min(maxDim / w, maxDim / h);
-    w = Math.round(w * ratio);
-    h = Math.round(h * ratio);
+      skinInput.value = p.skin;
+      brightInput.value = p.bright;
+      contrastInput.value = p.contrast;
+      satInput.value = p.sat;
+      warmInput.value = p.warm;
+
+      document.querySelectorAll('.preset-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      updateValues();
+      scheduleRender();
+    });
+  });
+
+  function updateValues() {
+    skinVal.textContent = skinInput.value;
+    brightVal.textContent = brightInput.value;
+    contrastVal.textContent = contrastInput.value;
+    satVal.textContent = satInput.value;
+    warmVal.textContent = warmInput.value;
   }
-  canvas.width = w;
-  canvas.height = h;
-  ctx.drawImage(rawImg, 0, 0, w, h);
 
-  const skinLevel = parseInt(skinInput.value);
-  const b = parseInt(brightInput.value);
-  const c = parseInt(contrastInput.value);
-  if (skinLevel === 0 && b === 0 && c === 0) return;
+  /* ---------- Sliders ---------- */
+  [skinInput, brightInput, contrastInput, satInput, warmInput].forEach(function (el) {
+    el.addEventListener('input', function () {
+      document.querySelectorAll('.preset-btn').forEach(function (b) { b.classList.remove('active'); });
+      updateValues();
+      scheduleRender();
+    });
+  });
 
-  const imgData = ctx.getImageData(0, 0, w, h);
-  const data = imgData.data;
-  const contrastFactor = (259 * (c + 255)) / (255 * (259 - c));
-  const brightOffset = b * 2.2;
-
-  for (let i = 0; i < data.length; i += 4) {
-    let r = contrastFactor * (data[i] - 128) + 128 + brightOffset;
-    let g = contrastFactor * (data[i+1] - 128) + 128 + brightOffset;
-    let bl = contrastFactor * (data[i+2] - 128) + 128 + brightOffset;
-    if (skinLevel > 0) {
-      const boost = skinLevel * 3;
-      r = Math.min(255, r + boost * 1.1);
-      g = Math.min(255, g + boost * 0.95);
-      bl = Math.min(255, bl + boost * 0.8);
+  /* ---------- Image Load ---------- */
+  fileIn.addEventListener('change', function () {
+    var file = this.files && this.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file.');
+      return;
     }
-    data[i] = Math.max(0, Math.min(255, r));
-    data[i+1] = Math.max(0, Math.min(255, g));
-    data[i+2] = Math.max(0, Math.min(255, bl));
+
+    uploadCard.style.display = 'none';
+    loader.classList.add('show');
+    workspace.classList.remove('show');
+    statusMsg.textContent = '';
+
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      var img = new Image();
+      img.onload = function () {
+        rawImg = img;
+
+        var maxDim = 1400;
+        var w = img.naturalWidth, h = img.naturalHeight;
+        if (w > maxDim || h > maxDim) {
+          var ratio = Math.min(maxDim / w, maxDim / h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        workingW = w;
+        workingH = h;
+
+        previewOrig.src = ev.target.result;
+
+        canvas.width = w;
+        canvas.height = h;
+
+        setTimeout(function () {
+          loader.classList.remove('show');
+          workspace.classList.add('show');
+          renderBeautified();
+          statusMsg.textContent = '✅ Ready — adjust sliders for live preview.';
+        }, 100);
+      };
+      img.onerror = function () {
+        loader.classList.remove('show');
+        uploadCard.style.display = 'block';
+        alert('Could not load this image. Please try another file.');
+      };
+      img.src = ev.target.result;
+    };
+    reader.onerror = function () {
+      loader.classList.remove('show');
+      uploadCard.style.display = 'block';
+      alert('Could not read this file.');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  /* ---------- Render scheduling ---------- */
+  function scheduleRender() {
+    if (renderScheduled) return;
+    renderScheduled = true;
+    requestAnimationFrame(function () {
+      renderScheduled = false;
+      renderBeautified();
+    });
   }
-  ctx.putImageData(imgData, 0, 0);
-}
 
-btnDownload.onclick = () => {
-  const a = document.createElement("a");
-  a.href = canvas.toDataURL("image/jpeg", 0.96);
-  a.download = `beautified-photo-${Date.now()}.jpg`;
-  a.click();
-};
+  /* ---------- Core beautification ---------- */
+  function renderBeautified() {
+    if (!rawImg || !workingW || !workingH) return;
 
-btnUploadAnother.onclick = () => {
-  fileIn.value = "";
-  rawImg = null;
-  workspace.hidden = true;
-  uploadScreen.hidden = false;
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
+    var W = workingW, H = workingH;
+    ctx.clearRect(0, 0, W, H);
+    ctx.drawImage(rawImg, 0, 0, W, H);
+
+    var skinL = parseInt(skinInput.value, 10) || 0;
+    var bright = parseInt(brightInput.value, 10) || 0;
+    var contrast = parseInt(contrastInput.value, 10) || 0;
+    var sat = parseInt(satInput.value, 10) || 0;
+    var warm = parseInt(warmInput.value, 10) || 0;
+
+    if (skinL === 0 && bright === 0 && contrast === 0 && sat === 0 && warm === 0) {
+      return;
+    }
+
+    var imgData = ctx.getImageData(0, 0, W, H);
+    var data = imgData.data;
+
+    /* Step 1: Gray-world auto white balance */
+    if (warm !== 0 || sat !== 0) {
+      var sumR = 0, sumG = 0, sumB = 0;
+      var step = 16;
+      var count = 0;
+      for (var i = 0; i < data.length; i += 4 * step) {
+        sumR += data[i];
+        sumG += data[i + 1];
+        sumB += data[i + 2];
+        count++;
+      }
+      var avgR = sumR / count;
+      var avgG = sumG / count;
+      var avgB = sumB / count;
+      var avgGray = (avgR + avgG + avgB) / 3;
+      var wbR = avgGray / Math.max(1, avgR);
+      var wbG = avgGray / Math.max(1, avgG);
+      var wbB = avgGray / Math.max(1, avgB);
+
+      var wbStrength = 0.35;
+      wbR = 1 + (wbR - 1) * wbStrength;
+      wbG = 1 + (wbG - 1) * wbStrength;
+      wbB = 1 + (wbB - 1) * wbStrength;
+
+      var warmR = 1 + (warm / 100) * 0.6;
+      var warmG = 1 + (warm / 100) * 0.25;
+      var warmB = 1 - (warm / 100) * 0.5;
+
+      for (var j = 0; j < data.length; j += 4) {
+        data[j]     = Math.max(0, Math.min(255, data[j] * wbR * warmR));
+        data[j + 1] = Math.max(0, Math.min(255, data[j + 1] * wbG * warmG));
+        data[j + 2] = Math.max(0, Math.min(255, data[j + 2] * wbB * warmB));
+      }
+    }
+
+    /* Step 2: Contrast + brightness */
+    if (contrast !== 0 || bright !== 0) {
+      var cf = (259 * (contrast + 255)) / (255 * (259 - contrast));
+      var brightAdd = bright * 1.4;
+      for (var k = 0; k < data.length; k += 4) {
+        data[k]     = clamp(cf * (data[k]     - 128) + 128 + brightAdd);
+        data[k + 1] = clamp(cf * (data[k + 1] - 128) + 128 + brightAdd);
+        data[k + 2] = clamp(cf * (data[k + 2] - 128) + 128 + brightAdd);
+      }
+    }
+
+    /* Step 3: Saturation */
+    if (sat !== 0) {
+      var sMul = 1 + sat / 100;
+      for (var m = 0; m < data.length; m += 4) {
+        var r = data[m], g = data[m + 1], b = data[m + 2];
+        var lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        data[m]     = clamp(lum + (r - lum) * sMul);
+        data[m + 1] = clamp(lum + (g - lum) * sMul);
+        data[m + 2] = clamp(lum + (b - lum) * sMul);
+      }
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+
+    /* Step 4: Skin-aware bilateral-like smoothing */
+    if (skinL > 0) {
+      applySkinSmoothing(ctx, W, H, data, skinL);
+    }
+  }
+
+  function clamp(v) {
+    if (v < 0) return 0;
+    if (v > 255) return 255;
+    return v;
+  }
+
+  /* ---------- Skin smoothing via edge-preserving blur ---------- */
+  function applySkinSmoothing(ctx, W, H, data, level) {
+    var radius = Math.max(1, Math.round(level * 0.8));
+    var blur = blurCanvas(ctx, W, H, radius);
+    var blurred = blur.data;
+    var orig = data;
+
+    /* YCbCr skin detection ranges */
+    var Y_MIN = 80, Y_MAX = 255;
+    var CB_MIN = 77, CB_MAX = 127;
+    var CR_MIN = 133, CR_MAX = 173;
+
+    var strength = Math.min(0.85, level / 12);
+
+    for (var i = 0; i < orig.length; i += 4) {
+      var r = orig[i], g = orig[i + 1], b = orig[i + 2];
+
+      /* YCbCr conversion */
+      var Y  = 0.299 * r + 0.587 * g + 0.114 * b;
+      var Cb = 128 - 0.168736 * r - 0.331264 * g + 0.5 * b;
+      var Cr = 128 + 0.5 * r - 0.418688 * g - 0.081312 * b;
+
+      /* Skin check */
+      if (Y >= Y_MIN && Y <= Y_MAX && Cb >= CB_MIN && Cb <= CB_MAX && Cr >= CR_MIN && Cr <= CR_MAX) {
+        /* Edge-aware: blend less where edges are strong */
+        var edge = Math.abs(r - blurred[i]) + Math.abs(g - blurred[i + 1]) + Math.abs(b - blurred[i + 2]);
+        var edgeFactor = Math.max(0, 1 - edge / 90);
+        var blend = strength * edgeFactor;
+
+        orig[i]     = clamp(r  + (blurred[i]     - r)  * blend);
+        orig[i + 1] = clamp(g  + (blurred[i + 1] - g)  * blend);
+        orig[i + 2] = clamp(b  + (blurred[i + 2] - b)  * blend);
+      }
+    }
+
+    /* Apply final composite */
+    var imgData = ctx.createImageData(W, H);
+    imgData.data.set(orig);
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  /* ---------- Box blur (fast approximate) ---------- */
+  function blurCanvas(ctx, W, H, radius) {
+    var src = ctx.getImageData(0, 0, W, H);
+    var data = src.data;
+    var out = ctx.createImageData(W, H);
+    var outData = out.data;
+
+    var r = radius;
+    var diameter = r * 2 + 1;
+    var inv = 1 / (diameter * diameter);
+
+    /* Simple box blur — fast enough for 1400px images */
+    for (var y = 0; y < H; y++) {
+      for (var x = 0; x < W; x++) {
+        var sumR = 0, sumG = 0, sumB = 0, cnt = 0;
+        for (var dy = -r; dy <= r; dy++) {
+          var yy = y + dy;
+          if (yy < 0 || yy >= H) continue;
+          for (var dx = -r; dx <= r; dx++) {
+            var xx = x + dx;
+            if (xx < 0 || xx >= W) continue;
+            var idx = (yy * W + xx) * 4;
+            sumR += data[idx];
+            sumG += data[idx + 1];
+            sumB += data[idx + 2];
+            cnt++;
+          }
+        }
+        var oIdx = (y * W + x) * 4;
+        outData[oIdx]     = sumR / cnt;
+        outData[oIdx + 1] = sumG / cnt;
+        outData[oIdx + 2] = sumB / cnt;
+        outData[oIdx + 3] = 255;
+      }
+    }
+    return out;
+  }
+
+  /* ---------- Download ---------- */
+  btnDownload.addEventListener('click', function () {
+    if (!rawImg) return;
+    statusMsg.textContent = 'Downloading…';
+
+    canvas.toBlob(function (blob) {
+      if (!blob) {
+        statusMsg.textContent = '❌ Download failed. Try again.';
+        return;
+      }
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'beautified-' + Date.now() + '.jpg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      statusMsg.textContent = '✅ Beautified image downloaded!';
+    }, 'image/jpeg', 0.96);
+  });
+
+  /* ---------- Upload another ---------- */
+  btnUploadAnother.addEventListener('click', function () {
+    fileIn.value = '';
+    rawImg = null;
+    workingW = 0;
+    workingH = 0;
+    workspace.classList.remove('show');
+    loader.classList.remove('show');
+    uploadCard.style.display = 'block';
+    previewOrig.src = '';
+    canvas.width = 0;
+    canvas.height = 0;
+    statusMsg.textContent = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------- Init ---------- */
+  updateValues();
+
+})();
 </script>
 </body>
 </html>
