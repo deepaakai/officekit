@@ -96,17 +96,27 @@ input, select, textarea { font: inherit; color: inherit; }
   flex-shrink: 0;
 }
 
+/* ---- Brand logo (transparent, sits directly on navy header) ---- */
 .brand-badge {
-  background: #fff;
-  color: #19398a;
-  padding: 5px 10px;
-  border-radius: 8px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: none;
 }
 
-.brand-badge img { height: 22px; width: auto; display: block; }
+.brand-badge img {
+  height: 40px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.brand-link:hover .brand-badge img {
+  transform: scale(1.04);
+}
 
 .top-nav {
   display: flex;
@@ -317,6 +327,11 @@ input, select, textarea { font: inherit; color: inherit; }
     overflow-x: auto;
     gap: 2px;
   }
+  .brand-badge img { height: 34px; }
+}
+
+@media (max-width: 480px) {
+  .brand-badge img { height: 30px; }
 }
 
 @media (min-width: 640px) and (max-width: 899px) {
@@ -523,17 +538,34 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 880px) { .footer-container { grid-template-columns: 1fr 1fr; gap: 24px; } }
 @media (max-width: 520px) { .footer-container { grid-template-columns: 1fr; } }
 
+/* ---- Footer logo (transparent, sits directly on navy footer) ---- */
 .footer-brand-box {
-  background: #fff;
-  color: #19398a;
-  padding: 5px 10px;
-  border-radius: 8px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-  margin-bottom: 12px;
+  box-shadow: none;
+  margin-bottom: 14px;
 }
-.footer-brand-box img { height: 20px; width: auto; display: block; }
+
+.footer-brand-box img {
+  height: 34px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+
+.footer-brand-box:hover img {
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .footer-brand-box img { height: 30px; }
+}
+
 .footer-col h5 { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: #fff; }
 .footer-col ul { list-style: none; padding: 0; margin: 0; }
 .footer-col ul li { margin-bottom: 9px; }
@@ -788,4 +820,4 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 640px) {
   .main-wrap, .container { padding-left: 12px; padding-right: 12px; }
   .hero-title, .tool-hero h1 { font-size: 24px; }
-   }
+}
