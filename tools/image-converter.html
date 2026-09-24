@@ -1,471 +1,1182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>All-in-One Converter Studio — DocEasy</title>
-  <link rel="stylesheet" href="../assets/css/doceasy-global.css">
-  <!-- Required Libraries for ZIP, PDF, and OCR -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://unpkg.com/tesseract.js@v5.0.5/dist/tesseract.min.js"></script>
-  
-  <style>
-    * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0b1329;
-      color: #f8fafc;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Image Converter & PDF Studio — All-in-One Free | DocEasy</title>
+<meta name="description" content="All-in-one converter studio: image format converter (JPG/PNG/WEBP), images to PDF, PDF to JPG ZIP, and image-to-text OCR. 100% browser-based, free, private.">
+<meta name="keywords" content="image converter, jpg to png, png to jpg, webp converter, images to pdf, pdf to jpg, ocr, image to text">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/image-converter.html">
 
-    /* Master Unified Header Fix */
-    .site-header {
-      background: #111e38 !important;
-      border-bottom: 1px solid #1e293b !important;
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 1000 !important;
-      width: 100% !important;
-    }
-    .header-inner {
-      max-width: 1260px !important;
-      margin: 0 auto !important;
-      padding: 0 16px !important;
-      height: 54px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      gap: 16px !important;
-    }
-    .brand-link {
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 10px !important;
-      text-decoration: none !important;
-      color: #ffffff !important;
-      font-weight: 800 !important;
-      font-size: 18px !important;
-    }
-    .brand-badge {
-      background: #2563eb !important;
-      color: #ffffff !important;
-      width: 32px !important;
-      height: 32px !important;
-      border-radius: 6px !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-    }
-    .brand-badge svg { width: 18px !important; height: 18px !important; fill: #ffffff !important; }
-    .nav-right { display: flex !important; align-items: center !important; gap: 16px !important; }
-    .top-nav { display: flex !important; align-items: center !important; gap: 8px !important; }
-    .top-nav a {
-      color: #cbd5e1 !important;
-      text-decoration: none !important;
-      font-size: 13.5px !important;
-      font-weight: 600 !important;
-      padding: 6px 10px !important;
-      border-radius: 6px !important;
-    }
-    .top-nav a:hover { color: #38bdf8 !important; }
+<meta property="og:type" content="website">
+<meta property="og:title" content="Image Converter & PDF Studio — DocEasy">
+<meta property="og:description" content="Convert image formats, merge to PDF, extract PDF pages, and OCR text — 100% in your browser.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/image-converter.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/image-converter-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
 
-    /* Theme Switch */
-    .theme-switch { position: relative; display: inline-block; width: 48px; height: 26px; margin: 0; }
-    .theme-switch input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute; cursor: pointer; inset: 0;
-      background-color: #1e293b; border: 1px solid #334155; border-radius: 26px; transition: 0.3s;
-    }
-    .slider:before {
-      position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
-      background-color: white; border-radius: 50%; transition: 0.3s;
-    }
-    input:checked + .slider { background-color: #2563eb; }
-    input:checked + .slider:before { transform: translateX(22px); }
-    .slider-icons {
-      position: absolute; width: 100%; height: 100%; display: flex;
-      justify-content: space-between; align-items: center; padding: 0 6px; font-size: 10px; pointer-events: none;
-    }
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image Converter & PDF Studio — DocEasy">
+<meta name="twitter:description" content="Convert image formats, merge to PDF, extract PDF pages, and OCR text.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/image-converter-demo.jpg">
 
-    /* Ad Slots */
-    .ad-placeholder {
-      max-width: 1100px;
-      margin: 20px auto;
-      background: #111e38;
-      border: 1px dashed #334155;
-      border-radius: 8px;
-      padding: 14px;
-      text-align: center;
-      color: #64748b;
-      font-size: 13px;
-      font-weight: 600;
-    }
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
-    .container { max-width: 1100px; margin: 20px auto 40px; padding: 0 16px; }
-    .tool-hero { text-align: center; margin-bottom: 24px; }
-    .tool-hero h1 { font-size: 26px; font-weight: 800; margin: 0 0 6px; color: #f8fafc; }
-    .tool-hero p { color: #94a3b8; font-size: 13.5px; margin: 0; }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Converter & PDF Studio — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/image-converter.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "All-in-one converter: image format, images to PDF, PDF to JPG, and OCR."
+}
+</script>
 
-    /* Category Tabs */
-    .studio-tabs { display: flex; background: #111e38; border-radius: 8px; padding: 4px; gap: 4px; margin-bottom: 20px; border: 1px solid #1e293b; overflow-x: auto; }
-    .tab-btn { flex: 1; background: transparent; border: none; color: #94a3b8; padding: 12px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
-    .tab-btn svg { width: 16px; height: 16px; fill: currentColor; }
-    .tab-btn.active { background: #2563eb; color: #fff; }
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
-    /* Section Panels */
-    .converter-panel { background: #111e38; border-radius: 10px; padding: 28px; border: 1px solid #1e293b; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    .converter-panel h3 { margin-top: 0; color: #38bdf8; font-size: 17px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-    .converter-panel h3 svg { width: 20px; height: 20px; fill: #38bdf8; }
-    .converter-panel p { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/tesseract.js@v5.0.5/dist/tesseract.min.js"></script>
 
-    .dropzone { border: 2px dashed #38bdf8; padding: 35px; border-radius: 8px; background: rgba(56, 189, 248, 0.05); text-align: center; cursor: pointer; margin-bottom: 16px; transition: 0.2s; }
-    .dropzone:hover { border-color: #60a5fa; background: rgba(56, 189, 248, 0.1); }
-    .dropzone svg { width: 36px; height: 36px; fill: #38bdf8; margin-bottom: 8px; }
-    .dropzone p { margin: 0; color: #38bdf8; font-weight: 600; font-size: 14px; }
+<style>
+/* Hide ad slots until AdSense approval */
+.ad-slot-container,
+.ad-placeholder { display: none !important; }
 
-    .action-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 15px; }
-    .btn { background: #2563eb; color: #fff; border: none; padding: 10px 22px; border-radius: 6px; font-weight: 700; font-size: 13.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-    .btn svg { width: 16px; height: 16px; fill: currentColor; }
-    .btn.green { background: #15803d; }
-    .btn.green:hover { background: #166534; }
-    .btn:hover { opacity: 0.9; }
+/* ============ Tabs ============ */
+.studio-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.studio-tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 1 1 0;
+  min-width: 130px;
+  padding: 12px 12px;
+  border: none;
+  background: transparent;
+  color: var(--subtext-color);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.tab-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; flex-shrink: 0; }
+.tab-btn:hover { color: var(--text-color); background: var(--card-hover); }
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
 
-    select, input[type="file"] { background: #0b1329; border: 1px solid #334155; color: #f8fafc; padding: 10px; border-radius: 6px; font-size: 13.5px; }
-    
-    .preview-box { margin-top: 15px; max-height: 250px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 10px; }
-    .preview-box img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid #334155; }
-    
-    .ocr-output { background: #0b1329; border: 1px solid #334155; padding: 14px; border-radius: 6px; min-height: 150px; font-family: monospace; font-size: 13px; color: #38bdf8; white-space: pre-wrap; margin-top: 15px; }
+/* ============ Panel ============ */
+.converter-panel { display: none; }
+.converter-panel.active { display: block; }
 
-    /* SEO Article Section & Image Box */
-    .seo-article {
-      background: #111e38;
-      border-radius: 12px;
-      padding: 28px;
-      border: 1px solid #1e293b;
-      margin-top: 35px;
-      font-size: 14px;
-      line-height: 1.7;
-      color: #cbd5e1;
-    }
-    .seo-article h2 { color: #f8fafc; font-size: 19px; margin-top: 0; }
-    .seo-article h3 { color: #38bdf8; font-size: 15px; margin-top: 20px; }
-    .seo-article ul { padding-left: 20px; }
-    .seo-article li { margin-bottom: 6px; }
+.panel-title {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-title svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; flex-shrink: 0; }
+.panel-sub {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  line-height: 1.5;
+}
 
-    /* Image Demo Container */
-    .article-image-box {
-      margin: 20px 0;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid #334155;
-      background: #0b1329;
-      text-align: center;
-    }
-    .article-image-box img {
-      width: 100%;
-      max-height: 380px;
-      object-fit: cover;
-      display: block;
-    }
-    .article-image-caption {
-      padding: 8px 12px;
-      font-size: 12px;
-      color: #94a3b8;
-      background: #111e38;
-      border-top: 1px solid #1e293b;
-    }
-  </style>
+/* ============ Dropzone ============ */
+.dropzone {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 16px;
+}
+.dropzone:hover {
+  background: var(--accent-soft-hover, var(--accent-soft));
+  transform: translateY(-2px);
+}
+.dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.dropzone .dz-icon {
+  width: 44px; height: 44px;
+  color: var(--accent);
+  margin: 0 auto 10px;
+  display: block;
+}
+.dropzone h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+.dropzone p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+}
+
+/* ============ Action Row ============ */
+.action-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.action-row label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+.action-row select {
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 160px;
+}
+.action-row select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ============ Buttons ============ */
+.btn-main {
+  background: var(--success, #16a34a);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: filter 0.15s;
+  width: 100%;
+}
+.btn-main:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-main svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+.btn-secondary {
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============ Preview ============ */
+.preview-box {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.preview-box img {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--card-hover);
+}
+
+/* ============ Status ============ */
+.status-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 10px 0;
+  line-height: 1.5;
+  min-height: 18px;
+}
+.file-name-display {
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  word-break: break-all;
+}
+
+/* ============ OCR Output ============ */
+.ocr-output {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  padding: 14px;
+  border-radius: 8px;
+  min-height: 150px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 13px;
+  color: var(--text-color);
+  white-space: pre-wrap;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+/* ============ SEO Article ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+.seo-article ul,
+.seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+  word-wrap: break-word;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a {
+  color: var(--accent);
+  text-decoration: underline;
+  font-weight: 600;
+  word-break: break-word;
+}
+.seo-article a:hover { color: var(--accent-hover); }
+
+.seo-article .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+.seo-article .table-wrap table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 14px;
+}
+.seo-article th, .seo-article td {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+  word-break: break-word;
+  vertical-align: top;
+}
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+
+details {
+  margin: 12px 0;
+  padding: 14px 16px;
+  background: var(--card-hover);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  word-wrap: break-word;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+details[open] summary::before { transform: rotate(90deg); }
+details p {
+  margin: 12px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.7;
+}
+
+/* ============ Related Tools Grid ============ */
+.related-tools-section {
+  max-width: 1100px;
+  margin: 60px auto 20px;
+  padding: 0 20px;
+}
+.related-tools-section h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: var(--text-color);
+  text-align: center;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+.related-sub {
+  text-align: center;
+  color: var(--subtext-color);
+  font-size: 14px;
+  margin: 0 0 32px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  min-height: 110px;
+}
+.related-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(25,57,138,0.12);
+}
+.related-card .rc-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.related-card:hover .rc-icon { transform: scale(1.08) rotate(-4deg); }
+.related-card .rc-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.related-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+.related-card p {
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 24px 16px; margin: 24px 12px; border-radius: 10px; }
+  .seo-article h2 { font-size: 21px !important; }
+  .seo-article h3 { font-size: 17.5px !important; }
+  .seo-article h4 { font-size: 16px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .seo-article .table-wrap table { min-width: 420px; }
+  .seo-article th, .seo-article td { padding: 8px 10px; font-size: 13px; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+  .tab-btn { font-size: 12.5px; padding: 11px 8px; gap: 5px; }
+  .tab-btn svg { width: 14px; height: 14px; }
+  .related-tools-section { padding: 0 14px; margin-top: 48px; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .related-card { padding: 14px 12px; min-height: 100px; }
+  .related-card h3 { font-size: 13px; }
+  .related-card p { font-size: 10.5px; }
+  .related-card .rc-icon { width: 36px; height: 36px; }
+  .related-card .rc-icon svg { width: 18px; height: 18px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- Global Header Container -->
-  <div id="doceasy-header"></div>
+<div id="doceasy-header"></div>
 
-  <!-- Top Ad Slot -->
-  <div class="ad-placeholder">Advertisement Space</div>
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Image Converter &amp; PDF Studio</h1>
+    <p class="hero-sub">Convert image formats, merge images into PDF, extract PDF pages as JPG, and OCR text from images — 100% in your browser.</p>
+  </div>
 
-  <main class="container">
-    <div class="tool-hero">
-      <h1>All-in-One Image & PDF Converter Studio</h1>
-      <p>Convert image formats, merge/extract PDFs into ZIP, and scan text with browser OCR.</p>
-    </div>
+  <div class="ad-slot-container">Advertisement</div>
 
-    <!-- NAVIGATION TABS -->
+  <div class="tool-card">
     <div class="studio-tabs">
-      <button class="tab-btn active" data-target="panel-img-conv">Image Format</button>
-      <button class="tab-btn" data-target="panel-img-pdf">Images to PDF</button>
-      <button class="tab-btn" data-target="panel-pdf-jpg">PDF to JPG (ZIP)</button>
-      <button class="tab-btn" data-target="panel-ocr">Image to OCR</button>
+      <button class="tab-btn active" data-target="panel-img-conv" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 4h4v2h-4zM14 10h2v4h-2z"/></svg>
+        Image Format
+      </button>
+      <button class="tab-btn" data-target="panel-img-pdf" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Images to PDF
+      </button>
+      <button class="tab-btn" data-target="panel-pdf-jpg" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg>
+        PDF to JPG
+      </button>
+      <button class="tab-btn" data-target="panel-ocr" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+        Image to OCR
+      </button>
     </div>
 
-    <!-- SECTION 1: IMAGE FORMAT CONVERTER -->
-    <div id="panel-img-conv" class="converter-panel">
-      <h3>Image Format Converter (JPG / PNG / WEBP)</h3>
-      <p>Convert any image format to JPEG, PNG, or WEBP instantly.</p>
-      <div class="dropzone" onclick="document.getElementById('img-file-in').click()">
-        <p>Click to upload image (JPG, PNG, WEBP)</p>
-        <input type="file" id="img-file-in" accept="image/*" style="display:none" onchange="previewSingleImg(event)">
-      </div>
-      <div id="single-img-name" style="font-size:12px; color:#94a3b8; margin-bottom:10px;"></div>
+    <!-- ============ PANEL 1: IMAGE FORMAT ============ -->
+    <div id="panel-img-conv" class="converter-panel active">
+      <h3 class="panel-title">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 4h4v2h-4zM14 10h2v4h-2z"/></svg>
+        Image Format Converter
+      </h3>
+      <p class="panel-sub">Convert any image between JPG, PNG, and WEBP instantly — quality preserved by default.</p>
+
+      <label class="dropzone">
+        <input type="file" id="img-file-in" accept="image/*" onchange="previewSingleImg(event)">
+        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <h4>Upload Image</h4>
+        <p>Click or drop a JPG, PNG, or WEBP file</p>
+      </label>
+
+      <div class="file-name-display" id="single-img-name"></div>
+
       <div class="action-row">
-        <label style="font-size:13px; font-weight:600; color:#cbd5e1;">Convert To:</label>
+        <label for="target-img-fmt">Convert To:</label>
         <select id="target-img-fmt">
           <option value="image/jpeg">JPEG / JPG</option>
           <option value="image/png">PNG</option>
           <option value="image/webp">WEBP</option>
         </select>
-        <button class="btn green" onclick="convertSingleImage()">Convert & Download</button>
+        <button class="btn-main" onclick="convertSingleImage()">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Convert &amp; Download
+        </button>
       </div>
       <canvas id="hidden-canvas" style="display:none;"></canvas>
     </div>
 
-    <!-- SECTION 2: IMAGES TO PDF -->
-    <div id="panel-img-pdf" class="converter-panel" hidden>
-      <h3>Images to PDF Maker</h3>
-      <p>Combine multiple images into a single professional PDF document.</p>
-      <div class="dropzone" onclick="document.getElementById('pdf-files-in').click()">
-        <p>Click to select multiple images for PDF</p>
-        <input type="file" id="pdf-files-in" accept="image/*" multiple style="display:none" onchange="previewMultipleImgs(event)">
-      </div>
-      <div id="multi-img-count" style="font-size:12px; color:#94a3b8; margin-bottom:10px;">No images selected</div>
+    <!-- ============ PANEL 2: IMAGES TO PDF ============ -->
+    <div id="panel-img-pdf" class="converter-panel">
+      <h3 class="panel-title">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Images to PDF Maker
+      </h3>
+      <p class="panel-sub">Combine multiple images into a single multi-page PDF document.</p>
+
+      <label class="dropzone">
+        <input type="file" id="pdf-files-in" accept="image/*" multiple onchange="previewMultipleImgs(event)">
+        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2.5"/>
+          <circle cx="8.5" cy="9" r="1.6"/>
+          <path d="M21 15.5l-4.5-4.5L5.5 21"/>
+        </svg>
+        <h4>Select Multiple Images</h4>
+        <p>Click or drop JPG / PNG / WEBP files</p>
+      </label>
+
+      <div class="file-name-display" id="multi-img-count">No images selected</div>
       <div class="preview-box" id="pdf-preview-box"></div>
+
       <div class="action-row">
-        <button class="btn green" onclick="generatePDF()">Generate & Download PDF</button>
+        <button class="btn-main" onclick="generatePDF()">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Generate &amp; Download PDF
+        </button>
       </div>
     </div>
 
-    <!-- SECTION 3: PDF TO JPG (ZIP) -->
-    <div id="panel-pdf-jpg" class="converter-panel" hidden>
-      <h3>PDF to JPG (ZIP Download)</h3>
-      <p>Extract all pages from a PDF file into high-quality JPG images inside a ZIP archive.</p>
-      <div class="dropzone" onclick="document.getElementById('pdf-to-jpg-in').click()">
-        <p>Click to upload PDF file</p>
-        <input type="file" id="pdf-to-jpg-in" accept="application/pdf" style="display:none" onchange="convertPdfToJpgZip(event)">
-      </div>
-      <div id="pdf-status" style="font-size:13px; color:#38bdf8; font-weight:600; margin-bottom:10px;"></div>
+    <!-- ============ PANEL 3: PDF TO JPG ============ -->
+    <div id="panel-pdf-jpg" class="converter-panel">
+      <h3 class="panel-title">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg>
+        PDF to JPG (ZIP Download)
+      </h3>
+      <p class="panel-sub">Extract every page of a PDF as a high-quality JPG image — bundled inside a ZIP archive.</p>
+
+      <label class="dropzone">
+        <input type="file" id="pdf-to-jpg-in" accept="application/pdf" onchange="convertPdfToJpgZip(event)">
+        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <h4>Upload PDF File</h4>
+        <p>Multi-page PDFs supported · JPG output</p>
+      </label>
+
+      <div class="status-text" id="pdf-status"></div>
     </div>
 
-    <!-- SECTION 4: REAL OCR -->
-    <div id="panel-ocr" class="converter-panel" hidden>
-      <h3>Real Image to Text OCR</h3>
-      <p>Scan and extract text from images using the browser OCR engine.</p>
-      <div class="dropzone" onclick="document.getElementById('ocr-file-in').click()">
-        <p>Click to upload image for OCR scanning</p>
-        <input type="file" id="ocr-file-in" accept="image/*" style="display:none" onchange="runRealOCR(event)">
-      </div>
-      <div id="ocr-status" style="font-size:12px; color:#38bdf8; font-weight:600; margin-bottom:8px;"></div>
-      <div class="ocr-output" id="ocr-result-text">Scanned text will appear here...</div>
-      <div class="action-row" style="margin-top:10px;">
-        <button class="btn" onclick="copyOcrText()">Copy Text</button>
+    <!-- ============ PANEL 4: OCR ============ -->
+    <div id="panel-ocr" class="converter-panel">
+      <h3 class="panel-title">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+        Image to Text (OCR)
+      </h3>
+      <p class="panel-sub">Extract typed text from images, screenshots, or scanned documents using browser OCR.</p>
+
+      <label class="dropzone">
+        <input type="file" id="ocr-file-in" accept="image/*" onchange="runRealOCR(event)">
+        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M8 12h8M8 8h8M8 16h4"/>
+        </svg>
+        <h4>Upload Image for OCR</h4>
+        <p>Best with clear, well-lit, high-contrast scans</p>
+      </label>
+
+      <div class="status-text" id="ocr-status"></div>
+      <div class="ocr-output" id="ocr-result-text">Scanned text will appear here…</div>
+
+      <div class="action-row">
+        <button class="btn-secondary" onclick="copyOcrText()">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Text
+        </button>
       </div>
     </div>
+  </div>
 
-    <!-- Mid Ad Slot -->
-    <div class="ad-placeholder">Advertisement Space</div>
+  <div class="ad-slot-container">Advertisement</div>
 
-    <!-- 250+ Words Professional SEO Article with Image Slot -->
-    <section class="seo-article">
-      <h2>Complete Guide: Convert Images, Create PDFs & Extract Text Online</h2>
-      <p>
-        Managing diverse digital documents across desktop and mobile devices often requires juggling multiple separate conversion utilities. The doceasy Converter Studio unifies everyday document transformations into a singular browser-based powerhouse. Whether you need to swap image raster formats between JPG, PNG, and WebP, merge multiple photo scans into a unified multi-page PDF, extract all pages from a PDF document into a bundled ZIP archive, or transcribe typed text using client-side OCR algorithms, everything operates directly within your device.
-      </p>
+  <!-- ============ SEO ARTICLE ============ -->
+  <section class="seo-article">
 
-      <!-- 🖼️ IMAGE PLACEHOLDER FOR ARTICLE 🖼️ -->
-      <div class="article-image-box">
-        <img src="../assets/images/converter-studio-demo.jpg" alt="All in One Converter Studio Workflow Demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:#38bdf8;font-weight:700;\'>📷 [Place Demo Graphic Here: assets/images/converter-studio-demo.jpg]</div>';">
-        <div class="article-image-caption">Overview of raster format transcode, multi-image PDF compiling, and local OCR transcription.</div>
-      </div>
+    <h2>Complete Guide: Image Converter, PDF Maker &amp; OCR Studio (2026)</h2>
 
-      <h3>How to Use the All-in-One Converter:</h3>
-      <ul>
-        <li><b>Format Transcode (JPG / PNG / WEBP):</b> Select the first tab, upload your source picture, pick your desired target format, and trigger instant local canvas re-encoding.</li>
-        <li><b>Compile Images into PDF:</b> Switch to <i>Images to PDF</i>, select one or more photo files, preview their layout, and export them into a neat printable document.</li>
-        <li><b>Extract PDF Pages into ZIP:</b> Upload any multi-page PDF document to render every single page into high-definition JPG snapshots packaged cleanly in a compressed ZIP download.</li>
-        <li><b>Extract Text (OCR):</b> Upload document screenshots or photos into the OCR tab to transcribe English typography into editable text instantly without typing manually.</li>
-      </ul>
+    <p>Managing digital documents across desktop, mobile, and tablet devices often requires juggling multiple separate conversion utilities. Image format conversions, PDF merges, page extractions, and OCR scanning are all tasks that most people do weekly — yet most online tools force you to sign up, upload files to unknown servers, and wait through ads just to get a simple output.</p>
 
-      <h3>Key Advantages & Privacy Guarantees:</h3>
-      <ul>
-        <li><b>Strict Local Processing:</b> All PDF parsing, image encoding, and OCR extraction utilize WebAssembly and client-side JavaScript workers. Your files are never stored or transmitted across external networks.</li>
-        <li><b>Universal Compatibility:</b> Fully responsive across Windows, macOS, Android, and iOS devices with zero software installation required.</li>
-        <li><b>Zero Limitations:</b> Transcode and process as many files as needed completely free of charge.</li>
-      </ul>
+    <p>The <strong>DocEasy Image Converter &amp; PDF Studio</strong> brings four essential tools into one clean interface — an <b>image format converter</b>, an <b>images-to-PDF maker</b>, a <b>PDF-to-JPG extractor</b>, and an <b>image-to-text OCR scanner</b>. Everything runs 100% inside your browser using modern web APIs. No uploads. No signup. No waiting.</p>
 
-      <h3>Frequently Asked Questions (FAQ)</h3>
-      <p><b>Q: Does converting an image format affect the original quality?</b><br>
-      Canvas exports use balanced compression algorithms. PNG outputs retain lossless transparency and clarity, while JPG and WebP files balance high visual fidelity with compact file weights.</p>
+    <div class="article-image-box">
+      <img src="../assets/images/image-converter-demo.jpg" alt="DocEasy All-in-One Converter Studio" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/image-converter-demo.jpg]</div>';">
+      <div class="article-image-caption">All-in-one conversion studio: image format, PDF compilation, page extraction, and OCR — running locally in your browser.</div>
+    </div>
 
-      <p><b>Q: How large of a PDF can I unpack into a ZIP?</b><br>
-      Because extraction processes sequentially in browser memory, multi-page PDFs with dozens of pages can be extracted easily depending on your device's available RAM.</p>
+    <h3>How to Use — Quick Start</h3>
+    <ol>
+      <li><b>Choose your tool:</b> Tap any of the four tabs — <b>Image Format</b>, <b>Images to PDF</b>, <b>PDF to JPG</b>, or <b>Image to OCR</b>.</li>
+      <li><b>Upload files:</b> Click the drop zone (or drag files into it). Multiple files supported where applicable.</li>
+      <li><b>Configure:</b> Pick output format, quality, or language (OCR) as needed.</li>
+      <li><b>Run:</b> Click the green action button. Processing happens instantly in your browser.</li>
+      <li><b>Download:</b> Your converted file, PDF, ZIP, or extracted text is delivered directly to your device.</li>
+    </ol>
 
-      <p><b>Q: Is my document data private?</b><br>
-      Yes, absolutely. No document, image, or parsed OCR string ever leaves your browser sandbox.</p>
-    </section>
+    <h3>1. What Is an Image Format Converter?</h3>
 
-    <!-- Bottom Ad Slot -->
-    <div class="ad-placeholder">Advertisement Space</div>
-  </main>
+    <p>An image format converter is a tool that takes an image in one file format (like JPG) and re-encodes it into another format (like PNG or WEBP). The pixel data stays the same, but the file structure, compression algorithm, and metadata change. This makes the image compatible with different platforms, reduces file size, or unlocks features like transparency.</p>
 
-  <!-- Global Footer Container -->
-  <div id="doceasy-footer"></div>
+    <p>Modern browsers support lossless conversion between the three major image formats through the HTML5 Canvas API. DocEasy uses this API to convert your images locally — no server round-trip, no privacy concerns, no upload limits.</p>
 
-  <!-- Master Core Script -->
-  <script src="../assets/js/core/doceasy-core.js"></script>
+    <h3>2. Why Convert Between Image Formats?</h3>
 
-  <script>
-    /* TAB SWITCHING */
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.converter-panel').forEach(p => p.hidden = true);
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.target).hidden = false;
-      };
+    <p>Different formats serve different purposes. Here are the most common reasons to convert:</p>
+
+    <ul>
+      <li><b>JPG → PNG:</b> When you need transparency or lossless quality for logos, signatures, or graphics.</li>
+      <li><b>PNG → JPG:</b> When you want smaller file sizes for photographs or background-heavy images.</li>
+      <li><b>Any → WEBP:</b> When you're publishing to a modern website and want the smallest file size with good quality.</li>
+      <li><b>Platform compatibility:</b> Some government portals only accept JPG; some stock sites only accept PNG.</li>
+      <li><b>Exam forms:</b> Indian exam portals often require specific formats (mostly JPG) and pixel dimensions.</li>
+      <li><b>Web performance:</b> WEBP images load 25–35% faster than equivalent JPGs, improving SEO and user experience.</li>
+    </ul>
+
+    <h3>3. Understanding the All-in-One Studio</h3>
+
+    <p>Instead of visiting four different websites for four different tasks, the DocEasy Studio bundles them into one interface:</p>
+
+    <ul>
+      <li><b>Image Format Converter:</b> Change an image's file format — JPG, PNG, or WEBP — with a single click. Original quality preserved by default.</li>
+      <li><b>Images to PDF:</b> Combine multiple JPG/PNG/WEBP images into one multi-page PDF. Perfect for scanning documents, creating photo albums, or bundling receipts.</li>
+      <li><b>PDF to JPG:</b> Extract every page of a multi-page PDF as an individual JPG image, packaged neatly inside a ZIP archive.</li>
+      <li><b>Image to OCR:</b> Extract typed text from images (screenshots, photos, scanned documents) using Tesseract.js.</li>
+    </ul>
+
+    <h3>4. JPG vs PNG vs WEBP — Which Format Should You Use?</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Best For</th><th>Compression</th><th>Transparency</th><th>Typical Size</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>JPG</b></td><td>Photos, scans, exam photos</td><td>Lossy (excellent)</td><td>No</td><td>Small</td></tr>
+          <tr><td><b>PNG</b></td><td>Logos, screenshots, signatures</td><td>Lossless</td><td>Yes</td><td>Medium–Large</td></tr>
+          <tr><td><b>WEBP</b></td><td>Websites, modern apps</td><td>Lossy + Lossless</td><td>Yes</td><td>Smallest</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><b>Simple rule:</b> Photos → JPG. Graphics/signatures/logos → PNG. Modern website → WEBP.</p>
+
+    <h3>5. How to Use the Image Format Converter</h3>
+    <ol>
+      <li>Open the <b>Image Format</b> tab (already active by default).</li>
+      <li>Click the upload card or drag your image into it.</li>
+      <li>Choose your target format — JPEG, PNG, or WEBP — from the dropdown.</li>
+      <li>Click <b>Convert &amp; Download</b>. The converted image downloads instantly.</li>
+    </ol>
+    <p><b>Note:</b> PNG output preserves transparency. When converting a transparent PNG to JPG, the transparent areas automatically become white — because JPG doesn't support transparency.</p>
+
+    <h3>6. How to Use Images to PDF</h3>
+    <ol>
+      <li>Open the <b>Images to PDF</b> tab.</li>
+      <li>Click the upload card and select multiple images at once.</li>
+      <li>You'll see thumbnails of all selected images and the total count.</li>
+      <li>Click <b>Generate &amp; Download PDF</b>. A print dialog opens with all pages laid out.</li>
+      <li>Choose "Save as PDF" as the destination and click Save.</li>
+    </ol>
+    <p>Each image becomes one page in the PDF, sized to fit A4 automatically. This is the same approach used by dedicated scanner apps. For a similar flow with camera capture and cropping, try our <a href="jpg-to-pdf.html">JPG to PDF scanner</a>.</p>
+
+    <h3>7. How to Use PDF to JPG</h3>
+    <ol>
+      <li>Open the <b>PDF to JPG</b> tab.</li>
+      <li>Click the upload card and select your PDF file.</li>
+      <li>The tool renders every page as a JPG at 1.5× scale (sharp enough for printing).</li>
+      <li>Once complete, a ZIP file downloads automatically with all pages renamed <code>page-1.jpg</code>, <code>page-2.jpg</code>, and so on.</li>
+    </ol>
+    <p>Use this to convert PDF slides to images, extract charts, or share individual pages on social media. If you also need to combine multiple PDFs into one first, try our <a href="pdf-merge.html">PDF Merge</a> tool. To reduce the resulting PDF size, use our <a href="pdf-compressor.html">PDF Compressor</a>.</p>
+
+    <h3>8. How to Use Image to OCR</h3>
+    <ol>
+      <li>Open the <b>Image to OCR</b> tab.</li>
+      <li>Upload a clear photo or screenshot containing typed text.</li>
+      <li>The browser downloads the OCR language model (~10 MB, first run only) and processes the image.</li>
+      <li>Extracted text appears in the output box. Click <b>Copy Text</b> to copy it.</li>
+    </ol>
+    <p><b>Best results:</b> use a straight, well-lit, high-contrast image. Printed text works best; handwriting is not well-supported by current OCR engines. For more advanced OCR workflows with language selection and pre-processing, try our <a href="doc-scanner.html">Document Scanner &amp; OCR</a>.</p>
+
+    <h3>9. Privacy &amp; Security</h3>
+
+    <p>Every operation in DocEasy runs entirely in your browser. Your files never leave your device. This is fundamentally different from most online converters, which upload your images to their servers.</p>
+
+    <ul>
+      <li><b>No uploads:</b> All image, PDF, and OCR processing happens locally using HTML5 Canvas, PDF.js, JSZip, and Tesseract.js.</li>
+      <li><b>No storage:</b> Nothing is stored, logged, or cached on any server.</li>
+      <li><b>No tracking:</b> We don't log which files you process or when.</li>
+      <li><b>Offline capable:</b> After the page loads, you can disconnect from the internet and continue converting.</li>
+    </ul>
+
+    <h3>10. Common Use Cases</h3>
+
+    <ul>
+      <li><b>Exam form submissions:</b> Convert photos to JPG with specific file sizes for <a href="image-compressor.html">SSC, IBPS, UPSC and other portals</a>.</li>
+      <li><b>Website optimization:</b> Convert PNGs to WEBP to reduce page load time and improve SEO.</li>
+      <li><b>Job applications:</b> Merge your resume, photo, and certificates into one PDF.</li>
+      <li><b>Business receipts:</b> Photograph receipts and merge into one PDF for expense reports.</li>
+      <li><b>Slide extraction:</b> Convert a PDF presentation into individual images for social media.</li>
+      <li><b>Document digitization:</b> Extract text from scanned documents into editable form.</li>
+      <li><b>Signature editing:</b> Convert a photographed signature to PNG with clean background.</li>
+      <li><b>ID card processing:</b> Crop and resize Aadhaar, PAN, voter ID with our <a href="card-cropper.html">ID Card Cropper</a>.</li>
+      <li><b>PAN applications:</b> Prepare photo and signature for UTI with our <a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature Resizer</a>.</li>
+      <li><b>Passport photos:</b> Create print-ready 35×45 mm photos with our <a href="passport-maker.html">Passport Photo Maker</a>.</li>
+    </ul>
+
+    <h3>11. Frequently Asked Questions</h3>
+
+    <details>
+      <summary>Q: Is this tool really free?</summary>
+      <p>Yes, 100% free with no signup, no watermark, and no daily limits. Every feature runs entirely in your browser.</p>
+    </details>
+
+    <details>
+      <summary>Q: Are my files uploaded to a server?</summary>
+      <p>No. All conversion, PDF merging, ZIP creation, and OCR happen locally in your browser using WebAssembly and JavaScript. Your files never leave your device.</p>
+    </details>
+
+    <details>
+      <summary>Q: Does image format conversion affect quality?</summary>
+      <p>Converting between PNG and WEBP is lossless by default — no quality loss. Converting to JPG uses high-quality compression (about 92% quality) that's visually indistinguishable from the original for most images.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I convert HEIC (iPhone) photos?</summary>
+      <p>HEIC is not natively supported by web browsers. Convert HEIC to JPG on your phone first (Settings → Camera → Formats → Most Compatible), then upload here.</p>
+    </details>
+
+    <details>
+      <summary>Q: How large can my PDF be for PDF-to-JPG conversion?</summary>
+      <p>No hard limit, but very large PDFs (100+ pages) may take a minute and consume significant RAM. For files under 50 pages, conversion typically completes in seconds.</p>
+    </details>
+
+    <details>
+      <summary>Q: Does OCR work with handwritten text?</summary>
+      <p>No. Current browser-based OCR engines are optimized for printed typography. Handwriting accuracy is very low. For best results, use clear printed documents, screenshots, or scans.</p>
+    </details>
+
+    <details>
+      <summary>Q: What languages does OCR support?</summary>
+      <p>The default OCR engine supports English very well. For other languages (Hindi, Bengali, Tamil), try our <a href="doc-scanner.html">Document Scanner &amp; OCR</a> tool which supports multiple language packs.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I convert images to PDF on mobile?</summary>
+      <p>Yes. The entire studio is fully responsive and works on any modern Android, iOS, or iPad browser. No app installation required.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I convert multiple images to different formats at once?</summary>
+      <p>Currently each conversion processes one image at a time for maximum quality control. Batch format conversion is on our roadmap.</p>
+    </details>
+
+    <details>
+      <summary>Q: Does the tool work offline?</summary>
+      <p>After the page loads once, most features work offline. OCR requires downloading a language model on first use (cached afterward).</p>
+    </details>
+
+    <h3>Popular Right Now — Trending Tools</h3>
+    <ul>
+      <li><a href="image-compressor.html">Image Compressor &amp; Resizer</a> — reduce image size for WhatsApp &amp; email</li>
+      <li><a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature Resizer</a> — exact specs for UTI/NSDL PAN applications</li>
+      <li><a href="card-cropper.html">ID Card Dual-Side Cropper</a> — Aadhaar, PAN at ultra HD 300 DPI</li>
+      <li><a href="pdf-merge.html">PDF Merge</a> — combine multiple PDFs into one clean file</li>
+      <li><a href="qr-scanner.html">QR Code Scanner</a> — scan QR from camera or image</li>
+    </ul>
+
+    <h3>12. Related Tools You Might Need</h3>
+
+    <p>If you found this studio useful, you may also like our dedicated <a href="image-compressor.html">Image Compressor &amp; Resizer</a>, <a href="pdf-merge.html">PDF Merge</a>, <a href="pdf-split.html">PDF Split</a>, <a href="pdf-compressor.html">PDF Compressor</a>, <a href="doc-scanner.html">Document Scanner &amp; OCR</a>, <a href="jpg-to-pdf.html">JPG to PDF</a>, <a href="pdf-to-jpg.html">PDF to JPG</a>, <a href="card-cropper.html">ID Card Cropper</a>, <a href="passport-maker.html">Passport Photo Maker</a>, <a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature Resizer</a>, and <a href="signature-bg-remover.html">Signature BG Remover</a>.</p>
+
+    <h3>13. Conclusion</h3>
+
+    <p>The DocEasy Image Converter &amp; PDF Studio replaces four separate paid tools with one clean, private, browser-based interface. Whether you're a student preparing exam forms, a freelancer organizing receipts, a developer optimizing a website, or anyone who deals with images and PDFs daily — everything you need is now one tab away.</p>
+
+    <p>No signup. No uploads. No limits. Just fast, high-quality conversion that respects your privacy and works on any device.</p>
+
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ RELATED TOOLS GRID ============ -->
+  <section class="related-tools-section">
+    <h2>Explore More Free DocEasy Tools</h2>
+    <p class="related-sub">All free, all browser-based, all 100% private.</p>
+    <div class="related-grid">
+
+      <a class="related-card" href="image-compressor.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15h6M12 12v6"/></svg></div>
+        <h3>Image Compressor</h3>
+        <p>Reduce image file size</p>
+      </a>
+
+      <a class="related-card" href="pdf-merge.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Merge PDF</h3>
+        <p>Combine PDFs into one</p>
+      </a>
+
+      <a class="related-card" href="pdf-split.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
+        <h3>Split PDF</h3>
+        <p>Extract specific pages</p>
+      </a>
+
+      <a class="related-card" href="pdf-compressor.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
+        <h3>Compress PDF</h3>
+        <p>Reduce PDF file size</p>
+      </a>
+
+      <a class="related-card" href="pdf-to-jpg.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        <h3>PDF to JPG</h3>
+        <p>High-res page extraction</p>
+      </a>
+
+      <a class="related-card" href="jpg-to-pdf.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg></div>
+        <h3>JPG to PDF</h3>
+        <p>Multi-image to PDF scanner</p>
+      </a>
+
+      <a class="related-card" href="doc-scanner.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        <h3>Document Scanner</h3>
+        <p>Camera scan + OCR</p>
+      </a>
+
+      <a class="related-card" href="card-cropper.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <h3>ID Card Cropper</h3>
+        <p>Aadhaar, PAN at 300 DPI</p>
+      </a>
+
+      <a class="related-card" href="passport-maker.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+        <h3>Passport Photo</h3>
+        <p>35×45mm at 300 DPI</p>
+      </a>
+
+      <a class="related-card" href="image-bg-remover.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
+        <h3>BG Remover</h3>
+        <p>AI background removal</p>
+      </a>
+
+      <a class="related-card" href="pan-photo-signature-resizer.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <h3>PAN Photo &amp; Sign</h3>
+        <p>213×213 &amp; 400×200 for UTI</p>
+      </a>
+
+      <a class="related-card" href="qr-scanner.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
+        <h3>QR Scanner</h3>
+        <p>Camera + image scan</p>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+/* ==========================================================================
+   All-in-One Converter Studio — Image Format, Images→PDF, PDF→JPG, OCR
+   100% client-side. No uploads.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  /* ---------- TAB SWITCHING ---------- */
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.converter-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.target);
+      if (target) target.classList.add('active');
     });
+  });
 
-    /* 1. SINGLE IMAGE CONVERTER */
-    let activeImage = null;
-    function previewSingleImg(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      document.getElementById('single-img-name').textContent = `Loaded: ${file.name}`;
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        activeImage = new Image();
-        activeImage.src = ev.target.result;
-      }
-      reader.readAsDataURL(file);
+  /* ============================================================
+     1. IMAGE FORMAT CONVERTER
+     ============================================================ */
+  var activeImage = null;
+
+  window.previewSingleImg = function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    document.getElementById('single-img-name').textContent = 'Loaded: ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      activeImage = new Image();
+      activeImage.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.convertSingleImage = function () {
+    if (!activeImage) { alert('Please upload an image first!'); return; }
+    var format = document.getElementById('target-img-fmt').value;
+    var canvas = document.getElementById('hidden-canvas');
+    canvas.width = activeImage.width;
+    canvas.height = activeImage.height;
+    var ctx = canvas.getContext('2d');
+    if (format === 'image/jpeg') {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
+    ctx.drawImage(activeImage, 0, 0);
+    var dataUrl = canvas.toDataURL(format, 0.92);
+    var ext = format.split('/')[1].replace('jpeg', 'jpg');
+    var a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = 'converted-image.' + ext;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
 
-    function convertSingleImage() {
-      if (!activeImage) { alert('Please upload an image first!'); return; }
-      const format = document.getElementById('target-img-fmt').value;
-      const canvas = document.getElementById('hidden-canvas');
-      canvas.width = activeImage.width;
-      canvas.height = activeImage.height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(activeImage, 0, 0);
+  /* ============================================================
+     2. IMAGES TO PDF
+     ============================================================ */
+  var selectedPdfImages = [];
 
-      const dataUrl = canvas.toDataURL(format);
-      const ext = format.split('/')[1].replace('jpeg', 'jpg');
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = `converted-image.${ext}`;
-      a.click();
-    }
-
-    /* 2. MULTI IMAGES TO PDF */
-    let selectedPdfImages = [];
-    function previewMultipleImgs(e) {
-      const files = e.target.files;
-      if (!files.length) return;
-      selectedPdfImages = [];
-      const box = document.getElementById('pdf-preview-box');
-      box.innerHTML = '';
-      
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-          selectedPdfImages.push(ev.target.result);
-          const img = document.createElement('img');
-          img.src = ev.target.result;
-          box.appendChild(img);
-        }
-        reader.readAsDataURL(file);
-      });
-      document.getElementById('multi-img-count').textContent = `${files.length} image(s) loaded ready for PDF`;
-    }
-
-    function generatePDF() {
-      if (selectedPdfImages.length === 0) { alert('Please select images first!'); return; }
-      const win = window.open('', '_blank');
-      win.document.write('<html><head><title>Print to PDF - DocEasy</title><style>body{margin:0;text-align:center;background:#fff;} img{max-width:100%; height:auto; display:block; margin:0 auto; page-break-after:always;}</style></head><body>');
-      selectedPdfImages.forEach(src => {
-        win.document.write(`<img src="${src}">`);
-      });
-      win.document.write('</body></html>');
-      win.document.close();
-      setTimeout(() => { win.print(); }, 500);
-    }
-
-    /* 3. PDF TO JPG (ZIP) */
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-    async function convertPdfToJpgZip(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const statusEl = document.getElementById('pdf-status');
-      statusEl.textContent = 'Reading PDF file...';
-
-      const reader = new FileReader();
-      reader.onload = async function(ev) {
-        try {
-          const typedarray = new Uint8Array(ev.target.result);
-          const pdf = await pdfjsLib.getDocument(typedarray).promise;
-          const zip = new JSZip();
-          const imgFolder = zip.folder("pdf-pages-jpg");
-
-          for (let i = 1; i <= pdf.numPages; i++) {
-            statusEl.textContent = `Processing page ${i} of ${pdf.numPages}...`;
-            const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: 1.5 });
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            await page.render({ canvasContext: context, viewport: viewport }).promise;
-            const imgData = canvas.toDataURL('image/jpeg', 0.9).replace(/^data:image\/jpeg;base64,/, "");
-            imgFolder.file(`page-${i}.jpg`, imgData, { base64: true });
-          }
-
-          statusEl.textContent = 'Generating ZIP file...';
-          const content = await zip.generateAsync({ type: "blob" });
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(content);
-          link.download = `${file.name.replace(/\.[^/.]+$/, "")}-images.zip`;
-          link.click();
-          statusEl.textContent = 'Success! ZIP downloaded.';
-        } catch (err) {
-          console.error(err);
-          statusEl.textContent = 'Error processing PDF. Please try another file.';
-        }
+  window.previewMultipleImgs = function (e) {
+    var files = e.target.files;
+    if (!files.length) return;
+    selectedPdfImages = [];
+    var box = document.getElementById('pdf-preview-box');
+    box.innerHTML = '';
+    Array.prototype.forEach.call(files, function (file) {
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        selectedPdfImages.push(ev.target.result);
+        var img = document.createElement('img');
+        img.src = ev.target.result;
+        box.appendChild(img);
       };
-      reader.readAsArrayBuffer(file);
-    }
+      reader.readAsDataURL(file);
+    });
+    document.getElementById('multi-img-count').textContent = files.length + ' image(s) loaded ready for PDF';
+  };
 
-    /* 4. REAL OCR */
-    async function runRealOCR(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const statusEl = document.getElementById('ocr-status');
-      const resultEl = document.getElementById('ocr-result-text');
-      
-      statusEl.textContent = 'Initializing OCR engine and scanning text...';
-      resultEl.textContent = 'Processing image pixels...';
+  window.generatePDF = function () {
+    if (selectedPdfImages.length === 0) { alert('Please select images first!'); return; }
+    var win = window.open('', '_blank');
+    if (!win) { alert('Please allow popups to generate PDF.'); return; }
+    var html = '<html><head><title>DocEasy — PDF</title><style>' +
+      '@page { size: A4; margin: 10mm; }' +
+      'body { margin: 0; padding: 0; text-align: center; background: #fff; }' +
+      'img { max-width: 100%; max-height: 277mm; height: auto; display: block; margin: 0 auto; page-break-after: always; object-fit: contain; }' +
+      'img:last-child { page-break-after: auto; }' +
+      '</style></head><body>';
+    selectedPdfImages.forEach(function (src) {
+      html += '<img src="' + src + '">';
+    });
+    html += '</body></html>';
+    win.document.write(html);
+    win.document.close();
+    setTimeout(function () { win.print(); }, 600);
+  };
 
+  /* ============================================================
+     3. PDF TO JPG (ZIP)
+     ============================================================ */
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  window.convertPdfToJpgZip = async function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var statusEl = document.getElementById('pdf-status');
+    statusEl.textContent = 'Reading PDF file…';
+
+    var reader = new FileReader();
+    reader.onload = async function (ev) {
       try {
-        const { data: { text } } = await Tesseract.recognize(
-          file,
-          'eng',
-          { logger: m => { if(m.status) statusEl.textContent = `${m.status} (${Math.round(m.progress * 100)}%)`; } }
-        );
-        statusEl.textContent = 'Scan complete successfully!';
-        resultEl.textContent = text ? text : 'No readable text found in this image.';
+        var typedarray = new Uint8Array(ev.target.result);
+        var pdf = await pdfjsLib.getDocument(typedarray).promise;
+        var zip = new JSZip();
+        var imgFolder = zip.folder('pdf-pages-jpg');
+        var total = pdf.numPages;
+
+        for (var i = 1; i <= total; i++) {
+          statusEl.textContent = 'Processing page ' + i + ' of ' + total + '…';
+          var page = await pdf.getPage(i);
+          var viewport = page.getViewport({ scale: 1.5 });
+          var canvas = document.createElement('canvas');
+          var context = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          await page.render({ canvasContext: context, viewport: viewport }).promise;
+          var imgData = canvas.toDataURL('image/jpeg', 0.92).replace(/^data:image\/jpeg;base64,/, '');
+          imgFolder.file('page-' + i + '.jpg', imgData, { base64: true });
+        }
+
+        statusEl.textContent = 'Generating ZIP file…';
+        var content = await zip.generateAsync({ type: 'blob' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(content);
+        link.download = file.name.replace(/\.[^/.]+$/, '') + '-images.zip';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(function () { URL.revokeObjectURL(link.href); }, 4000);
+        statusEl.textContent = '✅ Success! ZIP downloaded (' + total + ' pages).';
       } catch (err) {
         console.error(err);
-        statusEl.textContent = 'Error during OCR scan.';
-        resultEl.textContent = 'Failed to extract text. Please try a clearer image.';
+        statusEl.textContent = '❌ Error processing PDF. Please try another file.';
       }
-    }
+    };
+    reader.readAsArrayBuffer(file);
+  };
 
-    function copyOcrText() {
-      const text = document.getElementById('ocr-result-text').textContent;
-      navigator.clipboard.writeText(text);
-      alert('Extracted text copied to clipboard!');
+  /* ============================================================
+     4. IMAGE TO OCR
+     ============================================================ */
+  window.runRealOCR = async function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var statusEl = document.getElementById('ocr-status');
+    var resultEl = document.getElementById('ocr-result-text');
+
+    statusEl.textContent = 'Initializing OCR engine and scanning text…';
+    resultEl.textContent = 'Processing image pixels…';
+
+    try {
+      var result = await Tesseract.recognize(file, 'eng', {
+        logger: function (m) {
+          if (m.status) {
+            statusEl.textContent = m.status + ' (' + Math.round(m.progress * 100) + '%)';
+          }
+        }
+      });
+      var text = result && result.data && result.data.text ? result.data.text : '';
+      statusEl.textContent = '✅ Scan complete successfully!';
+      resultEl.textContent = text ? text : 'No readable text found in this image. Try a clearer, higher-contrast scan.';
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = '❌ Error during OCR scan.';
+      resultEl.textContent = 'Failed to extract text. Please try a clearer image.';
     }
-  </script>
+  };
+
+  window.copyOcrText = function () {
+    var text = document.getElementById('ocr-result-text').textContent || '';
+    if (!text) { alert('No text to copy.'); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        alert('Extracted text copied to clipboard!');
+      }).catch(function () {
+        alert('Copy failed. Please select and copy manually.');
+      });
+    } else {
+      alert('Clipboard not supported on this browser.');
+    }
+  };
+
+})();
+</script>
 </body>
 </html>
