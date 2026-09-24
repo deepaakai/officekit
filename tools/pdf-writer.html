@@ -5,1682 +5,547 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Word Writer — Hindi, English & Hinglish Typing with DOCX/PDF Export | DocEasy</title>
 <meta name="description" content="Free online Word writer with Hindi, English, and Hinglish typing. Built-in Hindi keyboard, 13 fonts, header/footer, and Word/PDF export. 100% browser-based.">
-<meta name="keywords" content="word writer, hindi typing, hinglish typing, hindi keyboard, devanagari font, docx writer, online word editor">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/word-writer.html">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Word Writer — Hindi, English, Hinglish | DocEasy">
-<meta property="og:description" content="Write in Hindi, English or Hinglish with 13 fonts, header/footer, and Word/PDF export.">
-<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/word-writer.html">
-<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
-<meta property="og:site_name" content="DocEasy">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Word Writer — Hindi, English, Hinglish | DocEasy">
-<meta name="twitter:description" content="Write in Hindi, English or Hinglish.">
-<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Word Writer — DocEasy","url":"https://deepaakai.github.io/officekit/tools/word-writer.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;700&family=Noto+Serif+Devanagari:wght@400;700&family=Baloo+Bhai+2:wght@400;700&family=Hind:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;700&family=Hind:wght@400;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
-.ad-slot-container, .ad-placeholder { display: none !important; }
+* { box-sizing: border-box; }
+.main-wrap { max-width: 1040px; margin: 0 auto; padding: 10px 16px 80px; }
 
-/* ============ TEMPLATE BAR ============ */
-.template-bar {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  padding: 10px 14px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  margin: 0 auto 12px;
-  max-width: 980px;
-  overflow-x: auto;
-}
-.template-bar > span {
-  font-size: 11px; font-weight: 800; color: var(--subtext-color);
-  text-transform: uppercase; letter-spacing: 0.6px; padding: 0 6px;
-  flex-shrink: 0;
-}
-.tpl-btn {
-  padding: 7px 14px;
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  color: var(--text-color);
-  font-size: 12.5px; font-weight: 600;
-  cursor: pointer; font-family: inherit;
-  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
-}
-.tpl-btn:hover {
-  border-color: var(--accent); color: var(--accent);
-  background: var(--accent-soft);
-  transform: translateY(-1px);
-}
-
-/* ============ MODERN TOOLBAR ============ */
-.toolbar {
-  display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
-  padding: 10px 14px;
-  background: linear-gradient(180deg, var(--card-bg) 0%, var(--card-hover) 100%);
-  border: 1px solid var(--border-color);
+/* ============ MODERN COMPACT TOOLBAR ============ */
+.toolbar-container {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
   border-radius: 14px;
-  margin: 0 auto 12px;
-  max-width: 980px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
+  padding: 8px 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  position: sticky;
+  top: 10px;
+  z-index: 100;
 }
-.tb-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 36px; height: 36px; padding: 0 10px;
-  background: transparent;
-  border: 1px solid transparent;
+.tb-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f8fafc;
+  padding: 3px 6px;
   border-radius: 9px;
-  color: var(--text-color);
-  font-size: 14px; font-weight: 700;
-  cursor: pointer;
-  transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
-  gap: 6px; font-family: inherit;
-}
-.tb-btn:hover { background: var(--accent-soft); color: var(--accent); transform: translateY(-1px); }
-.tb-btn:active { transform: translateY(0) scale(0.97); }
-.tb-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.28); }
-.tb-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.tb-btn.tb-keyboard {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-  color: #fff;
-  padding: 0 14px;
-  box-shadow: 0 2px 8px rgba(234,88,12,0.28);
-}
-.tb-btn.tb-keyboard:hover { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); color: #fff; transform: translateY(-1px); }
-.tb-btn.tb-keyboard.active { background: linear-gradient(135deg, #c2410c 0%, #9a3412 100%); }
-.tb-sep {
-  width: 1px; height: 24px;
-  background: linear-gradient(180deg, transparent, var(--border-color) 20%, var(--border-color) 80%, transparent);
-  margin: 0 4px; flex-shrink: 0;
+  border: 1px solid #e2e8f0;
 }
 .tb-select {
-  height: 36px; padding: 0 10px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 9px;
-  color: var(--text-color);
-  font-size: 12.5px; font-weight: 600;
-  cursor: pointer; font-family: inherit;
-  max-width: 170px;
-  transition: all 0.16s;
+  height: 32px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color, #1e293b);
+  cursor: pointer;
+  outline: none;
+  border-radius: 6px;
+  padding: 0 4px;
 }
-.tb-select:hover { border-color: var(--accent); }
-.tb-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.tb-color-wrap {
-  position: relative;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 9px; cursor: pointer;
-  transition: all 0.16s;
-}
-.tb-color-wrap:hover { background: var(--accent-soft); transform: translateY(-1px); }
-.tb-color-wrap svg { width: 16px; height: 16px; stroke: var(--text-color); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.tb-color-wrap::after {
-  content: ""; position: absolute; bottom: 4px; left: 8px; right: 8px;
-  height: 3px; border-radius: 2px;
-  background: var(--pick-color, #1a1a1a);
-}
-.tb-color-wrap input[type="color"] {
-  position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
-}
-
-/* ============ HEADER / FOOTER ROWS WITH TOGGLE ============ */
-.hf-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  margin: 0 auto 12px;
-  max-width: 980px;
-  transition: all 0.2s;
-}
-.hf-row.hf-disabled { opacity: 0.55; background: var(--card-hover); }
-.hf-row.hf-disabled .hf-input { pointer-events: none; }
-.hf-toggle {
-  position: relative;
+.tb-select:hover { background: #edf2f7; }
+.tb-btn {
+  width: 32px;
+  height: 32px;
   display: inline-flex;
-  width: 38px; height: 22px;
-  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tb-btn:hover { background: #e2e8f0; color: var(--accent, #19398a); }
+.tb-btn.active { background: var(--accent, #19398a); color: #ffffff !important; }
+.tb-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+.tb-btn.hindi-btn {
+  width: auto;
+  padding: 0 10px;
+  gap: 6px;
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fdba74;
+}
+.tb-btn.hindi-btn:hover, .tb-btn.hindi-btn.active { background: #ea580c; color: #fff !important; }
+
+.color-picker-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: 6px;
   cursor: pointer;
 }
-.hf-toggle input { display: none; }
-.hf-toggle .hf-track {
-  position: absolute; inset: 0;
-  background: var(--border-color);
-  border-radius: 999px;
-  transition: background 0.2s;
+.color-picker-box input[type="color"] {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 4px;
 }
-.hf-toggle .hf-knob {
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 18px; height: 18px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  transition: transform 0.24s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.hf-toggle input:checked ~ .hf-track { background: var(--accent); }
-.hf-toggle input:checked ~ .hf-knob { transform: translateX(16px); }
-.hf-label {
-  font-size: 11px; font-weight: 800; color: var(--subtext-color);
-  text-transform: uppercase; letter-spacing: 0.6px; flex-shrink: 0;
-  min-width: 52px;
-}
-.hf-input {
-  flex: 1; border: none; outline: none; background: transparent;
-  font-size: 13px; color: var(--text-color);
-  font-family: inherit;
-}
-.hf-input::placeholder { color: var(--subtext-color); opacity: 0.65; }
 
-/* ============ EDITOR ============ */
-.editor-wrap {
-  max-width: 980px;
-  margin: 0 auto 12px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
-  overflow: hidden;
+/* Watermark Toggle Button */
+.wm-btn {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 0 10px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.wm-btn.active { background: #dcfce7; color: #15803d; border-color: #86efac; }
+
+/* ============ HEADER & FOOTER ============ */
+.hf-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.hf-row.disabled { opacity: 0.5; background: #f8fafc; }
+.hf-row.disabled input { pointer-events: none; }
+.hf-label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; width: 55px; }
+.hf-input { flex: 1; border: none; outline: none; background: transparent; font-size: 13px; color: #1e293b; }
+
+/* ============ A4 EDITOR SHEET ============ */
+.editor-sheet {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  min-height: 842px; /* A4 aspect */
+  padding: 48px 56px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  outline: none;
+  font-family: 'Noto Sans Devanagari', 'Calibri', Arial, sans-serif;
+  font-size: 12pt;
+  line-height: 1.8;
+  color: #0f172a;
   position: relative;
 }
-.editor {
-  min-height: 480px; padding: 40px 48px;
-  font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
-  font-size: 12pt; line-height: 1.75; color: var(--text-color);
-  outline: none; overflow-y: auto; max-height: 700px;
-  background: var(--card-bg);
-}
-.editor:empty::before {
+.editor-sheet:empty::before {
   content: attr(data-placeholder);
-  color: var(--subtext-color); opacity: 0.7;
-  pointer-events: none; font-style: italic;
+  color: #94a3b8;
+  font-style: italic;
+  pointer-events: none;
 }
-.editor h1 { font-size: 24pt; font-weight: 700; margin: 0 0 14px; line-height: 1.3; }
-.editor h2 { font-size: 18pt; font-weight: 700; margin: 20px 0 10px; line-height: 1.3; }
-.editor h3 { font-size: 14pt; font-weight: 700; margin: 16px 0 8px; line-height: 1.3; }
-.editor p { margin: 0 0 12px; }
-.editor ul, .editor ol { padding-left: 26px; margin: 10px 0; }
-.editor li { margin-bottom: 5px; }
-.editor blockquote { border-left: 3px solid var(--accent); padding-left: 16px; margin: 14px 0; font-style: italic; color: var(--subtext-color); }
-.editor a { color: var(--accent); }
 
 /* ============ HINDI KEYBOARD ============ */
-.hk-wrap {
-  max-width: 980px;
-  margin: 0 auto 12px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
+.hk-panel {
+  display: none;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s, margin 0.3s;
-  padding: 0 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
-.hk-wrap.show { max-height: 800px; padding: 14px 16px; }
-.hk-inner { padding: 0; }
-.hk-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.hk-head h3 { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.6px; }
-.hk-close { background: transparent; border: none; color: var(--subtext-color); font-size: 22px; cursor: pointer; padding: 2px 10px; border-radius: 8px; line-height: 1; transition: all 0.15s; }
-.hk-close:hover { background: var(--card-hover); color: var(--text-color); }
-.hk-section { margin-bottom: 14px; }
-.hk-section:last-child { margin-bottom: 0; }
-.hk-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--subtext-color); margin-bottom: 6px; display: block; }
-.hk-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+.hk-panel.show { display: block; }
+.hk-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
 .hk-key {
-  min-width: 38px; height: 38px; padding: 0 8px;
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  color: var(--text-color);
-  font-size: 17px; font-weight: 500;
-  cursor: pointer;
-  font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
-  transition: all 0.1s;
+  min-width: 36px; height: 36px;
   display: inline-flex; align-items: center; justify-content: center;
+  background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px;
+  font-size: 16px; font-weight: 600; cursor: pointer;
+  font-family: 'Noto Sans Devanagari', sans-serif;
 }
-.hk-key:hover { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
-.hk-key:active { transform: scale(0.94); }
-.hk-key.wide { min-width: 70px; font-size: 12px; font-weight: 700; font-family: 'Inter', sans-serif; }
-.hk-key.backspace { background: #dc2626; color: #fff; border-color: #dc2626; }
-.hk-key.backspace:hover { background: #b91c1c; border-color: #b91c1c; color: #fff; }
-.hk-key.enter { background: var(--accent); color: #fff; border-color: var(--accent); }
-.hk-key.enter:hover { background: var(--accent-hover); color: #fff; }
-.hk-key.space { flex: 1; min-width: 120px; font-size: 11px; font-weight: 700; letter-spacing: 1px; font-family: 'Inter', sans-serif; }
+.hk-key:hover { background: #e2e8f0; border-color: var(--accent, #19398a); }
+.hk-key.wide { min-width: 70px; font-size: 12px; font-family: sans-serif; font-weight: 700; }
+.hk-key.backspace { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
 
-/* ============ STATUS BAR ============ */
-.status-bar {
-  max-width: 980px;
-  margin: 0 auto 12px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; flex-wrap: wrap;
-  padding: 10px 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
+/* ============ STATUS / ACTIONS ============ */
+.bottom-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 10px; margin-top: 12px;
+  background: #ffffff; padding: 10px 16px; border-radius: 12px;
+  border: 1px solid #e5e7eb;
 }
-.status-info { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--subtext-color); font-weight: 600; }
-.status-info span { display: inline-flex; align-items: center; gap: 5px; }
-.status-info b { color: var(--text-color); font-weight: 700; }
-.status-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-.btn {
-  padding: 9px 16px; border-radius: 9px;
-  font-size: 13px; font-weight: 700; cursor: pointer;
-  font-family: inherit;
-  display: inline-flex; align-items: center; gap: 7px;
-  border: 1px solid transparent; transition: all 0.16s; white-space: nowrap;
+.counter-box { font-size: 13px; color: #64748b; font-weight: 600; display: flex; gap: 14px; }
+.counter-box b { color: #0f172a; }
+.action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-act {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700;
+  cursor: pointer; border: none; transition: 0.15s;
 }
-.btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.22); }
-.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-.btn-success { background: #15803d; color: #fff; box-shadow: 0 2px 8px rgba(21,128,61,0.22); }
-.btn-success:hover { background: #166534; transform: translateY(-1px); }
-.btn-ghost { background: var(--card-bg); color: var(--text-color); border-color: var(--border-color); }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.btn-act.print { background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; }
+.btn-act.word { background: #15803d; color: #fff; }
+.btn-act.pdf { background: var(--accent, #19398a); color: #fff; }
+.btn-act:hover { opacity: 0.9; transform: translateY(-1px); }
 
-.toast {
-  position: fixed; bottom: 24px; left: 50%;
-  transform: translateX(-50%) translateY(120px);
-  background: var(--card-bg); color: var(--text-color);
-  border: 1px solid var(--border-color);
-  padding: 12px 20px; border-radius: 10px;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
-  font-size: 13.5px; font-weight: 600;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 9999;
-  display: flex; align-items: center; gap: 10px; max-width: 90vw;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-.toast.ok { border-color: #16a34a; }
-.toast.error { border-color: #dc2626; }
-.toast svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; flex-shrink: 0; }
-
-/* ============ SEO ARTICLE ============ */
-.seo-article {
-  max-width: 860px;
-  margin: 48px auto;
-  padding: 40px 32px;
-  line-height: 1.8;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-}
-.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; line-height: 1.3; }
-.seo-article h2:first-child { margin-top: 0; }
-.seo-article h3 { font-size: 20px !important; font-weight: 700; color: var(--accent); margin: 32px 0 16px; line-height: 1.4; }
-.seo-article h4 { font-size: 17px !important; font-weight: 700; color: var(--text-color); margin: 24px 0 12px; }
-.seo-article p { font-size: 16px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
-.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
-.seo-article li { font-size: 15.5px !important; color: var(--subtext-color); margin-bottom: 12px; line-height: 1.7; }
-.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
-.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
-.seo-article a:hover { color: var(--accent-hover); }
-.seo-article code { background: var(--card-hover); padding: 2px 8px; border-radius: 5px; font-family: ui-monospace, monospace; font-size: 14px; color: var(--accent); }
-.seo-article .table-wrap { width: 100%; overflow-x: auto; margin: 20px 0; border: 1px solid var(--border-color); border-radius: 10px; }
-.seo-article table { width: 100%; min-width: 480px; border-collapse: collapse; margin: 0; font-size: 14px; }
-.seo-article th, .seo-article td { padding: 10px 14px; border-bottom: 1px solid var(--border-color); text-align: left; color: var(--subtext-color); font-size: 14px; vertical-align: top; }
-.seo-article th { background: var(--card-hover); color: var(--text-color); font-weight: 700; white-space: nowrap; }
-.seo-article tr:last-child td { border-bottom: none; }
-.article-image-box { margin: 32px auto; max-width: 720px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); background: #fff; text-align: center; }
-.article-image-box img { width: 100%; max-height: 360px; object-fit: contain; padding: 20px; display: block; margin: 0 auto; }
-.article-image-caption { padding: 14px 18px; font-size: 13px; color: var(--subtext-color); background: var(--card-bg); border-top: 1px solid var(--border-color); line-height: 1.55; }
-.seo-article details { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; transition: all 0.2s; }
-.seo-article details:hover { border-color: var(--accent); }
-.seo-article details summary { font-size: 16px !important; font-weight: 700; color: var(--text-color); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.seo-article details summary::-webkit-details-marker { display: none; }
-.seo-article details summary::after { content: "+"; font-size: 22px; color: var(--accent); font-weight: 300; }
-.seo-article details[open] summary::after { content: "−"; }
-.seo-article details p { margin: 14px 0 0; font-size: 15px !important; line-height: 1.75; }
-
-.related-tools-section { max-width: 1100px; margin: 60px auto 20px; padding: 0 20px; }
-.related-tools-section h2 { font-size: clamp(22px, 3.5vw, 28px); font-weight: 800; color: var(--text-color); text-align: center; margin: 0 0 8px; letter-spacing: -0.5px; }
-.related-sub { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 0 32px; }
-.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-.related-card { display: flex; flex-direction: column; gap: 10px; padding: 18px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-decoration: none; color: var(--text-color); transition: all 0.2s ease; min-height: 110px; }
-.related-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 26px rgba(37,99,235,0.12); }
-.related-card .rc-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex-shrink: 0; }
-.related-card .rc-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.related-card h3 { font-size: 14px; font-weight: 700; margin: 0; line-height: 1.3; color: var(--text-color); }
-.related-card p { font-size: 11.5px; color: var(--subtext-color); margin: 0; line-height: 1.4; }
-
-/* ============ PRINT (hidden on screen) ============ */
-.print-header, .print-footer, .print-watermark { display: none; }
-
-/* ============ AGGRESSIVE PRINT ============ */
+/* ============ PRINT STYLING & WATERMARK ============ */
+.print-hf { display: none; }
 @media print {
-  @page { size: A4; margin: 18mm 20mm; }
-
-  /* Hide EVERYTHING by default */
-  body > * { display: none !important; }
-
-  /* Show only the main-wrap, but hide its children except editor-wrap */
-  body > .main-wrap { display: block !important; }
-  .main-wrap > * { display: none !important; }
-  .main-wrap > .editor-wrap { display: block !important; }
-
-  /* Show watermark layer */
-  body > .print-watermark { display: block !important; }
-
-  body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
-  .main-wrap { padding: 0 !important; max-width: none !important; margin: 0 !important; }
-  .editor-wrap {
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    max-width: none !important;
-    margin: 0 !important;
+  body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+  .toolbar-container, .template-bar, .hf-row, .hk-panel, .bottom-bar, 
+  .seo-article, .related-tools-section, #doceasy-header, #doceasy-footer, .hero-box {
+    display: none !important;
   }
-  .editor {
-    padding: 0 !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-    font-size: 11pt;
+  .main-wrap { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+  .editor-sheet {
+    border: none !important; box-shadow: none !important;
+    padding: 15mm !important; min-height: auto !important;
   }
+  .print-hf { display: block !important; text-align: center; font-size: 10pt; color: #666; }
+  .print-header { border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 14px; }
+  .print-footer { border-top: 1px solid #e2e8f0; padding-top: 6px; margin-top: 14px; }
 
-  .print-header { display: block !important; font-size: 10pt; color: #333; text-align: center; padding-bottom: 8px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
-  .print-footer { display: block !important; font-size: 10pt; color: #333; text-align: center; padding-top: 8px; border-top: 1px solid #ddd; margin-top: 20px; }
-
-  /* ===== WATERMARK — doceasy.org on every printed page ===== */
-  body > .print-watermark {
+  /* Optional Watermark */
+  body.show-watermark::after {
+    content: "DocEasy.org";
     position: fixed;
-    inset: 0;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg);
+    font-size: 70pt;
+    font-weight: 900;
+    color: rgba(25, 57, 138, 0.06);
     pointer-events: none;
     z-index: 9999;
-    overflow: hidden;
   }
-  body > .print-watermark::before {
-    content: "doceasy.org";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-35deg);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 68pt;
-    font-weight: 900;
-    color: rgba(37, 99, 235, 0.08);
-    letter-spacing: 6px;
-    white-space: nowrap;
-    text-transform: lowercase;
-    pointer-events: none;
-  }
-  body > .print-watermark::after {
-    content: "doceasy.org";
-    position: fixed;
-    bottom: 6mm;
-    right: 12mm;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 9pt;
-    font-weight: 700;
-    color: rgba(37, 99, 235, 0.4);
-    letter-spacing: 0.5px;
-    pointer-events: none;
-  }
-}
-
-/* ============ RESPONSIVE ============ */
-@media (max-width: 768px) {
-  .editor { padding: 24px 20px; min-height: 380px; font-size: 15px; }
-  .toolbar { padding: 8px; gap: 3px; }
-  .tb-select { max-width: 118px; font-size: 11.5px; }
-  .tb-btn { min-width: 32px; height: 32px; font-size: 12px; }
-  .tb-btn.tb-keyboard { padding: 0 10px; font-size: 11.5px; }
-  .status-bar { padding: 10px 12px; }
-  .status-info { font-size: 11.5px; gap: 10px; }
-  .btn { padding: 8px 12px; font-size: 12px; }
-  .template-bar { padding: 8px; }
-  .tpl-btn { padding: 6px 10px; font-size: 11.5px; }
-  .seo-article { padding: 28px 20px; margin: 32px auto; }
-  .seo-article h2 { font-size: 22px !important; }
-  .seo-article h3 { font-size: 18px !important; }
-  .seo-article p { font-size: 15.5px !important; }
-  .seo-article li { font-size: 15px !important; }
-  .article-image-box img { max-height: 260px; padding: 14px; }
-  .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .related-card { padding: 14px 12px; min-height: 100px; }
-  .related-card h3 { font-size: 13px; }
-  .related-card p { font-size: 10.5px; }
 }
 </style>
 </head>
-<body>
+<body class="show-watermark">
 
 <div id="doceasy-header"></div>
 
 <main class="main-wrap">
 
-  <div class="hero-box">
-    <h1 class="hero-title">Word Writer</h1>
-    <p class="hero-sub">Write in Hindi, English or Hinglish with 13 fonts and a built-in Hindi keyboard. Export as Word (.docx) or PDF — 100% private, browser-based.</p>
-  </div>
+  <div class="toolbar-container">
+    <!-- Font Family -->
+    <div class="tb-group">
+      <select class="tb-select" id="fontFamily">
+        <optgroup label="Hindi (देवनागरी)">
+          <option value="'Noto Sans Devanagari', sans-serif" selected>Noto Sans Devanagari</option>
+          <option value="'Noto Serif Devanagari', serif">Noto Serif Devanagari</option>
+          <option value="'Hind', sans-serif">Hind</option>
+          <option value="'Baloo Bhai 2', cursive">Baloo Bhai 2</option>
+        </optgroup>
+        <optgroup label="English">
+          <option value="Calibri, sans-serif">Calibri</option>
+          <option value="Arial, sans-serif">Arial</option>
+          <option value="'Times New Roman', serif">Times New Roman</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+        </optgroup>
+      </select>
 
-  <div class="ad-slot-container">Advertisement</div>
+      <select class="tb-select" id="fontSize">
+        <option value="1">10pt</option>
+        <option value="2">11pt</option>
+        <option value="3" selected>12pt</option>
+        <option value="4">14pt</option>
+        <option value="5">18pt</option>
+        <option value="6">24pt</option>
+        <option value="7">36pt</option>
+      </select>
+    </div>
 
-  <!-- Templates -->
-  <div class="template-bar">
-    <span>Templates</span>
-    <button class="tpl-btn" data-tpl="blank">Blank</button>
-    <button class="tpl-btn" data-tpl="letter">Letter</button>
-    <button class="tpl-btn" data-tpl="application">Application</button>
-    <button class="tpl-btn" data-tpl="resume">Resume</button>
-    <button class="tpl-btn" data-tpl="notice">Notice</button>
-    <button class="tpl-btn" data-tpl="essay">Essay</button>
-  </div>
+    <!-- Formatting -->
+    <div class="tb-group">
+      <button class="tb-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+      <button class="tb-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+      <button class="tb-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+      <button class="tb-btn" data-cmd="strikeThrough" title="Strike"><s>S</s></button>
+    </div>
 
-  <!-- Modern Toolbar -->
-  <div class="toolbar" id="toolbar">
-    <select class="tb-select" id="fontFamily" title="Font family">
-      <optgroup label="English">
-        <option value="Calibri">Calibri</option>
-        <option value="Arial">Arial</option>
-        <option value="Times New Roman">Times New Roman</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Verdana">Verdana</option>
-        <option value="Tahoma">Tahoma</option>
-        <option value="Lora">Lora (serif)</option>
-        <option value="Courier New">Courier New</option>
-      </optgroup>
-      <optgroup label="Hindi (Devanagari)">
-        <option value="Noto Sans Devanagari">Noto Sans Devanagari</option>
-        <option value="Noto Serif Devanagari">Noto Serif Devanagari</option>
-        <option value="Baloo Bhai 2">Baloo Bhai 2</option>
-        <option value="Hind">Hind</option>
-        <option value="Mangal">Mangal</option>
-      </optgroup>
-    </select>
+    <!-- Colors in One Place -->
+    <div class="tb-group">
+      <label class="color-picker-box" title="Text Color">
+        <span style="font-weight:900;font-size:13px;border-bottom:2px solid currentColor">A</span>
+        <input type="color" id="textColor" value="#0f172a">
+      </label>
+      <label class="color-picker-box" title="Highlight Color">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        <input type="color" id="hlColor" value="#fef08a">
+      </label>
+    </div>
 
-    <select class="tb-select" id="fontSize" title="Font size">
-      <option value="6">6pt</option>
-      <option value="7">7pt</option>
-      <option value="8">8pt</option>
-      <option value="9">9pt</option>
-      <option value="10">10pt</option>
-      <option value="11">11pt</option>
-      <option value="12" selected>12pt</option>
-      <option value="14">14pt</option>
-      <option value="16">16pt</option>
-      <option value="18">18pt</option>
-      <option value="20">20pt</option>
-      <option value="24">24pt</option>
-      <option value="32">32pt</option>
-      <option value="48">48pt</option>
-    </select>
+    <!-- Alignment -->
+    <div class="tb-group">
+      <button class="tb-btn" data-cmd="justifyLeft" title="Left"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <button class="tb-btn" data-cmd="justifyCenter" title="Center"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <button class="tb-btn" data-cmd="justifyRight" title="Right"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    </div>
 
-    <select class="tb-select" id="blockType" title="Paragraph style">
-      <option value="p">Paragraph</option>
-      <option value="h1">Heading 1</option>
-      <option value="h2">Heading 2</option>
-      <option value="h3">Heading 3</option>
-      <option value="blockquote">Quote</option>
-    </select>
-
-    <div class="tb-sep"></div>
-
-    <button class="tb-btn" data-cmd="bold" title="Bold"><b>B</b></button>
-    <button class="tb-btn" data-cmd="italic" title="Italic"><i>I</i></button>
-    <button class="tb-btn" data-cmd="underline" title="Underline"><u>U</u></button>
-    <button class="tb-btn" data-cmd="strikeThrough" title="Strike"><s>S</s></button>
-
-    <div class="tb-sep"></div>
-
-    <label class="tb-color-wrap" title="Text color" id="textColorWrap">
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 22h4l2-5h8l2 5h4L12 2z"/></svg>
-      <input type="color" id="textColor" value="#1a1a1a">
-    </label>
-
-    <label class="tb-color-wrap" title="Highlight" id="hlColorWrap">
-      <svg viewBox="0 0 24 24"><path d="M9 11l-6 6v3h3l6-6M14 4l6 6-8 8-6-6z"/></svg>
-      <input type="color" id="hlColor" value="#fef08a">
-    </label>
-
-    <div class="tb-sep"></div>
-
-    <button class="tb-btn" data-cmd="justifyLeft" title="Align left"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-    <button class="tb-btn" data-cmd="justifyCenter" title="Align center"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-    <button class="tb-btn" data-cmd="justifyRight" title="Align right"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-    <button class="tb-btn" data-cmd="justifyFull" title="Justify"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-
-    <div class="tb-sep"></div>
-
-    <button class="tb-btn" data-cmd="insertUnorderedList" title="Bullet list"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/></svg></button>
-    <button class="tb-btn" data-cmd="insertOrderedList" title="Numbered list"><svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><text x="3" y="8" font-size="7" font-weight="bold" fill="currentColor" stroke="none">1</text><text x="3" y="14" font-size="7" font-weight="bold" fill="currentColor" stroke="none">2</text><text x="3" y="20" font-size="7" font-weight="bold" fill="currentColor" stroke="none">3</text></svg></button>
-
-    <div class="tb-sep"></div>
-
-    <button class="tb-btn tb-keyboard" id="hindiKeyboardBtn" title="Toggle Hindi keyboard">
-      <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/></svg>
-      हिन्दी
+    <!-- Virtual Hindi Keyboard Toggle -->
+    <button class="tb-btn hindi-btn" id="toggleHkBtn" type="button">
+      ⌨️ हिन्दी कीबोर्ड
     </button>
 
-    <div class="tb-sep"></div>
-
-    <button class="tb-btn" data-cmd="undo" title="Undo"><svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg></button>
-    <button class="tb-btn" data-cmd="redo" title="Redo"><svg viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg></button>
-    <button class="tb-btn" data-cmd="removeFormat" title="Clear formatting"><svg viewBox="0 0 24 24"><path d="M4 7V5h16v2M9 19h6M12 5v14"/><line x1="3" y1="3" x2="21" y2="21" stroke="#dc2626" stroke-width="2.5"/></svg></button>
+    <!-- Watermark Switch -->
+    <button class="wm-btn active" id="wmToggleBtn" type="button" title="Toggle Watermark for Print">
+      वॉटरमार्क: चालू
+    </button>
   </div>
 
-  <!-- Header with toggle -->
-  <div class="hf-row hf-disabled" id="hfHeaderRow">
-    <label class="hf-toggle" title="Enable / disable header">
-      <input type="checkbox" id="toggleHeader">
-      <span class="hf-track"></span>
-      <span class="hf-knob"></span>
-    </label>
+  <!-- Header Row -->
+  <div class="hf-row" id="hRow">
     <span class="hf-label">Header</span>
-    <input class="hf-input" id="docHeader" placeholder="Toggle ON to add header text (appears on every printed page)" autocomplete="off" disabled>
+    <input type="checkbox" id="hCheck">
+    <input type="text" class="hf-input" id="hInput" placeholder="पेज के ऊपर आने वाला हेडर (वैकल्पिक)" disabled>
   </div>
 
-  <!-- Editor -->
-  <div class="editor-wrap">
-    <div class="print-header" id="printHeader"></div>
-    <div class="editor" id="editor" contenteditable="true" spellcheck="false" data-placeholder="Start typing here..."></div>
-    <div class="print-footer" id="printFooter"></div>
-  </div>
+  <!-- Editor Box -->
+  <div class="print-hf print-header" id="printH"></div>
+  <div class="editor-sheet" id="editor" contenteditable="true" spellcheck="false" data-placeholder="यहाँ लिखना शुरू करें... (हिंदी, English, Hinglish)"></div>
+  <div class="print-hf print-footer" id="printF"></div>
 
-  <!-- Footer with toggle -->
-  <div class="hf-row hf-disabled" id="hfFooterRow">
-    <label class="hf-toggle" title="Enable / disable footer">
-      <input type="checkbox" id="toggleFooter">
-      <span class="hf-track"></span>
-      <span class="hf-knob"></span>
-    </label>
+  <!-- Footer Row -->
+  <div class="hf-row" id="fRow" style="margin-top:8px;">
     <span class="hf-label">Footer</span>
-    <input class="hf-input" id="docFooter" placeholder="Toggle ON to add footer text (appears on every printed page)" autocomplete="off" disabled>
+    <input type="checkbox" id="fCheck">
+    <input type="text" class="hf-input" id="fInput" placeholder="पेज के नीचे आने वाला फुटर (वैकल्पिक)" disabled>
   </div>
 
-  <!-- Hindi Keyboard -->
-  <div class="hk-wrap" id="hkWrap">
-    <div class="hk-inner">
-      <div class="hk-head">
-        <h3>Hindi Virtual Keyboard</h3>
-        <button class="hk-close" id="hkClose" title="Close">×</button>
-      </div>
-      <div class="hk-section"><span class="hk-label">Vowels (Svar)</span><div class="hk-grid" data-group="vowels"></div></div>
-      <div class="hk-section"><span class="hk-label">Consonants (Vyanjan)</span><div class="hk-grid" data-group="consonants"></div></div>
-      <div class="hk-section"><span class="hk-label">Matras (Vowel Signs)</span><div class="hk-grid" data-group="matras"></div></div>
-      <div class="hk-section"><span class="hk-label">Numbers (Ank)</span><div class="hk-grid" data-group="numbers"></div></div>
-      <div class="hk-section"><span class="hk-label">Punctuation (Viram)</span><div class="hk-grid" data-group="punct"></div></div>
+  <!-- Virtual Hindi Keyboard Panel -->
+  <div class="hk-panel" id="hkPanel">
+    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+      <span style="font-size:12px;font-weight:700;color:#ea580c;">देवनागरी वर्णमाला</span>
+      <button type="button" id="hkClose" style="background:none;border:none;font-size:18px;cursor:pointer;">×</button>
     </div>
+    <div class="hk-grid" id="vowelsGrid"></div>
+    <div class="hk-grid" id="consGrid"></div>
+    <div class="hk-grid" id="matraGrid"></div>
   </div>
 
-  <!-- Status Bar -->
-  <div class="status-bar">
-    <div class="status-info">
-      <span>Words: <b id="wordCount">0</b></span>
-      <span>Chars: <b id="charCount">0</b></span>
-      <span>Pages: <b id="pageCount">1</b></span>
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <div class="counter-box">
+      <span>शब्द: <b id="wc">0</b></span>
+      <span>अक्षर: <b id="cc">0</b></span>
     </div>
-    <div class="status-actions">
-      <button class="btn btn-ghost" id="clearBtn"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>Clear</button>
-      <button class="btn btn-ghost" id="printBtn"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print</button>
-      <button class="btn btn-success" id="docxBtn"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Save Word</button>
-      <button class="btn btn-primary" id="pdfBtn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save PDF</button>
+    <div class="action-btns">
+      <button class="btn-act print" id="printBtn">🖨️ प्रिंट करें</button>
+      <button class="btn-act word" id="wordBtn">📄 Word (.docx)</button>
+      <button class="btn-act pdf" id="pdfBtn">⬇️ PDF में सेव करें</button>
     </div>
   </div>
-
-  <div class="ad-slot-container">Advertisement</div>
-
-  <!-- ============ ARTICLE ============ -->
-  <section class="seo-article">
-
-    <h2>Complete Guide: Type in Hindi, English and Hinglish with Word Writer (2026)</h2>
-
-    <p>Writing a document used to require installing Microsoft Word on a computer — and typing in Hindi required an external keyboard, a transliteration tool, or hours of practice with a Devanagari layout. Today, both problems are solved. <strong>DocEasy Word Writer</strong> lets you write in <b>Hindi, English, or Hinglish</b> with 13 fonts and a built-in Hindi keyboard, right in your browser. When you are done, export as Word (.docx) or PDF — no signup, no upload, 100% private.</p>
-
-    <p>This complete guide covers every feature: how to write in the language you want, how the Hindi keyboard functions, which fonts to use, and best practices for creating clean documents.</p>
-
-    <div class="article-image-box">
-      <img src="../assets/images/word-writer-demo.jpg" alt="DocEasy Word Writer — Hindi English Hinglish typing tool" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/word-writer-demo.jpg]</div>';">
-      <div class="article-image-caption">Write in Hindi, English, or Hinglish — export as Word or PDF. 100% private, 100% free.</div>
-    </div>
-
-    <h3>1. Quick Start — 60 Seconds to a Ready Document</h3>
-
-    <p>If you need to type something quickly and print or send it, follow these steps:</p>
-
-    <ol>
-      <li><b>Open the page</b> — the editor is right there. Click and start typing.</li>
-      <li><b>Type in any language</b> — English, Hindi, or mixed. The editor never restricts what you type.</li>
-      <li><b>Toggle Header / Footer</b> (optional) — flip the switches above and below the editor and type your header / footer text.</li>
-      <li><b>Format</b> — use the toolbar for font, size, color, alignment.</li>
-      <li><b>Export</b> — click <b>Save Word</b> or <b>Save PDF</b>. The file downloads instantly.</li>
-    </ol>
-
-    <p>That's it. No signup, no upload, no watermark. Everything happens in your browser.</p>
-
-    <h3>2. Writing in Any Language — No Mode Required</h3>
-
-    <p>The editor is language-agnostic. You can type English letters, Devanagari characters, or a mix of both in the same document. There is no "language mode" to switch — just write whatever you want, in whichever script you want.</p>
-
-    <ul>
-      <li><b>English</b> — type normally on your keyboard</li>
-      <li><b>Hindi</b> — click the orange <b>हिन्दी</b> button in the toolbar to open the on-screen Devanagari keyboard, then click characters to insert them. On mobile, use your device's built-in Hindi keyboard.</li>
-      <li><b>Hinglish (English → Hindi)</b> — type phonetically in English letters like <code>namaste</code> or <code>bharat</code>. The editor converts them to Hindi automatically. No mode toggle needed — the conversion happens naturally.</li>
-    </ul>
-
-    <p>You can also paste Hindi text from anywhere (WhatsApp, Gmail, Google Translate) directly into the editor and it stays as-is.</p>
-
-    <h3>3. Hindi Virtual Keyboard — How to Use</h3>
-
-    <p>Click the orange <b>हिन्दी</b> button in the toolbar. A virtual keyboard slides open below the editor. It has five sections:</p>
-
-    <ul>
-      <li><b>Vowels (Svar)</b> — 13 independent vowels: अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ, अं, अः</li>
-      <li><b>Consonants (Vyanjan)</b> — 36 consonants + conjuncts: क, ख, ग, घ, च, छ, ज, झ, ट, ठ, ड, ढ, त, थ, द, ध, न, प, फ, ब, भ, म, य, र, ल, व, श, ष, स, ह, क्ष, त्र, ज्ञ</li>
-      <li><b>Matras (Vowel Signs)</b> — 14 vowel marks: ा, ि, ी, ु, ू, ृ, े, ै, ो, ौ, ं, ँ, ः, ्</li>
-      <li><b>Numbers (Ank)</b> — ० to ९</li>
-      <li><b>Punctuation (Viram)</b> — पूर्ण विराम (।), comma, semicolon, question mark, backspace, enter, space</li>
-    </ul>
-
-    <p><b>How to type:</b> place your cursor in the editor, then click any key. The character is inserted at the cursor. The keyboard remembers your last cursor position even if you click elsewhere first.</p>
-
-    <p><b>How to add matras:</b> click the consonant first, then the matra. For example, to type <b>का</b>, click <b>क</b> then <b>ा</b>. For <b>कि</b>, click <b>क</b> then <b>ि</b>. For <b>क्ष</b>, click the conjunct key directly.</p>
-
-    <p><b>On mobile:</b> the virtual keyboard does not open automatically — your device's own Hindi keyboard is much faster. Add Hindi in Settings → Language, then press the globe icon on your keyboard to switch.</p>
-
-    <h3>4. Hinglish — Type English, Get Hindi</h3>
-
-    <p>The editor automatically converts certain English phonetic patterns into Hindi. If you cannot type Devanagari, this is the fastest way to write in Hindi.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>You type</th><th>It becomes</th></tr></thead>
-        <tbody>
-          <tr><td>namaste</td><td><b>नमस्ते</b></td></tr>
-          <tr><td>bharat</td><td><b>भारत</b></td></tr>
-          <tr><td>kaise ho</td><td><b>कैसे हो</b></td></tr>
-          <tr><td>dhanyavad</td><td><b>धन्यवाद</b></td></tr>
-          <tr><td>shubh ratri</td><td><b>शुभ रात्रि</b></td></tr>
-          <tr><td>mujhe hindi likhni hai</td><td><b>मुझे हिन्दी लिखनी है</b></td></tr>
-          <tr><td>kya aap theek hain</td><td><b>क्या आप ठीक हैं</b></td></tr>
-          <tr><td>mera naam rahul hai</td><td><b>मेरा नाम राहुल है</b></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p>Just press space, enter, or any punctuation — the word you just typed converts automatically. Words that are not recognized stay as-is, so you can mix Hindi and English freely.</p>
-
-    <h3>5. Fonts — The Right Font for Each Language</h3>
-
-    <p>The Font dropdown groups English and Hindi fonts separately:</p>
-
-    <h4>English Fonts (8):</h4>
-    <ul>
-      <li><b>Calibri</b> — modern, professional. Default choice.</li>
-      <li><b>Arial</b> — universal sans-serif, works on every device.</li>
-      <li><b>Times New Roman</b> — classic serif, best for academic papers.</li>
-      <li><b>Georgia</b> — screen-friendly serif, great for long documents.</li>
-      <li><b>Verdana</b> — wide sans-serif, excellent for small text.</li>
-      <li><b>Tahoma</b> — compact, good for dense layouts.</li>
-      <li><b>Lora</b> — elegant serif, ideal for essays and blogs.</li>
-      <li><b>Courier New</b> — monospaced, used for code and technical docs.</li>
-    </ul>
-
-    <h4>Hindi Fonts (5):</h4>
-    <ul>
-      <li><b>Noto Sans Devanagari</b> — Google's modern Hindi font, most readable.</li>
-      <li><b>Noto Serif Devanagari</b> — serif variant, formal documents.</li>
-      <li><b>Baloo Bhai 2</b> — bold, playful, for headings and posters.</li>
-      <li><b>Hind</b> — Indian Type Foundry's popular font, ideal for body text.</li>
-      <li><b>Mangal</b> — the traditional Windows Hindi font.</li>
-    </ul>
-
-    <p><b>How to apply:</b> select text (or place the cursor) and choose a font from the dropdown. It applies immediately to the selection and to anything you type next. Font is applied per character, so you can mix English and Hindi fonts in the same document.</p>
-
-    <h3>6. Font Size — From 6pt to 48pt</h3>
-
-    <p>The size dropdown has 14 options. Common uses:</p>
-
-    <ul>
-      <li><b>6pt – 8pt</b> — footnotes, legal disclaimers, captions</li>
-      <li><b>9pt – 11pt</b> — dense documents, sidebars, tables</li>
-      <li><b>12pt</b> — standard body text (default)</li>
-      <li><b>14pt – 18pt</b> — subheadings, emphasis</li>
-      <li><b>20pt – 24pt</b> — section headings</li>
-      <li><b>32pt – 48pt</b> — cover page titles</li>
-    </ul>
-
-    <h3>7. Colors — Text and Highlight</h3>
-
-    <p>Two color pickers sit in the toolbar:</p>
-
-    <ul>
-      <li><b>Text Color (A icon)</b> — changes the text color. A colored line below the icon shows the current color.</li>
-      <li><b>Highlight (marker icon)</b> — adds a background color behind the text.</li>
-    </ul>
-
-    <p>Click the icon → system color picker opens → choose a color → applies instantly. Default text color is black; default highlight is yellow.</p>
-
-    <p><b>To show colors in print:</b> enable "Background graphics" in the print dialog. Otherwise colors appear on screen but not on paper.</p>
-
-    <h3>8. Header and Footer — With Toggle Switches</h3>
-
-    <p>Two toggle switches sit above and below the editor — one for the <b>Header</b>, one for the <b>Footer</b>.</p>
-
-    <ul>
-      <li><b>Toggle OFF (default)</b> — the row is dimmed, the input is disabled, and nothing appears in print or PDF. Perfect when your document does not need a header/footer.</li>
-      <li><b>Toggle ON</b> — the input becomes editable. Type your text and it appears above/below the editor on screen, at the top/bottom of every printed page, and in the exported PDF.</li>
-    </ul>
-
-    <p><b>What to put in Header:</b> company name, document title, date, reference number.<br>
-    <b>What to put in Footer:</b> page number, contact info, copyright, confidentiality note.</p>
-
-    <h3>9. Templates — One-Click Documents</h3>
-
-    <p>Six ready-made templates sit above the toolbar:</p>
-
-    <ul>
-      <li><b>Blank</b> — empty document (default)</li>
-      <li><b>Letter</b> — formal letter: sender address, date, recipient, subject, body, signature</li>
-      <li><b>Application</b> — standard leave / request application format</li>
-      <li><b>Resume</b> — professional resume: summary, experience, education, skills</li>
-      <li><b>Notice</b> — office/school notice format with reference number and signature</li>
-      <li><b>Essay</b> — essay structure: introduction, body, conclusion</li>
-    </ul>
-
-    <p>Clicking a template replaces the editor content and auto-fills header/footer if enabled. Any <code>[square brackets]</code> in the template are placeholders — replace them with your own details.</p>
-
-    <h3>10. Print — Clean Output</h3>
-
-    <p>The <b>Print</b> button opens your browser's print dialog. Only your document, plus the enabled header and footer, appear on the printed page. The toolbar, template bar, virtual keyboard, and status bar are hidden automatically. A4 paper size, 20mm margins, professional layout.</p>
-
-    <p>You can also press <b>Ctrl+P</b> (Cmd+P on Mac) — same result.</p>
-
-    <h3>11. Save as PDF</h3>
-
-    <p>The <b>Save PDF</b> button opens the same print dialog — just pick <b>"Save as PDF"</b> as the destination (Windows: "Microsoft Print to PDF", Mac: "Save as PDF", Chrome: "Save as PDF").</p>
-
-    <p><b>Big advantage:</b> the exact fonts you see on screen (Noto Devanagari, Mangal, Baloo, Lora, everything) are embedded into the PDF. The PDF shows the same fonts on any device, whether or not those fonts are installed there.</p>
-
-    <h3>12. Save as Word (.docx)</h3>
-
-    <p>The <b>Save Word</b> button creates a real .docx file that:</p>
-
-    <ul>
-      <li>Opens in Microsoft Word, Google Docs, LibreOffice, and Apple Pages</li>
-      <li>Preserves fonts, sizes, colors, and highlights</li>
-      <li>Stores header and footer as real Word header/footer (only if enabled)</li>
-      <li>Converts headings into real Word heading styles (navigation pane works)</li>
-      <li>Renders Hindi text correctly on any system</li>
-    </ul>
-
-    <p><b>Note:</b> .docx files do not embed font files (browsers don't have them). If the receiver doesn't have the font installed, Word uses its default — but Hindi characters still display correctly because every system has a Devanagari fallback. Google Docs renders it perfectly.</p>
-
-    <h3>13. Autosave — No Lost Work</h3>
-
-    <p>Everything you type saves to your browser's localStorage every 600 milliseconds. Close the tab, come back — your content is there. Saved only on your device, never on a server. Auto-cleanup after 7 days.</p>
-
-    <h3>14. Dark Mode</h3>
-
-    <p>The site header includes a sun/moon toggle. Click it to switch between light and dark themes. The preference is saved in localStorage.</p>
-
-    <h3>15. Use Cases</h3>
-
-    <ul>
-      <li><b>Hindi essays</b> — school and college assignments</li>
-      <li><b>Hindi cover letters</b> — government and private sector jobs</li>
-      <li><b>Hinglish blogs</b> — long-form content for Hindi websites</li>
-      <li><b>Legal documents</b> — contracts, notices, agreements</li>
-      <li><b>Resume / CV</b> — professional format in seconds</li>
-      <li><b>Formal letters</b> — complaint, request, application</li>
-      <li><b>Office notices</b> — circulars and announcements</li>
-      <li><b>Personal journals</b> — daily diary in any language</li>
-      <li><b>Poetry</b> — with proper Devanagari punctuation (।)</li>
-      <li><b>Study notes</b> — mixed Hindi-English notes</li>
-      <li><b>Translation drafts</b> — Hindi original + English translation</li>
-      <li><b>Quotes and posters</b> — large fonts for impact</li>
-    </ul>
-
-    <h3>16. Frequently Asked Questions</h3>
-
-    <details><summary>Is the tool really free?</summary><p>Yes — 100% free. No signup, no watermark, no daily limit. Everything runs locally in your browser.</p></details>
-
-    <details><summary>Can I type Hindi on mobile?</summary><p>Yes. On mobile the virtual keyboard does not open automatically. Add Hindi in your device's Settings → Language, then press the globe key on your keyboard to switch to Hindi.</p></details>
-
-    <details><summary>Why does the Hindi keyboard open from a button instead of automatically?</summary><p>Because the toolbar button gives you full control — open it only when you need Devanagari characters. When closed, it stays out of the way.</p></details>
-
-    <details><summary>How does Hinglish conversion work?</summary><p>Common English-to-Hindi phonetic patterns — like <code>namaste</code> → नमस्ते, <code>bharat</code> → भारत, <code>dhanyavad</code> → धन्यवाद. Consonants, vowels, matras, and conjuncts are all handled. Anything not recognized stays in English, giving you mixed output.</p></details>
-
-    <details><summary>Is my data uploaded anywhere?</summary><p>No. Everything happens locally in your browser. No server call is made. When you close the tab, content is cleared from memory (the localStorage copy remains on your device).</p></details>
-
-    <details><summary>Will Hindi render correctly in the PDF?</summary><p>Yes. The Save PDF button opens the print dialog — the fonts you see on screen are embedded into the PDF. Noto Sans Devanagari, Mangal, Baloo — all render correctly.</p></details>
-
-    <details><summary>Will the .docx open in Google Docs?</summary><p>Yes. The file is standard Word format — opens in Google Docs, Microsoft Word, LibreOffice Writer, and Apple Pages. Hindi text stays intact.</p></details>
-
-    <details><summary>How do I enable / disable the header?</summary><p>Flip the toggle switch to the left of the "Header" label above the editor. OFF = header hidden everywhere (screen, print, PDF, .docx). ON = header appears on every printed page.</p></details>
-
-    <details><summary>How do I enable / disable the footer?</summary><p>Same as the header — flip the toggle switch below the editor. OFF by default.</p></details>
-
-    <details><summary>Does header/footer repeat on every page?</summary><p>Yes, when enabled. In print and PDF, on every page. In .docx, it is saved as a real Word header/footer, so Word also repeats it on every page.</p></details>
-
-    <details><summary>Can I mix Hindi and English in one document?</summary><p>Yes. Type English normally, paste Hindi from anywhere, or use the Hindi keyboard to insert Devanagari. Both stay in the same document, with their own fonts.</p></details>
-
-    <details><summary>Why does the font size go down to 6pt?</summary><p>Legal disclaimers, footnotes, and terms &amp; conditions. Also useful when you need to fit a lot of content on an A4 page. 12pt is the default and standard body size.</p></details>
-
-    <details><summary>Does it work offline?</summary><p>After the page has loaded once, yes. The .docx export library needs to load on first use (the browser caches it, then it works offline too).</p></details>
-
-    <details><summary>Colors don't appear in print — what do I do?</summary><p>Enable <b>"Background graphics"</b> in the print dialog (under More settings). Browsers skip background colors by default to save ink.</p></details>
-
-    <details><summary>Can I create custom templates?</summary><p>Everything you write is autosaved. So build your structure once, save it, and edit the same content next time. Custom templates aren't a separate feature yet, but you can save your file as .docx and reopen it.</p></details>
-
-    <h3>17. Privacy First</h3>
-
-    <p>Nothing you type is uploaded. No server, no account, no tracking. Close the tab and it clears from memory. That makes this tool ideal for sensitive content — personal letters, private notes, internal reports, confidential drafts.</p>
-
-    <h3>18. Related DocEasy Tools</h3>
-
-    <p>Once you've written your document, these DocEasy tools can help with the next step:</p>
-
-    <ul>
-      <li><a href="word-counter.html">Word Counter</a> — Count words, characters, and reading time</li>
-      <li><a href="pdf-to-word.html">PDF to Word</a> — Convert PDFs into editable .docx</li>
-      <li><a href="word-to-pdf.html">Word to PDF</a> — Convert .docx into PDF</li>
-      <li><a href="invoice-generator.html">Invoice Generator</a> — Create professional invoices</li>
-      <li><a href="card-cropper.html">ID Card Cropper</a> — Crop ID cards at 300 DPI</li>
-      <li><a href="pdf-merge.html">Merge PDF</a> — Combine multiple PDFs into one</li>
-      <li><a href="pdf-compressor.html">Compress PDF</a> — Reduce file size for upload</li>
-      <li><a href="qr-generator.html">QR Generator</a> — Create custom QR codes</li>
-    </ul>
-
-    <h3>19. Conclusion</h3>
-
-    <p>Writing a document in Hindi, English, or Hinglish no longer requires any external software. DocEasy Word Writer gives you 13 fonts, a virtual Hindi keyboard, Hinglish auto-conversion, six templates, colors, optional header/footer, and instant Word/PDF export — all in your browser. Bookmark it and come back whenever you need to write.</p>
-
-  </section>
-
-  <div class="ad-slot-container">Advertisement</div>
-
-  <!-- Related Tools -->
-  <section class="related-tools-section">
-    <h2>Explore More Free DocEasy Tools</h2>
-    <p class="related-sub">All free, all browser-based, all 100% private.</p>
-    <div class="related-grid">
-      <a class="related-card" href="word-counter.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div><h3>Word Counter</h3><p>Words, chars, reading time</p></a>
-      <a class="related-card" href="pdf-to-word.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>PDF to Word</h3><p>Editable .docx documents</p></a>
-      <a class="related-card" href="word-to-pdf.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>Word to PDF</h3><p>DOCX to PDF</p></a>
-      <a class="related-card" href="card-cropper.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div><h3>ID Card Cropper</h3><p>Aadhaar, PAN at 300 DPI</p></a>
-      <a class="related-card" href="invoice-generator.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><h3>Invoice Generator</h3><p>Professional invoices</p></a>
-      <a class="related-card" href="doc-scanner.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div><h3>Document Scanner</h3><p>Image to text OCR</p></a>
-      <a class="related-card" href="pdf-merge.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div><h3>Merge PDF</h3><p>Combine PDFs into one</p></a>
-      <a class="related-card" href="qr-generator.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div><h3>QR Generator</h3><p>Custom QR codes</p></a>
-    </div>
-  </section>
 
 </main>
 
 <div id="doceasy-footer"></div>
 
-<!-- Watermark layer (hidden on screen, shown only in print) -->
-<div class="print-watermark" aria-hidden="true"></div>
-
-<div class="toast" id="toast">
-  <svg viewBox="0 0 24 24" id="toastIcon"><path d="M20 6L9 17l-5-5"/></svg>
-  <span id="toastMsg">Done</span>
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
-(function () {
+(function() {
   'use strict';
-  var $ = function (id) { return document.getElementById(id); };
-
-  var editor = $('editor'), toolbar = $('toolbar');
-  var fontFamily = $('fontFamily'), fontSize = $('fontSize'), blockType = $('blockType');
-  var textColor = $('textColor'), hlColor = $('hlColor');
-  var docHeader = $('docHeader'), docFooter = $('docFooter');
-  var toggleHeader = $('toggleHeader'), toggleFooter = $('toggleFooter');
-  var hfHeaderRow = $('hfHeaderRow'), hfFooterRow = $('hfFooterRow');
-  var hkWrap = $('hkWrap'), hindiKeyboardBtn = $('hindiKeyboardBtn');
-  var wordCountEl = $('wordCount'), charCountEl = $('charCount'), pageCountEl = $('pageCount');
-  var toast = $('toast'), toastMsg = $('toastMsg'), toastIcon = $('toastIcon');
-  var lastRange = null;
-
-  function showToast(msg, type) {
-    toastMsg.textContent = msg;
-    toast.className = 'toast show ' + (type || 'ok');
-    toastIcon.innerHTML = type === 'error'
-      ? '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'
-      : '<path d="M20 6L9 17l-5-5"/>';
-    clearTimeout(toast._t);
-    toast._t = setTimeout(function () { toast.classList.remove('show'); }, 2600);
-  }
+  const editor = document.getElementById('editor');
+  let savedRange = null;
 
   function saveSelection() {
-    var sel = window.getSelection();
-    if (sel && sel.rangeCount > 0) {
-      var r = sel.getRangeAt(0);
-      if (editor.contains(r.commonAncestorContainer)) lastRange = r.cloneRange();
+    const sel = window.getSelection();
+    if (sel.rangeCount > 0 && editor.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+      savedRange = sel.getRangeAt(0).cloneRange();
     }
   }
+
   function restoreSelection() {
-    if (!lastRange) return;
-    var sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(lastRange);
+    if (savedRange) {
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(savedRange);
+    }
   }
 
+  // Format Execution
+  document.querySelectorAll('[data-cmd]').forEach(btn => {
+    btn.addEventListener('mousedown', e => e.preventDefault());
+    btn.addEventListener('click', () => {
+      document.execCommand(btn.dataset.cmd, false, null);
+      editor.focus();
+    });
+  });
+
+  // Font Family Apply
+  document.getElementById('fontFamily').addEventListener('change', function() {
+    editor.focus();
+    restoreSelection();
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand('fontName', false, this.value);
+  });
+
+  // Font Size Apply
+  document.getElementById('fontSize').addEventListener('change', function() {
+    editor.focus();
+    restoreSelection();
+    document.execCommand('fontSize', false, this.value);
+  });
+
+  // Text Color Apply
+  document.getElementById('textColor').addEventListener('input', function() {
+    editor.focus();
+    restoreSelection();
+    document.execCommand('foreColor', false, this.value);
+  });
+
+  // Highlight Color Apply
+  document.getElementById('hlColor').addEventListener('input', function() {
+    editor.focus();
+    restoreSelection();
+    document.execCommand('hiliteColor', false, this.value);
+  });
+
+  // Watermark Toggle
+  const wmBtn = document.getElementById('wmToggleBtn');
+  wmBtn.addEventListener('click', () => {
+    const isWatermark = document.body.classList.toggle('show-watermark');
+    wmBtn.classList.toggle('active', isWatermark);
+    wmBtn.textContent = isWatermark ? 'वॉटरमार्क: चालू' : 'वॉटरमार्क: बंद';
+  });
+
+  // Header / Footer Handlers
+  const hCheck = document.getElementById('hCheck'), hInput = document.getElementById('hInput');
+  const fCheck = document.getElementById('fCheck'), fInput = document.getElementById('fInput');
+  const printH = document.getElementById('printH'), printF = document.getElementById('printF');
+
+  hCheck.addEventListener('change', () => {
+    hInput.disabled = !hCheck.checked;
+    if (!hCheck.checked) hInput.value = '';
+    printH.textContent = hInput.value;
+  });
+  hInput.addEventListener('input', () => printH.textContent = hInput.value);
+
+  fCheck.addEventListener('change', () => {
+    fInput.disabled = !fCheck.checked;
+    if (!fCheck.checked) fInput.value = '';
+    printF.textContent = fInput.value;
+  });
+  fInput.addEventListener('input', () => printF.textContent = fInput.value);
+
+  // Virtual Hindi Keyboard
+  const VOWELS = ['अ','आ','इ','ई','उ','ऊ','ऋ','ए','ऐ','ओ','औ','अं','अः'];
+  const CONS = ['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह','क्ष','त्र','ज्ञ'];
+  const MATRAS = ['ा','ि','ी','ु','ू','ृ','े','ै','ो','ौ','ं','ँ','ः','्','।'];
+
+  function createKeys(list, targetId) {
+    const box = document.getElementById(targetId);
+    list.forEach(char => {
+      const k = document.createElement('button');
+      k.type = 'button';
+      k.className = 'hk-key';
+      k.textContent = char;
+      k.addEventListener('mousedown', e => e.preventDefault());
+      k.addEventListener('click', () => {
+        editor.focus();
+        restoreSelection();
+        document.execCommand('insertText', false, char);
+        saveSelection();
+        updateCounts();
+      });
+      box.appendChild(k);
+    });
+  }
+  createKeys(VOWELS, 'vowelsGrid');
+  createKeys(CONS, 'consGrid');
+  createKeys(MATRAS, 'matraGrid');
+
+  const hkPanel = document.getElementById('hkPanel');
+  const toggleHkBtn = document.getElementById('toggleHkBtn');
+  toggleHkBtn.addEventListener('click', () => {
+    const isShown = hkPanel.classList.toggle('show');
+    toggleHkBtn.classList.toggle('active', isShown);
+  });
+  document.getElementById('hkClose').addEventListener('click', () => {
+    hkPanel.classList.remove('show');
+    toggleHkBtn.classList.remove('active');
+  });
+
+  // Fast Hinglish Transliteration (Supports 2-letter tokens like ka, ki, ho)
+  const HING_DICT = {
+    'namaste':'नमस्ते','mera':'मेरा','aap':'आप','kya':'क्या','hai':'है','hain':'हैं',
+    'ka':'का','ki':'की','ke':'के','ko':'को','se':'से','me':'में','mai':'मैं',
+    'ho':'हो','shri':'श्री','bharat':'भारत','dhanyavad':'धन्यवाद','theek':'ठीक'
+  };
+
+  editor.addEventListener('input', () => {
+    saveSelection();
+    updateCounts();
+    checkHinglish();
+  });
   editor.addEventListener('keyup', saveSelection);
   editor.addEventListener('mouseup', saveSelection);
-  editor.addEventListener('input', function () {
-    saveSelection(); updateCounts(); autosave(); convertHinglishIfNeeded();
-  });
-  editor.addEventListener('focus', saveSelection);
 
-  function wrapSelection(styles) {
-    var sel = window.getSelection();
-    if (!sel.rangeCount) return;
-    var range = sel.getRangeAt(0);
-    var span = document.createElement('span');
-    Object.keys(styles).forEach(function (k) { span.style[k] = styles[k]; });
-
-    if (range.collapsed) {
-      span.appendChild(document.createTextNode('\u200b'));
-      range.insertNode(span);
-      var r = document.createRange();
-      r.setStart(span.firstChild, 1);
-      r.collapse(true);
-      sel.removeAllRanges();
-      sel.addRange(r);
-    } else {
-      try { range.surroundContents(span); }
-      catch (e) {
-        var frag = range.extractContents();
-        span.appendChild(frag);
-        range.insertNode(span);
-      }
-      var r2 = document.createRange();
-      r2.selectNodeContents(span);
-      sel.removeAllRanges();
-      sel.addRange(r2);
-    }
-    lastRange = sel.getRangeAt(0).cloneRange();
-    updateCounts();
-  }
-
-  toolbar.querySelectorAll('[data-cmd]').forEach(function (btn) {
-    btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      editor.focus();
-      document.execCommand(btn.dataset.cmd, false, null);
-      updateToolbarState();
-      saveSelection();
-      autosave();
-    });
-  });
-
-  blockType.addEventListener('change', function () {
-    editor.focus();
-    document.execCommand('formatBlock', false, this.value);
-    autosave();
-  });
-
-  function isHindiFont(fam) { return /Devanagari|Mangal|Hind|Baloo/i.test(fam); }
-
-  fontFamily.addEventListener('change', function () {
-    editor.focus();
-    restoreSelection();
-    var fam = this.value;
-    var cssFam = "'" + fam + "', " + (isHindiFont(fam) ? "'Noto Sans Devanagari', sans-serif" : "sans-serif");
-    wrapSelection({ 'font-family': cssFam });
-    try {
-      document.execCommand('styleWithCSS', false, true);
-      document.execCommand('fontName', false, fam);
-    } catch (e) {}
-    autosave();
-  });
-
-  fontSize.addEventListener('change', function () {
-    editor.focus();
-    restoreSelection();
-    wrapSelection({ 'font-size': this.value + 'pt' });
-    autosave();
-  });
-
-  textColor.addEventListener('input', function () {
-    editor.focus();
-    restoreSelection();
-    wrapSelection({ 'color': this.value });
-    $('textColorWrap').style.setProperty('--pick-color', this.value);
-    autosave();
-  });
-
-  hlColor.addEventListener('input', function () {
-    editor.focus();
-    restoreSelection();
-    wrapSelection({ 'background-color': this.value });
-    $('hlColorWrap').style.setProperty('--pick-color', this.value);
-    autosave();
-  });
-
-  function updateToolbarState() {
-    toolbar.querySelectorAll('[data-cmd]').forEach(function (btn) {
-      try { btn.classList.toggle('active', document.queryCommandState(btn.dataset.cmd)); } catch (e) {}
-    });
-  }
-  editor.addEventListener('keyup', updateToolbarState);
-  editor.addEventListener('mouseup', updateToolbarState);
-
-  /* ===== HINDI KEYBOARD ===== */
-  var HINDI_KEYS = {
-    vowels: ['\u0905','\u0906','\u0907','\u0908','\u0909','\u090A','\u090B','\u090F','\u0910','\u0913','\u0914','\u0905\u0902','\u0905\u0903'],
-    consonants: ['\u0915','\u0916','\u0917','\u0918','\u0919','\u091A','\u091B','\u091C','\u091D','\u091E','\u091F','\u0920','\u0921','\u0922','\u0923','\u0924','\u0925','\u0926','\u0927','\u0928','\u092A','\u092B','\u092C','\u092D','\u092E','\u092F','\u0930','\u0932','\u0935','\u0936','\u0937','\u0938','\u0939','\u0915\u094D\u0937','\u0924\u094D\u0930','\u091C\u094D\u091E'],
-    matras: ['\u093E','\u093F','\u0940','\u0941','\u0942','\u0943','\u0947','\u0948','\u094B','\u094C','\u0902','\u0901','\u0903','\u094D'],
-    numbers: ['\u0966','\u0967','\u0968','\u0969','\u096A','\u096B','\u096C','\u096D','\u096E','\u096F'],
-    punct: ['\u0964', ',', ';', '?', '!', '-', '"', "'"]
-  };
-
-  function buildKeyboard() {
-    Object.keys(HINDI_KEYS).forEach(function (group) {
-      var grid = document.querySelector('[data-group="' + group + '"]');
-      if (!grid) return;
-      grid.innerHTML = '';
-      HINDI_KEYS[group].forEach(function (ch) {
-        var b = document.createElement('button');
-        b.className = 'hk-key'; b.textContent = ch; b.type = 'button';
-        b.addEventListener('mousedown', function (e) { e.preventDefault(); });
-        b.addEventListener('click', function () { insertAtCursor(ch); });
-        grid.appendChild(b);
-      });
-    });
-    var pg = document.querySelector('[data-group="punct"]');
-    var back = document.createElement('button');
-    back.className = 'hk-key backspace wide'; back.textContent = 'Backspace'; back.type = 'button';
-    back.addEventListener('mousedown', function (e) { e.preventDefault(); });
-    back.addEventListener('click', function () {
-      editor.focus(); restoreSelection();
-      document.execCommand('delete', false, null);
-      saveSelection(); updateCounts(); autosave();
-    });
-    pg.appendChild(back);
-    var ent = document.createElement('button');
-    ent.className = 'hk-key enter wide'; ent.textContent = 'Enter'; ent.type = 'button';
-    ent.addEventListener('mousedown', function (e) { e.preventDefault(); });
-    ent.addEventListener('click', function () {
-      editor.focus(); restoreSelection();
-      document.execCommand('insertLineBreak', false, null);
-      saveSelection(); updateCounts(); autosave();
-    });
-    pg.appendChild(ent);
-    var sp = document.createElement('button');
-    sp.className = 'hk-key space'; sp.textContent = 'SPACE'; sp.type = 'button';
-    sp.addEventListener('mousedown', function (e) { e.preventDefault(); });
-    sp.addEventListener('click', function () { insertAtCursor(' '); });
-    pg.appendChild(sp);
-  }
-
-  function insertAtCursor(text) {
-    editor.focus();
-    restoreSelection();
-    var sel = window.getSelection();
-    if (!sel.rangeCount) {
-      editor.appendChild(document.createTextNode(text));
-    } else {
-      var r = sel.getRangeAt(0);
-      r.deleteContents();
-      var n = document.createTextNode(text);
-      r.insertNode(n);
-      r.setStartAfter(n); r.setEndAfter(n);
-      sel.removeAllRanges(); sel.addRange(r);
-      lastRange = r.cloneRange();
-    }
-    updateCounts(); autosave();
-  }
-
-  buildKeyboard();
-
-  hindiKeyboardBtn.addEventListener('click', function () {
-    var show = hkWrap.classList.toggle('show');
-    hindiKeyboardBtn.classList.toggle('active', show);
-    if (show) {
-      editor.focus();
-      setTimeout(function () { editor.focus(); restoreSelection(); }, 300);
-    }
-  });
-
-  $('hkClose').addEventListener('click', function () {
-    hkWrap.classList.remove('show');
-    hindiKeyboardBtn.classList.remove('active');
-  });
-
-  /* ===== HEADER / FOOTER TOGGLES ===== */
-  function applyHFToggle() {
-    if (toggleHeader.checked) {
-      hfHeaderRow.classList.remove('hf-disabled');
-      docHeader.disabled = false;
-    } else {
-      hfHeaderRow.classList.add('hf-disabled');
-      docHeader.disabled = true;
-      docHeader.value = '';
-    }
-    if (toggleFooter.checked) {
-      hfFooterRow.classList.remove('hf-disabled');
-      docFooter.disabled = false;
-    } else {
-      hfFooterRow.classList.add('hf-disabled');
-      docFooter.disabled = true;
-      docFooter.value = '';
-    }
-    syncHF();
-    autosave();
-  }
-  toggleHeader.addEventListener('change', applyHFToggle);
-  toggleFooter.addEventListener('change', applyHFToggle);
-
-  /* ===== HINGLISH AUTO-CONVERT ===== */
-  var HING_CONSONANTS = {
-    'shri':'\u0936\u094D\u0930\u0940','ksh':'\u0915\u094D\u0937','gy':'\u091C\u094D\u091E','shr':'\u0936\u094D\u0930','tr':'\u0924\u094D\u0930',
-    'chh':'\u091B','kh':'\u0916','gh':'\u0918','ch':'\u091A','jh':'\u091D','th':'\u0925','dh':'\u0927',
-    'ph':'\u092B','bh':'\u092D','sh':'\u0936','ny':'\u091E','ng':'\u0919',
-    'k':'\u0915','g':'\u0917','c':'\u0915','j':'\u091C','t':'\u0924','d':'\u0926','n':'\u0928',
-    'p':'\u092A','b':'\u092C','m':'\u092E','y':'\u092F','r':'\u0930','l':'\u0932',
-    'v':'\u0935','w':'\u0935','s':'\u0938','h':'\u0939','z':'\u091C\u093C','f':'\u092B\u093C','q':'\u0915\u093C','x':'\u0915\u094D\u0938'
-  };
-  var HING_VOWELS = { 'aa':'\u0906','ai':'\u0910','au':'\u0914','ee':'\u0908','oo':'\u090A','a':'\u0905','i':'\u0907','u':'\u0909','e':'\u090F','o':'\u0913' };
-  var HING_MATRAS = { 'aa':'\u093E','ai':'\u0948','au':'\u094C','ee':'\u0940','oo':'\u0942','i':'\u093F','u':'\u0941','e':'\u0947','o':'\u094B' };
-  var HING_CKEYS = Object.keys(HING_CONSONANTS).sort(function (a,b) { return b.length - a.length; });
-  var HING_VKEYS = Object.keys(HING_VOWELS).sort(function (a,b) { return b.length - a.length; });
-
-  function transliterate(word) {
-    var w = word.toLowerCase(), out = '', i = 0;
-    while (i < w.length) {
-      var rest = w.substring(i), matched = false;
-      for (var ci = 0; ci < HING_CKEYS.length; ci++) {
-        var ck = HING_CKEYS[ci];
-        if (rest.indexOf(ck) === 0) {
-          var after = rest.substring(ck.length);
-          for (var vi = 0; vi < HING_VKEYS.length; vi++) {
-            var vk = HING_VKEYS[vi];
-            if (after.indexOf(vk) === 0) {
-              out += HING_CONSONANTS[ck];
-              if (vk !== 'a') out += HING_MATRAS[vk];
-              i += ck.length + vk.length;
-              matched = true; break;
-            }
-          }
-          if (matched) break;
-          var nextIsCons = false;
-          for (var cj = 0; cj < HING_CKEYS.length; cj++) {
-            if (after.indexOf(HING_CKEYS[cj]) === 0) { nextIsCons = true; break; }
-          }
-          if ((ck === 'n' || ck === 'm') && nextIsCons) { out += '\u0902'; }
-          else { out += HING_CONSONANTS[ck]; if (nextIsCons) out += '\u094D'; }
-          i += ck.length; matched = true; break;
-        }
-      }
-      if (matched) continue;
-      for (var vk2i = 0; vk2i < HING_VKEYS.length; vk2i++) {
-        var vk2 = HING_VKEYS[vk2i];
-        if (rest.indexOf(vk2) === 0) { out += HING_VOWELS[vk2]; i += vk2.length; matched = true; break; }
-      }
-      if (matched) continue;
-      out += w[i]; i++;
-    }
-    return out;
-  }
-
-  function convertHinglishIfNeeded() {
-    var sel = window.getSelection();
-    if (!sel.rangeCount) return;
-    var range = sel.getRangeAt(0);
-    if (!range.collapsed) return;
-    var node = range.startContainer;
+  function checkHinglish() {
+    const sel = window.getSelection();
+    if (!sel.rangeCount || !sel.isCollapsed) return;
+    const node = sel.anchorNode;
     if (node.nodeType !== 3) return;
-    var text = node.textContent, offset = range.startOffset;
-    var before = text.substring(0, offset);
-    var m = before.match(/([a-zA-Z]{3,})\s$/);
+    const text = node.textContent.substring(0, sel.anchorOffset);
+    const m = text.match(/([a-zA-Z]{2,})\s$/);
     if (!m) return;
-    var eng = m[1];
-    var hindi = transliterate(eng);
-    if (hindi === eng || !/[\u0900-\u097F]/.test(hindi)) return;
-    var start = offset - eng.length - 1;
-    var end = offset - 1;
-    var range2 = document.createRange();
-    range2.setStart(node, start);
-    range2.setEnd(node, end);
-    range2.deleteContents();
-    var newNode = document.createTextNode(hindi);
-    range2.insertNode(newNode);
-    var r = document.createRange();
-    r.setStartAfter(newNode); r.collapse(true);
-    sel.removeAllRanges(); sel.addRange(r);
-    lastRange = r.cloneRange();
-    updateCounts();
+    const word = m[1].toLowerCase();
+    if (HING_DICT[word]) {
+      const start = sel.anchorOffset - word.length - 1;
+      const range = document.createRange();
+      range.setStart(node, start);
+      range.setEnd(node, sel.anchorOffset - 1);
+      range.deleteContents();
+      const textNode = document.createTextNode(HING_DICT[word]);
+      range.insertNode(textNode);
+      range.setStartAfter(textNode);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      saveSelection();
+    }
   }
 
-  /* ===== COUNTS ===== */
   function updateCounts() {
-    var text = editor.innerText || '';
-    var words = text.trim() ? text.trim().split(/\s+/).length : 0;
-    wordCountEl.textContent = words;
-    charCountEl.textContent = text.length;
-    pageCountEl.textContent = Math.max(1, Math.ceil(words / 450));
+    const txt = editor.innerText || '';
+    document.getElementById('cc').textContent = txt.length;
+    const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+    document.getElementById('wc').textContent = words;
   }
 
-  function syncHF() {
-    var headerText = toggleHeader.checked ? (docHeader.value || '') : '';
-    var footerText = toggleFooter.checked ? (docFooter.value || '') : '';
-    var ph = $('printHeader'), pf = $('printFooter');
-    ph.textContent = headerText;
-    pf.textContent = footerText;
-    ph.style.display = (toggleHeader.checked && headerText) ? 'block' : 'none';
-    pf.style.display = (toggleFooter.checked && footerText) ? 'block' : 'none';
-  }
-  docHeader.addEventListener('input', function () { syncHF(); autosave(); });
-  docFooter.addEventListener('input', function () { syncHF(); autosave(); });
+  // Print & PDF
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+  document.getElementById('pdfBtn').addEventListener('click', () => window.print());
 
-  /* ===== TEMPLATES ===== */
-  var TEMPLATES = {
-    blank: { header: '', footer: '', html: '' },
-    letter: {
-      header: '', footer: '',
-      html: '<p style="text-align:right">[Your Name]<br>[Your Address]<br>[City, PIN]<br>[Email] &bull; [Phone]</p>'
-          + '<p style="text-align:right">Date: ' + new Date().toLocaleDateString('en-IN') + '</p>'
-          + '<p>[Recipient Name]<br>[Designation]<br>[Organisation]<br>[Address]</p>'
-          + '<p><b>Subject:</b> [Subject of the letter]</p>'
-          + '<p>Dear [Sir/Madam],</p>'
-          + '<p>I am writing to [reason]. [Body of the letter &mdash; introduce the purpose, then give details.]</p>'
-          + '<p>[Second paragraph &mdash; supporting details or request.]</p>'
-          + '<p>[Third paragraph &mdash; closing statement.]</p>'
-          + '<p>Yours sincerely,<br><b>[Your Name]</b></p>'
-    },
-    application: {
-      header: '', footer: '',
-      html: '<p style="text-align:center"><b>APPLICATION FOR LEAVE</b></p>'
-          + '<p style="text-align:right">Date: ' + new Date().toLocaleDateString('en-IN') + '</p>'
-          + '<p>To,<br>The Manager<br>[Company Name]<br>[Address]</p>'
-          + '<p><b>Subject:</b> Application for [leave type] leave</p>'
-          + '<p>Respected Sir/Madam,</p>'
-          + '<p>I, [Your Name], [designation] in [department], kindly request [number] days of [type] leave from [start date] to [end date] due to [reason].</p>'
-          + '<p>I request you to kindly grant me leave for the mentioned period. I will resume my duties on [date].</p>'
-          + '<p>Thanking you,<br>Yours faithfully,<br><b>[Your Name]</b><br>[Employee ID]</p>'
-    },
-    resume: {
-      header: '[Your Name]',
-      footer: 'Email: you@example.com &bull; Phone: +91 90000 00000',
-      html: '<h1 style="text-align:center;margin-bottom:4px">[Your Name]</h1>'
-          + '<p style="text-align:center;color:#6b7280;margin-bottom:20px">[Job Title / Role]</p>'
-          + '<h2>Professional Summary</h2>'
-          + '<p>Experienced [role] with [X] years of expertise in [skills]. Passionate about [domain] and known for [strength].</p>'
-          + '<h2>Work Experience</h2>'
-          + '<h3>[Job Title] &mdash; [Company Name]</h3>'
-          + '<p><i>[Month Year] &ndash; Present</i></p>'
-          + '<ul><li>Achievement or responsibility one</li><li>Achievement or responsibility two</li><li>Achievement or responsibility three</li></ul>'
-          + '<h3>[Previous Job Title] &mdash; [Previous Company]</h3>'
-          + '<p><i>[Month Year] &ndash; [Month Year]</i></p>'
-          + '<ul><li>Key contribution one</li><li>Key contribution two</li></ul>'
-          + '<h2>Education</h2>'
-          + '<p><b>[Degree]</b>, [University], [Year]</p>'
-          + '<h2>Skills</h2>'
-          + '<p>[Skill 1] &bull; [Skill 2] &bull; [Skill 3] &bull; [Skill 4]</p>'
-    },
-    notice: {
-      header: '', footer: '',
-      html: '<p style="text-align:center"><b>NOTICE</b></p>'
-          + '<p style="text-align:center;color:#6b7280">[Organisation Name]</p>'
-          + '<p style="text-align:right">Date: ' + new Date().toLocaleDateString('en-IN') + '</p>'
-          + '<p><b>Ref:</b> [Reference Number]</p>'
-          + '<h2 style="text-align:center">[Subject of the Notice]</h2>'
-          + '<p>This is to inform all [concerned parties] that [main announcement or instruction].</p>'
-          + '<p>[Details and implications &mdash; bullet points if needed.]</p>'
-          + '<ul><li>[Point 1]</li><li>[Point 2]</li><li>[Point 3]</li></ul>'
-          + '<p>For any queries, please contact [contact person] at [contact details].</p>'
-          + '<p style="margin-top:32px">[Signature]<br><b>[Name of Authority]</b><br>[Designation]</p>'
-    },
-    essay: {
-      header: '', footer: '',
-      html: '<h1 style="text-align:center">[Essay Title]</h1>'
-          + '<p style="text-align:center;color:#6b7280"><i>By [Your Name] &bull; ' + new Date().toLocaleDateString('en-IN') + '</i></p>'
-          + '<h2>Introduction</h2>'
-          + '<p>Introduce the topic and state the main argument or thesis.</p>'
-          + '<h2>Body</h2>'
-          + '<p><b>Point 1.</b> [Explain the first main argument with examples or evidence.]</p>'
-          + '<p><b>Point 2.</b> [Explain the second main argument.]</p>'
-          + '<p><b>Point 3.</b> [Explain the third main argument.]</p>'
-          + '<h2>Conclusion</h2>'
-          + '<p>Summarise the key points and end with a concluding thought or call to action.</p>'
-    }
-  };
-
-  document.querySelectorAll('.tpl-btn[data-tpl]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var t = TEMPLATES[btn.dataset.tpl];
-      if (!t) return;
-      if (editor.innerHTML.trim() && !confirm('Replace current content with template "' + btn.dataset.tpl + '"?')) return;
-      editor.innerHTML = t.html;
-      if (t.header) { toggleHeader.checked = true; docHeader.value = t.header; }
-      if (t.footer) { toggleFooter.checked = true; docFooter.value = t.footer; }
-      applyHFToggle();
-      updateCounts(); autosave();
-      showToast('Template applied', 'ok');
-    });
+  // Quick Word Export
+  document.getElementById('wordBtn').addEventListener('click', () => {
+    const headerHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+      "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+      "xmlns='http://www.w3.org/TR/REC-html40'>"+
+      "<head><meta charset='utf-8'><title>DocEasy Document</title></head><body>";
+    const footerHtml = "</body></html>";
+    const sourceHTML = headerHtml + editor.innerHTML + footerHtml;
+    const blob = new Blob(['\ufeff' + sourceHTML], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'DocEasy-Document.doc';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   });
-
-  /* ===== PRINT / PDF ===== */
-  $('printBtn').addEventListener('click', function () {
-    syncHF();
-    window.print();
-  });
-
-  $('pdfBtn').addEventListener('click', function () {
-    syncHF();
-    showToast('Choose "Save as PDF" in the print dialog', 'ok');
-    setTimeout(function () { window.print(); }, 400);
-  });
-
-  /* ===== DOCX EXPORT ===== */
-  function escapeXml(s) {
-    return String(s || '')
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-  }
-  function rgbToHex(rgb) {
-    if (!rgb) return null;
-    if (rgb.indexOf('#') === 0) return rgb.replace('#', '').toUpperCase();
-    var m = rgb.match(/\d+/g);
-    if (!m || m.length < 3) return null;
-    return ('0' + parseInt(m[0]).toString(16)).slice(-2)
-         + ('0' + parseInt(m[1]).toString(16)).slice(-2)
-         + ('0' + parseInt(m[2]).toString(16)).slice(-2);
-  }
-  function sanitizeFilename(name) {
-    return (name || 'document').replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-') || 'document';
-  }
-
-  function extractRuns(node, inherited) {
-    inherited = inherited || {};
-    var runs = [];
-    if (node.nodeType === 3) {
-      if (node.textContent) {
-        runs.push({
-          text: node.textContent,
-          bold: inherited.bold, italic: inherited.italic, underline: inherited.underline,
-          font: inherited.font, size: inherited.size, color: inherited.color, hl: inherited.hl
-        });
-      }
-      return runs;
-    }
-    if (node.nodeType !== 1) return runs;
-    var tag = node.tagName.toLowerCase();
-    var style = node.style || {};
-    var fmt = Object.assign({}, inherited);
-    if (style.fontFamily) fmt.font = style.fontFamily.replace(/["']/g, '').split(',')[0].trim();
-    if (style.fontSize) {
-      var sz = parseFloat(style.fontSize);
-      if (style.fontSize.indexOf('pt') > -1) fmt.size = Math.round(sz * 2);
-      else if (style.fontSize.indexOf('px') > -1) fmt.size = Math.round(sz * 1.5);
-    }
-    if (style.color) { var c = rgbToHex(style.color); if (c) fmt.color = c; }
-    if (style.backgroundColor && style.backgroundColor !== 'transparent') {
-      var h = rgbToHex(style.backgroundColor); if (h) fmt.hl = h;
-    }
-    if (tag === 'b' || tag === 'strong') fmt.bold = true;
-    if (tag === 'i' || tag === 'em') fmt.italic = true;
-    if (tag === 'u') fmt.underline = true;
-    if (style.fontWeight === 'bold' || parseInt(style.fontWeight) >= 600) fmt.bold = true;
-    if (style.fontStyle === 'italic') fmt.italic = true;
-    if (style.textDecoration && style.textDecoration.indexOf('underline') > -1) fmt.underline = true;
-
-    Array.prototype.forEach.call(node.childNodes, function (child) {
-      runs = runs.concat(extractRuns(child, fmt));
-    });
-    return runs;
-  }
-
-  function blockTypeToStyle(tag) {
-    if (tag === 'h1') return { style: 'Heading1', size: 48 };
-    if (tag === 'h2') return { style: 'Heading2', size: 36 };
-    if (tag === 'h3') return { style: 'Heading3', size: 28 };
-    if (tag === 'blockquote') return { style: null, size: 22, indent: 720 };
-    return { style: null, size: 24 };
-  }
-
-  function runsToXml(runs) {
-    var xml = '';
-    runs.forEach(function (r) {
-      if (!r.text) return;
-      var rPr = '<w:rPr>';
-      if (r.font) rPr += '<w:rFonts w:ascii="' + escapeXml(r.font) + '" w:hAnsi="' + escapeXml(r.font) + '" w:cs="' + escapeXml(r.font) + '"/>';
-      if (r.bold) rPr += '<w:b/>';
-      if (r.italic) rPr += '<w:i/>';
-      if (r.underline) rPr += '<w:u w:val="single"/>';
-      if (r.color) rPr += '<w:color w:val="' + r.color + '"/>';
-      if (r.hl) rPr += '<w:shd w:val="clear" w:color="auto" w:fill="' + r.hl + '"/>';
-      if (r.size) rPr += '<w:sz w:val="' + r.size + '"/><w:szCs w:val="' + r.size + '"/>';
-      rPr += '</w:rPr>';
-      var parts = String(r.text).split('\n');
-      parts.forEach(function (part, idx) {
-        if (idx > 0) xml += '<w:r><w:br/></w:r>';
-        if (part) xml += '<w:r>' + rPr + '<w:t xml:space="preserve">' + escapeXml(part) + '</w:t></w:r>';
-      });
-    });
-    return xml;
-  }
-
-  function buildDocxXml() {
-    var body = '';
-    Array.prototype.forEach.call(editor.childNodes, function (node) {
-      if (node.nodeType === 3) {
-        if (!node.textContent.trim()) return;
-        body += '<w:p><w:r><w:t xml:space="preserve">' + escapeXml(node.textContent) + '</w:t></w:r></w:p>';
-        return;
-      }
-      if (node.nodeType !== 1) return;
-      var tag = node.tagName.toLowerCase();
-      if (tag === 'ul' || tag === 'ol') {
-        Array.prototype.forEach.call(node.children, function (li) {
-          if (li.tagName.toLowerCase() !== 'li') return;
-          var runs = extractRuns(li, {});
-          body += '<w:p><w:pPr><w:ind w:left="720"/></w:pPr>'
-                + '<w:r><w:t xml:space="preserve">• </w:t></w:r>'
-                + runsToXml(runs) + '</w:p>';
-        });
-        return;
-      }
-      var runs = extractRuns(node, {});
-      var bs = blockTypeToStyle(tag);
-      var pPr = '<w:pPr>';
-      if (bs.style) pPr += '<w:pStyle w:val="' + bs.style + '"/>';
-      if (bs.indent) pPr += '<w:ind w:left="' + bs.indent + '"/>';
-      pPr += '</w:pPr>';
-      if (runs.length === 0 || !runs.some(function (r) { return r.text && r.text.trim(); })) {
-        body += '<w:p/>';
-      } else {
-        body += '<w:p>' + pPr + runsToXml(runs) + '</w:p>';
-      }
-    });
-    return body;
-  }
-
-  async function exportDocx() {
-    if (!editor.innerText.trim()) { showToast('Write something first', 'error'); return; }
-    if (!window.JSZip) { showToast('Library still loading', 'error'); return; }
-    try {
-      var bodyXml = buildDocxXml();
-      var headerText = toggleHeader.checked ? docHeader.value.trim() : '';
-      var footerText = toggleFooter.checked ? docFooter.value.trim() : '';
-      var useHeader = !!headerText;
-      var useFooter = !!footerText;
-
-      var headerXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<w:hdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
-        + '<w:p><w:pPr><w:jc w:val="center"/><w:pBdr><w:bottom w:val="single" w:sz="4" w:space="1" w:color="CCCCCC"/></w:pBdr></w:pPr>'
-        + '<w:r><w:rPr><w:sz w:val="18"/><w:color w:val="666666"/></w:rPr>'
-        + '<w:t xml:space="preserve">' + escapeXml(headerText) + '</w:t></w:r></w:p></w:hdr>';
-
-      var footerXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<w:ftr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
-        + '<w:p><w:pPr><w:jc w:val="center"/><w:pBdr><w:top w:val="single" w:sz="4" w:space="1" w:color="CCCCCC"/></w:pBdr></w:pPr>'
-        + '<w:r><w:rPr><w:sz w:val="18"/><w:color w:val="666666"/></w:rPr>'
-        + '<w:t xml:space="preserve">' + escapeXml(footerText) + '</w:t></w:r></w:p></w:ftr>';
-
-      var sectPr = '<w:sectPr>'
-        + (useHeader ? '<w:headerReference w:type="default" r:id="rIdHdr"/>' : '')
-        + (useFooter ? '<w:footerReference w:type="default" r:id="rIdFtr"/>' : '')
-        + '<w:pgSz w:w="11906" w:h="16838"/>'
-        + '<w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567"/>'
-        + '</w:sectPr>';
-
-      var docXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" '
-        + 'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
-        + '<w:body>' + bodyXml + sectPr + '</w:body></w:document>';
-
-      var docRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-        + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
-        + '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable" Target="fontTable.xml"/>'
-        + (useHeader ? '<Relationship Id="rIdHdr" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header" Target="header1.xml"/>' : '')
-        + (useFooter ? '<Relationship Id="rIdFtr" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/>' : '')
-        + '</Relationships>';
-
-      var contentTypes = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
-        + '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
-        + '<Default Extension="xml" ContentType="application/xml"/>'
-        + '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
-        + '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
-        + '<Override PartName="/word/fontTable.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"/>'
-        + (useHeader ? '<Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/>' : '')
-        + (useFooter ? '<Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/>' : '')
-        + '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>'
-        + '<Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>'
-        + '</Types>';
-
-      var rootRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-        + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
-        + '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>'
-        + '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>'
-        + '</Relationships>';
-
-      var stylesXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
-        + '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:sz w:val="48"/></w:rPr></w:style>'
-        + '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/><w:sz w:val="36"/></w:rPr></w:style>'
-        + '<w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:b/><w:sz w:val="28"/></w:rPr></w:style>'
-        + '<w:style w:type="paragraph" w:styleId="Normal" w:default="1"><w:name w:val="Normal"/><w:rPr><w:sz w:val="24"/></w:rPr></w:style>'
-        + '</w:styles>';
-
-      var fontNames = ['Calibri','Arial','Times New Roman','Georgia','Verdana','Tahoma','Lora','Courier New',
-        'Noto Sans Devanagari','Noto Serif Devanagari','Baloo Bhai 2','Hind','Mangal'];
-      var fontTableXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<w:fonts xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">';
-      fontNames.forEach(function (n) {
-        fontTableXml += '<w:font w:name="' + escapeXml(n) + '"><w:family w:val="auto"/></w:font>';
-      });
-      fontTableXml += '</w:fonts>';
-
-      var now = new Date().toISOString();
-      var coreXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" '
-        + 'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" '
-        + 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
-        + '<dc:title>' + escapeXml(editor.innerText.substring(0, 60) || 'Untitled') + '</dc:title>'
-        + '<dc:creator>DocEasy</dc:creator>'
-        + '<dcterms:created xsi:type="dcterms:W3CDTF">' + now + '</dcterms:created>'
-        + '<dcterms:modified xsi:type="dcterms:W3CDTF">' + now + '</dcterms:modified>'
-        + '</cp:coreProperties>';
-
-      var appXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        + '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties">'
-        + '<Application>DocEasy Word Writer</Application></Properties>';
-
-      var zip = new JSZip();
-      zip.file('[Content_Types].xml', contentTypes);
-      zip.folder('_rels').file('.rels', rootRels);
-      var wd = zip.folder('word');
-      wd.file('document.xml', docXml);
-      wd.file('styles.xml', stylesXml);
-      wd.file('fontTable.xml', fontTableXml);
-      if (useHeader) wd.file('header1.xml', headerXml);
-      if (useFooter) wd.file('footer1.xml', footerXml);
-      wd.folder('_rels').file('document.xml.rels', docRels);
-      var dp = zip.folder('docProps');
-      dp.file('core.xml', coreXml);
-      dp.file('app.xml', appXml);
-
-      var blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = sanitizeFilename(editor.innerText.split('\n')[0] || 'document') + '.docx';
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
-      showToast('Word document downloaded', 'ok');
-    } catch (err) {
-      console.error(err);
-      showToast('Word export failed: ' + (err.message || 'unknown'), 'error');
-    }
-  }
-
-  $('docxBtn').addEventListener('click', exportDocx);
-
-  $('clearBtn').addEventListener('click', function () {
-    if (!editor.innerText.trim()) { editor.innerHTML = ''; return; }
-    if (!confirm('Clear the entire document?')) return;
-    editor.innerHTML = '';
-    docHeader.value = ''; docFooter.value = '';
-    toggleHeader.checked = false; toggleFooter.checked = false;
-    applyHFToggle();
-    updateCounts();
-    localStorage.removeItem('de_ww_doc');
-    showToast('Cleared', 'ok');
-  });
-
-  /* ===== AUTOSAVE ===== */
-  var autosaveTimer;
-  function autosave() {
-    clearTimeout(autosaveTimer);
-    autosaveTimer = setTimeout(function () {
-      try {
-        localStorage.setItem('de_ww_doc', JSON.stringify({
-          html: editor.innerHTML,
-          header: docHeader.value, footer: docFooter.value,
-          headerOn: toggleHeader.checked, footerOn: toggleFooter.checked,
-          ts: Date.now()
-        }));
-      } catch (e) {}
-    }, 600);
-  }
-
-  function loadSaved() {
-    try {
-      var raw = localStorage.getItem('de_ww_doc');
-      if (!raw) return;
-      var d = JSON.parse(raw);
-      if (d && d.ts && (Date.now() - d.ts) < 1000 * 60 * 60 * 24 * 7) {
-        if (d.html) editor.innerHTML = d.html;
-        if (d.header) docHeader.value = d.header;
-        if (d.footer) docFooter.value = d.footer;
-        if (d.headerOn) toggleHeader.checked = true;
-        if (d.footerOn) toggleFooter.checked = true;
-      }
-    } catch (e) {}
-    applyHFToggle();
-    updateCounts();
-  }
-
-  loadSaved();
-  updateCounts();
-  $('textColorWrap').style.setProperty('--pick-color', '#1a1a1a');
-  $('hlColorWrap').style.setProperty('--pick-color', '#fef08a');
-  editor.focus();
 })();
 </script>
-
-<script src="../assets/js/core/doceasy-core.js"></script>
 </body>
-  </html>
+</html>
