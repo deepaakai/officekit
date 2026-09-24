@@ -21,7 +21,6 @@
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
   --shadow-md: 0 4px 12px rgba(25,57,138,0.14);
   --shadow-lg: 0 12px 34px rgba(0,0,0,0.20);
-
   --bg-primary: var(--bg-color);
   --text-main: var(--text-color);
   --text-muted: var(--subtext-color);
@@ -60,7 +59,7 @@ img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
 input, select, textarea { font: inherit; color: inherit; }
 
-/* ============ HEADER ============ */
+/* ============ HEADER (base) ============ */
 .site-header {
   position: sticky; top: 10px; z-index: 1000;
   background: var(--header-bg); color: #fff;
@@ -114,102 +113,123 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 .pill-nav a:hover { background: rgba(255,255,255,0.15); color: #fff; }
 
-/* ============ HEADER FIX — Desktop pe top-nav ko 2nd row bhejo ============ */
-@media (min-width: 781px) {
+/* ==========================================================================
+   ✅ DESKTOP HEADER — 2 ROWS (clean, never overlaps)
+   Row 1: [Logo]  [Tools AI Templates Why FAQ Blog]  [Toggle]
+   Row 2: [Merge PDF] [Compress PDF] [Compress Image] [BG Remover] [QR Code]
+   ========================================================================== */
+@media (min-width: 900px) {
+  .site-header {
+    max-width: 1400px;
+  }
+
   .header-inner {
-    flex-wrap: wrap !important;
-    padding: 12px 20px 8px !important;
-    gap: 10px !important;
-    align-items: center !important;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px 20px 12px;
+    column-gap: 16px;
+    row-gap: 8px;
   }
 
+  /* Row 1, order 1: Logo */
   .brand-link {
-    flex-shrink: 0 !important;
-    order: 1 !important;
+    order: 1;
+    flex: 0 0 auto;
+    flex-shrink: 0;
   }
 
-  .nav-right {
-    display: contents !important;
-  }
-
+  /* Row 1, order 2: Pill nav */
   .pill-nav {
-    display: flex !important;
-    flex-shrink: 0 !important;
-    order: 2 !important;
-    margin-left: auto !important;
-    gap: 3px !important;
-    padding: 5px 8px !important;
+    display: flex;
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: 2px;
+    padding: 4px 8px;
   }
-
   .pill-nav a {
-    padding: 6px 12px !important;
-    font-size: 12.5px !important;
-    white-space: nowrap !important;
+    padding: 6px 12px;
+    font-size: 12.5px;
   }
 
+  /* nav-right ko display:contents karo taaki iske children
+     directly header-inner ke flex items ban jaayein */
+  .nav-right {
+    display: contents;
+  }
+
+  /* Row 1, order 3: Toggle (right corner) */
   .theme-switch {
-    order: 3 !important;
-    flex-shrink: 0 !important;
-    margin-left: 6px !important;
+    order: 3;
+    flex: 0 0 auto;
+    margin-left: auto;
   }
 
-  /* Top-nav ko nayi row mein bhejo */
+  /* Row 2, order 4: Top nav (full width, centered) */
   .top-nav {
-    order: 10 !important;
-    width: 100% !important;
-    flex-basis: 100% !important;
-    justify-content: center !important;
-    gap: 2px !important;
-    margin: 4px 0 0 0 !important;
-    padding: 8px 0 2px 0 !important;
-    border-top: 1px solid rgba(255,255,255,0.15) !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important;
+    order: 4;
+    flex: 1 1 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 0 2px;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  .top-nav::-webkit-scrollbar { display: none !important; }
-
+  .top-nav::-webkit-scrollbar { display: none; }
   .top-nav a {
-    padding: 5px 12px !important;
-    font-size: 12.5px !important;
-    white-space: nowrap !important;
-    border-radius: 6px !important;
+    padding: 6px 14px;
+    font-size: 12.5px;
+    border-radius: 8px;
   }
 }
 
 /* Bade screens pe comfortable size */
-@media (min-width: 1200px) {
-  .pill-nav a {
-    padding: 6px 14px !important;
-    font-size: 13px !important;
+@media (min-width: 1300px) {
+  .pill-nav a { font-size: 13px; padding: 6px 14px; }
+  .top-nav a  { font-size: 13px; padding: 6px 16px; }
+}
+
+/* ============ MOBILE / TABLET (≤899px) ============ */
+@media (max-width: 899px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 14px;
   }
-  .top-nav a {
-    padding: 6px 14px !important;
-    font-size: 13px !important;
+  .brand-link { flex-shrink: 0; }
+  .nav-right {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .pill-nav { display: none; }
+  .top-nav {
+    order: 2;
+    width: 100%;
+    overflow-x: auto;
+    gap: 2px;
+  }
+  .theme-switch {
+    order: 1;
+    margin-left: auto;
   }
 }
 
-/* ============ Mobile (≤780px) ============ */
-@media (max-width: 780px) {
-  .header-inner {
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-    padding: 12px 14px !important;
+/* Tablet pe pill-nav bhi dikhao */
+@media (min-width: 640px) and (max-width: 899px) {
+  .pill-nav {
+    display: flex;
+    flex-shrink: 0;
   }
-  .nav-right {
-    width: 100% !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-    justify-content: space-between !important;
-  }
-  .top-nav {
-    order: 2 !important;
-    width: 100% !important;
-    overflow-x: auto !important;
-    gap: 2px !important;
-  }
-  .theme-switch {
-    order: 1 !important;
-    margin-left: auto !important;
+  .pill-nav a {
+    padding: 5px 10px;
+    font-size: 12px;
   }
 }
 
@@ -369,4 +389,4 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 640px) {
   .main-wrap, .container { padding-left: 12px; padding-right: 12px; }
   .hero-title, .tool-hero h1 { font-size: 24px; }
-}
+     }
