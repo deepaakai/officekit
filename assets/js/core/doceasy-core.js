@@ -5,23 +5,25 @@
 (function () {
   'use strict';
 
+  /* ---------- Early theme restore ---------- */
   try {
     var saved = localStorage.getItem('doceasy_theme') || 'light';
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) {}
 
+  /* ---------- Config ---------- */
   var CONFIG = {
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
     /* Pill Nav (Row 1) */
     pillNav: [
-      { href: 'index.html', label: 'Home',       root: true },
-      { href: '#tools',     label: 'Tools' },
-      { href: '#ai',        label: 'AI Tools' },
-      { href: '#templates', label: 'Templates' },
-      { href: '#faq',       label: 'FAQ' },
-      { href: '#blog',      label: 'Blog' }
+      { href: 'index.html',           label: 'Home',       root: true },
+      { href: 'index.html#tools',     label: 'Tools',      root: true },
+      { href: 'index.html#ai',        label: 'AI Tools',   root: true },
+      { href: 'index.html#templates', label: 'Templates',  root: true },
+      { href: 'index.html#faq',       label: 'FAQ',        root: true },
+      { href: 'index.html#blog',      label: 'Blog',       root: true }
     ],
 
     /* Top Nav (Row 2) — Quick tools */
@@ -36,7 +38,7 @@
       { href: 'qr-generator.html',      label: 'QR Code',          page: 'qr-generator' }
     ],
 
-    /* Category Nav (Row 3) — Only on homepage */
+    /* Category Nav (Row 3) — All pages */
     categoryNav: [
       { href: '#pdf-tools',       label: 'PDF' },
       { href: '#image-tools',     label: 'Image' },
@@ -70,6 +72,7 @@
     }
   };
 
+  /* ---------- Path resolver ---------- */
   function resolvePath(href, isRoot) {
     if (!href) return '#';
     if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
@@ -90,6 +93,7 @@
     return href;
   }
 
+  /* ---------- Header builder ---------- */
   function buildHeader() {
     var pills = CONFIG.pillNav.map(function (p) {
       return '<a href="' + resolvePath(p.href, p.root) + '">' + p.label + '</a>';
@@ -100,10 +104,48 @@
     }).join('');
 
     var catLinks = CONFIG.categoryNav.map(function (c) {
-      return '<a href="' + c.href + '">' + c.label + '</a>';
+      var href = c.href;
+      if (CONFIG.isSubPage && href.charAt(0) === '#') {
+        href = '../index.html' + href;
+      }
+      return '<a href="' + href + '">' + c.label + '</a>';
     }).join('');
 
     var homeHref = resolvePath('index.html', true);
+
+    /* ============ SUPPORT MODAL HTML ============ */
+    var supportModal =
+      '<div class="support-modal-backdrop" id="supportModal">' +
+        '<div class="support-modal">' +
+          '<div class="support-modal-header">' +
+            '<div class="coffee-badge">☕ Buy Me a Coffee · एक कॉफ़ी सपोर्ट करें</div>' +
+            '<button type="button" class="support-modal-close" onclick="docEasyCloseSupport()" aria-label="Close">✕</button>' +
+          '</div>' +
+          '<h2>Keep DocEasy 100% Free &amp; Private</h2>' +
+          '<p class="sm-sub-hi">DocEasy पूरी तरह मुफ़्त, बिना लॉगिन और बिना किसी सर्वर अपलोड के काम करता है। अगर इसने आपका समय बचाया है, तो डेवलपर को सपोर्ट करें।</p>' +
+          '<p class="sm-sub-en">100% local, zero limits. If it saved your day, fuel the project with a small coffee!</p>' +
+          '<div class="sm-grid">' +
+            '<div class="sm-pay-box">' +
+              '<span class="sm-badge-country">🇮🇳 India (UPI)</span>' +
+              '<div class="sm-qr-frame">' +
+                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=deepaakai@dbs%26pn=DocEasy%26am=80%26cu=INR" alt="UPI QR Code" class="sm-upi-qr">' +
+              '</div>' +
+              '<p class="sm-upi-id">deepaakai@dbs</p>' +
+              '<p class="sm-upi-text">GPay / PhonePe / Paytm</p>' +
+              '<span class="sm-amount-tag">☕ ₹80 (1 Coffee)</span>' +
+            '</div>' +
+            '<div class="sm-pay-box">' +
+              '<span class="sm-badge-country">🌍 Worldwide</span>' +
+              '<div class="sm-paypal-content">' +
+                '<svg viewBox="0 0 24 24" width="42" height="42" fill="#003087"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.78.78 0 0 1 .77-.655h6.634c3.275 0 5.64 1.34 6.183 4.293.447 2.435-.45 4.498-2.344 5.56 1.954.767 2.613 2.73 2.158 5.207-.547 2.977-3.037 4.545-6.674 4.545H7.71a.64.64 0 0 1-.634-.533l-.001-.005z"/></svg>' +
+                '<h4>Buy a $1 Coffee</h4>' +
+                '<p class="sm-pp-desc">Quick &amp; secure international contribution</p>' +
+                '<a href="https://www.paypal.me/DPaswan198/1" target="_blank" rel="noopener" class="sm-paypal-btn">Gift $1 via PayPal →</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
 
     return '<header class="site-header">' +
       '<div class="header-inner">' +
@@ -113,16 +155,21 @@
           '</span>' +
         '</a>' +
         '<nav class="pill-nav" aria-label="Sections">' + pills + '</nav>' +
+        '<button type="button" class="support-link" onclick="docEasyOpenSupport()" aria-label="Support">' +
+          '<span class="support-icon">☕</span>' +
+          '<span class="support-text">Support</span>' +
+        '</button>' +
         '<label class="theme-switch" aria-label="Toggle theme">' +
           '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
           '<span class="slider"></span>' +
         '</label>' +
       '</div>' +
       '<nav class="top-nav" aria-label="Quick tools">' + tools + '</nav>' +
-      (!CONFIG.isSubPage ? '<nav class="category-nav" aria-label="Categories">' + catLinks + '</nav>' : '') +
-    '</header>';
+      '<nav class="category-nav" aria-label="Categories">' + catLinks + '</nav>' +
+    '</header>' + supportModal;
   }
 
+  /* ---------- Footer builder ---------- */
   function buildFooter() {
     function col(title, items, isRoot) {
       var lis = items.map(function (it) {
@@ -149,6 +196,7 @@
       '</div></footer>';
   }
 
+  /* ---------- Inject ---------- */
   function inject() {
     var h = document.getElementById('doceasy-header');
     if (h && !document.querySelector('.site-header')) h.outerHTML = buildHeader();
@@ -168,6 +216,7 @@
     if (y) y.textContent = new Date().getFullYear();
   }
 
+  /* ---------- Theme toggle ---------- */
   window.docEasyToggleTheme = function () {
     var cb = document.getElementById('theme-checkbox');
     if (cb && cb.checked) {
@@ -180,6 +229,33 @@
   };
   window.officekitToggleTheme = window.docEasyToggleTheme;
 
+  /* ---------- Support Modal Open/Close ---------- */
+  window.docEasyOpenSupport = function () {
+    var m = document.getElementById('supportModal');
+    if (m) {
+      m.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+  window.docEasyCloseSupport = function () {
+    var m = document.getElementById('supportModal');
+    if (m) {
+      m.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  };
+
+  document.addEventListener('click', function (e) {
+    var m = document.getElementById('supportModal');
+    if (m && e.target === m) {
+      window.docEasyCloseSupport();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') window.docEasyCloseSupport();
+  });
+
+  /* ---------- Init ---------- */
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
   else inject();
 })();
