@@ -3,99 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Image Compressor &amp; Resizer — DocEasy</title>
-<meta name="description" content="Compress and resize images online for free. Reduce JPG, PNG, WEBP file size and resize by pixels or percentage — 100% browser-based, no uploads.">
-<meta name="keywords" content="image compressor, image resizer, compress jpg, compress png, resize image, reduce image size">
-<meta name="theme-color" content="#0b1329">
-
+<title>Image Compressor & Resizer Free — DocEasy</title>
+<meta name="description" content="Free browser-based image compressor and resizer. Reduce JPG, PNG, WEBP file size and resize by pixels or percentage. 100% private, no upload.">
+<meta name="keywords" content="image compressor, image resizer, compress jpg, compress png, resize image, reduce image size, photo compressor">
+<meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/image-compressor.html">
 
+<!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Image Compressor &amp; Resizer — DocEasy">
-<meta property="og:description" content="Compress and resize images 100% in your browser. No uploads, no limits, no watermark.">
+<meta property="og:title" content="Image Compressor & Resizer Free — DocEasy">
+<meta property="og:description" content="Compress and resize images instantly in your browser. No upload, no watermark.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/image-compressor.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/image-compressor-demo.jpg">
 <meta property="og:site_name" content="DocEasy">
 
+<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Image Compressor &amp; Resizer — DocEasy">
-<meta name="twitter:description" content="Compress and resize images 100% in your browser.">
+<meta name="twitter:title" content="Image Compressor & Resizer Free — DocEasy">
+<meta name="twitter:description" content="Compress and resize images instantly. 100% browser-based.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/image-compressor-demo.jpg">
 
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<!-- Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Image Compressor & Resizer",
+  "name": "Image Compressor & Resizer — DocEasy",
   "url": "https://deepaakai.github.io/officekit/tools/image-compressor.html",
   "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Compress and resize JPG, PNG, WEBP images online. 100% browser-based."
 }
 </script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
 <style>
-/* ===== Ad slots hidden ===== */
+/* Hide ad slots until AdSense approval */
 .ad-slot-container,
-.ad-placeholder { display: none !important; }
-
-/* ===== Layout (pdf-to-jpg jaisa) ===== */
-.main-wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; }
-
-.hero-box { text-align: center; padding: 8px 0 20px; }
-.hero-title {
-  font-size: clamp(22px, 4vw, 30px);
-  font-weight: 800;
-  color: var(--text-color);
-  margin: 0 0 8px;
-  letter-spacing: -0.5px;
-}
-.hero-sub {
-  color: var(--subtext-color);
-  font-size: 14.5px;
-  margin: 0 auto 18px;
-  max-width: 640px;
+.ad-placeholder {
+  display: none !important;
 }
 
-.tool-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
-}
-
-/* ===== Tabs ===== */
-.tabs {
+/* ============ Tabs ============ */
+.studio-tabs {
   display: flex;
-  gap: 4px;
-  padding: 4px;
+  gap: 6px;
+  padding: 5px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 10px;
   margin-bottom: 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
 }
-.tabs::-webkit-scrollbar { display: none; }
 .tab-btn {
   flex: 1;
-  min-width: 140px;
   padding: 12px 16px;
   border: none;
   background: transparent;
   color: var(--subtext-color);
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   border-radius: 7px;
   cursor: pointer;
-  white-space: nowrap;
-  transition: 0.18s;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
+.tab-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; }
 .tab-btn:hover { color: var(--text-color); background: var(--card-hover); }
 .tab-btn.active {
   background: var(--accent);
@@ -103,69 +83,142 @@
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
 
-/* ===== Drop zone ===== */
-.drop-zone {
-  border: 2px dashed var(--border-color);
-  border-radius: 12px;
-  padding: 34px 20px;
+/* ============ Upload Card ============ */
+.upload-card {
+  position: relative;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 32px 20px;
   text-align: center;
-  transition: 0.22s;
   cursor: pointer;
-  background: var(--card-hover);
+  transition: all 0.15s;
+  margin-bottom: 16px;
 }
-.drop-zone:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+.upload-card:hover {
+  background: var(--accent-soft-hover, var(--accent-soft));
+  transform: translateY(-2px);
 }
-.dz-icon {
-  width: 70px; height: 70px; margin: 0 auto 12px;
-  border-radius: 20px;
-  display: grid; place-items: center;
-  background: var(--accent-soft);
+.upload-card input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.upload-card .uc-icon {
+  width: 48px; height: 48px;
   color: var(--accent);
+  margin: 0 auto 12px;
 }
-.dz-icon svg { width: 44px; height: 44px; }
-.dz-title { font-size: 17px; color: var(--text-color); margin: 0 0 6px; font-weight: 700; }
-.dz-sub { color: var(--subtext-color); font-size: 13px; margin: 0; }
+.upload-card h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--text-color);
+  font-weight: 700;
+}
+.upload-card p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+}
 
-/* ===== Fields ===== */
+/* ============ Preview ============ */
+.preview-wrap {
+  display: none;
+  margin: 18px 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.preview-wrap.show { display: flex; }
+.preview-col {
+  flex: 1 1 220px;
+  text-align: center;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px;
+}
+.preview-col h4 {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--subtext-color);
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+.preview-col img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  display: block;
+  margin: 0 auto;
+}
+.preview-meta {
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+.preview-meta b { color: var(--accent); font-weight: 700; }
+
+/* ============ Controls ============ */
+.controls {
+  display: none;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-color);
+}
+.controls.show { display: block; }
+
 .field-row {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
-  margin-top: 16px;
+  margin-bottom: 14px;
 }
 .f-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  flex: 1 1 150px;
+  flex: 1 1 160px;
   min-width: 130px;
 }
 .f-group label {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-color);
   text-transform: uppercase;
   letter-spacing: 0.3px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 8px;
 }
-.f-group output { color: var(--accent); font-weight: 700; }
-
-select, input[type="number"], input[type="text"] {
-  background: var(--card-bg);
+.f-group output {
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.f-group select,
+.f-group input[type="number"] {
+  height: 42px;
+  padding: 0 12px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 10px 12px;
-  width: 100%;
+  background: var(--card-bg);
   color: var(--text-color);
   font-size: 14px;
   font-family: inherit;
-  transition: 0.18s;
+  cursor: pointer;
+  transition: border-color 0.15s;
 }
-select:focus, input[type="number"]:focus, input[type="text"]:focus {
+.f-group select:focus,
+.f-group input[type="number"]:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
@@ -180,184 +233,224 @@ input[type="range"] {
   cursor: pointer;
 }
 input[type="range"]::-webkit-slider-runnable-track {
-  height: 5px; border-radius: 3px; background: var(--border-color);
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-color);
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 19px; height: 19px; margin-top: -7px;
-  border-radius: 50%; background: var(--accent);
+  width: 19px; height: 19px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--accent);
   border: 2px solid #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   cursor: pointer;
 }
 input[type="range"]::-moz-range-track {
-  height: 5px; border-radius: 3px; background: var(--border-color);
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-color);
 }
 input[type="range"]::-moz-range-thumb {
-  width: 19px; height: 19px; border-radius: 50%;
-  background: var(--accent); border: 2px solid #fff; cursor: pointer;
+  width: 19px; height: 19px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  cursor: pointer;
 }
 
 .lock-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  gap: 8px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--text-color);
   cursor: pointer;
   user-select: none;
-  padding: 10px 0;
+  padding: 12px 0;
 }
-.lock-label input { accent-color: var(--accent); }
+.lock-label input { accent-color: var(--accent); width: 16px; height: 16px; }
 
-/* ===== Buttons ===== */
-.primary-button, .btn-primary {
+/* ============ Main Button ============ */
+.btn-main {
+  width: 100%;
+  background: var(--success, #16a34a);
+  color: #fff;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 14px;
-  background: var(--accent);
-  color: #fff;
-  border: 1px solid var(--accent);
-  cursor: pointer;
-  transition: 0.18s;
-  width: 100%;
-  margin-top: 16px;
+  transition: background 0.15s, opacity 0.15s;
+  margin-top: 8px;
 }
-.primary-button:hover { filter: brightness(1.08); }
-.primary-button:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-main:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-main svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
 
 .btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  width: 100%;
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   padding: 12px 20px;
   border-radius: 8px;
-  font-weight: 700;
   font-size: 14px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
+  font-weight: 700;
+  font-family: inherit;
   cursor: pointer;
-  transition: 0.18s;
+  margin-top: 10px;
+  transition: all 0.15s;
 }
 .btn-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
-  background: var(--accent-soft);
 }
 
-.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-.btn-row .primary-button,
-.btn-row .btn-secondary { width: auto; flex: 1; margin-top: 0; min-width: 140px; }
-
-/* ===== Info box ===== */
-.info-box {
-  font-size: 13px;
-  color: var(--text-color);
-  margin: 14px 0 0;
-  padding: 12px 14px;
-  background: var(--card-hover);
-  border-radius: 8px;
-  border-left: 3px solid var(--accent);
-  line-height: 1.6;
-}
-.info-box b { color: var(--accent); }
-
-/* ===== Preview ===== */
-.preview-wrap {
-  margin-top: 16px;
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
-.preview-col {
-  flex: 1 1 220px;
-  text-align: center;
-}
-.preview-col h4 {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--subtext-color);
-  margin: 0 0 8px;
-}
-.preview-col img {
-  max-width: 100%;
-  max-height: 220px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background: var(--card-hover);
-}
-.preview-meta {
-  font-size: 12px;
-  color: var(--subtext-color);
-  margin-top: 6px;
-}
-.preview-meta b { color: var(--accent); }
-
-/* ===== SEO Article ===== */
+/* ============ SEO ARTICLE — Improved Typography ============ */
 .seo-article {
-  margin-top: 40px;
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: var(--shadow-md);
+  border-radius: 14px;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
-.seo-article h2 { font-size: 26px !important; margin: 0 0 12px; color: var(--text-color); line-height: 1.3; }
-.seo-article h3 { margin-top: 26px; font-size: 20px !important; color: var(--accent); line-height: 1.3; }
-.seo-article h4 { margin-top: 18px; font-size: 16px; color: var(--text-color); }
-.seo-article p { font-size: 16px !important; line-height: 1.8; color: var(--text-color); margin: 12px 0; }
-.seo-article ul, .seo-article ol { padding-left: 22px; font-size: 15.5px !important; line-height: 1.8; color: var(--text-color); }
-.seo-article li { margin-bottom: 8px; }
-.seo-article a { color: var(--accent); text-decoration: none; font-weight: 600; }
-.seo-article a:hover { text-decoration: underline; }
-.seo-article table {
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.seo-article ul,
+.seo-article ol {
+  margin: 20px 0;
+  padding-left: 24px;
+}
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+  word-wrap: break-word;
+}
+.seo-article b,
+.seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; word-break: break-word; }
+.seo-article a:hover { color: var(--accent-hover); }
+
+/* ============ Table — Mobile Scrollable Wrapper ============ */
+.seo-article .table-wrap {
   width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+.seo-article .table-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+.seo-article .table-wrap::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+.seo-article .table-wrap table {
+  width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
-  margin: 16px 0;
+  margin: 0;
   font-size: 14px;
 }
-.seo-article th, .seo-article td {
-  padding: 10px;
+.seo-article th,
+.seo-article td {
+  padding: 10px 12px;
   border: 1px solid var(--border-color);
   text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  vertical-align: top;
 }
-.seo-article th { background: var(--card-hover); color: var(--text-color); font-weight: 700; }
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
 
 .article-image-box {
-  margin: 24px 0;
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff;
   text-align: center;
-  border: 1px dashed var(--border-color);
-  border-radius: 10px;
-  padding: 12px;
-  background: var(--card-hover);
+  box-sizing: border-box;
 }
 .article-image-box img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
   display: block;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 .article-image-caption {
-  font-size: 12.5px;
+  padding: 14px 18px;
+  font-size: 13px;
   color: var(--subtext-color);
-  padding: 8px 4px 2px;
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
 }
 
-/* ===== FAQ details ===== */
 details {
-  margin: 10px 0;
-  padding: 12px 14px;
+  margin: 12px 0;
+  padding: 14px 16px;
   background: var(--card-hover);
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -368,15 +461,46 @@ details summary {
   color: var(--accent);
   font-size: 15px;
   list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  word-wrap: break-word;
 }
 details summary::-webkit-details-marker { display: none; }
 details summary::before {
-  content: "▸ ";
+  content: "▸";
   display: inline-block;
   transition: transform 0.2s;
+  font-size: 12px;
+  flex-shrink: 0;
 }
 details[open] summary::before { transform: rotate(90deg); }
-details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
+details p {
+  margin: 12px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .seo-article {
+    padding: 24px 16px;
+    margin: 24px 12px;
+    border-radius: 10px;
+  }
+  .seo-article h2 { font-size: 21px !important; }
+  .seo-article h3 { font-size: 17.5px !important; }
+  .seo-article h4 { font-size: 16px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .seo-article .table-wrap table { min-width: 420px; }
+  .seo-article th,
+  .seo-article td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+  .tab-btn { font-size: 13px; padding: 11px 10px; }
+}
 </style>
 </head>
 <body>
@@ -386,162 +510,188 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
 <main class="main-wrap">
   <div class="hero-box">
     <h1 class="hero-title">Image Compressor &amp; Resizer</h1>
-    <p class="hero-sub">Compress JPG, PNG and WEBP images and resize them by exact pixels or percentage — 100% in your browser, nothing uploaded.</p>
+    <p class="hero-sub">Reduce image file size and resize photos by pixels or percentage — 100% in your browser, nothing uploaded.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ TABS ============ -->
-  <div class="tabs">
-    <button class="tab-btn active" data-target="panel-compress">Image Compressor</button>
-    <button class="tab-btn" data-target="panel-resize">Image Resizer</button>
-  </div>
+  <div class="tool-card">
+    <!-- TABS -->
+    <div class="studio-tabs">
+      <button class="tab-btn active" data-target="panel-compress" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Image Compressor
+      </button>
+      <button class="tab-btn" data-target="panel-resize" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+        Image Resizer
+      </button>
+    </div>
 
-  <!-- ============ PANEL 1: COMPRESSOR ============ -->
-  <div id="panel-compress" class="tool-card">
-    <div class="drop-zone" id="compress-drop">
-      <div class="dz-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- ============ PANEL 1: COMPRESSOR ============ -->
+    <div id="panel-compress">
+      <label class="upload-card">
+        <input type="file" id="compress-file" accept="image/*">
+        <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <path d="M17 8l-5-5-5 5M12 3v13"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
         </svg>
+        <h3>📁 Upload Image to Compress</h3>
+        <p>Select JPG, PNG, or WEBP from your device</p>
+      </label>
+
+      <div class="preview-wrap" id="compress-preview">
+        <div class="preview-col">
+          <h4>Original</h4>
+          <img id="compress-orig-img" alt="Original image preview">
+          <div class="preview-meta" id="compress-orig-meta"></div>
+        </div>
+        <div class="preview-col">
+          <h4>Compressed</h4>
+          <img id="compress-new-img" alt="Compressed image preview">
+          <div class="preview-meta" id="compress-new-meta"></div>
+        </div>
       </div>
-      <h3 class="dz-title">Select or Drop Image</h3>
-      <p class="dz-sub">JPG, PNG or WEBP supported</p>
-      <input type="file" id="compress-file" accept="image/*" hidden>
+
+      <div class="controls" id="compress-controls">
+        <div class="field-row">
+          <div class="f-group">
+            <label for="compress-format">Output Format</label>
+            <select id="compress-format">
+              <option value="image/jpeg" selected>JPG — smallest file</option>
+              <option value="image/png">PNG — lossless</option>
+              <option value="image/webp">WEBP — modern</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label for="compress-quality">Quality <output id="compress-quality-out">0.75</output></label>
+            <input type="range" id="compress-quality" min="0.3" max="1" step="0.05" value="0.75">
+          </div>
+        </div>
+
+        <button class="btn-main" id="compress-btn" type="button">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Compress &amp; Download
+        </button>
+        <button class="btn-secondary" id="compress-reset" type="button">Choose Another Image</button>
+      </div>
     </div>
 
-    <div id="compress-info" class="info-box" style="display:none;"></div>
-
-    <div class="preview-wrap" id="compress-preview" style="display:none;">
-      <div class="preview-col">
-        <h4>Original</h4>
-        <img id="compress-orig-img" alt="Original preview">
-        <div class="preview-meta" id="compress-orig-meta"></div>
-      </div>
-      <div class="preview-col">
-        <h4>Compressed</h4>
-        <img id="compress-new-img" alt="Compressed preview">
-        <div class="preview-meta" id="compress-new-meta"></div>
-      </div>
-    </div>
-
-    <div class="field-row" id="compress-controls" style="display:none;">
-      <div class="f-group">
-        <label for="compress-format">Output Format</label>
-        <select id="compress-format">
-          <option value="image/jpeg" selected>JPG (smallest)</option>
-          <option value="image/png">PNG (lossless)</option>
-          <option value="image/webp">WEBP (modern)</option>
-        </select>
-      </div>
-      <div class="f-group">
-        <label for="compress-quality">Quality <output id="compress-quality-out">0.75</output></label>
-        <input type="range" id="compress-quality" min="0.3" max="1" step="0.05" value="0.75">
-      </div>
-    </div>
-
-    <button class="primary-button" id="compress-btn" style="display:none;">Compress &amp; Download</button>
-    <button class="btn-secondary" id="compress-reset" style="display:none; width:100%; margin-top:10px;">Choose Another Image</button>
-  </div>
-
-  <!-- ============ PANEL 2: RESIZER ============ -->
-  <div id="panel-resize" class="tool-card" hidden>
-    <div class="drop-zone" id="resize-drop">
-      <div class="dz-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2.5"/>
+    <!-- ============ PANEL 2: RESIZER ============ -->
+    <div id="panel-resize" hidden>
+      <label class="upload-card">
+        <input type="file" id="resize-file" accept="image/*">
+        <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
           <path d="M9 3v18M3 9h18"/>
         </svg>
-      </div>
-      <h3 class="dz-title">Select or Drop Image</h3>
-      <p class="dz-sub">JPG, PNG or WEBP supported</p>
-      <input type="file" id="resize-file" accept="image/*" hidden>
-    </div>
+        <h3>📁 Upload Image to Resize</h3>
+        <p>Select JPG, PNG, or WEBP from your device</p>
+      </label>
 
-    <div id="resize-info" class="info-box" style="display:none;"></div>
+      <div class="preview-wrap" id="resize-preview">
+        <div class="preview-col" style="flex: 1 1 100%;">
+          <h4>Preview</h4>
+          <img id="resize-prev-img" alt="Image preview">
+          <div class="preview-meta" id="resize-prev-meta"></div>
+        </div>
+      </div>
 
-    <div class="field-row" id="resize-controls" style="display:none;">
-      <div class="f-group" style="flex: 1 1 100%;">
-        <label for="resize-mode">Resize Mode</label>
-        <select id="resize-mode">
-          <option value="px" selected>By Pixels (Width × Height)</option>
-          <option value="percent">By Percentage</option>
-        </select>
-      </div>
-    </div>
+      <div class="controls" id="resize-controls">
+        <div class="field-row">
+          <div class="f-group" style="flex: 1 1 100%;">
+            <label for="resize-mode">Resize Mode</label>
+            <select id="resize-mode">
+              <option value="px" selected>By Pixels (Width × Height)</option>
+              <option value="percent">By Percentage</option>
+            </select>
+          </div>
+        </div>
 
-    <div class="field-row" id="resize-px-row" style="display:none;">
-      <div class="f-group">
-        <label for="resize-width">Width (px)</label>
-        <input type="number" id="resize-width" min="1" max="10000">
-      </div>
-      <div class="f-group">
-        <label for="resize-height">Height (px)</label>
-        <input type="number" id="resize-height" min="1" max="10000">
-      </div>
-      <div class="f-group" style="flex: 0 0 auto; min-width: 0; justify-content: flex-end;">
-        <label class="lock-label">
-          <input type="checkbox" id="resize-lock" checked>
-          Lock aspect ratio
-        </label>
-      </div>
-    </div>
+        <div class="field-row" id="resize-px-row">
+          <div class="f-group">
+            <label for="resize-width">Width (px)</label>
+            <input type="number" id="resize-width" min="1" max="10000">
+          </div>
+          <div class="f-group">
+            <label for="resize-height">Height (px)</label>
+            <input type="number" id="resize-height" min="1" max="10000">
+          </div>
+          <div class="f-group" style="flex: 0 0 auto; min-width: 0; justify-content: flex-end;">
+            <label class="lock-label">
+              <input type="checkbox" id="resize-lock" checked>
+              Lock aspect ratio
+            </label>
+          </div>
+        </div>
 
-    <div class="field-row" id="resize-pct-row" style="display:none;">
-      <div class="f-group" style="flex: 1 1 100%;">
-        <label for="resize-percent">Scale <output id="resize-percent-out">50%</output></label>
-        <input type="range" id="resize-percent" min="5" max="200" step="1" value="50">
-      </div>
-    </div>
+        <div class="field-row" id="resize-pct-row" style="display:none;">
+          <div class="f-group" style="flex: 1 1 100%;">
+            <label for="resize-percent">Scale <output id="resize-percent-out">50%</output></label>
+            <input type="range" id="resize-percent" min="5" max="200" step="1" value="50">
+          </div>
+        </div>
 
-    <div class="field-row" id="resize-output-row" style="display:none;">
-      <div class="f-group">
-        <label for="resize-format">Output Format</label>
-        <select id="resize-format">
-          <option value="image/jpeg" selected>JPG</option>
-          <option value="image/png">PNG</option>
-          <option value="image/webp">WEBP</option>
-        </select>
-      </div>
-      <div class="f-group">
-        <label for="resize-quality">Quality <output id="resize-quality-out">0.9</output></label>
-        <input type="range" id="resize-quality" min="0.5" max="1" step="0.05" value="0.9">
-      </div>
-    </div>
+        <div class="field-row">
+          <div class="f-group">
+            <label for="resize-format">Output Format</label>
+            <select id="resize-format">
+              <option value="image/jpeg" selected>JPG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label for="resize-quality">Quality <output id="resize-quality-out">0.9</output></label>
+            <input type="range" id="resize-quality" min="0.5" max="1" step="0.05" value="0.9">
+          </div>
+        </div>
 
-    <div class="btn-row" id="resize-buttons" style="display:none;">
-      <button class="primary-button" id="resize-btn">Resize &amp; Download</button>
-      <button class="btn-secondary" id="resize-reset">Choose Another</button>
+        <button class="btn-main" id="resize-btn" type="button">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+          Resize &amp; Download
+        </button>
+        <button class="btn-secondary" id="resize-reset" type="button">Choose Another Image</button>
+      </div>
     </div>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ SEO ARTICLE ============ -->
+  <!-- ============ SEO ARTICLE — 2000+ WORDS ============ -->
   <section class="seo-article">
+
     <h2>Complete Guide: Compress &amp; Resize Images Online (2026)</h2>
 
-    <p>Images power the modern web. Every website, mobile app, exam form, government portal, job application, and social media post depends on images. Yet most users never think about how image file size, resolution, and format silently affect their daily digital life. An image that is too large slows down a website, gets rejected by an exam portal, or fails to upload on WhatsApp. An image that is too small looks blurry, unprofessional, and can even get your job application rejected.</p>
+    <p>Images power the modern web. Every website, mobile app, exam registration portal, government form, job application, and social media post depends on images. Yet most users never stop to think about how image file size, resolution, and format silently affect their daily digital life. An image that is too large slows down a website, gets rejected by an exam portal, or fails to upload on WhatsApp. An image that is too small looks blurry, unprofessional, and can even get your job application rejected.</p>
 
-    <p>The <strong>DocEasy Image Compressor &amp; Resizer</strong> solves both problems in one place — completely free, completely private, and completely in your browser. This comprehensive guide walks you through everything you need to know about image compression, resizing, format conversion, exam-specific requirements, and best practices.</p>
+    <p>The <strong>DocEasy Image Compressor &amp; Resizer</strong> solves both problems in one clean tool — completely free, completely private, and completely in your browser. This comprehensive guide walks you through everything you need to know about image compression, resizing, format conversion, exam-specific requirements, and industry best practices.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/image-compressor-demo.jpg" alt="Image Compressor and Resizer Demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;padding:20px;\'>📷 [Place Demo Here: assets/images/image-compressor-demo.jpg]</div>';">
-      <div class="article-image-caption">Compress and resize images instantly — 100% in your browser.</div>
+      <img src="../assets/images/image-compressor-demo.jpg" alt="Image Compressor and Resizer Tool Demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/image-compressor-demo.jpg]</div>';">
+      <div class="article-image-caption">Compress and resize images instantly — 100% in your browser, no uploads.</div>
     </div>
 
     <h3>1. What Is Image Compression?</h3>
-    <p>Image compression is the process of reducing an image's file size by removing redundant or less important data. There are two main types:</p>
+
+    <p>Image compression is the process of reducing an image's file size by removing redundant or less important data. It is the single most effective way to make images load faster, upload quicker, and use less storage — without visibly changing how they look.</p>
+
+    <p>There are two main types:</p>
+
     <ul>
       <li><b>Lossy compression:</b> Permanently discards some image data to achieve dramatic size reductions. JPG and WEBP use lossy compression. A 3 MB photo can become 200 KB with barely noticeable quality loss.</li>
       <li><b>Lossless compression:</b> Reduces file size without losing any data. PNG is lossless. File sizes remain larger than JPG, but image fidelity is 100% preserved.</li>
     </ul>
-    <p>For most web, email, and exam-portal use cases, lossy compression at 70–85% quality offers the best balance between visual clarity and file size.</p>
+
+    <p>For most web, email, and exam-portal use cases, lossy compression at 70–85% quality offers the best balance between visual clarity and file size. You will not notice the difference on-screen, but the file size can drop by 60–75%.</p>
 
     <h3>2. Why Resize Images?</h3>
+
     <p>Resizing means changing the pixel dimensions (width × height) of an image. This is different from compression — resizing changes how many pixels exist, while compression changes how efficiently those pixels are stored.</p>
+
     <p>You need to resize when:</p>
+
     <ul>
       <li>An exam portal demands a photo of exactly 200×230 pixels.</li>
       <li>You want to upload to Instagram or LinkedIn with specific dimensions.</li>
@@ -549,60 +699,80 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       <li>You want to reduce file size by lowering the pixel count.</li>
       <li>You want to standardize photos for a collage, ID card, or website.</li>
     </ul>
-    <p>Resizing is also the fastest way to reduce file size without sacrificing much visual quality. Halving the dimensions reduces pixel count by 75% — often cutting file size by 60–80%.</p>
+
+    <p>Resizing is also the fastest way to reduce file size without sacrificing much visual quality. Halving the dimensions reduces pixel count by 75% — often cutting file size by 60–80%. For online forms, this is usually the first step: resize to the required dimensions, then adjust quality if the file is still too large.</p>
 
     <h3>3. JPG vs PNG vs WEBP — Which Format Should You Use?</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Format</th>
-          <th>Best For</th>
-          <th>Compression</th>
-          <th>Transparency</th>
-          <th>Typical Size</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td><b>JPG</b></td><td>Photos, scans, exam photos</td><td>Lossy (excellent)</td><td>No</td><td>Small</td></tr>
-        <tr><td><b>PNG</b></td><td>Logos, screenshots, signatures</td><td>Lossless</td><td>Yes</td><td>Medium–Large</td></tr>
-        <tr><td><b>WEBP</b></td><td>Websites, modern apps</td><td>Lossy + Lossless</td><td>Yes</td><td>Smallest</td></tr>
-      </tbody>
-    </table>
+
+    <p>Choosing the right format is the single biggest decision for image file size and quality. Here is a practical comparison:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Format</th>
+            <th>Best For</th>
+            <th>Compression</th>
+            <th>Transparency</th>
+            <th>Typical Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>JPG</b></td><td>Photos, scans, exam photos</td><td>Lossy (excellent)</td><td>No</td><td>Small</td></tr>
+          <tr><td><b>PNG</b></td><td>Logos, screenshots, signatures</td><td>Lossless</td><td>Yes</td><td>Medium–Large</td></tr>
+          <tr><td><b>WEBP</b></td><td>Websites, modern apps</td><td>Lossy + Lossless</td><td>Yes</td><td>Smallest</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <p><b>Simple rule:</b> Photos → JPG. Graphics/signatures/logos → PNG. Modern website → WEBP.</p>
 
     <h3>4. Quality Slider Guide — What Value Should You Choose?</h3>
-    <table>
-      <thead>
-        <tr><th>Quality</th><th>Use Case</th><th>Size Reduction</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>0.5 – 0.6</td><td>Thumbnails, previews</td><td>80–90%</td></tr>
-        <tr><td>0.7 – 0.8</td><td>Web uploads, exam forms</td><td>60–75%</td></tr>
-        <tr><td>0.85 – 0.9</td><td>General purpose (recommended)</td><td>40–60%</td></tr>
-        <tr><td>0.95 – 1.0</td><td>Printing, archiving</td><td>10–25%</td></tr>
-      </tbody>
-    </table>
+
+    <p>The quality slider controls how aggressively the encoder discards data. Here is a practical reference:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Quality</th><th>Use Case</th><th>Size Reduction</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0.5 – 0.6</td><td>Thumbnails, previews</td><td>80–90%</td></tr>
+          <tr><td>0.7 – 0.8</td><td>Web uploads, exam forms</td><td>60–75%</td></tr>
+          <tr><td>0.85 – 0.9</td><td>General purpose (recommended)</td><td>40–60%</td></tr>
+          <tr><td>0.95 – 1.0</td><td>Printing, archiving</td><td>10–25%</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3>5. Exam Photo Size Requirements (India 2026)</h3>
-    <table>
-      <thead>
-        <tr><th>Exam</th><th>Photo Size</th><th>Max File</th><th>Signature</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>SSC CGL</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
-        <tr><td>SSC CHSL</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
-        <tr><td>UPSC IAS</td><td>350×350 px</td><td>20–300 KB</td><td>20–300 KB</td></tr>
-        <tr><td>IBPS PO</td><td>200×230 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
-        <tr><td>Railway RRB</td><td>320×240 px</td><td>15–70 KB</td><td>10–40 KB</td></tr>
-        <tr><td>NEET UG</td><td>200×230 px</td><td>10–200 KB</td><td>4–30 KB</td></tr>
-        <tr><td>JEE Main</td><td>200×230 px</td><td>10–200 KB</td><td>4–30 KB</td></tr>
-        <tr><td>GATE</td><td>240×320 px</td><td>5–200 KB</td><td>5–200 KB</td></tr>
-        <tr><td>CTET</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
-        <tr><td>Police Bharti</td><td>150×200 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
-      </tbody>
-    </table>
+
+    <p>Indian exam portals are strict about photo dimensions and file size. Below is a ready reference for major exams:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Exam</th><th>Photo Size</th><th>Max File</th><th>Signature</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SSC CGL</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+          <tr><td>SSC CHSL</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+          <tr><td>UPSC IAS</td><td>350×350 px</td><td>20–300 KB</td><td>20–300 KB</td></tr>
+          <tr><td>IBPS PO</td><td>200×230 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+          <tr><td>Railway RRB</td><td>320×240 px</td><td>15–70 KB</td><td>10–40 KB</td></tr>
+          <tr><td>NEET UG</td><td>200×230 px</td><td>10–200 KB</td><td>4–30 KB</td></tr>
+          <tr><td>JEE Main</td><td>200×230 px</td><td>10–200 KB</td><td>4–30 KB</td></tr>
+          <tr><td>GATE</td><td>240×320 px</td><td>5–200 KB</td><td>5–200 KB</td></tr>
+          <tr><td>CTET</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+          <tr><td>Police Bharti</td><td>150×200 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3>6. Government Document Photo Sizes</h3>
+
+    <p>For PAN, Aadhaar, Voter ID, Passport, and other official documents:</p>
+
     <ul>
       <li><b>PAN Card Photo:</b> 213×213 px, 20–50 KB, JPG</li>
       <li><b>Aadhaar Print:</b> A4 PDF, 300 DPI, color</li>
@@ -614,19 +784,21 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       <li><b>School/College Form:</b> 200×230 px, 20–50 KB, JPG</li>
     </ul>
 
-    <h3>7. How to Use the Compressor</h3>
+    <h3>7. How to Use the Image Compressor</h3>
+
     <ol>
-      <li>Open the <b>Image Compressor</b> tab.</li>
-      <li>Click the drop zone or drag your image into it.</li>
-      <li>The tool loads the image and shows original vs compressed preview with file sizes.</li>
+      <li>Open the <b>Image Compressor</b> tab (it's already active by default).</li>
+      <li>Click the upload card or drag your image into it.</li>
+      <li>The tool loads the image and shows side-by-side Original vs Compressed preview with file sizes and reduction percentage.</li>
       <li>Choose output format (JPG / PNG / WEBP) and adjust the quality slider.</li>
       <li>Watch the compressed preview and file size update live.</li>
       <li>Click <b>Compress &amp; Download</b>. Your optimized file downloads instantly.</li>
     </ol>
 
-    <h3>8. How to Use the Resizer</h3>
+    <h3>8. How to Use the Image Resizer</h3>
+
     <ol>
-      <li>Open the <b>Image Resizer</b> tab.</li>
+      <li>Click the <b>Image Resizer</b> tab.</li>
       <li>Upload your image. Original dimensions display automatically.</li>
       <li>Choose <b>By Pixels</b> (exact width × height) or <b>By Percentage</b> (scale slider).</li>
       <li>Keep <b>Lock aspect ratio</b> checked to avoid distortion.</li>
@@ -635,6 +807,7 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
     </ol>
 
     <h3>9. Best Practices for Exam &amp; Government Form Photos</h3>
+
     <ul>
       <li><b>Use a plain white or light background.</b> Avoid shadows, patterns, or colored walls.</li>
       <li><b>Face the camera directly.</b> No tilted head, no side profile.</li>
@@ -647,6 +820,7 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
     </ul>
 
     <h3>10. Common Use Cases</h3>
+
     <ul>
       <li><b>Job applications:</b> Portals like Naukri, LinkedIn, and government job sites enforce size limits.</li>
       <li><b>School/College admissions:</b> Photo and signature uploads with strict pixel requirements.</li>
@@ -681,7 +855,7 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
 
     <details>
       <summary>Q: What is the difference between compression and resizing?</summary>
-      <p>Compression reduces file size without changing the number of pixels. Resizing changes the number of pixels. Both reduce file size, but resizing also changes visual dimensions.</p>
+      <p>Compression reduces file size without changing the number of pixels. Resizing changes the number of pixels. Both reduce file size, but resizing also changes the visual dimensions.</p>
     </details>
 
     <details>
@@ -710,19 +884,15 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
     </details>
 
     <h3>12. Related Tools You Might Need</h3>
-    <ul>
-      <li><a href="pdf-merge.html">PDF Merge</a> — Combine multiple PDFs into one.</li>
-      <li><a href="pdf-split.html">PDF Split</a> — Split a PDF into separate files.</li>
-      <li><a href="pdf-compressor.html">PDF Compressor</a> — Reduce PDF file size.</li>
-      <li><a href="image-bg-remover.html">Image Background Remover</a> — Remove backgrounds instantly.</li>
-      <li><a href="signature-resize.html">Signature Resize</a> — Resize signatures for exam forms.</li>
-      <li><a href="passport-maker.html">Passport Photo Maker</a> — Create passport-size photos.</li>
-      <li><a href="card-cropper.html">Card Cropper</a> — Crop ID cards to exact size.</li>
-    </ul>
+
+    <p>If you found this helpful, you may also like our <a href="doc-scanner.html">Document Scanner &amp; OCR</a> to extract text from scanned photos, our <a href="passport-maker.html">Passport Photo Maker</a> to create print-ready passport photos, our <a href="signature-resize.html">Signature Resize</a> tool for exam signatures, our <a href="card-cropper.html">Card Cropper</a> to crop ID cards to exact size, our <a href="image-bg-remover.html">Image Background Remover</a> to remove backgrounds instantly, and our <a href="pdf-compressor.html">PDF Compressor</a> to reduce PDF file size.</p>
 
     <h3>13. Conclusion</h3>
+
     <p>The DocEasy Image Compressor &amp; Resizer is a complete toolkit for anyone who works with images daily — students filling exam forms, professionals optimizing websites, job seekers uploading resumes, or anyone sharing photos on social media. With two focused tools in one clean interface, strict privacy guarantees, and zero cost, it is the only image utility you will ever need.</p>
+
     <p>Bookmark this page, and use it whenever you need to compress or resize — all in one place, all in your browser.</p>
+
   </section>
 
   <div class="ad-slot-container">Advertisement</div>
@@ -738,11 +908,11 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
 
   var $ = function (id) { return document.getElementById(id); };
 
-  /* ==================== TABS ==================== */
+  /* ==================== TAB SWITCHING ==================== */
   document.querySelectorAll('.tab-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
-      document.querySelectorAll('.tool-card[id^="panel-"]').forEach(function (p) { p.hidden = true; });
+      document.querySelectorAll('[id^="panel-"]').forEach(function (p) { p.hidden = true; });
       btn.classList.add('active');
       $(btn.dataset.target).hidden = false;
     });
@@ -762,7 +932,9 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       var reader = new FileReader();
       reader.onload = function (ev) {
         var img = new Image();
-        img.onload = function () { resolve({ img: img, dataUrl: ev.target.result, size: file.size, name: file.name }); };
+        img.onload = function () {
+          resolve({ img: img, dataUrl: ev.target.result, size: file.size, name: file.name });
+        };
         img.onerror = function () { reject(new Error('Cannot read image')); };
         img.src = ev.target.result;
       };
@@ -772,47 +944,33 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
   }
 
   /* ==================== COMPRESSOR ==================== */
-  var cFile = $('compress-file');
-  var cDrop = $('compress-drop');
-  var cInfo = $('compress-info');
+  var cFile    = $('compress-file');
   var cPreview = $('compress-preview');
+  var cControls= $('compress-controls');
   var cOrigImg = $('compress-orig-img');
-  var cNewImg = $('compress-new-img');
-  var cOrigMeta = $('compress-orig-meta');
+  var cNewImg  = $('compress-new-img');
+  var cOrigMeta= $('compress-orig-meta');
   var cNewMeta = $('compress-new-meta');
-  var cControls = $('compress-controls');
-  var cFormat = $('compress-format');
+  var cFormat  = $('compress-format');
   var cQuality = $('compress-quality');
   var cQualityOut = $('compress-quality-out');
-  var cBtn = $('compress-btn');
-  var cReset = $('compress-reset');
-
-  var cData = null;      // { img, dataUrl, size, name }
-  var cBlobUrl = null;
+  var cBtn     = $('compress-btn');
+  var cReset   = $('compress-reset');
+  var cData    = null;
 
   function cResetUI() {
     cData = null;
-    if (cBlobUrl) { URL.revokeObjectURL(cBlobUrl); cBlobUrl = null; }
     cFile.value = '';
-    cInfo.style.display = 'none';
-    cPreview.style.display = 'none';
-    cControls.style.display = 'none';
-    cBtn.style.display = 'none';
-    cReset.style.display = 'none';
+    cPreview.classList.remove('show');
+    cControls.classList.remove('show');
+    cOrigImg.src = '';
+    cNewImg.src = '';
+    cOrigMeta.innerHTML = '';
+    cNewMeta.innerHTML = '';
+    cBtn.textContent = 'Compress & Download';
   }
 
-  cDrop.addEventListener('click', function () { cFile.click(); });
   cReset.addEventListener('click', function (e) { e.stopPropagation(); cResetUI(); });
-
-  cDrop.addEventListener('dragover', function (e) { e.preventDefault(); cDrop.style.borderColor = 'var(--accent)'; });
-  cDrop.addEventListener('dragleave', function () { cDrop.style.borderColor = ''; });
-  cDrop.addEventListener('drop', function (e) {
-    e.preventDefault();
-    cDrop.style.borderColor = '';
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleCompressFile(e.dataTransfer.files[0]);
-    }
-  });
 
   cFile.addEventListener('change', function () {
     if (cFile.files && cFile.files[0]) handleCompressFile(cFile.files[0]);
@@ -822,14 +980,10 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
     if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
     try {
       cData = await loadImage(file);
-      cInfo.style.display = 'block';
-      cInfo.innerHTML = '<b>Loaded:</b> ' + file.name + ' &nbsp;·&nbsp; <b>Dimensions:</b> ' + cData.img.naturalWidth + ' × ' + cData.img.naturalHeight + ' px &nbsp;·&nbsp; <b>Size:</b> ' + formatBytes(cData.size);
       cOrigImg.src = cData.dataUrl;
-      cOrigMeta.innerHTML = cData.img.naturalWidth + ' × ' + cData.img.naturalHeight + ' px · <b>' + formatBytes(cData.size) + '</b>';
-      cPreview.style.display = 'flex';
-      cControls.style.display = 'flex';
-      cBtn.style.display = 'block';
-      cReset.style.display = 'block';
+      cOrigMeta.innerHTML = cData.img.naturalWidth + ' × ' + cData.img.naturalHeight + ' px<br><b>' + formatBytes(cData.size) + '</b>';
+      cPreview.classList.add('show');
+      cControls.classList.add('show');
       updateCompressedPreview();
     } catch (err) {
       alert('Could not load image. Please try another file.');
@@ -845,7 +999,6 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
     canvas.height = cData.img.naturalHeight;
     var ctx = canvas.getContext('2d');
     if (format === 'image/jpeg') {
-      // Fill white background for transparent PNG -> JPG
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
@@ -854,11 +1007,11 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       ? canvas.toDataURL('image/png')
       : canvas.toDataURL(format, quality);
     cNewImg.src = dataUrl;
-    // Estimate compressed size from base64
     var base64 = dataUrl.split(',')[1];
     var estSize = Math.round(base64.length * 0.75);
     var reduction = cData.size > 0 ? Math.round((1 - estSize / cData.size) * 100) : 0;
-    cNewMeta.innerHTML = canvas.width + ' × ' + canvas.height + ' px · <b>' + formatBytes(estSize) + '</b> (' + (reduction >= 0 ? '−' + reduction : '+' + Math.abs(reduction)) + '%)';
+    var sign = reduction >= 0 ? '−' + reduction : '+' + Math.abs(reduction);
+    cNewMeta.innerHTML = canvas.width + ' × ' + canvas.height + ' px<br><b>' + formatBytes(estSize) + '</b> (' + sign + '%)';
   }
 
   cQuality.addEventListener('input', function () {
@@ -880,70 +1033,55 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     ctx.drawImage(cData.img, 0, 0);
-
     canvas.toBlob(function (blob) {
       if (!blob) { alert('Compression failed.'); return; }
-      if (cBlobUrl) URL.revokeObjectURL(cBlobUrl);
-      cBlobUrl = URL.createObjectURL(blob);
+      var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       var baseName = (cData.name || 'image').replace(/\.[^/.]+$/, '');
-      a.href = cBlobUrl;
+      a.href = url;
       a.download = baseName + '-compressed.' + extFromMime(format);
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      cBtn.textContent = 'Downloaded ✓';
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      cBtn.textContent = '✓ Downloaded';
       setTimeout(function () { cBtn.textContent = 'Compress & Download'; }, 2000);
     }, format, quality);
   });
 
   /* ==================== RESIZER ==================== */
-  var rFile = $('resize-file');
-  var rDrop = $('resize-drop');
-  var rInfo = $('resize-info');
-  var rControls = $('resize-controls');
-  var rMode = $('resize-mode');
-  var rPxRow = $('resize-px-row');
-  var rPctRow = $('resize-pct-row');
-  var rOutRow = $('resize-output-row');
-  var rButtons = $('resize-buttons');
-  var rWidth = $('resize-width');
-  var rHeight = $('resize-height');
-  var rLock = $('resize-lock');
+  var rFile    = $('resize-file');
+  var rPreview = $('resize-preview');
+  var rControls= $('resize-controls');
+  var rPrevImg = $('resize-prev-img');
+  var rPrevMeta= $('resize-prev-meta');
+  var rMode    = $('resize-mode');
+  var rPxRow   = $('resize-px-row');
+  var rPctRow  = $('resize-pct-row');
+  var rWidth   = $('resize-width');
+  var rHeight  = $('resize-height');
+  var rLock    = $('resize-lock');
   var rPercent = $('resize-percent');
   var rPercentOut = $('resize-percent-out');
-  var rFormat = $('resize-format');
+  var rFormat  = $('resize-format');
   var rQuality = $('resize-quality');
   var rQualityOut = $('resize-quality-out');
-  var rBtn = $('resize-btn');
-  var rReset = $('resize-reset');
-
-  var rData = null;
-  var rNatW = 0, rNatH = 0;
+  var rBtn     = $('resize-btn');
+  var rReset   = $('resize-reset');
+  var rData    = null;
+  var rNatW    = 0, rNatH = 0;
 
   function rResetUI() {
     rData = null;
     rFile.value = '';
-    rInfo.style.display = 'none';
-    rControls.style.display = 'none';
-    rPxRow.style.display = 'none';
-    rPctRow.style.display = 'none';
-    rOutRow.style.display = 'none';
-    rButtons.style.display = 'none';
+    rPreview.classList.remove('show');
+    rControls.classList.remove('show');
+    rPrevImg.src = '';
+    rPrevMeta.innerHTML = '';
+    rBtn.textContent = 'Resize & Download';
   }
 
-  rDrop.addEventListener('click', function () { rFile.click(); });
   rReset.addEventListener('click', function (e) { e.stopPropagation(); rResetUI(); });
-
-  rDrop.addEventListener('dragover', function (e) { e.preventDefault(); rDrop.style.borderColor = 'var(--accent)'; });
-  rDrop.addEventListener('dragleave', function () { rDrop.style.borderColor = ''; });
-  rDrop.addEventListener('drop', function (e) {
-    e.preventDefault();
-    rDrop.style.borderColor = '';
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleResizeFile(e.dataTransfer.files[0]);
-    }
-  });
 
   rFile.addEventListener('change', function () {
     if (rFile.files && rFile.files[0]) handleResizeFile(rFile.files[0]);
@@ -955,18 +1093,14 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       rData = await loadImage(file);
       rNatW = rData.img.naturalWidth;
       rNatH = rData.img.naturalHeight;
-      rInfo.style.display = 'block';
-      rInfo.innerHTML = '<b>Loaded:</b> ' + file.name + ' &nbsp;·&nbsp; <b>Original:</b> ' + rNatW + ' × ' + rNatH + ' px &nbsp;·&nbsp; <b>Size:</b> ' + formatBytes(rData.size);
-
+      rPrevImg.src = rData.dataUrl;
+      rPrevMeta.innerHTML = rNatW + ' × ' + rNatH + ' px &nbsp;·&nbsp; <b>' + formatBytes(rData.size) + '</b>';
+      rPreview.classList.add('show');
+      rControls.classList.add('show');
       rWidth.value = rNatW;
       rHeight.value = rNatH;
       rPercent.value = 50;
       rPercentOut.textContent = '50%';
-
-      rControls.style.display = 'flex';
-      rOutRow.style.display = 'flex';
-      rButtons.style.display = 'flex';
-
       toggleMode();
     } catch (err) {
       alert('Could not load image. Please try another file.');
@@ -975,13 +1109,10 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
 
   function toggleMode() {
     var mode = rMode.value;
-    rPxRow.style.display = (mode === 'px') ? 'flex' : 'none';
+    rPxRow.style.display  = (mode === 'px') ? 'flex' : 'none';
     rPctRow.style.display = (mode === 'percent') ? 'flex' : 'none';
-    if (mode === 'percent') {
-      applyPercent();
-    }
+    if (mode === 'percent') applyPercent();
   }
-
   rMode.addEventListener('change', toggleMode);
 
   function applyLockFromWidth() {
@@ -994,7 +1125,6 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
     var h = parseFloat(rHeight.value);
     if (h > 0) rWidth.value = Math.round(h * rNatW / rNatH);
   }
-
   rWidth.addEventListener('input', applyLockFromWidth);
   rHeight.addEventListener('input', applyLockFromHeight);
 
@@ -1015,7 +1145,6 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
     if (!rData) return;
     var mode = rMode.value;
     var targetW, targetH;
-
     if (mode === 'percent') {
       var pct = parseFloat(rPercent.value) || 100;
       targetW = Math.max(1, Math.round(rNatW * pct / 100));
@@ -1026,10 +1155,8 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       if (!targetW || targetW < 1) targetW = rNatW;
       if (!targetH || targetH < 1) targetH = rNatH;
     }
-
     var format = rFormat.value;
     var quality = parseFloat(rQuality.value) || 0.9;
-
     var canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
@@ -1041,7 +1168,6 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     ctx.drawImage(rData.img, 0, 0, targetW, targetH);
-
     canvas.toBlob(function (blob) {
       if (!blob) { alert('Resize failed.'); return; }
       var url = URL.createObjectURL(blob);
@@ -1053,7 +1179,7 @@ details p { margin: 10px 0 0; font-size: 15px !important; line-height: 1.7; }
       a.click();
       document.body.removeChild(a);
       setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
-      rBtn.textContent = 'Downloaded ✓';
+      rBtn.textContent = '✓ Downloaded';
       setTimeout(function () { rBtn.textContent = 'Resize & Download'; }, 2000);
     }, format, quality);
   });
