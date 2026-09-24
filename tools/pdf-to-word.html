@@ -3,177 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Word Writer — Hindi & English Typing with DOCX/PDF Export | DocEasy</title>
-<meta name="description" content="Free online Word writer with Hindi + English fonts and Hindi virtual keyboard. Write and export as Word (.docx) or PDF. 100% browser-based.">
-<meta name="keywords" content="word writer, hindi typing, hindi keyboard, devanagari font, mangal font, docx writer, hindi word document">
+<title>PDF to Word — Convert PDF to DOCX Online Free | DocEasy</title>
+<meta name="description" content="Convert PDF documents to editable Word (.docx) files online. 100% browser-based, no upload, no signup. Extract text from PDF into Word.">
+<meta name="keywords" content="pdf to word, pdf to docx, convert pdf to word, pdf to word converter, free pdf to word, editable word from pdf">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/word-writer.html">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/pdf-to-word.html">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Word Writer — Hindi & English Typing | DocEasy">
-<meta property="og:description" content="Write in Hindi or English with 11 fonts and export as Word or PDF.">
-<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/word-writer.html">
-<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
+<meta property="og:title" content="PDF to Word — Convert PDF to DOCX Free | DocEasy">
+<meta property="og:description" content="Convert PDF to editable Word (.docx) — 100% browser-based, no upload.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/pdf-to-word.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/pdf-to-word-demo.jpg">
 <meta property="og:site_name" content="DocEasy">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Word Writer — Hindi & English | DocEasy">
-<meta name="twitter:description" content="Write in Hindi or English with 11 fonts.">
-<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
+<meta name="twitter:title" content="PDF to Word — DocEasy">
+<meta name="twitter:description" content="Convert PDF to editable Word (.docx).">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/pdf-to-word-demo.jpg">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Word Writer — DocEasy","url":"https://deepaakai.github.io/officekit/tools/word-writer.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PDF to Word — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/pdf-to-word.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
 </script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700&family=Noto+Serif+Devanagari:wght@400;700&family=Baloo+Bhai+2:wght@400;700&family=Hind:wght@400;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <style>
-.ad-slot-container, .ad-placeholder { display: none !important; }
+.ad-slot-container,
+.ad-placeholder { display: none !important; }
 
-.editor-toolbar {
-  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
-  padding: 10px; background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  border-radius: 10px 10px 0 0;
+.drop-zone {
+  border: 2px dashed var(--border-color); border-radius: 12px;
+  padding: 42px 20px; text-align: center;
+  transition: all 0.22s ease; cursor: pointer;
+  background: var(--card-hover); position: relative;
 }
-.tb-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 38px; height: 38px; padding: 0 10px;
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 8px; color: var(--text-color);
-  font-size: 14px; font-weight: 700; cursor: pointer;
-  transition: all 0.15s ease; gap: 6px; font-family: inherit;
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px);
 }
-.tb-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.tb-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.tb-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.tb-btn.hindi-active { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; border-color: #ea580c; }
-.tb-sep { width: 1px; height: 26px; background: var(--border-color); margin: 0 2px; }
-.tb-select {
-  height: 38px; padding: 0 8px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: 8px;
-  color: var(--text-color); font-size: 13px; font-weight: 600;
-  cursor: pointer; font-family: inherit; max-width: 170px;
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer;
 }
-.tb-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.dz-icon {
+  width: 72px; height: 72px; margin: 0 auto 16px;
+  border-radius: 20px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.dz-icon svg { width: 36px; height: 36px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.dz-title { font-size: 18px; font-weight: 700; color: var(--text-color); margin: 0 0 6px; }
+.dz-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0 0 20px; }
+.dz-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px;
+  background: var(--accent); color: #fff; border: none;
+  cursor: pointer; transition: all 0.18s ease;
+  box-shadow: 0 4px 14px rgba(25,57,138,0.25);
+  font-family: inherit;
+}
+.dz-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.dz-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; }
 
-.editor-area {
-  min-height: 420px; padding: 28px 32px; background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 0 0 10px 10px;
-  font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
-  font-size: 12pt; line-height: 1.6; color: #1a1a1a;
-  outline: none; overflow-y: auto; max-height: 640px;
+.file-info {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; background: var(--accent-soft);
+  border: 1px solid var(--accent); border-radius: 10px; margin-top: 18px;
 }
-.editor-area:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.editor-area:empty:before { content: attr(data-placeholder); color: #999; pointer-events: none; }
-.editor-area h1 { font-size: 24pt; font-weight: 700; margin: 0 0 12px; }
-.editor-area h2 { font-size: 18pt; font-weight: 700; margin: 18px 0 10px; }
-.editor-area h3 { font-size: 14pt; font-weight: 700; margin: 14px 0 8px; }
-.editor-area p { margin: 0 0 10px; }
-.editor-area ul, .editor-area ol { padding-left: 26px; margin: 10px 0; }
-.editor-area li { margin-bottom: 4px; }
-.editor-area blockquote { border-left: 4px solid var(--accent); padding-left: 14px; margin: 12px 0; font-style: italic; color: #555; }
+.file-info svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; flex-shrink: 0; }
+.file-info .fi-name {
+  font-weight: 700; color: var(--text-color); font-size: 14px;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.file-info .fi-size { color: var(--subtext-color); font-size: 12.5px; font-weight: 600; }
+.file-info .fi-remove {
+  background: transparent; border: none; color: var(--error);
+  cursor: pointer; padding: 4px; display: grid; place-items: center;
+  border-radius: 6px; transition: background 0.15s;
+}
+.file-info .fi-remove:hover { background: rgba(220,38,38,0.1); }
+.file-info .fi-remove svg { stroke: var(--error); width: 18px; height: 18px; }
 
-/* Hindi keyboard */
-.hindi-keyboard {
-  display: none;
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  border-top: none;
-  padding: 14px 12px;
-  max-height: 320px;
-  overflow-y: auto;
+.notice-box {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 16px; margin-top: 16px;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.35);
+  border-radius: 10px;
+  font-size: 12.5px; color: var(--text-color);
+  line-height: 1.55;
 }
-.hindi-keyboard.show { display: block; }
-.hk-section { margin-bottom: 12px; }
-.hk-section:last-child { margin-bottom: 0; }
-.hk-label {
-  font-size: 10.5px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: 0.5px;
-  color: var(--accent); margin-bottom: 6px;
-  display: block;
-}
-.hk-grid {
-  display: flex; flex-wrap: wrap; gap: 4px;
-}
-.hk-key {
-  min-width: 40px; height: 40px; padding: 0 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  color: var(--text-color);
-  font-size: 18px; font-weight: 500;
-  cursor: pointer; font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
-  transition: all 0.1s;
-  display: inline-flex; align-items: center; justify-content: center;
-}
-.hk-key:hover { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-.hk-key:active { transform: scale(0.95); }
-.hk-key.wide { min-width: 70px; font-size: 14px; font-weight: 700; }
-.hk-key.backspace { background: var(--error); color: #fff; border-color: var(--error); font-size: 14px; }
-.hk-key.backspace:hover { background: #b91c1c; }
-.hk-key.enter { background: var(--accent); color: #fff; border-color: var(--accent); font-size: 14px; }
-.hk-key.enter:hover { filter: brightness(1.1); color: #fff; }
-.hk-key.space { flex: 1; min-width: 100px; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
-
-.status-bar {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 12px; flex-wrap: wrap; padding: 10px 16px;
-  background: var(--card-hover); border: 1px solid var(--border-color);
-  border-top: none; border-radius: 0 0 10px 10px;
-  font-size: 12.5px; color: var(--subtext-color); font-weight: 600;
-}
-.status-bar span { display: inline-flex; align-items: center; gap: 6px; }
-.status-bar svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
-.status-bar .hindi-badge {
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  color: #fff; padding: 3px 10px; border-radius: 999px;
-  font-size: 10.5px; font-weight: 800; letter-spacing: 0.3px;
-}
-
-.settings-row {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px; margin-top: 20px;
-}
-.setting { display: flex; flex-direction: column; gap: 6px; }
-.setting label {
-  font-size: 12px; font-weight: 700; color: var(--text-color);
-  text-transform: uppercase; letter-spacing: 0.3px;
-}
-.setting input[type="text"] {
-  padding: 10px 12px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: 8px;
-  color: var(--text-color); font-size: 14px; font-family: inherit; transition: border-color 0.15s;
-}
-.setting input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); outline: none; }
-
-.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
-.btn-primary, .btn-secondary, .btn-docx {
-  flex: 1; min-width: 160px; padding: 14px 20px; border-radius: 10px;
-  font-size: 15px; font-weight: 700; cursor: pointer;
-  transition: all 0.18s ease;
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 8px; border: none; font-family: inherit;
-}
-.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 14px rgba(25,57,138,0.25); }
-.btn-primary:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
-.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-.btn-docx { background: var(--success); color: #fff; box-shadow: 0 4px 14px rgba(21,128,61,0.25); }
-.btn-docx:hover:not(:disabled) { background: var(--success-hover); transform: translateY(-2px); }
-.btn-docx:disabled { opacity: 0.55; cursor: not-allowed; }
-.btn-secondary {
-  background: var(--card-bg); color: var(--text-color);
-  border: 1px solid var(--border-color); flex: 0 0 auto; min-width: 120px;
-}
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.btn-primary svg, .btn-secondary svg, .btn-docx svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+.notice-box svg { width: 18px; height: 18px; stroke: #f59e0b; fill: none; flex-shrink: 0; margin-top: 1px; }
+.notice-box b { color: #b45309; }
 
 .progress-wrap { margin-top: 20px; display: none; }
 .progress-wrap.show { display: block; }
@@ -186,14 +118,32 @@
   background: linear-gradient(90deg, var(--accent), #38bdf8);
   transition: width 0.2s ease; border-radius: 4px;
 }
-.progress-text { margin-top: 10px; text-align: center; font-size: 13px; color: var(--subtext-color); font-weight: 600; }
+.progress-text {
+  margin-top: 10px; text-align: center;
+  font-size: 13px; color: var(--subtext-color); font-weight: 600;
+}
 
-.toast {
-  position: fixed; bottom: 24px; left: 50%;
-  transform: translateX(-50%) translateY(100px);
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.btn-primary, .btn-secondary {
+  flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 10px;
+  font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.18s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none;
+  font-family: inherit;
+}
+.btn-primary { background: var(--success); color: #fff; box-shadow: 0 4px 14px rgba(21,128,61,0.25); }
+.btn-primary:hover:not(:disabled) { background: var(--success-hover); transform: translateY(-2px); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-secondary {
   background: var(--card-bg); color: var(--text-color);
   border: 1px solid var(--border-color);
-  padding: 14px 22px; border-radius: 10px;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.btn-primary svg, .btn-secondary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color); padding: 14px 22px; border-radius: 10px;
   box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw;
@@ -213,68 +163,261 @@
   margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
 }
 .info-box h3 svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
-.info-box ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
-.info-box li { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--subtext-color); line-height: 1.5; }
-.info-box li svg { width: 16px; height: 16px; stroke: var(--success); fill: none; flex-shrink: 0; margin-top: 3px; stroke-width: 2.5; }
+.info-box ul {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;
+}
+.info-box li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; color: var(--subtext-color); line-height: 1.5;
+}
+.info-box li svg {
+  width: 16px; height: 16px; stroke: var(--success); fill: none;
+  flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
+}
 
 /* SEO Article */
-.seo-article { max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; overflow-x: hidden; box-sizing: border-box; }
-.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; line-height: 1.3; }
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
 .seo-article h2:first-child { margin-top: 0; }
-.seo-article h3 { font-size: 20px !important; font-weight: 700; color: var(--accent); margin: 32px 0 16px; line-height: 1.4; }
-.seo-article h4 { font-size: 17px !important; font-weight: 700; color: var(--text-color); margin: 24px 0 12px; }
-.seo-article p { font-size: 16px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
 .seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
-.seo-article li { font-size: 15.5px !important; color: var(--subtext-color); margin-bottom: 12px; line-height: 1.7; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
 .seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
-.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article a {
+  color: var(--accent);
+  text-decoration: underline;
+  font-weight: 600;
+}
 .seo-article a:hover { color: var(--accent-hover); }
-.seo-article .table-wrap { width: 100%; max-width: 100%; overflow-x: auto; margin: 20px 0; border: 1px solid var(--border-color); border-radius: 8px; }
-.seo-article .table-wrap table { width: 100%; min-width: 480px; border-collapse: collapse; margin: 0; font-size: 14px; }
-.seo-article th, .seo-article td { padding: 10px 12px; border: 1px solid var(--border-color); text-align: left; color: var(--subtext-color); font-size: 14px; vertical-align: top; }
-.seo-article th { background: var(--card-hover); color: var(--text-color); font-weight: 700; white-space: nowrap; }
+.seo-article code {
+  background: var(--card-hover); padding: 2px 6px;
+  border-radius: 4px; font-size: 14px; color: var(--accent);
+}
 
-.article-image-box { margin: 32px auto; max-width: 720px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); background: #fff; text-align: center; box-sizing: border-box; }
-.article-image-box img { width: 100%; max-height: 360px; object-fit: contain; padding: 20px; display: block; margin: 0 auto; box-sizing: border-box; }
-.article-image-caption { padding: 14px 18px; font-size: 13px; color: var(--subtext-color); background: var(--card-bg); border-top: 1px solid var(--border-color); line-height: 1.55; }
+.seo-article .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+.seo-article .table-wrap table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 14px;
+}
+.seo-article th, .seo-article td {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+  word-break: break-word;
+  vertical-align: top;
+}
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
 
-details { margin: 12px 0; padding: 14px 16px; background: var(--card-hover); border-radius: 8px; border: 1px solid var(--border-color); }
-details summary { cursor: pointer; font-weight: 700; color: var(--accent); font-size: 15px; list-style: none; display: flex; align-items: center; gap: 8px; }
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+
+details {
+  margin: 12px 0;
+  padding: 14px 16px;
+  background: var(--card-hover);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 details summary::-webkit-details-marker { display: none; }
-details summary::before { content: "▸"; display: inline-block; transition: transform 0.2s; font-size: 12px; flex-shrink: 0; }
+details summary::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 12px;
+  flex-shrink: 0;
+}
 details[open] summary::before { transform: rotate(90deg); }
-details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height: 1.7; }
+details p {
+  margin: 12px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.7;
+}
 
-.related-tools-section { max-width: 1100px; margin: 60px auto 20px; padding: 0 20px; }
-.related-tools-section h2 { font-size: clamp(22px, 3.5vw, 28px); font-weight: 800; color: var(--text-color); text-align: center; margin: 0 0 8px; letter-spacing: -0.5px; }
-.related-sub { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 0 32px; }
-.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-.related-card { display: flex; flex-direction: column; gap: 10px; padding: 18px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-decoration: none; color: var(--text-color); transition: all 0.2s ease; min-height: 110px; }
-.related-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 26px rgba(25,57,138,0.12); }
-.related-card .rc-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex-shrink: 0; }
+/* Related Tools */
+.related-tools-section {
+  max-width: 1100px;
+  margin: 60px auto 20px;
+  padding: 0 20px;
+}
+.related-tools-section h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: var(--text-color);
+  text-align: center;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+.related-sub {
+  text-align: center;
+  color: var(--subtext-color);
+  font-size: 14px;
+  margin: 0 0 32px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  min-height: 110px;
+}
+.related-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(25,57,138,0.12);
+}
+.related-card .rc-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
 .related-card:hover .rc-icon { transform: scale(1.08) rotate(-4deg); }
-.related-card .rc-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.related-card h3 { font-size: 14px; font-weight: 700; margin: 0; line-height: 1.3; color: var(--text-color); }
-.related-card p { font-size: 11.5px; color: var(--subtext-color); margin: 0; line-height: 1.4; }
+.related-card .rc-icon svg {
+  width: 20px; height: 20px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.related-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+.related-card p {
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  margin: 0;
+  line-height: 1.4;
+}
 
 @media (max-width: 768px) {
   .seo-article { padding: 24px 16px; margin: 24px 12px; border-radius: 10px; }
   .seo-article h2 { font-size: 21px !important; }
   .seo-article h3 { font-size: 17.5px !important; }
+  .seo-article h4 { font-size: 16px !important; }
   .seo-article p { font-size: 15.5px !important; }
   .seo-article li { font-size: 15px !important; }
   .seo-article .table-wrap table { min-width: 420px; }
+  .seo-article th, .seo-article td { padding: 8px 10px; font-size: 13px; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
   .related-tools-section { padding: 0 14px; margin-top: 48px; }
   .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .related-card { padding: 14px 12px; min-height: 100px; }
   .related-card h3 { font-size: 13px; }
   .related-card p { font-size: 10.5px; }
-  .editor-area { padding: 20px 18px; min-height: 320px; }
-  .tb-select { max-width: 130px; font-size: 12px; }
-  .tb-btn { min-width: 34px; height: 34px; font-size: 13px; }
-  .hk-key { min-width: 34px; height: 34px; font-size: 15px; padding: 0 6px; }
-  .hk-key.wide { min-width: 58px; font-size: 12px; }
-  .hindi-keyboard { max-height: 260px; padding: 10px 8px; }
+  .related-card .rc-icon { width: 36px; height: 36px; }
+  .related-card .rc-icon svg { width: 18px; height: 18px; }
 }
 </style>
 </head>
@@ -284,517 +427,359 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
 
 <main class="main-wrap">
   <div class="hero-box">
-    <h1 class="hero-title">Word Writer</h1>
-    <p class="hero-sub">Write in <b>Hindi or English</b> with 11 fonts and a built-in Hindi keyboard. Export as Word (.docx) or PDF — 100% private.</p>
+    <h1 class="hero-title">PDF to Word</h1>
+    <p class="hero-sub">Convert PDF documents to editable Word (.docx) files instantly. 100% browser-based — your files never leave your device.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
   <div class="tool-card">
-    <!-- Toolbar -->
-    <div class="editor-toolbar" id="toolbar">
-      <select class="tb-select" id="fontFamily" title="Font">
-        <optgroup label="English Fonts">
-          <option value="Calibri">Calibri</option>
-          <option value="Arial">Arial</option>
-          <option value="Times New Roman">Times New Roman</option>
-          <option value="Georgia">Georgia</option>
-          <option value="Verdana">Verdana</option>
-          <option value="Tahoma">Tahoma</option>
-          <option value="Courier New">Courier New</option>
-        </optgroup>
-        <optgroup label="हिन्दी Fonts">
-          <option value="Noto Sans Devanagari">Noto Sans देवनागरी</option>
-          <option value="Noto Serif Devanagari">Noto Serif देवनागरी</option>
-          <option value="Baloo Bhai 2">Baloo भाई</option>
-          <option value="Hind">हिन्द (Hind)</option>
-          <option value="Mangal">मंगल (Mangal)</option>
-        </optgroup>
-      </select>
-
-      <select class="tb-select" id="fontSize" title="Font size">
-        <option value="1">8pt</option>
-        <option value="2">10pt</option>
-        <option value="3" selected>12pt</option>
-        <option value="4">14pt</option>
-        <option value="5">18pt</option>
-        <option value="6">24pt</option>
-        <option value="7">36pt</option>
-      </select>
-
-      <select class="tb-select" id="blockType" title="Style">
-        <option value="p">Paragraph</option>
-        <option value="h1">Heading 1</option>
-        <option value="h2">Heading 2</option>
-        <option value="h3">Heading 3</option>
-        <option value="blockquote">Quote</option>
-      </select>
-
-      <div class="tb-sep"></div>
-
-      <!-- Hindi Keyboard Toggle -->
-      <button class="tb-btn" id="hindiKeyboardBtn" title="Toggle Hindi Keyboard (हिन्दी कीबोर्ड)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h12"/></svg>
-        हिन्दी
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept=".pdf,application/pdf">
+      <div class="dz-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="9" y1="13" x2="15" y2="13"/>
+          <line x1="9" y1="17" x2="15" y2="17"/>
+        </svg>
+      </div>
+      <h3 class="dz-title">Drop your PDF file here</h3>
+      <p class="dz-sub">or click to browse · PDF supported · Max 25 MB</p>
+      <button class="dz-btn" type="button" id="chooseBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Choose PDF File
       </button>
-
-      <div class="tb-sep"></div>
-      <button class="tb-btn" data-cmd="bold" title="Bold"><b>B</b></button>
-      <button class="tb-btn" data-cmd="italic" title="Italic"><i>I</i></button>
-      <button class="tb-btn" data-cmd="underline" title="Underline"><u>U</u></button>
-      <div class="tb-sep"></div>
-      <button class="tb-btn" data-cmd="justifyLeft" title="Align left"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-      <button class="tb-btn" data-cmd="justifyCenter" title="Align center"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-      <button class="tb-btn" data-cmd="justifyRight" title="Align right"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-      <div class="tb-sep"></div>
-      <button class="tb-btn" data-cmd="insertUnorderedList" title="Bullet list"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/></svg></button>
-      <button class="tb-btn" data-cmd="insertOrderedList" title="Numbered list"><svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><text x="3" y="8" font-size="7" font-weight="bold" fill="currentColor" stroke="none">1</text><text x="3" y="14" font-size="7" font-weight="bold" fill="currentColor" stroke="none">2</text><text x="3" y="20" font-size="7" font-weight="bold" fill="currentColor" stroke="none">3</text></svg></button>
-      <div class="tb-sep"></div>
-      <button class="tb-btn" data-cmd="undo" title="Undo"><svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg></button>
-      <button class="tb-btn" data-cmd="redo" title="Redo"><svg viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg></button>
     </div>
 
-    <div class="editor-area" id="editor" contenteditable="true" data-placeholder="Start writing in English or Hindi... / हिन्दी या English में लिखें..."></div>
-
-    <!-- Hindi Virtual Keyboard -->
-    <div class="hindi-keyboard" id="hindiKeyboard">
-      <div class="hk-section">
-        <span class="hk-label">स्वर (Vowels)</span>
-        <div class="hk-grid">
-          <button class="hk-key" data-key="अ">अ</button>
-          <button class="hk-key" data-key="आ">आ</button>
-          <button class="hk-key" data-key="इ">इ</button>
-          <button class="hk-key" data-key="ई">ई</button>
-          <button class="hk-key" data-key="उ">उ</button>
-          <button class="hk-key" data-key="ऊ">ऊ</button>
-          <button class="hk-key" data-key="ऋ">ऋ</button>
-          <button class="hk-key" data-key="ए">ए</button>
-          <button class="hk-key" data-key="ऐ">ऐ</button>
-          <button class="hk-key" data-key="ओ">ओ</button>
-          <button class="hk-key" data-key="औ">औ</button>
-          <button class="hk-key" data-key="अं">अं</button>
-          <button class="hk-key" data-key="अः">अः</button>
-        </div>
-      </div>
-
-      <div class="hk-section">
-        <span class="hk-label">व्यंजन (Consonants)</span>
-        <div class="hk-grid">
-          <button class="hk-key" data-key="क">क</button>
-          <button class="hk-key" data-key="ख">ख</button>
-          <button class="hk-key" data-key="ग">ग</button>
-          <button class="hk-key" data-key="घ">घ</button>
-          <button class="hk-key" data-key="ङ">ङ</button>
-          <button class="hk-key" data-key="च">च</button>
-          <button class="hk-key" data-key="छ">छ</button>
-          <button class="hk-key" data-key="ज">ज</button>
-          <button class="hk-key" data-key="झ">झ</button>
-          <button class="hk-key" data-key="ञ">ञ</button>
-          <button class="hk-key" data-key="ट">ट</button>
-          <button class="hk-key" data-key="ठ">ठ</button>
-          <button class="hk-key" data-key="ड">ड</button>
-          <button class="hk-key" data-key="ढ">ढ</button>
-          <button class="hk-key" data-key="ण">ण</button>
-          <button class="hk-key" data-key="त">त</button>
-          <button class="hk-key" data-key="थ">थ</button>
-          <button class="hk-key" data-key="द">द</button>
-          <button class="hk-key" data-key="ध">ध</button>
-          <button class="hk-key" data-key="न">न</button>
-          <button class="hk-key" data-key="प">प</button>
-          <button class="hk-key" data-key="फ">फ</button>
-          <button class="hk-key" data-key="ब">ब</button>
-          <button class="hk-key" data-key="भ">भ</button>
-          <button class="hk-key" data-key="म">म</button>
-          <button class="hk-key" data-key="य">य</button>
-          <button class="hk-key" data-key="र">र</button>
-          <button class="hk-key" data-key="ल">ल</button>
-          <button class="hk-key" data-key="व">व</button>
-          <button class="hk-key" data-key="श">श</button>
-          <button class="hk-key" data-key="ष">ष</button>
-          <button class="hk-key" data-key="स">स</button>
-          <button class="hk-key" data-key="ह">ह</button>
-          <button class="hk-key" data-key="क्ष">क्ष</button>
-          <button class="hk-key" data-key="त्र">त्र</button>
-          <button class="hk-key" data-key="ज्ञ">ज्ञ</button>
-        </div>
-      </div>
-
-      <div class="hk-section">
-        <span class="hk-label">मात्राएँ (Matras)</span>
-        <div class="hk-grid">
-          <button class="hk-key" data-key="ा">ा</button>
-          <button class="hk-key" data-key="ि">ि</button>
-          <button class="hk-key" data-key="ी">ी</button>
-          <button class="hk-key" data-key="ु">ु</button>
-          <button class="hk-key" data-key="ू">ू</button>
-          <button class="hk-key" data-key="ृ">ृ</button>
-          <button class="hk-key" data-key="े">े</button>
-          <button class="hk-key" data-key="ै">ै</button>
-          <button class="hk-key" data-key="ो">ो</button>
-          <button class="hk-key" data-key="ौ">ौ</button>
-          <button class="hk-key" data-key="ं">ं</button>
-          <button class="hk-key" data-key="ँ">ँ</button>
-          <button class="hk-key" data-key="ः">ः</button>
-          <button class="hk-key" data-key="्">्</button>
-        </div>
-      </div>
-
-      <div class="hk-section">
-        <span class="hk-label">अंक (Numbers)</span>
-        <div class="hk-grid">
-          <button class="hk-key" data-key="०">०</button>
-          <button class="hk-key" data-key="१">१</button>
-          <button class="hk-key" data-key="२">२</button>
-          <button class="hk-key" data-key="३">३</button>
-          <button class="hk-key" data-key="४">४</button>
-          <button class="hk-key" data-key="५">५</button>
-          <button class="hk-key" data-key="६">६</button>
-          <button class="hk-key" data-key="७">७</button>
-          <button class="hk-key" data-key="८">८</button>
-          <button class="hk-key" data-key="९">९</button>
-        </div>
-      </div>
-
-      <div class="hk-section">
-        <span class="hk-label">विराम चिह्न (Punctuation)</span>
-        <div class="hk-grid">
-          <button class="hk-key" data-key="।">।</button>
-          <button class="hk-key" data-key=",">,</button>
-          <button class="hk-key" data-key=";">;</button>
-          <button class="hk-key" data-key="?">?</button>
-          <button class="hk-key" data-key="!">!</button>
-          <button class="hk-key" data-key="-">-</button>
-          <button class="hk-key backspace" data-action="backspace">⌫ Backspace</button>
-          <button class="hk-key enter" data-action="enter">↵ Enter</button>
-          <button class="hk-key space" data-action="space">SPACE</button>
-        </div>
-      </div>
+    <div class="file-info" id="fileInfo" style="display:none;">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <span class="fi-name" id="fileName">document.pdf</span>
+      <span class="fi-size" id="fileSize">0 KB</span>
+      <button class="fi-remove" id="removeFile" title="Remove file">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
     </div>
 
-    <div class="status-bar">
-      <span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>Words: <b id="wordCount">0</b></span>
-      <span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>Characters: <b id="charCount">0</b></span>
-      <span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Reading: <b id="readTime">0</b> min</span>
-      <span class="hindi-badge" id="hindiBadge" style="display:none;">हिन्दी ON</span>
-    </div>
-
-    <div class="settings-row">
-      <div class="setting">
-        <label for="docTitle">Document Title</label>
-        <input type="text" id="docTitle" value="Untitled Document" spellcheck="false" autocomplete="off">
-      </div>
-      <div class="setting">
-        <label for="authorName">Author</label>
-        <input type="text" id="authorName" value="" placeholder="Your name" spellcheck="false" autocomplete="off">
+    <div class="notice-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 9v4M12 17h.01"/>
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      </svg>
+      <div>
+        <b>Text extraction:</b> This tool extracts text from PDF and creates an editable Word document. Text-based PDFs work best. Scanned PDFs (images of pages) need OCR, which this tool does not perform. Complex layouts, tables, and images are simplified.
       </div>
     </div>
 
     <div class="progress-wrap" id="progressWrap">
-      <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressBar"></div>
+      </div>
       <p class="progress-text" id="progressText">Processing…</p>
     </div>
 
-    <div class="btn-row">
-      <button class="btn-secondary" type="button" id="clearBtn">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-        Clear
+    <div class="btn-row" id="actionRow" style="display:none;">
+      <button class="btn-secondary" type="button" id="resetBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Convert Another
       </button>
-      <button class="btn-primary" type="button" id="downloadPdfBtn">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Save as PDF
-      </button>
-      <button class="btn-docx" type="button" id="downloadDocxBtn">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Save as Word
+      <button class="btn-primary" type="button" id="convertBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Convert to Word
       </button>
     </div>
   </div>
 
   <div class="info-box">
     <h3>
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Why use DocEasy Word Writer?
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Why use DocEasy for PDF to Word?
     </h3>
     <ul>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <b>7 English fonts</b> + <b>5 Hindi (Devanagari) fonts</b></li>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <b>Built-in Hindi keyboard</b> — type देवनागरी directly</li>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Font sizes from 8pt to 36pt</li>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Export as Word (.docx) OR PDF — 100% private</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — files never leave your device</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Opens in Word, Google Docs, LibreOffice</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Preserves paragraphs and line breaks</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free forever — no signup required</li>
     </ul>
   </div>
 
-  <!-- ============ SEO ARTICLE ============ -->
+  <!-- ============ SEO ARTICLE — 2000+ WORDS ============ -->
   <section class="seo-article">
 
-    <h2>Complete Guide: Hindi &amp; English Typing with DOCX/PDF Export (2026)</h2>
+    <h2>Complete Guide: How to Convert PDF to Word Online (2026)</h2>
 
-    <p>Writing a document used to require installing Microsoft Word on a computer — and typing in Hindi required an external keyboard, a transliteration tool, or hours of practice with a Devanagari layout. Today, both problems are solved. The <strong>DocEasy Word Writer</strong> lets you write in <b>Hindi or English</b> with 11 fonts and a built-in Hindi keyboard, right in your browser. When you are done, export as Word (.docx) or PDF — no signup, no upload, 100% private.</p>
+    <p>PDFs are the world's favourite document format — perfect for sharing, printing, and preserving layout. But the moment you need to <b>edit</b> a PDF, the format becomes a barrier. PDFs are designed to be read-only. Whether you want to fix a typo, update a number, restructure content, or translate the document, you need the text in an editable format. That is where PDF to Word conversion comes in.</p>
 
-    <p>This complete guide covers every feature: how to switch between Hindi and English, how the Hindi keyboard works, which fonts to use for which language, and best practices for creating clean documents.</p>
+    <p>The <strong>DocEasy PDF to Word converter</strong> lets you turn any text-based PDF into an editable Word (.docx) file — completely in your browser. No uploads, no signup, no limits. This guide explains everything: how the tool works, what types of PDFs convert best, the real limitations to be aware of, and best practices to get the cleanest possible output.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/word-writer-demo.jpg" alt="Word Writer Demo — DocEasy" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/word-writer-demo.jpg]</div>';">
-      <div class="article-image-caption">Write in Hindi or English with 11 fonts and a built-in Hindi keyboard — export as Word or PDF.</div>
+      <img src="../assets/images/pdf-to-word-demo.jpg" alt="PDF to Word Conversion Demo — DocEasy" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/pdf-to-word-demo.jpg]</div>';">
+      <div class="article-image-caption">Turn locked PDFs into editable Word documents — 100% processed locally in your browser.</div>
     </div>
 
     <h3>How to Use — Quick Start</h3>
     <ol>
-      <li><b>Start typing:</b> Click inside the editor and start writing in English as normal.</li>
-      <li><b>Switch to Hindi:</b> Click the <b>हिन्दी</b> button in the toolbar to open the Hindi virtual keyboard.</li>
-      <li><b>Type in Hindi:</b> Click the Devanagari letters to insert them, or use your device's own Hindi keyboard.</li>
-      <li><b>Pick a font:</b> Choose from 7 English + 5 Hindi fonts in the Font dropdown.</li>
-      <li><b>Set font size:</b> 8pt, 10pt, 12pt (default), 14pt, 18pt, 24pt, or 36pt.</li>
-      <li><b>Export:</b> Click "Save as PDF" or "Save as Word" — instant download.</li>
+      <li><b>Upload:</b> Drag and drop your PDF file onto the upload zone, or click "Choose PDF File" to browse.</li>
+      <li><b>Wait for extraction:</b> The tool reads your PDF using PDF.js and extracts text from each page.</li>
+      <li><b>Click Convert:</b> Press the "Convert to Word" button.</li>
+      <li><b>Download:</b> Your .docx file downloads instantly to your device.</li>
+      <li><b>Open and edit:</b> Open the file in Word, Google Docs, or LibreOffice and start editing.</li>
     </ol>
 
-    <h3>1. Why Use an Online Word Writer with Hindi Support?</h3>
+    <h3>1. Why Convert PDF to Word?</h3>
 
-    <p>Microsoft Word is powerful, but typing in Hindi on it requires either a Google Indic keyboard add-on, a phonetic transliteration tool, or a desktop that supports Devanagari natively. On mobile, Word's Hindi support is often missing entirely. An online Word writer with a built-in Hindi keyboard solves all three problems:</p>
+    <p>PDF stands for Portable Document Format. Adobe created it in 1993 to solve a simple problem: documents looked different on different computers because of fonts, layout, and software versions. PDF froze everything into a single, uneditable file. It was an instant hit.</p>
+
+    <p>But that same locked design is a problem when you need to change something. The most common reasons to convert PDF to Word:</p>
 
     <ul>
-      <li>Works on any device — desktop, tablet, phone</li>
-      <li>Hindi keyboard is built in — no external app needed</li>
-      <li>5 Hindi fonts and 7 English fonts in one place</li>
-      <li>Export as DOCX (editable) or PDF (shareable)</li>
-      <li>Nothing to install — just open and type</li>
+      <li><b>Fix typos and errors:</b> A document you received contains mistakes — you need to correct them.</li>
+      <li><b>Update numbers:</b> An invoice or report needs its figures refreshed for a new period.</li>
+      <li><b>Restructure content:</b> Move sections around, add paragraphs, delete outdated text.</li>
+      <li><b>Repurpose content:</b> Extract useful paragraphs from a PDF into a new proposal or email.</li>
+      <li><b>Translate:</b> Convert a foreign-language PDF into editable text for translation tools.</li>
+      <li><b>Collaborate:</b> Send the editable version to colleagues for review with track changes.</li>
+      <li><b>Add your own branding:</b> Take a template PDF and adapt it into your own design.</li>
+      <li><b>Fill a form:</b> Extract text from a form to auto-populate another document.</li>
     </ul>
 
-    <h3>2. The Built-in Hindi Keyboard</h3>
+    <h3>2. How the Tool Works</h3>
 
-    <p>Click the <b>हिन्दी</b> button in the toolbar to show the on-screen Devanagari keyboard. It is organised into five sections for easy access:</p>
+    <p>DocEasy's PDF to Word converter uses three technologies working together entirely in your browser:</p>
+
+    <ol>
+      <li><b>PDF.js</b> — Mozilla's open-source library that parses PDF files and extracts text, coordinates, and font information from every page.</li>
+      <li><b>Text reconstruction</b> — The extracted text items are grouped into lines based on their y-coordinates, then into paragraphs based on vertical gaps and alignment.</li>
+      <li><b>JSZip</b> — Builds the resulting .docx file, which is actually a ZIP archive containing XML files that Word, Google Docs, and LibreOffice all understand.</li>
+    </ol>
+
+    <p>Every step happens locally in your browser. No file is uploaded to any server. You can verify this by opening your browser's Developer Tools Network tab — no outgoing requests are made during conversion.</p>
+
+    <h3>3. What Kind of PDFs Convert Best?</h3>
+
+    <p>Not all PDFs are created equal. The converter works best with:</p>
 
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Section</th><th>What It Contains</th><th>Example Characters</th></tr>
+          <tr><th>PDF Type</th><th>Conversion Quality</th><th>Reason</th></tr>
         </thead>
         <tbody>
-          <tr><td><b>स्वर (Vowels)</b></td><td>13 independent vowel letters</td><td>अ आ इ ई उ ऊ ए ऐ ओ औ</td></tr>
-          <tr><td><b>व्यंजन (Consonants)</b></td><td>36 consonant letters + conjuncts</td><td>क ख ग घ च छ ज झ ट ठ ड ढ</td></tr>
-          <tr><td><b>मात्राएँ (Matras)</b></td><td>14 vowel signs attached to consonants</td><td>ा ि ी ु ू े ै ो ौ ं ँ</td></tr>
-          <tr><td><b>अंक (Numbers)</b></td><td>10 Devanagari numerals</td><td>० १ २ ३ ४ ५ ६ ७ ८ ९</td></tr>
-          <tr><td><b>विराम (Punctuation)</b></td><td>Purna viram (।), comma, question mark, space, enter, backspace</td><td>। , ? ! -</td></tr>
+          <tr><td><b>Text-based PDF</b> (from Word, Google Docs)</td><td>Excellent ⭐⭐⭐⭐⭐</td><td>Real text — clean extraction</td></tr>
+          <tr><td><b>Digital report / eBook</b></td><td>Very good ⭐⭐⭐⭐</td><td>Text-based, minor layout loss</td></tr>
+          <tr><td><b>Online article / receipt</b></td><td>Very good ⭐⭐⭐⭐</td><td>Simple layout, clean text</td></tr>
+          <tr><td><b>PDF with tables</b></td><td>Fair ⭐⭐</td><td>Table structure simplified to text</td></tr>
+          <tr><td><b>PDF with images/graphics</b></td><td>Poor ⭐⭐</td><td>Images not extracted</td></tr>
+          <tr><td><b>Scanned PDF</b></td><td>Not supported ❌</td><td>Image-only, needs OCR</td></tr>
         </tbody>
       </table>
     </div>
 
-    <p>Click any key to insert that character at the current cursor position. Hold the cursor in the editor for best results — the keyboard inserts characters exactly where you were typing.</p>
+    <h3>4. Understanding the Limitations</h3>
 
-    <h3>3. Hindi Fonts Available</h3>
+    <p>This tool performs <b>text extraction</b>, not pixel-perfect conversion. Here's the honest breakdown of what works and what doesn't:</p>
 
-    <p>All five Hindi fonts are free, open-source, and render Devanagari beautifully in the export. They are:</p>
-
+    <h4>What Is Preserved:</h4>
     <ul>
-      <li><b>Noto Sans Devanagari</b> — Google's default modern Hindi font. Clean, readable, works everywhere.</li>
-      <li><b>Noto Serif Devanagari</b> — Same as above but with serifs (small decorative strokes). Ideal for formal documents.</li>
-      <li><b>Baloo Bhai 2</b> — Bold, playful Devanagari font. Great for headlines and posters.</li>
-      <li><b>Hind</b> — Popular open-source Devanagari font by Indian Type Foundry. Highly legible.</li>
-      <li><b>Mangal</b> — Traditional Hindi font shipped with Windows. Familiar look, widely recognised.</li>
+      <li><b>Text content:</b> Every word from every page.</li>
+      <li><b>Paragraph structure:</b> Line and paragraph breaks.</li>
+      <li><b>Page boundaries:</b> Each PDF page becomes a new page in Word.</li>
+      <li><b>Reading order:</b> Text flows in the correct sequence.</li>
     </ul>
 
-    <p>For body text, <b>Noto Sans Devanagari</b> or <b>Hind</b> gives the best readability. For headings, <b>Baloo Bhai 2</b> is bold and eye-catching.</p>
-
-    <h3>4. English Fonts Available</h3>
-
+    <h4>What Is NOT Preserved:</h4>
     <ul>
-      <li><b>Calibri</b> — Modern default in Microsoft Office. Clean and professional.</li>
-      <li><b>Arial</b> — Universal sans-serif. Works on every device.</li>
-      <li><b>Times New Roman</b> — Classic serif. Standard for academic papers.</li>
-      <li><b>Georgia</b> — Readable serif designed for screens. Great for long documents.</li>
-      <li><b>Verdana</b> — Wide sans-serif. Excellent for small text on screens.</li>
-      <li><b>Tahoma</b> — Compact sans-serif. Good for dense layouts.</li>
-      <li><b>Courier New</b> — Monospaced. Ideal for code and technical documents.</li>
+      <li><b>Images, photos, and graphics:</b> Not extracted. If you need images, use a different tool.</li>
+      <li><b>Fonts:</b> The Word document uses standard system fonts, not the original PDF fonts.</li>
+      <li><b>Colors and styling:</b> Bold, italic, and colors are not detected.</li>
+      <li><b>Tables:</b> Table content is preserved but the structure is flattened into sequential text.</li>
+      <li><b>Multi-column layouts:</b> Columns may merge into a single stream of text.</li>
+      <li><b>Headers, footers, and page numbers:</b> May or may not appear depending on the PDF.</li>
+      <li><b>Hyperlinks:</b> URLs remain as plain text — not clickable.</li>
+      <li><b>Bookmarks and form fields:</b> Not extracted.</li>
     </ul>
 
-    <h3>5. Font Sizes — What to Use When</h3>
+    <p>For plain text-heavy documents — reports, articles, letters, contracts — the output is clean and immediately usable. For designed documents with complex visuals, you may need a more advanced conversion tool or manual recreation.</p>
+
+    <h3>5. Scanned PDFs and OCR</h3>
+
+    <p>A scanned PDF is just a collection of images — photographs of paper pages. The text you see is pixels, not real characters. There is no text to extract, so our converter cannot handle it.</p>
+
+    <p>To convert a scanned PDF, you need <b>OCR</b> (Optical Character Recognition). OCR technology reads the pixels and attempts to identify characters. If you have a scanned PDF:</p>
+
+    <ol>
+      <li>Convert the PDF pages to images first using our <a href="pdf-to-jpg.html">PDF to JPG</a> tool.</li>
+      <li>Run OCR on the resulting images using our <a href="doc-scanner.html">Document Scanner &amp; OCR</a>.</li>
+      <li>Copy the extracted text into Word and save.</li>
+    </ol>
+
+    <p>OCR accuracy for clean, printed scans is typically 95–99%. For blurry or rotated scans, accuracy drops.</p>
+
+    <h3>6. Privacy — Why Client-Side Conversion Matters</h3>
+
+    <p>Most online PDF converters work the same way: you upload your file, it sits on their server, their software processes it, and you download the result. This means your document is sitting on an unknown server for an unknown period of time. For sensitive documents — contracts, financial records, ID proofs, medical reports — that's a real privacy risk.</p>
+
+    <p>DocEasy takes a different approach. Your PDF never leaves your device. Everything happens in your browser's memory. When you close the tab, the file is gone. This makes DocEasy one of the only genuinely private PDF to Word converters available.</p>
+
+    <h3>7. Best Practices</h3>
 
     <ul>
-      <li><b>8pt:</b> Footnotes, captions, legal disclaimers.</li>
-      <li><b>10pt:</b> Dense technical documents, sidebars, code.</li>
-      <li><b>12pt:</b> Standard body text — the default for most documents.</li>
-      <li><b>14pt:</b> Subheadings, emphasis, easy-reading documents.</li>
-      <li><b>18pt:</b> Section headings, presentations.</li>
-      <li><b>24pt:</b> Chapter titles, large headlines.</li>
-      <li><b>36pt:</b> Cover page titles, posters.</li>
+      <li><b>Use a text-based PDF:</b> The cleaner the source, the cleaner the output.</li>
+      <li><b>Keep the file under 25 MB:</b> Larger files still work but take longer.</li>
+      <li><b>Check the .docx after conversion:</b> Open it in Word or Google Docs and review the formatting.</li>
+      <li><b>Expect to fix formatting:</b> Multi-column layouts and tables will need manual adjustment.</li>
+      <li><b>Save the original PDF:</b> Keep a backup in case you need to re-convert.</li>
+      <li><b>For scanned PDFs, use OCR first:</b> Run <a href="pdf-to-jpg.html">PDF to JPG</a> then <a href="doc-scanner.html">OCR</a>.</li>
+      <li><b>For very complex documents, use a dedicated desktop tool:</b> Adobe Acrobat, ABBYY FineReader, or similar professional software.</li>
     </ul>
 
-    <h3>6. Tips for Typing Hindi Effectively</h3>
+    <h3>8. Common Use Cases</h3>
 
     <ul>
-      <li><b>Use the Hindi keyboard in the toolbar</b> — click characters to insert them.</li>
-      <li><b>Or use your device's Hindi keyboard</b> — on Android, install Google Indic Keyboard. On iPhone, add a Hindi keyboard in Settings. On Windows, add Hindi as a language.</li>
-      <li><b>Use matras after consonants</b> — for example, क + ा = का, क + ि = कि.</li>
-      <li><b>Use the halant (्) to join consonants</b> — for example, क + ् + ष = क्ष.</li>
-      <li><b>End sentences with । (purna viram)</b> — the Hindi full stop. This is standard Hindi punctuation.</li>
-      <li><b>Mix Hindi and English freely</b> — the editor supports both in the same document.</li>
+      <li><b>Editing contracts:</b> Convert PDF contracts into editable Word for revisions.</li>
+      <li><b>Updating invoices:</b> Extract invoice content and update for a new period.</li>
+      <li><b>Repurposing reports:</b> Pull paragraphs from old PDF reports into a new proposal.</li>
+      <li><b>Academic research:</b> Extract text from PDF papers for citation and quotation.</li>
+      <li><b>Translating documents:</b> Convert PDF to Word, then use a translation tool.</li>
+      <li><b>Form filling:</b> Extract form structure from a PDF, then recreate it in Word.</li>
+      <li><b>Resume editing:</b> Convert a received PDF resume into editable text.</li>
+      <li><b>Digital archiving:</b> Convert legacy PDFs into editable text for archival systems.</li>
     </ul>
 
-    <h3>7. Common Hindi Keyboard Combinations</h3>
+    <h3>9. Comparison with Other Tools</h3>
 
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>You Want</th><th>Click These Keys</th></tr>
+          <tr><th>Tool</th><th>Free?</th><th>Privacy</th><th>Signup?</th><th>Limits</th></tr>
         </thead>
         <tbody>
-          <tr><td><b>का</b></td><td>क + ा</td></tr>
-          <tr><td><b>कि</b></td><td>क + ि</td></tr>
-          <tr><td><b>की</b></td><td>क + ी</td></tr>
-          <tr><td><b>कु</b></td><td>क + ु</td></tr>
-          <tr><td><b>के</b></td><td>क + े</td></tr>
-          <tr><td><b>को</b></td><td>क + ो</td></tr>
-          <tr><td><b>क्ष</b></td><td>क्ष (single conjunct key)</td></tr>
-          <tr><td><b>ज्ञ</b></td><td>ज्ञ (single conjunct key)</td></tr>
+          <tr><td><b>DocEasy</b></td><td>Yes</td><td>100% local</td><td>No</td><td>None</td></tr>
+          <tr><td>SmallPDF</td><td>Freemium</td><td>Cloud</td><td>Yes</td><td>2/day</td></tr>
+          <tr><td>iLovePDF</td><td>Freemium</td><td>Cloud</td><td>No</td><td>Size limits</td></tr>
+          <tr><td>Adobe Acrobat</td><td>Paid</td><td>Cloud</td><td>Yes</td><td>7 days trial</td></tr>
+          <tr><td>Google Docs</td><td>Free</td><td>Cloud</td><td>Google ID</td><td>15 MB limit</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>8. PDF or Word — Which Should You Choose?</h3>
+    <p>DocEasy is the only option that is completely free, requires no signup, and processes files 100% locally.</p>
 
-    <ul>
-      <li><b>Save as PDF</b> if you want the document to look identical on every device. PDFs lock the layout — perfect for final versions, resumes, and contracts.</li>
-      <li><b>Save as Word (.docx)</b> if you plan to keep editing, or send to someone who will edit it in Microsoft Word, Google Docs, or LibreOffice.</li>
-    </ul>
-
-    <p><b>Note on Hindi PDF export:</b> The PDF export uses Helvetica-based fonts (Latin script only). <b>Hindi text in PDF may not render correctly.</b> For documents with Hindi content, always use <b>Save as Word (.docx)</b> — the .docx format fully supports Devanagari fonts and opens correctly in Word, Google Docs, and LibreOffice.</p>
-
-    <h3>9. Privacy First — Always</h3>
-
-    <p>Everything you type stays in your browser. There is no server, no account, and no tracking. When you close the tab, your text is gone from memory. This makes DocEasy Word Writer suitable for sensitive content in Hindi or English — personal letters, private notes, internal reports, and confidential drafts.</p>
-
-    <h3>10. Common Use Cases</h3>
-
-    <ul>
-      <li><b>Hindi essays and assignments:</b> Write school or college work in Devanagari.</li>
-      <li><b>Hindi cover letters:</b> Draft job applications for government posts in Hindi.</li>
-      <li><b>Hindi blog drafts:</b> Type long-form content for Hindi websites.</li>
-      <li><b>Legal documents:</b> Contracts, agreements, notices — in Hindi or English.</li>
-      <li><b>Personal journals:</b> Daily diary in your preferred language.</li>
-      <li><b>Story writing:</b> Fiction or non-fiction in Hindi.</li>
-      <li><b>Study notes:</b> Mixed Hindi-English notes for exams.</li>
-      <li><b>Poetry:</b> Hindi poems with proper Devanagari punctuation (।).</li>
-      <li><b>Government forms:</b> Draft applications in Hindi before submitting.</li>
-      <li><b>Translation drafts:</b> Write English translation alongside Hindi original.</li>
-    </ul>
-
-    <h3>11. Frequently Asked Questions</h3>
+    <h3>10. Frequently Asked Questions</h3>
 
     <details>
-      <summary>Q: Is the Word Writer really free?</summary>
-      <p>Yes — 100% free, no signup, no watermark, no daily limits. All processing happens locally in your browser.</p>
+      <summary>Q: Is this PDF to Word converter really free?</summary>
+      <p>Yes — 100% free, no signup, no watermark, no daily limits. All processing happens in your browser.</p>
     </details>
 
     <details>
-      <summary>Q: Can I type in Hindi with this tool?</summary>
-      <p>Yes. Click the <b>हिन्दी</b> button in the toolbar to open the on-screen Devanagari keyboard. Click characters to insert them, or use your device's own Hindi keyboard.</p>
+      <summary>Q: Are my PDF files uploaded to a server?</summary>
+      <p>No. Everything runs locally in your browser using PDF.js and JSZip. Your PDF never leaves your device. You can verify by watching the Developer Tools Network tab — no outbound requests are made during conversion.</p>
     </details>
 
     <details>
-      <summary>Q: Which Hindi fonts are available?</summary>
-      <p>Five: Noto Sans Devanagari, Noto Serif Devanagari, Baloo Bhai 2, Hind, and Mangal. All are free and open-source.</p>
+      <summary>Q: Will images be preserved in the Word file?</summary>
+      <p>No. This tool performs text extraction only. Images, charts, and graphics from the PDF are not included in the .docx output.</p>
     </details>
 
     <details>
-      <summary>Q: Which English fonts are available?</summary>
-      <p>Seven: Calibri, Arial, Times New Roman, Georgia, Verdana, Tahoma, and Courier New.</p>
+      <summary>Q: Can I convert a scanned PDF?</summary>
+      <p>Scanned PDFs are image-only — they contain no real text. This tool does not perform OCR, so scanned PDFs will result in empty output. Use our <a href="pdf-to-jpg.html">PDF to JPG</a> then <a href="doc-scanner.html">OCR</a> instead.</p>
     </details>
 
     <details>
-      <summary>Q: Are my words uploaded to a server?</summary>
-      <p>No. Everything runs locally in your browser. Your document never leaves your device.</p>
+      <summary>Q: Will tables be preserved?</summary>
+      <p>Table text is extracted, but the table structure is not. You will see the text content but may need to recreate tables manually in Word.</p>
     </details>
 
     <details>
-      <summary>Q: Can I export Hindi documents as PDF?</summary>
-      <p>PDF export uses Latin-based fonts and may not render Hindi correctly. For Hindi documents, always use <b>Save as Word (.docx)</b> — it opens correctly in Word and Google Docs with full Hindi support.</p>
+      <summary>Q: What file size is supported?</summary>
+      <p>Up to 25 MB recommended. Larger files may work but will take longer to process.</p>
     </details>
 
     <details>
-      <summary>Q: Can I export the same document as both PDF and Word?</summary>
-      <p>Yes. Write once, then click both buttons — you get both formats.</p>
+      <summary>Q: Does the output open in Google Docs?</summary>
+      <p>Yes. The generated .docx file is standard Word format and opens in Microsoft Word, Google Docs, LibreOffice Writer, and Apple Pages.</p>
     </details>
 
     <details>
-      <summary>Q: What font sizes are available?</summary>
-      <p>8pt, 10pt, 12pt (default), 14pt, 18pt, 24pt, and 36pt.</p>
+      <summary>Q: Can I convert multiple PDFs at once?</summary>
+      <p>Currently one PDF at a time for maximum quality control. Batch conversion is on our roadmap.</p>
     </details>
 
     <details>
-      <summary>Q: Can I mix Hindi and English in one document?</summary>
-      <p>Yes. Type English normally, then switch to the Hindi keyboard for Devanagari text — both stay in the same document.</p>
-    </details>
-
-    <details>
-      <summary>Q: Can I open the .docx in Google Docs?</summary>
-      <p>Yes. The file is standard Word format and opens in Google Docs, Microsoft Word, LibreOffice Writer, and Apple Pages — with Hindi text intact.</p>
+      <summary>Q: Will formatting like bold and italic be preserved?</summary>
+      <p>No. Bold, italic, colors, and font styles are not detected during extraction. The output uses default Word formatting. This keeps the file clean and easy to restyle.</p>
     </details>
 
     <details>
       <summary>Q: Does it work on mobile?</summary>
-      <p>Yes. The Hindi keyboard is fully touch-friendly, and the whole tool works on Android, iOS, and iPad.</p>
+      <p>Yes. The tool works on any modern Android, iOS, or iPad browser. No app installation required.</p>
     </details>
 
     <details>
-      <summary>Q: Does it work offline?</summary>
-      <p>After the page loads once, you can write offline. PDF/DOCX export needs the libraries loaded (cached after first use).</p>
+      <summary>Q: What happens to my file after conversion?</summary>
+      <p>Nothing — it stays in your browser's memory. When you close the tab or refresh the page, the file is gone. Nothing is retained, logged, or stored.</p>
     </details>
 
-    <h3>12. Popular Right Now — Trending Tools</h3>
+    <details>
+      <summary>Q: Can I convert a password-protected PDF?</summary>
+      <p>Password-protected PDFs need to be unlocked first. Our <a href="pdf-editor.html">PDF Editor</a> and <a href="pdf-to-jpg.html">PDF to JPG</a> tools support password entry — you can unlock the PDF there, then convert pages here.</p>
+    </details>
+
+    <h3>11. Popular Right Now — Trending Tools</h3>
     <ul>
-      <li><a href="word-counter.html">Word Counter</a> — count words, characters, reading time</li>
-      <li><a href="doc-scanner.html">Document Scanner &amp; OCR</a> — extract Hindi/English text from images</li>
-      <li><a href="pdf-to-word.html">PDF to Word</a> — convert PDFs to editable .docx</li>
-      <li><a href="word-to-pdf.html">Word to PDF</a> — convert DOCX to PDF</li>
-      <li><a href="invoice-generator.html">Invoice Generator</a> — professional GST invoices</li>
+      <li><a href="word-to-pdf.html">Word to PDF</a> — convert DOCX to PDF (reverse)</li>
+      <li><a href="pdf-to-jpg.html">PDF to JPG</a> — extract PDF pages as images</li>
+      <li><a href="pdf-merge.html">Merge PDF</a> — combine multiple PDFs</li>
+      <li><a href="pdf-compressor.html">Compress PDF</a> — reduce PDF file size</li>
+      <li><a href="doc-scanner.html">Document Scanner &amp; OCR</a> — extract text from scans</li>
     </ul>
 
-    <h3>13. Related Tools You Might Need</h3>
-    <p>If you found this writer useful, you may also like our <a href="word-counter.html">Word Counter</a>, our <a href="doc-scanner.html">Document Scanner &amp; OCR</a> for extracting Hindi text from images, our <a href="pdf-to-word.html">PDF to Word</a> converter, our <a href="word-to-pdf.html">Word to PDF</a> for the reverse, our <a href="invoice-generator.html">Invoice Generator</a>, our <a href="pdf-merge.html">PDF Merge</a>, and our <a href="pdf-compressor.html">PDF Compressor</a>.</p>
+    <h3>12. Related Tools You Might Need</h3>
+    <p>If you found this tool useful, you may also like our <a href="word-to-pdf.html">Word to PDF</a> converter (the reverse), our <a href="pdf-to-jpg.html">PDF to JPG</a> for extracting pages as images, our <a href="pdf-merge.html">PDF Merge</a> for combining files, our <a href="pdf-split.html">PDF Split</a> for extracting specific pages, our <a href="pdf-compressor.html">PDF Compressor</a> for reducing size, our <a href="doc-scanner.html">Document Scanner &amp; OCR</a> for scanned PDFs, and our <a href="word-writer.html">Word Writer</a> to create new documents online.</p>
 
-    <h3>14. Conclusion</h3>
+    <h3>13. Conclusion</h3>
 
-    <p>Writing in Hindi or English no longer requires any external software or keyboard. With the DocEasy Word Writer, you get 11 fonts, a built-in Hindi keyboard, font size controls, and one-click export to Word or PDF — all in your browser, all 100% private.</p>
+    <p>PDF to Word conversion is a daily need for students, professionals, researchers, and anyone who receives PDFs they need to edit. With the DocEasy PDF to Word converter, you get clean text extraction, instant Word output, and total privacy — all without uploading a single byte.</p>
 
-    <p>Bookmark this page and use it whenever you need to write something — in English, Hindi, or both.</p>
+    <p>Bookmark this page and use it whenever you need to convert a PDF into an editable document.</p>
 
   </section>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- Related Tools Grid -->
+  <!-- ============ RELATED TOOLS GRID ============ -->
   <section class="related-tools-section">
     <h2>Explore More Free DocEasy Tools</h2>
     <p class="related-sub">All free, all browser-based, all 100% private.</p>
     <div class="related-grid">
 
-      <a class="related-card" href="word-counter.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div>
-        <h3>Word Counter</h3>
-        <p>Words, chars, reading time</p>
-      </a>
-
-      <a class="related-card" href="pdf-to-word.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-        <h3>PDF to Word</h3>
-        <p>Editable .docx documents</p>
-      </a>
-
       <a class="related-card" href="word-to-pdf.html">
         <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
         <h3>Word to PDF</h3>
-        <p>DOCX to PDF</p>
+        <p>DOCX to PDF (reverse)</p>
       </a>
 
-      <a class="related-card" href="doc-scanner.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
-        <h3>Document Scanner</h3>
-        <p>Image to text OCR</p>
-      </a>
-
-      <a class="related-card" href="invoice-generator.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
-        <h3>Invoice Generator</h3>
-        <p>Professional invoices</p>
+      <a class="related-card" href="pdf-to-jpg.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        <h3>PDF to JPG</h3>
+        <p>Extract pages as images</p>
       </a>
 
       <a class="related-card" href="pdf-merge.html">
@@ -803,16 +788,46 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
         <p>Combine PDFs into one</p>
       </a>
 
+      <a class="related-card" href="pdf-split.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
+        <h3>Split PDF</h3>
+        <p>Extract specific pages</p>
+      </a>
+
       <a class="related-card" href="pdf-compressor.html">
         <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
         <h3>Compress PDF</h3>
         <p>Reduce PDF file size</p>
       </a>
 
-      <a class="related-card" href="pdf-split.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
-        <h3>Split PDF</h3>
-        <p>Extract specific pages</p>
+      <a class="related-card" href="doc-scanner.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        <h3>Document Scanner</h3>
+        <p>Image to text OCR</p>
+      </a>
+
+      <a class="related-card" href="word-writer.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3>Word Writer</h3>
+        <p>Write & export as DOCX</p>
+      </a>
+
+      <a class="related-card" href="pdf-editor.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        <h3>PDF Editor</h3>
+        <p>Edit PDFs online</p>
+      </a>
+
+      <a class="related-card" href="pdf-to-excel.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg></div>
+        <h3>PDF to Excel</h3>
+        <p>Extract tables to XLSX</p>
+      </a>
+
+      <a class="related-card" href="jpg-to-pdf.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg></div>
+        <h3>JPG to PDF</h3>
+        <p>Images to PDF scanner</p>
       </a>
 
       <a class="related-card" href="image-compressor.html">
@@ -827,18 +842,6 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
         <p>JPG, PNG, WEBP</p>
       </a>
 
-      <a class="related-card" href="qr-generator.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
-        <h3>QR Generator</h3>
-        <p>Custom QR codes</p>
-      </a>
-
-      <a class="related-card" href="card-cropper.html">
-        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
-        <h3>ID Card Cropper</h3>
-        <p>Aadhaar, PAN at 300 DPI</p>
-      </a>
-
     </div>
   </section>
 
@@ -847,42 +850,40 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
 <div id="doceasy-footer"></div>
 
 <div class="toast" id="toast">
-  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="toastIcon"><path d="M20 6L9 17l-5-5"/></svg>
+  <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="toastIcon">
+    <path d="M20 6L9 17l-5-5"/>
+  </svg>
   <span id="toastMsg">Done</span>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
 (function () {
   'use strict';
 
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
   var $ = function (id) { return document.getElementById(id); };
 
-  var editor = $('editor');
-  var toolbar = $('toolbar');
-  var blockType = $('blockType');
-  var fontFamily = $('fontFamily');
-  var fontSize = $('fontSize');
-  var docTitle = $('docTitle');
-  var authorName = $('authorName');
-  var clearBtn = $('clearBtn');
-  var downloadPdfBtn = $('downloadPdfBtn');
-  var downloadDocxBtn = $('downloadDocxBtn');
-  var progressWrap = $('progressWrap');
+  var fileInput   = $('fileInput');
+  var dropZone    = $('dropZone');
+  var fileInfo    = $('fileInfo');
+  var fileName    = $('fileName');
+  var fileSize    = $('fileSize');
+  var removeFile  = $('removeFile');
+  var actionRow   = $('actionRow');
+  var convertBtn  = $('convertBtn');
+  var resetBtn    = $('resetBtn');
+  var progressWrap= $('progressWrap');
   var progressBar = $('progressBar');
-  var progressText = $('progressText');
-  var toast = $('toast');
-  var toastMsg = $('toastMsg');
-  var toastIcon = $('toastIcon');
-  var wordCountEl = $('wordCount');
-  var charCountEl = $('charCount');
-  var readTimeEl = $('readTime');
-  var hindiKeyboardBtn = $('hindiKeyboardBtn');
-  var hindiKeyboard = $('hindiKeyboard');
-  var hindiBadge = $('hindiBadge');
-  var lastRange = null;
+  var progressText= $('progressText');
+  var toast       = $('toast');
+  var toastMsg    = $('toastMsg');
+  var toastIcon   = $('toastIcon');
+
+  var currentFile = null;
 
   function showToast(msg, type) {
     toastMsg.textContent = msg;
@@ -896,145 +897,100 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
     toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
   }
 
-  /* ---------- Save/restore selection for keyboard insertion ---------- */
-  function saveSelection() {
-    var sel = window.getSelection();
-    if (sel && sel.rangeCount > 0) {
-      var range = sel.getRangeAt(0);
-      if (editor.contains(range.commonAncestorContainer)) {
-        lastRange = range.cloneRange();
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function handleFile(file) {
+    if (!file) return;
+    var name = (file.name || '').toLowerCase();
+    if (!name.endsWith('.pdf')) {
+      showToast('Please select a .pdf file', 'error');
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      showToast('File too large. Maximum 25 MB.', 'error');
+      return;
+    }
+    currentFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = formatBytes(file.size);
+    fileInfo.style.display = 'flex';
+    actionRow.style.display = 'flex';
+    dropZone.style.display = 'none';
+  }
+
+  function resetAll() {
+    currentFile = null;
+    fileInput.value = '';
+    fileInfo.style.display = 'none';
+    actionRow.style.display = 'none';
+    dropZone.style.display = 'block';
+    progressWrap.classList.remove('show');
+    progressBar.style.width = '0%';
+    progressText.textContent = 'Processing…';
+  }
+
+  fileInput.addEventListener('change', function () { handleFile(this.files[0]); });
+
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropZone.classList.remove('dragover');
+    });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  removeFile.addEventListener('click', function (e) { e.stopPropagation(); resetAll(); });
+  resetBtn.addEventListener('click', resetAll);
+
+  async function extractPdfText(arrayBuffer) {
+    var pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    var totalPages = pdf.numPages;
+    var allPagesText = [];
+
+    for (var i = 1; i <= totalPages; i++) {
+      var page = await pdf.getPage(i);
+      var textContent = await page.getTextContent();
+
+      var items = textContent.items;
+      var lines = [];
+      var lastY = null;
+      var currentLine = '';
+
+      for (var j = 0; j < items.length; j++) {
+        var it = items[j];
+        var y = it.transform ? it.transform[5] : 0;
+        if (lastY === null || Math.abs(y - lastY) < 3) {
+          currentLine += it.str;
+        } else {
+          if (currentLine.trim()) lines.push(currentLine);
+          currentLine = it.str;
+        }
+        lastY = y;
       }
+      if (currentLine.trim()) lines.push(currentLine);
+
+      allPagesText.push(lines.join('\n'));
+      progressBar.style.width = String(20 + Math.round((i / totalPages) * 30)) + '%';
+      progressText.textContent = 'Extracting page ' + i + ' of ' + totalPages + '…';
     }
-  }
-  function restoreSelection() {
-    if (!lastRange) return;
-    var sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(lastRange);
+
+    return allPagesText;
   }
 
-  editor.addEventListener('keyup', saveSelection);
-  editor.addEventListener('mouseup', saveSelection);
-  editor.addEventListener('input', saveSelection);
-  editor.addEventListener('focus', saveSelection);
-
-  /* ---------- Toolbar formatting ---------- */
-  toolbar.querySelectorAll('[data-cmd]').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      editor.focus();
-      document.execCommand(btn.dataset.cmd, false, null);
-      updateToolbarState();
-      updateCounts();
-    });
-  });
-
-  blockType.addEventListener('change', function () {
-    editor.focus();
-    document.execCommand('formatBlock', false, this.value);
-    updateCounts();
-  });
-
-  fontFamily.addEventListener('change', function () {
-    editor.focus();
-    document.execCommand('fontName', false, this.value);
-    saveSelection();
-  });
-
-  fontSize.addEventListener('change', function () {
-    editor.focus();
-    document.execCommand('fontSize', false, this.value);
-    saveSelection();
-  });
-
-  function updateToolbarState() {
-    toolbar.querySelectorAll('[data-cmd]').forEach(function (btn) {
-      try {
-        btn.classList.toggle('active', document.queryCommandState(btn.dataset.cmd));
-      } catch (e) {}
-    });
-  }
-  editor.addEventListener('keyup', updateToolbarState);
-  editor.addEventListener('mouseup', updateToolbarState);
-
-  /* ---------- Hindi keyboard toggle ---------- */
-  hindiKeyboardBtn.addEventListener('click', function () {
-    var show = hindiKeyboard.classList.toggle('show');
-    hindiKeyboardBtn.classList.toggle('hindi-active', show);
-    hindiBadge.style.display = show ? 'inline-flex' : 'none';
-    if (show) {
-      editor.focus();
-      restoreSelection();
-    }
-  });
-
-  /* ---------- Hindi keyboard insertion ---------- */
-  function insertAtCursor(text) {
-    editor.focus();
-    restoreSelection();
-    var sel = window.getSelection();
-    if (!sel.rangeCount) return;
-    var range = sel.getRangeAt(0);
-    range.deleteContents();
-    var node = document.createTextNode(text);
-    range.insertNode(node);
-    range.setStartAfter(node);
-    range.setEndAfter(node);
-    sel.removeAllRanges();
-    sel.addRange(range);
-    lastRange = range.cloneRange();
-    updateCounts();
-  }
-
-  hindiKeyboard.querySelectorAll('.hk-key').forEach(function (key) {
-    key.addEventListener('click', function (e) {
-      e.preventDefault();
-      var action = key.dataset.action;
-      if (action === 'space') {
-        insertAtCursor(' ');
-      } else if (action === 'enter') {
-        editor.focus();
-        restoreSelection();
-        document.execCommand('insertLineBreak', false, null);
-        saveSelection();
-        updateCounts();
-      } else if (action === 'backspace') {
-        editor.focus();
-        restoreSelection();
-        document.execCommand('delete', false, null);
-        saveSelection();
-        updateCounts();
-      } else if (key.dataset.key) {
-        insertAtCursor(key.dataset.key);
-      }
-    });
-  });
-
-  /* ---------- Live counts ---------- */
-  function updateCounts() {
-    var text = editor.innerText || '';
-    var words = text.trim() ? text.trim().split(/\s+/).length : 0;
-    var chars = text.length;
-    var mins = Math.max(1, Math.round(words / 200));
-    wordCountEl.textContent = words;
-    charCountEl.textContent = chars;
-    readTimeEl.textContent = words === 0 ? 0 : mins;
-  }
-  editor.addEventListener('input', updateCounts);
-  updateCounts();
-
-  clearBtn.addEventListener('click', function () {
-    if (!editor.textContent.trim()) return;
-    if (confirm('Clear the entire document? This cannot be undone.')) {
-      editor.innerHTML = '';
-      updateCounts();
-      showToast('Editor cleared', 'ok');
-    }
-  });
-
-  function sanitizeFilename(name) {
-    return (name || 'document').replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-') || 'document';
-  }
   function escapeXml(s) {
     return String(s)
       .replace(/&/g, '&amp;')
@@ -1044,329 +1000,133 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
       .replace(/'/g, '&apos;');
   }
 
-  /* ---------- Content parser (preserves font info for DOCX) ---------- */
-  function parseHtmlBlocks(root) {
-    var blocks = [];
-    function walk(node, inheritedFont) {
-      if (node.nodeType === 3) {
-        var t = node.textContent;
-        if (t.trim()) blocks.push({ type: 'p', text: t, font: inheritedFont });
-        return;
-      }
-      if (node.nodeType !== 1) return;
-      var tag = node.tagName.toLowerCase();
-      var text = node.textContent || '';
-      var font = node.style && node.style.fontFamily ? node.style.fontFamily.replace(/["']/g, '') : inheritedFont;
-
-      if (/^h[1-6]$/.test(tag)) {
-        blocks.push({ type: tag, text: text, font: font });
-      } else if (tag === 'blockquote') {
-        blocks.push({ type: 'blockquote', text: text, font: font });
-      } else if (tag === 'ul' || tag === 'ol') {
-        Array.prototype.forEach.call(node.children, function (li) {
-          var liFont = li.style && li.style.fontFamily ? li.style.fontFamily.replace(/["']/g, '') : font;
-          blocks.push({ type: 'li', text: li.textContent || '', font: liFont });
-        });
-      } else if (tag === 'br') {
-        blocks.push({ type: 'p', text: '', font: font });
-      } else if (tag === 'font') {
-        var fFace = node.getAttribute('face') || font;
-        Array.prototype.forEach.call(node.childNodes, function (c) { walk(c, fFace); });
-      } else if (tag === 'div' || tag === 'p' || tag === 'span') {
-        if (node.children.length > 0) {
-          Array.prototype.forEach.call(node.childNodes, function (c) { walk(c, font); });
+  async function buildDocx(pages) {
+    var bodyXml = '';
+    pages.forEach(function (pageText) {
+      var lines = (pageText || '').split(/\r?\n/);
+      lines.forEach(function (line) {
+        var safe = escapeXml(line);
+        if (!safe.trim()) {
+          bodyXml += '<w:p/>';
         } else {
-          blocks.push({ type: 'p', text: text, font: font });
+          bodyXml += '<w:p><w:r><w:t xml:space="preserve">' + safe + '</w:t></w:r></w:p>';
         }
-      } else {
-        blocks.push({ type: 'p', text: text, font: font });
-      }
-    }
-    Array.prototype.forEach.call(root.childNodes, function (c) { walk(c, null); });
-    return blocks;
+      });
+      bodyXml += '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
+    });
+
+    var docXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+      '<w:body>' + bodyXml +
+      '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134"/></w:sectPr>' +
+      '</w:body></w:document>';
+
+    var contentTypes = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+      '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>' +
+      '<Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>' +
+      '</Types>';
+
+    var rels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+      '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>' +
+      '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>' +
+      '</Relationships>';
+
+    var now = new Date().toISOString();
+    var coreXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+      '<dc:title>' + escapeXml((currentFile.name || '').replace(/\.pdf$/i, '')) + '</dc:title>' +
+      '<dc:creator>DocEasy PDF to Word</dc:creator>' +
+      '<dcterms:created xsi:type="dcterms:W3CDTF">' + now + '</dcterms:created>' +
+      '<dcterms:modified xsi:type="dcterms:W3CDTF">' + now + '</dcterms:modified>' +
+      '</cp:coreProperties>';
+
+    var appXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties">' +
+      '<Application>DocEasy PDF to Word</Application>' +
+      '</Properties>';
+
+    var zip = new JSZip();
+    zip.file('[Content_Types].xml', contentTypes);
+    zip.folder('_rels').file('.rels', rels);
+    zip.folder('word').file('document.xml', docXml);
+    zip.folder('docProps').file('core.xml', coreXml);
+    zip.folder('docProps').file('app.xml', appXml);
+
+    return await zip.generateAsync({
+      type: 'blob',
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    });
   }
 
-  /* ============================================================
-     PDF EXPORT
-     ============================================================ */
-  async function exportPdf() {
-    if (!window.PDFLib) { showToast('PDF library still loading. Try again.', 'error'); return; }
-    if (!editor.textContent.trim()) { showToast('Write something first!', 'error'); return; }
-
-    // Hindi check
-    var hasHindi = /[\u0900-\u097F]/.test(editor.textContent);
-    if (hasHindi) {
-      var proceed = confirm('⚠️ Your document contains Hindi text.\n\nPDF export uses Latin-only fonts — Hindi characters may not display correctly.\n\nFor best results with Hindi, use "Save as Word" instead.\n\nContinue with PDF anyway?');
-      if (!proceed) return;
+  async function convertToWord() {
+    if (!currentFile) return;
+    if (!window.pdfjsLib || !window.JSZip) {
+      showToast('Libraries still loading. Please wait a moment.', 'error');
+      return;
     }
 
-    downloadPdfBtn.disabled = true;
-    downloadDocxBtn.disabled = true;
+    convertBtn.disabled = true;
     progressWrap.classList.add('show');
-    progressBar.style.width = '15%';
-    progressText.textContent = 'Reading content…';
+    progressBar.style.width = '10%';
+    progressText.textContent = 'Opening PDF file…';
 
     try {
-      var pageWidth = 595.28, pageHeight = 841.89;
-      var margin = 56;
-      var maxWidth = pageWidth - margin * 2;
+      var arrayBuffer = await currentFile.arrayBuffer();
 
-      var pdfDoc = await PDFLib.PDFDocument.create();
-      pdfDoc.setTitle(docTitle.value || 'Untitled Document');
-      pdfDoc.setProducer('DocEasy Word Writer');
-      pdfDoc.setCreator('DocEasy');
-      if (authorName.value) pdfDoc.setAuthor(authorName.value);
+      progressBar.style.width = '20%';
+      progressText.textContent = 'Extracting text from PDF…';
 
-      var fontReg = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-      var fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-      var fontItal = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaOblique);
+      var pages = await extractPdfText(arrayBuffer);
 
-      progressBar.style.width = '40%';
-      progressText.textContent = 'Building PDF…';
-
-      var blocks = parseHtmlBlocks(editor);
-      var page = pdfDoc.addPage([pageWidth, pageHeight]);
-      var y = pageHeight - margin;
-
-      function newPage() { page = pdfDoc.addPage([pageWidth, pageHeight]); y = pageHeight - margin; }
-
-      function drawWrapped(text, font, size, color, lineHeight, indent) {
-        var words = text.split(/\s+/);
-        var currentLine = '';
-        words.forEach(function (word) {
-          var testLine = currentLine ? currentLine + ' ' + word : word;
-          if (font.widthOfTextAtSize(testLine, size) > maxWidth - (indent || 0) && currentLine) {
-            if (y < margin + lineHeight) newPage();
-            page.drawText(currentLine, { x: margin + (indent || 0), y: y, size: size, font: font, color: color });
-            y -= lineHeight;
-            currentLine = word;
-          } else { currentLine = testLine; }
-        });
-        if (currentLine) {
-          if (y < margin + lineHeight) newPage();
-          page.drawText(currentLine, { x: margin + (indent || 0), y: y, size: size, font: font, color: color });
-          y -= lineHeight;
-        }
+      var totalText = pages.join('').trim();
+      if (!totalText) {
+        throw new Error('No text found. This PDF may be scanned or image-based. OCR is not supported.');
       }
 
-      // Strip Hindi chars for PDF (they don't render)
-      function stripHindi(s) {
-        return (s || '').replace(/[\u0900-\u097F]/g, '').replace(/\s+/g, ' ').trim() || '[Hindi text — see Word version]';
-      }
-
-      blocks.forEach(function (block) {
-        var text = stripHindi(block.text);
-        if (!text) { y -= 6; return; }
-        if (block.type === 'h1') { y -= 4; drawWrapped(text, fontBold, 20, PDFLib.rgb(0.10, 0.14, 0.22), 26, 0); y -= 8; }
-        else if (block.type === 'h2') { y -= 3; drawWrapped(text, fontBold, 16, PDFLib.rgb(0.10, 0.14, 0.22), 22, 0); y -= 6; }
-        else if (block.type === 'h3') { y -= 2; drawWrapped(text, fontBold, 13, PDFLib.rgb(0.10, 0.14, 0.22), 19, 0); y -= 5; }
-        else if (block.type === 'blockquote') { drawWrapped(text, fontItal, 11, PDFLib.rgb(0.35, 0.38, 0.45), 16, 16); y -= 6; }
-        else if (block.type === 'li') {
-          if (y < margin + 16) newPage();
-          page.drawText('•', { x: margin, y: y, size: 11, font: fontReg, color: PDFLib.rgb(0.10, 0.14, 0.22) });
-          drawWrapped(text, fontReg, 11, PDFLib.rgb(0.10, 0.14, 0.22), 16, 16);
-          y -= 2;
-        } else { drawWrapped(text, fontReg, 11, PDFLib.rgb(0.10, 0.14, 0.22), 16, 0); y -= 6; }
-      });
-
-      var pages = pdfDoc.getPages();
-      pages.forEach(function (p) {
-        p.drawText('doceasy.org', { x: p.getWidth() - margin - 60, y: 24, size: 8, font: fontReg, color: PDFLib.rgb(0, 0, 0), opacity: 0.5 });
-      });
-
-      progressBar.style.width = '85%';
-      progressText.textContent = 'Saving PDF…';
-
-      var pdfBytes = await pdfDoc.save();
-      var blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = sanitizeFilename(docTitle.value) + '.pdf';
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
-
-      progressBar.style.width = '100%';
-      progressText.textContent = 'Done!';
-      showToast('PDF downloaded successfully', 'ok');
-      setTimeout(function () { progressWrap.classList.remove('show'); progressBar.style.width = '0%'; }, 1500);
-
-    } catch (err) {
-      console.error(err);
-      showToast('PDF export failed: ' + (err.message || 'Unknown error'), 'error');
-      progressWrap.classList.remove('show');
-      progressBar.style.width = '0%';
-    } finally {
-      downloadPdfBtn.disabled = false;
-      downloadDocxBtn.disabled = false;
-    }
-  }
-
-  /* ============================================================
-     DOCX EXPORT (with Hindi font support)
-     ============================================================ */
-  async function exportDocx() {
-    if (!window.JSZip) { showToast('DOCX library still loading.', 'error'); return; }
-    if (!editor.textContent.trim()) { showToast('Write something first!', 'error'); return; }
-
-    downloadPdfBtn.disabled = true;
-    downloadDocxBtn.disabled = true;
-    progressWrap.classList.add('show');
-    progressBar.style.width = '15%';
-    progressText.textContent = 'Reading content…';
-
-    try {
-      var blocks = parseHtmlBlocks(editor);
-      progressBar.style.width = '40%';
+      progressBar.style.width = '65%';
       progressText.textContent = 'Building Word document…';
 
-      // Font family mapping (Word-known names)
-      function normFont(f) {
-        if (!f) return null;
-        return f.replace(/["']/g, '').split(',')[0].trim();
-      }
+      var blob = await buildDocx(pages);
 
-      var bodyXml = '';
-      blocks.forEach(function (block) {
-        var text = escapeXml((block.text || ''));
-        var fontName = normFont(block.font);
-        var rPr = '<w:rPr>';
-        // Bold/italic/underline based on block type
-        if (block.type === 'h1' || block.type === 'h2' || block.type === 'h3') rPr += '<w:b/>';
-        if (block.type === 'blockquote') rPr += '<w:i/>';
-        if (fontName) rPr += '<w:rFonts w:ascii="' + fontName + '" w:hAnsi="' + fontName + '" w:cs="' + fontName + '"/>';
-        var sizeXml = '';
-        if (block.type === 'h1') sizeXml = '<w:sz w:val="48"/><w:szCs w:val="48"/>';
-        else if (block.type === 'h2') sizeXml = '<w:sz w:val="36"/><w:szCs w:val="36"/>';
-        else if (block.type === 'h3') sizeXml = '<w:sz w:val="28"/><w:szCs w:val="28"/>';
-        else sizeXml = '<w:sz w:val="24"/><w:szCs w:val="24"/>';
-        rPr += sizeXml + '</w:rPr>';
-
-        if (!text.trim() && block.type !== 'p') return;
-
-        if (block.type === 'h1') {
-          bodyXml += '<w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr><w:r>' + rPr + '<w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
-        } else if (block.type === 'h2') {
-          bodyXml += '<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r>' + rPr + '<w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
-        } else if (block.type === 'h3') {
-          bodyXml += '<w:p><w:pPr><w:pStyle w:val="Heading3"/></w:pPr><w:r>' + rPr + '<w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
-        } else if (block.type === 'blockquote') {
-          bodyXml += '<w:p><w:pPr><w:ind w:left="720"/></w:pPr><w:r>' + rPr + '<w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
-        } else if (block.type === 'li') {
-          bodyXml += '<w:p><w:pPr><w:ind w:left="720"/></w:pPr><w:r>' + rPr + '<w:t xml:space="preserve">• ' + text + '</w:t></w:r></w:p>';
-        } else if (text) {
-          bodyXml += '<w:p><w:r>' + rPr + '<w:t xml:space="preserve">' + text + '</w:t></w:r></w:p>';
-        } else {
-          bodyXml += '<w:p/>';
-        }
-      });
-
-      var docXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
-        '<w:body>' + bodyXml +
-        '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134"/></w:sectPr>' +
-        '</w:body></w:document>';
-
-      var contentTypes = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
-        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
-        '<Default Extension="xml" ContentType="application/xml"/>' +
-        '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
-        '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>' +
-        '<Override PartName="/word/fontTable.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"/>' +
-        '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>' +
-        '<Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>' +
-        '</Types>';
-
-      var rels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
-        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
-        '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>' +
-        '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>' +
-        '</Relationships>';
-
-      var docRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
-        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>' +
-        '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable" Target="fontTable.xml"/>' +
-        '</Relationships>';
-
-      var stylesXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
-        '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:sz w:val="48"/></w:rPr></w:style>' +
-        '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/><w:sz w:val="36"/></w:rPr></w:style>' +
-        '<w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:pPr><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:b/><w:sz w:val="28"/></w:rPr></w:style>' +
-        '<w:style w:type="paragraph" w:styleId="Normal" w:default="1"><w:name w:val="Normal"/><w:rPr><w:sz w:val="24"/></w:rPr></w:style>' +
-        '</w:styles>';
-
-      // Font table with Hindi + English fonts
-      var fontNames = ['Calibri', 'Arial', 'Times New Roman', 'Georgia', 'Verdana', 'Tahoma', 'Courier New',
-        'Noto Sans Devanagari', 'Noto Serif Devanagari', 'Baloo Bhai 2', 'Hind', 'Mangal'];
-      var fontTableXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<w:fonts xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">';
-      fontNames.forEach(function (name, i) {
-        fontTableXml += '<w:font w:name="' + name + '"><w:family w:val="auto"/></w:font>';
-      });
-      fontTableXml += '</w:fonts>';
-
-      var now = new Date().toISOString();
-      var coreXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-        '<dc:title>' + escapeXml(docTitle.value || 'Untitled Document') + '</dc:title>' +
-        '<dc:creator>' + escapeXml(authorName.value || 'DocEasy User') + '</dc:creator>' +
-        '<cp:lastModifiedBy>' + escapeXml(authorName.value || 'DocEasy User') + '</cp:lastModifiedBy>' +
-        '<dcterms:created xsi:type="dcterms:W3CDTF">' + now + '</dcterms:created>' +
-        '<dcterms:modified xsi:type="dcterms:W3CDTF">' + now + '</dcterms:modified>' +
-        '</cp:coreProperties>';
-
-      var appXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-        '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties">' +
-        '<Application>DocEasy Word Writer</Application>' +
-        '</Properties>';
-
-      progressBar.style.width = '75%';
-      progressText.textContent = 'Packaging .docx…';
-
-      var zip = new JSZip();
-      zip.file('[Content_Types].xml', contentTypes);
-      zip.folder('_rels').file('.rels', rels);
-      zip.folder('word').file('document.xml', docXml);
-      zip.folder('word').file('styles.xml', stylesXml);
-      zip.folder('word').file('fontTable.xml', fontTableXml);
-      zip.folder('word').folder('_rels').file('document.xml.rels', docRels);
-      zip.folder('docProps').file('core.xml', coreXml);
-      zip.folder('docProps').file('app.xml', appXml);
-
-      var blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      progressBar.style.width = '90%';
+      progressText.textContent = 'Saving .docx…';
 
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = sanitizeFilename(docTitle.value) + '.docx';
+      a.download = currentFile.name.replace(/\.pdf$/i, '') + '.docx';
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
 
       progressBar.style.width = '100%';
       progressText.textContent = 'Done!';
-      showToast('Word document downloaded successfully', 'ok');
-      setTimeout(function () { progressWrap.classList.remove('show'); progressBar.style.width = '0%'; }, 1500);
+      showToast('Word document created successfully', 'ok');
+
+      setTimeout(function () {
+        progressWrap.classList.remove('show');
+        progressBar.style.width = '0%';
+      }, 1500);
 
     } catch (err) {
       console.error(err);
-      showToast('Word export failed: ' + (err.message || 'Unknown error'), 'error');
+      showToast('Conversion failed: ' + (err.message || 'Unknown error'), 'error');
       progressWrap.classList.remove('show');
       progressBar.style.width = '0%';
     } finally {
-      downloadPdfBtn.disabled = false;
-      downloadDocxBtn.disabled = false;
+      convertBtn.disabled = false;
     }
   }
 
-  downloadPdfBtn.addEventListener('click', exportPdf);
-  downloadDocxBtn.addEventListener('click', exportDocx);
+  convertBtn.addEventListener('click', convertToWord);
 })();
 </script>
 
 <script src="../assets/js/core/doceasy-core.js"></script>
 </body>
-        </html>
+</html>
