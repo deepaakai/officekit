@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>All-in-One Converter Studio — DocEasy</title>
   <link rel="stylesheet" href="../assets/css/doceasy-global.css">
+  <!-- Required Libraries for ZIP, PDF, and OCR -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://unpkg.com/tesseract.js@v5.0.5/dist/tesseract.min.js"></script>
@@ -130,24 +131,17 @@
     .btn.green:hover { background: #166534; }
     .btn:hover { opacity: 0.9; }
 
-    select, input[type="file"] { background: #0b1329; border: 1px solid #334155; color: #f8fafc; padding: 10px; border-radius: 6px; font-size: 13.5px; }
+    select, input[type="file"], input[type="number"] {
+      background: #0b1329; border: 1px solid #334155; color: #f8fafc;
+      padding: 10px; border-radius: 6px; font-size: 13.5px;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     
     .preview-box { margin-top: 15px; max-height: 250px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 10px; }
     .preview-box img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid #334155; }
     
     .ocr-output { background: #0b1329; border: 1px solid #334155; padding: 14px; border-radius: 6px; min-height: 150px; font-family: monospace; font-size: 13px; color: #38bdf8; white-space: pre-wrap; margin-top: 15px; }
-
-    /* Resize specific */
-    .resize-preview { margin: 15px 0; text-align: center; }
-    .resize-preview img { max-width: 100%; max-height: 240px; border: 1px solid #334155; border-radius: 8px; }
-    .resize-file-info { font-size: 12px; color: #94a3b8; margin-top: 8px; }
-    .resize-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-    .resize-grid label { font-size: 12px; color: #94a3b8; font-weight: 700; display: block; margin-bottom: 6px; }
-    .resize-grid input[type="number"] { width: 100%; padding: 10px; background: #0b1329; border: 1px solid #334155; color: #f8fafc; border-radius: 6px; }
-    .preset-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
-    .preset-btn { background: #2563eb; color: #fff; border: none; padding: 7px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; }
-    .preset-btn:hover { opacity: 0.9; }
-    .resize-status { font-size: 13px; color: #38bdf8; font-weight: 600; margin-top: 12px; }
 
     /* SEO Article Section & Image Box */
     .seo-article {
@@ -200,101 +194,21 @@
   <main class="container">
     <div class="tool-hero">
       <h1>All-in-One Image & PDF Converter Studio</h1>
-      <p>Convert image formats, resize, merge/extract PDFs into ZIP, and scan text with browser OCR.</p>
+      <p>Convert image formats, merge/extract PDFs into ZIP, and scan text with browser OCR.</p>
     </div>
 
     <!-- NAVIGATION TABS -->
     <div class="studio-tabs">
-      <button class="tab-btn active" data-target="panel-resize">📐 Resize</button>
-      <button class="tab-btn" data-target="panel-img-conv">Image Format</button>
+      <button class="tab-btn active" data-target="panel-img-conv">Image Format</button>
       <button class="tab-btn" data-target="panel-img-pdf">Images to PDF</button>
       <button class="tab-btn" data-target="panel-pdf-jpg">PDF to JPG (ZIP)</button>
       <button class="tab-btn" data-target="panel-ocr">Image to OCR</button>
     </div>
 
-    <!-- SECTION 0: RESIZE IMAGE -->
-    <div id="panel-resize" class="converter-panel">
-      <h3>📐 Image Resizer</h3>
-      <p>Resize images to exact pixel dimensions, cm/mm/inch, or target file size (KB).</p>
-
-      <div class="dropzone" onclick="document.getElementById('resize-file-in').click()">
-        <p>Click to upload image</p>
-        <input type="file" id="resize-file-in" accept="image/*" style="display:none" onchange="loadResizeImage(event)">
-      </div>
-
-      <div id="resize-preview" class="resize-preview" hidden>
-        <img id="resize-preview-img" alt="Preview">
-        <div id="resize-file-info" class="resize-file-info"></div>
-      </div>
-
-      <div class="resize-grid">
-        <div>
-          <label>Unit</label>
-          <select id="resize-unit" style="width:100%; padding:10px; background:#0b1329; border:1px solid #334155; color:#f8fafc; border-radius:6px;">
-            <option value="px" selected>Pixels (px)</option>
-            <option value="cm">Centimeters (cm)</option>
-            <option value="mm">Millimeters (mm)</option>
-            <option value="in">Inches (in)</option>
-            <option value="kb">Target KB</option>
-          </select>
-        </div>
-        <div>
-          <label>DPI (for cm/mm/in)</label>
-          <select id="resize-dpi" style="width:100%; padding:10px; background:#0b1329; border:1px solid #334155; color:#f8fafc; border-radius:6px;">
-            <option value="96">96 DPI</option>
-            <option value="150">150 DPI</option>
-            <option value="200">200 DPI</option>
-            <option value="300" selected>300 DPI (Print)</option>
-            <option value="600">600 DPI</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="resize-grid">
-        <div>
-          <label>Width</label>
-          <input type="number" id="resize-width" placeholder="e.g. 600" min="1">
-        </div>
-        <div>
-          <label>Height</label>
-          <input type="number" id="resize-height" placeholder="e.g. 800" min="1">
-        </div>
-      </div>
-
-      <label style="font-size:12px; color:#94a3b8; font-weight:700; display:block; margin:15px 0 8px;">Quick Presets</label>
-      <div class="preset-row" id="resize-presets">
-        <button class="preset-btn" data-w="200" data-h="230" onclick="applyResizePreset(this)">Passport</button>
-        <button class="preset-btn" data-w="413" data-h="531" onclick="applyResizePreset(this)">Passport 300DPI</button>
-        <button class="preset-btn" data-w="600" data-h="600" onclick="applyResizePreset(this)">SSC Photo</button>
-        <button class="preset-btn" data-w="300" data-h="300" onclick="applyResizePreset(this)">NEET Photo</button>
-        <button class="preset-btn" data-w="140" data-h="60" onclick="applyResizePreset(this)">Signature</button>
-        <button class="preset-btn" data-w="1080" data-h="1080" onclick="applyResizePreset(this)">Instagram</button>
-        <button class="preset-btn" data-w="1200" data-h="630" onclick="applyResizePreset(this)">OG Image</button>
-        <button class="preset-btn" data-w="1920" data-h="1080" onclick="applyResizePreset(this)">Full HD</button>
-      </div>
-
-      <label style="font-size:12px; color:#94a3b8; font-weight:700; display:block; margin:15px 0 8px;">Target File Size (KB)</label>
-      <div class="preset-row" id="kb-presets">
-        <button class="preset-btn" data-kb="20" onclick="applyKbPreset(this)">20 KB</button>
-        <button class="preset-btn" data-kb="50" onclick="applyKbPreset(this)">50 KB</button>
-        <button class="preset-btn" data-kb="100" onclick="applyKbPreset(this)">100 KB</button>
-        <button class="preset-btn" data-kb="200" onclick="applyKbPreset(this)">200 KB</button>
-        <button class="preset-btn" data-kb="500" onclick="applyKbPreset(this)">500 KB</button>
-        <button class="preset-btn" data-kb="1024" onclick="applyKbPreset(this)">1 MB</button>
-      </div>
-
-      <div class="action-row">
-        <button class="btn green" onclick="performResize()">Resize & Download</button>
-        <button class="btn" style="background:#334155;" onclick="resetResize()">Reset</button>
-      </div>
-
-      <div id="resize-status" class="resize-status" hidden></div>
-    </div>
-
     <!-- SECTION 1: IMAGE FORMAT CONVERTER -->
-    <div id="panel-img-conv" class="converter-panel" hidden>
+    <div id="panel-img-conv" class="converter-panel">
       <h3>Image Format Converter (JPG / PNG / WEBP)</h3>
-      <p>Convert any image format to JPEG, PNG, or WEBP instantly.</p>
+      <p>Convert any image format to JPEG, PNG, or WEBP instantly. Optionally resize while converting.</p>
       <div class="dropzone" onclick="document.getElementById('img-file-in').click()">
         <p>Click to upload image (JPG, PNG, WEBP)</p>
         <input type="file" id="img-file-in" accept="image/*" style="display:none" onchange="previewSingleImg(event)">
@@ -307,6 +221,18 @@
           <option value="image/png">PNG</option>
           <option value="image/webp">WEBP</option>
         </select>
+
+        <label style="font-size:13px; font-weight:600; color:#cbd5e1;">Resize:</label>
+        <select id="resize-mode">
+          <option value="100" selected>Original (100%)</option>
+          <option value="75">75%</option>
+          <option value="50">50%</option>
+          <option value="25">25%</option>
+          <option value="custom">Custom width (px)</option>
+        </select>
+        <input type="number" id="resize-custom" min="50" max="8000" placeholder="Width px"
+               style="display:none; width:120px;">
+
         <button class="btn green" onclick="convertSingleImage()">Convert & Download</button>
       </div>
       <canvas id="hidden-canvas" style="display:none;"></canvas>
@@ -356,38 +282,34 @@
     <!-- Mid Ad Slot -->
     <div class="ad-placeholder">Advertisement Space</div>
 
-    <!-- SEO Article -->
+    <!-- SEO Article with Image Slot -->
     <section class="seo-article">
-      <h2>Complete Guide: Convert Images, Create PDFs &amp; Extract Text Online</h2>
+      <h2>Complete Guide: Convert Images, Create PDFs & Extract Text Online</h2>
       <p>
-        Managing diverse digital documents across desktop and mobile devices often requires juggling multiple separate conversion utilities. The DocEasy Converter Studio unifies everyday document transformations into a singular browser-based powerhouse. Whether you need to resize photos to exact pixel dimensions or target file sizes, swap image raster formats between JPG, PNG, and WebP, merge multiple photo scans into a unified multi-page PDF, extract all pages from a PDF document into a bundled ZIP archive, or transcribe typed text using client-side OCR algorithms, everything operates directly within your device.
+        Managing diverse digital documents across desktop and mobile devices often requires juggling multiple separate conversion utilities. The doceasy Converter Studio unifies everyday document transformations into a singular browser-based powerhouse. Whether you need to swap image raster formats between JPG, PNG, and WebP, merge multiple photo scans into a unified multi-page PDF, extract all pages from a PDF document into a bundled ZIP archive, or transcribe typed text using client-side OCR algorithms, everything operates directly within your device.
       </p>
 
       <div class="article-image-box">
         <img src="../assets/images/converter-studio-demo.jpg" alt="All in One Converter Studio Workflow Demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:#38bdf8;font-weight:700;\'>📷 [Place Demo Graphic Here: assets/images/converter-studio-demo.jpg]</div>';">
-        <div class="article-image-caption">Overview of image resize, raster format transcode, multi-image PDF compiling, and local OCR transcription.</div>
+        <div class="article-image-caption">Overview of raster format transcode, multi-image PDF compiling, and local OCR transcription.</div>
       </div>
 
       <h3>How to Use the All-in-One Converter:</h3>
       <ul>
-        <li><b>Resize Image:</b> Select the Resize tab, upload your picture, choose exact pixel dimensions, cm/mm/inch with DPI, or target a specific KB size. Perfect for SSC, Railway, NEET, and other government portals.</li>
-        <li><b>Format Transcode (JPG / PNG / WEBP):</b> Select the Image Format tab, upload your source picture, pick your desired target format, and trigger instant local canvas re-encoding.</li>
+        <li><b>Format Transcode (JPG / PNG / WEBP):</b> Select the first tab, upload your source picture, pick your desired target format, optionally resize it, and trigger instant local canvas re-encoding.</li>
         <li><b>Compile Images into PDF:</b> Switch to <i>Images to PDF</i>, select one or more photo files, preview their layout, and export them into a neat printable document.</li>
         <li><b>Extract PDF Pages into ZIP:</b> Upload any multi-page PDF document to render every single page into high-definition JPG snapshots packaged cleanly in a compressed ZIP download.</li>
         <li><b>Extract Text (OCR):</b> Upload document screenshots or photos into the OCR tab to transcribe English typography into editable text instantly without typing manually.</li>
       </ul>
 
-      <h3>Key Advantages &amp; Privacy Guarantees:</h3>
+      <h3>Key Advantages & Privacy Guarantees:</h3>
       <ul>
-        <li><b>Strict Local Processing:</b> All image resizing, PDF parsing, image encoding, and OCR extraction utilize client-side JavaScript. Your files are never stored or transmitted across external networks.</li>
+        <li><b>Strict Local Processing:</b> All PDF parsing, image encoding, and OCR extraction utilize WebAssembly and client-side JavaScript workers. Your files are never stored or transmitted across external networks.</li>
         <li><b>Universal Compatibility:</b> Fully responsive across Windows, macOS, Android, and iOS devices with zero software installation required.</li>
-        <li><b>Zero Limitations:</b> Process as many files as needed completely free of charge.</li>
+        <li><b>Zero Limitations:</b> Transcode and process as many files as needed completely free of charge.</li>
       </ul>
 
       <h3>Frequently Asked Questions (FAQ)</h3>
-      <p><b>Q: What is the difference between Resize and Compress?</b><br>
-      Resize changes the actual pixel dimensions (width × height). Compress reduces file size in KB while keeping dimensions. This tool does both — you can target exact pixels or exact KB.</p>
-
       <p><b>Q: Does converting an image format affect the original quality?</b><br>
       Canvas exports use balanced compression algorithms. PNG outputs retain lossless transparency and clarity, while JPG and WebP files balance high visual fidelity with compact file weights.</p>
 
@@ -419,110 +341,9 @@
       };
     });
 
-    /* 0. RESIZE IMAGE */
-    let resizeImage = null;
-
-    function loadResizeImage(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        resizeImage = new Image();
-        resizeImage.onload = () => {
-          document.getElementById("resize-preview-img").src = ev.target.result;
-          document.getElementById("resize-preview").hidden = false;
-          document.getElementById("resize-file-info").textContent = 
-            file.name + " · " + resizeImage.width + " × " + resizeImage.height + " px · " + (file.size/1024).toFixed(1) + " KB";
-          document.getElementById("resize-width").value = resizeImage.width;
-          document.getElementById("resize-height").value = resizeImage.height;
-        };
-        resizeImage.src = ev.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function applyResizePreset(btn) {
-      document.getElementById("resize-unit").value = "px";
-      document.getElementById("resize-width").value = btn.dataset.w;
-      document.getElementById("resize-height").value = btn.dataset.h;
-    }
-
-    function applyKbPreset(btn) {
-      document.getElementById("resize-unit").value = "kb";
-      document.getElementById("resize-width").value = btn.dataset.kb;
-    }
-
-    async function performResize() {
-      if (!resizeImage) { alert("Please upload an image first."); return; }
-
-      const unit = document.getElementById("resize-unit").value;
-      const dpi = parseInt(document.getElementById("resize-dpi").value) || 300;
-      let targetW, targetH, targetKB = null;
-
-      if (unit === "kb") {
-        targetKB = parseInt(document.getElementById("resize-width").value);
-        if (!targetKB || targetKB < 1) { alert("Enter a target KB (e.g. 50)."); return; }
-        targetW = resizeImage.width;
-        targetH = resizeImage.height;
-      } else {
-        const w = parseFloat(document.getElementById("resize-width").value);
-        const h = parseFloat(document.getElementById("resize-height").value);
-        if (!w || !h) { alert("Please enter both width and height."); return; }
-        if (unit === "px") { targetW = Math.round(w); targetH = Math.round(h); }
-        else if (unit === "cm") { targetW = Math.round(w / 2.54 * dpi); targetH = Math.round(h / 2.54 * dpi); }
-        else if (unit === "mm") { targetW = Math.round(w / 25.4 * dpi); targetH = Math.round(h / 25.4 * dpi); }
-        else if (unit === "in") { targetW = Math.round(w * dpi); targetH = Math.round(h * dpi); }
-      }
-
-      const canvas = document.createElement("canvas");
-      canvas.width = targetW;
-      canvas.height = targetH;
-      const ctx = canvas.getContext("2d");
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(resizeImage, 0, 0, targetW, targetH);
-
-      let quality = 0.92;
-      let blob = await new Promise(r => canvas.toBlob(r, "image/jpeg", quality));
-
-      if (targetKB) {
-        const maxBytes = targetKB * 1024;
-        let attempts = 0;
-        while (blob.size > maxBytes && quality > 0.1 && attempts < 12) {
-          quality -= 0.08;
-          blob = await new Promise(r => canvas.toBlob(r, "image/jpeg", quality));
-          attempts++;
-        }
-        showResizeStatus("✅ Resized to " + targetW + " × " + targetH + " px · " + (blob.size/1024).toFixed(1) + " KB (target: " + targetKB + " KB, quality: " + Math.round(quality*100) + "%)");
-      } else {
-        showResizeStatus("✅ Resized to " + targetW + " × " + targetH + " px · " + (blob.size/1024).toFixed(1) + " KB");
-      }
-
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "resized-" + targetW + "x" + targetH + ".jpg";
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
-
-    function resetResize() {
-      resizeImage = null;
-      document.getElementById("resize-file-in").value = "";
-      document.getElementById("resize-preview").hidden = true;
-      document.getElementById("resize-width").value = "";
-      document.getElementById("resize-height").value = "";
-      document.getElementById("resize-status").hidden = true;
-    }
-
-    function showResizeStatus(msg) {
-      const el = document.getElementById("resize-status");
-      el.textContent = msg;
-      el.hidden = false;
-    }
-
-    /* 1. SINGLE IMAGE CONVERTER */
+    /* 1. SINGLE IMAGE CONVERTER (with resize) */
     let activeImage = null;
+
     function previewSingleImg(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -535,16 +356,43 @@
       reader.readAsDataURL(file);
     }
 
+    // Resize dropdown → custom width input दिखाओ/छिपाओ
+    document.getElementById('resize-mode').addEventListener('change', function () {
+      document.getElementById('resize-custom').style.display =
+        this.value === 'custom' ? 'inline-block' : 'none';
+    });
+
     function convertSingleImage() {
       if (!activeImage) { alert('Please upload an image first!'); return; }
-      const format = document.getElementById('target-img-fmt').value;
-      const canvas = document.getElementById('hidden-canvas');
-      canvas.width = activeImage.width;
-      canvas.height = activeImage.height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(activeImage, 0, 0);
 
-      const dataUrl = canvas.toDataURL(format);
+      const format = document.getElementById('target-img-fmt').value;
+      const mode   = document.getElementById('resize-mode').value;
+
+      let w = activeImage.width;
+      let h = activeImage.height;
+
+      if (mode === 'custom') {
+        const cw = parseInt(document.getElementById('resize-custom').value, 10);
+        if (cw && cw > 0) {
+          h = Math.round(h * (cw / w));
+          w = cw;
+        }
+      } else {
+        const pct = parseInt(mode, 10) / 100;
+        w = Math.round(w * pct);
+        h = Math.round(h * pct);
+      }
+
+      const canvas = document.getElementById('hidden-canvas');
+      canvas.width  = w;
+      canvas.height = h;
+
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(activeImage, 0, 0, w, h);
+
+      const dataUrl = canvas.toDataURL(format, 0.92);
       const ext = format.split('/')[1].replace('jpeg', 'jpg');
       const a = document.createElement('a');
       a.href = dataUrl;
