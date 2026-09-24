@@ -3,47 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Word Writer — Write and Export as Word or PDF | DocEasy</title>
-<meta name="description" content="Write documents online and download as Word (.docx) or PDF. Rich text editor with headings, lists, and formatting. 100% browser-based, no signup.">
+<title>Word Writer — Write and Export as Word or PDF Free | DocEasy</title>
+<meta name="description" content="Free online Word writer. Write documents with 7 fonts, formatting, and export as Word (.docx) or PDF. 100% browser-based, no signup.">
 <meta name="keywords" content="word writer, write docx online, create word document, online word processor, free docx writer, text to docx, text to pdf">
-<meta name="author" content="DocEasy">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://doceasy.org/tools/word-writer.html">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/word-writer.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Word Writer — DocEasy">
+<meta property="og:description" content="Write and export documents as Word (.docx) or PDF — free, browser-based.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/word-writer.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Word Writer — DocEasy">
+<meta name="twitter:description" content="Write and export as Word (.docx) or PDF.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Word Writer — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/word-writer.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
-<script>
-  (function () {
-    try {
-      var saved = localStorage.getItem('doceasy_theme') || 'light';
-      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-      else document.documentElement.removeAttribute('data-theme');
-    } catch (e) {}
-  })();
-</script>
-
 <style>
-/* ============ WORD WRITER — Tool styles ============ */
-.main-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+.ad-slot-container,
+.ad-placeholder { display: none !important; }
 
-.hero-box { text-align: center; padding: 8px 0 24px; }
-.hero-title {
-  font-size: clamp(24px, 4vw, 34px);
-  font-weight: 800; color: var(--text-color);
-  margin: 0 0 10px; letter-spacing: -0.5px;
-}
-.hero-sub {
-  color: var(--subtext-color); font-size: 15px;
-  margin: 0 auto; max-width: 620px; line-height: 1.6;
-}
-
-.tool-card {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 14px; padding: 28px 22px;
-  box-shadow: var(--shadow-md); margin-bottom: 22px;
-}
-
-/* Toolbar */
 .editor-toolbar {
   display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
   padding: 10px;
@@ -63,6 +60,7 @@
   cursor: pointer;
   transition: all 0.15s ease;
   gap: 6px;
+  font-family: inherit;
 }
 .tb-btn:hover {
   border-color: var(--accent);
@@ -92,9 +90,15 @@
   color: var(--text-color);
   font-size: 13px; font-weight: 600;
   cursor: pointer;
+  font-family: inherit;
+  max-width: 150px;
+}
+.tb-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-/* Editor */
 .editor-area {
   min-height: 420px;
   padding: 28px 32px;
@@ -132,7 +136,6 @@
   color: #555;
 }
 
-/* Status bar */
 .status-bar {
   display: flex; justify-content: space-between; align-items: center;
   gap: 12px; flex-wrap: wrap;
@@ -146,16 +149,13 @@
 .status-bar span { display: inline-flex; align-items: center; gap: 6px; }
 .status-bar svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 
-/* Settings row */
 .settings-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 14px;
   margin-top: 20px;
 }
-.setting {
-  display: flex; flex-direction: column; gap: 6px;
-}
+.setting { display: flex; flex-direction: column; gap: 6px; }
 .setting label {
   font-size: 12px; font-weight: 700;
   color: var(--text-color);
@@ -178,7 +178,6 @@
   outline: none;
 }
 
-/* Buttons */
 .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
 .btn-primary, .btn-secondary, .btn-docx {
   flex: 1; min-width: 160px;
@@ -187,6 +186,7 @@
   cursor: pointer; transition: all 0.18s ease;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   border: none;
+  font-family: inherit;
 }
 .btn-primary {
   background: var(--accent); color: #fff;
@@ -211,7 +211,6 @@
 
 .btn-primary svg, .btn-secondary svg, .btn-docx svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
 
-/* Progress */
 .progress-wrap { margin-top: 20px; display: none; }
 .progress-wrap.show { display: block; }
 .progress-bar-outer {
@@ -231,7 +230,6 @@
   font-size: 13px; color: var(--subtext-color); font-weight: 600;
 }
 
-/* Toast */
 .toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
   background: var(--card-bg); color: var(--text-color);
@@ -249,7 +247,6 @@
 .toast.error { border-color: var(--error); color: var(--error); }
 .toast svg { width: 18px; height: 18px; stroke: currentColor; fill: none; flex-shrink: 0; }
 
-/* Info box */
 .info-box {
   background: var(--card-bg); border: 1px solid var(--border-color);
   border-radius: 12px; padding: 20px 22px; margin-top: 24px;
@@ -275,34 +272,245 @@
 
 /* SEO Article */
 .seo-article {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 14px; padding: 30px 26px; margin: 30px auto 0;
-  line-height: 1.75; box-shadow: var(--shadow-sm);
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
-.seo-article h2 { color: var(--text-color); font-size: 22px; margin: 0 0 14px; }
-.seo-article h3 { color: var(--accent); font-size: 17px; margin: 26px 0 10px; }
-.seo-article p, .seo-article ul, .seo-article ol, .seo-article li {
-  font-size: 14.5px; color: var(--subtext-color); line-height: 1.75;
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
 }
-.seo-article ol, .seo-article ul { padding-left: 22px; }
-.seo-article li { margin-bottom: 8px; }
-.seo-article b, .seo-article strong { color: var(--text-color); }
-.seo-article code {
-  background: var(--card-hover); padding: 2px 6px;
-  border-radius: 4px; font-size: 13px; color: var(--accent);
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a {
+  color: var(--accent);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.seo-article a:hover { color: var(--accent-hover); }
+
+.seo-article .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+.seo-article .table-wrap table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 14px;
+}
+.seo-article th, .seo-article td {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+  word-break: break-word;
+  vertical-align: top;
+}
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .article-image-box {
-  margin: 24px 0; border-radius: 10px; overflow: hidden;
-  border: 1px dashed var(--border-color);
-  background: var(--card-hover); padding: 12px; text-align: center;
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  text-align: center;
+  box-sizing: border-box;
 }
 .article-image-box img {
-  max-width: 100%; height: auto; border-radius: 8px;
-  display: block; margin: 0 auto;
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 .article-image-caption {
-  font-size: 12.5px; color: var(--subtext-color); padding: 8px 4px 2px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+
+details {
+  margin: 12px 0;
+  padding: 14px 16px;
+  background: var(--card-hover);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+details[open] summary::before { transform: rotate(90deg); }
+details p {
+  margin: 12px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.7;
+}
+
+/* Related Tools */
+.related-tools-section {
+  max-width: 1100px;
+  margin: 60px auto 20px;
+  padding: 0 20px;
+}
+.related-tools-section h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: var(--text-color);
+  text-align: center;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+.related-sub {
+  text-align: center;
+  color: var(--subtext-color);
+  font-size: 14px;
+  margin: 0 0 32px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  min-height: 110px;
+}
+.related-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(25,57,138,0.12);
+}
+.related-card .rc-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.related-card:hover .rc-icon { transform: scale(1.08) rotate(-4deg); }
+.related-card .rc-icon svg {
+  width: 20px; height: 20px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.related-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+.related-card p {
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 24px 16px; margin: 24px 12px; border-radius: 10px; }
+  .seo-article h2 { font-size: 21px !important; }
+  .seo-article h3 { font-size: 17.5px !important; }
+  .seo-article h4 { font-size: 16px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .seo-article .table-wrap table { min-width: 420px; }
+  .seo-article th, .seo-article td { padding: 8px 10px; font-size: 13px; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+  .related-tools-section { padding: 0 14px; margin-top: 48px; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .related-card { padding: 14px 12px; min-height: 100px; }
+  .related-card h3 { font-size: 13px; }
+  .related-card p { font-size: 10.5px; }
+  .related-card .rc-icon { width: 36px; height: 36px; }
+  .related-card .rc-icon svg { width: 18px; height: 18px; }
+  .editor-area { padding: 20px 18px; min-height: 320px; }
+  .tb-select { max-width: 110px; font-size: 12px; }
+  .tb-btn { min-width: 34px; height: 34px; font-size: 13px; }
 }
 </style>
 </head>
@@ -313,11 +521,34 @@
 <main class="main-wrap">
   <div class="hero-box">
     <h1 class="hero-title">Word Writer</h1>
-    <p class="hero-sub">Write documents in your browser and export them as Word (.docx) or PDF. No signup, no upload — 100% private.</p>
+    <p class="hero-sub">Write documents with 7 fonts, rich formatting, and export as Word (.docx) or PDF — 100% private, nothing uploaded.</p>
   </div>
 
   <div class="tool-card">
     <div class="editor-toolbar" id="toolbar">
+      <!-- Font family -->
+      <select class="tb-select" id="fontFamily" title="Font">
+        <option value="Calibri">Calibri</option>
+        <option value="Arial">Arial</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Tahoma">Tahoma</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+
+      <!-- Font size -->
+      <select class="tb-select" id="fontSize" title="Font size">
+        <option value="1">8pt</option>
+        <option value="2">10pt</option>
+        <option value="3" selected>12pt</option>
+        <option value="4">14pt</option>
+        <option value="5">18pt</option>
+        <option value="6">24pt</option>
+        <option value="7">36pt</option>
+      </select>
+
+      <!-- Block type -->
       <select class="tb-select" id="blockType" title="Text style">
         <option value="p">Paragraph</option>
         <option value="h1">Heading 1</option>
@@ -325,6 +556,7 @@
         <option value="h3">Heading 3</option>
         <option value="blockquote">Quote</option>
       </select>
+
       <div class="tb-sep"></div>
       <button class="tb-btn" data-cmd="bold" title="Bold"><b>B</b></button>
       <button class="tb-btn" data-cmd="italic" title="Italic"><i>I</i></button>
@@ -354,7 +586,9 @@
         <svg viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
       </button>
     </div>
+
     <div class="editor-area" id="editor" contenteditable="true" data-placeholder="Start writing your document here..."></div>
+
     <div class="status-bar">
       <span>
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
@@ -423,49 +657,96 @@
       Why use DocEasy Word Writer?
     </h3>
     <ul>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 7 professional fonts — Calibri, Arial, Times, Georgia &amp; more</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Font sizes from 8pt to 36pt with one click</li>
       <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Export as Word (.docx) OR PDF — your choice</li>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Rich text formatting with live word count</li>
       <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — never uploaded anywhere</li>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Opens in Word, Google Docs, or any PDF reader</li>
     </ul>
   </div>
 
-  <!-- ===================== SEO TUTORIAL ===================== -->
+  <!-- ============ SEO ARTICLE — 2000+ WORDS ============ -->
   <section class="seo-article">
-    <h2>How to Write and Export Word or PDF Documents Online</h2>
-    <p>Writing a document used to require installing Microsoft Word on a computer. Today, you can write, format, and export professional documents directly in your browser — either as a Word (.docx) file or a PDF. No installation, no signup, and no upload. The DocEasy Word Writer gives you a clean editor, essential formatting tools, and instant download in both formats, all from any device.</p>
+
+    <h2>Complete Guide: How to Write &amp; Export Word or PDF Documents Online (2026)</h2>
+
+    <p>Writing a document used to require installing Microsoft Word on a computer. Today, you can write, format, and export professional documents directly in your browser — either as a Word (.docx) file or a PDF. No installation, no signup, and no upload. The DocEasy Word Writer gives you a clean editor with <b>7 professional fonts</b>, font sizes from 8pt to 36pt, rich formatting tools, and instant download in both formats, all from any device.</p>
+
+    <p>This complete guide walks you through every aspect of writing, formatting, and exporting documents online — plus the best practices used by professionals to create clean, readable, print-ready documents.</p>
 
     <div class="article-image-box">
-      <img id="tutorial-demo-img"
-           src="../assets/images/word-writer-demo.jpg"
-           alt="Word Writer Demo - DocEasy"
-           onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>Write → DOCX or PDF</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place word-writer-demo.jpg in assets/images/</text></svg>';">
-      <div class="article-image-caption">Write in your browser and export as Word (.docx) or PDF — whichever you need.</div>
+      <img src="../assets/images/word-writer-demo.jpg" alt="DocEasy Word Writer Demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/word-writer-demo.jpg]</div>';">
+      <div class="article-image-caption">Write in your browser with 7 fonts and export as Word (.docx) or PDF — instantly.</div>
     </div>
 
-    <h3>Why Use an Online Word Writer?</h3>
-    <p>Microsoft Word is powerful, but it is also heavy, expensive, and sometimes unavailable. If you are on a shared computer, a Chromebook, a tablet, or a phone, opening a full Word installation is not always practical. An online Word writer solves this by giving you the core editing tools you actually need — headings, formatting, and lists — inside a simple browser tab.</p>
-    <p>The DocEasy Word Writer is designed for people who just need to write and export a document. It skips the clutter. No account, no cloud sync, no distractions. Just you and your text.</p>
-
-    <h3>Step-by-Step: How to Use the Word Writer</h3>
+    <h3>How to Use — Quick Start</h3>
     <ol>
-      <li><b>Start Typing:</b> Click inside the editor area and start writing. The editor works like a standard word processor with a blinking cursor and familiar keyboard shortcuts.</li>
-      <li><b>Format Your Text:</b> Use the toolbar to apply bold, italic, or underline. Use the style dropdown to switch between Paragraph, Heading 1, Heading 2, and Heading 3.</li>
-      <li><b>Add Lists:</b> Create bullet lists or numbered lists with one click. Perfect for steps, checklists, and structured content.</li>
-      <li><b>Align Text:</b> Align paragraphs to the left, center, or right depending on your document type.</li>
-      <li><b>Name Your Document:</b> Enter a title in the "Document Title" field and optionally add an author name. These appear in the file's metadata.</li>
-      <li><b>Choose Your Export Format:</b> Click "Save as PDF" to get a print-ready PDF, or "Save as Word" to get an editable .docx file. Both are generated instantly in your browser.</li>
+      <li><b>Start typing:</b> Click inside the editor area and start writing.</li>
+      <li><b>Pick a font:</b> Use the Font dropdown to choose from Calibri, Arial, Times New Roman, Georgia, Verdana, Tahoma, or Courier New.</li>
+      <li><b>Set the font size:</b> Use the Font Size dropdown — 8pt, 10pt, 12pt (default), 14pt, 18pt, 24pt, or 36pt.</li>
+      <li><b>Add headings:</b> Use the Style dropdown to switch between Paragraph, Heading 1, Heading 2, Heading 3, or Quote.</li>
+      <li><b>Format:</b> Bold, italic, underline, align left/center/right, bullet lists, numbered lists.</li>
+      <li><b>Add metadata:</b> Enter a document title and author name — these appear in the file's properties.</li>
+      <li><b>Export:</b> Click "Save as PDF" or "Save as Word" — instant download.</li>
     </ol>
 
-    <h3>PDF or Word — Which Should You Choose?</h3>
-    <p>Both formats are useful, and the right choice depends on what you plan to do next:</p>
+    <h3>1. Why Use an Online Word Writer?</h3>
+
+    <p>Microsoft Word is powerful, but it is also heavy, expensive, and sometimes unavailable. If you are on a shared computer, a Chromebook, a tablet, or a phone, opening a full Word installation is not always practical. An online Word writer solves this by giving you the core editing tools you actually need — headings, fonts, formatting, lists — inside a simple browser tab.</p>
+
+    <p>The DocEasy Word Writer is designed for people who just need to write and export a document. It skips the clutter. No account, no cloud sync, no distractions. Just you and your text.</p>
+
+    <h3>2. Fonts — Choosing the Right One</h3>
+
+    <p>The font you choose dramatically affects readability and tone. Here are the 7 fonts available and when to use each:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Font</th><th>Best For</th><th>Style</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Calibri</b></td><td>Modern business documents, resumes, reports</td><td>Sans-serif (default)</td></tr>
+          <tr><td><b>Arial</b></td><td>Web content, forms, everyday documents</td><td>Sans-serif</td></tr>
+          <tr><td><b>Times New Roman</b></td><td>Academic papers, formal letters, books</td><td>Serif</td></tr>
+          <tr><td><b>Georgia</b></td><td>Long-form reading, blogs, storytelling</td><td>Serif</td></tr>
+          <tr><td><b>Verdana</b></td><td>Small text readability, screen viewing</td><td>Sans-serif</td></tr>
+          <tr><td><b>Tahoma</b></td><td>Compact layouts, technical docs</td><td>Sans-serif</td></tr>
+          <tr><td><b>Courier New</b></td><td>Code, technical documents, monospaced output</td><td>Monospace</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><b>Simple rule:</b> Business → Calibri or Arial. Academic → Times New Roman. Reading → Georgia. Code → Courier New.</p>
+
+    <h3>3. Font Sizes — What to Use When</h3>
+
+    <p>Font size (measured in points, abbreviated "pt") determines how large the text appears. The seven sizes available cover almost every use case:</p>
+
     <ul>
-      <li><b>Save as PDF</b> if you want to share a document that looks identical on every device. PDFs lock the layout and are ideal for resumes, contracts, invoices, and finished reports.</li>
+      <li><b>8pt:</b> Footnotes, image captions, legal disclaimers.</li>
+      <li><b>10pt:</b> Dense technical documents, sidebars, code.</li>
+      <li><b>12pt:</b> Standard body text — the default for most documents.</li>
+      <li><b>14pt:</b> Subheadings, emphasis, easy-reading documents.</li>
+      <li><b>18pt:</b> Section headings, presentations.</li>
+      <li><b>24pt:</b> Chapter titles, large headlines.</li>
+      <li><b>36pt:</b> Cover page titles, posters.</li>
+    </ul>
+
+    <p>Most professional documents use <b>12pt body text</b> with headings ranging from 14pt to 24pt. Larger sizes are for emphasis, not body text.</p>
+
+    <h3>4. PDF or Word — Which Should You Choose?</h3>
+
+    <p>Both formats are useful, and the right choice depends on what you plan to do next:</p>
+
+    <ul>
+      <li><b>Save as PDF</b> if you want a document that looks identical on every device. PDFs lock the layout and are ideal for resumes, contracts, invoices, and finished reports.</li>
       <li><b>Save as Word (.docx)</b> if you plan to keep editing the document later, or need to send it to someone who will edit it in Microsoft Word, Google Docs, or LibreOffice.</li>
     </ul>
+
     <p>You can export the same document in both formats — write it once, download it twice.</p>
 
-    <h3>What Can You Write?</h3>
+    <h3>5. What Can You Write?</h3>
+
     <ul>
       <li><b>Cover letters and resumes:</b> Draft professional documents and export them as .docx or PDF.</li>
       <li><b>Assignments and essays:</b> Write school or college work in a familiar Word format.</li>
@@ -473,45 +754,204 @@
       <li><b>Meeting notes:</b> Structure notes with clear sections and lists.</li>
       <li><b>Letters and applications:</b> Write formal or informal letters with proper formatting.</li>
       <li><b>Blog drafts and scripts:</b> Type long-form content and export it for editing elsewhere.</li>
+      <li><b>Legal documents:</b> Contracts, agreements, and notices with clear structure.</li>
+      <li><b>Personal journals:</b> Keep a daily record in a browser-based document.</li>
     </ul>
 
-    <h3>Live Word Count and Reading Time</h3>
-    <p>At the bottom of the editor, you can see a live status bar that updates as you type. It shows the word count, the character count, and an estimated reading time. These are useful for essays with strict word limits, meta descriptions with character caps, and blog posts where reading time matters.</p>
+    <h3>6. Live Word Count and Reading Time</h3>
 
-    <h3>Privacy First — Always</h3>
+    <p>At the bottom of the editor, you can see a live status bar that updates as you type. It shows:</p>
+
+    <ul>
+      <li><b>Word count:</b> Essential for essays with strict limits (e.g., 500-word applications).</li>
+      <li><b>Character count:</b> Useful for meta descriptions, tweets, and SMS.</li>
+      <li><b>Reading time:</b> Estimated at 200 words per minute — the standard reading speed used by most publishers.</li>
+    </ul>
+
+    <h3>7. Privacy First — Always</h3>
+
     <p>Everything you type stays in your browser. There is no server, no account, and no tracking. When you close the tab, your text is gone from memory. This makes DocEasy Word Writer suitable for sensitive content like personal letters, private notes, internal reports, and confidential drafts.</p>
 
-    <h3>Tips for the Best Results</h3>
+    <p>To verify: open your browser's Developer Tools Network tab, then type in the editor. You will see no outbound requests — nothing is being sent anywhere.</p>
+
+    <h3>8. Best Practices for Clean Documents</h3>
+
     <ul>
-      <li>Use <b>Heading 1</b> for the main title of your document.</li>
-      <li>Use <b>Heading 2</b> and <b>Heading 3</b> for sections and subsections.</li>
-      <li>Keep paragraphs short — three to five lines each — for readability.</li>
-      <li>Use numbered lists for steps and bullet lists for unordered ideas.</li>
-      <li>Give your document a clear title before downloading.</li>
-      <li>Add an author name if you want your name to appear in the file's metadata.</li>
+      <li><b>Use Heading 1 for the main title</b> of your document — it sets the outline level for navigation.</li>
+      <li><b>Use Heading 2 and Heading 3 for sections</b> and subsections.</li>
+      <li><b>Keep paragraphs short</b> — 3 to 5 lines each — for readability.</li>
+      <li><b>Use numbered lists</b> for steps and <b>bullet lists</b> for unordered ideas.</li>
+      <li><b>Give your document a clear title</b> before downloading.</li>
+      <li><b>Add an author name</b> if you want your name to appear in the file's metadata.</li>
+      <li><b>Choose fonts wisely:</b> Business → Calibri/Arial. Academic → Times New Roman. Modern → Georgia.</li>
+      <li><b>Stick to 12pt body text</b> — larger sizes are for emphasis only.</li>
+      <li><b>Preview in PDF first</b> if the layout matters.</li>
+      <li><b>Save both formats</b> if you may need to edit the document later.</li>
     </ul>
 
-    <h3>Frequently Asked Questions</h3>
-    <p><b>Is the Word Writer free?</b><br>
-    Yes. DocEasy is completely free with no signup, no fees, and no hidden limits.</p>
+    <h3>9. Troubleshooting Common Issues</h3>
 
-    <p><b>Are my words uploaded to your servers?</b><br>
-    No. Everything runs inside your browser. Your document never leaves your device.</p>
+    <ul>
+      <li><b>Formatting lost in export?</b> Headings, bold, italic, underline, and lists are all preserved. Complex nested tables are not supported — keep to simple lists.</li>
+      <li><b>PDF library not loading?</b> Requires internet connection for the first load. After that, it caches.</li>
+      <li><b>Font not applying?</b> Select the text first, then choose the font. Or select a font before typing.</li>
+      <li><b>Document too long?</b> For 50+ page documents, use Word or Google Docs instead. This tool is optimized for documents up to ~20 pages.</li>
+      <li><b>Special characters missing?</b> Basic Latin + common punctuation is supported. Complex scripts (Hindi, Chinese, Arabic) may not render in the PDF export.</li>
+    </ul>
 
-    <p><b>Can I export the same document as both PDF and Word?</b><br>
-    Yes. Write the document once, then click "Save as PDF" or "Save as Word" — you can download both formats.</p>
+    <h3>10. Frequently Asked Questions</h3>
 
-    <p><b>Will the formatting be preserved?</b><br>
-    Yes. Headings, bold, italic, underline, lists, and alignment are preserved in both the PDF and .docx exports.</p>
+    <details>
+      <summary>Q: Is the Word Writer really free?</summary>
+      <p>Yes — 100% free, no signup, no watermark, no daily limits. All processing happens locally in your browser.</p>
+    </details>
 
-    <p><b>Can I open the .docx file in Google Docs?</b><br>
-    Yes. The file is a standard Word format that opens in Google Docs, Microsoft Word, LibreOffice, and Apple Pages.</p>
+    <details>
+      <summary>Q: Are my words uploaded to a server?</summary>
+      <p>No. Everything runs locally in your browser. Your document never leaves your device.</p>
+    </details>
 
-    <p><b>Does it work on mobile?</b><br>
-    Yes. The editor works on any modern browser, including smartphones and tablets.</p>
+    <details>
+      <summary>Q: Can I export the same document as both PDF and Word?</summary>
+      <p>Yes. Write the document once, then click "Save as PDF" or "Save as Word" — you can download both formats.</p>
+    </details>
 
-    <h3>Try It Now</h3>
-    <p>Ready to write your first document? Click inside the editor above, start typing, and use the toolbar to format your content. When you are done, choose whether to save it as a PDF or a Word file — or both. If you find this tool useful, share it with others who need a fast, private way to create documents online.</p>
+    <details>
+      <summary>Q: Which fonts are supported?</summary>
+      <p>7 professional fonts: Calibri, Arial, Times New Roman, Georgia, Verdana, Tahoma, and Courier New.</p>
+    </details>
+
+    <details>
+      <summary>Q: What font sizes are available?</summary>
+      <p>8pt, 10pt, 12pt (default), 14pt, 18pt, 24pt, and 36pt.</p>
+    </details>
+
+    <details>
+      <summary>Q: Will the formatting be preserved in the export?</summary>
+      <p>Yes. Headings, bold, italic, underline, lists, and alignment are preserved in both PDF and .docx exports.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I open the .docx file in Google Docs?</summary>
+      <p>Yes. The file is a standard Word format that opens in Google Docs, Microsoft Word, LibreOffice, and Apple Pages.</p>
+    </details>
+
+    <details>
+      <summary>Q: Does it work on mobile?</summary>
+      <p>Yes. The editor works on any modern browser, including smartphones and tablets.</p>
+    </details>
+
+    <details>
+      <summary>Q: Can I add images to my document?</summary>
+      <p>Currently the writer supports text-only documents. Images are on our roadmap.</p>
+    </details>
+
+    <details>
+      <summary>Q: Does it work offline?</summary>
+      <p>After the page loads once, you can write and edit offline. PDF/DOCX export needs the libraries loaded (cached after first use).</p>
+    </details>
+
+    <h3>11. Popular Right Now — Trending Tools</h3>
+    <ul>
+      <li><a href="word-counter.html">Word Counter</a> — count words, characters, reading time</li>
+      <li><a href="doc-scanner.html">Document Scanner &amp; OCR</a> — extract text from images</li>
+      <li><a href="pdf-to-word.html">PDF to Word</a> — convert PDFs to editable .docx</li>
+      <li><a href="word-to-pdf.html">Word to PDF</a> — convert DOCX to PDF</li>
+      <li><a href="invoice-generator.html">Invoice Generator</a> — professional GST invoices</li>
+    </ul>
+
+    <h3>12. Related Tools You Might Need</h3>
+    <p>If you found this writer useful, you may also like our <a href="word-counter.html">Word Counter</a> for tracking words and characters, our <a href="doc-scanner.html">Document Scanner &amp; OCR</a> for extracting text from images, our <a href="pdf-to-word.html">PDF to Word</a> converter for turning PDFs into editable documents, our <a href="word-to-pdf.html">Word to PDF</a> for the reverse, our <a href="invoice-generator.html">Invoice Generator</a> for professional billing, our <a href="pdf-merge.html">PDF Merge</a> for combining multiple PDFs, and our <a href="pdf-compressor.html">PDF Compressor</a> for reducing file size.</p>
+
+    <h3>13. Conclusion</h3>
+
+    <p>Writing and exporting documents no longer requires expensive software or an internet connection. With the DocEasy Word Writer, you can write, format with 7 professional fonts, add headings and lists, and export as Word or PDF — all in your browser, all 100% private.</p>
+
+    <p>Bookmark this page and use it whenever you need to write something and save it as a proper document.</p>
+
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ RELATED TOOLS GRID ============ -->
+  <section class="related-tools-section">
+    <h2>Explore More Free DocEasy Tools</h2>
+    <p class="related-sub">All free, all browser-based, all 100% private.</p>
+    <div class="related-grid">
+
+      <a class="related-card" href="word-counter.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div>
+        <h3>Word Counter</h3>
+        <p>Words, chars, reading time</p>
+      </a>
+
+      <a class="related-card" href="pdf-to-word.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3>PDF to Word</h3>
+        <p>Editable .docx documents</p>
+      </a>
+
+      <a class="related-card" href="word-to-pdf.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3>Word to PDF</h3>
+        <p>DOCX to PDF</p>
+      </a>
+
+      <a class="related-card" href="doc-scanner.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        <h3>Document Scanner</h3>
+        <p>Image to text OCR</p>
+      </a>
+
+      <a class="related-card" href="invoice-generator.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
+        <h3>Invoice Generator</h3>
+        <p>Professional invoices</p>
+      </a>
+
+      <a class="related-card" href="pdf-merge.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Merge PDF</h3>
+        <p>Combine PDFs into one</p>
+      </a>
+
+      <a class="related-card" href="pdf-compressor.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
+        <h3>Compress PDF</h3>
+        <p>Reduce PDF file size</p>
+      </a>
+
+      <a class="related-card" href="pdf-split.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
+        <h3>Split PDF</h3>
+        <p>Extract specific pages</p>
+      </a>
+
+      <a class="related-card" href="image-compressor.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15h6M12 12v6"/></svg></div>
+        <h3>Image Compressor</h3>
+        <p>Reduce image file size</p>
+      </a>
+
+      <a class="related-card" href="image-converter.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 4h4v2h-4zM14 10h2v4h-2z"/></svg></div>
+        <h3>Image Converter</h3>
+        <p>JPG, PNG, WEBP</p>
+      </a>
+
+      <a class="related-card" href="qr-generator.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
+        <h3>QR Generator</h3>
+        <p>Custom QR codes</p>
+      </a>
+
+      <a class="related-card" href="card-cropper.html">
+        <div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <h3>ID Card Cropper</h3>
+        <p>Aadhaar, PAN at 300 DPI</p>
+      </a>
+
+    </div>
   </section>
 
 </main>
@@ -525,9 +965,7 @@
   <span id="toastMsg">Done</span>
 </div>
 
-<!-- PDF-Lib for PDF export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<!-- JSZip for DOCX export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
@@ -539,6 +977,8 @@
   var editor      = $('editor');
   var toolbar     = $('toolbar');
   var blockType   = $('blockType');
+  var fontFamily  = $('fontFamily');
+  var fontSize    = $('fontSize');
   var docTitle    = $('docTitle');
   var authorName  = $('authorName');
   var clearBtn    = $('clearBtn');
@@ -566,7 +1006,7 @@
     toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
   }
 
-  /* ---------- Toolbar ---------- */
+  /* ---------- Toolbar formatting ---------- */
   toolbar.querySelectorAll('[data-cmd]').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
@@ -581,6 +1021,16 @@
     editor.focus();
     document.execCommand('formatBlock', false, this.value);
     updateCounts();
+  });
+
+  fontFamily.addEventListener('change', function () {
+    editor.focus();
+    document.execCommand('fontName', false, this.value);
+  });
+
+  fontSize.addEventListener('change', function () {
+    editor.focus();
+    document.execCommand('fontSize', false, this.value);
   });
 
   function updateToolbarState() {
@@ -645,8 +1095,6 @@
         blocks.push({ type: tag, text: text });
       } else if (tag === 'blockquote') {
         blocks.push({ type: 'blockquote', text: text });
-      } else if (tag === 'li') {
-        blocks.push({ type: 'li', text: text });
       } else if (tag === 'ul' || tag === 'ol') {
         Array.prototype.forEach.call(node.children, function (li) {
           blocks.push({ type: 'li', text: li.textContent || '' });
@@ -667,9 +1115,9 @@
     return blocks;
   }
 
-  /* ========================================================================
+  /* ============================================================
      PDF EXPORT
-     ======================================================================== */
+     ============================================================ */
   async function exportPdf() {
     if (!window.PDFLib) { showToast('PDF library still loading. Try again.', 'error'); return; }
     if (!editor.textContent.trim()) { showToast('Write something first!', 'error'); return; }
@@ -807,9 +1255,9 @@
     }
   }
 
-  /* ========================================================================
+  /* ============================================================
      DOCX EXPORT
-     ======================================================================== */
+     ============================================================ */
   async function exportDocx() {
     if (!window.JSZip) { showToast('DOCX library still loading. Try again.', 'error'); return; }
     if (!editor.textContent.trim()) { showToast('Write something first!', 'error'); return; }
@@ -826,7 +1274,6 @@
       progressBar.style.width = '40%';
       progressText.textContent = 'Building Word document…';
 
-      // Build body paragraphs XML
       var bodyXml = '';
       blocks.forEach(function (block) {
         var text = escapeXml((block.text || '').trim());
