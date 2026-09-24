@@ -22,7 +22,6 @@
   --shadow-md: 0 4px 12px rgba(25,57,138,0.14);
   --shadow-lg: 0 12px 34px rgba(0,0,0,0.20);
 
-  /* Aliases */
   --bg-primary: var(--bg-color);
   --text-main: var(--text-color);
   --text-muted: var(--subtext-color);
@@ -114,12 +113,104 @@ input, select, textarea { font: inherit; color: inherit; }
   padding: 6px 14px; border-radius: 999px; white-space: nowrap; transition: background 0.15s;
 }
 .pill-nav a:hover { background: rgba(255,255,255,0.15); color: #fff; }
-@media (min-width: 900px) { .pill-nav { display: flex; } }
+
+/* ============ HEADER FIX — Desktop pe top-nav ko 2nd row bhejo ============ */
+@media (min-width: 781px) {
+  .header-inner {
+    flex-wrap: wrap !important;
+    padding: 12px 20px 8px !important;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+
+  .brand-link {
+    flex-shrink: 0 !important;
+    order: 1 !important;
+  }
+
+  .nav-right {
+    display: contents !important;
+  }
+
+  .pill-nav {
+    display: flex !important;
+    flex-shrink: 0 !important;
+    order: 2 !important;
+    margin-left: auto !important;
+    gap: 3px !important;
+    padding: 5px 8px !important;
+  }
+
+  .pill-nav a {
+    padding: 6px 12px !important;
+    font-size: 12.5px !important;
+    white-space: nowrap !important;
+  }
+
+  .theme-switch {
+    order: 3 !important;
+    flex-shrink: 0 !important;
+    margin-left: 6px !important;
+  }
+
+  /* Top-nav ko nayi row mein bhejo */
+  .top-nav {
+    order: 10 !important;
+    width: 100% !important;
+    flex-basis: 100% !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    margin: 4px 0 0 0 !important;
+    padding: 8px 0 2px 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.15) !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  .top-nav::-webkit-scrollbar { display: none !important; }
+
+  .top-nav a {
+    padding: 5px 12px !important;
+    font-size: 12.5px !important;
+    white-space: nowrap !important;
+    border-radius: 6px !important;
+  }
+}
+
+/* Bade screens pe comfortable size */
+@media (min-width: 1200px) {
+  .pill-nav a {
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+  }
+  .top-nav a {
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ============ Mobile (≤780px) ============ */
 @media (max-width: 780px) {
-  .header-inner { flex-wrap: wrap; }
-  .nav-right { width: 100%; justify-content: space-between; }
-  .top-nav { order: 2; width: 100%; }
-  .theme-switch { order: 1; margin-left: auto; }
+  .header-inner {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+  }
+  .nav-right {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    justify-content: space-between !important;
+  }
+  .top-nav {
+    order: 2 !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    gap: 2px !important;
+  }
+  .theme-switch {
+    order: 1 !important;
+    margin-left: auto !important;
+  }
 }
 
 /* ============ MAIN ============ */
@@ -278,105 +369,4 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 640px) {
   .main-wrap, .container { padding-left: 12px; padding-right: 12px; }
   .hero-title, .tool-hero h1 { font-size: 24px; }
-}
-
-/* ==========================================================================
-   HEADER FIX — Desktop pe single-line, no scatter
-   ========================================================================== */
-@media (min-width: 900px) {
-  .header-inner {
-    flex-wrap: nowrap;
-    gap: 14px;
-    padding: 10px 18px;
-  }
-
-  .brand-link {
-    flex-shrink: 0;
-  }
-
-  .nav-right {
-    flex: 1 1 auto;
-    min-width: 0;
-    flex-wrap: nowrap;
-    gap: 8px;
-    justify-content: flex-end;
-    overflow: hidden;
-  }
-
-  .pill-nav {
-    display: flex;
-    flex-shrink: 0;
-    gap: 2px;
-    padding: 4px 6px;
-  }
-
-  .top-nav {
-    flex-shrink: 1;
-    min-width: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: 2px;
-    padding-bottom: 2px;
-  }
-
-  .top-nav::-webkit-scrollbar { display: none; }
-
-  .theme-switch {
-    flex-shrink: 0;
-    margin-left: 4px;
-  }
-
-  /* Chhote items = zyada fit */
-  .pill-nav a {
-    padding: 5px 11px;
-    font-size: 12.5px;
-  }
-
-  .top-nav a {
-    padding: 5px 8px;
-    font-size: 12.5px;
-  }
-}
-
-/* Bade screens pe comfortable size */
-@media (min-width: 1200px) {
-  .pill-nav a {
-    padding: 6px 14px;
-    font-size: 13px;
-  }
-  .top-nav a {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-}
-
-/* ==========================================================================
-   HEADER FIX — Mobile pe saaf stacking (existing rules ko refine)
-   ========================================================================== */
-@media (max-width: 780px) {
-  .header-inner {
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px 14px;
-  }
-
-  .nav-right {
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: space-between;
-  }
-
-  .top-nav {
-    order: 2;
-    width: 100%;
-    overflow-x: auto;
-    gap: 2px;
-    padding-bottom: 4px;
-  }
-
-  .theme-switch {
-    order: 1;
-    margin-left: auto;
-  }
 }
