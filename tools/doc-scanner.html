@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Document Scanner & OCR (Image to Text) Free — DocEasy</title>
-<meta name="description" content="Free browser-based OCR tool. Extract text from images, scanned documents, and photos instantly in English, Hindi, and 100+ languages. No upload, 100% private.">
-<meta name="keywords" content="ocr online, image to text, document scanner, hindi ocr, photo to text, extract text from image, pdf to text, business card scanner">
+<title>Image Compressor & Resizer Free — DocEasy</title>
+<meta name="description" content="Free browser-based image compressor and resizer. Reduce JPG, PNG, WEBP file size and resize by pixels or percentage. 100% private, no upload.">
+<meta name="keywords" content="image compressor, image resizer, compress jpg, compress png, resize image, reduce image size, photo compressor">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/doc-scanner.html">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/image-compressor.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Document Scanner & OCR (Image to Text) Free — DocEasy">
-<meta property="og:description" content="Extract text from images and document photos instantly. 100% browser-based.">
-<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/doc-scanner.html">
-<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/doc-scanner-demo.jpg">
+<meta property="og:title" content="Image Compressor & Resizer Free — DocEasy">
+<meta property="og:description" content="Compress and resize images instantly in your browser. No upload, no watermark.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/image-compressor.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/image-compressor-demo.jpg">
 <meta property="og:site_name" content="DocEasy">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Document Scanner & OCR (Image to Text) Free — DocEasy">
-<meta name="twitter:description" content="Extract text from images instantly. 100+ languages. No upload.">
-<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/doc-scanner-demo.jpg">
+<meta name="twitter:title" content="Image Compressor & Resizer Free — DocEasy">
+<meta name="twitter:description" content="Compress and resize images instantly. 100% browser-based.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/image-compressor-demo.jpg">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
@@ -30,19 +30,16 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Document Scanner & OCR — DocEasy",
-  "url": "https://deepaakai.github.io/officekit/tools/doc-scanner.html",
+  "name": "Image Compressor & Resizer — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/image-compressor.html",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any (Web)",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Extract text from images and documents online. 100+ languages. 100% browser-based."
+  "description": "Compress and resize JPG, PNG, WEBP images online. 100% browser-based."
 }
 </script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
-
-<!-- Puter.js — free OCR API, no key required -->
-<script src="https://js.puter.com/v2/"></script>
 
 <style>
 /* Hide ad slots until AdSense approval */
@@ -51,29 +48,55 @@
   display: none !important;
 }
 
-/* ============ Upload Options ============ */
-.upload-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 16px;
+/* ============ Tabs ============ */
+.studio-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
-@media (max-width: 640px) {
-  .upload-options { grid-template-columns: 1fr; }
+.tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--subtext-color);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.tab-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; }
+.tab-btn:hover { color: var(--text-color); background: var(--card-hover); }
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
 
+/* ============ Upload Card ============ */
 .upload-card {
   position: relative;
   border: 2px dashed var(--accent);
   background: var(--accent-soft);
   border-radius: 10px;
-  padding: 26px 18px;
+  padding: 32px 20px;
   text-align: center;
   cursor: pointer;
   transition: all 0.15s;
+  margin-bottom: 16px;
 }
 .upload-card:hover {
-  background: var(--accent-soft-hover);
+  background: var(--accent-soft-hover, var(--accent-soft));
   transform: translateY(-2px);
 }
 .upload-card input[type="file"] {
@@ -85,9 +108,9 @@
   cursor: pointer;
 }
 .upload-card .uc-icon {
-  width: 44px; height: 44px;
+  width: 48px; height: 48px;
   color: var(--accent);
-  margin: 0 auto 10px;
+  margin: 0 auto 12px;
 }
 .upload-card h3 {
   margin: 0 0 4px;
@@ -101,175 +124,195 @@
   color: var(--subtext-color);
 }
 
-/* ============ OCR Engine Toggle ============ */
-.engine-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 16px 0;
+/* ============ Preview ============ */
+.preview-wrap {
+  display: none;
+  margin: 18px 0;
+  gap: 16px;
   flex-wrap: wrap;
 }
-.engine-row label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-color);
+.preview-wrap.show { display: flex; }
+.preview-col {
+  flex: 1 1 220px;
+  text-align: center;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px;
 }
-.engine-row select {
-  height: 38px;
+.preview-col h4 {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--subtext-color);
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+.preview-col img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  display: block;
+  margin: 0 auto;
+}
+.preview-meta {
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+.preview-meta b { color: var(--accent); font-weight: 700; }
+
+/* ============ Controls ============ */
+.controls {
+  display: none;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-color);
+}
+.controls.show { display: block; }
+
+.field-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.f-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 160px;
+  min-width: 130px;
+}
+.f-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.f-group output {
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.f-group select,
+.f-group input[type="number"] {
+  height: 42px;
   padding: 0 12px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background: var(--card-bg);
   color: var(--text-color);
-  font-size: 13.5px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.f-group select:focus,
+.f-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 26px;
+  background: transparent;
   cursor: pointer;
 }
-.engine-row select:focus { border-color: var(--accent); }
-
-/* ============ Preview ============ */
-.preview-thumb {
-  display: none;
-  text-align: center;
-  margin: 14px 0;
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-color);
 }
-.preview-thumb img {
-  max-width: 100%;
-  max-height: 240px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  box-shadow: var(--shadow-sm);
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 19px; height: 19px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  cursor: pointer;
 }
-.preview-thumb .file-name {
-  font-size: 12px;
-  color: var(--subtext-color);
-  margin-top: 6px;
-  word-break: break-all;
+input[type="range"]::-moz-range-track {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-color);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 19px; height: 19px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  cursor: pointer;
 }
 
-/* ============ OCR Box ============ */
-#ocr-box { margin-top: 20px; }
+.lock-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-color);
+  cursor: pointer;
+  user-select: none;
+  padding: 12px 0;
+}
+.lock-label input { accent-color: var(--accent); width: 16px; height: 16px; }
 
-.btn-ocr-main {
+/* ============ Main Button ============ */
+.btn-main {
   width: 100%;
-  background: var(--success);
+  background: var(--success, #16a34a);
   color: #fff;
   border: none;
   padding: 13px 20px;
   border-radius: 8px;
   font-size: 15px;
   font-weight: 700;
+  font-family: inherit;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: background 0.15s, opacity 0.15s;
+  margin-top: 8px;
 }
-.btn-ocr-main:hover:not(:disabled) { background: var(--success-hover); }
-.btn-ocr-main:disabled { opacity: 0.6; cursor: not-allowed; }
-.btn-ocr-main svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+.btn-main:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-main:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-main svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
 
-/* Progress bar */
-.progress-wrap {
-  display: none;
-  margin-top: 14px;
-}
-.progress-wrap.show { display: block; }
-.progress-bar {
-  height: 8px;
-  background: var(--border-color);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.progress-bar i {
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent), #22a8e0);
-  border-radius: 99px;
-  transition: width 0.15s linear;
-}
-#status-text {
-  font-size: 13px;
-  color: var(--accent);
-  margin: 8px 0 0;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* ============ Result ============ */
-.result-wrap {
-  display: none;
-  margin-top: 18px;
-}
-.result-wrap.show { display: block; }
-
-.result-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.result-header h3 {
-  margin: 0;
+.btn-secondary {
+  width: 100%;
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 12px 20px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 700;
-  color: var(--text-color);
-}
-.result-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.result-actions button {
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
-  padding: 7px 14px;
-  border-radius: 6px;
-  font-size: 12.5px;
-  font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  margin-top: 10px;
   transition: all 0.15s;
 }
-.result-actions button:hover {
+.btn-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
-}
-.result-actions button svg { width: 14px; height: 14px; stroke: currentColor; fill: none; }
-
-#ocr-result {
-  width: 100%;
-  min-height: 240px;
-  padding: 14px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 13.5px;
-  line-height: 1.6;
-  background: var(--card-bg);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  resize: vertical;
-  box-sizing: border-box;
-}
-#ocr-result:focus { border-color: var(--accent); }
-
-/* ============ Info note ============ */
-.info-note {
-  background: var(--accent-soft);
-  border-left: 3px solid var(--accent);
-  padding: 10px 14px;
-  border-radius: 4px;
-  font-size: 12.5px;
-  color: var(--text-color);
-  margin-top: 14px;
-  line-height: 1.5;
 }
 
 /* ============ SEO ARTICLE — Improved Typography ============ */
@@ -325,6 +368,25 @@
 .seo-article strong { color: var(--text-color); font-weight: 700; }
 .seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
 .seo-article a:hover { color: var(--accent-hover); }
+.seo-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+}
+.seo-article th,
+.seo-article td {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+}
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+}
 
 .article-image-box {
   margin: 32px auto;
@@ -352,6 +414,37 @@
   line-height: 1.55;
 }
 
+details {
+  margin: 12px 0;
+  padding: 14px 16px;
+  background: var(--card-hover);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 12px;
+}
+details[open] summary::before { transform: rotate(90deg); }
+details p {
+  margin: 12px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.7;
+}
+
 @media (max-width: 768px) {
   .seo-article { padding: 28px 20px; margin: 32px auto; }
   .seo-article h2 { font-size: 22px !important; }
@@ -359,6 +452,7 @@
   .seo-article p { font-size: 15.5px !important; }
   .seo-article li { font-size: 15px !important; }
   .article-image-box img { max-height: 260px; padding: 14px; }
+  .tab-btn { font-size: 13px; padding: 11px 10px; }
 }
 </style>
 </head>
@@ -368,277 +462,383 @@
 
 <main class="main-wrap">
   <div class="hero-box">
-    <h1 class="hero-title">Document Scanner & Image to Text (OCR)</h1>
-    <p class="hero-sub">Extract typed text from photos, scanned documents and receipts instantly. Works with English, Hindi, and 100+ languages — 100% private, all in your browser.</p>
+    <h1 class="hero-title">Image Compressor &amp; Resizer</h1>
+    <p class="hero-sub">Reduce image file size and resize photos by pixels or percentage — 100% in your browser, nothing uploaded.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
   <div class="tool-card">
-    <div class="upload-options">
-      <label class="upload-card">
-        <input type="file" id="camera-in" accept="image/*" capture="environment">
-        <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-          <circle cx="12" cy="13" r="4"/>
-        </svg>
-        <h3>📷 Take a Photo</h3>
-        <p>Open camera (mobile) or pick from gallery</p>
-      </label>
+    <!-- TABS -->
+    <div class="studio-tabs">
+      <button class="tab-btn active" data-target="panel-compress" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Image Compressor
+      </button>
+      <button class="tab-btn" data-target="panel-resize" type="button">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+        Image Resizer
+      </button>
+    </div>
 
+    <!-- ============ PANEL 1: COMPRESSOR ============ -->
+    <div id="panel-compress">
       <label class="upload-card">
-        <input type="file" id="file-in" accept="image/*">
+        <input type="file" id="compress-file" accept="image/*">
         <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="17 8 12 3 7 8"/>
           <line x1="12" y1="3" x2="12" y2="15"/>
         </svg>
-        <h3>📁 Upload File</h3>
-        <p>Select PNG, JPG, WEBP from your device</p>
+        <h3>📁 Upload Image to Compress</h3>
+        <p>Select JPG, PNG, or WEBP from your device</p>
       </label>
-    </div>
 
-    <div class="preview-thumb" id="preview-thumb">
-      <img id="preview-img" alt="Selected image preview">
-      <div class="file-name" id="preview-name"></div>
-    </div>
-
-    <div class="engine-row">
-      <label for="ocr-engine">OCR Engine:</label>
-      <select id="ocr-engine">
-        <option value="puter" selected>Puter AI (English + 100+ langs)</option>
-        <option value="tesseract">Tesseract.js (offline)</option>
-      </select>
-      <label for="ocr-lang">Language:</label>
-      <select id="ocr-lang">
-        <option value="eng" selected>English</option>
-        <option value="hin">Hindi (हिन्दी)</option>
-        <option value="eng+hin">English + Hindi</option>
-        <option value="ben">Bengali (বাংলা)</option>
-        <option value="tam">Tamil (தமிழ்)</option>
-        <option value="tel">Telugu (తెలుగు)</option>
-        <option value="mar">Marathi (मराठी)</option>
-        <option value="guj">Gujarati (ગુજરાતી)</option>
-        <option value="kan">Kannada (ಕನ್ನಡ)</option>
-        <option value="mal">Malayalam (മലയാളം)</option>
-        <option value="pan">Punjabi (ਪੰਜਾਬੀ)</option>
-        <option value="urd">Urdu (اردو)</option>
-      </select>
-    </div>
-
-    <div id="ocr-box" hidden>
-      <button class="btn-ocr-main" id="btn-ocr">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
-        Extract Text (OCR)
-      </button>
-
-      <div class="progress-wrap" id="progress-wrap">
-        <div class="progress-bar"><i id="progress-fill"></i></div>
-        <p id="status-text"></p>
-      </div>
-    </div>
-
-    <div class="result-wrap" id="result-wrap">
-      <div class="result-header">
-        <h3>Extracted Text</h3>
-        <div class="result-actions">
-          <button id="btn-copy" type="button">
-            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copy
-          </button>
-          <button id="btn-download" type="button">
-            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download .txt
-          </button>
-          <button id="btn-reset" type="button">
-            <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-            New Scan
-          </button>
+      <div class="preview-wrap" id="compress-preview">
+        <div class="preview-col">
+          <h4>Original</h4>
+          <img id="compress-orig-img" alt="Original image preview">
+          <div class="preview-meta" id="compress-orig-meta"></div>
+        </div>
+        <div class="preview-col">
+          <h4>Compressed</h4>
+          <img id="compress-new-img" alt="Compressed image preview">
+          <div class="preview-meta" id="compress-new-meta"></div>
         </div>
       </div>
-      <textarea id="ocr-result" placeholder="Extracted text will appear here..."></textarea>
+
+      <div class="controls" id="compress-controls">
+        <div class="field-row">
+          <div class="f-group">
+            <label for="compress-format">Output Format</label>
+            <select id="compress-format">
+              <option value="image/jpeg" selected>JPG — smallest file</option>
+              <option value="image/png">PNG — lossless</option>
+              <option value="image/webp">WEBP — modern</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label for="compress-quality">Quality <output id="compress-quality-out">0.75</output></label>
+            <input type="range" id="compress-quality" min="0.3" max="1" step="0.05" value="0.75">
+          </div>
+        </div>
+
+        <button class="btn-main" id="compress-btn" type="button">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Compress &amp; Download
+        </button>
+        <button class="btn-secondary" id="compress-reset" type="button">Choose Another Image</button>
+      </div>
     </div>
 
-    <div class="info-note">
-      💡 <b>Tip:</b> For best accuracy — use a well-lit, straight photo, avoid shadows, and keep the text upright. Higher contrast between text and paper = better OCR.
+    <!-- ============ PANEL 2: RESIZER ============ -->
+    <div id="panel-resize" hidden>
+      <label class="upload-card">
+        <input type="file" id="resize-file" accept="image/*">
+        <svg class="uc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M9 3v18M3 9h18"/>
+        </svg>
+        <h3>📁 Upload Image to Resize</h3>
+        <p>Select JPG, PNG, or WEBP from your device</p>
+      </label>
+
+      <div class="preview-wrap" id="resize-preview">
+        <div class="preview-col" style="flex: 1 1 100%;">
+          <h4>Preview</h4>
+          <img id="resize-prev-img" alt="Image preview">
+          <div class="preview-meta" id="resize-prev-meta"></div>
+        </div>
+      </div>
+
+      <div class="controls" id="resize-controls">
+        <div class="field-row">
+          <div class="f-group" style="flex: 1 1 100%;">
+            <label for="resize-mode">Resize Mode</label>
+            <select id="resize-mode">
+              <option value="px" selected>By Pixels (Width × Height)</option>
+              <option value="percent">By Percentage</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row" id="resize-px-row">
+          <div class="f-group">
+            <label for="resize-width">Width (px)</label>
+            <input type="number" id="resize-width" min="1" max="10000">
+          </div>
+          <div class="f-group">
+            <label for="resize-height">Height (px)</label>
+            <input type="number" id="resize-height" min="1" max="10000">
+          </div>
+          <div class="f-group" style="flex: 0 0 auto; min-width: 0; justify-content: flex-end;">
+            <label class="lock-label">
+              <input type="checkbox" id="resize-lock" checked>
+              Lock aspect ratio
+            </label>
+          </div>
+        </div>
+
+        <div class="field-row" id="resize-pct-row" style="display:none;">
+          <div class="f-group" style="flex: 1 1 100%;">
+            <label for="resize-percent">Scale <output id="resize-percent-out">50%</output></label>
+            <input type="range" id="resize-percent" min="5" max="200" step="1" value="50">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="f-group">
+            <label for="resize-format">Output Format</label>
+            <select id="resize-format">
+              <option value="image/jpeg" selected>JPG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label for="resize-quality">Quality <output id="resize-quality-out">0.9</output></label>
+            <input type="range" id="resize-quality" min="0.5" max="1" step="0.05" value="0.9">
+          </div>
+        </div>
+
+        <button class="btn-main" id="resize-btn" type="button">
+          <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+          Resize &amp; Download
+        </button>
+        <button class="btn-secondary" id="resize-reset" type="button">Choose Another Image</button>
+      </div>
     </div>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ SEO ARTICLE — 2800+ WORDS ============ -->
+  <!-- ============ SEO ARTICLE — 2000+ WORDS ============ -->
   <section class="seo-article">
 
-    <h2>Complete Guide to Extracting Text from Images with Client-Side OCR (2026)</h2>
+    <h2>Complete Guide: Compress &amp; Resize Images Online (2026)</h2>
 
-    <p>Optical Character Recognition (OCR) technology transforms physical papers, captured receipts, printed certificates, and image files into digital, editable text without requiring manual retyping. The DocEasy Document Scanner &amp; OCR engine gives you the choice of two world-class recognition engines — both running directly in your browser — so your sensitive documents never leave your device.</p>
+    <p>Images power the modern web. Every website, mobile app, exam registration portal, government form, job application, and social media post depends on images. Yet most users never stop to think about how image file size, resolution, and format silently affect their daily digital life. An image that is too large slows down a website, gets rejected by an exam portal, or fails to upload on WhatsApp. An image that is too small looks blurry, unprofessional, and can even get your job application rejected.</p>
 
-    <p>Whether you are digitizing classroom notes, extracting line items from a financial bill, transcribing a printed book page, or converting a scanned Aadhaar or PAN PDF into editable text, this tool handles it all in seconds. Unlike commercial cloud OCR platforms that upload your photos to external data warehouses, DocEasy takes a privacy-first approach. Your uploaded scan is processed locally and nothing is ever transmitted to any server.</p>
-
-    <p>This matters especially for identity documents, bank statements, medical records, and legal contracts where a data leak could have serious consequences. You can even disconnect from the internet after the page loads and the offline engine will continue to work — an easy test to confirm that nothing is being transmitted.</p>
+    <p>The <strong>DocEasy Image Compressor &amp; Resizer</strong> solves both problems in one clean tool — completely free, completely private, and completely in your browser. This comprehensive guide walks you through everything you need to know about image compression, resizing, format conversion, exam-specific requirements, and industry best practices.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/doc-scanner-demo.jpg" alt="Document scanner and OCR workflow showing image-to-text extraction with language selection" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/doc-scanner-demo.jpg]</div>';">
-      <div class="article-image-caption">Live OCR workflow: upload a scanned document, pick language, extract editable text in seconds — all processed locally in your browser.</div>
+      <img src="../assets/images/image-compressor-demo.jpg" alt="Image Compressor and Resizer Tool Demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/image-compressor-demo.jpg]</div>';">
+      <div class="article-image-caption">Compress and resize images instantly — 100% in your browser, no uploads.</div>
     </div>
 
-    <h3>What is OCR?</h3>
+    <h3>1. What Is Image Compression?</h3>
 
-    <p>Optical Character Recognition (OCR) is a technology that converts different types of documents — scanned paper documents, PDF files, or images captured by a digital camera — into editable and searchable data. OCR software analyses the shapes and patterns of characters in an image and maps them to the corresponding letters, numbers, or symbols in a digital character set.</p>
+    <p>Image compression is the process of reducing an image's file size by removing redundant or less important data. It is the single most effective way to make images load faster, upload quicker, and use less storage — without visibly changing how they look.</p>
 
-    <p>For example, when you photograph a printed page from a book, the image is just a collection of pixels. OCR software reads those pixels, identifies which groups form the letter "A", which form "B", and so on, and outputs the actual text "AB" that can be copied, edited, searched, and stored in any text editor.</p>
+    <p>There are two main types:</p>
 
-    <h3>How OCR Technology Works — Step by Step</h3>
+    <ul>
+      <li><b>Lossy compression:</b> Permanently discards some image data to achieve dramatic size reductions. JPG and WEBP use lossy compression. A 3 MB photo can become 200 KB with barely noticeable quality loss.</li>
+      <li><b>Lossless compression:</b> Reduces file size without losing any data. PNG is lossless. File sizes remain larger than JPG, but image fidelity is 100% preserved.</li>
+    </ul>
 
-    <p>OCR software analyses an image pixel-by-pixel to identify patterns that correspond to characters in a specific alphabet. It works in five stages:</p>
+    <p>For most web, email, and exam-portal use cases, lossy compression at 70–85% quality offers the best balance between visual clarity and file size. You will not notice the difference on-screen, but the file size can drop by 60–75%.</p>
+
+    <h3>2. Why Resize Images?</h3>
+
+    <p>Resizing means changing the pixel dimensions (width × height) of an image. This is different from compression — resizing changes how many pixels exist, while compression changes how efficiently those pixels are stored.</p>
+
+    <p>You need to resize when:</p>
+
+    <ul>
+      <li>An exam portal demands a photo of exactly 200×230 pixels.</li>
+      <li>You want to upload to Instagram or LinkedIn with specific dimensions.</li>
+      <li>You need a passport-size photo (35×45 mm at 300 DPI = 413×531 px).</li>
+      <li>You want to reduce file size by lowering the pixel count.</li>
+      <li>You want to standardize photos for a collage, ID card, or website.</li>
+    </ul>
+
+    <p>Resizing is also the fastest way to reduce file size without sacrificing much visual quality. Halving the dimensions reduces pixel count by 75% — often cutting file size by 60–80%. For online forms, this is usually the first step: resize to the required dimensions, then adjust quality if the file is still too large.</p>
+
+    <h3>3. JPG vs PNG vs WEBP — Which Format Should You Use?</h3>
+
+    <p>Choosing the right format is the single biggest decision for image file size and quality. Here is a practical comparison:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Format</th>
+          <th>Best For</th>
+          <th>Compression</th>
+          <th>Transparency</th>
+          <th>Typical Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><b>JPG</b></td><td>Photos, scans, exam photos</td><td>Lossy (excellent)</td><td>No</td><td>Small</td></tr>
+        <tr><td><b>PNG</b></td><td>Logos, screenshots, signatures</td><td>Lossless</td><td>Yes</td><td>Medium–Large</td></tr>
+        <tr><td><b>WEBP</b></td><td>Websites, modern apps</td><td>Lossy + Lossless</td><td>Yes</td><td>Smallest</td></tr>
+      </tbody>
+    </table>
+
+    <p><b>Simple rule:</b> Photos → JPG. Graphics/signatures/logos → PNG. Modern website → WEBP.</p>
+
+    <h3>4. Quality Slider Guide — What Value Should You Choose?</h3>
+
+    <p>The quality slider controls how aggressively the encoder discards data. Here is a practical reference:</p>
+
+    <table>
+      <thead>
+        <tr><th>Quality</th><th>Use Case</th><th>Size Reduction</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0.5 – 0.6</td><td>Thumbnails, previews</td><td>80–90%</td></tr>
+        <tr><td>0.7 – 0.8</td><td>Web uploads, exam forms</td><td>60–75%</td></tr>
+        <tr><td>0.85 – 0.9</td><td>General purpose (recommended)</td><td>40–60%</td></tr>
+        <tr><td>0.95 – 1.0</td><td>Printing, archiving</td><td>10–25%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>5. Exam Photo Size Requirements (India 2026)</h3>
+
+    <p>Indian exam portals are strict about photo dimensions and file size. Below is a ready reference for major exams:</p>
+
+    <table>
+      <thead>
+        <tr><th>Exam</th><th>Photo Size</th><th>Max File</th><th>Signature</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SSC CGL</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+        <tr><td>SSC CHSL</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+        <tr><td>UPSC IAS</td><td>350×350 px</td><td>20–300 KB</td><td>20–300 KB</td></tr>
+        <tr><td>IBPS PO</td><td>200×230 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+        <tr><td>Railway RRB</td><td>320×240 px</td><td>15–70 KB</td><td>10–40 KB</td></tr>
+        <tr><td>NEET UG</td><td>200×230 px</td><td>10–200 KB</td><td>4–30 KB</td></tr>
+        <tr><td>JEE Main</td><td>200×230 px</td><td>10–200 KB</td><td>4–30 KB</td></tr>
+        <tr><td>GATE</td><td>240×320 px</td><td>5–200 KB</td><td>5–200 KB</td></tr>
+        <tr><td>CTET</td><td>100×120 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+        <tr><td>Police Bharti</td><td>150×200 px</td><td>20–50 KB</td><td>10–20 KB</td></tr>
+      </tbody>
+    </table>
+
+    <h3>6. Government Document Photo Sizes</h3>
+
+    <p>For PAN, Aadhaar, Voter ID, Passport, and other official documents:</p>
+
+    <ul>
+      <li><b>PAN Card Photo:</b> 213×213 px, 20–50 KB, JPG</li>
+      <li><b>Aadhaar Print:</b> A4 PDF, 300 DPI, color</li>
+      <li><b>Voter ID Photo:</b> 200×230 px, 20–50 KB, JPG</li>
+      <li><b>Passport Size Photo:</b> 35×45 mm, 300 DPI (413×531 px), white background</li>
+      <li><b>Driving Licence Photo:</b> 100×120 px, 20–50 KB, JPG</li>
+      <li><b>EPFO Photo:</b> 100×120 px, 20–50 KB, JPG</li>
+      <li><b>Ration Card Photo:</b> 200×230 px, 20–50 KB, JPG</li>
+      <li><b>School/College Form:</b> 200×230 px, 20–50 KB, JPG</li>
+    </ul>
+
+    <h3>7. How to Use the Image Compressor</h3>
 
     <ol>
-      <li><b>Preprocessing:</b> The image is converted to grayscale and contrast is boosted so text stands out from the paper. Noise, speckles, and background texture are removed.</li>
-      <li><b>Layout analysis:</b> The software figures out which regions of the image contain text lines, paragraphs, columns, or tables. This helps it distinguish text from graphics.</li>
-      <li><b>Line and word segmentation:</b> The text region is split into individual lines and then individual characters.</li>
-      <li><b>Character recognition:</b> Each character shape is matched against a trained neural network model for that font family.</li>
-      <li><b>Post-processing:</b> Dictionary and grammar rules are applied to correct obvious errors. For instance, "hel1o" gets auto-corrected to "hello".</li>
+      <li>Open the <b>Image Compressor</b> tab (it's already active by default).</li>
+      <li>Click the upload card or drag your image into it.</li>
+      <li>The tool loads the image and shows side-by-side Original vs Compressed preview with file sizes and reduction percentage.</li>
+      <li>Choose output format (JPG / PNG / WEBP) and adjust the quality slider.</li>
+      <li>Watch the compressed preview and file size update live.</li>
+      <li>Click <b>Compress &amp; Download</b>. Your optimized file downloads instantly.</li>
     </ol>
 
-    <p>Modern OCR engines train on hundreds of thousands of fonts and can achieve <b>95-99% accuracy</b> on clean printed text — significantly better than what was possible even a decade ago.</p>
-
-    <h3>How to Use the DocEasy Document Scanner</h3>
+    <h3>8. How to Use the Image Resizer</h3>
 
     <ol>
-      <li><b>Step 1 — Take a photo or upload:</b> Tap "📷 Take a Photo" to open your device's camera (mobile) or "📁 Upload File" to select an existing PNG, JPG, or WEBP image from your device. You'll see a live preview of what was selected.</li>
-      <li><b>Step 2 — Choose your OCR engine:</b> Pick <b>Puter AI</b> for the best accuracy and 100+ language support, or <b>Tesseract.js</b> for a fully offline experience. Both run 100% in your browser.</li>
-      <li><b>Step 3 — Choose your language:</b> Pick the primary language from the dropdown. English is default. Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, and Urdu are also supported. For mixed English + Hindi content, choose "English + Hindi".</li>
-      <li><b>Step 4 — Extract text:</b> Click "Extract Text (OCR)" to begin. A progress bar shows the neural network's status. Depending on image size and device speed, this takes 3-15 seconds.</li>
-      <li><b>Step 5 — Copy or download:</b> Once complete, the extracted text appears in an editable textarea. Click <b>Copy</b> to copy it to your clipboard, <b>Download .txt</b> to save it as a plain text file, or edit it directly in the textarea before copying.</li>
-      <li><b>Step 6 — Start a new scan:</b> Click "New Scan" to clear the current result and upload another image without reloading the page.</li>
+      <li>Click the <b>Image Resizer</b> tab.</li>
+      <li>Upload your image. Original dimensions display automatically.</li>
+      <li>Choose <b>By Pixels</b> (exact width × height) or <b>By Percentage</b> (scale slider).</li>
+      <li>Keep <b>Lock aspect ratio</b> checked to avoid distortion.</li>
+      <li>Pick output format and quality.</li>
+      <li>Click <b>Resize &amp; Download</b>.</li>
     </ol>
 
-    <h3>Tips for Maximum OCR Accuracy</h3>
-
-    <p>OCR is not magic — the quality of your input directly determines the quality of your output. Follow these best practices for 95%+ accuracy:</p>
+    <h3>9. Best Practices for Exam &amp; Government Form Photos</h3>
 
     <ul>
-      <li><b>Good lighting is everything:</b> Natural daylight or bright, even indoor lighting produces the cleanest images. Avoid harsh shadows across the text.</li>
-      <li><b>Keep the camera flat:</b> Shoot the document straight-on, not at an angle. Perspective distortion confuses character recognition.</li>
-      <li><b>Fill the frame:</b> Get as close as possible so the text occupies most of the image. Small text = more errors.</li>
-      <li><b>High contrast:</b> Black text on white paper works best. If your document has a colored or textured background, scan it with your phone's "document" mode first.</li>
-      <li><b>No glare:</b> Avoid shiny reflections from glossy paper or plastic wraps. Glare creates white blobs that OCR reads as missing characters.</li>
-      <li><b>Upright orientation:</b> The engine assumes horizontal text lines. If your document is sideways, rotate it before uploading.</li>
-      <li><b>Printed vs handwritten:</b> The engine is optimized for printed typography. High-clarity block handwriting (all-caps print) can work; cursive handwriting usually produces poor results.</li>
-      <li><b>Multiple attempts for difficult scans:</b> If the first pass has errors, re-photograph with better lighting or a straighter angle and try again.</li>
+      <li><b>Use a plain white or light background.</b> Avoid shadows, patterns, or colored walls.</li>
+      <li><b>Face the camera directly.</b> No tilted head, no side profile.</li>
+      <li><b>Keep both ears visible</b> if the exam requires it.</li>
+      <li><b>No glasses or cap</b> unless medically required.</li>
+      <li><b>Recent photo only</b> — usually within 3 months.</li>
+      <li><b>Resize first, then compress.</b> Resizing to exact pixel dimensions often brings the file size down enough on its own.</li>
+      <li><b>Check the file size after download.</b> If it's still too large, lower the quality slider to 0.7 and re-export.</li>
+      <li><b>Always save a backup</b> of the original file before editing.</li>
     </ul>
 
-    <h3>Common Use Cases for OCR</h3>
+    <h3>10. Common Use Cases</h3>
 
     <ul>
-      <li><b>Digitizing business cards:</b> Extract names, phone numbers, and email addresses from a stack of business cards without typing them into your CRM.</li>
-      <li><b>Extracting invoice data:</b> Pull line items, amounts, and dates from paper invoices for accounting or expense reports.</li>
-      <li><b>Transcribing book pages:</b> Convert printed text into editable digital files for research or translation.</li>
-      <li><b>Reading receipts:</b> Extract totals, tax amounts, and merchant details from photographed receipts for reimbursement claims.</li>
-      <li><b>Learning materials:</b> Digitize textbook pages or notes so you can search and copy the content.</li>
-      <li><b>Document archival:</b> Make scanned physical documents searchable by extracting their text.</li>
-      <li><b>Extracting Hindi content:</b> Convert Hindi newspaper clippings, notices, and forms into editable Unicode text — one of the few OCR tools that supports Devanagari script well.</li>
-      <li><b>Bank statements:</b> Convert photographed bank passbook pages into searchable text.</li>
-      <li><b>ID card data extraction:</b> Read Aadhaar, PAN, or voter ID card details from photos.</li>
-      <li><b>Medical prescription scanning:</b> Digitize printed prescriptions for your health records.</li>
+      <li><b>Job applications:</b> Portals like Naukri, LinkedIn, and government job sites enforce size limits.</li>
+      <li><b>School/College admissions:</b> Photo and signature uploads with strict pixel requirements.</li>
+      <li><b>Passport &amp; Visa:</b> Country-specific photo sizes (US: 2×2 inch, India: 35×45 mm, UK: 35×45 mm).</li>
+      <li><b>Social media:</b> Instagram post 1080×1080, story 1080×1920, LinkedIn banner 1584×396.</li>
+      <li><b>Website optimization:</b> Compress images to speed up page load and improve SEO.</li>
+      <li><b>Email attachments:</b> Keep total email size under 25 MB (Gmail limit).</li>
+      <li><b>Printing:</b> 300 DPI for professional print quality.</li>
     </ul>
 
-    <h3>Why Client-Side OCR Matters</h3>
-
-    <p>When you upload an image to a cloud-based OCR service, that image — containing your ID card number, bank account details, medical prescription, or legal contract — sits on a remote server, often in another country, for an unknown period of time. Most services claim to delete files after a few hours, but you have no way to verify that.</p>
-
-    <p>DocEasy eliminates this risk entirely. Because OCR runs entirely inside your browser using WebAssembly and the Puter AI edge network, your image never leaves your device. When you close or refresh the tab, all traces are wiped from memory.</p>
-
-    <p>Here's how DocEasy's privacy compares to popular alternatives:</p>
-
-    <ul>
-      <li><b>DocEasy:</b> Files never leave device. No server processing.</li>
-      <li><b>Google Drive OCR:</b> Files uploaded to Google servers.</li>
-      <li><b>Adobe OCR:</b> Files uploaded to Adobe cloud.</li>
-      <li><b>Online OCR:</b> Files uploaded to third-party servers.</li>
-      <li><b>ABBYY FineReader Online:</b> Files uploaded to ABBYY servers.</li>
-    </ul>
-
-    <h3>Supported Languages</h3>
-
-    <p>DocEasy supports over 100 languages through the Puter AI engine, with priority support for the most common Indian and international languages:</p>
-
-    <ul>
-      <li><b>English</b> — 99% accuracy</li>
-      <li><b>Hindi (हिन्दी)</b> — Devanagari script</li>
-      <li><b>Bengali (বাংলা)</b></li>
-      <li><b>Tamil (தமிழ்)</b></li>
-      <li><b>Telugu (తెలుగు)</b></li>
-      <li><b>Marathi (मराठी)</b></li>
-      <li><b>Gujarati (ગુજરાતી)</b></li>
-      <li><b>Kannada (ಕನ್ನಡ)</b></li>
-      <li><b>Malayalam (മലയാളം)</b></li>
-      <li><b>Punjabi (ਪੰਜਾਬੀ)</b></li>
-      <li><b>Urdu (اردو)</b></li>
-      <li>Plus Arabic, Chinese, Japanese, Korean, Russian, Greek, Hebrew, and 80+ more</li>
-    </ul>
-
-    <h3>Frequently Asked Questions</h3>
+    <h3>11. Frequently Asked Questions</h3>
 
     <details>
-      <summary>What image formats are supported for OCR?</summary>
-      <p>All common web and phone formats — JPEG, PNG, WebP, GIF, BMP, and direct mobile camera captures. HEIC images from iPhones should first be converted to JPEG.</p>
+      <summary>Q: Is this tool really free?</summary>
+      <p>Yes, 100% free with no signup, no watermark, and no daily limits. The tool runs entirely in your browser.</p>
     </details>
 
     <details>
-      <summary>Does this scanner support handwritten manuscripts?</summary>
-      <p>The engine is optimized primarily for typed and printed typography. High-clarity block letters in all-caps can sometimes be recognized. Cursive or joined handwriting will produce low accuracy; no browser-based OCR tool currently handles cursive well.</p>
+      <summary>Q: Are my images uploaded to a server?</summary>
+      <p>No. Every operation — compression, resizing, format conversion — runs locally using the HTML5 Canvas API. Your files never leave your device.</p>
     </details>
 
     <details>
-      <summary>Is my document data sent to any third-party servers?</summary>
-      <p>No. All optical character models execute client-side via JavaScript Web Workers and browser-native AI on your local device. No documents or extracted texts are logged or transmitted anywhere. You can verify this by disconnecting your internet after the page loads.</p>
+      <summary>Q: Does resizing reduce image quality?</summary>
+      <p>Downscaling (making smaller) generally improves perceived sharpness. Upscaling (making larger) softens details because the software has to invent pixels. For best results, start with a high-resolution source and only downscale.</p>
     </details>
 
     <details>
-      <summary>Which languages are supported?</summary>
-      <p>Over 100 languages through the Puter AI engine. We've prioritized the most common Indian and international languages in the dropdown.</p>
+      <summary>Q: How do I resize a photo to exactly 20 KB?</summary>
+      <p>First resize to the target pixel dimensions (e.g., 200×230 px). Then lower the quality slider to 0.6–0.7. If the file is still too large, reduce dimensions slightly. Repeat until the file size is under 20 KB.</p>
     </details>
 
     <details>
-      <summary>Why is my first scan slow?</summary>
-      <p>The first time you use a language, the tool downloads its trained model (about 10-15 MB) and caches it in your browser. Subsequent scans of the same language are much faster — usually under 3 seconds.</p>
+      <summary>Q: What is the difference between compression and resizing?</summary>
+      <p>Compression reduces file size without changing the number of pixels. Resizing changes the number of pixels. Both reduce file size, but resizing also changes the visual dimensions.</p>
     </details>
 
     <details>
-      <summary>Can it extract text from PDFs?</summary>
-      <p>Directly, no — this tool is designed for image files. To OCR a PDF, first convert its pages to JPG using our <a href="pdf-to-jpg.html">PDF to JPG</a> tool, then upload the resulting images here.</p>
+      <summary>Q: Can I use this tool on mobile?</summary>
+      <p>Yes. The entire tool is fully responsive and works on Android, iOS, Windows, macOS, and Linux. No app installation required.</p>
     </details>
 
     <details>
-      <summary>Does it preserve formatting like paragraphs and line breaks?</summary>
-      <p>It preserves line breaks and paragraphs based on visual layout. Complex formatting like tables and multi-column layouts may be partially flattened.</p>
+      <summary>Q: Why does my PNG file stay large after compression?</summary>
+      <p>PNG uses lossless compression, so the quality slider does not affect it. To get smaller files with PNG, either reduce the pixel dimensions (resize) or convert to JPG/WEBP.</p>
     </details>
 
     <details>
-      <summary>Is there any file size limit?</summary>
-      <p>No fixed limit, but images larger than 4000×4000 pixels are downscaled internally for speed. For best results, keep the image under 2000 pixels wide.</p>
+      <summary>Q: What is WEBP and should I use it?</summary>
+      <p>WEBP is a modern format developed by Google. It typically produces files 25–35% smaller than JPG at the same visual quality, and it supports transparency like PNG. It is supported by all modern browsers.</p>
     </details>
 
     <details>
-      <summary>Can I use OCR on mobile?</summary>
-      <p>Yes. The tool works on any modern mobile browser. Tap "Take a Photo" to open the camera directly.</p>
+      <summary>Q: Can I batch resize multiple images?</summary>
+      <p>Currently the tool processes one image at a time for maximum quality control. Batch processing is on our roadmap.</p>
     </details>
 
     <details>
-      <summary>Is the extracted text editable?</summary>
-      <p>Yes. The extracted text appears in an editable textarea. You can modify, copy, download, or search it before saving.</p>
+      <summary>Q: Is there a file size limit?</summary>
+      <p>No hard limit, but very large files (50 MB+) may slow down on older devices. The tool processes everything in memory, so available RAM is the only constraint.</p>
     </details>
 
-    <h3>Related DocEasy Tools</h3>
+    <h3>12. Related Tools You Might Need</h3>
 
-    <p>If you found this helpful, you may also like our <a href="pdf-to-jpg.html">PDF to JPG Converter</a> to extract pages as images before OCR, our <a href="jpg-to-pdf.html">JPG to PDF Maker</a> to bundle scanned pages into a single file, our <a href="pdf-editor.html">PDF Editor</a> to annotate or edit text, and our <a href="word-counter.html">Word Counter</a> to check the character and word count of your extracted text before submitting.</p>
+    <p>If you found this helpful, you may also like our <a href="doc-scanner.html">Document Scanner &amp; OCR</a> to extract text from scanned photos, our <a href="passport-maker.html">Passport Photo Maker</a> to create print-ready passport photos, our <a href="signature-resize.html">Signature Resize</a> tool for exam signatures, our <a href="card-cropper.html">Card Cropper</a> to crop ID cards to exact size, our <a href="image-bg-remover.html">Image Background Remover</a> to remove backgrounds instantly, and our <a href="pdf-compressor.html">PDF Compressor</a> to reduce PDF file size.</p>
 
-    <h3>Conclusion</h3>
+    <h3>13. Conclusion</h3>
 
-    <p>OCR is no longer a professional-only technology. With DocEasy's Document Scanner, anyone can extract text from images, receipts, business cards, book pages, and identity documents in seconds — for free, without uploading anything to any server.</p>
+    <p>The DocEasy Image Compressor &amp; Resizer is a complete toolkit for anyone who works with images daily — students filling exam forms, professionals optimizing websites, job seekers uploading resumes, or anyone sharing photos on social media. With two focused tools in one clean interface, strict privacy guarantees, and zero cost, it is the only image utility you will ever need.</p>
 
-    <p>Whether you're a student digitizing notes, a freelancer scanning invoices, or a professional handling sensitive documents, DocEasy gives you a fast, accurate, and private way to convert images into editable text.</p>
+    <p>Bookmark this page, and use it whenever you need to compress or resize — all in one place, all in your browser.</p>
 
   </section>
 
@@ -650,240 +850,288 @@
 <script src="../assets/js/core/doceasy-core.js"></script>
 
 <script>
-/* ==========================================================================
-   Document Scanner — Dual OCR Engine (Puter AI + Tesseract.js)
-   Puter AI: free, no API key, 100+ languages, high accuracy
-   Tesseract: fully offline fallback
-   ========================================================================== */
-const cameraIn     = document.getElementById("camera-in");
-const fileIn       = document.getElementById("file-in");
-const ocrBox       = document.getElementById("ocr-box");
-const engineSel    = document.getElementById("ocr-engine");
-const langSelect   = document.getElementById("ocr-lang");
-const btnOcr       = document.getElementById("btn-ocr");
-const progressWrap = document.getElementById("progress-wrap");
-const progressFill = document.getElementById("progress-fill");
-const statusEl     = document.getElementById("status-text");
-const resultWrap   = document.getElementById("result-wrap");
-const result       = document.getElementById("ocr-result");
-const previewThumb = document.getElementById("preview-thumb");
-const previewImg   = document.getElementById("preview-img");
-const previewName  = document.getElementById("preview-name");
-const btnCopy      = document.getElementById("btn-copy");
-const btnDownload  = document.getElementById("btn-download");
-const btnReset     = document.getElementById("btn-reset");
+(function () {
+  'use strict';
 
-let currentFile = null;
-let currentFileUrl = null;
-let loadedTesseract = false;
+  var $ = function (id) { return document.getElementById(id); };
 
-function preprocessImage(file) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      try {
-        const maxDim = 2400;
-        let w = img.width, h = img.height;
-        if (w > maxDim || h > maxDim) {
-          const r = Math.min(maxDim / w, maxDim / h);
-          w = Math.round(w * r);
-          h = Math.round(h * r);
-        }
-        const c = document.createElement("canvas");
-        c.width = w;
-        c.height = h;
-        const ctx = c.getContext("2d", { willReadFrequently: true });
-        ctx.drawImage(img, 0, 0, w, h);
-        const imgData = ctx.getImageData(0, 0, w, h);
-        const data = imgData.data;
-        const contrast = 1.35;
-        const intercept = 128 * (1 - contrast);
-        for (let i = 0; i < data.length; i += 4) {
-          const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
-          let v = contrast * gray + intercept;
-          if (v > 255) v = 255;
-          else if (v < 0) v = 0;
-          data[i] = v; data[i+1] = v; data[i+2] = v;
-        }
-        ctx.putImageData(imgData, 0, 0);
-        c.toBlob((blob) => {
-          URL.revokeObjectURL(url);
-          if (blob) resolve(blob);
-          else reject(new Error("Failed to preprocess image"));
-        }, "image/png", 1.0);
-      } catch (err) {
-        URL.revokeObjectURL(url);
-        reject(err);
-      }
-    };
-    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Could not read image file")); };
-    img.src = url;
+  /* ==================== TAB SWITCHING ==================== */
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('[id^="panel-"]').forEach(function (p) { p.hidden = true; });
+      btn.classList.add('active');
+      $(btn.dataset.target).hidden = false;
+    });
   });
-}
 
-function handleFile(file) {
-  if (!file) return;
-  currentFile = file;
-  if (currentFileUrl) URL.revokeObjectURL(currentFileUrl);
-  currentFileUrl = URL.createObjectURL(file);
-  previewImg.src = currentFileUrl;
-  previewName.textContent = file.name + " (" + (file.size / 1024).toFixed(1) + " KB)";
-  previewThumb.style.display = "block";
-  ocrBox.hidden = false;
-  resultWrap.classList.remove("show");
-  progressWrap.classList.remove("show");
-  statusEl.textContent = "";
-  progressFill.style.width = "0%";
-}
-
-cameraIn.addEventListener("change", (e) => {
-  const f = e.target.files[0];
-  if (f) handleFile(f);
-  e.target.value = "";
-});
-
-fileIn.addEventListener("change", (e) => {
-  const f = e.target.files[0];
-  if (f) handleFile(f);
-  e.target.value = "";
-});
-
-function blobToDataURL(blob) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(new Error("Failed to read image"));
-    reader.readAsDataURL(blob);
-  });
-}
-
-async function runPuterOCR(blob) {
-  statusEl.textContent = "Preparing image for Puter AI...";
-  progressFill.style.width = "20%";
-  const dataUrl = await blobToDataURL(blob);
-  statusEl.textContent = "Sending to Puter AI OCR engine...";
-  progressFill.style.width = "50%";
-  const text = await puter.ai.img2txt(dataUrl);
-  progressFill.style.width = "100%";
-  return typeof text === "string" ? text : (text.text || JSON.stringify(text));
-}
-
-function loadTesseractScript() {
-  if (loadedTesseract) return Promise.resolve();
-  if (window.Tesseract) { loadedTesseract = true; return Promise.resolve(); }
-  return new Promise((resolve, reject) => {
-    const s = document.createElement("script");
-    s.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
-    s.onload = () => { loadedTesseract = true; resolve(); };
-    s.onerror = () => reject(new Error("Failed to load Tesseract.js"));
-    document.head.appendChild(s);
-  });
-}
-
-async function runTesseractOCR(blob, lang) {
-  statusEl.textContent = "Loading Tesseract engine...";
-  progressFill.style.width = "15%";
-  await loadTesseractScript();
-  const { data: { text } } = await Tesseract.recognize(blob, lang, {
-    logger: (m) => {
-      if (m.status === "loading tesseract core") {
-        statusEl.textContent = "Loading OCR engine...";
-        progressFill.style.width = "25%";
-      } else if (m.status === "initializing tesseract") {
-        statusEl.textContent = "Initializing engine...";
-        progressFill.style.width = "35%";
-      } else if (m.status === "loading language traineddata") {
-        statusEl.textContent = "Downloading language data (" + Math.round(m.progress * 100) + "%)...";
-        progressFill.style.width = (35 + m.progress * 20) + "%";
-      } else if (m.status === "initializing api") {
-        statusEl.textContent = "Preparing recognition...";
-        progressFill.style.width = "60%";
-      } else if (m.status === "recognizing text") {
-        const pct = Math.round(m.progress * 100);
-        statusEl.textContent = "Recognizing text... " + pct + "%";
-        progressFill.style.width = (60 + m.progress * 40) + "%";
-      }
-    }
-  });
-  progressFill.style.width = "100%";
-  return text;
-}
-
-btnOcr.addEventListener("click", async () => {
-  if (!currentFile) { alert("Please upload or capture an image first."); return; }
-  btnOcr.disabled = true;
-  progressWrap.classList.add("show");
-  progressFill.style.width = "5%";
-  statusEl.textContent = "Preparing image...";
-  try {
-    const processedBlob = await preprocessImage(currentFile);
-    const engine = engineSel.value;
-    const lang = langSelect.value || "eng";
-    let rawText = "";
-    if (engine === "puter") {
-      rawText = await runPuterOCR(processedBlob);
-    } else {
-      rawText = await runTesseractOCR(processedBlob, lang);
-    }
-    const cleanText = (rawText || "").trim();
-    result.value = cleanText || "(No readable text found in this image. Try a clearer, higher-contrast photo.)";
-    const wordCount = cleanText ? cleanText.split(/\s+/).filter(Boolean).length : 0;
-    statusEl.textContent = cleanText
-      ? "✅ Extraction complete! " + wordCount + " words detected."
-      : "⚠️ No text detected. Try another image.";
-    resultWrap.classList.add("show");
-    resultWrap.scrollIntoView({ behavior: "smooth", block: "start" });
-  } catch (err) {
-    console.error(err);
-    statusEl.textContent = "❌ Error: " + (err.message || "OCR failed");
-    progressFill.style.width = "0%";
-  } finally {
-    btnOcr.disabled = false;
+  /* ==================== HELPERS ==================== */
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   }
-});
+  function extFromMime(mime) {
+    return mime.split('/')[1].replace('jpeg', 'jpg');
+  }
+  function loadImage(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        var img = new Image();
+        img.onload = function () {
+          resolve({ img: img, dataUrl: ev.target.result, size: file.size, name: file.name });
+        };
+        img.onerror = function () { reject(new Error('Cannot read image')); };
+        img.src = ev.target.result;
+      };
+      reader.onerror = function () { reject(new Error('Cannot read file')); };
+      reader.readAsDataURL(file);
+    });
+  }
 
-btnCopy.addEventListener("click", () => {
-  const text = result.value.trim();
-  if (!text) { alert("Nothing to copy yet."); return; }
-  navigator.clipboard.writeText(text).then(() => {
-    const orig = btnCopy.innerHTML;
-    btnCopy.innerHTML = '<svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-    setTimeout(() => { btnCopy.innerHTML = orig; }, 1500);
-  }).catch(() => {
-    result.select();
-    document.execCommand("copy");
+  /* ==================== COMPRESSOR ==================== */
+  var cFile    = $('compress-file');
+  var cPreview = $('compress-preview');
+  var cControls= $('compress-controls');
+  var cOrigImg = $('compress-orig-img');
+  var cNewImg  = $('compress-new-img');
+  var cOrigMeta= $('compress-orig-meta');
+  var cNewMeta = $('compress-new-meta');
+  var cFormat  = $('compress-format');
+  var cQuality = $('compress-quality');
+  var cQualityOut = $('compress-quality-out');
+  var cBtn     = $('compress-btn');
+  var cReset   = $('compress-reset');
+  var cData    = null;
+
+  function cResetUI() {
+    cData = null;
+    cFile.value = '';
+    cPreview.classList.remove('show');
+    cControls.classList.remove('show');
+    cOrigImg.src = '';
+    cNewImg.src = '';
+    cOrigMeta.innerHTML = '';
+    cNewMeta.innerHTML = '';
+    cBtn.textContent = 'Compress & Download';
+  }
+
+  cReset.addEventListener('click', function (e) { e.stopPropagation(); cResetUI(); });
+
+  cFile.addEventListener('change', function () {
+    if (cFile.files && cFile.files[0]) handleCompressFile(cFile.files[0]);
   });
-});
 
-btnDownload.addEventListener("click", () => {
-  const text = result.value.trim();
-  if (!text) { alert("Nothing to download yet."); return; }
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "extracted-text-" + Date.now() + ".txt";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-});
+  async function handleCompressFile(file) {
+    if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
+    try {
+      cData = await loadImage(file);
+      cOrigImg.src = cData.dataUrl;
+      cOrigMeta.innerHTML = cData.img.naturalWidth + ' × ' + cData.img.naturalHeight + ' px<br><b>' + formatBytes(cData.size) + '</b>';
+      cPreview.classList.add('show');
+      cControls.classList.add('show');
+      updateCompressedPreview();
+    } catch (err) {
+      alert('Could not load image. Please try another file.');
+    }
+  }
 
-btnReset.addEventListener("click", () => {
-  currentFile = null;
-  if (currentFileUrl) { URL.revokeObjectURL(currentFileUrl); currentFileUrl = null; }
-  previewThumb.style.display = "none";
-  previewImg.src = "";
-  previewName.textContent = "";
-  result.value = "";
-  ocrBox.hidden = true;
-  resultWrap.classList.remove("show");
-  progressWrap.classList.remove("show");
-  progressFill.style.width = "0%";
-  statusEl.textContent = "";
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+  function updateCompressedPreview() {
+    if (!cData) return;
+    var format = cFormat.value;
+    var quality = parseFloat(cQuality.value) || 0.75;
+    var canvas = document.createElement('canvas');
+    canvas.width = cData.img.naturalWidth;
+    canvas.height = cData.img.naturalHeight;
+    var ctx = canvas.getContext('2d');
+    if (format === 'image/jpeg') {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    ctx.drawImage(cData.img, 0, 0);
+    var dataUrl = (format === 'image/png')
+      ? canvas.toDataURL('image/png')
+      : canvas.toDataURL(format, quality);
+    cNewImg.src = dataUrl;
+    var base64 = dataUrl.split(',')[1];
+    var estSize = Math.round(base64.length * 0.75);
+    var reduction = cData.size > 0 ? Math.round((1 - estSize / cData.size) * 100) : 0;
+    var sign = reduction >= 0 ? '−' + reduction : '+' + Math.abs(reduction);
+    cNewMeta.innerHTML = canvas.width + ' × ' + canvas.height + ' px<br><b>' + formatBytes(estSize) + '</b> (' + sign + '%)';
+  }
+
+  cQuality.addEventListener('input', function () {
+    cQualityOut.textContent = parseFloat(cQuality.value).toFixed(2);
+    updateCompressedPreview();
+  });
+  cFormat.addEventListener('change', updateCompressedPreview);
+
+  cBtn.addEventListener('click', function () {
+    if (!cData) return;
+    var format = cFormat.value;
+    var quality = parseFloat(cQuality.value) || 0.75;
+    var canvas = document.createElement('canvas');
+    canvas.width = cData.img.naturalWidth;
+    canvas.height = cData.img.naturalHeight;
+    var ctx = canvas.getContext('2d');
+    if (format === 'image/jpeg') {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    ctx.drawImage(cData.img, 0, 0);
+    canvas.toBlob(function (blob) {
+      if (!blob) { alert('Compression failed.'); return; }
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      var baseName = (cData.name || 'image').replace(/\.[^/.]+$/, '');
+      a.href = url;
+      a.download = baseName + '-compressed.' + extFromMime(format);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      cBtn.textContent = '✓ Downloaded';
+      setTimeout(function () { cBtn.textContent = 'Compress & Download'; }, 2000);
+    }, format, quality);
+  });
+
+  /* ==================== RESIZER ==================== */
+  var rFile    = $('resize-file');
+  var rPreview = $('resize-preview');
+  var rControls= $('resize-controls');
+  var rPrevImg = $('resize-prev-img');
+  var rPrevMeta= $('resize-prev-meta');
+  var rMode    = $('resize-mode');
+  var rPxRow   = $('resize-px-row');
+  var rPctRow  = $('resize-pct-row');
+  var rWidth   = $('resize-width');
+  var rHeight  = $('resize-height');
+  var rLock    = $('resize-lock');
+  var rPercent = $('resize-percent');
+  var rPercentOut = $('resize-percent-out');
+  var rFormat  = $('resize-format');
+  var rQuality = $('resize-quality');
+  var rQualityOut = $('resize-quality-out');
+  var rBtn     = $('resize-btn');
+  var rReset   = $('resize-reset');
+  var rData    = null;
+  var rNatW    = 0, rNatH = 0;
+
+  function rResetUI() {
+    rData = null;
+    rFile.value = '';
+    rPreview.classList.remove('show');
+    rControls.classList.remove('show');
+    rPrevImg.src = '';
+    rPrevMeta.innerHTML = '';
+    rBtn.textContent = 'Resize & Download';
+  }
+
+  rReset.addEventListener('click', function (e) { e.stopPropagation(); rResetUI(); });
+
+  rFile.addEventListener('change', function () {
+    if (rFile.files && rFile.files[0]) handleResizeFile(rFile.files[0]);
+  });
+
+  async function handleResizeFile(file) {
+    if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
+    try {
+      rData = await loadImage(file);
+      rNatW = rData.img.naturalWidth;
+      rNatH = rData.img.naturalHeight;
+      rPrevImg.src = rData.dataUrl;
+      rPrevMeta.innerHTML = rNatW + ' × ' + rNatH + ' px &nbsp;·&nbsp; <b>' + formatBytes(rData.size) + '</b>';
+      rPreview.classList.add('show');
+      rControls.classList.add('show');
+      rWidth.value = rNatW;
+      rHeight.value = rNatH;
+      rPercent.value = 50;
+      rPercentOut.textContent = '50%';
+      toggleMode();
+    } catch (err) {
+      alert('Could not load image. Please try another file.');
+    }
+  }
+
+  function toggleMode() {
+    var mode = rMode.value;
+    rPxRow.style.display  = (mode === 'px') ? 'flex' : 'none';
+    rPctRow.style.display = (mode === 'percent') ? 'flex' : 'none';
+    if (mode === 'percent') applyPercent();
+  }
+  rMode.addEventListener('change', toggleMode);
+
+  function applyLockFromWidth() {
+    if (!rLock.checked || !rNatW || !rNatH) return;
+    var w = parseFloat(rWidth.value);
+    if (w > 0) rHeight.value = Math.round(w * rNatH / rNatW);
+  }
+  function applyLockFromHeight() {
+    if (!rLock.checked || !rNatW || !rNatH) return;
+    var h = parseFloat(rHeight.value);
+    if (h > 0) rWidth.value = Math.round(h * rNatW / rNatH);
+  }
+  rWidth.addEventListener('input', applyLockFromWidth);
+  rHeight.addEventListener('input', applyLockFromHeight);
+
+  function applyPercent() {
+    if (!rData) return;
+    var pct = parseFloat(rPercent.value) || 50;
+    rPercentOut.textContent = pct + '%';
+    rWidth.value = Math.max(1, Math.round(rNatW * pct / 100));
+    rHeight.value = Math.max(1, Math.round(rNatH * pct / 100));
+  }
+  rPercent.addEventListener('input', applyPercent);
+
+  rQuality.addEventListener('input', function () {
+    rQualityOut.textContent = parseFloat(rQuality.value).toFixed(2);
+  });
+
+  rBtn.addEventListener('click', function () {
+    if (!rData) return;
+    var mode = rMode.value;
+    var targetW, targetH;
+    if (mode === 'percent') {
+      var pct = parseFloat(rPercent.value) || 100;
+      targetW = Math.max(1, Math.round(rNatW * pct / 100));
+      targetH = Math.max(1, Math.round(rNatH * pct / 100));
+    } else {
+      targetW = parseInt(rWidth.value, 10);
+      targetH = parseInt(rHeight.value, 10);
+      if (!targetW || targetW < 1) targetW = rNatW;
+      if (!targetH || targetH < 1) targetH = rNatH;
+    }
+    var format = rFormat.value;
+    var quality = parseFloat(rQuality.value) || 0.9;
+    var canvas = document.createElement('canvas');
+    canvas.width = targetW;
+    canvas.height = targetH;
+    var ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    if (format === 'image/jpeg') {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    ctx.drawImage(rData.img, 0, 0, targetW, targetH);
+    canvas.toBlob(function (blob) {
+      if (!blob) { alert('Resize failed.'); return; }
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      var baseName = (rData.name || 'image').replace(/\.[^/.]+$/, '');
+      a.href = url;
+      a.download = baseName + '-' + targetW + 'x' + targetH + '.' + extFromMime(format);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      rBtn.textContent = '✓ Downloaded';
+      setTimeout(function () { rBtn.textContent = 'Resize & Download'; }, 2000);
+    }, format, quality);
+  });
+
+})();
 </script>
 </body>
 </html>
