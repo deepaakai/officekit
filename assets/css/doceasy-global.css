@@ -279,3 +279,104 @@ input:focus, textarea:focus, select:focus {
   .main-wrap, .container { padding-left: 12px; padding-right: 12px; }
   .hero-title, .tool-hero h1 { font-size: 24px; }
 }
+
+/* ==========================================================================
+   HEADER FIX — Desktop pe single-line, no scatter
+   ========================================================================== */
+@media (min-width: 900px) {
+  .header-inner {
+    flex-wrap: nowrap;
+    gap: 14px;
+    padding: 10px 18px;
+  }
+
+  .brand-link {
+    flex-shrink: 0;
+  }
+
+  .nav-right {
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .pill-nav {
+    display: flex;
+    flex-shrink: 0;
+    gap: 2px;
+    padding: 4px 6px;
+  }
+
+  .top-nav {
+    flex-shrink: 1;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 2px;
+    padding-bottom: 2px;
+  }
+
+  .top-nav::-webkit-scrollbar { display: none; }
+
+  .theme-switch {
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+
+  /* Chhote items = zyada fit */
+  .pill-nav a {
+    padding: 5px 11px;
+    font-size: 12.5px;
+  }
+
+  .top-nav a {
+    padding: 5px 8px;
+    font-size: 12.5px;
+  }
+}
+
+/* Bade screens pe comfortable size */
+@media (min-width: 1200px) {
+  .pill-nav a {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+  .top-nav a {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+/* ==========================================================================
+   HEADER FIX — Mobile pe saaf stacking (existing rules ko refine)
+   ========================================================================== */
+@media (max-width: 780px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+
+  .nav-right {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .top-nav {
+    order: 2;
+    width: 100%;
+    overflow-x: auto;
+    gap: 2px;
+    padding-bottom: 4px;
+  }
+
+  .theme-switch {
+    order: 1;
+    margin-left: auto;
+  }
+}
