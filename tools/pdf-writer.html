@@ -20,10 +20,10 @@
 <meta name="twitter:description" content="Write in Hindi, English or Hinglish.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232563eb'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Word Writer — DocEasy","url":"https://deepaakai.github.io/officekit/tools/word-writer.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Word Writer — DocEasy","url":"https://deepaakai.github.io/officekit/tools/word-writer.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Write in Hindi, English or Hinglish with 13 fonts, header/footer, and Word/PDF export."}
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,170 +33,454 @@
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
 <style>
-:root {
-  --bg: #f7f7f5; --card: #ffffff; --card-hover: #fafafa;
-  --text: #1a1a1a; --subtext: #6b7280; --muted: #9ca3af;
-  --border: #e5e7eb; --border-strong: #d1d5db;
-  --accent: #2563eb; --accent-hover: #1d4ed8; --accent-soft: #eff6ff;
-  --success: #16a34a; --success-hover: #15803d; --error: #dc2626;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.10);
-  --radius: 12px;
-}
-[data-theme="dark"] {
-  --bg: #0f0f10; --card: #1a1a1c; --card-hover: #222225;
-  --text: #f5f5f5; --subtext: #9ca3af; --muted: #6b7280;
-  --border: #2a2a2d; --border-strong: #3a3a3d;
-  --accent: #60a5fa; --accent-hover: #93c5fd; --accent-soft: #1e293b;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+/* Hide ad slots until AdSense approval */
+.ad-slot-container,
+.ad-placeholder {
+  display: none !important;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; transition: background 0.2s, color 0.2s; }
-body { display: flex; flex-direction: column; min-height: 100vh; }
+/* ============ Word Writer Tool Styles ============ */
+.template-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 10px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin: 0 auto 12px;
+  max-width: 980px;
+  overflow-x: auto;
+}
+.template-bar > span {
+  font-size: 11px; font-weight: 800; color: var(--subtext-color);
+  text-transform: uppercase; letter-spacing: 0.6px; padding: 0 6px;
+  flex-shrink: 0;
+}
+.tpl-btn {
+  padding: 7px 14px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 8px; color: var(--text-color);
+  font-size: 12.5px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  transition: all 0.15s; white-space: nowrap;
+}
+.tpl-btn:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: var(--accent-soft);
+}
 
-.app-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; gap: 16px; }
-.brand { display: flex; align-items: center; gap: 12px; }
-.brand-logo { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), #7c3aed); color: #fff; font-weight: 800; font-size: 15px; display: grid; place-items: center; flex-shrink: 0; }
-.brand-text h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
-.brand-text p { font-size: 11.5px; color: var(--subtext); margin-top: 1px; }
-.header-actions { display: flex; align-items: center; gap: 10px; }
-.lang-tabs { display: flex; gap: 2px; padding: 3px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; }
-.lang-tabs button { padding: 7px 14px; border-radius: 7px; background: transparent; border: none; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--subtext); font-family: inherit; transition: all 0.15s; white-space: nowrap; }
-.lang-tabs button:hover { color: var(--text); }
-.lang-tabs button.active { background: var(--card); color: var(--accent); box-shadow: var(--shadow-sm); }
-.icon-btn { width: 38px; height: 38px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); color: var(--text); cursor: pointer; display: grid; place-items: center; transition: all 0.15s; }
-.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
-.icon-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-.container { flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-.hero-box { text-align: center; padding: 12px 0 4px; }
-.hero-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
-.hero-sub { font-size: 14px; color: var(--subtext); max-width: 620px; margin: 0 auto; line-height: 1.55; }
-
-.template-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; }
-.template-bar > span { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; padding: 0 6px; }
-.tpl-btn { padding: 7px 14px; background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; white-space: nowrap; }
-.tpl-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-
-.toolbar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding: 10px 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
-.tb-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; height: 36px; padding: 0 10px; background: transparent; border: 1px solid transparent; border-radius: 8px; color: var(--text); font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.12s; gap: 6px; font-family: inherit; }
+.toolbar {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  padding: 10px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin: 0 auto 12px;
+  max-width: 980px;
+  box-shadow: var(--shadow-sm);
+}
+.tb-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 36px; padding: 0 10px;
+  background: transparent; border: 1px solid transparent;
+  border-radius: 8px; color: var(--text-color);
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: all 0.12s; gap: 6px; font-family: inherit;
+}
 .tb-btn:hover { background: var(--accent-soft); color: var(--accent); }
 .tb-btn.active { background: var(--accent); color: #fff; }
 .tb-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.tb-sep { width: 1px; height: 22px; background: var(--border); margin: 0 2px; }
-.tb-select { height: 36px; padding: 0 8px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: inherit; max-width: 170px; }
+.tb-sep { width: 1px; height: 22px; background: var(--border-color); margin: 0 2px; }
+.tb-select {
+  height: 36px; padding: 0 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px; color: var(--text-color);
+  font-size: 12.5px; font-weight: 600;
+  cursor: pointer; font-family: inherit; max-width: 170px;
+}
 .tb-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.tb-color-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; transition: background 0.12s; }
+.tb-color-wrap {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px; cursor: pointer; transition: background 0.12s;
+}
 .tb-color-wrap:hover { background: var(--accent-soft); }
-.tb-color-wrap svg { width: 15px; height: 15px; stroke: var(--text); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.tb-color-wrap::after { content: ""; position: absolute; bottom: 4px; left: 8px; right: 8px; height: 3px; border-radius: 2px; background: var(--pick-color, #1a1a1a); }
-.tb-color-wrap input[type="color"] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+.tb-color-wrap svg { width: 15px; height: 15px; stroke: var(--text-color); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tb-color-wrap::after {
+  content: ""; position: absolute; bottom: 4px; left: 8px; right: 8px;
+  height: 3px; border-radius: 2px;
+  background: var(--pick-color, #1a1a1a);
+}
+.tb-color-wrap input[type="color"] {
+  position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
+}
 
-.hf-row { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: var(--card); border: 1px dashed var(--border); border-radius: var(--radius); transition: border-color 0.15s; }
+.hf-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: var(--card-bg);
+  border: 1px dashed var(--border-color);
+  border-radius: 10px;
+  margin: 0 auto 12px;
+  max-width: 980px;
+  transition: border-color 0.15s;
+}
 .hf-row:focus-within { border-color: var(--accent); border-style: solid; }
-.hf-label { font-size: 10.5px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; flex-shrink: 0; }
-.hf-input { flex: 1; border: none; outline: none; background: transparent; font-size: 13px; color: var(--text); font-family: inherit; }
-.hf-input::placeholder { color: var(--muted); }
+.hf-label {
+  font-size: 10.5px; font-weight: 800; color: var(--subtext-color);
+  text-transform: uppercase; letter-spacing: 0.6px; flex-shrink: 0;
+}
+.hf-input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-size: 13px; color: var(--text-color);
+  font-family: inherit;
+}
+.hf-input::placeholder { color: var(--subtext-color); opacity: 0.75; }
 
-.editor-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; position: relative; }
-.editor { min-height: 520px; padding: 40px 52px; font-family: 'Calibri', 'Segoe UI', Arial, sans-serif; font-size: 12pt; line-height: 1.75; color: var(--text); outline: none; overflow-y: auto; max-height: 720px; background: var(--card); }
-.editor:empty::before { content: attr(data-placeholder); color: var(--muted); pointer-events: none; font-style: italic; }
+.editor-wrap {
+  max-width: 980px;
+  margin: 0 auto 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  position: relative;
+}
+.editor {
+  min-height: 480px; padding: 36px 44px;
+  font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+  font-size: 12pt; line-height: 1.75; color: var(--text-color);
+  outline: none; overflow-y: auto; max-height: 700px;
+  background: var(--card-bg);
+}
+.editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--subtext-color); opacity: 0.7;
+  pointer-events: none; font-style: italic;
+}
 .editor h1 { font-size: 24pt; font-weight: 700; margin: 0 0 14px; line-height: 1.3; }
 .editor h2 { font-size: 18pt; font-weight: 700; margin: 20px 0 10px; line-height: 1.3; }
 .editor h3 { font-size: 14pt; font-weight: 700; margin: 16px 0 8px; line-height: 1.3; }
 .editor p { margin: 0 0 12px; }
 .editor ul, .editor ol { padding-left: 26px; margin: 10px 0; }
 .editor li { margin-bottom: 5px; }
-.editor blockquote { border-left: 3px solid var(--accent); padding-left: 16px; margin: 14px 0; font-style: italic; color: var(--subtext); }
+.editor blockquote { border-left: 3px solid var(--accent); padding-left: 16px; margin: 14px 0; font-style: italic; color: var(--subtext-color); }
 .editor a { color: var(--accent); }
 
-.hk-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s; }
-.hk-wrap.show { max-height: 700px; margin-top: 0; }
-.hk-inner { padding: 14px 16px; }
+.hk-wrap {
+  max-width: 980px;
+  margin: 0 auto 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s, padding 0.3s;
+}
+.hk-wrap.show { max-height: 720px; padding: 14px 16px; }
+.hk-inner { padding: 0; }
 .hk-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .hk-head h3 { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.6px; }
-.hk-close { background: transparent; border: none; color: var(--muted); font-size: 20px; cursor: pointer; padding: 2px 8px; border-radius: 6px; line-height: 1; }
-.hk-close:hover { background: var(--bg); color: var(--text); }
+.hk-close { background: transparent; border: none; color: var(--subtext-color); font-size: 20px; cursor: pointer; padding: 2px 8px; border-radius: 6px; line-height: 1; }
+.hk-close:hover { background: var(--card-hover); color: var(--text-color); }
 .hk-section { margin-bottom: 12px; }
 .hk-section:last-child { margin-bottom: 0; }
-.hk-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; display: block; }
+.hk-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--subtext-color); margin-bottom: 6px; display: block; }
 .hk-grid { display: flex; flex-wrap: wrap; gap: 4px; }
-.hk-key { min-width: 38px; height: 38px; padding: 0 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); font-size: 17px; font-weight: 500; cursor: pointer; font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif; transition: all 0.1s; display: inline-flex; align-items: center; justify-content: center; }
+.hk-key {
+  min-width: 38px; height: 38px; padding: 0 8px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 7px; color: var(--text-color);
+  font-size: 17px; font-weight: 500; cursor: pointer;
+  font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
+  transition: all 0.1s;
+  display: inline-flex; align-items: center; justify-content: center;
+}
 .hk-key:hover { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 .hk-key:active { transform: scale(0.94); }
 .hk-key.wide { min-width: 66px; font-size: 12px; font-weight: 700; font-family: 'Inter', sans-serif; }
-.hk-key.backspace { background: var(--error); color: #fff; border-color: var(--error); font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 700; }
+.hk-key.backspace { background: #dc2626; color: #fff; border-color: #dc2626; font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 700; }
+.hk-key.backspace:hover { background: #b91c1c; border-color: #b91c1c; color: #fff; }
 .hk-key.enter { background: var(--accent); color: #fff; border-color: var(--accent); font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 700; }
+.hk-key.enter:hover { background: var(--accent-hover); color: #fff; }
 .hk-key.space { flex: 1; min-width: 100px; font-size: 11px; font-weight: 700; letter-spacing: 1px; font-family: 'Inter', sans-serif; }
 
-.status-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 16px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
-.status-info { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--subtext); font-weight: 600; }
+.status-bar {
+  max-width: 980px;
+  margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding: 10px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+.status-info { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--subtext-color); font-weight: 600; }
 .status-info span { display: inline-flex; align-items: center; gap: 5px; }
-.status-info b { color: var(--text); font-weight: 700; }
+.status-info b { color: var(--text-color); font-weight: 700; }
 .status-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-.btn { padding: 9px 16px; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 7px; border: 1px solid transparent; transition: all 0.15s; white-space: nowrap; }
+.btn {
+  padding: 9px 16px; border-radius: 8px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: inherit;
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid transparent; transition: all 0.15s; white-space: nowrap;
+}
 .btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .btn-primary { background: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent-hover); }
-.btn-success { background: var(--success); color: #fff; }
-.btn-success:hover { background: var(--success-hover); }
-.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-success { background: #15803d; color: #fff; }
+.btn-success:hover { background: #166534; }
+.btn-ghost { background: var(--card-bg); color: var(--text-color); border-color: var(--border-color); }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 12px 20px; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: 13.5px; font-weight: 600; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 9999; display: flex; align-items: center; gap: 10px; max-width: 90vw; }
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: var(--card-bg); color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 12px 20px; border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  font-size: 13.5px; font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 9999;
+  display: flex; align-items: center; gap: 10px; max-width: 90vw;
+}
 .toast.show { transform: translateX(-50%) translateY(0); }
-.toast.ok { border-color: var(--success); }
-.toast.error { border-color: var(--error); }
+.toast.ok { border-color: #16a34a; }
+.toast.error { border-color: #dc2626; }
 .toast svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; flex-shrink: 0; }
 
-.seo-article { max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8; background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow-x: hidden; box-sizing: border-box; }
-.seo-article h2 { font-size: 26px; font-weight: 800; color: var(--text); margin: 40px 0 20px; letter-spacing: -0.5px; line-height: 1.3; }
+/* ============ SEO ARTICLE — matching card-cropper style ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
 .seo-article h2:first-child { margin-top: 0; }
-.seo-article h3 { font-size: 20px; font-weight: 700; color: var(--accent); margin: 32px 0 16px; line-height: 1.4; }
-.seo-article h4 { font-size: 17px; font-weight: 700; color: var(--text); margin: 24px 0 12px; }
-.seo-article p { font-size: 16px; color: var(--subtext); margin: 0 0 20px; line-height: 1.8; }
-.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
-.seo-article li { font-size: 15.5px; color: var(--subtext); margin-bottom: 12px; line-height: 1.7; }
-.seo-article b, .seo-article strong { color: var(--text); font-weight: 700; }
-.seo-article code { background: var(--card-hover); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
-.seo-article .table-wrap { width: 100%; overflow-x: auto; margin: 20px 0; border: 1px solid var(--border); border-radius: 8px; }
-.seo-article table { width: 100%; min-width: 480px; border-collapse: collapse; margin: 0; font-size: 14px; }
-.seo-article th, .seo-article td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; color: var(--subtext); font-size: 14px; vertical-align: top; }
-.seo-article th { background: var(--card-hover); color: var(--text); font-weight: 700; white-space: nowrap; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul,
+.seo-article ol {
+  margin: 20px 0;
+  padding-left: 24px;
+}
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b,
+.seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article a:hover { color: var(--accent-hover); }
+.seo-article code {
+  background: var(--card-hover);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
 
-.article-image-box { margin: 32px auto; max-width: 720px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #fff; text-align: center; box-sizing: border-box; }
-.article-image-box img { width: 100%; max-height: 360px; object-fit: contain; padding: 20px; display: block; margin: 0 auto; box-sizing: border-box; }
-.article-image-caption { padding: 14px 18px; font-size: 13px; color: var(--subtext); background: var(--card); border-top: 1px solid var(--border); line-height: 1.55; }
+.seo-article .table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+.seo-article table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 14px;
+}
+.seo-article th,
+.seo-article td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+  vertical-align: top;
+}
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.seo-article tr:last-child td { border-bottom: none; }
 
-details { margin: 12px 0; padding: 14px 16px; background: var(--card-hover); border-radius: 8px; border: 1px solid var(--border); }
-details summary { cursor: pointer; font-weight: 700; color: var(--accent); font-size: 15px; list-style: none; display: flex; align-items: center; gap: 8px; }
-details summary::-webkit-details-marker { display: none; }
-details summary::before { content: "\25B8"; display: inline-block; transition: transform 0.2s; font-size: 12px; flex-shrink: 0; }
-details[open] summary::before { transform: rotate(90deg); }
-details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height: 1.7; }
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  text-align: center;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
 
-.related-tools-section { max-width: 1100px; margin: 60px auto 20px; padding: 0 20px; }
-.related-tools-section h2 { font-size: clamp(22px, 3.5vw, 28px); font-weight: 800; color: var(--text); text-align: center; margin: 0 0 8px; letter-spacing: -0.5px; }
-.related-sub { text-align: center; color: var(--subtext); font-size: 14px; margin: 0 0 32px; }
-.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-.related-card { display: flex; flex-direction: column; gap: 10px; padding: 18px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--text); transition: all 0.2s ease; min-height: 110px; }
-.related-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 26px rgba(37,99,235,0.12); }
-.related-card .rc-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex-shrink: 0; }
-.related-card .rc-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.related-card h3 { font-size: 14px; font-weight: 700; margin: 0; line-height: 1.3; color: var(--text); }
-.related-card p { font-size: 11.5px; color: var(--subtext); margin: 0; line-height: 1.4; }
+.seo-article details {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 16px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+";
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 14px 0 0;
+  font-size: 15px !important;
+  line-height: 1.75;
+}
 
+.related-tools-section {
+  max-width: 1100px;
+  margin: 60px auto 20px;
+  padding: 0 20px;
+}
+.related-tools-section h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: var(--text-color);
+  text-align: center;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+.related-sub {
+  text-align: center;
+  color: var(--subtext-color);
+  font-size: 14px;
+  margin: 0 0 32px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+.related-card {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  min-height: 110px;
+}
+.related-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(37,99,235,0.12);
+}
+.related-card .rc-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.related-card .rc-icon svg {
+  width: 20px; height: 20px;
+  stroke: currentColor; fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.related-card h3 {
+  font-size: 14px; font-weight: 700;
+  margin: 0; line-height: 1.3;
+  color: var(--text-color);
+}
+.related-card p {
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  margin: 0; line-height: 1.4;
+}
+
+/* Print */
 @media print {
   @page { size: A4; margin: 18mm 20mm; }
   body { background: #fff !important; }
-  #doceasy-header, #doceasy-footer, .app-header, .template-bar, .toolbar, .status-bar, .hk-wrap, .toast, .hf-row, .hero-box, .seo-article, .related-tools-section { display: none !important; }
-  .container { max-width: none; padding: 0; gap: 0; }
-  .editor-wrap { border: none; box-shadow: none; border-radius: 0; }
+  #doceasy-header, #doceasy-footer, .hero-box, .template-bar, .toolbar,
+  .status-bar, .hk-wrap, .toast, .hf-row, .seo-article,
+  .related-tools-section, .ad-slot-container { display: none !important; }
+  .main-wrap { max-width: none; padding: 0; }
+  .editor-wrap { border: none; box-shadow: none; border-radius: 0; max-width: none; margin: 0; }
   .editor { padding: 0; min-height: auto; max-height: none; overflow: visible; font-size: 11pt; }
   .print-header, .print-footer { display: block !important; font-size: 10pt; color: #333; }
   .print-header { text-align: center; padding-bottom: 8px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
@@ -204,26 +488,23 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
 }
 .print-header, .print-footer { display: none; }
 
-@media (max-width: 720px) {
-  .app-header { padding: 10px 14px; }
-  .brand-text p { display: none; }
-  .lang-tabs button { padding: 7px 10px; font-size: 12px; }
-  .container { padding: 12px; gap: 10px; }
-  .hero-title { font-size: 20px; }
-  .hero-sub { font-size: 13px; }
+@media (max-width: 768px) {
+  .template-bar, .toolbar, .hf-row, .editor-wrap, .hk-wrap, .status-bar { border-radius: 10px; }
   .editor { padding: 24px 20px; min-height: 380px; font-size: 15px; }
-  .toolbar { padding: 8px; }
+  .toolbar { padding: 8px; gap: 4px; }
   .tb-select { max-width: 120px; font-size: 11.5px; }
   .tb-btn { min-width: 32px; height: 32px; font-size: 12px; }
-  .status-bar { padding: 8px 12px; }
+  .status-bar { padding: 10px 12px; }
   .status-info { font-size: 11.5px; gap: 10px; }
   .btn { padding: 8px 12px; font-size: 12px; }
   .template-bar { padding: 8px; }
   .tpl-btn { padding: 6px 10px; font-size: 11.5px; }
-  .seo-article { padding: 24px 16px; margin: 24px 12px; }
-  .seo-article h2 { font-size: 21px; }
-  .seo-article h3 { font-size: 17.5px; }
-  .seo-article p, .seo-article li { font-size: 15px; }
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
   .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .related-card { padding: 14px 12px; min-height: 100px; }
   .related-card h3 { font-size: 13px; }
@@ -235,33 +516,26 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
 
 <div id="doceasy-header"></div>
 
-<header class="app-header">
-  <div class="brand">
-    <div class="brand-logo">DE</div>
-    <div class="brand-text">
-      <h1>Word Writer</h1>
-      <p>Hindi • English • Hinglish</p>
-    </div>
-  </div>
-  <div class="header-actions">
-    <div class="lang-tabs" id="langTabs">
-      <button data-lang="en" class="active">English</button>
-      <button data-lang="hi">Hindi</button>
-      <button data-lang="hinglish">Hinglish</button>
-    </div>
-    <button class="icon-btn" id="themeBtn" title="Toggle theme">
-      <svg id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-  </div>
-</header>
-
-<main class="container">
+<main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">Write in Hindi, English or Hinglish — Export as Word or PDF</h1>
-    <p class="hero-sub">13 fonts • Built-in Hindi keyboard • Header &amp; Footer • Templates • Colors • 100% private, browser-based.</p>
+    <h1 class="hero-title">Word Writer</h1>
+    <p class="hero-sub">Write in Hindi, English or Hinglish with 13 fonts and a built-in Hindi keyboard. Export as Word (.docx) or PDF — 100% private, browser-based.</p>
   </div>
 
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- Language Tabs -->
+  <div class="template-bar" style="justify-content:center;">
+    <span>Language</span>
+    <div class="lang-tabs" id="langTabs" style="display:inline-flex; gap:4px; padding:3px; background:var(--bg-color); border:1px solid var(--border-color); border-radius:10px;">
+      <button data-lang="en" class="active tpl-btn" style="border:none;">English</button>
+      <button data-lang="hi" class="tpl-btn" style="border:none;">Hindi</button>
+      <button data-lang="hinglish" class="tpl-btn" style="border:none;">Hinglish</button>
+    </div>
+  </div>
+
+  <!-- Templates -->
   <div class="template-bar">
     <span>Templates</span>
     <button class="tpl-btn" data-tpl="blank">Blank</button>
@@ -272,6 +546,7 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
     <button class="tpl-btn" data-tpl="essay">Essay</button>
   </div>
 
+  <!-- Toolbar -->
   <div class="toolbar" id="toolbar">
     <select class="tb-select" id="fontFamily" title="Font family">
       <optgroup label="English">
@@ -356,22 +631,26 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
     <button class="tb-btn" data-cmd="removeFormat" title="Clear formatting"><svg viewBox="0 0 24 24"><path d="M4 7V5h16v2M9 19h6M12 5v14"/><line x1="3" y1="3" x2="21" y2="21" stroke="#dc2626" stroke-width="2.5"/></svg></button>
   </div>
 
+  <!-- Header input -->
   <div class="hf-row">
     <span class="hf-label">Header</span>
     <input class="hf-input" id="docHeader" placeholder="Header text — appears at the top of every printed page (e.g. company name, document title)" autocomplete="off">
   </div>
 
+  <!-- Editor -->
   <div class="editor-wrap">
     <div class="print-header" id="printHeader"></div>
     <div class="editor" id="editor" contenteditable="true" spellcheck="false" data-placeholder="Start typing in English, Hindi, or Hinglish..."></div>
     <div class="print-footer" id="printFooter"></div>
   </div>
 
+  <!-- Footer input -->
   <div class="hf-row">
     <span class="hf-label">Footer</span>
-    <input class="hf-input" id="docFooter" placeholder="Footer text — appears at the bottom of every printed page (e.g. page number, CIN, contact info)" autocomplete="off">
+    <input class="hf-input" id="docFooter" placeholder="Footer text — appears at the bottom of every printed page (e.g. page number, contact info)" autocomplete="off">
   </div>
 
+  <!-- Hindi Keyboard -->
   <div class="hk-wrap" id="hkWrap">
     <div class="hk-inner">
       <div class="hk-head">
@@ -386,12 +665,13 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
     </div>
   </div>
 
+  <!-- Status Bar -->
   <div class="status-bar">
     <div class="status-info">
       <span>Words: <b id="wordCount">0</b></span>
       <span>Chars: <b id="charCount">0</b></span>
       <span>Pages: <b id="pageCount">1</b></span>
-      <span id="langBadge" style="display:none; color: var(--accent); font-weight: 700;"></span>
+      <span id="langBadge" style="display:none; color:var(--accent); font-weight:700;"></span>
     </div>
     <div class="status-actions">
       <button class="btn btn-ghost" id="clearBtn"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>Clear</button>
@@ -400,235 +680,299 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
       <button class="btn btn-primary" id="pdfBtn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save PDF</button>
     </div>
   </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ SEO ARTICLE ============ -->
+  <section class="seo-article">
+
+    <h2>Complete Guide: Type in Hindi, English and Hinglish with Word Writer (2026)</h2>
+
+    <p>Writing a document used to require installing Microsoft Word on a computer — and typing in Hindi required an external keyboard, a transliteration tool, or hours of practice with a Devanagari layout. Today, both problems are solved. <strong>DocEasy Word Writer</strong> lets you write in <b>Hindi, English, or Hinglish</b> with 13 fonts and a built-in Hindi keyboard, right in your browser. When you are done, export as Word (.docx) or PDF — no signup, no upload, 100% private.</p>
+
+    <p>This complete guide covers every feature: how the three language modes work, how the Hindi keyboard functions, which fonts to use, and best practices for creating clean documents.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/word-writer-demo.jpg" alt="DocEasy Word Writer — Hindi English Hinglish typing tool" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/word-writer-demo.jpg]</div>';">
+      <div class="article-image-caption">Write in Hindi, English, or Hinglish — export as Word or PDF. 100% private, 100% free.</div>
+    </div>
+
+    <h3>1. Quick Start — 60 Seconds to a Ready Document</h3>
+
+    <p>If you need to type something quickly and print or send it, follow these steps:</p>
+
+    <ol>
+      <li><b>Open the page</b> — the editor is right there. Click and start typing.</li>
+      <li><b>Pick a language mode</b> — three buttons above the toolbar: <b>English</b>, <b>Hindi</b>, <b>Hinglish</b>. Click whichever you want.</li>
+      <li><b>Fill in Header / Footer</b> (optional) — two input boxes above and below the editor. Whatever you type there appears on every printed page.</li>
+      <li><b>Format</b> — use the toolbar for font, size, color, alignment.</li>
+      <li><b>Export</b> — click <b>Save Word</b> or <b>Save PDF</b>. The file downloads instantly.</li>
+    </ol>
+
+    <p>That's it. No signup, no upload, no watermark. Everything happens in your browser.</p>
+
+    <h3>2. Three Language Modes — Which One to Use?</h3>
+
+    <p>The tool handles three languages, each with its own purpose. Remember: switching modes does not lock you into that language — you can type anything at any time.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Mode</th><th>Best for</th><th>How it behaves</th></tr></thead>
+        <tbody>
+          <tr><td><b>English</b></td><td>English letters, reports, emails, resumes</td><td>Normal typing — exactly like any other editor</td></tr>
+          <tr><td><b>Hindi</b></td><td>Hindi essays, letters, notices, applications</td><td>On desktop, a virtual keyboard slides open below. On mobile, your device's own Hindi keyboard is used.</td></tr>
+          <tr><td><b>Hinglish</b></td><td>Quick Hindi typing when you don't know Devanagari layout</td><td>Type in English — <code>namaste</code> becomes नमस्ते, <code>bharat</code> becomes भारत. Conversion triggers on space.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>You can also just ignore the modes entirely — the editor never restricts what you type.</p>
+
+    <h3>3. Hindi Mode — Using the Virtual Keyboard</h3>
+
+    <p>When you click the <b>Hindi</b> button, the virtual keyboard slides open below the editor. It has five sections:</p>
+
+    <ul>
+      <li><b>Vowels (Svar)</b> — 13 independent vowels: अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ, अं, अः</li>
+      <li><b>Consonants (Vyanjan)</b> — 36 consonants + conjuncts: क, ख, ग, घ, च, छ, ज, झ, ट, ठ, ड, ढ, त, थ, द, ध, न, प, फ, ब, भ, म, य, र, ल, व, श, ष, स, ह, क्ष, त्र, ज्ञ</li>
+      <li><b>Matras (Vowel Signs)</b> — 14 vowel marks: ा, ि, ी, ु, ू, ृ, े, ै, ो, ौ, ं, ँ, ः, ्</li>
+      <li><b>Numbers (Ank)</b> — ० to ९</li>
+      <li><b>Punctuation (Viram)</b> — पूर्ण विराम (।), comma, semicolon, question mark, backspace, enter, space</li>
+    </ul>
+
+    <p><b>How to type:</b> place your cursor in the editor, then click any key. The character is inserted at the cursor. The keyboard remembers your last cursor position even if you click elsewhere first.</p>
+
+    <p><b>How to add matras:</b> click the consonant first, then the matra. For example, to type <b>का</b>, click <b>क</b> then <b>ा</b>. For <b>कि</b>, click <b>क</b> then <b>ि</b>. For <b>क्ष</b>, click the conjunct key directly.</p>
+
+    <h3>4. Hinglish Mode — Auto Convert English to Hindi</h3>
+
+    <p>This is the most popular feature. If you cannot type Devanagari, but want Hindi output, switch to <b>Hinglish</b>. Type normally in English letters and the word converts to Hindi the moment you press space.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>You type</th><th>It becomes</th></tr></thead>
+        <tbody>
+          <tr><td>namaste</td><td><b>नमस्ते</b></td></tr>
+          <tr><td>bharat</td><td><b>भारत</b></td></tr>
+          <tr><td>kaise ho</td><td><b>कैसे हो</b></td></tr>
+          <tr><td>dhanyavad</td><td><b>धन्यवाद</b></td></tr>
+          <tr><td>shubh ratri</td><td><b>शुभ रात्रि</b></td></tr>
+          <tr><td>mujhe hindi likhni hai</td><td><b>मुझे हिन्दी लिखनी है</b></td></tr>
+          <tr><td>kya aap theek hain</td><td><b>क्या आप ठीक हैं</b></td></tr>
+          <tr><td>mera naam rahul hai</td><td><b>मेरा नाम राहुल है</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Just press space, enter, or any punctuation — the word you just typed converts automatically. Words that are not recognized stay as-is, so you can mix Hindi and English freely.</p>
+
+    <h3>5. Fonts — The Right Font for Each Language</h3>
+
+    <p>The Font dropdown groups English and Hindi fonts separately:</p>
+
+    <h4>English Fonts (8):</h4>
+    <ul>
+      <li><b>Calibri</b> — modern, professional. Default choice.</li>
+      <li><b>Arial</b> — universal sans-serif, works on every device.</li>
+      <li><b>Times New Roman</b> — classic serif, best for academic papers.</li>
+      <li><b>Georgia</b> — screen-friendly serif, great for long documents.</li>
+      <li><b>Verdana</b> — wide sans-serif, excellent for small text.</li>
+      <li><b>Tahoma</b> — compact, good for dense layouts.</li>
+      <li><b>Lora</b> — elegant serif, ideal for essays and blogs.</li>
+      <li><b>Courier New</b> — monospaced, used for code and technical docs.</li>
+    </ul>
+
+    <h4>Hindi Fonts (5):</h4>
+    <ul>
+      <li><b>Noto Sans Devanagari</b> — Google's modern Hindi font, most readable.</li>
+      <li><b>Noto Serif Devanagari</b> — serif variant, formal documents.</li>
+      <li><b>Baloo Bhai 2</b> — bold, playful, for headings and posters.</li>
+      <li><b>Hind</b> — Indian Type Foundry's popular font, ideal for body text.</li>
+      <li><b>Mangal</b> — the traditional Windows Hindi font.</li>
+    </ul>
+
+    <p><b>How to apply:</b> select text (or place the cursor) and choose a font from the dropdown. It applies immediately to the selection and to anything you type next. Font is applied per character, so you can mix English and Hindi fonts in the same document.</p>
+
+    <h3>6. Font Size — From 6pt to 48pt</h3>
+
+    <p>The size dropdown has 14 options. Common uses:</p>
+
+    <ul>
+      <li><b>6pt – 8pt</b> — footnotes, legal disclaimers, captions</li>
+      <li><b>9pt – 11pt</b> — dense documents, sidebars, tables</li>
+      <li><b>12pt</b> — standard body text (default)</li>
+      <li><b>14pt – 18pt</b> — subheadings, emphasis</li>
+      <li><b>20pt – 24pt</b> — section headings</li>
+      <li><b>32pt – 48pt</b> — cover page titles</li>
+    </ul>
+
+    <h3>7. Colors — Text and Highlight</h3>
+
+    <p>Two color pickers sit in the toolbar:</p>
+
+    <ul>
+      <li><b>Text Color (A icon)</b> — changes the text color. A colored line below the icon shows the current color.</li>
+      <li><b>Highlight (marker icon)</b> — adds a background color behind the text.</li>
+    </ul>
+
+    <p>Click the icon → system color picker opens → choose a color → applies instantly. Default text color is black (#1a1a1a); default highlight is yellow (#fef08a).</p>
+
+    <p><b>To show colors in print:</b> enable "Background graphics" in the print dialog. Otherwise colors appear on screen but not on paper.</p>
+
+    <h3>8. Header and Footer — On Every Page</h3>
+
+    <p>Two input boxes sit above and below the editor — <b>Header</b> and <b>Footer</b>. Whatever you type there:</p>
+
+    <ul>
+      <li>Appears above and below the editor on screen</li>
+      <li>Appears at the top and bottom of every printed page</li>
+      <li>Appears in PDF export</li>
+      <li>Is saved as a real Word header/footer in .docx — opens correctly in Microsoft Word</li>
+    </ul>
+
+    <p><b>What to put in Header:</b> company name, document title, date, reference number.<br>
+    <b>What to put in Footer:</b> page number, contact info, copyright, confidentiality note.</p>
+
+    <p>Both are optional — leave them blank and nothing shows.</p>
+
+    <h3>9. Templates — One-Click Documents</h3>
+
+    <p>Six ready-made templates sit above the toolbar:</p>
+
+    <ul>
+      <li><b>Blank</b> — empty document (default)</li>
+      <li><b>Letter</b> — formal letter: sender address, date, recipient, subject, body, signature</li>
+      <li><b>Application</b> — standard leave / request application format</li>
+      <li><b>Resume</b> — professional resume: summary, experience, education, skills</li>
+      <li><b>Notice</b> — office/school notice format with reference number and signature</li>
+      <li><b>Essay</b> — essay structure: introduction, body, conclusion</li>
+    </ul>
+
+    <p>Clicking a template replaces the editor content and auto-fills header/footer. Any <code>[square brackets]</code> in the template are placeholders — replace them with your own details.</p>
+
+    <h3>10. Print — Clean Output</h3>
+
+    <p>The <b>Print</b> button opens your browser's print dialog. The toolbar, template bar, virtual keyboard, and status bar are hidden in print — only your document, header, and footer appear. A4 paper size, 20mm margins, professional layout.</p>
+
+    <p>You can also press <b>Ctrl+P</b> (Cmd+P on Mac) — same result.</p>
+
+    <h3>11. Save as PDF</h3>
+
+    <p>The <b>Save PDF</b> button opens the same print dialog — just pick <b>"Save as PDF"</b> as the destination (Windows: "Microsoft Print to PDF", Mac: "Save as PDF", Chrome: "Save as PDF").</p>
+
+    <p><b>Big advantage:</b> the exact fonts you see on screen (Noto Devanagari, Mangal, Baloo, Lora, everything) are embedded into the PDF. The PDF shows the same fonts on any device, whether or not those fonts are installed there.</p>
+
+    <h3>12. Save as Word (.docx)</h3>
+
+    <p>The <b>Save Word</b> button creates a real .docx file that:</p>
+
+    <ul>
+      <li>Opens in Microsoft Word, Google Docs, LibreOffice, and Apple Pages</li>
+      <li>Preserves fonts, sizes, colors, and highlights</li>
+      <li>Stores header and footer as real Word header/footer</li>
+      <li>Converts headings into real Word heading styles (navigation pane works)</li>
+      <li>Renders Hindi text correctly on any system</li>
+    </ul>
+
+    <p><b>Note:</b> .docx files do not embed font files (browsers don't have them). If the receiver doesn't have the font installed, Word uses its default — but Hindi characters still display correctly because every system has a Devanagari fallback. Google Docs renders it perfectly.</p>
+
+    <h3>13. Autosave — No Lost Work</h3>
+
+    <p>Everything you type saves to your browser's localStorage every 600 milliseconds. Close the tab, come back — your content is there. Saved only on your device, never on a server. Auto-cleanup after 7 days.</p>
+
+    <h3>14. Dark Mode</h3>
+
+    <p>A sun/moon icon in the site header toggles between light and dark themes. The preference is saved in localStorage.</p>
+
+    <h3>15. Use Cases</h3>
+
+    <ul>
+      <li><b>Hindi essays</b> — school and college assignments</li>
+      <li><b>Hindi cover letters</b> — government and private sector jobs</li>
+      <li><b>Hinglish blogs</b> — long-form content for Hindi websites</li>
+      <li><b>Legal documents</b> — contracts, notices, agreements</li>
+      <li><b>Resume / CV</b> — professional format in seconds</li>
+      <li><b>Formal letters</b> — complaint, request, application</li>
+      <li><b>Office notices</b> — circulars and announcements</li>
+      <li><b>Personal journals</b> — daily diary in any language</li>
+      <li><b>Poetry</b> — with proper Devanagari punctuation (।)</li>
+      <li><b>Study notes</b> — mixed Hindi-English notes</li>
+      <li><b>Translation drafts</b> — Hindi original + English translation</li>
+      <li><b>Quotes and posters</b> — large fonts for impact</li>
+    </ul>
+
+    <h3>16. Frequently Asked Questions</h3>
+
+    <details><summary>Is the tool really free?</summary><p>Yes — 100% free. No signup, no watermark, no daily limit. Everything runs locally in your browser.</p></details>
+
+    <details><summary>Can I type Hindi on mobile?</summary><p>Yes. On mobile the virtual keyboard does not open automatically (your device's own Hindi keyboard works better). Add Hindi in Settings → Language, then press the globe key on your keyboard to switch to Hindi.</p></details>
+
+    <details><summary>Why does the keyboard open automatically on desktop?</summary><p>Desktop browsers rarely have a Hindi keyboard installed, and setting up an external IME is fiddly. So whenever you pick Hindi mode, the virtual keyboard slides open — just click to type.</p></details>
+
+    <details><summary>What words does Hinglish mode convert?</summary><p>Common English-to-Hindi phonetic patterns — like <code>namaste</code> → नमस्ते, <code>bharat</code> → भारत, <code>dhanyavad</code> → धन्यवाद. Consonants, vowels, matras, and conjuncts are all handled. Anything not recognized stays in English, giving you mixed output.</p></details>
+
+    <details><summary>Is my data uploaded anywhere?</summary><p>No. Everything happens locally in your browser. No server call is made. When you close the tab, content is cleared from memory (the localStorage copy remains on your device).</p></details>
+
+    <details><summary>Will Hindi render correctly in the PDF?</summary><p>Yes. The Save PDF button opens the print dialog — the fonts you see on screen are embedded into the PDF. Noto Sans Devanagari, Mangal, Baloo — all render correctly.</p></details>
+
+    <details><summary>Will the .docx open in Google Docs?</summary><p>Yes. The file is standard Word format — opens in Google Docs, Microsoft Word, LibreOffice Writer, and Apple Pages. Hindi text stays intact.</p></details>
+
+    <details><summary>Does header/footer repeat on every page?</summary><p>Yes. In print and PDF, on every page. In .docx, it is saved as a real Word header/footer, so Word also repeats it on every page.</p></details>
+
+    <details><summary>Can I mix Hindi and English in one document?</summary><p>Yes. Type English normally, switch to Hinglish for a while, or use the Hindi keyboard to insert Devanagari. Both stay in the same document, with their own fonts.</p></details>
+
+    <details><summary>Why does the font size go down to 6pt?</summary><p>Legal disclaimers, footnotes, and terms &amp; conditions. Also useful when you need to fit a lot of content on an A4 page. 12pt is the default and standard body size.</p></details>
+
+    <details><summary>Does it work offline?</summary><p>After the page has loaded once, yes. The .docx export library needs to load on first use (the browser caches it, then it works offline too).</p></details>
+
+    <details><summary>Colors don't appear in print — what do I do?</summary><p>Enable <b>"Background graphics"</b> in the print dialog (under More settings). Browsers skip background colors by default to save ink.</p></details>
+
+    <details><summary>Can I create custom templates?</summary><p>Everything you write is autosaved. So build your structure once, save it, and edit the same content next time. Custom templates aren't a separate feature yet, but you can save your file as .docx and reopen it.</p></details>
+
+    <h3>17. Privacy First</h3>
+
+    <p>Nothing you type is uploaded. No server, no account, no tracking. Close the tab and it clears from memory. That makes this tool ideal for sensitive content — personal letters, private notes, internal reports, confidential drafts.</p>
+
+    <h3>18. Related DocEasy Tools</h3>
+
+    <p>Once you've written your document, these DocEasy tools can help with the next step:</p>
+
+    <ul>
+      <li><a href="word-counter.html">Word Counter</a> — Count words, characters, and reading time</li>
+      <li><a href="pdf-to-word.html">PDF to Word</a> — Convert PDFs into editable .docx</li>
+      <li><a href="word-to-pdf.html">Word to PDF</a> — Convert .docx into PDF</li>
+      <li><a href="invoice-generator.html">Invoice Generator</a> — Create professional invoices</li>
+      <li><a href="card-cropper.html">ID Card Cropper</a> — Crop ID cards at 300 DPI</li>
+      <li><a href="pdf-merge.html">Merge PDF</a> — Combine multiple PDFs into one</li>
+      <li><a href="pdf-compressor.html">Compress PDF</a> — Reduce file size for upload</li>
+      <li><a href="qr-generator.html">QR Generator</a> — Create custom QR codes</li>
+    </ul>
+
+    <h3>19. Conclusion</h3>
+
+    <p>Writing a document in Hindi, English, or Hinglish no longer requires any external software. DocEasy Word Writer gives you 13 fonts, a virtual Hindi keyboard, a Hinglish converter, six templates, colors, header/footer, and instant Word/PDF export — all in your browser. Bookmark it and come back whenever you need to write.</p>
+
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ RELATED TOOLS ============ -->
+  <section class="related-tools-section">
+    <h2>Explore More Free DocEasy Tools</h2>
+    <p class="related-sub">All free, all browser-based, all 100% private.</p>
+    <div class="related-grid">
+      <a class="related-card" href="word-counter.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div><h3>Word Counter</h3><p>Words, chars, reading time</p></a>
+      <a class="related-card" href="pdf-to-word.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>PDF to Word</h3><p>Editable .docx documents</p></a>
+      <a class="related-card" href="word-to-pdf.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>Word to PDF</h3><p>DOCX to PDF</p></a>
+      <a class="related-card" href="card-cropper.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div><h3>ID Card Cropper</h3><p>Aadhaar, PAN at 300 DPI</p></a>
+      <a class="related-card" href="invoice-generator.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><h3>Invoice Generator</h3><p>Professional invoices</p></a>
+      <a class="related-card" href="doc-scanner.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div><h3>Document Scanner</h3><p>Image to text OCR</p></a>
+      <a class="related-card" href="pdf-merge.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div><h3>Merge PDF</h3><p>Combine PDFs into one</p></a>
+      <a class="related-card" href="qr-generator.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div><h3>QR Generator</h3><p>Custom QR codes</p></a>
+    </div>
+  </section>
+
 </main>
-
-<!-- ============ ARTICLE ============ -->
-<section class="seo-article">
-  <h2>Word Writer — Complete Guide: Type in Hindi, English and Hinglish (2026)</h2>
-
-  <p>Writing a document used to require installing Microsoft Word on a computer — and typing in Hindi required an external keyboard, a transliteration tool, or hours of practice with a Devanagari layout. Today, both problems are solved. The <strong>DocEasy Word Writer</strong> lets you write in <b>Hindi, English, or Hinglish</b> with 13 fonts and a built-in Hindi keyboard, right in your browser. When you are done, export as Word (.docx) or PDF — no signup, no upload, 100% private.</p>
-
-  <p>This complete guide covers every feature: how the three language modes work, how the Hindi keyboard functions, which fonts to use, and best practices for creating clean documents.</p>
-
-  <div class="article-image-box">
-    <img src="../assets/images/word-writer-demo.jpg" alt="DocEasy Word Writer — Hindi English Hinglish typing tool" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;text-align:center;\'>📷 [Place image at: assets/images/word-writer-demo.jpg]</div>';">
-    <div class="article-image-caption">Write in Hindi, English, or Hinglish — export as Word or PDF. 100% private, 100% free.</div>
-  </div>
-
-  <h3>1. Quick Start — 60 Seconds to a Ready Document</h3>
-  <p>If you need to type something quickly and print or send it, follow these 5 steps:</p>
-  <ol>
-    <li><b>Open the page</b> — the editor is right there. Click and start typing.</li>
-    <li><b>Pick a language mode</b> — three buttons in the header: <b>English</b>, <b>Hindi</b>, <b>Hinglish</b>. Click whichever you want.</li>
-    <li><b>Fill in Header / Footer</b> (optional) — two input boxes above and below the editor. Whatever you type there appears on every printed page.</li>
-    <li><b>Format</b> — use the toolbar for font, size, color, alignment.</li>
-    <li><b>Export</b> — click <b>Save Word</b> or <b>Save PDF</b>. The file downloads instantly.</li>
-  </ol>
-  <p>That's it. No signup, no upload, no watermark. Everything happens in your browser.</p>
-
-  <h3>2. Three Language Modes — Which One to Use?</h3>
-  <p>The tool handles three languages, each with its own purpose. Remember: switching modes does not lock you into that language — you can type anything at any time.</p>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Mode</th><th>Best for</th><th>How it behaves</th></tr></thead>
-      <tbody>
-        <tr><td><b>English</b></td><td>English letters, reports, emails, resumes</td><td>Normal typing — exactly like any other editor</td></tr>
-        <tr><td><b>Hindi</b></td><td>Hindi essays, letters, notices, applications</td><td>On desktop, a virtual keyboard slides open below. On mobile, your device's own Hindi keyboard is used.</td></tr>
-        <tr><td><b>Hinglish</b></td><td>Quick Hindi typing when you don't know Devanagari layout</td><td>Type in English — <code>namaste</code> becomes <b>नमस्ते</b>, <code>bharat</code> becomes <b>भारत</b>, <code>kaise ho</code> becomes <b>कैसे हो</b>. Conversion triggers on space.</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p>You can also just ignore the modes entirely — the editor never restricts what you type.</p>
-
-  <h3>3. Hindi Mode — Using the Virtual Keyboard</h3>
-  <p>When you click the <b>Hindi</b> button, the virtual keyboard slides open below the editor. It has five sections:</p>
-  <ul>
-    <li><b>Vowels (Svar)</b> — 13 independent vowels: अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ, अं, अः</li>
-    <li><b>Consonants (Vyanjan)</b> — 36 consonants + conjuncts: क, ख, ग, घ, च, छ, ज, झ, ट, ठ, ड, ढ, त, थ, द, ध, न, प, फ, ब, भ, म, य, र, ल, व, श, ष, स, ह, क्ष, त्र, ज्ञ</li>
-    <li><b>Matras (Vowel Signs)</b> — 14 vowel marks: ा, ि, ी, ु, ू, ृ, े, ै, ो, ौ, ं, ँ, ः, ्</li>
-    <li><b>Numbers (Ank)</b> — ० to ९</li>
-    <li><b>Punctuation (Viram)</b> — पूर्ण विराम (।), comma, semicolon, question mark, backspace, enter, space</li>
-  </ul>
-  <p><b>How to type:</b> place your cursor in the editor, then click any key. The character is inserted at the cursor. The keyboard remembers your last cursor position even if you click elsewhere first.</p>
-  <p><b>How to add matras:</b> click the consonant first, then the matra. For example, to type <b>का</b>, click <b>क</b> then <b>ा</b>. For <b>कि</b>, click <b>क</b> then <b>ि</b>. For <b>क्ष</b>, click the conjunct key directly.</p>
-
-  <h3>4. Hinglish Mode — Auto Convert English to Hindi</h3>
-  <p>This is the most popular feature. If you cannot type Devanagari, but want Hindi output, switch to <b>Hinglish</b>. Type normally in English letters and the word converts to Hindi the moment you press space.</p>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>You type</th><th>It becomes</th></tr></thead>
-      <tbody>
-        <tr><td>namaste</td><td><b>नमस्ते</b></td></tr>
-        <tr><td>bharat</td><td><b>भारत</b></td></tr>
-        <tr><td>kaise ho</td><td><b>कैसे हो</b></td></tr>
-        <tr><td>dhanyavad</td><td><b>धन्यवाद</b></td></tr>
-        <tr><td>shubh ratri</td><td><b>शुभ रात्रि</b></td></tr>
-        <tr><td>mujhe hindi likhni hai</td><td><b>मुझे हिन्दी लिखनी है</b></td></tr>
-        <tr><td>kya aap theek hain</td><td><b>क्या आप ठीक हैं</b></td></tr>
-        <tr><td>mera naam rahul hai</td><td><b>मेरा नाम राहुल है</b></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p>Just press space, enter, or any punctuation — the word you just typed converts automatically. Words that are not recognized stay as-is, so you can mix Hindi and English freely.</p>
-
-  <h3>5. Fonts — The Right Font for Each Language</h3>
-  <p>The Font dropdown groups English and Hindi fonts separately:</p>
-  <h4>English Fonts (8):</h4>
-  <ul>
-    <li><b>Calibri</b> — modern, professional. Default choice.</li>
-    <li><b>Arial</b> — universal sans-serif, works on every device.</li>
-    <li><b>Times New Roman</b> — classic serif, best for academic papers.</li>
-    <li><b>Georgia</b> — screen-friendly serif, great for long documents.</li>
-    <li><b>Verdana</b> — wide sans-serif, excellent for small text.</li>
-    <li><b>Tahoma</b> — compact, good for dense layouts.</li>
-    <li><b>Lora</b> — elegant serif, ideal for essays and blogs.</li>
-    <li><b>Courier New</b> — monospaced, used for code and technical docs.</li>
-  </ul>
-  <h4>Hindi Fonts (5):</h4>
-  <ul>
-    <li><b>Noto Sans Devanagari</b> — Google's modern Hindi font, most readable.</li>
-    <li><b>Noto Serif Devanagari</b> — serif variant, formal documents.</li>
-    <li><b>Baloo Bhai 2</b> — bold, playful, for headings and posters.</li>
-    <li><b>Hind</b> — Indian Type Foundry's popular font, ideal for body text.</li>
-    <li><b>Mangal</b> — the traditional Windows Hindi font.</li>
-  </ul>
-  <p><b>How to apply:</b> select text (or place the cursor) and choose a font from the dropdown. It applies immediately to the selection and to anything you type next. Font is applied per character, so you can mix English and Hindi fonts in the same document.</p>
-
-  <h3>6. Font Size — From 6pt to 48pt</h3>
-  <p>The size dropdown has 14 options. Common uses:</p>
-  <ul>
-    <li><b>6pt – 8pt</b> — footnotes, legal disclaimers, captions</li>
-    <li><b>9pt – 11pt</b> — dense documents, sidebars, tables</li>
-    <li><b>12pt</b> — standard body text (default)</li>
-    <li><b>14pt – 18pt</b> — subheadings, emphasis</li>
-    <li><b>20pt – 24pt</b> — section headings</li>
-    <li><b>32pt – 48pt</b> — cover page titles</li>
-  </ul>
-
-  <h3>7. Colors — Text and Highlight</h3>
-  <p>Two color pickers sit in the toolbar:</p>
-  <ul>
-    <li><b>Text Color (A icon)</b> — changes the text color. A colored line below the icon shows the current color.</li>
-    <li><b>Highlight (marker icon)</b> — adds a background color behind the text.</li>
-  </ul>
-  <p>Click the icon → system color picker opens → choose a color → applies instantly. Default text color is black (#1a1a1a); default highlight is yellow (#fef08a).</p>
-  <p><b>To show colors in print:</b> enable "Background graphics" in the print dialog. Otherwise colors appear on screen but not on paper.</p>
-
-  <h3>8. Header and Footer — On Every Page</h3>
-  <p>Two input boxes sit above and below the editor — <b>Header</b> and <b>Footer</b>. Whatever you type there:</p>
-  <ul>
-    <li>Appears above and below the editor on screen</li>
-    <li>Appears at the top and bottom of every printed page</li>
-    <li>Appears in PDF export</li>
-    <li>Is saved as a real Word header/footer in .docx — opens correctly in Microsoft Word</li>
-  </ul>
-  <p><b>What to put in Header:</b> company name, document title, date, reference number.<br>
-  <b>What to put in Footer:</b> page number, CIN, contact info, copyright, confidentiality note.</p>
-  <p>Both are optional — leave them blank and nothing shows.</p>
-
-  <h3>9. Templates — One-Click Documents</h3>
-  <p>Six ready-made templates sit above the toolbar:</p>
-  <ul>
-    <li><b>Blank</b> — empty document (default)</li>
-    <li><b>Letter</b> — formal letter: sender address, date, recipient, subject, body, signature</li>
-    <li><b>Application</b> — standard leave / request application format</li>
-    <li><b>Resume</b> — professional resume: summary, experience, education, skills</li>
-    <li><b>Notice</b> — office/school notice format with reference number and signature</li>
-    <li><b>Essay</b> — essay structure: introduction, body, conclusion</li>
-  </ul>
-  <p>Clicking a template replaces the editor content and auto-fills header/footer. Any <code>[square brackets]</code> in the template are placeholders — replace them with your own details.</p>
-
-  <h3>10. Print — Clean Output</h3>
-  <p>The <b>Print</b> button opens your browser's print dialog. The toolbar, template bar, virtual keyboard, and status bar are hidden in print — only your document, header, and footer appear. A4 paper size, 20mm margins, professional layout.</p>
-  <p>You can also press <b>Ctrl+P</b> (Cmd+P on Mac) — same result.</p>
-
-  <h3>11. Save as PDF</h3>
-  <p>The <b>Save PDF</b> button opens the same print dialog — just pick <b>"Save as PDF"</b> as the destination (Windows: "Microsoft Print to PDF", Mac: "Save as PDF", Chrome: "Save as PDF").</p>
-  <p><b>Big advantage:</b> the exact fonts you see on screen (Noto Devanagari, Mangal, Baloo, Lora, everything) are embedded into the PDF. The PDF shows the same fonts on any device, whether or not those fonts are installed there.</p>
-
-  <h3>12. Save as Word (.docx)</h3>
-  <p>The <b>Save Word</b> button creates a real .docx file that:</p>
-  <ul>
-    <li>Opens in Microsoft Word, Google Docs, LibreOffice, and Apple Pages</li>
-    <li>Preserves fonts, sizes, colors, and highlights</li>
-    <li>Stores header and footer as real Word header/footer</li>
-    <li>Converts headings into real Word heading styles (navigation pane works)</li>
-    <li>Renders Hindi text correctly on any system</li>
-  </ul>
-  <p><b>Note:</b> .docx files do not embed font files (browsers don't have them). If the receiver doesn't have the font installed, Word uses its default — but Hindi characters still display correctly because every system has a Devanagari fallback. Google Docs renders it perfectly.</p>
-
-  <h3>13. Autosave — No Lost Work</h3>
-  <p>Everything you type saves to your browser's localStorage every 600 milliseconds. Close the tab, come back — your content is there. Saved only on your device, never on a server. Auto-cleanup after 7 days.</p>
-
-  <h3>14. Dark Mode</h3>
-  <p>A sun/moon icon in the header toggles between light and dark themes. The preference is saved in localStorage.</p>
-
-  <h3>15. Use Cases</h3>
-  <ul>
-    <li><b>Hindi essays</b> — school and college assignments</li>
-    <li><b>Hindi cover letters</b> — government and private sector jobs</li>
-    <li><b>Hinglish blogs</b> — long-form content for Hindi websites</li>
-    <li><b>Legal documents</b> — contracts, notices, agreements</li>
-    <li><b>Resume / CV</b> — professional format in seconds</li>
-    <li><b>Formal letters</b> — complaint, request, application</li>
-    <li><b>Office notices</b> — circulars and announcements</li>
-    <li><b>Personal journals</b> — daily diary in any language</li>
-    <li><b>Poetry</b> — with proper Devanagari punctuation (।)</li>
-    <li><b>Study notes</b> — mixed Hindi-English notes</li>
-    <li><b>Translation drafts</b> — Hindi original + English translation</li>
-    <li><b>Quotes and posters</b> — large fonts for impact</li>
-  </ul>
-
-  <h3>16. Frequently Asked Questions</h3>
-
-  <details><summary>Is the tool really free?</summary><p>Yes — 100% free. No signup, no watermark, no daily limit. Everything runs locally in your browser.</p></details>
-
-  <details><summary>Can I type Hindi on mobile?</summary><p>Yes. On mobile the virtual keyboard does not open automatically (your device's own Hindi keyboard works better). Add Hindi in Settings → Language, then press the globe key on your keyboard to switch to Hindi.</p></details>
-
-  <details><summary>Why does the keyboard open automatically on desktop?</summary><p>Desktop browsers rarely have a Hindi keyboard installed, and setting up an external IME is fiddly. So whenever you pick Hindi mode, the virtual keyboard slides open — just click to type.</p></details>
-
-  <details><summary>What words does Hinglish mode convert?</summary><p>Common English-to-Hindi phonetic patterns — like <code>namaste</code> → नमस्ते, <code>bharat</code> → भारत, <code>dhanyavad</code> → धन्यवाद. Consonants, vowels, matras, and conjuncts are all handled. Anything not recognized stays in English, giving you mixed output.</p></details>
-
-  <details><summary>Is my data uploaded anywhere?</summary><p>No. Everything happens locally in your browser. No server call is made. When you close the tab, content is cleared from memory (the localStorage copy remains on your device).</p></details>
-
-  <details><summary>Will Hindi render correctly in the PDF?</summary><p>Yes. The Save PDF button opens the print dialog — the fonts you see on screen are embedded into the PDF. Noto Sans Devanagari, Mangal, Baloo — all render correctly.</p></details>
-
-  <details><summary>Will the .docx open in Google Docs?</summary><p>Yes. The file is standard Word format — opens in Google Docs, Microsoft Word, LibreOffice Writer, and Apple Pages. Hindi text stays intact.</p></details>
-
-  <details><summary>Does header/footer repeat on every page?</summary><p>Yes. In print and PDF, on every page. In .docx, it is saved as a real Word header/footer, so Word also repeats it on every page.</p></details>
-
-  <details><summary>Can I mix Hindi and English in one document?</summary><p>Yes. Type English normally, switch to Hinglish for a while, or use the Hindi keyboard to insert Devanagari. Both stay in the same document, with their own fonts.</p></details>
-
-  <details><summary>Why does the font size go down to 6pt?</summary><p>Legal disclaimers, footnotes, and terms &amp; conditions. Also useful when you need to fit a lot of content on an A4 page. 12pt is the default and standard body size.</p></details>
-
-  <details><summary>Does it work offline?</summary><p>After the page has loaded once, yes. The .docx export library needs to load on first use (the browser caches it, then it works offline too).</p></details>
-
-  <details><summary>Colors don't appear in print — what do I do?</summary><p>Enable <b>"Background graphics"</b> in the print dialog (under More settings). Browsers skip background colors by default to save ink.</p></details>
-
-  <details><summary>Can I create custom templates?</summary><p>Everything you write is autosaved. So build your structure once, save it, and edit the same content next time. Custom templates aren't a separate feature yet, but you can save your file as .docx and reopen it.</p></details>
-
-  <h3>17. Privacy First</h3>
-  <p>Nothing you type is uploaded. No server, no account, no tracking. Close the tab and it clears from memory. That makes this tool ideal for sensitive content — personal letters, private notes, internal reports, confidential drafts.</p>
-
-  <h3>18. Conclusion</h3>
-  <p>Writing a document in Hindi, English, or Hinglish no longer requires any external software. DocEasy Word Writer gives you 13 fonts, a virtual Hindi keyboard, a Hinglish converter, six templates, colors, header/footer, and instant Word/PDF export — all in your browser. Bookmark it and come back whenever you need to write.</p>
-</section>
-
-<!-- ============ RELATED TOOLS ============ -->
-<section class="related-tools-section">
-  <h2>Explore More Free DocEasy Tools</h2>
-  <p class="related-sub">All free, all browser-based, all 100% private.</p>
-  <div class="related-grid">
-    <a class="related-card" href="word-counter.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div><h3>Word Counter</h3><p>Words, chars, reading time</p></a>
-    <a class="related-card" href="pdf-to-word.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>PDF to Word</h3><p>Editable .docx documents</p></a>
-    <a class="related-card" href="word-to-pdf.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>Word to PDF</h3><p>DOCX to PDF</p></a>
-    <a class="related-card" href="doc-scanner.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div><h3>Document Scanner</h3><p>Image to text OCR</p></a>
-    <a class="related-card" href="invoice-generator.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><h3>Invoice Generator</h3><p>Professional invoices</p></a>
-    <a class="related-card" href="pdf-merge.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div><h3>Merge PDF</h3><p>Combine PDFs into one</p></a>
-    <a class="related-card" href="pdf-compressor.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div><h3>Compress PDF</h3><p>Reduce PDF file size</p></a>
-    <a class="related-card" href="qr-generator.html"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div><h3>QR Generator</h3><p>Custom QR codes</p></a>
-  </div>
-</section>
 
 <div id="doceasy-footer"></div>
 
@@ -863,7 +1207,6 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
     });
 
     // Hindi keyboard opens ONLY on desktop when Hindi mode is active.
-    // Mobile uses the device's own keyboard — no virtual keyboard.
     if (lang === 'hi' && !IS_MOBILE) {
       hkWrap.classList.add('show');
     } else {
@@ -872,7 +1215,7 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
 
     if (lang === 'hinglish') {
       langBadge.style.display = 'inline';
-      langBadge.textContent = 'Hinglish mode - type in English, converts to Hindi on space';
+      langBadge.textContent = 'Hinglish mode — type in English, converts on space';
     } else if (lang === 'hi') {
       langBadge.style.display = 'inline';
       langBadge.textContent = 'Hindi mode';
@@ -885,7 +1228,7 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
         ? 'Start typing in English...'
         : lang === 'hi'
           ? 'Start typing in Hindi...'
-          : 'Type in English (e.g. "namaste") - converts to Devanagari on space'
+          : 'Type in English (e.g. "namaste") — converts to Devanagari on space'
     );
 
     autosave();
@@ -1066,7 +1409,7 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
     }
   };
 
-  document.querySelectorAll('.tpl-btn').forEach(function (btn) {
+  document.querySelectorAll('.tpl-btn[data-tpl]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var t = TEMPLATES[btn.dataset.tpl];
       if (!t) return;
@@ -1347,23 +1690,6 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
     showToast('Cleared', 'ok');
   });
 
-  var themeBtn = $('themeBtn'), themeIcon = $('themeIcon');
-  function applyTheme(t) {
-    state.theme = t;
-    document.documentElement.setAttribute('data-theme', t);
-    themeIcon.innerHTML = t === 'dark'
-      ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>'
-      : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-    try { localStorage.setItem('de_ww_theme', t); } catch (e) {}
-  }
-  themeBtn.addEventListener('click', function () {
-    applyTheme(state.theme === 'dark' ? 'light' : 'dark');
-  });
-  try {
-    var savedTheme = localStorage.getItem('de_ww_theme');
-    if (savedTheme) applyTheme(savedTheme);
-  } catch (e) {}
-
   var autosaveTimer;
   function autosave() {
     clearTimeout(autosaveTimer);
@@ -1403,4 +1729,4 @@ details p { margin: 12px 0 0 !important; font-size: 15px !important; line-height
 
 <script src="../assets/js/core/doceasy-core.js"></script>
 </body>
-    </html>
+                                                                                                                                                                                                                                                                                    </html>
