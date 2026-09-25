@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Finance Tools — Loan EMI, Salary, Tax Calculators | DocEasy</title>
+<meta name="description" content="Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD. No signup, browser-based, 100% private.">
+<meta name="keywords" content="finance tools, loan emi calculator, income tax calculator, salary calculator, gratuity calculator, epf calculator, hra calculator, sip calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/finance-tools.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Finance Tools — Loan EMI, Salary, Tax Calculators | DocEasy">
+<meta property="og:description" content="Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/finance-tools.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Finance Tools — Loan EMI, Salary, Tax Calculators | DocEasy">
+<meta name="twitter:description" content="Free online finance calculators. No signup, 100% private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Finance Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/finance-tools.html",
+  "description": "Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD."
+}
+</script>
+
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
+<style>
+* { box-sizing: border-box; }
+.main-wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px 80px; overflow-x: hidden; }
+
+/* HERO */
+.fhero {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 42px 32px;
+  margin-top: 34px;
+  background: linear-gradient(135deg, #065f46 0%, #16a34a 55%, #22c55e 100%);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(22,163,74,0.28);
+}
+.fhero::before, .fhero::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+}
+.fhero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.fhero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.fhero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  margin-bottom: 14px; backdrop-filter: blur(6px);
+  position: relative; z-index: 1;
+}
+.fhero h1 {
+  font-size: clamp(26px, 4.5vw, 42px); font-weight: 800;
+  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
+  position: relative; z-index: 1;
+}
+.fhero p {
+  font-size: clamp(14px, 2vw, 16.5px); line-height: 1.6;
+  max-width: 680px; margin: 0; opacity: 0.92;
+  position: relative; z-index: 1;
+}
+.fhero-stats {
+  display: flex; gap: 26px; margin-top: 24px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.fhero-stats .stat { display: flex; flex-direction: column; }
+.fhero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.fhero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.85; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar {
+  display: flex; gap: 12px; align-items: center;
+  margin: 34px 0 22px; flex-wrap: wrap;
+}
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 500px; }
+.search-box svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
+}
+.search-box input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 14px; outline: none; transition: all 0.18s;
+}
+.search-box input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button {
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 12.5px; font-weight: 700; cursor: pointer;
+  transition: all 0.18s; font-family: inherit;
+}
+.filter-pills button:hover { border-color: #16a34a; color: #16a34a; }
+.filter-pills button.active {
+  background: #16a34a; border-color: #16a34a; color: #fff;
+  box-shadow: 0 6px 16px rgba(22,163,74,0.28);
+}
+
+/* CATEGORY BLOCK */
+.cat-block { margin-top: 42px; scroll-margin-top: 90px; }
+.cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-head .icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, #16a34a, #065f46);
+}
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count {
+  margin-left: auto; font-size: 11.5px; font-weight: 700;
+  color: var(--subtext-color); background: var(--card-hover);
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+.tool-tile {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none; color: var(--text-color);
+  transition: all 0.2s ease; min-height: 140px;
+  position: relative;
+}
+.tool-tile:hover {
+  border-color: #16a34a;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(22,163,74,0.14);
+}
+.tool-tile .tile-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  background: rgba(22,163,74,0.08);
+  color: #16a34a;
+  display: grid; place-items: center;
+  transition: transform 0.22s; flex-shrink: 0;
+}
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag {
+  position: absolute; top: 9px; right: 9px;
+  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
+}
+.tool-tile .tag.soon { background: linear-gradient(135deg,#64748b,#475569); }
+.tool-tile.soon { opacity: 0.78; cursor: not-allowed; }
+.tool-tile.soon:hover { transform: none; border-color: var(--border-color); box-shadow: none; }
+
+/* HOW TO USE */
+.how-to-use { max-width: 940px; margin: 68px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #16a34a; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* FAQ */
+.deep-faq { max-width: 900px; margin: 68px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #16a34a; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #16a34a; font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: #16a34a; font-weight: 600; }
+
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .fhero { padding: 30px 20px; border-radius: 18px; margin-top: 22px; }
+  .fhero-stats { gap: 18px; margin-top: 18px; }
+  .fhero-stats .stat b { font-size: 18px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tool-tile { min-height: 124px; padding: 15px 12px 13px; }
+  .tool-tile h3 { font-size: 12.5px; }
+  .tool-tile p { font-size: 10px; }
+  .cat-head h2 { font-size: 16.5px; }
+  .cat-head .count { display: none; }
+  .toolbar { margin: 24px 0 18px; }
+  .search-box { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .filter-pills button { padding: 8px 12px; font-size: 11.5px; }
+  .tool-tile { padding: 13px 11px 11px; min-height: 116px; }
+  .tool-tile .tile-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .tool-tile .tile-icon svg { width: 18px; height: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <!-- HERO -->
+  <section class="fhero">
+    <div class="fhero-badge">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"/>
+      </svg>
+      FINANCE TOOLS
+    </div>
+    <h1>Finance Calculators &amp; Planners</h1>
+    <p>Free browser-based calculators for loans, income tax, salary, gratuity, EPF, HRA, SIP, and fixed deposits. No signup, no upload, 100% private — your numbers never leave your device.</p>
+    <div class="fhero-stats">
+      <div class="stat"><b>15+</b><span>Calculators</span></div>
+      <div class="stat"><b>0</b><span>Signup</span></div>
+      <div class="stat"><b>₹0</b><span>Cost</span></div>
+      <div class="stat"><b>Free</b><span>Forever</span></div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <input type="text" id="toolSearch" placeholder="Search finance tools — loan EMI, income tax, salary, gratuity, SIP…">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="loan">Loans</button>
+      <button data-filter="salary">Salary</button>
+      <button data-filter="invest">Investments</button>
+      <button data-filter="tax">Tax</button>
+      <button data-filter="retire">Retirement</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">No finance tools match your search.</div>
+
+  <!-- ================= LOAN CALCULATORS ================= -->
+  <section class="cat-block" data-cat="loan">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div>
+        <h2>Loan Calculators</h2>
+        <p>Calculate monthly EMI, total interest, and amortization for home, car, personal, and education loans.</p>
+      </div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="home loan emi calculator mortgage property">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Home Loan EMI</h3>
+        <p>Monthly EMI + amortization</p>
+      </div>
+      <div class="tool-tile soon" data-tags="car loan emi calculator auto vehicle">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Car Loan EMI</h3>
+        <p>Auto loan calculator</p>
+      </div>
+      <div class="tool-tile soon" data-tags="personal loan emi calculator unsecured">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Personal Loan EMI</h3>
+        <p>Quick personal loan estimate</p>
+      </div>
+      <div class="tool-tile soon" data-tags="education loan emi calculator student">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Education Loan EMI</h3>
+        <p>Student loan repayment</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SALARY CALCULATORS ================= -->
+  <section class="cat-block" data-cat="salary">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg>
+      </div>
+      <div>
+        <h2>Salary &amp; Payroll</h2>
+        <p>Break down CTC into take-home salary, calculate HRA exemption, and estimate monthly pay.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="in hand salary calculator ctc take home">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>In-Hand Salary Calculator</h3>
+        <p>CTC → take-home monthly</p>
+      </div>
+      <div class="tool-tile soon" data-tags="hra exemption calculator house rent allowance">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>HRA Exemption</h3>
+        <p>House rent allowance tax break</p>
+      </div>
+      <div class="tool-tile soon" data-tags="salary increment calculator hike percentage">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Salary Increment</h3>
+        <p>Old vs new salary hike</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INVESTMENT CALCULATORS ================= -->
+  <section class="cat-block" data-cat="invest">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg>
+      </div>
+      <div>
+        <h2>Investment Tools</h2>
+        <p>Calculate SIP returns, FD maturity, PPF growth, and compound interest projections.</p>
+      </div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="sip calculator mutual fund monthly investment">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>SIP Calculator</h3>
+        <p>Mutual fund SIP returns</p>
+      </div>
+      <div class="tool-tile soon" data-tags="fd calculator fixed deposit maturity">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>FD Calculator</h3>
+        <p>Fixed deposit maturity amount</p>
+      </div>
+      <div class="tool-tile soon" data-tags="ppf calculator public provident fund">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>PPF Calculator</h3>
+        <p>15-year PPF projection</p>
+      </div>
+      <div class="tool-tile soon" data-tags="compound interest calculator ci">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Compound Interest</h3>
+        <p>CI calculator for any period</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TAX CALCULATORS ================= -->
+  <section class="cat-block" data-cat="tax">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+      </div>
+      <div>
+        <h2>Tax Calculators</h2>
+        <p>Estimate income tax under old and new regimes, calculate TDS, and plan tax-saving investments.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="income tax calculator old new regime">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Income Tax Calculator</h3>
+        <p>Old vs new regime comparison</p>
+      </div>
+      <div class="tool-tile soon" data-tags="tds calculator tax deduction">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>TDS Calculator</h3>
+        <p>By section (194C, 194J, etc.)</p>
+      </div>
+      <div class="tool-tile soon" data-tags="tax saving calculator 80c deduction">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Tax Saving Planner</h3>
+        <p>Section 80C, 80D, NPS</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RETIREMENT ================= -->
+  <section class="cat-block" data-cat="retire">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+      </div>
+      <div>
+        <h2>Retirement &amp; Benefits</h2>
+        <p>Calculate gratuity, EPF balance, NPS pension, and retirement corpus projections.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="gratuity calculator employee benefit">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Gratuity Calculator</h3>
+        <p>Payment on retirement/resignation</p>
+      </div>
+      <div class="tool-tile soon" data-tags="epf calculator provident fund employee">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>EPF Calculator</h3>
+        <p>Employee provident fund balance</p>
+      </div>
+      <div class="tool-tile soon" data-tags="nps calculator national pension scheme">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>NPS Calculator</h3>
+        <p>National Pension Scheme corpus</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO USE -->
+  <section class="how-to-use">
+    <h2>How to Use Finance Tools</h2>
+    <p class="lead">Four simple steps to calculate EMIs, taxes, salaries, or investment returns — all in your browser.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Pick a Calculator</h3>
+        <p>Choose from loan, salary, investment, tax, or retirement categories above.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Enter Your Numbers</h3>
+        <p>Type loan amounts, interest rates, tenure, or salary. Nothing leaves your device.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>See Instant Results</h3>
+        <p>Real-time calculations with breakdowns, charts, and amortization schedules.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Save or Share</h3>
+        <p>Download the schedule as PDF or share results — no signup needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Finance Tools — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about DocEasy's finance calculators — loans, taxes, salary, investments, and privacy.</p>
+
+    <details class="faq-item" open>
+      <summary>What are DocEasy Finance Tools?</summary>
+      <p>DocEasy Finance Tools are a growing collection of free, browser-based financial calculators designed for Indian users. They cover four major areas: Loan Calculators (home, car, personal, education EMI), Salary &amp; Payroll (in-hand salary, HRA exemption, salary increment), Investment Tools (SIP, FD, PPF, compound interest), Tax Calculators (income tax under both regimes, TDS, tax saving), and Retirement &amp; Benefits (gratuity, EPF, NPS). Every calculator runs entirely in your browser using JavaScript — no data is uploaded, no signup is required, and no personal financial information ever leaves your device. Unlike most finance sites that require registration or bombard you with ads, DocEasy gives you instant, private calculations in seconds.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are these finance calculators really free?</summary>
+      <p>Yes — every calculator is 100% free, forever, with no strings attached. There's no signup, no email, no credit card, no trial period, no daily limit, and no premium tier. You can calculate home loan EMIs, SIP returns, or income tax as many times as you want, all free. The site is supported by lightweight display ads elsewhere. We don't sell your financial data, we don't track your inputs, and we don't ask for your email to unlock features. Most finance sites lure you in with free calculators and then upsell loan products, credit cards, or investment advice — DocEasy doesn't sell anything. It's just calculations, free forever.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my financial data safe?</summary>
+      <p>Completely safe. Every finance calculator runs entirely client-side in your browser — no data is ever uploaded to any server. When you enter your loan amount, salary, or investment details, those numbers live only in your browser's memory. Nothing is transmitted, logged, or stored anywhere. You can verify this yourself: open Developer Tools (F12), go to the Network tab, enter your financial data, and watch for requests. You'll see zero outgoing data — because nothing is transmitted. This makes DocEasy safe for sensitive financial information like salary, loan details, investment portfolio values, and tax computations. Even we cannot see your numbers.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How accurate is the Home Loan EMI Calculator?</summary>
+      <p>The Home Loan EMI Calculator uses the standard compound interest formula prescribed by banks: <code>EMI = P × r × (1+r)^n / ((1+r)^n - 1)</code>, where P is the principal, r is the monthly interest rate (annual rate / 12 / 100), and n is the loan tenure in months. The calculation matches the output of major bank EMI calculators (HDFC, SBI, ICICI) to 2 decimal places. The tool also generates a detailed amortization schedule showing the split between principal and interest for each month — useful for understanding how much total interest you'll pay over the life of the loan. For loans with floating rates or prepayments, the calculation is an estimate — actual EMI may vary slightly based on the bank's day-count conventions.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is the difference between old and new tax regimes?</summary>
+      <p>India has two income tax regimes since April 2020. <b>Old Regime:</b> Higher tax rates but allows numerous deductions and exemptions — Section 80C (up to ₹1.5 lakh), 80D (health insurance), HRA exemption, home loan interest (Section 24), and standard deduction of ₹50,000. Best for people with significant investments and home loans. <b>New Regime:</b> Lower tax rates and wider slabs but no major deductions except standard deduction of ₹50,000 (₹75,000 from FY 2024-25). Best for people with fewer deductions or those who prefer simplicity. DocEasy's Income Tax Calculator compares both regimes side-by-side and tells you which one saves you more tax for your specific income. Choosing the right regime can save ₹10,000–50,000 per year.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is in-hand salary calculated from CTC?</summary>
+      <p>In-hand salary is your CTC minus all deductions. The main deductions are: <b>(1) Employer PF contribution:</b> 12% of basic salary (part of CTC but not paid to you directly). <b>(2) Employee PF contribution:</b> 12% of basic salary (deducted from your gross salary). <b>(3) Professional Tax:</b> ₹200 per month (varies by state). <b>(4) Income Tax (TDS):</b> As per your applicable tax slab, divided into 12 monthly deductions. <b>(5) Gratuity:</b> 4.81% of basic (part of CTC but paid only on exit). The rough formula: In-hand ≈ CTC × 0.75 to 0.85, depending on your tax bracket and structure. DocEasy's upcoming In-Hand Salary Calculator will give you an exact breakdown with all components itemized.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does the HRA exemption work?</summary>
+      <p>House Rent Allowance (HRA) exemption under Section 10(13A) is the <b>least</b> of three values: (1) Actual HRA received from your employer; (2) Rent paid minus 10% of your basic salary; (3) 50% of basic salary (if living in metro cities — Delhi, Mumbai, Kolkata, Chennai) or 40% of basic (non-metro). The exempted amount is subtracted from your taxable income, reducing your tax liability. For example, if your basic is ₹50,000/month, HRA is ₹20,000/month, and you pay ₹18,000/month rent in Delhi — the exemption is the minimum of ₹20,000, ₹18,000 − ₹5,000 = ₹13,000, and ₹25,000 → ₹13,000/month, which is ₹1,56,000/year tax-free. The HRA Exemption Calculator handles this automatically.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is SIP and how do returns compound?</summary>
+      <p>SIP (Systematic Investment Plan) is a method of investing a fixed amount in mutual funds at regular intervals — usually monthly. For example, investing ₹5,000 every month into an equity mutual fund. The power of SIP comes from <b>rupee cost averaging</b> and <b>compounding</b>. When markets are down, your fixed SIP buys more units; when markets are up, it buys fewer — averaging out your purchase cost over time. Compounding works by generating returns on your returns: a 12% annual return over 20 years on a ₹10,000 monthly SIP grows to about ₹99 lakh, of which ₹76 lakh is pure returns. The SIP Calculator projects this growth based on your monthly amount, expected return rate, and investment tenure. Returns are compounded monthly in the calculation.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is gratuity calculated?</summary>
+      <p>Gratuity is a lump-sum payment made by an employer to an employee who has completed at least 5 years of continuous service. The formula under the Payment of Gratuity Act, 1972 is: <code>Gratuity = (Last drawn salary × 15 × Years of service) / 26</code>, where "last drawn salary" means basic + dearness allowance, and 26 represents the average number of working days in a month. For example, if your last drawn salary is ₹50,000 and you've worked 10 years: Gratuity = (50,000 × 15 × 10) / 26 = ₹2,88,461. Gratuity is tax-exempt up to ₹20 lakh (for non-government employees). The Gratuity Calculator handles the formula and shows your payable amount instantly, including the tax treatment.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is EPF and how do I calculate my balance?</summary>
+      <p>EPF (Employees' Provident Fund) is a retirement savings scheme where both you and your employer contribute 12% of your basic salary every month. Your contribution goes entirely to your EPF account, while your employer's contribution is split — 8.33% goes to EPS (pension) and 3.67% to EPF. The EPF balance grows with interest, currently around 8.25% per annum (revised annually by EPFO). For example, if your basic salary is ₹30,000/month and you work for 20 years at 8.25% interest, your EPF corpus could be roughly ₹45–55 lakh. The EPF Calculator projects this based on your current salary, expected salary growth, and interest rate. Your actual EPF balance is available on the EPFO member portal (unifiedportal-mem.epfindia.gov.in).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>All modern browsers: Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Since the calculators use only standard JavaScript and Canvas APIs (for charts), they work identically across all browsers. Chrome and Edge offer the smoothest experience with the fastest chart rendering. Mobile browsers (Chrome on Android, Safari on iOS) work perfectly for all calculations. If you see calculation errors or layout issues on an old browser, updating to the latest version usually fixes them. All calculations use IEEE 754 double-precision floating-point math, which is standard across all browsers.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does it work offline?</summary>
+      <p>Yes — after the page loads once, all finance calculators work fully offline. Since all calculations happen locally in your browser using JavaScript, no internet connection is needed once the page is loaded. This is particularly useful when you're traveling, in areas with poor connectivity, or in a privacy-conscious environment where you don't want any network activity during financial calculations. You can switch off Wi-Fi and continue calculating EMIs, SIPs, taxes, or gratuity. The only exception is the very first page load — after that, everything works offline until you refresh.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use these tools on mobile?</summary>
+      <p>Yes — every finance tool is fully responsive and works on Android phones, iPhones, and tablets. The interface adapts to narrow screens with touch-friendly inputs and larger tap targets. You can calculate EMIs on the go, check SIP projections during a meeting, or estimate taxes at your desk. The charts and amortization schedules are also mobile-optimized — they scale down gracefully and remain readable. On mobile, we recommend landscape mode for the more complex calculators (like Income Tax and Home Loan EMI), which need slightly more screen width for the schedule tables.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is this different from BankBazaar or PolicyBazaar?</summary>
+      <p>BankBazaar, PolicyBazaar, and similar sites are <b>lead-generation platforms</b> — they offer free calculators but their real business is selling you loans, credit cards, and insurance. Every calculation is a hook to collect your phone number and email so their sales team can call you. DocEasy is the opposite: we don't sell anything, don't collect your contact info, and don't share your data with anyone. Our calculators are pure utilities — you use them, get your answer, and close the tab. No follow-up calls, no spam emails, no aggressive sales tactics. Just honest calculators, free forever.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I download my amortization schedule?</summary>
+      <p>Yes — the Loan EMI Calculators (coming soon) will let you download the full amortization schedule as a PDF, showing month-by-month breakdown of principal and interest payments. This is useful for: (1) Understanding how much total interest you'll pay; (2) Tracking your loan progress; (3) Planning prepayments to save interest; (4) Sharing with your CA for tax filing. The PDF is generated entirely in your browser — no server round-trip, no delay, no file upload. You can also print the schedule directly if you prefer a paper copy.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are the calculators compliant with Indian tax laws?</summary>
+      <p>The calculators implement the current income tax slabs, standard deductions, Section 80C/80D limits, HRA rules, gratuity formula, and EPF interest rates as prescribed by Indian law for FY 2024-25. However, tax laws change every year during the Union Budget — slabs are revised, deductions are added or removed, and rules are updated. DocEasy aims to keep the calculators in sync with official rates, and we update them within days of budget announcements. However, always verify critical calculations against the Income Tax Department website (incometax.gov.in) or consult a Chartered Accountant before making major financial decisions. These tools are for estimation and planning — not a substitute for professional advice.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use these tools for financial planning advice?</summary>
+      <p>DocEasy's calculators help you understand numbers — EMI amounts, tax liabilities, investment projections — but they don't provide financial advice. We don't recommend specific loans, mutual funds, insurance products, or investment strategies. Financial decisions depend on many personal factors: your risk tolerance, cash flow, family situation, career stage, and long-term goals. These calculators give you data to make informed choices, but for personalized advice, consult a SEBI-registered investment advisor (RIA) or a certified financial planner (CFP). The calculators are tools for planning, not substitutes for professional judgment.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you keep logs of my financial data?</summary>
+      <p>No. We don't log loan amounts, salary figures, tax rates, investment values, or any metadata about your usage. We don't track which calculators you use or when. Our analytics only records anonymous page views — never financial content. Since your data never leaves your browser, there's literally nothing for us to log. You can verify this yourself: open Developer Tools → Network tab, enter your financial data, and watch for requests. Zero outgoing requests carry your financial information — because it never goes anywhere. This is the strongest possible privacy guarantee for any finance tool.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What other finance tools are coming soon?</summary>
+      <p>We're actively building all 15+ calculators listed on this page. Priority order: (1) Income Tax Calculator — highest user demand; (2) Home Loan EMI with amortization; (3) In-Hand Salary Calculator; (4) SIP Calculator with growth chart; (5) Gratuity &amp; EPF Calculators; (6) HRA Exemption; (7) FD Calculator; (8) TDS Calculator; (9) PPF Calculator; (10) NPS Calculator; (11) Compound Interest; (12) Car &amp; Personal Loan EMI; (13) Education Loan EMI; (14) Salary Increment; (15) Tax Saving Planner. Want a specific calculator sooner? Use the "Request Tool" link in the footer — we prioritize the most-requested tools.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I calculate the best loan tenure?</summary>
+      <p>Shorter tenure means higher EMI but lower total interest — longer tenure means lower EMI but higher total interest. For example, on a ₹50 lakh home loan at 8.5% interest: 15-year tenure → EMI ₹49,233, total interest ₹38.6 lakh. 20-year tenure → EMI ₹43,391, total interest ₹54.1 lakh. 25-year tenure → EMI ₹40,247, total interest ₹70.7 lakh. The "best" tenure depends on your cash flow — choose the shortest tenure you can comfortably afford. A common rule of thumb: EMI should not exceed 40% of your monthly take-home salary. Our Home Loan EMI Calculator (coming soon) will let you compare tenures side-by-side to find your sweet spot.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I plan prepayments to save interest?</summary>
+      <p>Yes — most of our loan calculators include a prepayment feature. When you make a prepayment, you have two choices: reduce tenure (keep EMI same) or reduce EMI (keep tenure same). <b>Reducing tenure saves more interest</b> — this is almost always the better financial choice. For example, on a ₹50 lakh home loan at 8.5% for 20 years, prepaying ₹5 lakh in year 5 and choosing tenure reduction saves about ₹15 lakh in interest over the loan's life. If you choose EMI reduction instead, you save about ₹6 lakh. The upcoming Home Loan EMI Calculator will let you model prepayments and see the savings in real-time.</p>
+    </details>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Related DocEasy Categories</h3>
+    <p style="text-align:center; color:var(--subtext-color); margin-bottom:20px; font-size:14px;">Explore other free tools on DocEasy</p>
+    <ul style="max-width:680px; margin:0 auto 20px; padding-left:24px; line-height:1.9; font-size:15px; color:var(--subtext-color);">
+      <li><a href="categories.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">All Categories</a> — Browse all 35+ tools</li>
+      <li><a href="business-tools.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">Business Tools</a> — GST, invoices, stamp duty</li>
+      <li><a href="printing-tools.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">Printing Tools</a> — Aadhaar, ID card, passport</li>
+      <li><a href="media-tools.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">Media Tools</a> — Screen recorder, voice recorder</li>
+      <li><a href="index.html#pdf-tools" style="color:#16a34a; font-weight:600; text-decoration:underline;">PDF Tools</a> — Merge, split, compress PDFs</li>
+      <li><a href="index.html#image-tools" style="color:#16a34a; font-weight:600; text-decoration:underline;">Image Tools</a> — Compress, convert, resize images</li>
+    </ul>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Conclusion</h3>
+    <p style="max-width:860px; margin:20px auto 0; font-size:15.5px; color:var(--subtext-color); line-height:1.8; text-align:center;">
+      DocEasy's Finance Tools give you fast, private, and free calculators for every major financial decision — home loans, income tax, salary, SIP, gratuity, EPF, and more. No signup, no data sharing, no sales calls. Whether you're planning your first home purchase, comparing tax regimes, or projecting retirement savings, these tools give you clear numbers to make confident decisions.
+    </p>
+
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  var searchInput = document.getElementById('toolSearch');
+  var pills = document.getElementById('filterPills');
+  var tiles = document.querySelectorAll('.tool-tile');
+  var cats = document.querySelectorAll('.cat-block');
+  var noResults = document.getElementById('noResults');
+  var activeFilter = 'all';
+
+  function applyFilters() {
+    var q = (searchInput.value || '').toLowerCase().trim();
+    var visibleCount = 0;
+
+    cats.forEach(function (cat) {
+      var catKey = cat.getAttribute('data-cat');
+      var catVisible = false;
+
+      cat.querySelectorAll('.tool-tile').forEach(function (tile) {
+        var text = (tile.textContent + ' ' + (tile.getAttribute('data-tags') || '')).toLowerCase();
+        var matchSearch = !q || text.indexOf(q) !== -1;
+        var matchFilter = activeFilter === 'all' || catKey === activeFilter;
+        var show = matchSearch && matchFilter;
+        tile.style.display = show ? '' : 'none';
+        if (show) { catVisible = true; visibleCount++; }
+      });
+
+      cat.style.display = catVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  pills.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    pills.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    activeFilter = btn.getAttribute('data-filter');
+    applyFilters();
+  });
+})();
+</script>
+</body>
+</html>
