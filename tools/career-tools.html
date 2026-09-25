@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Career Tools — Resume, Interview, Skill Calculators | DocEasy</title>
+<meta name="description" content="Free online career tools — resume builder, cover letter, interview prep, skill assessment, salary comparison. No signup, browser-based, 100% private.">
+<meta name="keywords" content="career tools, resume builder, cv maker, cover letter generator, interview preparation, skill assessment, salary comparison, career planning">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/career-tools.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Career Tools — Resume, Interview, Skill Calculators | DocEasy">
+<meta property="og:description" content="Free online career tools — resume builder, cover letter, interview prep, salary comparison.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/career-tools.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Career Tools — Resume, Interview, Skill Calculators | DocEasy">
+<meta name="twitter:description" content="Free online career tools. No signup, 100% private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Career Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/career-tools.html",
+  "description": "Free online career tools — resume builder, cover letter, interview prep, skill assessment, salary comparison."
+}
+</script>
+
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
+<style>
+* { box-sizing: border-box; }
+.main-wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px 80px; overflow-x: hidden; }
+
+/* HERO */
+.cthero {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 42px 32px;
+  margin-top: 34px;
+  background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #a78bfa 100%);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(139,92,246,0.28);
+}
+.cthero::before, .cthero::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+}
+.cthero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.cthero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.cthero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  margin-bottom: 14px; backdrop-filter: blur(6px);
+  position: relative; z-index: 1;
+}
+.cthero h1 {
+  font-size: clamp(26px, 4.5vw, 42px); font-weight: 800;
+  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
+  position: relative; z-index: 1;
+}
+.cthero p {
+  font-size: clamp(14px, 2vw, 16.5px); line-height: 1.6;
+  max-width: 680px; margin: 0; opacity: 0.92;
+  position: relative; z-index: 1;
+}
+.cthero-stats {
+  display: flex; gap: 26px; margin-top: 24px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.cthero-stats .stat { display: flex; flex-direction: column; }
+.cthero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.cthero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.85; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar {
+  display: flex; gap: 12px; align-items: center;
+  margin: 34px 0 22px; flex-wrap: wrap;
+}
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 500px; }
+.search-box svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
+}
+.search-box input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 14px; outline: none; transition: all 0.18s;
+}
+.search-box input:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button {
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 12.5px; font-weight: 700; cursor: pointer;
+  transition: all 0.18s; font-family: inherit;
+}
+.filter-pills button:hover { border-color: #8b5cf6; color: #8b5cf6; }
+.filter-pills button.active {
+  background: #8b5cf6; border-color: #8b5cf6; color: #fff;
+  box-shadow: 0 6px 16px rgba(139,92,246,0.28);
+}
+
+/* CATEGORY BLOCK */
+.cat-block { margin-top: 42px; scroll-margin-top: 90px; }
+.cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-head .icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count {
+  margin-left: auto; font-size: 11.5px; font-weight: 700;
+  color: var(--subtext-color); background: var(--card-hover);
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+.tool-tile {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none; color: var(--text-color);
+  transition: all 0.2s ease; min-height: 140px;
+  position: relative;
+}
+.tool-tile:hover {
+  border-color: #8b5cf6;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(139,92,246,0.14);
+}
+.tool-tile .tile-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  background: rgba(139,92,246,0.08);
+  color: #8b5cf6;
+  display: grid; place-items: center;
+  transition: transform 0.22s; flex-shrink: 0;
+}
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag {
+  position: absolute; top: 9px; right: 9px;
+  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
+}
+.tool-tile .tag.soon { background: linear-gradient(135deg,#64748b,#475569); }
+.tool-tile.soon { opacity: 0.78; cursor: not-allowed; }
+.tool-tile.soon:hover { transform: none; border-color: var(--border-color); box-shadow: none; }
+
+/* HOW TO USE */
+.how-to-use { max-width: 940px; margin: 68px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #8b5cf6; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* FAQ */
+.deep-faq { max-width: 900px; margin: 68px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #8b5cf6; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #8b5cf6; font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: #8b5cf6; font-weight: 600; }
+
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .cthero { padding: 30px 20px; border-radius: 18px; margin-top: 22px; }
+  .cthero-stats { gap: 18px; margin-top: 18px; }
+  .cthero-stats .stat b { font-size: 18px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tool-tile { min-height: 124px; padding: 15px 12px 13px; }
+  .tool-tile h3 { font-size: 12.5px; }
+  .tool-tile p { font-size: 10px; }
+  .cat-head h2 { font-size: 16.5px; }
+  .cat-head .count { display: none; }
+  .toolbar { margin: 24px 0 18px; }
+  .search-box { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .filter-pills button { padding: 8px 12px; font-size: 11.5px; }
+  .tool-tile { padding: 13px 11px 11px; min-height: 116px; }
+  .tool-tile .tile-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .tool-tile .tile-icon svg { width: 18px; height: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <!-- HERO -->
+  <section class="cthero">
+    <div class="cthero-badge">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+        <path d="M22 10v6"/>
+      </svg>
+      CAREER TOOLS
+    </div>
+    <h1>Career Builders &amp; Job Helpers</h1>
+    <p>Free browser-based tools for job seekers and professionals — resume builder, cover letter generator, interview prep, salary comparison, and skill assessment. No signup, no upload, 100% private.</p>
+    <div class="cthero-stats">
+      <div class="stat"><b>12+</b><span>Career Tools</span></div>
+      <div class="stat"><b>0</b><span>Signup</span></div>
+      <div class="stat"><b>₹0</b><span>Cost</span></div>
+      <div class="stat"><b>Free</b><span>Forever</span></div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <input type="text" id="toolSearch" placeholder="Search career tools — resume, cover letter, interview, salary…">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="resume">Resume</button>
+      <button data-filter="interview">Interview</button>
+      <button data-filter="salary">Salary</button>
+      <button data-filter="skill">Skills</button>
+      <button data-filter="planning">Planning</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">No career tools match your search.</div>
+
+  <!-- ================= RESUME & APPLICATION ================= -->
+  <section class="cat-block" data-cat="resume">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg>
+      </div>
+      <div>
+        <h2>Resume &amp; Job Application</h2>
+        <p>Build professional resumes, cover letters, and application documents that get noticed.</p>
+      </div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="resume builder cv maker professional">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Resume Builder</h3>
+        <p>Professional CV templates</p>
+      </div>
+      <div class="tool-tile soon" data-tags="cover letter generator job application">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Cover Letter Generator</h3>
+        <p>Personalized cover letters</p>
+      </div>
+      <div class="tool-tile soon" data-tags="resume ats checker scan score">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>ATS Resume Checker</h3>
+        <p>Score against job keywords</p>
+      </div>
+      <div class="tool-tile soon" data-tags="bio generator linkedin profile summary">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Professional Bio Generator</h3>
+        <p>LinkedIn / portfolio bios</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INTERVIEW PREP ================= -->
+  <section class="cat-block" data-cat="interview">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+      </div>
+      <div>
+        <h2>Interview Preparation</h2>
+        <p>Practice answers, prepare for common questions, and build confidence before your interview.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="interview questions preparation practice">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="12" r="10"/><path d="M12 17h.01"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Interview Q&amp;A Bank</h3>
+        <p>1000+ common questions</p>
+      </div>
+      <div class="tool-tile soon" data-tags="star method answer builder behavioral">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>STAR Answer Builder</h3>
+        <p>Structured interview answers</p>
+      </div>
+      <div class="tool-tile soon" data-tags="mock interview simulator practice">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Mock Interview Simulator</h3>
+        <p>Practice with timed questions</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SALARY & NEGOTIATION ================= -->
+  <section class="cat-block" data-cat="salary">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg>
+      </div>
+      <div>
+        <h2>Salary &amp; Negotiation</h2>
+        <p>Compare salaries, estimate your market value, and plan your negotiation strategy.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="salary comparison market rate industry">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Salary Comparison</h3>
+        <p>Benchmark by role &amp; city</p>
+      </div>
+      <div class="tool-tile soon" data-tags="salary negotiation calculator hike offer">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Negotiation Planner</h3>
+        <p>Counter-offer calculator</p>
+      </div>
+      <div class="tool-tile soon" data-tags="offer comparison ctc package evaluate">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Offer Comparison</h3>
+        <p>Compare multiple job offers</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SKILLS & GROWTH ================= -->
+  <section class="cat-block" data-cat="skill">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+      </div>
+      <div>
+        <h2>Skills &amp; Growth</h2>
+        <p>Assess your skills, identify gaps, and create a learning roadmap for your career.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="skill assessment test evaluate">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Skill Assessment</h3>
+        <p>Rate and benchmark skills</p>
+      </div>
+      <div class="tool-tile soon" data-tags="career path planner roadmap goals">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m8 12 3 3 5-6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Career Roadmap</h3>
+        <p>Plan your 5-year path</p>
+      </div>
+      <div class="tool-tile soon" data-tags="skill gap analysis learning plan">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Skill Gap Analysis</h3>
+        <p>Identify missing skills</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CAREER PLANNING ================= -->
+  <section class="cat-block" data-cat="planning">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+      </div>
+      <div>
+        <h2>Career Planning</h2>
+        <p>Long-term career planning tools — goal setting, timeline tracking, and decision frameworks.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="career goal planner smart goals timeline">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Career Goal Planner</h3>
+        <p>SMART goals &amp; timelines</p>
+      </div>
+      <div class="tool-tile soon" data-tags="career change calculator switch job">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Career Change Analyzer</h3>
+        <p>Should you switch? Pros &amp; cons</p>
+      </div>
+      <div class="tool-tile soon" data-tags="learning path generator courses road">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Learning Path Builder</h3>
+        <p>Curated course roadmap</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO USE -->
+  <section class="how-to-use">
+    <h2>How to Use Career Tools</h2>
+    <p class="lead">Four simple steps to build your resume, prepare for interviews, or plan your next career move.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Pick a Tool</h3>
+        <p>Choose from resume, interview, salary, skills, or planning categories above.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Enter Your Info</h3>
+        <p>Fill in your experience, skills, or target role. Nothing leaves your device.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Get Your Output</h3>
+        <p>Download your resume as PDF, get interview prep sheets, or see salary benchmarks.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Apply &amp; Grow</h3>
+        <p>Use the output to apply for jobs, prep for interviews, or negotiate a raise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Career Tools — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about DocEasy's career tools — resumes, interviews, salaries, skills, and privacy.</p>
+
+    <details class="faq-item" open>
+      <summary>What are DocEasy Career Tools?</summary>
+      <p>DocEasy Career Tools are a growing collection of free, browser-based utilities designed for job seekers and working professionals. They cover five major areas: <b>Resume &amp; Job Application</b> (resume builder, cover letter generator, ATS checker, professional bio), <b>Interview Preparation</b> (question bank, STAR answer builder, mock interview simulator), <b>Salary &amp; Negotiation</b> (salary comparison, negotiation planner, offer comparison), <b>Skills &amp; Growth</b> (skill assessment, career roadmap, skill gap analysis), and <b>Career Planning</b> (goal planner, career change analyzer, learning path builder). Every tool runs entirely in your browser — no uploads, no signup, no subscription fees. Unlike LinkedIn Premium (₹1,500+/month) or resume builders that charge for downloads, DocEasy's career tools are completely free and privacy-first.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are these career tools really free?</summary>
+      <p>Yes — every tool is 100% free, forever, with no strings attached. There's no signup, no email, no credit card, no trial period, no daily limit, and no premium tier. You can build unlimited resumes, generate unlimited cover letters, or prepare for unlimited interviews — all free. The site is supported by lightweight display ads on other pages. We don't sell your data, we don't track your job search, and we don't ask for your email to unlock features. Most resume builders charge ₹200–500 per download and watermark the free version. DocEasy never watermarks, never charges, and never limits. Building a resume takes 5 minutes and costs ₹0.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my personal and career data safe?</summary>
+      <p>Completely safe. Every career tool runs entirely client-side in your browser — no data is ever uploaded to any server. When you enter your name, experience, education, or salary expectations, that information lives only in your browser's memory. Nothing is transmitted, logged, or stored anywhere. You can verify this yourself: open Developer Tools (F12), go to the Network tab, enter your career details, and watch for requests. You'll see zero outgoing data — because nothing is transmitted. This makes DocEasy safe for handling sensitive career information: current salary, target companies, resume drafts, and personal contact details. Even we cannot see your data.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I build a professional resume?</summary>
+      <p>A strong resume has 5 key sections: <b>(1) Header:</b> Name, phone, email, LinkedIn, and city. <b>(2) Summary:</b> 2–3 lines describing your experience and target role. <b>(3) Experience:</b> Reverse-chronological list with company, role, dates, and 3–5 bullet points per role showing impact (quantified where possible — "increased sales by 25%"). <b>(4) Skills:</b> 8–12 relevant technical and soft skills. <b>(5) Education:</b> Degrees, certifications, and relevant coursework. Keep it to 1 page for under 10 years of experience, 2 pages maximum otherwise. Use a clean, ATS-friendly format (no tables, no columns, no graphics). DocEasy's upcoming Resume Builder will generate this structure automatically from your inputs and export as PDF.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is an ATS and why does it matter?</summary>
+      <p>ATS (Applicant Tracking System) is software that companies use to screen resumes before a human ever sees them. About 75% of mid-to-large companies (and nearly all Fortune 500 companies) use ATS like Workday, Taleo, Greenhouse, or Lever. When you apply online, your resume is parsed by the ATS, and only resumes that match the job description's keywords proceed. ATS-unfriendly resumes — with tables, images, unusual fonts, or missing keywords — get auto-rejected. DocEasy's upcoming ATS Resume Checker will scan your resume against a specific job description and score it on keyword match, formatting, and readability, so you can fix issues before applying.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is the STAR method for interviews?</summary>
+      <p>STAR stands for <b>Situation, Task, Action, Result</b> — a structured way to answer behavioral interview questions like "Tell me about a time when you…". <b>Situation:</b> Describe the context (1–2 sentences). <b>Task:</b> Explain what you needed to accomplish (1 sentence). <b>Action:</b> Describe the specific steps you took (2–4 sentences, focus on "I" not "we"). <b>Result:</b> Share the measurable outcome (1–2 sentences with numbers if possible). For example: "Our team's onboarding time was 3 weeks (Situation). I was asked to reduce it to under 10 days (Task). I redesigned the checklist, automated 5 manual steps, and created a mentor program (Action). Onboarding dropped to 7 days, saving 40 hours per new hire (Result)." DocEasy's STAR Answer Builder will guide you through this structure for each interview answer.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I negotiate a higher salary?</summary>
+      <p>Successful negotiation follows 5 steps: <b>(1) Research market rate:</b> Use Glassdoor, AmbitionBox, Levels.fyi, or DocEasy's Salary Comparison (coming soon) to know the range for your role, city, and experience. <b>(2) Anchor high:</b> When asked for expectations, give a range with your target at the bottom. Say "I'm looking at ₹18–22 lakh based on my research." <b>(3) Justify with value:</b> Frame it as ROI — "I've increased revenue 30% at my last role, and I plan to do the same here." <b>(4) Be prepared to walk:</b> The strongest negotiators have multiple offers. <b>(5) Consider total comp:</b> Base salary, bonus, equity, sign-on, relocation, and benefits. A ₹2 lakh higher base is worth more than a ₹3 lakh bonus that's discretionary. Never accept the first offer — almost every company has room to negotiate 5–15%.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which is more important — resume or cover letter?</summary>
+      <p>For most roles, the <b>resume is more important</b>. Recruiters spend 6–8 seconds scanning a resume before deciding whether to read further — and many never read the cover letter at all. That said, cover letters still matter for: (1) Senior roles (Manager+), where judgment and communication matter; (2) Career changes, where you need to explain why you're pivoting; (3) Small companies where the founder reads every application; (4) Creative roles where writing style is part of the job. For most applications: perfect the resume first, then write a short (150–250 word) customized cover letter as a bonus. Never send a generic cover letter — that's worse than none.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I explain a career gap?</summary>
+      <p>Career gaps are more common than ever (post-COVID, sabbaticals, caregiving, upskilling). The formula: <b>be honest, brief, and forward-looking</b>. Never apologize or over-explain. Examples: "I took 8 months off to care for a family member, and I'm now ready to return full-time." "I spent 6 months completing a data science certification and building 3 portfolio projects." "I took a planned sabbatical to travel and reflect, and I'm excited to re-enter the workforce." On your resume, fill the gap with the honest label ("Career Break — Travel") rather than hiding it, which looks worse when discovered. In interviews, spend 10 seconds on the gap and the rest on why you're the right fit now.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How many pages should a resume be?</summary>
+      <p>Rules of thumb: <b>Fresher (0–2 years):</b> 1 page. <b>Mid-level (3–8 years):</b> 1 page, extend to 2 only if you have significant achievements to showcase. <b>Senior (8–15 years):</b> 2 pages. <b>Executive (15+ years):</b> 2–3 pages (or a 2-page resume + separate accomplishments addendum). Never pad a resume with irrelevant experience to fill pages — recruiters see through it. If you're struggling to fit on 1 page, cut older roles (pre-2015 can be a single line), remove outdated skills, and tighten bullet points. If you have too much and can't cut, use a clean 2-page layout with consistent formatting. Remember: a strong 1-page resume beats a weak 2-page resume every time.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>All modern browsers: Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Since the tools use only standard JavaScript and Canvas APIs (for PDF export), they work identically across all browsers. Chrome and Edge offer the smoothest experience with the fastest PDF generation and printing. Mobile browsers (Chrome on Android, Safari on iOS) work perfectly for editing resumes and filling in templates. If you plan to print a resume, we recommend doing it from desktop Chrome or Edge for the most accurate output.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does it work offline?</summary>
+      <p>Yes — after the page loads once, all career tools work fully offline. Since all processing happens locally in your browser, no internet connection is needed once the page is loaded. This is useful when traveling, in areas with poor connectivity, or for privacy-conscious users. You can switch off Wi-Fi and continue building your resume, drafting cover letters, or preparing for interviews. The only exception is the very first page load — after that, everything works offline until you refresh. Resumes generated offline can be saved as PDF and shared later when you're back online.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use these tools on mobile?</summary>
+      <p>Yes — every career tool is fully responsive and works on Android phones, iPhones, and tablets. The interface adapts to narrow screens with touch-friendly inputs. You can update your resume on the go, draft a cover letter from your phone, or practice interview questions during your commute. For resume editing with complex layouts, a laptop or desktop is more comfortable. But for quick updates — adding a new certification, tweaking your summary, or saving a draft — mobile works perfectly. Resumes built on mobile can be exported as PDF and emailed or shared via WhatsApp directly from the browser.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I create different resumes for different jobs?</summary>
+      <p>Yes — you should. Tailoring your resume for each role significantly increases callback rates. The formula: keep a "master resume" with everything (all roles, all skills, all achievements), then create a tailored version for each application by selecting the most relevant 80% and adding keywords from the job description. This takes 10–15 minutes per application but can double your response rate. The upcoming Resume Builder will support multiple resume versions — save your master, then duplicate and customize for each job. Different industries (tech vs. finance vs. marketing) also warrant different resume styles.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I know if my resume is good enough?</summary>
+      <p>Three ways to evaluate: <b>(1) Feedback loop:</b> If you're applying to 20+ jobs and getting zero callbacks, your resume needs work. A good resume gets 5–15% callback rate. <b>(2) Peer review:</b> Show it to 3 people in your industry (not just friends) and ask "What 3 things would you change?" <b>(3) ATS score:</b> Run it through an ATS checker (DocEasy's is coming soon) against a specific job description — aim for 75%+ keyword match. Red flags: typos (kills 60% of resumes), vague bullets ("responsible for..."), no numbers/metrics, more than 2 pages, dense walls of text, or missing contact info. If any of these apply, fix them before applying.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you keep logs of my resume data?</summary>
+      <p>No. We don't log resume content, personal information, career details, or any metadata about your usage. We don't track which tools you use or when. Our analytics only records anonymous page views — never resume content. Since your data never leaves your browser, there's literally nothing for us to log. You can verify this yourself: open Developer Tools → Network tab, enter your resume data, and watch for requests. Zero outgoing requests carry your information — because it never goes anywhere. This is the strongest possible privacy guarantee for any career tool. Even we cannot see your resume, salary, or interview notes.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are the salary benchmarks accurate?</summary>
+      <p>Salary benchmarks vary by source, and no single source is perfect. Most salary sites (Glassdoor, AmbitionBox, Levels.fyi, PayScale) rely on user-submitted data, which can be skewed by self-selection bias — people with higher salaries are more likely to report. DocEasy's Salary Comparison tool (coming soon) will aggregate public data from multiple sources and show you a range (min, median, max) rather than a single number. Treat it as a starting point for negotiation, not a definitive answer. For the most accurate number, combine: (1) Data from salary sites; (2) Conversations with peers in similar roles; (3) The company's own pay bands (if they publish them).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What other career tools are coming soon?</summary>
+      <p>We're actively building all 16 career tools listed on this page. Priority order: (1) Resume Builder — highest user demand; (2) Cover Letter Generator; (3) ATS Resume Checker; (4) Salary Comparison; (5) Interview Q&amp;A Bank; (6) STAR Answer Builder; (7) Negotiation Planner; (8) Offer Comparison; (9) Career Roadmap; (10) Skill Assessment; (11) Skill Gap Analysis; (12) Career Goal Planner; (13) Career Change Analyzer; (14) Learning Path Builder; (15) Professional Bio Generator; (16) Mock Interview Simulator. Want a specific tool sooner? Use the "Request Tool" link in the footer — we prioritize the most-requested tools.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I download my resume as PDF?</summary>
+      <p>Yes — the upcoming Resume Builder will export your resume as a print-ready PDF via your browser's built-in "Print → Save as PDF" option. The layout is optimized for A4 paper with clean margins and ATS-friendly formatting. You can also choose between multiple templates: minimal (classic), modern (with accent color), and creative (with sidebar). The PDF is generated entirely in your browser — no server round-trip, no delay, no file upload. For the best PDF output, use Chrome or Edge on desktop. On mobile, Safari and Chrome also export PDFs, though layout may be slightly different due to mobile font rendering.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is this different from LinkedIn or Naukri?</summary>
+      <p>LinkedIn, Naukri, and Indeed are <b>job platforms</b> — their business is connecting employers with candidates, and they make money by charging employers for job postings and candidates for premium features. DocEasy is a <b>tool provider</b> — we don't list jobs, don't charge employers, and don't upsell premium. We just give you free tools to build your resume, prepare for interviews, and negotiate salaries. Use DocEasy to build your resume, then use LinkedIn/Naukri to find jobs and apply. They're complementary — one helps you create, the other helps you find. DocEasy never charges for anything, never watermarks output, and never asks for your email.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How often should I update my resume?</summary>
+      <p>At minimum: every 6 months, even if you're not job hunting. Here's why: (1) You'll forget specific achievements if you wait too long — write them down while fresh; (2) Annual reviews and project completions are worth capturing; (3) Having an up-to-date resume makes it easy to apply quickly when opportunities arise; (4) Your resume grows stale as your skills and experience grow. Best practice: after every major project or accomplishment, add a bullet point to your "master resume". Then, when you actually need to apply, tailoring for a specific role takes 10 minutes instead of 3 hours.</p>
+    </details>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Related DocEasy Categories</h3>
+    <p style="text-align:center; color:var(--subtext-color); margin-bottom:20px; font-size:14px;">Explore other free tools on DocEasy</p>
+    <ul style="max-width:680px; margin:0 auto 20px; padding-left:24px; line-height:1.9; font-size:15px; color:var(--subtext-color);">
+      <li><a href="categories.html" style="color:#8b5cf6; font-weight:600; text-decoration:underline;">All Categories</a> — Browse all 35+ tools</li>
+      <li><a href="business-tools.html" style="color:#8b5cf6; font-weight:600; text-decoration:underline;">Business Tools</a> — GST, invoices, stamp duty</li>
+      <li><a href="finance-tools.html" style="color:#8b5cf6; font-weight:600; text-decoration:underline;">Finance Tools</a> — Loans, tax, salary, SIP</li>
+      <li><a href="printing-tools.html" style="color:#8b5cf6; font-weight:600; text-decoration:underline;">Printing Tools</a> — Aadhaar, ID card, passport</li>
+      <li><a href="media-tools.html" style="color:#8b5cf6; font-weight:600; text-decoration:underline;">Media Tools</a> — Screen recorder, voice recorder</li>
+      <li><a href="index.html#pdf-tools" style="color:#8b5cf6; font-weight:600; text-decoration:underline;">PDF Tools</a> — Merge, split, compress PDFs</li>
+    </ul>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Conclusion</h3>
+    <p style="max-width:860px; margin:20px auto 0; font-size:15.5px; color:var(--subtext-color); line-height:1.8; text-align:center;">
+      DocEasy's Career Tools give you fast, private, and free utilities for every stage of your professional journey — from building your first resume to negotiating your next salary. No signup, no data sharing, no watermarks. Whether you're a fresher preparing for your first interview or a senior professional planning a career switch, these tools give you the edge you need, all in your browser.
+    </p>
+
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  var searchInput = document.getElementById('toolSearch');
+  var pills = document.getElementById('filterPills');
+  var tiles = document.querySelectorAll('.tool-tile');
+  var cats = document.querySelectorAll('.cat-block');
+  var noResults = document.getElementById('noResults');
+  var activeFilter = 'all';
+
+  function applyFilters() {
+    var q = (searchInput.value || '').toLowerCase().trim();
+    var visibleCount = 0;
+
+    cats.forEach(function (cat) {
+      var catKey = cat.getAttribute('data-cat');
+      var catVisible = false;
+
+      cat.querySelectorAll('.tool-tile').forEach(function (tile) {
+        var text = (tile.textContent + ' ' + (tile.getAttribute('data-tags') || '')).toLowerCase();
+        var matchSearch = !q || text.indexOf(q) !== -1;
+        var matchFilter = activeFilter === 'all' || catKey === activeFilter;
+        var show = matchSearch && matchFilter;
+        tile.style.display = show ? '' : 'none';
+        if (show) { catVisible = true; visibleCount++; }
+      });
+
+      cat.style.display = catVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  pills.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    pills.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    activeFilter = btn.getAttribute('data-filter');
+    applyFilters();
+  });
+})();
+</script>
+</body>
+</html>
