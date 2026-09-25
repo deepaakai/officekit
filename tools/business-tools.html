@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Business Tools — GST, Invoice, Stamp Duty Calculators | DocEasy</title>
+<meta name="description" content="Free online business tools — GST calculator, stamp duty, HS code finder, invoice generator, quotation maker. No signup, browser-based, 100% private.">
+<meta name="keywords" content="business tools, gst calculator, stamp duty calculator, hs code finder, invoice generator, quotation maker, business document tools">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/business-tools.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Business Tools — GST, Invoice, Stamp Duty Calculators | DocEasy">
+<meta property="og:description" content="Free online business tools — GST calculator, invoice generator, stamp duty, HS code finder.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/business-tools.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Business Tools — GST, Invoice, Stamp Duty | DocEasy">
+<meta name="twitter:description" content="Free online business tools. No signup, 100% private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Business Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/business-tools.html",
+  "description": "Free online business tools — GST calculator, stamp duty, HS code finder, invoice generator, quotation maker."
+}
+</script>
+
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
+<style>
+* { box-sizing: border-box; }
+.main-wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px 80px; overflow-x: hidden; }
+
+/* HERO */
+.bhero {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 42px 32px;
+  margin-top: 34px;
+  background: linear-gradient(135deg, #b45309 0%, #d97706 55%, #f59e0b 100%);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(217,119,6,0.28);
+}
+.bhero::before, .bhero::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+}
+.bhero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.bhero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.bhero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  margin-bottom: 14px; backdrop-filter: blur(6px);
+  position: relative; z-index: 1;
+}
+.bhero h1 {
+  font-size: clamp(26px, 4.5vw, 42px); font-weight: 800;
+  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
+  position: relative; z-index: 1;
+}
+.bhero p {
+  font-size: clamp(14px, 2vw, 16.5px); line-height: 1.6;
+  max-width: 680px; margin: 0; opacity: 0.92;
+  position: relative; z-index: 1;
+}
+.bhero-stats {
+  display: flex; gap: 26px; margin-top: 24px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.bhero-stats .stat { display: flex; flex-direction: column; }
+.bhero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.bhero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.85; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar {
+  display: flex; gap: 12px; align-items: center;
+  margin: 34px 0 22px; flex-wrap: wrap;
+}
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 500px; }
+.search-box svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
+}
+.search-box input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 14px; outline: none; transition: all 0.18s;
+}
+.search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button {
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 12.5px; font-weight: 700; cursor: pointer;
+  transition: all 0.18s; font-family: inherit;
+}
+.filter-pills button:hover { border-color: #d97706; color: #d97706; }
+.filter-pills button.active {
+  background: #d97706; border-color: #d97706; color: #fff;
+  box-shadow: 0 6px 16px rgba(217,119,6,0.28);
+}
+
+/* CATEGORY BLOCK */
+.cat-block { margin-top: 42px; scroll-margin-top: 90px; }
+.cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-head .icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, #d97706, #b45309);
+}
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count {
+  margin-left: auto; font-size: 11.5px; font-weight: 700;
+  color: var(--subtext-color); background: var(--card-hover);
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+.tool-tile {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none; color: var(--text-color);
+  transition: all 0.2s ease; min-height: 140px;
+  position: relative;
+}
+.tool-tile:hover {
+  border-color: #d97706;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(217,119,6,0.14);
+}
+.tool-tile .tile-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  background: rgba(217,119,6,0.08);
+  color: #d97706;
+  display: grid; place-items: center;
+  transition: transform 0.22s; flex-shrink: 0;
+}
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag {
+  position: absolute; top: 9px; right: 9px;
+  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
+}
+.tool-tile .tag.soon { background: linear-gradient(135deg,#64748b,#475569); }
+.tool-tile.soon { opacity: 0.78; cursor: not-allowed; }
+.tool-tile.soon:hover { transform: none; border-color: var(--border-color); box-shadow: none; }
+
+/* HOW TO USE */
+.how-to-use { max-width: 940px; margin: 68px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #d97706; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* FAQ */
+.deep-faq { max-width: 900px; margin: 68px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #d97706; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #d97706; font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: #d97706; font-weight: 600; }
+
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .bhero { padding: 30px 20px; border-radius: 18px; margin-top: 22px; }
+  .bhero-stats { gap: 18px; margin-top: 18px; }
+  .bhero-stats .stat b { font-size: 18px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tool-tile { min-height: 124px; padding: 15px 12px 13px; }
+  .tool-tile h3 { font-size: 12.5px; }
+  .tool-tile p { font-size: 10px; }
+  .cat-head h2 { font-size: 16.5px; }
+  .cat-head .count { display: none; }
+  .toolbar { margin: 24px 0 18px; }
+  .search-box { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .filter-pills button { padding: 8px 12px; font-size: 11.5px; }
+  .tool-tile { padding: 13px 11px 11px; min-height: 116px; }
+  .tool-tile .tile-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .tool-tile .tile-icon svg { width: 18px; height: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <!-- HERO -->
+  <section class="bhero">
+    <div class="bhero-badge">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        <rect x="2" y="6" width="20" height="14" rx="2"/>
+      </svg>
+      BUSINESS TOOLS
+    </div>
+    <h1>Business Calculators &amp; Documents</h1>
+    <p>Free browser-based tools for Indian businesses — GST calculator, stamp duty estimator, HS code finder, invoice generator, and quotation maker. No signup, no upload, 100% private.</p>
+    <div class="bhero-stats">
+      <div class="stat"><b>12+</b><span>Business Tools</span></div>
+      <div class="stat"><b>0</b><span>Uploads</span></div>
+      <div class="stat"><b>₹0</b><span>Cost</span></div>
+      <div class="stat"><b>Free</b><span>Forever</span></div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <input type="text" id="toolSearch" placeholder="Search business tools — GST, invoice, stamp duty, HS code…">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="tax">Tax &amp; GST</button>
+      <button data-filter="docs">Documents</button>
+      <button data-filter="finance">Finance</button>
+      <button data-filter="trade">Trade &amp; Import</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">No business tools match your search.</div>
+
+  <!-- ================= TAX & GST ================= -->
+  <section class="cat-block" data-cat="tax">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+      </div>
+      <div>
+        <h2>Tax &amp; GST Tools</h2>
+        <p>Calculate GST, reverse GST, TDS, and estimate stamp duty for your documents.</p>
+      </div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-tile" href="tools/gst-calculator.html" data-tags="gst calculator tax cgst sgst igst">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+        <span class="tag">NEW</span>
+        <h3>GST Calculator</h3>
+        <p>CGST, SGST, IGST on any amount</p>
+      </a>
+      <a class="tool-tile" href="tools/reverse-gst.html" data-tags="reverse gst calculator inclusive exclusive">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <span class="tag">NEW</span>
+        <h3>Reverse GST Calculator</h3>
+        <p>Extract GST from inclusive price</p>
+      </a>
+      <div class="tool-tile soon" data-tags="tds calculator tax deduction source">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>TDS Calculator</h3>
+        <p>Tax deduction at source by section</p>
+      </div>
+      <div class="tool-tile soon" data-tags="stamp duty calculator agreement property">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Stamp Duty Calculator</h3>
+        <p>For agreements and property</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DOCUMENTS ================= -->
+  <section class="cat-block" data-cat="docs">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg>
+      </div>
+      <div>
+        <h2>Business Documents</h2>
+        <p>Generate invoices, quotations, purchase orders, and other business documents.</p>
+      </div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-tile" href="tools/invoice-generator.html" data-tags="invoice generator bill gst business">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
+        <span class="tag">HOT</span>
+        <h3>Invoice Generator</h3>
+        <p>Professional GST invoices</p>
+      </a>
+      <div class="tool-tile soon" data-tags="quotation maker quote estimate">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Quotation Maker</h3>
+        <p>Send professional quotes</p>
+      </div>
+      <div class="tool-tile soon" data-tags="purchase order generator po business">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 12h6M9 16h6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Purchase Order Maker</h3>
+        <p>Professional POs in seconds</p>
+      </div>
+      <div class="tool-tile soon" data-tags="delivery challan generator gst">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Delivery Challan</h3>
+        <p>GST-compliant challans</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FINANCE ================= -->
+  <section class="cat-block" data-cat="finance">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"/></svg>
+      </div>
+      <div>
+        <h2>Business Finance</h2>
+        <p>EMI, interest, profitability, and break-even calculators for business planning.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="business loan emi calculator interest">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Business Loan EMI</h3>
+        <p>Calculate monthly EMI</p>
+      </div>
+      <div class="tool-tile soon" data-tags="break even analysis calculator">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Break-Even Calculator</h3>
+        <p>Find your profitable point</p>
+      </div>
+      <div class="tool-tile soon" data-tags="profit margin calculator markup">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Profit Margin Calculator</h3>
+        <p>Margin, markup, selling price</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRADE & IMPORT ================= -->
+  <section class="cat-block" data-cat="trade">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/></svg>
+      </div>
+      <div>
+        <h2>Trade &amp; Import</h2>
+        <p>HS code lookup, import duty estimate, and international trade helpers.</p>
+      </div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-tile soon" data-tags="hs code finder hsn lookup product">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>HS Code Finder</h3>
+        <p>Find HSN code by product</p>
+      </div>
+      <div class="tool-tile soon" data-tags="import duty calculator customs">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Import Duty Calculator</h3>
+        <p>Estimate customs duty</p>
+      </div>
+      <div class="tool-tile soon" data-tags="currency converter exchange rate">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Currency Converter</h3>
+        <p>Real-time exchange rates</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO USE -->
+  <section class="how-to-use">
+    <h2>How to Use Business Tools</h2>
+    <p class="lead">Four simple steps to calculate taxes, generate documents, or estimate costs — all in your browser.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Pick a Tool</h3>
+        <p>Choose from GST, invoice, stamp duty, or any other business category above.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Enter Your Data</h3>
+        <p>Type amounts, dates, or upload a document. Everything stays on your device.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Get Instant Results</h3>
+        <p>Real-time calculations, formatted documents, and preview — no waiting.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Download or Print</h3>
+        <p>Save your invoice as PDF, print it, or share via WhatsApp — no signup needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Business Tools — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about DocEasy's business tools — GST, invoices, stamp duty, HS codes, and compliance for Indian businesses.</p>
+
+    <details class="faq-item" open>
+      <summary>What are DocEasy Business Tools?</summary>
+      <p>DocEasy Business Tools are a growing collection of free, browser-based utilities for Indian small businesses, freelancers, shopkeepers, and eMitra/CSC operators. They include a GST calculator (with CGST, SGST, IGST splits), reverse GST calculator, invoice generator, and (coming soon) stamp duty calculator, quotation maker, purchase order generator, HS code finder, and business loan EMI calculator. Every tool runs entirely in your browser — no uploads, no signup, no subscription fees. Unlike SaaS accounting software that charges ₹500–5,000 per month, DocEasy's business tools are completely free and privacy-first. Perfect for one-off calculations, quick invoice generation, or daily business tasks.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are these business tools really free?</summary>
+      <p>Yes — every tool is 100% free, forever, with no strings attached. There's no signup, no email, no credit card, no trial period, no daily limit, and no premium tier. You can calculate GST on a million invoices, generate unlimited quotations, or estimate stamp duty as many times as you want — all free. The site is supported by lightweight display ads elsewhere on the site. We don't sell your data, we don't track your business, and we don't ask for your email to unlock features. Unlike most business tools that lure you with a free trial and then charge ₹500–5,000 per month, DocEasy stays free forever.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my business data safe?</summary>
+      <p>Completely safe. Every business tool runs entirely client-side in your browser — no data is ever uploaded to any server. When you enter invoice amounts, GST rates, or party names, they live only in your browser's memory. Nothing is transmitted, logged, or stored anywhere. You can verify this yourself: open Developer Tools (F12), go to the Network tab, enter your invoice data, and watch for requests. You'll see zero outgoing data carrying your business information. This makes DocEasy safe for handling confidential invoices, client details, and financial data — even under NDA.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How accurate is the GST calculator?</summary>
+      <p>The GST calculator uses the official GST slabs and formulas as prescribed by the CBIC (Central Board of Indirect Taxes and Customs). It supports all current GST rates: 0%, 0.25%, 3%, 5%, 12%, 18%, and 28%. For intra-state transactions, GST splits equally into CGST (Central GST) and SGST (State GST). For inter-state transactions, IGST (Integrated GST) applies at the full rate. The calculator handles both inclusive and exclusive GST, and correctly computes the tax amount, taxable value, and total. The math is precise to 2 decimal places — same as most commercial accounting software.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is the difference between CGST, SGST, and IGST?</summary>
+      <p>Under India's GST regime, taxes are split based on whether the transaction is intra-state or inter-state. <b>CGST (Central GST):</b> The central government's share of tax on intra-state sales. <b>SGST (State GST):</b> The state government's share on intra-state sales. Together, CGST + SGST equal the total GST rate (e.g., 9% + 9% = 18%). <b>IGST (Integrated GST):</b> Applies to inter-state sales (between different states). IGST is collected by the central government and later distributed to the destination state. For example, a sale within Maharashtra attracts CGST + SGST, while a sale from Maharashtra to Karnataka attracts IGST. DocEasy's GST calculator lets you pick intra-state or inter-state and auto-splits the tax correctly.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I generate a GST-compliant invoice?</summary>
+      <p>Yes — DocEasy's Invoice Generator produces GST-compliant invoices that meet the requirements under Rule 46 of the CGST Rules, 2017. The invoice includes: your business name, address, and GSTIN; invoice number and date; buyer's name, address, and GSTIN (if registered); place of supply; HSN/SAC codes; description of goods/services; quantity and rate; taxable value; CGST, SGST, or IGST (auto-computed); total amount in figures and words; and signature. You can download the invoice as PDF and share it with clients via WhatsApp or email. For turnover above ₹5 crore, we recommend consulting a CA to ensure additional e-invoicing requirements are met.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is reverse GST calculation and when do I need it?</summary>
+      <p>Reverse GST calculation extracts the base price and tax amount from a total that already includes GST. For example, if a customer pays ₹1,180 for a product and you know the GST rate is 18%, the reverse calculation tells you that the base price is ₹1,000 and GST is ₹180. This is useful when: (1) You're working backwards from a customer's budget ("I have ₹10,000 total — what's the base amount at 18% GST?"); (2) You receive an invoice that shows only the total and you need to verify the tax; (3) You're booking expenses where the total is known but the GST split needs to be recorded separately. DocEasy's Reverse GST Calculator handles this in one click.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is stamp duty and why do I need to calculate it?</summary>
+      <p>Stamp duty is a tax levied by state governments on legal documents like agreements, property transfers, affidavits, and contracts. The rate varies by state and document type — for example, Maharashtra charges 5% + ₹5,000 for property transfer, while Delhi charges 4–6% depending on the buyer's gender. Stamp duty must be paid before or at the time of document execution, otherwise the document becomes inadmissible as evidence in court. Our upcoming Stamp Duty Calculator will help you estimate the correct duty for common document types across Indian states. This is especially useful for rental agreements, sale deeds, gift deeds, and partnership contracts.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use these tools for my eMitra or CSC center?</summary>
+      <p>Absolutely — DocEasy is designed with eMitra and CSC operators in mind. You can generate invoices for customer services, calculate GST on products, create quotations for bulk orders, and (coming soon) estimate stamp duty for agreements. Since everything runs locally in your browser, you can process dozens of customers per hour without any server delays or subscription costs. The tools work offline after the first load, which is critical in areas with unreliable internet. All processing is local, so customer data stays on your device — safe for KYC and financial information. Many eMitra operators already use DocEasy's printing tools alongside these business tools.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are these tools compliant with Indian tax laws?</summary>
+      <p>The tools implement the current GST slabs, reverse GST formulas, and CGST rules for invoicing. However, tax laws change frequently — rates can be revised in budget announcements, and rules can be updated by CBIC circulars. DocEasy aims to keep the tools in sync with official rates, but we always recommend verifying critical calculations against the CBIC website (cbic-gst.gov.in) or consulting a Chartered Accountant before filing. These tools are intended for estimation, quick calculations, and daily business operations — not as a substitute for professional tax advice or accounting software. For complex scenarios like composite supply, mixed supply, or export transactions, consult a CA.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I download invoices as PDF?</summary>
+      <p>Yes — the Invoice Generator creates print-ready invoices that can be saved as PDF via your browser's built-in "Print → Save as PDF" option. The invoice layout is optimized for A4 paper with correct margins, GST breakdown, and signature space. You can also print directly to a physical printer. The PDF is generated entirely in your browser — no server round-trip, no delay, no file upload. For bulk invoices, simply generate one, save it, and start a new invoice in the same tab. The invoice format is compliant with Rule 46 of CGST Rules and includes all mandatory fields.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which GST rates are supported?</summary>
+      <p>DocEasy's GST Calculator supports all current Indian GST rates: <b>0%</b> (exempt goods), <b>0.25%</b> (rough diamonds), <b>3%</b> (gold, silver), <b>5%</b> (essential items, restaurants), <b>12%</b> (processed foods, business class air travel), <b>18%</b> (most goods and services — default), and <b>28%</b> (luxury items, cars, tobacco). You can also enter custom rates for special cases. The calculator automatically splits the tax into CGST + SGST for intra-state transactions or IGST for inter-state transactions. When GST rates are revised in future budgets, we'll update the calculator within days of the official announcement.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need to register for GST to use these tools?</summary>
+      <p>No — these tools are for everyone, registered or not. If you're GST-registered, you can use them to generate compliant invoices, calculate tax on sales, and verify input credit claims. If you're not registered (turnover below ₹40 lakh for goods, ₹20 lakh for services), you can still use the GST calculator to understand what tax would apply if you were registered, or to compare prices from GST-registered vendors. If you're a freelancer or small business owner considering GST registration, use these tools to estimate your compliance costs and decide if registration makes financial sense.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is this different from Tally or Zoho Books?</summary>
+      <p>Tally, Zoho Books, and similar software are full accounting suites — they handle ledgers, inventory, payroll, bank reconciliation, and tax filing. DocEasy is not a replacement for those. Instead, DocEasy offers <b>quick, one-off tools</b> for common business tasks: calculating GST on a single invoice, generating a quotation, estimating stamp duty. You use DocEasy for quick tasks and your accounting software for bookkeeping. Think of it as the calculator next to your ledger — not the ledger itself. For businesses that don't need full accounting software (freelancers, shopkeepers with simple books), DocEasy might be all you need. For growing businesses, it's a handy companion to Tally or Zoho.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>All modern browsers: Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Since the tools use only standard JavaScript and Canvas APIs, they work identically across all browsers. Chrome and Edge offer the smoothest experience for PDF generation and printing. Mobile browsers (Chrome on Android, Safari on iOS) work perfectly for calculations and invoice generation. If you see layout issues on an old browser, updating to the latest version usually fixes them.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does it work offline?</summary>
+      <p>Yes — after the page loads once, all business tools work fully offline. Since calculations and invoice generation happen entirely in your browser, no internet connection is needed once the page is loaded. This is crucial for eMitra and CSC operators in rural areas with unreliable connectivity. You can switch off Wi-Fi and continue calculating GST, generating invoices, or estimating stamp duty. The only exception is the very first page load — after that, everything works offline. Invoices generated offline can be saved as PDF and shared later when you're back online.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use these tools on mobile?</summary>
+      <p>Yes — every business tool is fully responsive and works on Android phones, iPhones, and tablets. The interface adapts to narrow screens with touch-friendly inputs. You can calculate GST on the go, generate invoices on your phone, and share them via WhatsApp directly from your mobile browser. On iOS, use Safari to save invoices as PDF to Files. On Android, Chrome lets you download the invoice directly. For heavy invoice generation (20+ invoices per day), a desktop or laptop is more efficient, but mobile works fine for quick calculations and one-off invoices.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I customize the invoice with my logo and branding?</summary>
+      <p>Yes — the Invoice Generator lets you upload your business logo (PNG or JPG), which appears at the top of every invoice. You can also customize: business name, address, phone, email, GSTIN, bank account details, terms and conditions, and footer text. The layout adapts to your branding while keeping the GST-compliant format intact. Your logo is stored only in your browser's memory during the session — nothing is uploaded. For best results, use a horizontal logo (400×100 px or similar) with transparent or white background.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you keep logs of my business data?</summary>
+      <p>No. We don't log invoice numbers, customer names, GST amounts, business names, or any metadata about your usage. We don't track which tools you use or when. Our analytics only records anonymous page views — never business content. Since your data never leaves your browser, there's literally nothing for us to log. You can verify this yourself: open Developer Tools → Network tab, enter invoice data, and watch for requests. Zero outgoing requests carry your business data — because it never goes anywhere. This is the strongest possible privacy guarantee for any business tool.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are the invoices legally valid?</summary>
+      <p>Yes — invoices generated with DocEasy contain all mandatory fields required under Rule 46 of CGST Rules, 2017. They are legally valid for GST compliance, provided: (1) You're registered for GST (if your turnover exceeds the threshold); (2) You sign the invoice physically or digitally before sharing; (3) You maintain sequential invoice numbering as required by GST law; (4) You file your GST returns (GSTR-1) with the correct invoice details. The invoice format includes all mandatory fields — GSTIN, HSN/SAC, place of supply, tax breakdown, amount in words. For e-invoicing requirements (turnover above ₹5 crore), consult a CA — DocEasy's invoices work as a base but may need IRN integration.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I create invoices in multiple currencies?</summary>
+      <p>Yes — the Invoice Generator supports multiple currencies. You can select from INR, USD, EUR, GBP, AED, and other common currencies. For export invoices (under LUT or with payment of IGST), you can specify the currency and exchange rate. For domestic invoices, INR is default. The currency symbol appears before amounts throughout the invoice. Note: GST laws require invoices in INR for domestic transactions — foreign currency invoices are for exports and imports. If you're billing a foreign client, select their currency and mention the applicable export regulations (LUT number, shipping bill, etc.) in the notes section.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What other business tools are coming soon?</summary>
+      <p>We're actively building several more business tools: (1) <b>Quotation Maker</b> — professional quotes with validity dates; (2) <b>Purchase Order Generator</b> — POs with automatic GST; (3) <b>Delivery Challan</b> — GST-compliant challans for goods movement; (4) <b>Stamp Duty Calculator</b> — state-wise estimates for agreements; (5) <b>TDS Calculator</b> — tax deduction by section (194C, 194J, etc.); (6) <b>Business Loan EMI</b> — monthly EMI with amortization schedule; (7) <b>Break-Even Calculator</b> — find your profitable point; (8) <b>Profit Margin Calculator</b> — margin, markup, selling price; (9) <b>HS Code Finder</b> — HSN lookup by product description; (10) <b>Import Duty Calculator</b> — customs duty estimates. Request a specific tool via the "Request Tool" link in the footer.</p>
+    </details>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Related DocEasy Categories</h3>
+    <p style="text-align:center; color:var(--subtext-color); margin-bottom:20px; font-size:14px;">Explore other free tools on DocEasy</p>
+    <ul style="max-width:680px; margin:0 auto 20px; padding-left:24px; line-height:1.9; font-size:15px; color:var(--subtext-color);">
+      <li><a href="categories.html" style="color:#d97706; font-weight:600; text-decoration:underline;">All Categories</a> — Browse all 35+ tools</li>
+      <li><a href="printing-tools.html" style="color:#d97706; font-weight:600; text-decoration:underline;">Printing Tools</a> — Aadhaar, ID card, passport print</li>
+      <li><a href="media-tools.html" style="color:#d97706; font-weight:600; text-decoration:underline;">Media Tools</a> — Screen recorder, voice recorder, editor</li>
+      <li><a href="index.html#pdf-tools" style="color:#d97706; font-weight:600; text-decoration:underline;">PDF Tools</a> — Merge, split, compress PDFs</li>
+      <li><a href="index.html#image-tools" style="color:#d97706; font-weight:600; text-decoration:underline;">Image Tools</a> — Compress, convert, resize images</li>
+      <li><a href="index.html#utility-tools" style="color:#d97706; font-weight:600; text-decoration:underline;">Utility Tools</a> — QR codes, invoices, word counter</li>
+    </ul>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Conclusion</h3>
+    <p style="max-width:860px; margin:20px auto 0; font-size:15.5px; color:var(--subtext-color); line-height:1.8; text-align:center;">
+      DocEasy's Business Tools give you fast, private, and free utilities for Indian businesses — from GST calculation to invoice generation to stamp duty estimation. No signup, no subscription, no upload. Whether you're a freelancer, shopkeeper, eMitra operator, or growing business, these tools save you time and money every day.
+    </p>
+
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  var searchInput = document.getElementById('toolSearch');
+  var pills = document.getElementById('filterPills');
+  var tiles = document.querySelectorAll('.tool-tile');
+  var cats = document.querySelectorAll('.cat-block');
+  var noResults = document.getElementById('noResults');
+  var activeFilter = 'all';
+
+  function applyFilters() {
+    var q = (searchInput.value || '').toLowerCase().trim();
+    var visibleCount = 0;
+
+    cats.forEach(function (cat) {
+      var catKey = cat.getAttribute('data-cat');
+      var catVisible = false;
+
+      cat.querySelectorAll('.tool-tile').forEach(function (tile) {
+        var text = (tile.textContent + ' ' + (tile.getAttribute('data-tags') || '')).toLowerCase();
+        var matchSearch = !q || text.indexOf(q) !== -1;
+        var matchFilter = activeFilter === 'all' || catKey === activeFilter;
+        var show = matchSearch && matchFilter;
+        tile.style.display = show ? '' : 'none';
+        if (show) { catVisible = true; visibleCount++; }
+      });
+
+      cat.style.display = catVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  pills.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    pills.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    activeFilter = btn.getAttribute('data-filter');
+    applyFilters();
+  });
+})();
+</script>
+</body>
+</html>
