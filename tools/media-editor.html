@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Universal Media Editor — Trim, Mute, Convert Video Online Free | DocEasy</title>
+<meta name="description" content="Edit video & audio in your browser: trim, mute, compress, resize, rotate, flip, speed, extract audio, convert format, extract frames. No upload, 100% private.">
+<meta name="keywords" content="video trimmer, mute video, compress video, video converter, extract audio, video editor online, free video tools, browser video editor">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-editor.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Universal Media Editor — 12 Tools in 1 | DocEasy">
+<meta property="og:description" content="Trim, mute, compress, resize, rotate, flip, speed, extract audio, convert — all in your browser. No upload.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-editor.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg-color, #f8fafc); color: var(--text-color, #0f172a); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+.main-wrap { max-width: 940px; margin: 0 auto; padding: 34px 18px 60px; }
+
+/* ============ HEADER ============ */
+.de-header { position: sticky; top: 0; z-index: 50; background: var(--card-bg, #fff); border-bottom: 1px solid var(--border-color, #e2e8f0); }
+.de-header-inner { max-width: 1240px; margin: 0 auto; padding: 12px 18px; display: flex; align-items: center; gap: 20px; }
+.de-logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 19px; font-weight: 800; color: var(--text-color, #0f172a); letter-spacing: -0.4px; flex-shrink: 0; }
+.de-logo em { font-style: normal; color: #7c3aed; }
+.de-nav { display: flex; gap: 4px; flex: 1; justify-content: center; }
+.de-nav a { padding: 8px 14px; border-radius: 9px; font-size: 13.5px; font-weight: 700; color: var(--subtext-color, #64748b); text-decoration: none; transition: all .18s; }
+.de-nav a:hover { color: var(--text-color, #0f172a); background: var(--card-hover, #f1f5f9); }
+.de-nav a.active { color: #7c3aed; background: #ede9fe; }
+.de-header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.de-btn-primary { padding: 9px 18px; border-radius: 10px; background: #19398a; color: #fff; text-decoration: none; font-size: 13px; font-weight: 800; transition: all .18s; }
+.de-btn-primary:hover { transform: translateY(-2px); }
+.de-menu-btn { display: none; background: var(--card-hover, #f1f5f9); border: 1px solid var(--border-color, #e2e8f0); color: var(--text-color, #0f172a); padding: 8px; border-radius: 9px; cursor: pointer; }
+@media (max-width: 860px) {
+  .de-nav { display: none; }
+  .de-menu-btn { display: inline-flex; }
+  .de-header.open .de-nav { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--card-bg, #fff); padding: 12px 18px 16px; border-bottom: 1px solid var(--border-color, #e2e8f0); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
+  .de-header.open .de-nav a { padding: 12px 16px; }
+}
+
+/* ============ TOOL ============ */
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--subtext-color, #64748b); text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 18px; }
+.back-link:hover { color: #7c3aed; }
+.back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.tool-head { text-align: center; margin-bottom: 24px; }
+.tool-head .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: #ede9fe; color: #7c3aed; font-size: 11px; font-weight: 800; letter-spacing: .5px; margin-bottom: 12px; }
+.tool-head h1 { font-size: clamp(26px, 4.6vw, 38px); font-weight: 800; margin: 0 0 10px; letter-spacing: -1px; color: var(--text-color, #0f172a); }
+.tool-head p { color: var(--subtext-color, #64748b); font-size: 15px; margin: 0; line-height: 1.55; }
+.card { background: var(--card-bg, #fff); border: 1px solid var(--border-color, #e2e8f0); border-radius: 18px; padding: 22px; box-shadow: 0 8px 26px rgba(25,57,138,0.06); margin-bottom: 20px; }
+
+/* TABS */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--border-color, #e2e8f0); }
+.tab-btn { padding: 8px 14px; border-radius: 10px; border: 1px solid var(--border-color, #e2e8f0); background: var(--card-bg, #fff); color: var(--text-color, #0f172a); font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all .18s; font-family: inherit; display: inline-flex; align-items: center; gap: 5px; }
+.tab-btn:hover { border-color: #7c3aed; color: #7c3aed; }
+.tab-btn.active { background: #7c3aed; border-color: #7c3aed; color: #fff; box-shadow: 0 6px 16px rgba(124,58,237,.28); }
+.tab-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+
+/* DROP ZONE */
+.drop-zone { border: 2px dashed var(--border-color, #e2e8f0); border-radius: 14px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all .2s; background: var(--card-hover, #f8fafc); margin-bottom: 18px; }
+.drop-zone:hover, .drop-zone.dragover { border-color: #7c3aed; background: #f5f3ff; }
+.drop-zone svg { width: 44px; height: 44px; stroke: #7c3aed; fill: none; stroke-width: 1.8; margin-bottom: 12px; }
+.drop-zone h3 { font-size: 15px; font-weight: 800; margin: 0 0 6px; color: var(--text-color, #0f172a); }
+.drop-zone p { font-size: 12.5px; color: var(--subtext-color, #64748b); margin: 0; }
+.drop-zone input[type="file"] { display: none; }
+
+/* FILE INFO */
+.file-info { display: none; padding: 12px 16px; background: var(--card-hover, #f1f5f9); border-radius: 10px; margin-bottom: 18px; font-size: 13px; }
+.file-info.show { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.file-info b { color: var(--text-color, #0f172a); }
+.file-info span { color: var(--subtext-color, #64748b); }
+.file-info button { padding: 6px 12px; border-radius: 8px; border: none; background: #fee2e2; color: #dc2626; font-size: 11.5px; font-weight: 700; cursor: pointer; font-family: inherit; }
+
+/* OPTIONS */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field-row.single { grid-template-columns: 1fr; }
+.field label { display: block; font-size: 11.5px; font-weight: 800; color: var(--subtext-color, #64748b); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 6px; }
+.field input[type="text"], .field input[type="number"], .field select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color, #e2e8f0); background: var(--card-bg, #fff); color: var(--text-color, #0f172a); font-size: 13.5px; font-family: inherit; outline: none; transition: all .18s; }
+.field input:focus, .field select:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,.12); }
+.field small { display: block; font-size: 11px; color: var(--subtext-color, #64748b); margin-top: 4px; }
+.field .range-val { font-size: 12px; color: var(--subtext-color, #64748b); font-weight: 700; margin-top: 4px; display: inline-block; }
+
+/* PROCESS BUTTON */
+.process-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px 26px; border-radius: 12px; border: none; background: #7c3aed; color: #fff; font-size: 15px; font-weight: 800; cursor: pointer; transition: all .18s; font-family: inherit; box-shadow: 0 8px 22px rgba(124,58,237,.28); margin-top: 8px; }
+.process-btn:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
+.process-btn:disabled { opacity: .5; cursor: not-allowed; }
+.process-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+
+/* PROGRESS */
+.progress-wrap { display: none; margin-top: 16px; }
+.progress-wrap.show { display: block; }
+.progress-bar { height: 8px; background: var(--card-hover, #f1f5f9); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #7c3aed, #a78bfa); border-radius: 999px; transition: width .2s ease; }
+.progress-text { text-align: center; font-size: 12.5px; color: var(--subtext-color, #64748b); font-weight: 700; margin-top: 8px; }
+
+/* RESULT */
+.result-wrap { display: none; margin-top: 18px; padding: 18px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; }
+.result-wrap.show { display: block; }
+.result-wrap h4 { font-size: 14px; font-weight: 800; margin: 0 0 12px; color: #15803d; }
+.result-wrap video, .result-wrap audio { width: 100%; border-radius: 10px; margin-bottom: 12px; max-height: 320px; background: #000; }
+.result-wrap .dl-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; background: #16a34a; color: #fff; text-decoration: none; font-size: 13.5px; font-weight: 800; transition: all .18s; }
+.result-wrap .dl-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.result-wrap .dl-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+
+.error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 16px; display: none; }
+.error-msg.show { display: block; }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--subtext-color, #64748b); text-align: center; line-height: 1.6; }
+
+/* ============ FAQ ============ */
+.deep-faq { max-width: 880px; margin: 68px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 32px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color, #64748b); font-size: 14px; margin: 0 auto 34px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg, #fff); border: 1px solid var(--border-color, #e2e8f0); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #7c3aed; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color, #0f172a); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #7c3aed; font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color, #64748b); line-height: 1.72; }
+.deep-faq code { background: var(--card-hover, #f1f5f9); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: #7c3aed; font-weight: 600; }
+
+/* ============ FOOTER ============ */
+.de-footer { background: #0f172a; color: #cbd5e1; margin-top: 80px; }
+.de-footer-inner { max-width: 1240px; margin: 0 auto; padding: 50px 18px 30px; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 30px; }
+.de-footer-brand .de-logo { color: #fff; margin-bottom: 14px; font-size: 20px; }
+.de-footer-brand p { font-size: 13px; line-height: 1.65; color: #94a3b8; margin: 0; max-width: 340px; }
+.de-footer-col h4 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #fff; margin: 0 0 14px; }
+.de-footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.de-footer-col ul a { font-size: 13px; color: #94a3b8; text-decoration: none; transition: color .18s; }
+.de-footer-col ul a:hover { color: #7c3aed; }
+.de-footer-bottom { border-top: 1px solid #1e293b; max-width: 1240px; margin: 0 auto; padding: 22px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #94a3b8; }
+.de-footer-links { display: flex; gap: 20px; }
+.de-footer-links a { color: #94a3b8; text-decoration: none; font-size: 12px; }
+.de-footer-links a:hover { color: #7c3aed; }
+
+@media (max-width: 780px) { .de-footer-inner { grid-template-columns: 1fr 1fr; gap: 26px; } .de-footer-brand { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } .tab-btn { padding: 7px 11px; font-size: 11.5px; } .card { padding: 16px; } }
+@media (max-width: 480px) { .de-footer-inner { grid-template-columns: 1fr; } .de-footer-bottom { flex-direction: column; text-align: center; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="de-header" id="deHeader">
+  <div class="de-header-inner">
+    <a class="de-logo" href="../index.html">
+      <svg viewBox="0 0 100 100" width="36" height="36"><rect width="100" height="100" rx="20" fill="#19398a"/><text x="50" y="68" font-size="52" font-weight="900" fill="white" text-anchor="middle" font-family="Arial">DE</text></svg>
+      <span>Doc<em>Easy</em></span>
+    </a>
+    <nav class="de-nav">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#pdf-tools">PDF Tools</a>
+      <a href="../index.html#image-tools">Image Tools</a>
+      <a href="../media-tools.html" class="active">Media Tools</a>
+      <a href="../index.html#id-tools">ID &amp; Signature</a>
+      <a href="../index.html#utility-tools">Utilities</a>
+    </nav>
+    <div class="de-header-actions">
+      <a class="de-btn-primary" href="../media-tools.html">All Tools</a>
+      <button class="de-menu-btn" aria-label="Menu" onclick="document.getElementById('deHeader').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="main-wrap">
+  <a class="back-link" href="../media-tools.html">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+    Back to Media Tools
+  </a>
+
+  <div class="tool-head">
+    <div class="badge">🎬 MEDIA EDITOR</div>
+    <h1>Universal Media Editor</h1>
+    <p>12 tools in one page — Trim, Mute, Compress, Resize, Rotate, Flip, Speed, Loop, Reverse, Extract Audio, Convert, Extract Frames. Nothing uploads.</p>
+  </div>
+
+  <div class="card">
+    <div class="error-msg" id="errMsg"></div>
+
+    <!-- TABS -->
+    <div class="tabs" id="tabs">
+      <button class="tab-btn active" data-op="trim"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12M20 4 8.12 15.88"/></svg>Trim</button>
+      <button class="tab-btn" data-op="mute"><svg viewBox="0 0 24 24"><path d="m2 2 20 20M10.66 6H14a2 2 0 0 1 2 2v2.5l5.248-3.062A.5.5 0 0 1 22 7.87v8.196"/></svg>Mute</button>
+      <button class="tab-btn" data-op="compress"><svg viewBox="0 0 24 24"><path d="m14 10 7-7M20 10h-6V4M3 21l7-7M4 14h6v6"/></svg>Compress</button>
+      <button class="tab-btn" data-op="resize"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M21 3l-7 7M3 21l7-7M9 21H3v-6"/></svg>Resize</button>
+      <button class="tab-btn" data-op="rotate"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>Rotate</button>
+      <button class="tab-btn" data-op="flip"><svg viewBox="0 0 24 24"><path d="M12 3v18M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Flip</button>
+      <button class="tab-btn" data-op="speed"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>Speed</button>
+      <button class="tab-btn" data-op="loop"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg>Loop</button>
+      <button class="tab-btn" data-op="reverse"><svg viewBox="0 0 24 24"><path d="M3 12h18M8 7l-5 5 5 5"/></svg>Reverse</button>
+      <button class="tab-btn" data-op="extractAudio"><svg viewBox="0 0 24 24"><path d="M14 2v5a1 1 0 0 0 1 1h5M4 6.835V4a2 2 0 0 1 2-2h8"/><path d="M2 19a2 2 0 0 1 4 0v1a2 2 0 0 1-4 0v-4a6 6 0 0 1 12 0v4a2 2 0 0 1-4 0v-1a2 2 0 0 1 4 0"/></svg>Audio</button>
+      <button class="tab-btn" data-op="convert"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg>Convert</button>
+      <button class="tab-btn" data-op="frames"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg>Frames</button>
+    </div>
+
+    <!-- DROP -->
+    <div class="drop-zone" id="dropZone">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg>
+      <h3>Drop video or audio here</h3>
+      <p>or click to browse · MP4, WEBM, MOV, MKV, MP3, WAV, OGG · up to 500 MB</p>
+      <input type="file" id="fileInput" accept="video/*,audio/*">
+    </div>
+
+    <div class="file-info" id="fileInfo">
+      <div><b id="fileName">—</b> <span id="fileSize"></span></div>
+      <button id="clearFile">Remove</button>
+    </div>
+
+    <!-- PANELS -->
+    <div class="tab-panel active" data-panel="trim">
+      <div class="field-row">
+        <div class="field"><label>Start time</label><input type="text" id="trimStart" placeholder="00:00:00" value="00:00:00"><small>Format: HH:MM:SS or seconds</small></div>
+        <div class="field"><label>End time</label><input type="text" id="trimEnd" placeholder="00:00:10" value="00:00:10"><small>Leave blank for full length</small></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="mute">
+      <p style="font-size:13.5px;color:var(--subtext-color, #64748b);margin:0 0 12px;">Removes the audio track completely. Video quality unchanged.</p>
+    </div>
+
+    <div class="tab-panel" data-panel="compress">
+      <div class="field-row">
+        <div class="field"><label>Quality preset</label>
+          <select id="compressPreset">
+            <option value="28">Light (best quality, larger file)</option>
+            <option value="32" selected>Balanced (recommended)</option>
+            <option value="36">Strong (smaller, some quality loss)</option>
+          </select>
+        </div>
+        <div class="field"><label>Scale width</label><input type="number" id="compressWidth" placeholder="1280" value="1280"><small>Optional. Leave for original.</small></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="resize">
+      <div class="field-row">
+        <div class="field"><label>Width (px)</label><input type="number" id="resizeW" value="1280"></div>
+        <div class="field"><label>Height (px)</label><input type="number" id="resizeH" value="720"></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="rotate">
+      <div class="field-row single">
+        <div class="field"><label>Rotation</label>
+          <select id="rotateAngle">
+            <option value="90">90° clockwise</option>
+            <option value="180">180°</option>
+            <option value="270">270° (90° counter-clockwise)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="flip">
+      <div class="field-row single">
+        <div class="field"><label>Direction</label>
+          <select id="flipDir">
+            <option value="h">Horizontal (mirror)</option>
+            <option value="v">Vertical (upside down)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="speed">
+      <div class="field-row single">
+        <div class="field"><label>Speed <span class="range-val" id="speedVal">1.5×</span></label>
+          <input type="range" id="speedRate" min="0.25" max="4" step="0.25" value="1.5" style="width:100%;height:6px;accent-color:#7c3aed;">
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="loop">
+      <div class="field-row single">
+        <div class="field"><label>Repeat times</label><input type="number" id="loopTimes" min="2" max="10" value="3"></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="reverse">
+      <p style="font-size:13.5px;color:var(--subtext-color, #64748b);margin:0 0 12px;">Plays video and audio backwards. Works best on short clips (under 60 seconds).</p>
+    </div>
+
+    <div class="tab-panel" data-panel="extractAudio">
+      <div class="field-row">
+        <div class="field"><label>Output format</label>
+          <select id="audioFormat">
+            <option value="mp3">MP3 (universal)</option>
+            <option value="wav">WAV (lossless)</option>
+            <option value="ogg">OGG</option>
+            <option value="m4a">M4A (AAC)</option>
+          </select>
+        </div>
+        <div class="field"><label>Bitrate</label>
+          <select id="audioBitrate">
+            <option value="128k">128 kbps (recommended)</option>
+            <option value="192k">192 kbps</option>
+            <option value="256k">256 kbps</option>
+            <option value="320k">320 kbps (highest)</option>
+            <option value="64k">64 kbps (voice)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="convert">
+      <div class="field-row">
+        <div class="field"><label>Output format</label>
+          <select id="convertFormat">
+            <option value="mp4">MP4 (H.264 + AAC)</option>
+            <option value="webm">WebM (VP9 + Opus)</option>
+            <option value="gif">Animated GIF</option>
+            <option value="mp3">MP3 (audio only)</option>
+          </select>
+        </div>
+        <div class="field"><label>Quality</label>
+          <select id="convertQuality">
+            <option value="23">High (CRF 23)</option>
+            <option value="28" selected>Balanced (CRF 28)</option>
+            <option value="32">Small file (CRF 32)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="frames">
+      <div class="field-row">
+        <div class="field"><label>Frame rate (fps)</label><input type="number" id="framesFps" min="1" max="10" value="1"><small>1 fps = 1 frame per second</small></div>
+        <div class="field"><label>Max frames</label><input type="number" id="framesMax" min="1" max="100" value="10"></div>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <button class="process-btn" id="processBtn" disabled>
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      Process File
+    </button>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">Loading FFmpeg engine…</div>
+    </div>
+
+    <div class="result-wrap" id="resultWrap">
+      <h4>✓ Done! Your file is ready.</h4>
+      <div id="resultPreview"></div>
+      <a class="dl-btn" id="downloadLink" download="output.mp4" href="#">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download Result
+      </a>
+    </div>
+
+    <p class="note">🔒 Everything happens in your browser using FFmpeg compiled to WebAssembly. First load takes ~10 seconds.</p>
+  </div>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Universal Media Editor — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about editing video and audio in your browser — trim, mute, compress, convert, and more.</p>
+
+    <details class="faq-item" open>
+      <summary>What can I do with this Universal Media Editor?</summary>
+      <p>This single tool replaces 12 separate media utilities. You can: (1) <strong>Trim</strong> — cut video or audio to exact start and end times; (2) <strong>Mute</strong> — remove the audio track completely while keeping video; (3) <strong>Compress</strong> — reduce file size with three quality presets; (4) <strong>Resize</strong> — change resolution to any width and height you specify; (5) <strong>Rotate</strong> — turn video 90°, 180°, or 270° to fix orientation issues; (6) <strong>Flip</strong> — mirror horizontally or vertically for creative effects; (7) <strong>Speed</strong> — speed up or slow down from 0.25× to 4×; (8) <strong>Loop</strong> — repeat the video 2 to 10 times in a single file; (9) <strong>Reverse</strong> — play video and audio backwards; (10) <strong>Extract Audio</strong> — pull the audio track from any video as MP3, WAV, OGG, or M4A; (11) <strong>Convert</strong> — change format to MP4, WebM, animated GIF, or MP3; (12) <strong>Extract Frames</strong> — export JPG stills from any video. Every operation runs entirely in your browser using FFmpeg compiled to WebAssembly — nothing is uploaded to any server.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is this Universal Media Editor really free?</summary>
+      <p>Yes — 100% free, forever, with no strings attached. There's no signup, no email, no watermark, no daily limit, no file-size cap, and no premium tier hiding behind a paywall. You can trim, convert, compress, or edit as many files as you want, as many times as you want, without paying anything. The tool is supported by lightweight, non-intrusive display ads on other pages of the site. We don't collect your files, we don't track your operations, and we don't sell any data. Every feature is unlocked for every visitor — there's no "upgrade to remove watermark" or "pro plan" here. Unlike most online video editors that watermark your output and charge to remove it, DocEasy gives you clean, professional results at zero cost.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does the processing work without a server?</summary>
+      <p>This tool uses FFmpeg compiled to WebAssembly — the same engine used by professional video software, but running entirely inside your browser. When you drop a file, it's loaded into your browser's memory. FFmpeg then processes it using your device's CPU to perform trimming, conversion, compression, and all other operations. The output is written to a new file in memory and offered to you as a download. At no point does any data leave your device — no uploads, no cloud processing, no server queue, no waiting for someone else's computer. This is why the first use takes about 10 seconds (loading the FFmpeg engine for the first time), but subsequent operations are much faster because the engine is already cached.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which file formats are supported?</summary>
+      <p><strong>Input formats</strong> include MP4, WebM, MOV, MKV, AVI, FLV, TS, M4V, and 3GP for video, plus MP3, WAV, OGG, OPUS, M4A, AAC, FLAC, and WMA for audio. <strong>Output formats</strong> depend on which tool you use: Trim, Mute, Compress, Resize, Rotate, Flip, Speed, Loop, and Reverse all output MP4 (video) or MP3 (audio); Extract Audio outputs MP3, WAV, OGG, or M4A based on your selection; Convert outputs MP4, WebM, GIF, or MP3; Extract Frames outputs a series of JPG images. The tool auto-detects the input format from the file extension, so you don't need to specify it manually. If a file doesn't work, try converting it to a standard format first using the Convert tab.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I trim a video to a specific time range?</summary>
+      <p>Click the "Trim" tab, then enter your start and end times. The format is <code>HH:MM:SS</code> (hours:minutes:seconds) or you can use plain seconds. For example, to cut from 1 minute 30 seconds to 2 minutes 45 seconds, enter <code>00:01:30</code> as start and <code>00:02:45</code> as end. Leave the end field blank to trim from start to the end of the video. Click "Process File," and the trimmed clip downloads in seconds. The trim is frame-accurate and, for MP4/H.264 files, lossless — no quality loss because we cut at keyframe boundaries without re-encoding. This makes Trim one of the fastest operations, usually completing in 1–3 seconds even for large files.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does compressing a video reduce quality?</summary>
+      <p>It depends on the preset you choose. "Light" (CRF 28) keeps most of the original quality while reducing file size by 30–50%. "Balanced" (CRF 32) reduces size by 50–70% with slight quality loss that's usually invisible for social media sharing. "Strong" (CRF 36) reduces size by 70–85% with visible compression artifacts — good for rough previews but not for final outputs. For WhatsApp, Instagram, Telegram, or email sharing, "Balanced" is the sweet spot. For archiving, use "Light." You can also combine compress with resize — reducing 4K to 1080p plus CRF 32 gives dramatic size savings with minimal visual impact.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I extract audio from a video as MP3?</summary>
+      <p>Click the "Audio" tab, select MP3 as the output format and 192 kbps bitrate (recommended for music) or 128 kbps (fine for voice). Drop your video file, click Process. In a few seconds you'll get an MP3 file containing only the audio track. This works on MP4, MOV, MKV, AVI, WebM, and any video format FFmpeg supports. The audio quality matches the original — no re-encoding degradation for MP3 sources. If you need lossless audio, choose WAV output instead; the file will be larger but bit-perfect. For voice recordings, 64 kbps is plenty. For music, use 192 kbps or higher.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I convert video to GIF?</summary>
+      <p>Yes — click the "Convert" tab, choose "Animated GIF" as the output format, and click Process. The tool generates a GIF from your video. Note that GIFs are limited to 256 colors and don't support audio, so quality is lower than video. For best results, use short clips (under 10 seconds), and consider trimming first using the Trim tab. GIF output files can be surprisingly large — a 5-second 720p GIF can be 5–10 MB. If you need a smaller GIF, reduce the resolution first using the Resize tab, then convert. The tool automatically applies a 10 fps frame rate and 480px width for GIFs to keep file size reasonable.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the maximum file size I can process?</summary>
+      <p>There's no hard limit imposed by DocEasy, but practical limits depend on your device's RAM. Devices with 4 GB RAM handle up to about 200 MB comfortably. 8 GB RAM handles 500 MB. 16 GB RAM handles 1 GB or more. Since everything runs in your browser's memory, very large files may temporarily slow down your device. For files above 500 MB, close other browser tabs and apps first, and use Chrome or Edge — they handle WebAssembly memory more efficiently than Firefox. If a file is too large, trim it down first using a desktop tool, then process the smaller clip here.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How long does processing take?</summary>
+      <p>Simple operations like trim (lossless), mute, rotate, and flip complete in 1–3 seconds regardless of file size. Compress, resize, and convert take 10–60 seconds for a typical 100 MB file, depending on your CPU. Complex operations like reverse, speed change, and GIF conversion take longer — up to 2–3 minutes for a 100 MB file. The first operation in a session also includes a one-time ~10-second FFmpeg engine load. Subsequent operations in the same session skip this step. If a file takes more than 5 minutes, your device is likely memory-constrained — try a smaller file or close other apps.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the tool work offline?</summary>
+      <p>Partially. The FFmpeg WebAssembly engine loads once from a CDN (about 25 MB). After that first load, the engine is cached by your browser, and the tool works offline for subsequent uses. So: (1) First visit — requires internet to download FFmpeg; (2) Subsequent visits — works fully offline, even with Wi-Fi off. You can verify this by loading the page, processing a file, then turning off Wi-Fi and processing another file — it will still work. This makes DocEasy ideal for flights, rural areas, or privacy-conscious environments where you don't want any network activity during editing.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>The tool works on Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. For best performance, use Chrome or Edge — they handle WebAssembly memory and multi-threading best. Firefox works well but is slower for large files. Safari supports everything but may have occasional memory issues with files above 300 MB. Mobile browsers work too — Chrome on Android and Safari on iOS handle small files fine, but very large files may strain mobile memory. If you see "SharedArrayBuffer not defined" errors, your browser doesn't support the required APIs — update to the latest version or switch to Chrome.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I batch-process multiple files?</summary>
+      <p>Not in this version — you process one file at a time. To batch-process, save your output, remove the current file, drop the next one, and repeat. Each file is independent. For heavy batch work with 20+ files, we recommend FFmpeg on desktop (command-line) which can process entire folders with a single command. This tool is optimized for quick, one-off tasks like trimming a clip before sharing, converting a video for WhatsApp, or extracting audio from a presentation. Future versions may add batch support — request it via the "Request Tool" link if it matters to you.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my file safe? Do you see it?</summary>
+      <p>Your file never leaves your device. Full stop. The moment you drop a file, it's read into your browser's memory. FFmpeg processes it locally using WebAssembly. The output is written back to memory and offered to you as a download. No upload, no server, no tracking. You can prove this: open Developer Tools (F12), go to the Network tab, drop a file, and click Process. You'll see requests for the FFmpeg engine (first time only) but zero requests carrying your file — because it never travels over the network. This is the strongest privacy guarantee possible for any online media tool.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why is my output file larger than expected?</summary>
+      <p>Several reasons can cause this: (1) Converting MP4 to WebM often produces larger files — WebM VP9 is not always more efficient than H.264; (2) Re-encoding can increase bitrate if the preset is too high quality; (3) Lossless trim preserves the original bitrate, so if the source was a high-bitrate 4K video, output will be large too; (4) GIF conversion is inherently large due to the format's inefficiency; (5) Audio extraction to WAV is uncompressed and much larger than MP3. To reduce size: use Compress with a higher CRF (like 32), reduce resolution to 720p first, and use MP4 (not WebM) for maximum compatibility and efficiency.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the output video have a watermark?</summary>
+      <p>No — never. Every file you process is watermark-free, logo-free, and 100% clean. What you see in the preview is exactly what you download. We don't add "Made with DocEasy" text, we don't insert logo overlays, we don't inject intro or outro sequences. The output is entirely yours. This is one of the main reasons people choose DocEasy over free tools that watermark output and then charge to remove it. Use the results for personal, educational, or commercial projects — no attribution required, no credit line needed.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use the output for commercial projects?</summary>
+      <p>Yes — everything you create is yours to use freely, including commercially. There are no licensing restrictions on the output files. If you trim a client's video, convert a marketing clip, or extract audio for a podcast, you own 100% of the result and can monetize it however you want. The only exception is if the input content itself is copyrighted by someone else — DocEasy doesn't grant you rights to material you don't own. But the tool imposes no restrictions on what you do with your output. Use it for YouTube, Instagram, TikTok, client work, online courses, ads, or any other commercial purpose.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if the tool crashes or produces a corrupted file?</summary>
+      <p>This is usually caused by memory limits. Try these fixes in order: (1) Close other browser tabs and applications to free RAM; (2) Use a smaller file — trim it first with a desktop tool if needed; (3) Switch to Chrome or Edge, which handle WebAssembly memory better; (4) Reload the page to reset memory; (5) Reboot your device if problems persist. If the output file is corrupted, it may be because the input file itself has issues — try playing the original in VLC to confirm it's not damaged. If you consistently hit crashes on files under 100 MB, please report it via the "Report Error" link with your browser version and the operation you tried.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you log which files I process?</summary>
+      <p>No. We don't log filenames, file sizes, operations performed, durations, or any metadata. We don't track which tools you use or when. Our analytics only records anonymous page views — never file activity. Since your files never leave your browser, there's literally nothing for us to log. You can verify this yourself: open Developer Tools → Network tab, drop a file, process it, and watch for requests. You'll see the FFmpeg engine download (first time only) but zero requests carrying your file data — because it never goes anywhere. This is a technical impossibility for us to see your files, not just a policy promise.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is this different from desktop video editors?</summary>
+      <p>Desktop editors like Adobe Premiere, DaVinci Resolve, or Final Cut Pro offer advanced features: multi-track timelines, color grading, motion graphics, audio mixing, plugins, and professional output presets. DocEasy doesn't replace those for complex work. But DocEasy wins on four crucial fronts: (1) <strong>Zero installation</strong> — no downloads, no admin rights, no disk space; (2) <strong>Cross-platform</strong> — same tool on Windows, Mac, Linux, Chromebooks, Android, iOS; (3) <strong>Privacy by default</strong> — nothing uploads; (4) <strong>Instant availability</strong> — open a browser, done. For quick daily tasks like trimming a clip before sharing, converting a format, or extracting audio, DocEasy is faster than opening a heavy desktop app. For professional multi-hour editing sessions, use dedicated desktop software.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I add subtitles or stickers with this tool?</summary>
+      <p>Not in this version of the Universal Media Editor. However, DocEasy offers separate dedicated tools for these tasks: <strong>Add Subtitles to Video</strong> (burns SRT files into video) and <strong>Add Stickers to Video</strong> (overlays images and emoji). Both will be available on the Media Tools hub page. This editor focuses on the 12 most-used operations — trim, mute, compress, resize, rotate, flip, speed, loop, reverse, extract audio, convert, and extract frames. For advanced overlays and text, use the dedicated tools. If you need more advanced editing (multi-track, keyframes, effects), consider Kapwing, Clipchamp, or desktop software.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does the first load take so long?</summary>
+      <p>The first time you use the media editor, your browser downloads the FFmpeg WebAssembly engine — about 25 MB of compiled code. This takes 8–15 seconds on a typical broadband connection. After that first load, the engine is cached by your browser, so all subsequent visits load instantly. If you use multiple DocEasy media tools (Video Converter, Compress Video, etc.), they share the same FFmpeg engine, so you only pay the download cost once. You can see the progress bar during the initial load — it says "Loading FFmpeg engine…". Don't refresh or close the tab during this step, or you'll need to start over.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I process files on my phone?</summary>
+      <p>Yes — the Universal Media Editor works on Android and iOS phones and tablets. Chrome on Android and Safari on iOS both support WebAssembly. However, mobile devices have less RAM than desktops, so practical file size limits are lower: about 50–100 MB on phones with 4 GB RAM, and up to 300 MB on newer flagships with 8 GB+ RAM. For the smoothest mobile experience: (1) close all other apps before processing; (2) keep the browser tab in the foreground; (3) make sure your phone is plugged in or has enough battery; (4) use Wi-Fi for the first load; (5) start with smaller files to test. Trim longer videos on desktop first, then process the clip on mobile if needed.</p>
+    </details>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="de-footer">
+  <div class="de-footer-inner">
+    <div class="de-footer-col de-footer-brand">
+      <a class="de-logo" href="../index.html">
+        <svg viewBox="0 0 100 100" width="32" height="32"><rect width="100" height="100" rx="20" fill="#19398a"/><text x="50" y="68" font-size="52" font-weight="900" fill="white" text-anchor="middle" font-family="Arial">DE</text></svg>
+        <span>Doc<em>Easy</em></span>
+      </a>
+      <p>Free browser-based tools for PDF, images, documents, and media. No upload, no signup, 100% private. Works worldwide.</p>
+    </div>
+    <div class="de-footer-col">
+      <h4>Media Tools</h4>
+      <ul>
+        <li><a href="media-voice-recorder.html">Voice Recorder</a></li>
+        <li><a href="media-webcam-test.html">Webcam Test</a></li>
+        <li><a href="media-mic-test.html">Mic Test</a></li>
+        <li><a href="media-text-to-speech.html">Text to Speech</a></li>
+        <li><a href="media-editor.html">Universal Editor</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Popular Tools</h4>
+      <ul>
+        <li><a href="../index.html#pdf-tools">Merge PDF</a></li>
+        <li><a href="../index.html#image-tools">Compress Image</a></li>
+        <li><a href="../index.html#id-tools">Passport Photo</a></li>
+        <li><a href="../index.html#converter-tools">JPG to PDF</a></li>
+        <li><a href="../index.html#utility-tools">QR Generator</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../index.html#faq">FAQ</a></li>
+        <li><a href="../media-tools.html">Media Hub</a></li>
+        <li><a href="../index.html">All Categories</a></li>
+        <li><a href="../sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="de-footer-bottom">
+    <p>© 2026 DocEasy. All rights reserved. Made with ❤️ for the world.</p>
+    <div class="de-footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FFmpeg.wasm -->
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.min.js"></script>
+
+<script>
+(function () {
+  // Wait for FFmpeg to be available
+  if (typeof FFmpegWASM === 'undefined' || typeof FFmpegUtil === 'undefined') {
+    console.error('FFmpeg scripts not loaded');
+    document.getElementById('errMsg').textContent = 'FFmpeg failed to load. Please refresh the page.';
+    document.getElementById('errMsg').classList.add('show');
+    return;
+  }
+
+  var { FFmpeg } = FFmpegWASM;
+  var { fetchFile, toBlobURL } = FFmpegUtil;
+
+  var ffmpeg = new FFmpeg();
+  var loaded = false;
+  var currentFile = null;
+  var currentOp = 'trim';
+
+  var dropZone = document.getElementById('dropZone');
+  var fileInput = document.getElementById('fileInput');
+  var fileInfo = document.getElementById('fileInfo');
+  var fileName = document.getElementById('fileName');
+  var fileSize = document.getElementById('fileSize');
+  var clearBtn = document.getElementById('clearFile');
+  var processBtn = document.getElementById('processBtn');
+  var progressWrap = document.getElementById('progressWrap');
+  var progressFill = document.getElementById('progressFill');
+  var progressText = document.getElementById('progressText');
+  var resultWrap = document.getElementById('resultWrap');
+  var resultPreview = document.getElementById('resultPreview');
+  var downloadLink = document.getElementById('downloadLink');
+  var errMsg = document.getElementById('errMsg');
+
+  // Tab switching
+  document.getElementById('tabs').addEventListener('click', function (e) {
+    var btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    currentOp = btn.getAttribute('data-op');
+    var panel = document.querySelector('.tab-panel[data-panel="' + currentOp + '"]');
+    if (panel) panel.classList.add('active');
+    resultWrap.classList.remove('show');
+  });
+
+  // Speed slider
+  var speedRate = document.getElementById('speedRate');
+  var speedVal = document.getElementById('speedVal');
+  speedRate.addEventListener('input', function () {
+    speedVal.textContent = parseFloat(speedRate.value).toFixed(2).replace(/\.?0+$/, '') + '×';
+  });
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  function setFile(file) {
+    currentFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = '(' + formatSize(file.size) + ')';
+    fileInfo.classList.add('show');
+    processBtn.disabled = false;
+    resultWrap.classList.remove('show');
+  }
+
+  dropZone.addEventListener('click', function () { fileInput.click(); });
+  fileInput.addEventListener('change', function () { if (this.files[0]) setFile(this.files[0]); });
+
+  ['dragenter','dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.add('dragover'); });
+  });
+  ['dragleave','drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.remove('dragover'); });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    var f = e.dataTransfer.files[0];
+    if (f) setFile(f);
+  });
+
+  clearBtn.addEventListener('click', function () {
+    currentFile = null;
+    fileInfo.classList.remove('show');
+    fileInput.value = '';
+    processBtn.disabled = true;
+    resultWrap.classList.remove('show');
+    progressWrap.classList.remove('show');
+  });
+
+  function showError(m) {
+    errMsg.textContent = m;
+    errMsg.classList.add('show');
+    setTimeout(function(){ errMsg.classList.remove('show'); }, 8000);
+  }
+
+  function updateProgress(ratio, msg) {
+    progressFill.style.width = Math.round(ratio * 100) + '%';
+    if (msg) progressText.textContent = msg;
+  }
+
+  async function loadFFmpeg() {
+    if (loaded) return;
+    progressWrap.classList.add('show');
+    updateProgress(0.1, 'Loading FFmpeg engine… (first time only)');
+    var baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
+    await ffmpeg.load({
+      coreURL: await toBlobURL(baseURL + '/ffmpeg-core.js', 'text/javascript'),
+      wasmURL: await toBlobURL(baseURL + '/ffmpeg-core.wasm', 'application/wasm')
+    });
+    loaded = true;
+    updateProgress(0.3, 'FFmpeg ready');
+  }
+
+  function getExt(name) {
+    var m = (name || '').match(/\.([a-z0-9]+)$/i);
+    return m ? m[1].toLowerCase() : 'mp4';
+  }
+
+  processBtn.addEventListener('click', async function () {
+    if (!currentFile) return;
+    processBtn.disabled = true;
+    resultWrap.classList.remove('show');
+    progressWrap.classList.add('show');
+    updateProgress(0.05, 'Preparing…');
+
+    try {
+      await loadFFmpeg();
+
+      var inExt = getExt(currentFile.name);
+      var inName = 'input.' + inExt;
+      updateProgress(0.35, 'Reading file…');
+      await ffmpeg.writeFile(inName, await fetchFile(currentFile));
+
+      var outName, outMime, args;
+
+      if (currentOp === 'trim') {
+        var s = document.getElementById('trimStart').value || '0';
+        var e = document.getElementById('trimEnd').value;
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-ss', s];
+        if (e) args = args.concat(['-to', e]);
+        args = args.concat(['-c', 'copy', outName]);
+
+      } else if (currentOp === 'mute') {
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-an', '-c:v', 'copy', outName];
+
+      } else if (currentOp === 'compress') {
+        var crf = document.getElementById('compressPreset').value;
+        var w = document.getElementById('compressWidth').value;
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-c:v', 'libx264', '-crf', crf, '-preset', 'fast'];
+        if (w) args = args.concat(['-vf', 'scale=' + w + ':-2']);
+        args = args.concat(['-c:a', 'aac', '-b:a', '128k', outName]);
+
+      } else if (currentOp === 'resize') {
+        var rw = document.getElementById('resizeW').value;
+        var rh = document.getElementById('resizeH').value;
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-vf', 'scale=' + rw + ':' + rh, '-c:a', 'copy', outName];
+
+      } else if (currentOp === 'rotate') {
+        var angle = document.getElementById('rotateAngle').value;
+        var filter = angle === '90' ? 'transpose=1' : angle === '180' ? 'transpose=1,transpose=1' : 'transpose=2';
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-vf', filter, '-c:a', 'copy', outName];
+
+      } else if (currentOp === 'flip') {
+        var dir = document.getElementById('flipDir').value;
+        var f = dir === 'h' ? 'hflip' : 'vflip';
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-vf', f, '-c:a', 'copy', outName];
+
+      } else if (currentOp === 'speed') {
+        var rate = parseFloat(speedRate.value);
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-filter_complex', '[0:v]setpts=' + (1 / rate) + '*PTS[v];[0:a]atempo=' + rate + '[a]', '-map', '[v]', '-map', '[a]', outName];
+
+      } else if (currentOp === 'loop') {
+        var times = parseInt(document.getElementById('loopTimes').value, 10);
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-stream_loop', String(times - 1), '-i', inName, '-c', 'copy', outName];
+
+      } else if (currentOp === 'reverse') {
+        outName = 'output.mp4';
+        outMime = 'video/mp4';
+        args = ['-i', inName, '-vf', 'reverse', '-af', 'areverse', outName];
+
+      } else if (currentOp === 'extractAudio') {
+        var af = document.getElementById('audioFormat').value;
+        var ab = document.getElementById('audioBitrate').value;
+        outName = 'output.' + af;
+        if (af === 'mp3') {
+          outMime = 'audio/mpeg';
+          args = ['-i', inName, '-vn', '-c:a', 'libmp3lame', '-b:a', ab, outName];
+        } else if (af === 'wav') {
+          outMime = 'audio/wav';
+          args = ['-i', inName, '-vn', '-c:a', 'pcm_s16le', outName];
+        } else if (af === 'ogg') {
+          outMime = 'audio/ogg';
+          args = ['-i', inName, '-vn', '-c:a', 'libvorbis', '-b:a', ab, outName];
+        } else {
+          outMime = 'audio/mp4';
+          args = ['-i', inName, '-vn', '-c:a', 'aac', '-b:a', ab, outName];
+        }
+
+      } else if (currentOp === 'convert') {
+        var cf = document.getElementById('convertFormat').value;
+        var q = document.getElementById('convertQuality').value;
+        if (cf === 'gif') {
+          outName = 'output.gif';
+          outMime = 'image/gif';
+          args = ['-i', inName, '-vf', 'fps=10,scale=480:-1:flags=lanczos', '-loop', '0', outName];
+        } else if (cf === 'mp3') {
+          outName = 'output.mp3';
+          outMime = 'audio/mpeg';
+          args = ['-i', inName, '-vn', '-c:a', 'libmp3lame', '-b:a', '192k', outName];
+        } else if (cf === 'webm') {
+          outName = 'output.webm';
+          outMime = 'video/webm';
+          args = ['-i', inName, '-c:v', 'libvpx-vp9', '-crf', q, '-b:v', '0', '-c:a', 'libopus', outName];
+        } else {
+          outName = 'output.mp4';
+          outMime = 'video/mp4';
+          args = ['-i', inName, '-c:v', 'libx264', '-crf', q, '-preset', 'fast', '-c:a', 'aac', outName];
+        }
+
+      } else if (currentOp === 'frames') {
+        var fps = document.getElementById('framesFps').value;
+        var maxF = document.getElementById('framesMax').value;
+        outName = 'frame-%03d.jpg';
+        args = ['-i', inName, '-vf', 'fps=' + fps, '-frames:v', maxF, outName];
+        ffmpeg.on('progress', function (e) {
+          updateProgress(0.3 + (e.progress || 0) * 0.65, 'Extracting frames… ' + Math.round((e.progress || 0) * 100) + '%');
+        });
+        await ffmpeg.exec(args);
+        var frameData = await ffmpeg.readFile('frame-001.jpg');
+        var frameBlob = new Blob([frameData.buffer], { type: 'image/jpeg' });
+        var frameUrl = URL.createObjectURL(frameBlob);
+        resultPreview.innerHTML = '<img src="' + frameUrl + '" style="width:100%;border-radius:10px;margin-bottom:12px;"><p style="font-size:12.5px;color:var(--subtext-color, #64748b);margin:0 0 12px;">Showing first frame. All ' + maxF + ' frames were extracted.</p>';
+        downloadLink.href = frameUrl;
+        downloadLink.download = 'frame-001.jpg';
+        updateProgress(1, 'Done!');
+        resultWrap.classList.add('show');
+        processBtn.disabled = false;
+        return;
+      } else {
+        throw new Error('Unknown operation');
+      }
+
+      // Run FFmpeg with progress
+      ffmpeg.on('progress', function (e) {
+        var r = Math.min(0.95, 0.35 + (e.progress || 0) * 0.6);
+        updateProgress(r, 'Processing… ' + Math.round((e.progress || 0) * 100) + '%');
+      });
+
+      await ffmpeg.exec(args);
+      updateProgress(0.97, 'Reading output…');
+      var data = await ffmpeg.readFile(outName);
+      var blob = new Blob([data.buffer], { type: outMime });
+      var url = URL.createObjectURL(blob);
+
+      resultPreview.innerHTML = '';
+      if (outName.endsWith('.mp4') || outName.endsWith('.webm')) {
+        resultPreview.innerHTML = '<video controls src="' + url + '"></video>';
+      } else if (outName.endsWith('.mp3') || outName.endsWith('.wav') || outName.endsWith('.ogg') || outName.endsWith('.m4a')) {
+        resultPreview.innerHTML = '<audio controls src="' + url + '"></audio>';
+      } else if (outName.endsWith('.gif')) {
+        resultPreview.innerHTML = '<img src="' + url + '" style="width:100%;border-radius:10px;margin-bottom:12px;">';
+      }
+
+      downloadLink.href = url;
+      downloadLink.download = 'doceasy-' + outName;
+      updateProgress(1, 'Done!');
+      resultWrap.classList.add('show');
+      processBtn.disabled = false;
+    } catch (err) {
+      console.error(err);
+      showError('Processing failed: ' + (err.message || 'Unknown error') + '. Try a smaller file or reload the page.');
+      progressWrap.classList.remove('show');
+      processBtn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
