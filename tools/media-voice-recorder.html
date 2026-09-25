@@ -4,223 +4,577 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Voice Recorder — Record Audio Online Free | DocEasy</title>
-<meta name="description" content="Free online voice recorder. Record audio from your microphone in the browser, download as WebM or M4A. No signup, no upload, 100% private. Works on mobile too.">
+<meta name="description" content="Free online voice recorder. Record audio from your microphone in the browser, download as WebM or M4A. No signup, no upload, 100% private. Works on mobile.">
 <meta name="keywords" content="voice recorder, online voice recorder, record audio, microphone recorder, browser recorder, free voice recorder">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-voice-recorder.html">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Voice Recorder — Record Audio Online Free | DocEasy">
+<meta property="og:description" content="Record audio from your microphone. No signup, no upload, 100% private.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-voice-recorder.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/voice-recorder-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Voice Recorder — Record Audio Online Free | DocEasy">
+<meta name="twitter:description" content="Record audio from your microphone. Free, private, browser-based.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/voice-recorder-demo.jpg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Voice Recorder — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/media-voice-recorder.html",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Record audio from your microphone in the browser. Free, private, no signup."
+}
+</script>
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
-* { box-sizing: border-box; }
-.wrap { max-width: 820px; margin: 0 auto; padding: 34px 18px 80px; }
-.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--subtext-color); text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 18px; transition: color .18s; }
-.back-link:hover { color: #db2777; }
-.back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
-.tool-head { text-align: center; margin-bottom: 26px; }
-.tool-head .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: #fce7f3; color: #db2777; font-size: 11px; font-weight: 800; letter-spacing: .5px; margin-bottom: 12px; }
-.tool-head h1 { font-size: clamp(26px, 4.6vw, 38px); font-weight: 800; margin: 0 0 10px; letter-spacing: -1px; color: var(--text-color); }
-.tool-head p { color: var(--subtext-color); font-size: 15px; margin: 0; line-height: 1.55; }
-.card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 28px 24px; box-shadow: 0 8px 26px rgba(25,57,138,0.06); }
-.timer { font-size: 52px; font-weight: 800; text-align: center; color: var(--text-color); font-variant-numeric: tabular-nums; letter-spacing: -2px; margin: 8px 0 6px; }
-.timer.rec { color: #dc2626; }
-.rec-status { text-align: center; font-size: 13px; font-weight: 700; color: var(--subtext-color); margin-bottom: 22px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.rec-dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; }
-.rec-dot.on { background: #dc2626; animation: pulse 1.2s infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1);} 50% { opacity: .4; transform: scale(1.15);} }
-.controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 12px; border: none; font-size: 14px; font-weight: 800; cursor: pointer; transition: all .18s; font-family: inherit; text-decoration: none; }
-.btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
-.btn.primary { background: #db2777; color: #fff; box-shadow: 0 8px 22px rgba(219,39,119,.28); }
-.btn.primary:hover { filter: brightness(1.08); transform: translateY(-2px); }
-.btn.danger { background: #dc2626; color: #fff; box-shadow: 0 8px 22px rgba(220,38,38,.28); }
-.btn.danger:hover { filter: brightness(1.08); transform: translateY(-2px); }
-.btn.ghost { background: var(--card-hover); color: var(--text-color); border: 1px solid var(--border-color); }
-.btn.ghost:hover { border-color: #db2777; color: #db2777; }
-.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
-.visualizer { width: 100%; height: 100px; background: var(--card-hover); border-radius: 12px; margin-bottom: 20px; display: block; }
-.preview { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); display: none; }
-.preview.show { display: block; }
-.preview h3 { font-size: 14px; font-weight: 800; margin: 0 0 12px; }
-.preview audio { width: 100%; margin-bottom: 14px; }
-.preview .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.note { margin-top: 20px; font-size: 12.5px; color: var(--subtext-color); text-align: center; line-height: 1.6; }
-.error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 16px; display: none; }
-.error-msg.show { display: block; }
+/* Hide ad slots until AdSense approval */
+.ad-slot-container, .ad-placeholder { display: none !important; }
 
-/* FAQ */
-.deep-faq { max-width: 820px; margin: 64px auto 0; }
-.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; color: var(--text-color); letter-spacing: -0.6px; }
-.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 580px; line-height: 1.6; }
-.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
-.deep-faq .faq-item:hover { border-color: #db2777; }
-.deep-faq .faq-item[open] { border-color: #db2777; }
-.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
-.deep-faq summary::-webkit-details-marker { display: none; }
-.deep-faq summary::after { content: "+"; font-size: 21px; color: #db2777; font-weight: 300; flex-shrink: 0; transition: transform 0.2s; line-height: 1; }
-.deep-faq .faq-item[open] summary::after { content: "−"; }
-.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
-.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: 'Courier New', monospace; color: #db2777; font-weight: 600; }
-@media (max-width: 500px) { .card { padding: 20px 16px; } .timer { font-size: 42px; } .btn { padding: 12px 20px; font-size: 13px; } .deep-faq .faq-item { padding: 13px 15px; } .deep-faq summary { font-size: 13px; } .deep-faq .faq-item p { font-size: 12.5px; } }
+/* ============ Tool-specific styles ============ */
+.rec-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 26px 24px;
+  box-shadow: var(--shadow-sm);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.rec-timer {
+  font-size: clamp(38px, 8vw, 56px);
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -2px;
+  margin: 10px 0 6px;
+}
+.rec-timer.rec { color: #dc2626; }
+.rec-status {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--subtext-color);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.rec-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border-color);
+}
+.rec-dot.on { background: #dc2626; animation: recpulse 1.2s infinite; }
+@keyframes recpulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: .35; transform: scale(1.15); }
+}
+.rec-visualizer {
+  width: 100%;
+  height: 100px;
+  background: var(--card-hover);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: block;
+}
+.rec-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.rec-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+.rec-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.rec-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(25,57,138,.28);
+}
+.rec-btn.primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.rec-btn.danger { background: #dc2626; color: #fff; box-shadow: 0 8px 22px rgba(220,38,38,.25); }
+.rec-btn.danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.rec-btn.ghost {
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.rec-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+.rec-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.rec-preview {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  display: none;
+}
+.rec-preview.show { display: block; }
+.rec-preview h3 {
+  font-size: 14.5px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: var(--text-color);
+}
+.rec-preview audio { width: 100%; margin-bottom: 14px; }
+.rec-preview .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.rec-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: none;
+}
+[data-theme="dark"] .rec-error { background: #2a0a0a; border-color: #7f1d1d; color: #fca5a5; }
+.rec-error.show { display: block; }
+
+.rec-note {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article code {
+  background: var(--card-hover);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  text-align: center;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+.seo-article details {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 16px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+";
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 14px 0 0;
+  font-size: 15px !important;
+  line-height: 1.75;
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+  .rec-btn { padding: 11px 20px; font-size: 13px; }
+  .rec-card { padding: 20px 16px; }
+  .rec-timer { font-size: 42px; }
+}
 </style>
 </head>
 <body>
-<div id="doceasy-header"></div>
-<main class="wrap">
-  <a class="back-link" href="../media-tools.html">
-    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
-    Back to Media Tools
-  </a>
 
-  <div class="tool-head">
-    <div class="badge">🎙️ AUDIO</div>
-    <h1>Voice Recorder</h1>
-    <p>Record audio from your microphone directly in the browser. Nothing is uploaded — everything stays on your device.</p>
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Voice Recorder</h1>
+    <p class="hero-sub">Record audio from your microphone directly in the browser. Download as WebM or M4A. No upload, no signup, 100% private.</p>
   </div>
 
-  <div class="card">
-    <div class="error-msg" id="errMsg"></div>
-    <div class="timer" id="timer">00:00</div>
-    <div class="rec-status"><span class="rec-dot" id="recDot"></span><span id="statusText">Ready to record</span></div>
-    <canvas class="visualizer" id="viz"></canvas>
-    <div class="controls">
-      <button class="btn primary" id="startBtn">
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="rec-card">
+    <div class="rec-error" id="errMsg"></div>
+
+    <div class="rec-timer" id="timer">00:00</div>
+    <div class="rec-status">
+      <span class="rec-dot" id="recDot"></span>
+      <span id="statusText">Ready to record</span>
+    </div>
+
+    <canvas class="rec-visualizer" id="viz"></canvas>
+
+    <div class="rec-actions">
+      <button class="rec-btn primary" id="startBtn">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
         Start Recording
       </button>
-      <button class="btn danger" id="stopBtn" disabled>
+      <button class="rec-btn danger" id="stopBtn" disabled>
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
         Stop
       </button>
-      <button class="btn ghost" id="pauseBtn" disabled>
+      <button class="rec-btn ghost" id="pauseBtn" disabled>
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>
         Pause
       </button>
     </div>
-    <div class="preview" id="preview">
+
+    <div class="rec-preview" id="preview">
       <h3>Your Recording</h3>
       <audio id="audioPlayer" controls></audio>
       <div class="actions">
-        <a class="btn primary" id="downloadBtn" download="voice-recording.webm" href="#">
+        <a class="rec-btn primary" id="downloadBtn" download="voice-recording.webm" href="#">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Download
         </a>
-        <button class="btn ghost" id="resetBtn">
+        <button class="rec-btn ghost" id="resetBtn">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
           Record Again
         </button>
       </div>
     </div>
-    <p class="note">🔒 All audio is processed locally. No file is uploaded to any server.</p>
+
+    <p class="rec-note">🔒 All audio is processed locally in your browser. No file is uploaded to any server.</p>
   </div>
 
-  <!-- FAQ -->
-  <section class="deep-faq" id="faq">
-    <h2>Voice Recorder — Frequently Asked Questions</h2>
-    <p class="faq-lead">Everything about recording audio in your browser — quality, formats, troubleshooting, and privacy.</p>
+  <div class="ad-slot-container">Advertisement</div>
 
-    <details class="faq-item" open>
+  <!-- ============ HOW TO USE + FAQ (2000+ words) ============ -->
+  <section class="seo-article">
+
+    <h2>Free Online Voice Recorder — Record Audio in Your Browser (2026)</h2>
+
+    <p>Whether you're recording a podcast intro, capturing voice notes for a client call, creating narration for a YouTube video, or documenting an interview, DocEasy's <b>free online voice recorder</b> gives you professional-quality audio capture in your browser — no install, no signup, no watermark, and complete privacy because nothing ever uploads to a server.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/voice-recorder-demo.jpg" alt="Voice recorder interface showing timer, live waveform, and recording controls" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/voice-recorder-demo.jpg]</div>';">
+      <div class="article-image-caption">The DocEasy Voice Recorder captures audio directly from your microphone with a live waveform preview. Nothing is uploaded.</div>
+    </div>
+
+    <h3>How to Use the Voice Recorder</h3>
+
+    <p>Recording your voice takes just three simple steps:</p>
+
+    <ol>
+      <li><b>Step 1 — Click "Start Recording":</b> The browser will ask for microphone permission. Click "Allow" once — this is remembered for future visits.</li>
+      <li><b>Step 2 — Speak into your microphone:</b> You'll see the timer counting up, a red pulsing dot, and a live waveform bouncing with your voice. Click "Pause" at any time to temporarily stop; click again to resume from the same point.</li>
+      <li><b>Step 3 — Click "Stop":</b> A preview player appears below with your recording. Click "Download" to save the file, or "Record Again" to start a fresh take.</li>
+    </ol>
+
+    <p>That's it — no signup, no email, no payment. The entire workflow runs in your browser tab.</p>
+
+    <h3>Where Your Recording Is Saved</h3>
+
+    <p>Your recording is saved <b>only on your device</b> — never on any server. When you click "Start Recording," the browser's MediaRecorder API captures audio directly into your device's memory. When you click "Download," the file is written to your Downloads folder. At no point does any data travel over the internet to DocEasy's servers. You can verify this: disconnect your Wi-Fi after the page loads, and the recorder continues working perfectly.</p>
+
+    <h3>Audio Format Support</h3>
+
+    <p>The output format depends on your browser:</p>
+
+    <ul>
+      <li><b>Chrome, Edge, Brave, Opera:</b> WebM using Opus codec at 128 kbps — excellent quality for voice.</li>
+      <li><b>Safari (macOS, iOS):</b> M4A using AAC encoding — also high quality.</li>
+      <li><b>Firefox:</b> OGG using Opus codec.</li>
+    </ul>
+
+    <p>All three formats play natively on Windows, macOS, Linux, Android, and iOS without any extra software. If you need MP3 specifically, use DocEasy's <a href="media-editor.html">Universal Media Editor</a> to convert the file in a few seconds.</p>
+
+    <h3>Common Use Cases</h3>
+
+    <ul>
+      <li><b>Podcast recording:</b> Solo episodes, intros, outros, ads, or audiobook chapters.</li>
+      <li><b>Voice memos:</b> Quick notes-to-self, meeting recaps, or shopping lists.</li>
+      <li><b>Interview capture:</b> Recording phone or in-person interviews (with consent).</li>
+      <li><b>Video narration:</b> Creating voiceover audio for tutorials, reviews, or explainers.</li>
+      <li><b>Language learning:</b> Recording yourself to compare pronunciation with native speakers.</li>
+      <li><b>Music practice:</b> Capturing vocal takes or instrument practice sessions.</li>
+      <li><b>Accessibility:</b> Recording audio versions of documents for visually impaired users.</li>
+      <li><b>Testimonials:</b> Collecting client quotes for websites and marketing material.</li>
+    </ul>
+
+    <h3>Getting the Best Audio Quality</h3>
+
+    <p>Three tips dramatically improve your recordings:</p>
+
+    <ol>
+      <li><b>Use an external microphone.</b> Even a ₹500 lavalier mic or a USB headset mic is far better than your laptop's built-in mic.</li>
+      <li><b>Record in a quiet room.</b> Soft furnishings (curtains, carpets, bookshelves) absorb echoes. Avoid bathrooms, kitchens, and empty halls.</li>
+      <li><b>Watch the waveform while recording.</b> The green bars should stay in the middle range — never touching the top. If they constantly spike, you're too close or speaking too loudly.</li>
+    </ol>
+
+    <h3>Privacy and Security</h3>
+
+    <p>Voice recordings often contain sensitive information — client calls, medical notes, private conversations, or confidential business plans. DocEasy is built so none of this ever leaves your device:</p>
+
+    <ul>
+      <li><b>No uploads:</b> Recording happens entirely in your browser's memory.</li>
+      <li><b>No server processing:</b> There's no DocEasy server handling your audio.</li>
+      <li><b>No tracking:</b> We don't log what you record or how long.</li>
+      <li><b>No account needed:</b> Use the tool completely anonymously.</li>
+      <li><b>Offline capable:</b> After loading once, you can turn off Wi-Fi and record.</li>
+    </ul>
+
+    <h3>Works on All Modern Devices</h3>
+
+    <p>The Voice Recorder works on:</p>
+
+    <ul>
+      <li><b>Desktop:</b> Windows, macOS, Linux, Chrome OS.</li>
+      <li><b>Browsers:</b> Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi.</li>
+      <li><b>Mobile:</b> Android (Chrome, Firefox, Samsung Internet), iOS (Safari 14.3+, Chrome for iOS).</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
       <summary>How do I record my voice using DocEasy Voice Recorder?</summary>
-      <p>Recording is simple and takes just three steps. First, click the pink "Start Recording" button on this page. Second, when your browser asks for microphone permission, click "Allow" — this is a one-time step. Third, speak into your microphone. You'll see the timer counting up, a red dot pulsing, and a live waveform bouncing with your voice. When you're done, click "Stop." A preview player appears below with your recording, and you can click "Download" to save it to your device. The whole process takes just a few seconds and requires zero installation, no account, and no email.</p>
+      <p>Click "Start Recording," grant microphone permission when your browser asks, speak into the mic, and click "Stop" when done. A preview appears below — click "Download" to save the file. Three steps, no signup, no installation.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Is this voice recorder really free?</summary>
-      <p>Yes — 100% free, forever, with no strings attached. There's no signup, no email required, no watermark, no daily limit, no file-size cap, and no "pro" version hiding behind a paywall. You can record as many voice memos as you want, as many times as you want, without ever paying a rupee. The site is supported by simple display ads on other pages, which is why we can keep this tool completely free while still protecting your privacy. We don't sell your data, we don't track your recordings, and we don't ask for your email to unlock features.</p>
+      <p>Yes — 100% free, forever. No signup, no email, no watermark, no daily limit, no file-size cap, and no premium tier. Record as many voice memos as you want, forever.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Where is my recording saved — on your server or my device?</summary>
-      <p>Your recording is saved only on your device, never on any server. This is the most important thing to understand about DocEasy. When you click "Start Recording," the browser's MediaRecorder API captures audio directly into your device's memory. When you click "Download," the file is written to your Downloads folder. At no point does any data travel over the internet to DocEasy's servers — because we don't have any servers handling your audio. You can verify this yourself: disconnect your Wi-Fi after the page loads, and the recorder still works perfectly. This makes DocEasy the safest choice for recording sensitive content like client calls, medical notes, or private conversations.</p>
+      <p>Only on your device. Recording happens locally in your browser. Nothing is uploaded. You can verify by opening Developer Tools → Network tab — zero outgoing requests carry your audio data.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Which audio format does the recording save in?</summary>
-      <p>The format depends on your browser. Chrome, Edge, Brave, and Opera save recordings as <code>.webm</code> using the Opus codec at 128 kbps — excellent quality for voice. Safari on macOS and iOS saves as <code>.m4a</code> using AAC encoding, which is also high quality. Firefox saves as <code>.ogg</code> using Opus. All three formats play natively on Windows, macOS, Linux, Android, and iOS without any extra software. If you specifically need MP3 — for example, to upload to a podcast host, WhatsApp, or a website — use DocEasy's Audio Converter tool to convert the downloaded file in a few seconds.</p>
+      <p>Chrome/Edge save as <code>.webm</code>, Safari saves as <code>.m4a</code>, and Firefox saves as <code>.ogg</code>. All three play natively everywhere. Convert to MP3 with the Universal Media Editor if needed.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Does it work on mobile phones?</summary>
-      <p>Yes — the Voice Recorder works perfectly on Android phones and iPhones running modern browsers. On Android, Chrome, Firefox, and Samsung Internet all support microphone recording out of the box. On iPhone, Safari (iOS 14.3 and later) supports MediaRecorder for audio, and Chrome for iOS also works. Just tap "Start Recording," grant microphone permission, and recording begins. The recording saves to your phone's Downloads folder. For the cleanest audio, use headphones with a built-in mic to reduce echo, and record in a quiet room. Mobile devices can also produce excellent recordings — many podcasters record entire episodes on their phones using this exact approach.</p>
+      <p>Yes — Android phones (Chrome, Firefox, Samsung Internet) and iPhones (Safari 14.3+, Chrome for iOS) both support the recorder. Just tap Start, allow mic access, and record.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Why does my browser ask for microphone permission?</summary>
-      <p>Every modern browser requires explicit permission before any website can access your microphone. This is a security feature — it prevents malicious sites from secretly listening to you. When you click "Start Recording" for the first time, you'll see a popup asking something like "Allow this site to use your microphone?" You must click "Allow" for the recorder to work. You only need to grant this permission once per browser — after that, it's remembered. If you accidentally clicked "Block," you can reset it by clicking the padlock icon in your browser's address bar and changing the microphone permission to "Allow."</p>
+      <p>Every modern browser requires explicit permission before any website can access the microphone. This is a security feature to prevent malicious sites from secretly listening to you. Grant it once per browser and it's remembered.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I pause and resume mid-recording?</summary>
-      <p>Yes — the Voice Recorder supports pausing and resuming without creating multiple files. Click "Pause" while recording, and the timer stops along with the audio capture. The red dot turns grey. Click "Resume," and recording continues from exactly where it stopped. When you finally click "Stop" and download, you get one continuous file with the paused sections removed automatically. This is perfect for recording interviews with breaks, or when you need to cough or sneeze without ruining the take. The pause/resume feature works reliably on Chrome, Edge, and Firefox; Safari support is also solid on iOS 15 and later.</p>
+      <p>Yes — click "Pause" while recording. The timer stops and no audio is captured. Click "Resume" to continue from exactly where you stopped. Paused sections are removed from the final file.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>How can I get the best audio quality?</summary>
-      <p>Three tips will dramatically improve your recording. First, use an external microphone — even a ₹500 lavalier mic or a USB headset mic is far better than your laptop's built-in mic. Second, record in a small, soft-furnished room with curtains, carpet, or bookshelves to absorb echoes; avoid bathrooms, kitchens, and empty halls. Third, watch the waveform while recording — the green bars should stay in the middle range, never touching the top. If the bars are hitting the top constantly, you're too close to the mic or speaking too loudly; back off a few inches. You can also test your mic levels first using the Mic Test tool in the Device Tests section.</p>
+      <p>Use an external microphone (USB or headset), record in a small soft-furnished room, and speak 6–12 inches from the mic. Watch the waveform — peaks should stay around 50–75%, not clipping at 100%.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Is there a time limit on recordings?</summary>
-      <p>There's no time limit imposed by DocEasy — you can record for as long as you want. The practical limit is memory. A 1-hour recording at 128 kbps is about 60 MB, which every device handles easily. A 5-hour recording is about 300 MB, which is still fine on desktop but might strain older phones. If you're recording for many hours continuously, we recommend plugging in your device, closing other apps, and keeping the browser tab in focus. There's also no limit on the number of separate recordings you can make — record 10, 100, or 1,000 times, it's all free.</p>
+      <p>No imposed limit. Recording length depends on your device's available memory. A one-hour recording at 128 kbps is roughly 60 MB, which every modern device handles easily.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I record audio playing on my computer (system audio)?</summary>
-      <p>Not with this tool directly — the Voice Recorder captures only your microphone input. To record system audio (whatever is playing through your speakers — YouTube, Spotify, Zoom calls), use DocEasy's Screen Recorder tool instead. That tool uses the browser's <code>getDisplayMedia</code> API which can capture system audio along with screen video, and you can then extract just the audio using the Extract Audio tool. Alternatively, on Windows you can enable "Stereo Mix" in your sound settings and select it as the input device here — but this depends on your hardware drivers.</p>
+      <p>Not with this tool — it captures only your microphone. Use DocEasy's Screen Recorder instead (it can capture system audio), then extract the audio using the Universal Media Editor's Audio tab.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>What happens if I close the tab while recording?</summary>
-      <p>If you close the browser tab, refresh the page, or navigate away while recording, the recording is immediately cancelled and lost. There's no server-side recovery because everything happens in memory on your device. We strongly recommend clicking "Stop" and "Download" before closing the tab. For long recordings, set a reminder or keep the tab pinned so you don't accidentally close it. On mobile, avoid switching to other apps for long periods — some browsers may suspend background tabs, which could interrupt the recording.</p>
+      <p>The recording is immediately cancelled and lost — there's no server-side recovery because everything happens in memory. Always click "Stop" and "Download" before closing the tab.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I use the recordings for commercial purposes?</summary>
-      <p>Yes — everything you record with DocEasy is yours to use freely, including for commercial projects. There are no watermarks, no attribution requirements, and no licensing restrictions on the output files. If you record a voiceover for a YouTube video, an interview for a podcast, or audio notes for a paid course, you own 100% of the result and can monetize it however you want. DocEasy doesn't claim any rights to your recordings. The only exception is if the content itself is copyrighted by someone else — DocEasy doesn't grant you rights to material you don't own.</p>
+      <p>Yes — everything you record is yours to use freely, including commercially. No watermarks, no attribution, no restrictions. The only exception is if the input content itself is copyrighted by someone else.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Why is my recording file so large?</summary>
-      <p>Voice recordings at 128 kbps are compact — a 10-minute recording is roughly 10 MB. If your file is much larger, it may be because your browser is saving at a higher bitrate (some save at 256 kbps or higher). To reduce file size, use DocEasy's Audio Converter to re-encode at 64 kbps — that's still perfectly clear for voice and halves the file size. For sharing on WhatsApp or email, aim for files under 25 MB. Music and singing benefit from 128 kbps or higher; spoken voice is fine at 64 kbps. Remember: halving the bitrate roughly halves the file size but also reduces quality.</p>
+      <p>Voice recordings at 128 kbps are compact (10 minutes ≈ 10 MB). If yours is much larger, convert to a lower bitrate using the Universal Media Editor. For voice, 64 kbps is plenty.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Does the recorder work offline?</summary>
-      <p>Yes — after you load this page once, the Voice Recorder continues working even without an internet connection. Since all audio processing happens locally in your browser, you can switch off Wi-Fi and still record. This is useful for flights, rural areas with poor connectivity, or privacy-conscious recording where you don't want any network activity. The only requirement is that the page itself has loaded once. If you want to record truly offline, open this page, wait for it to fully load, then turn off Wi-Fi. The recording will work normally, and downloading the file will still work since it's saved locally.</p>
+      <p>Yes — after the page loads once, it works completely offline. Since all processing is local, no internet is needed. Load the page online, then turn off Wi-Fi and record.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Why is my recording silent or barely audible?</summary>
-      <p>If your recording plays back but is silent or very quiet, check these common causes. First, confirm the correct microphone is selected in your OS sound settings — if you have headphones plugged in with a mic, your laptop might be using that instead of the internal mic. Second, check your OS input volume slider — it should be at 70% or higher. Third, make sure no other app (Zoom, Teams, Discord, Skype) is holding the microphone exclusively — close them and refresh the page. Fourth, speak directly toward the mic, about 6–12 inches away. If the waveform barely moves during recording, the problem is at the input stage, not the recorder itself.</p>
+      <p>Check: (1) Correct microphone selected in OS settings; (2) Input volume at 70% or higher; (3) No other app (Zoom, Teams) holding the mic exclusively; (4) Speak directly toward the mic 6–12 inches away.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I convert the recording to MP3?</summary>
-      <p>Yes — download your recording first (it'll be WebM, M4A, or OGG depending on your browser), then open DocEasy's Audio Converter tool and upload the file. Select MP3 as the output format and click Convert. In a few seconds you'll have an MP3 file that plays on literally any device, including old car stereos, MP3 players, and basic phones. The conversion happens locally in your browser using FFmpeg compiled to WebAssembly, so your file never leaves your device. This is useful when you need to upload the recording to a platform that only accepts MP3, or send it to someone with an old device.</p>
+      <p>Yes — download the recording first, then use DocEasy's Universal Media Editor (Audio tab) to convert WebM/M4A/OGG to MP3 in a few seconds. Conversion happens locally in your browser.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Does the browser need to stay in focus while recording?</summary>
-      <p>Not necessarily, but it's safer. On desktop Chrome and Edge, recording continues even if you switch to another tab or another application — the MediaRecorder keeps capturing in the background. On Firefox, recording generally continues too, but there have been reports of brief interruptions when the tab is heavily throttled. On mobile, background recording is less reliable — iOS Safari and Android Chrome may suspend background tabs after a few minutes to save battery. For critical recordings, keep this tab visible and your screen on. If you must switch away, do so briefly and check the waveform when you return.</p>
+      <p>Not strictly, but recommended. On desktop Chrome and Edge, recording continues when switching tabs. On mobile, background recording is less reliable — keep the tab visible for critical recordings.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I edit the recording after downloading?</summary>
-      <p>Yes — after downloading, you can edit the recording with any audio editor. Free options include Audacity (Windows, Mac, Linux), Ocenaudio, or web-based tools. You can also use DocEasy's own tools for basic edits: use the Audio Splitter to cut a section, the Audio Speed Changer to adjust playback speed, or the Silence Remover to trim quiet gaps automatically. For more advanced editing like noise reduction, multi-track mixing, or effects, a desktop editor like Audacity is better. The recording file itself has no restrictions — you can open it, edit it, re-save it, or share it however you like.</p>
+      <p>Yes — use Audacity (free, Windows/Mac/Linux) for advanced edits. Or use DocEasy's tools: Split Audio, Audio Speed, Silence Remover, or Universal Media Editor for basic trims and format changes.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Which browsers are supported?</summary>
-      <p>DocEasy Voice Recorder works on all modern browsers: Google Chrome 90+, Microsoft Edge 90+, Mozilla Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and most Chromium-based browsers. Chrome and Edge offer the smoothest experience with WebM/Opus output and reliable pause/resume. Firefox works well too, though it saves as OGG. Safari on macOS and iOS supports the recorder but saves as M4A. If you're on an outdated browser (Internet Explorer, old Chrome below version 90), the "Start Recording" button may not work. The fix is simple — update your browser to the latest version, or switch to Chrome.</p>
+      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Chrome and Edge offer the smoothest experience.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Do you keep any logs of my recordings?</summary>
-      <p>No. We don't log filenames, durations, formats, or any metadata about your recordings. We don't track which tool you use or how long you spend recording. Our analytics only records anonymous page views — never file operations. Since files never leave your device, there's nothing for us to log even if we wanted to. You can verify this yourself: open Developer Tools (F12), go to the Network tab, and watch for requests while recording. You'll see zero requests to any DocEasy server during the entire process — from clicking "Start" to downloading the file.</p>
+      <p>No. We don't log filenames, durations, formats, or any metadata. Our analytics only records anonymous page views — never file activity. Since files never leave your device, there's nothing to log.</p>
     </details>
+
+    <details>
+      <summary>Can I record with a Bluetooth microphone or headset?</summary>
+      <p>Yes, but Bluetooth mics use a low-bandwidth profile (HFP/HSP) that reduces audio quality to 8–16 kHz. For professional work, use a wired USB microphone or a lavalier plugged into your computer.</p>
+    </details>
+
+    <details>
+      <summary>Can I record from a browser tab playing music?</summary>
+      <p>Not directly — this tool captures only the microphone. To record tab audio, use the Screen Recorder with "System audio" enabled, then extract the audio track.</p>
+    </details>
+
+    <details>
+      <summary>How is this different from a phone's built-in voice recorder?</summary>
+      <p>A phone recorder is great for quick notes, but DocEasy works across devices (start on desktop, finish on mobile), produces higher-quality output with an external mic, and requires no app install. Both have their place.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <ul>
+      <li><a href="media-editor.html">Universal Media Editor</a> — Convert, trim, compress your recordings</li>
+      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Record screen + system audio</li>
+      <li><a href="media-webcam-recorder.html">Webcam Recorder</a> — Record yourself on camera</li>
+      <li><a href="media-mic-test.html">Mic Test</a> — Verify microphone before recording</li>
+      <li><a href="media-webcam-test.html">Webcam Test</a> — Check camera before recording</li>
+      <li><a href="media-text-to-speech.html">Text to Speech</a> — Read text aloud with browser voices</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>DocEasy's Voice Recorder gives you professional audio capture without the hassle of installing software, creating an account, or uploading files to a server. Record podcasts, voice memos, interviews, narration, or anything else — all in your browser, all completely private.</p>
+
+    <p>Try it above. Click Start Recording, speak, click Stop, and download your file in seconds.</p>
+
   </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
 </main>
+
 <div id="doceasy-footer"></div>
+
 <script src="../assets/js/core/doceasy-core.js"></script>
+
 <script>
 (function () {
   var startBtn = document.getElementById('startBtn');
@@ -268,13 +622,14 @@
       var bars = 48;
       var step = Math.floor(buf.length / bars);
       var bw = w / bars;
+      var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#19398a';
       for (var i = 0; i < bars; i++) {
         var v = buf[i * step] / 255;
         var bh = v * h * 0.9 + 4;
         var x = i * bw;
         var grad = ctx.createLinearGradient(0, h - bh, 0, h);
-        grad.addColorStop(0, '#db2777');
-        grad.addColorStop(1, '#f472b6');
+        grad.addColorStop(0, accent);
+        grad.addColorStop(1, '#38bdf8');
         ctx.fillStyle = grad;
         ctx.fillRect(x + 2, h - bh, bw - 4, bh);
       }
@@ -316,7 +671,7 @@
       audioPlayer.src = url;
       downloadBtn.href = url;
       var ext = (mediaRecorder.mimeType || '').indexOf('mp4') > -1 ? 'm4a' : (mediaRecorder.mimeType.indexOf('ogg') > -1 ? 'ogg' : 'webm');
-      downloadBtn.download = 'voice-recording.' + ext;
+      downloadBtn.download = 'voice-recording-' + Date.now() + '.' + ext;
       preview.classList.add('show');
     };
 
