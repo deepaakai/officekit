@@ -3,32 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Webcam Test — Check Your Camera Online Free | DocEasy</title>
-<meta name="description" content="Test your webcam with a live preview. See resolution, frame rate, and device label. No upload, no signup, 100% private.">
-<meta name="keywords" content="webcam test, camera test, test webcam online, camera checker, webcam resolution test, browser webcam test">
+<title>Webcam Recorder — Record Video from Camera Online Free | DocEasy</title>
+<meta name="description" content="Free online webcam recorder. Record video from your camera with microphone in HD. No signup, no upload, 100% private. Works on Windows, Mac, Android.">
+<meta name="keywords" content="webcam recorder, online webcam recorder, record video camera, browser camera recorder, free webcam recorder">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-webcam-test.html">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-webcam-recorder.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Webcam Test — Check Your Camera Online Free | DocEasy">
-<meta property="og:description" content="Test your webcam with a live preview. Free, private, browser-based.">
-<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-webcam-test.html">
-<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/webcam-test-demo.jpg">
+<meta property="og:title" content="Webcam Recorder — Record Video from Camera Online Free | DocEasy">
+<meta property="og:description" content="Record video from your webcam with audio. Free, private, browser-based.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-webcam-recorder.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/webcam-recorder-demo.jpg">
 <meta property="og:site_name" content="DocEasy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Webcam Test — Check Your Camera Online Free | DocEasy">
-<meta name="twitter:description" content="Test your webcam with a live preview. No upload, no signup.">
-<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/webcam-test-demo.jpg">
+<meta name="twitter:title" content="Webcam Recorder — Record Video from Camera Online Free | DocEasy">
+<meta name="twitter:description" content="Record video from your webcam with audio. Free, private, no signup.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/webcam-recorder-demo.jpg">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Webcam Test — DocEasy",
-  "url": "https://deepaakai.github.io/officekit/tools/media-webcam-test.html",
-  "applicationCategory": "UtilitiesApplication",
+  "name": "Webcam Recorder — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/media-webcam-recorder.html",
+  "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Any (Web)",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Test your webcam with a live preview. Free, private, no signup."
+  "description": "Record video from your webcam with microphone audio. Free, private, no signup."
 }
 </script>
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
@@ -37,30 +37,68 @@
 .ad-slot-container, .ad-placeholder { display: none !important; }
 
 /* ============ Tool-specific styles ============ */
-.cam-card {
+.wr-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 14px;
-  padding: 22px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
   max-width: 760px;
   margin: 0 auto;
 }
-.cam-error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  display: none;
+.wr-timer {
+  font-size: clamp(38px, 8vw, 56px);
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -2px;
+  margin: 10px 0 6px;
 }
-[data-theme="dark"] .cam-error { background: #2a0a0a; border-color: #7f1d1d; color: #fca5a5; }
-.cam-error.show { display: block; }
+.wr-timer.rec { color: #dc2626; }
+.wr-status {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--subtext-color);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.wr-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border-color);
+}
+.wr-dot.on { background: #dc2626; animation: wrpulse 1.2s infinite; }
+@keyframes wrpulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: .35; transform: scale(1.15); }
+}
 
-.cam-video-frame {
+.wr-device-row {
+  display: none;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.wr-device-row.show { display: flex; }
+.wr-device-row select {
+  flex: 1;
+  min-width: 180px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 12.5px;
+  font-family: inherit;
+  outline: none;
+}
+.wr-device-row select:focus { border-color: var(--accent); }
+
+.wr-video-frame {
   position: relative;
   background: #0f172a;
   border-radius: 14px;
@@ -68,13 +106,14 @@
   aspect-ratio: 16 / 9;
   margin-bottom: 18px;
 }
-.cam-video-frame video {
+.wr-video-frame video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scaleX(-1);
 }
-.cam-video-frame .placeholder {
+.wr-video-frame .placeholder {
   position: absolute;
   inset: 0;
   display: grid;
@@ -86,14 +125,14 @@
   padding: 20px;
 }
 
-.cam-actions {
+.wr-actions {
   display: flex;
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
-.cam-btn {
+.wr-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -107,51 +146,55 @@
   font-family: inherit;
   text-decoration: none;
 }
-.cam-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
-.cam-btn.primary {
+.wr-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.wr-btn.primary {
   background: var(--accent);
   color: #fff;
   box-shadow: 0 8px 22px rgba(25,57,138,.28);
 }
-.cam-btn.primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
-.cam-btn.ghost {
+.wr-btn.primary:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-2px); }
+.wr-btn.danger { background: #dc2626; color: #fff; box-shadow: 0 8px 22px rgba(220,38,38,.25); }
+.wr-btn.danger:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-2px); }
+.wr-btn.ghost {
   background: var(--card-hover);
   color: var(--text-color);
   border: 1px solid var(--border-color);
 }
-.cam-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
-.cam-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+.wr-btn.ghost:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.wr-btn:disabled { opacity: .45; cursor: not-allowed; transform: none !important; box-shadow: none; }
 
-.cam-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  margin-top: 20px;
+.wr-result {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
   display: none;
 }
-.cam-stats.show { display: grid; }
-.cam-stat-box {
-  background: var(--card-hover);
-  border-radius: 12px;
-  padding: 14px 16px;
-}
-.cam-stat-box .lbl {
-  font-size: 11px;
-  color: var(--subtext-color);
-  text-transform: uppercase;
-  letter-spacing: .6px;
+.wr-result.show { display: block; }
+.wr-result h3 {
+  font-size: 14.5px;
   font-weight: 800;
-  margin-bottom: 4px;
-}
-.cam-stat-box .val {
-  font-size: 17px;
-  font-weight: 800;
+  margin: 0 0 12px;
   color: var(--text-color);
-  font-variant-numeric: tabular-nums;
 }
-.cam-stat-box .val.ok { color: #16a34a; }
+.wr-result video { width: 100%; border-radius: 10px; margin-bottom: 14px; max-height: 340px; background: #000; }
+.wr-result .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
-.cam-note {
+.wr-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: none;
+  line-height: 1.55;
+}
+[data-theme="dark"] .wr-error { background: #2a0a0a; border-color: #7f1d1d; color: #fca5a5; }
+.wr-error.show { display: block; }
+
+.wr-note {
   margin-top: 18px;
   font-size: 12.5px;
   color: var(--subtext-color);
@@ -280,8 +323,9 @@
   .seo-article p { font-size: 15.5px !important; }
   .seo-article li { font-size: 15px !important; }
   .article-image-box img { max-height: 260px; padding: 14px; }
-  .cam-btn { padding: 11px 20px; font-size: 13px; }
-  .cam-card { padding: 16px; }
+  .wr-btn { padding: 11px 20px; font-size: 13px; }
+  .wr-card { padding: 16px; }
+  .wr-timer { font-size: 42px; }
 }
 </style>
 </head>
@@ -292,257 +336,277 @@
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">Webcam Test</h1>
-    <p class="hero-sub">Check your webcam with a live preview. See resolution, frame rate, and device label instantly — no upload, no signup, 100% private.</p>
+    <h1 class="hero-title">Webcam Recorder</h1>
+    <p class="hero-sub">Record video from your webcam with microphone audio. Choose your camera and mic, preview live, and download in HD — no upload, no signup, 100% private.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <div class="cam-card">
-    <div class="cam-error" id="errMsg"></div>
+  <div class="wr-card">
+    <div class="wr-error" id="errMsg"></div>
 
-    <div class="cam-video-frame">
-      <video id="video" autoplay playsinline muted></video>
-      <div class="placeholder" id="placeholder">Click "Start Camera" to begin</div>
+    <div class="wr-timer" id="timer">00:00</div>
+    <div class="wr-status">
+      <span class="wr-dot" id="recDot"></span>
+      <span id="statusText">Ready to record</span>
     </div>
 
-    <div class="cam-actions">
-      <button class="cam-btn primary" id="startBtn">
+    <div class="wr-device-row" id="deviceRow">
+      <select id="videoSelect" aria-label="Select camera"></select>
+      <select id="audioSelect" aria-label="Select microphone"></select>
+    </div>
+
+    <div class="wr-video-frame">
+      <video id="livePreview" autoplay playsinline muted></video>
+      <div class="placeholder" id="placeholder">Click "Start Camera" to see live preview</div>
+    </div>
+
+    <div class="wr-actions">
+      <button class="wr-btn primary" id="previewBtn">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
         Start Camera
       </button>
-      <button class="cam-btn ghost" id="stopBtn" disabled>
+      <button class="wr-btn primary" id="startBtn" disabled>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        Start Recording
+      </button>
+      <button class="wr-btn danger" id="stopBtn" disabled>
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
         Stop
       </button>
+      <button class="wr-btn ghost" id="pauseBtn" disabled>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>
+        Pause
+      </button>
     </div>
 
-    <div class="cam-stats" id="stats">
-      <div class="cam-stat-box">
-        <div class="lbl">Resolution</div>
-        <div class="val" id="res">—</div>
-      </div>
-      <div class="cam-stat-box">
-        <div class="lbl">Frame Rate</div>
-        <div class="val" id="fps">—</div>
-      </div>
-      <div class="cam-stat-box">
-        <div class="lbl">Device</div>
-        <div class="val" id="label" style="font-size:13px;">—</div>
-      </div>
-      <div class="cam-stat-box">
-        <div class="lbl">Status</div>
-        <div class="val ok">✓ Live</div>
+    <div class="wr-result" id="preview">
+      <h3>Your Recording</h3>
+      <video id="outputVideo" controls></video>
+      <div class="actions">
+        <a class="wr-btn primary" id="downloadBtn" download="webcam-recording.webm" href="#">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download
+        </a>
+        <button class="wr-btn ghost" id="resetBtn">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+          Record Again
+        </button>
       </div>
     </div>
 
-    <p class="cam-note">🔒 Video preview stays on your device. Nothing is recorded or uploaded.</p>
+    <p class="wr-note">🔒 All video is processed locally in your browser. Nothing is ever uploaded to a server.</p>
   </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ HOW TO USE + FAQ (2000+ words) ============ -->
+  <!-- ============ HOW TO USE + FAQ ============ -->
   <section class="seo-article">
 
-    <h2>Free Online Webcam Test — Check Your Camera in Seconds (2026)</h2>
+    <h2>Free Online Webcam Recorder — Record Video from Your Camera (2026)</h2>
 
-    <p>Before any video call, online interview, class, or recording session, you need to know: is my webcam actually working? DocEasy's <b>free online webcam test</b> shows a live preview with resolution, frame rate, and device info so you can verify your camera setup in seconds — no install, no signup, no upload, and complete privacy.</p>
+    <p>Whether you're recording a professional self-introduction for a job application, capturing a video message for family, creating content for YouTube, or documenting an important moment, DocEasy's <b>free online webcam recorder</b> gives you full HD video capture with microphone audio — no install, no signup, no watermark, and complete privacy because nothing ever uploads to a server.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/webcam-test-demo.jpg" alt="Webcam test interface showing live camera preview and device statistics" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/webcam-test-demo.jpg]</div>';">
-      <div class="article-image-caption">The DocEasy Webcam Test shows a live preview with resolution, frame rate, and device label. Nothing is recorded.</div>
+      <img src="../assets/images/webcam-recorder-demo.jpg" alt="Webcam recorder interface showing live camera preview and recording controls" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/webcam-recorder-demo.jpg]</div>';">
+      <div class="article-image-caption">The DocEasy Webcam Recorder captures HD video from your camera with synchronized microphone audio. Nothing is uploaded.</div>
     </div>
 
-    <h3>How to Use the Webcam Test</h3>
+    <h3>How to Use the Webcam Recorder</h3>
 
-    <p>Testing your webcam takes just two clicks:</p>
+    <p>Recording your webcam takes just four simple steps:</p>
 
     <ol>
-      <li><b>Step 1 — Click "Start Camera":</b> Your browser will ask for camera permission. Click "Allow" once — this is remembered for future visits.</li>
-      <li><b>Step 2 — See your preview:</b> The video feed appears immediately. Below it, you'll see four stats: resolution, frame rate, device label, and a green "Live" status.</li>
+      <li><b>Step 1 — Click "Start Camera":</b> Your browser will ask for camera and microphone permission. Click "Allow" once — this is remembered for future visits. A live preview appears.</li>
+      <li><b>Step 2 — Choose your devices (optional):</b> If you have multiple cameras or microphones, dropdowns appear above the preview. Pick the ones you want to use.</li>
+      <li><b>Step 3 — Click "Start Recording":</b> The timer counts up, the red dot pulses, and recording begins. Click "Pause" at any time to temporarily stop; click again to resume from the same point.</li>
+      <li><b>Step 4 — Click "Stop":</b> A preview player appears below with your recording. Click "Download" to save the file, or "Record Again" to start a fresh take.</li>
     </ol>
 
-    <p>If the video appears and stats show, your webcam is working perfectly. If not, work through the troubleshooting checklist below.</p>
+    <p>That's it — no signup, no email, no payment. The entire workflow runs in your browser tab.</p>
 
-    <h3>What the Stats Mean</h3>
+    <h3>Device Selection</h3>
+
+    <p>If you have multiple cameras (like a built-in laptop webcam plus an external USB webcam) or multiple microphones (built-in mic plus a headset), the tool automatically lists all available devices in dropdown menus. Simply select the ones you want to use — the live preview updates instantly. This is useful for switching to an external USB webcam for better quality, using a headset microphone instead of the laptop's built-in mic, or testing multiple devices to see which looks or sounds best.</p>
+
+    <h3>Video Output Quality</h3>
+
+    <p>Recordings are saved as <b>WebM files</b> using the VP9 video codec and Opus audio codec — both modern, efficient, and royalty-free. WebM plays natively in Chrome, Edge, Firefox, Opera, Vivaldi, and most Android browsers. It also plays in VLC, MPV, and most desktop media players. If you need MP4 instead (for iOS or legacy software), use DocEasy's <a href="media-editor.html">Universal Media Editor</a> to convert WebM → MP4 in a few seconds — the conversion happens locally in your browser.</p>
+
+    <p>Resolution depends on your camera. Built-in laptop webcams typically output 720p. External USB webcams often support 1080p. The tool captures whatever your camera outputs — no downsampling, no quality loss.</p>
+
+    <h3>Common Use Cases</h3>
 
     <ul>
-      <li><b>Resolution:</b> The pixel dimensions of your camera output. Common values: 640×480 (SD, rare), 1280×720 (HD, most common), 1920×1080 (Full HD), 2560×1440 (QHD), 3840×2160 (4K).</li>
-      <li><b>Frame Rate (FPS):</b> The number of frames captured per second. 30 fps is standard; 60 fps is smoother. Lower FPS may indicate CPU strain or a bandwidth-limited camera.</li>
-      <li><b>Device Label:</b> The name your OS gives the camera (e.g. "HD Webcam C920," "FaceTime HD Camera"). Some browsers show generic names for privacy.</li>
-      <li><b>Status:</b> "✓ Live" confirms the camera stream is active and decoding properly.</li>
+      <li><b>Job applications:</b> Record a video self-introduction for online applications or LinkedIn.</li>
+      <li><b>Video messages:</b> Send personalized greetings to family, friends, or clients.</li>
+      <li><b>Content creation:</b> Film YouTube intros, vlog segments, or course lessons.</li>
+      <li><b>Online teaching:</b> Record short explainer videos for students.</li>
+      <li><b>Product demos:</b> Show a software feature while narrating the workflow.</li>
+      <li><b>Practice interviews:</b> Record mock answers to review your delivery and body language.</li>
+      <li><b>Video diaries:</b> Keep a personal video journal — no app required.</li>
+      <li><b>Reaction videos:</b> Film yourself reacting to content for social media.</li>
+      <li><b>Testimonials:</b> Collect client or student testimonials in video format.</li>
     </ul>
 
-    <h3>Common Reasons Your Webcam Isn't Working</h3>
-
-    <p>If the preview shows a black screen or nothing happens, work through these checks:</p>
-
-    <ol>
-      <li><b>Camera permission denied:</b> Click the padlock icon in the address bar, set camera to "Allow," and refresh the page.</li>
-      <li><b>Another app is using the camera:</b> Zoom, Teams, Discord, Skype, OBS, and browser tabs can all lock the camera exclusively. Close them and try again.</li>
-      <li><b>Physical privacy shutter:</b> Many laptops have a slider that blocks the lens — check and open it.</li>
-      <li><b>OS-level block:</b> Windows — Settings → Privacy → Camera. macOS — System Preferences → Security & Privacy → Camera. Ensure your browser is allowed.</li>
-      <li><b>Wrong device selected:</b> If you have multiple cameras (built-in + USB), the browser uses the OS default. Change it in your OS sound/video settings.</li>
-      <li><b>Driver issues:</b> On Windows, open Device Manager and confirm the webcam isn't showing a warning icon. Update drivers if needed.</li>
-    </ol>
-
-    <h3>Why Webcam Testing Matters</h3>
-
-    <p>A webcam test is one of the most underrated checks you can do. Common scenarios where testing saves the day:</p>
+    <h3>Tips for Better Recordings</h3>
 
     <ul>
-      <li><b>Job interviews:</b> A black-screen interview immediately loses credibility. Verify before every call.</li>
-      <li><b>Online classes:</b> Teachers and students need to see each other — a dead camera derails the lesson.</li>
-      <li><b>Client meetings:</b> Professional first impressions require a working camera and good lighting.</li>
-      <li><b>Content creation:</b> YouTube videos, streams, and course recordings need reliable camera output.</li>
-      <li><b>Telehealth:</b> Doctors need clear video for remote consultations.</li>
-      <li><b>Family calls:</b> Grandparents want to see faces, not just hear voices.</li>
+      <li><b>Lighting:</b> Sit facing a window or use a soft light in front of you. Avoid light sources behind you — they silhouette your face.</li>
+      <li><b>Camera position:</b> Place the camera at eye level, not looking up at you from below or down from above.</li>
+      <li><b>Background:</b> Choose a clean wall, bookshelf, or plant. Avoid messy rooms and distracting posters.</li>
+      <li><b>Audio:</b> Use a headset or external mic if possible. Even a cheap lavalier beats a laptop's built-in mic.</li>
+      <li><b>Framing:</b> Fill about two-thirds of the frame with your upper body. Leave a little headroom above.</li>
+      <li><b>Eye contact:</b> Look at the camera lens, not at your own preview.</li>
+      <li><b>Test first:</b> Do a 15-second test run to check lighting, framing, and audio before the real take.</li>
     </ul>
 
     <h3>Privacy and Security</h3>
 
-    <p>Your webcam feed is never recorded, saved, or transmitted. The Webcam Test only shows a live preview in your browser using the getUserMedia API. It does not record video, does not take screenshots, and does not send anything over the internet. The moment you click "Stop," the camera stream is fully terminated.</p>
-
-    <p>You can verify this yourself: open Developer Tools (F12), go to the Network tab, click "Start Camera," and watch. You'll see <b>zero outgoing data</b> — because the video stays entirely on your device.</p>
-
-    <h3>Works on All Modern Devices</h3>
-
-    <p>The Webcam Test works on:</p>
+    <p>Webcam recordings often contain personal information — your face, your voice, sometimes your home. DocEasy is built so none of this ever leaves your device:</p>
 
     <ul>
-      <li><b>Desktop:</b> Windows, macOS, Linux, Chrome OS.</li>
-      <li><b>Browsers:</b> Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi.</li>
-      <li><b>Mobile:</b> Android (Chrome, Firefox), iOS (Safari 14.3+).</li>
+      <li><b>No uploads:</b> Recording happens entirely in your browser's memory using MediaRecorder API.</li>
+      <li><b>No server processing:</b> There's no DocEasy server handling your video.</li>
+      <li><b>No tracking:</b> We don't log what you record or how long.</li>
+      <li><b>No account needed:</b> Use the tool completely anonymously.</li>
+      <li><b>Offline capable:</b> After loading once, you can turn off Wi-Fi and record.</li>
+      <li><b>Camera indicator:</b> Your device shows a green light whenever the camera is active — always visible.</li>
     </ul>
 
     <h3>Frequently Asked Questions</h3>
 
     <details>
-      <summary>How do I test my webcam with this tool?</summary>
-      <p>Click "Start Camera," grant camera permission when the browser asks, and the live preview appears instantly. You'll see resolution, frame rate, device label, and a green "Live" status below the video.</p>
+      <summary>How do I record video from my webcam?</summary>
+      <p>Click "Start Camera," grant camera and mic permission, verify the preview, then click "Start Recording." Click "Stop" when done, then "Download" to save the WebM file. Four steps, no signup.</p>
     </details>
 
     <details>
-      <summary>Is this webcam test free?</summary>
-      <p>Yes — 100% free, forever. No signup, no email, no payment, no daily limit, and no premium tier. Test as many times as you want, on any device.</p>
+      <summary>Is this webcam recorder really free?</summary>
+      <p>Yes — 100% free, forever. No signup, no email, no watermark, no time limit, no file-size cap, no premium tier. Record as many videos as you want.</p>
     </details>
 
     <details>
-      <summary>Is my camera being recorded or sent anywhere?</summary>
-      <p>No. The Webcam Test only shows a live preview. Nothing is recorded, saved, or transmitted. Verify by opening Developer Tools → Network tab — zero outgoing requests during the test.</p>
+      <summary>Is my video uploaded to your servers?</summary>
+      <p>No — everything happens locally in your browser using MediaRecorder API. Nothing is transmitted. Verify by opening Developer Tools → Network tab — zero outgoing requests carry your video data.</p>
     </details>
 
     <details>
-      <summary>Why does my browser ask for camera permission?</summary>
-      <p>Every modern browser requires explicit permission before any website can access the camera. This prevents malicious sites from secretly spying on you. A "Stop Sharing" bar stays visible whenever the camera is active.</p>
+      <summary>Which video format is used?</summary>
+      <p>WebM using VP9 video codec and Opus audio codec — modern, efficient, royalty-free. Plays natively in Chrome, Edge, Firefox, VLC, and most modern players. Convert to MP4 with the Universal Media Editor if needed.</p>
     </details>
 
     <details>
-      <summary>My webcam shows a black screen — what's wrong?</summary>
-      <p>Check: (1) Camera permission set to "Allow" in the browser; (2) No other app (Zoom, Teams) holding the camera; (3) Physical privacy shutter open; (4) OS privacy settings allow browser access; (5) Correct camera selected in OS settings.</p>
+      <summary>Can I choose which camera and microphone to use?</summary>
+      <p>Yes — after clicking "Start Camera," dropdown menus appear above the preview listing all available cameras and microphones. Select the ones you want. The preview updates instantly.</p>
     </details>
 
     <details>
-      <summary>What resolution and frame rate should I expect?</summary>
-      <p>Most laptop webcams output 1280×720 at 30 fps. External USB webcams (Logitech C920/C922) output 1920×1080 at 30 fps. Newer high-end webcams support 60 fps and 4K.</p>
+      <summary>Does it work on mobile phones?</summary>
+      <p>Yes — works on Android (Chrome, Firefox) and iPhone/iPad (Safari 14.3+). The front camera is used by default. Mobile recordings may be in MP4 on Safari.</p>
     </details>
 
     <details>
-      <summary>How can I check if my camera looks good before an interview?</summary>
-      <p>Verify: (1) Resolution at least 720p; (2) Even lighting with light source in front (not behind); (3) Clean background; (4) Camera at eye level; (5) You look directly at the lens, not the preview.</p>
+      <summary>Why does my browser ask for camera and mic permission?</summary>
+      <p>Every modern browser requires explicit permission before any website can access your camera and microphone. This prevents malicious sites from secretly watching or listening. A green indicator light stays on while the camera is active.</p>
     </details>
 
     <details>
-      <summary>Does the test work on mobile phones?</summary>
-      <p>Yes — works on Android (Chrome, Firefox) and iPhone/iPad (Safari 14.3+). Tap "Start Camera," grant permission, and the front camera shows live. Mobile resolutions may be higher than desktop.</p>
+      <summary>Can I pause and resume mid-recording?</summary>
+      <p>Yes — click "Pause" while recording. The timer stops and no video is captured. Click "Resume" to continue from exactly where you stopped. Paused sections are removed from the final file.</p>
     </details>
 
     <details>
-      <summary>Can I switch between multiple cameras?</summary>
-      <p>Not directly in the tool. To test a different camera, click "Stop," change the default camera in your OS settings, then click "Start Camera" again. Some browsers let you pick a specific device from the permission popup.</p>
+      <summary>What resolution is my recording?</summary>
+      <p>It depends on your camera. Built-in laptop webcams output 720p at 30 fps. External USB webcams often support 1080p. The tool captures whatever your camera provides — no downsampling.</p>
     </details>
 
     <details>
-      <summary>Why does my webcam label show as generic text?</summary>
-      <p>For privacy, browsers sometimes show labels like "Camera (1)" until you grant persistent permission. Once granted, actual device names may appear. Corporate-managed devices may hide labels permanently.</p>
+      <summary>How can I look better on camera?</summary>
+      <p>Face a window or soft light in front of you. Camera at eye level. Clean background (wall, plant, bookshelf). Fill two-thirds of the frame with your upper body. Look at the lens, not the preview. Wear solid colors — avoid busy patterns.</p>
+    </details>
+
+    <details>
+      <summary>Can I record with an external USB webcam?</summary>
+      <p>Yes — plug in the USB webcam, click "Start Camera," and select it from the camera dropdown menu. The live preview will switch to the external camera automatically.</p>
+    </details>
+
+    <details>
+      <summary>Is there a time limit on recordings?</summary>
+      <p>No imposed limit. Recording length depends on your device's memory. A 10-minute 720p recording is roughly 50–100 MB, which every modern device handles easily.</p>
+    </details>
+
+    <details>
+      <summary>What if the preview shows a black screen?</summary>
+      <p>Check: (1) Camera permission set to "Allow"; (2) No other app (Zoom, Teams) using the camera; (3) Physical privacy shutter open; (4) Correct camera selected in the dropdown; (5) Refresh the page and try again.</p>
+    </details>
+
+    <details>
+      <summary>Why is there no audio in my recording?</summary>
+      <p>Check: (1) Microphone permission granted (separate from camera); (2) Correct mic selected in the dropdown; (3) Mic not muted in OS; (4) Another app not holding the mic. Refresh the page after fixing.</p>
     </details>
 
     <details>
       <summary>Does it work offline?</summary>
-      <p>Yes — after the page loads once, it works fully offline. Since the preview runs entirely locally via getUserMedia, no internet is needed. Turn off Wi-Fi and continue testing.</p>
+      <p>Yes — after the page loads once, the recorder works fully offline. Since all processing is local, no internet is needed. Load the page online, then turn off Wi-Fi and record.</p>
+    </details>
+
+    <details>
+      <summary>Can I convert the WebM recording to MP4?</summary>
+      <p>Yes — download the recording first, then use DocEasy's Universal Media Editor (Convert tab) to convert WebM → MP4 in a few seconds. Conversion is local in your browser.</p>
+    </details>
+
+    <details>
+      <summary>Can I use the recordings for commercial purposes?</summary>
+      <p>Yes — everything you record is yours to use freely, including commercially. No watermarks, no attribution, no restrictions. The only exception is if the content itself is copyrighted by someone else.</p>
     </details>
 
     <details>
       <summary>Which browsers are supported?</summary>
-      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Chrome and Edge offer the fastest preview startup.</p>
+      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi. Chrome and Edge produce the best WebM output. Safari saves as MP4.</p>
     </details>
 
     <details>
-      <summary>How do I fix a laggy or low-fps preview?</summary>
-      <p>Close other CPU-heavy apps (Zoom, OBS, games), close other browser tabs with video, disable browser extensions temporarily, and check that Windows Privacy → Camera is enabled for your browser.</p>
+      <summary>Do you keep logs of my recordings?</summary>
+      <p>No. We don't log filenames, durations, formats, or any metadata. Our analytics only records anonymous page views. Since files never leave your device, there's nothing to log.</p>
     </details>
 
     <details>
-      <summary>Can I take a screenshot of the webcam preview?</summary>
-      <p>Yes — the tool has no built-in screenshot button, but use your OS tool (Windows: Win+Shift+S, macOS: Cmd+Shift+4). Or use the Screen Recorder with "Current Tab" to capture the preview as video.</p>
+      <summary>Can I take multiple takes without closing the page?</summary>
+      <p>Yes — after downloading a recording, click "Record Again" to reset the timer and start a new take. Your camera stays active, so no need to re-grant permission.</p>
     </details>
 
     <details>
-      <summary>Why does my webcam look blurry or out of focus?</summary>
-      <p>Common causes: (1) Dirty lens — wipe with a microfibre cloth; (2) Autofocus hasn't locked — move the camera slightly; (3) Low resolution — verify 720p+ in the stats; (4) Software interference — close Zoom/Skype and refresh.</p>
+      <summary>How is this different from my phone's camera app?</summary>
+      <p>A phone camera app is great for mobile recording, but DocEasy works across all devices (desktop, laptop, tablet, mobile), requires no app install, produces clean WebM files optimized for editing, and keeps everything completely private.</p>
     </details>
 
     <details>
-      <summary>Can I use my phone as a webcam?</summary>
-      <p>Yes — install apps like Iriun Webcam, DroidCam, Camo, or EpocCam to create a virtual camera on your PC/Mac. It appears in the Webcam Test as a selectable device. Great for upgrading to your phone's higher-quality camera.</p>
+      <summary>Can I record just my voice without video?</summary>
+      <p>Yes — for audio-only recording, use DocEasy's Voice Recorder instead. It's optimized for microphone capture, produces smaller files, and includes a live waveform visualization.</p>
     </details>
 
     <details>
-      <summary>Does the test record any video?</summary>
-      <p>No. The Webcam Test only displays a live preview. There's no save button, no file output, no data written to disk. The moment you click "Stop," the video is discarded. For recording, use the Webcam Recorder tool.</p>
-    </details>
-
-    <details>
-      <summary>Do you keep logs of my webcam test?</summary>
-      <p>No. We don't log device names, resolutions, or any metadata. Our analytics only records anonymous page views. Since video never leaves your browser, there's nothing to log.</p>
-    </details>
-
-    <details>
-      <summary>Can I test on a Chromebook?</summary>
-      <p>Yes — Chrome OS runs Chrome, which supports getUserMedia fully. The test works identically to Windows, Mac, and Linux.</p>
-    </details>
-
-    <details>
-      <summary>What if the stats show but the video is black?</summary>
-      <p>This usually means DRM, driver issues, or GPU decode failure. Try switching to Chrome or Edge, updating your graphics driver, or restarting the browser. If a virtual camera app is running, close it and retry.</p>
-    </details>
-
-    <details>
-      <summary>How often should I test my webcam?</summary>
-      <p>Before every important video call, interview, or recording session. A 20-second test eliminates the risk of a dead camera at the worst moment. Some users bookmark this page as a pre-call checklist.</p>
-    </details>
-
-    <details>
-      <summary>Can I use this webcam test commercially?</summary>
-      <p>Yes — nothing is saved, so there's no output to license. Use the tool freely for personal, educational, or commercial purposes. No restrictions.</p>
+      <summary>Why does the recording look grainy or noisy?</summary>
+      <p>Low-light conditions cause grain. Improve by facing a window or using a soft light in front of you. Also verify your camera is outputting 720p or higher — some USB webcams default to lower resolutions until you select a higher-quality mode in the dropdown.</p>
     </details>
 
     <h3>Related DocEasy Tools</h3>
 
     <ul>
-      <li><a href="media-webcam-recorder.html">Webcam Recorder</a> — Record video from your camera</li>
-      <li><a href="media-mic-test.html">Mic Test</a> — Verify microphone before video calls</li>
-      <li><a href="media-voice-recorder.html">Voice Recorder</a> — Record audio from your microphone</li>
-      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Capture screen with audio</li>
-      <li><a href="media-editor.html">Universal Media Editor</a> — Edit and convert media files</li>
+      <li><a href="media-webcam-test.html">Webcam Test</a> — Verify your camera before recording</li>
+      <li><a href="media-mic-test.html">Mic Test</a> — Check microphone levels before recording</li>
+      <li><a href="media-voice-recorder.html">Voice Recorder</a> — Record audio-only files</li>
+      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Capture your screen with audio</li>
+      <li><a href="media-editor.html">Universal Media Editor</a> — Trim, compress, convert your recordings</li>
       <li><a href="media-teleprompter.html">Teleprompter</a> — Read scripts while recording</li>
     </ul>
 
     <h3>Conclusion</h3>
 
-    <p>DocEasy's Webcam Test gives you instant camera verification in your browser — no install, no signup, no upload, no privacy risk. Whether you're preparing for a job interview, launching a stream, teaching online, or making family calls, a 20-second test ensures your camera works before the moment matters.</p>
+    <p>DocEasy's Webcam Recorder gives you professional video capture without the hassle of installing software, creating an account, or uploading files to a server. Record video messages, self-introductions, tutorials, vlogs, or anything else — all in your browser, all completely private.</p>
 
-    <p>Try it above. Click "Start Camera," verify your preview and stats, and stop. All in your browser, all completely private.</p>
+    <p>Try it above. Click "Start Camera," verify the preview, click "Start Recording," and download your video in seconds. No watermark, no limits, no signup.</p>
 
   </section>
 
@@ -556,70 +620,241 @@
 
 <script>
 (function () {
-  var video = document.getElementById('video');
+  var timerEl = document.getElementById('timer');
+  var recDot = document.getElementById('recDot');
+  var statusText = document.getElementById('statusText');
+  var deviceRow = document.getElementById('deviceRow');
+  var videoSelect = document.getElementById('videoSelect');
+  var audioSelect = document.getElementById('audioSelect');
+  var livePreview = document.getElementById('livePreview');
   var placeholder = document.getElementById('placeholder');
+  var previewBtn = document.getElementById('previewBtn');
   var startBtn = document.getElementById('startBtn');
   var stopBtn = document.getElementById('stopBtn');
-  var stats = document.getElementById('stats');
-  var res = document.getElementById('res');
-  var fps = document.getElementById('fps');
-  var label = document.getElementById('label');
+  var pauseBtn = document.getElementById('pauseBtn');
+  var resetBtn = document.getElementById('resetBtn');
+  var preview = document.getElementById('preview');
+  var outputVideo = document.getElementById('outputVideo');
+  var downloadBtn = document.getElementById('downloadBtn');
   var errMsg = document.getElementById('errMsg');
+
+  var mediaRecorder = null;
+  var chunks = [];
   var stream = null;
+  var timerId = null;
+  var startTime = 0;
+  var pauseStart = 0;
+  var permissionGranted = false;
 
-  function showError(m) {
-    errMsg.textContent = m;
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    var m = Math.floor(s / 60);
+    var sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function showError(msg) {
+    errMsg.textContent = msg;
     errMsg.classList.add('show');
-    setTimeout(function(){ errMsg.classList.remove('show'); }, 6000);
+    setTimeout(function () { errMsg.classList.remove('show'); }, 8000);
   }
 
-  function measureFps() {
-    var last = performance.now(), frames = 0;
-    function tick(now) {
-      frames++;
-      var dt = now - last;
-      if (dt >= 1000) {
-        fps.textContent = frames + ' fps';
-        frames = 0;
-        last = now;
-      }
-      if (stream) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+  function pickMime() {
+    if (typeof MediaRecorder === 'undefined') return '';
+    var t = '';
+    ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'].some(function (m) {
+      if (MediaRecorder.isTypeSupported(m)) { t = m; return true; }
+      return false;
+    });
+    return t;
   }
 
-  startBtn.addEventListener('click', async function () {
+  async function refreshDeviceList() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return;
     try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: { ideal: 1280 }, height: { ideal: 720 } },
-        audio: false
+      var devices = await navigator.mediaDevices.enumerateDevices();
+      var curVideo = videoSelect.value;
+      var curAudio = audioSelect.value;
+      videoSelect.innerHTML = '';
+      audioSelect.innerHTML = '';
+      var hasVideo = false, hasAudio = false;
+
+      devices.forEach(function (d) {
+        if (d.kind === 'videoinput') {
+          var o = document.createElement('option');
+          o.value = d.deviceId;
+          o.textContent = '📷 ' + (d.label || 'Camera ' + (videoSelect.options.length + 1));
+          videoSelect.appendChild(o);
+          hasVideo = true;
+        } else if (d.kind === 'audioinput') {
+          var a = document.createElement('option');
+          a.value = d.deviceId;
+          a.textContent = '🎤 ' + (d.label || 'Microphone ' + (audioSelect.options.length + 1));
+          audioSelect.appendChild(a);
+          hasAudio = true;
+        }
       });
+
+      if (curVideo) videoSelect.value = curVideo;
+      if (curAudio) audioSelect.value = curAudio;
+      if (hasVideo || hasAudio) deviceRow.classList.add('show');
     } catch (e) {
-      showError('Camera access denied or unavailable. Please check permissions.');
+      console.warn('enumerateDevices failed', e);
+    }
+  }
+
+  async function startPreview() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      showError('इस browser में camera support नहीं है। Chrome, Edge, या Firefox use करो।');
       return;
     }
 
-    video.srcObject = stream;
-    placeholder.style.display = 'none';
-    var track = stream.getVideoTracks()[0];
-    var s = track.getSettings ? track.getSettings() : {};
-    res.textContent = (s.width || '—') + ' × ' + (s.height || '—');
-    label.textContent = track.label || 'Default camera';
-    stats.classList.add('show');
+    try {
+      var constraints = {
+        video: { width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: true
+      };
+
+      if (permissionGranted && videoSelect.value) {
+        constraints.video.deviceId = { ideal: videoSelect.value };
+      }
+      if (permissionGranted && audioSelect.value) {
+        constraints.audio = { deviceId: { ideal: audioSelect.value } };
+      }
+
+      if (stream) {
+        stream.getTracks().forEach(function (t) { t.stop(); });
+        stream = null;
+      }
+
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+      permissionGranted = true;
+
+      livePreview.srcObject = stream;
+      livePreview.muted = true;
+      try { await livePreview.play(); } catch (e) {}
+
+      placeholder.style.display = 'none';
+      startBtn.disabled = false;
+      previewBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>Refresh Camera';
+
+      await refreshDeviceList();
+      statusText.textContent = 'Camera ready — click Start Recording';
+
+    } catch (e) {
+      console.error(e);
+      if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError') {
+        showError('Permission denied. Address bar में 🔒 padlock icon पर click करके Camera और Microphone दोनों को "Allow" करो, फिर page refresh करो।');
+      } else if (e.name === 'NotFoundError' || e.name === 'DevicesNotFoundError') {
+        showError('कोई camera या microphone नहीं मिला इस device पर। Check करो कि camera connected है।');
+      } else if (e.name === 'NotReadableError' || e.name === 'TrackStartError') {
+        showError('Camera किसी और app (Zoom, Teams, OBS, Discord) ने पकड़ रखा है। उन्हें पूरी तरह बंद करो और फिर try करो।');
+      } else if (e.name === 'OverconstrainedError') {
+        showError('Selected device उपलब्ध नहीं है। Dropdown से दूसरा device select करो।');
+      } else if (e.name === 'SecurityError') {
+        showError('Camera सिर्फ HTTPS या localhost पर काम करता है। URL check करो (https:// से शुरू होना चाहिए)।');
+      } else {
+        showError('Camera access failed: ' + (e.message || e.name || 'Unknown error'));
+      }
+    }
+  }
+
+  previewBtn.addEventListener('click', startPreview);
+  videoSelect.addEventListener('change', function () { if (permissionGranted) startPreview(); });
+  audioSelect.addEventListener('change', function () { if (permissionGranted) startPreview(); });
+
+  startBtn.addEventListener('click', function () {
+    if (!stream) { showError('पहले "Start Camera" click करो।'); return; }
+    if (typeof MediaRecorder === 'undefined') {
+      showError('इस browser में recording support नहीं है। Chrome या Edge use करो।');
+      return;
+    }
+    chunks = [];
+    var mt = pickMime();
+    try {
+      mediaRecorder = new MediaRecorder(stream, mt ? { mimeType: mt } : undefined);
+    } catch (e) {
+      showError('Recording start नहीं हो सका: ' + e.message);
+      return;
+    }
+
+    mediaRecorder.ondataavailable = function (e) { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = function () {
+      var blob = new Blob(chunks, { type: mediaRecorder.mimeType || 'video/webm' });
+      var url = URL.createObjectURL(blob);
+      outputVideo.src = url;
+      downloadBtn.href = url;
+      var ext = (mediaRecorder.mimeType || '').indexOf('mp4') > -1 ? 'mp4' : 'webm';
+      downloadBtn.download = 'webcam-recording-' + Date.now() + '.' + ext;
+      preview.classList.add('show');
+      try { preview.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    };
+
+    mediaRecorder.start(1000);
+    startTime = Date.now();
+    timerId = setInterval(function () {
+      timerEl.textContent = fmt(Date.now() - startTime);
+    }, 100);
+    timerEl.classList.add('rec');
+    recDot.classList.add('on');
+    statusText.textContent = 'Recording…';
     startBtn.disabled = true;
     stopBtn.disabled = false;
-    measureFps();
+    pauseBtn.disabled = false;
+    previewBtn.disabled = true;
+    videoSelect.disabled = true;
+    audioSelect.disabled = true;
+    pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>Pause';
   });
 
   stopBtn.addEventListener('click', function () {
-    if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
-    stream = null;
-    video.srcObject = null;
-    placeholder.style.display = 'grid';
-    stats.classList.remove('show');
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+    clearInterval(timerId);
+    timerId = null;
+    timerEl.classList.remove('rec');
+    recDot.classList.remove('on');
+    statusText.textContent = 'Recording stopped';
     startBtn.disabled = false;
     stopBtn.disabled = true;
+    pauseBtn.disabled = true;
+    previewBtn.disabled = false;
+    videoSelect.disabled = false;
+    audioSelect.disabled = false;
   });
+
+  pauseBtn.addEventListener('click', function () {
+    if (!mediaRecorder) return;
+    if (mediaRecorder.state === 'recording') {
+      mediaRecorder.pause();
+      clearInterval(timerId);
+      timerId = null;
+      pauseStart = Date.now();
+      statusText.textContent = 'Paused';
+      recDot.classList.remove('on');
+      pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m5 3 14 9-14 9V3z"/></svg>Resume';
+    } else if (mediaRecorder.state === 'paused') {
+      mediaRecorder.resume();
+      startTime += Date.now() - pauseStart;
+      timerId = setInterval(function () {
+        timerEl.textContent = fmt(Date.now() - startTime);
+      }, 100);
+      statusText.textContent = 'Recording…';
+      recDot.classList.add('on');
+      pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>Pause';
+    }
+  });
+
+  resetBtn.addEventListener('click', function () {
+    preview.classList.remove('show');
+    outputVideo.src = '';
+    timerEl.textContent = '00:00';
+    timerEl.classList.remove('rec');
+    recDot.classList.remove('on');
+    statusText.textContent = 'Ready to record';
+    chunks = [];
+  });
+
+  // NOTE: No enumerateDevices on page load — prevents stale deviceId bug
 })();
 </script>
 </body>
