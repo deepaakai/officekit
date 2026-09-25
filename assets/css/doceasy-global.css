@@ -67,17 +67,18 @@ img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
 input, select, textarea { font: inherit; color: inherit; }
 
-/* ============ HEADER ============ */
+/* ============ HEADER — STICKY AT TOP (full-width, no floating) ============ */
 .site-header {
   position: sticky;
-  top: 10px;
+  top: 0;
   z-index: 1000;
   background: var(--header-bg);
   color: #fff;
-  max-width: 1240px;
-  margin: 0 auto;
-  border-radius: 16px;
-  box-shadow: 0 8px 26px rgba(25,57,138,0.15);
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
 .header-inner {
@@ -107,7 +108,7 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 
 .brand-badge img {
-  height: 40px;
+  height: 52px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -262,15 +263,15 @@ input, select, textarea { font: inherit; color: inherit; }
 
 /* ============ DESKTOP HEADER (3 rows) ============ */
 @media (min-width: 900px) {
-  .site-header { max-width: 1400px; }
-
   .header-inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    padding: 10px 20px 12px;
+    padding: 12px 24px 14px;
     column-gap: 16px;
     row-gap: 8px;
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
   .brand-link { order: 1; flex: 0 0 auto; flex-shrink: 0; }
@@ -310,8 +311,34 @@ input, select, textarea { font: inherit; color: inherit; }
   .top-nav a  { font-size: 13px; padding: 6px 16px; }
 }
 
+/* ============ TABLET HEADER ============ */
+@media (min-width: 640px) and (max-width: 899px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+  .brand-link { order: 1; flex-shrink: 0; }
+  .pill-nav {
+    display: flex;
+    order: 2;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .pill-nav a { padding: 5px 10px; font-size: 12px; }
+  .support-link { order: 3; }
+  .theme-switch { order: 4; }
+  .top-nav {
+    order: 5;
+    width: 100%;
+    overflow-x: auto;
+    gap: 2px;
+  }
+  .brand-badge img { height: 48px; }
+}
+
 /* ============ MOBILE HEADER ============ */
-@media (max-width: 899px) {
+@media (max-width: 639px) {
   .header-inner {
     flex-wrap: wrap;
     gap: 10px;
@@ -327,16 +354,11 @@ input, select, textarea { font: inherit; color: inherit; }
     overflow-x: auto;
     gap: 2px;
   }
-  .brand-badge img { height: 34px; }
+  .brand-badge img { height: 44px; }
 }
 
 @media (max-width: 480px) {
-  .brand-badge img { height: 30px; }
-}
-
-@media (min-width: 640px) and (max-width: 899px) {
-  .pill-nav { display: flex; flex-shrink: 0; }
-  .pill-nav a { padding: 5px 10px; font-size: 12px; }
+  .brand-badge img { height: 40px; }
 }
 
 /* ============ MAIN ============ */
@@ -550,7 +572,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .footer-brand-box img {
-  height: 34px;
+  height: 48px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -562,8 +584,12 @@ input:focus, textarea:focus, select:focus {
   opacity: 1;
 }
 
+@media (max-width: 768px) {
+  .footer-brand-box img { height: 44px; }
+}
+
 @media (max-width: 480px) {
-  .footer-brand-box img { height: 30px; }
+  .footer-brand-box img { height: 42px; }
 }
 
 .footer-col h5 { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: #fff; }
@@ -820,4 +846,4 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 640px) {
   .main-wrap, .container { padding-left: 12px; padding-right: 12px; }
   .hero-title, .tool-hero h1 { font-size: 24px; }
-}
+   }
