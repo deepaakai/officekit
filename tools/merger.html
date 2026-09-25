@@ -44,66 +44,30 @@
   border-bottom: 2px solid var(--border-color);
 }
 .mg-tab {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 11px 10px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
-  color: var(--text-color);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  font-family: inherit;
-  text-align: center;
-  white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 11px 10px; border-radius: 10px;
+  border: 1px solid var(--border-color); background: var(--card-bg);
+  color: var(--text-color); font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.18s ease; font-family: inherit;
+  text-align: center; white-space: nowrap;
 }
-.mg-tab:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-2px);
-}
-.mg-tab.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
-}
+.mg-tab:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.mg-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 6px 16px rgba(25,57,138,0.28); }
 .mg-tab svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2.2; flex-shrink: 0; }
 
-/* Mobile: 2x2 grid */
 @media (max-width: 620px) {
-  .mg-tabs {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-  .mg-tab {
-    padding: 12px 8px;
-    font-size: 12.5px;
-  }
+  .mg-tabs { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .mg-tab { padding: 12px 8px; font-size: 12.5px; }
 }
 
 /* DROP ZONE */
 .mg-drop {
-  border: 2px dashed var(--accent);
-  border-radius: 14px;
-  padding: 40px 22px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: var(--accent-soft);
-  margin-bottom: 18px;
+  border: 2px dashed var(--accent); border-radius: 14px;
+  padding: 40px 22px; text-align: center; cursor: pointer;
+  transition: all 0.2s; background: var(--accent-soft); margin-bottom: 18px;
 }
 .mg-drop:hover, .mg-drop.dragover { background: var(--accent-soft-hover); }
-.mg-drop svg {
-  width: 48px; height: 48px;
-  stroke: var(--accent);
-  fill: none; stroke-width: 1.8;
-  margin-bottom: 14px;
-}
+.mg-drop svg { width: 48px; height: 48px; stroke: var(--accent); fill: none; stroke-width: 1.8; margin-bottom: 14px; }
 .mg-drop h3 { font-size: 16px; font-weight: 800; margin: 0 0 6px; color: var(--text-color); }
 .mg-drop p { font-size: 13px; color: var(--subtext-color); margin: 0; line-height: 1.5; }
 .mg-drop input[type="file"] { display: none; }
@@ -111,208 +75,77 @@
 /* FILE LIST */
 .mg-list { display: none; margin-bottom: 18px; }
 .mg-list.show { display: block; }
-.mg-list-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+.mg-list-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
 .mg-list-head h3 { font-size: 14px; font-weight: 800; margin: 0; color: var(--text-color); }
 .mg-list-head .hint { font-size: 12px; color: var(--subtext-color); font-weight: 600; }
 .mg-files { display: flex; flex-direction: column; gap: 8px; }
 .mg-file {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  background: var(--card-hover);
-  border-radius: 10px;
-  font-size: 13px;
-  border: 1px solid transparent;
-  transition: all 0.18s;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; background: var(--card-hover);
+  border-radius: 10px; font-size: 13px; border: 1px solid transparent; transition: all 0.18s;
 }
 .mg-file:hover { border-color: var(--accent); }
 .mg-file .handle { cursor: grab; color: var(--subtext-color); font-weight: 700; user-select: none; }
 .mg-file .idx {
-  width: 24px; height: 24px;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 6px;
-  display: grid; place-items: center;
-  font-size: 11px; font-weight: 800;
-  flex-shrink: 0;
+  width: 24px; height: 24px; background: var(--accent); color: #fff;
+  border-radius: 6px; display: grid; place-items: center;
+  font-size: 11px; font-weight: 800; flex-shrink: 0;
 }
-.mg-file .name {
-  flex: 1;
-  color: var(--text-color);
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-}
+.mg-file .name { flex: 1; color: var(--text-color); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .mg-file .size { color: var(--subtext-color); font-size: 12px; white-space: nowrap; }
-.mg-file .remove {
-  background: none;
-  border: none;
-  color: #dc2626;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 18px;
-  line-height: 1;
-  font-weight: 700;
-  transition: all 0.15s;
-}
+.mg-file .remove { background: none; border: none; color: #dc2626; cursor: pointer; padding: 4px 8px; border-radius: 6px; font-size: 18px; line-height: 1; font-weight: 700; transition: all 0.15s; }
 .mg-file .remove:hover { background: rgba(220,38,38,0.1); }
-.mg-file .arrow {
-  background: none;
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
-  cursor: pointer;
-  padding: 4px 7px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  transition: all 0.15s;
-}
+.mg-file .arrow { background: none; border: 1px solid var(--border-color); color: var(--text-color); cursor: pointer; padding: 4px 7px; border-radius: 6px; font-size: 11px; font-weight: 700; transition: all 0.15s; }
 .mg-file .arrow:hover { border-color: var(--accent); color: var(--accent); }
 .mg-file .arrow:disabled { opacity: 0.3; cursor: not-allowed; }
 
-/* Hide size on very small */
 @media (max-width: 400px) {
   .mg-file .size { display: none; }
   .mg-file .handle { display: none; }
 }
 
 /* OPTIONS */
-.mg-options {
-  display: none;
-  padding: 16px;
-  background: var(--card-hover);
-  border-radius: 10px;
-  margin-bottom: 18px;
-}
+.mg-options { display: none; padding: 16px; background: var(--card-hover); border-radius: 10px; margin-bottom: 18px; }
 .mg-options.show { display: block; }
-.mg-option-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  font-size: 13.5px;
-}
+.mg-option-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13.5px; }
 .mg-option-row:last-child { margin-bottom: 0; }
-.mg-option-row label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  color: var(--text-color);
-  cursor: pointer;
-}
+.mg-option-row label { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text-color); cursor: pointer; }
 .mg-option-row input[type="checkbox"],
-.mg-option-row input[type="radio"] {
-  accent-color: var(--accent);
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
+.mg-option-row input[type="radio"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
 
 /* ACTION */
 .mg-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .mg-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px 26px;
-  border-radius: 12px;
-  border: none;
-  font-size: 14.5px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  font-family: inherit;
-  text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 26px; border-radius: 12px; border: none;
+  font-size: 14.5px; font-weight: 800; cursor: pointer;
+  transition: all 0.18s ease; font-family: inherit; text-decoration: none;
 }
 .mg-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.4; flex-shrink: 0; }
-.mg-btn.primary {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 8px 22px rgba(25,57,138,0.28);
-  flex: 1;
-}
+.mg-btn.primary { background: var(--accent); color: #fff; box-shadow: 0 8px 22px rgba(25,57,138,0.28); flex: 1; }
 .mg-btn.primary:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-2px); }
-.mg-btn.ghost {
-  background: var(--card-hover);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
+.mg-btn.ghost { background: var(--card-hover); color: var(--text-color); border: 1px solid var(--border-color); }
 .mg-btn.ghost:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .mg-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
 
 /* PPT ACTION BLOCK */
-.mg-ppt-actions {
-  display: none;
-  padding: 20px;
-  background: #fff7ed;
-  border: 2px solid #fdba74;
-  border-radius: 12px;
-  margin-bottom: 18px;
-}
+.mg-ppt-actions { display: none; padding: 20px; background: #fff7ed; border: 2px solid #fdba74; border-radius: 12px; margin-bottom: 18px; }
 [data-theme="dark"] .mg-ppt-actions { background: #2a1608; border-color: #7c2d12; }
 .mg-ppt-actions.show { display: block; }
-.mg-ppt-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 14.5px;
-  font-weight: 800;
-  color: #c2410c;
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
+.mg-ppt-head { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; font-weight: 800; color: #c2410c; margin-bottom: 10px; line-height: 1.4; }
 [data-theme="dark"] .mg-ppt-head { color: #fdba74; }
 .mg-ppt-head svg { stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
-.mg-ppt-actions > p {
-  font-size: 13.5px;
-  color: #9a3412;
-  margin: 0 0 16px;
-  line-height: 1.65;
-}
+.mg-ppt-actions > p { font-size: 13.5px; color: #9a3412; margin: 0 0 16px; line-height: 1.65; }
 [data-theme="dark"] .mg-ppt-actions > p { color: #fdba74; }
-.mg-ppt-action-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 14px;
-}
+.mg-ppt-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 @media (max-width: 620px) { .mg-ppt-action-grid { grid-template-columns: 1fr; } }
 .mg-ppt-action {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: #ea580c;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: 700;
-  transition: all 0.18s;
-  box-shadow: 0 6px 14px rgba(234,88,12,0.25);
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+  background: #ea580c; color: #fff; text-decoration: none; border-radius: 10px;
+  font-weight: 700; transition: all 0.18s; box-shadow: 0 6px 14px rgba(234,88,12,0.25);
 }
 .mg-ppt-action:hover { filter: brightness(1.08); transform: translateY(-2px); }
-.mg-ppt-num {
-  width: 28px; height: 28px;
-  background: rgba(255,255,255,0.22);
-  border-radius: 7px;
-  display: grid; place-items: center;
-  font-size: 13px; font-weight: 900;
-  flex-shrink: 0;
-}
+.mg-ppt-num { width: 28px; height: 28px; background: rgba(255,255,255,0.22); border-radius: 7px; display: grid; place-items: center; font-size: 13px; font-weight: 900; flex-shrink: 0; }
 .mg-ppt-action > div:nth-child(2) { flex: 1; min-width: 0; }
 .mg-ppt-action b { display: block; font-size: 13.5px; }
 .mg-ppt-action span { display: block; font-size: 11.5px; opacity: 0.9; margin-top: 3px; line-height: 1.4; }
@@ -325,206 +158,315 @@
 /* PROGRESS */
 .mg-progress { display: none; margin-top: 18px; }
 .mg-progress.show { display: block; }
-.mg-progress-bar {
-  height: 8px;
-  background: var(--card-hover);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.mg-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent), #38bdf8);
-  border-radius: 999px;
-  transition: width 0.25s ease;
-}
-.mg-progress-text {
-  text-align: center;
-  font-size: 13px;
-  color: var(--subtext-color);
-  font-weight: 700;
-  margin-top: 8px;
-}
+.mg-progress-bar { height: 8px; background: var(--card-hover); border-radius: 999px; overflow: hidden; }
+.mg-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), #38bdf8); border-radius: 999px; transition: width 0.25s ease; }
+.mg-progress-text { text-align: center; font-size: 13px; color: var(--subtext-color); font-weight: 700; margin-top: 8px; }
 
 /* RESULT */
-.mg-result {
-  display: none;
-  margin-top: 18px;
-  padding: 20px;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-radius: 12px;
-}
+.mg-result { display: none; margin-top: 18px; padding: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; }
 [data-theme="dark"] .mg-result { background: #052e16; border-color: #166534; }
 .mg-result.show { display: block; }
-.mg-result h4 {
-  font-size: 15px;
-  font-weight: 800;
-  margin: 0 0 12px;
-  color: #15803d;
-}
+.mg-result h4 { font-size: 15px; font-weight: 800; margin: 0 0 12px; color: #15803d; }
 [data-theme="dark"] .mg-result h4 { color: #4ade80; }
-.mg-result .stats {
-  font-size: 13px;
-  color: var(--subtext-color);
-  margin-bottom: 14px;
-  line-height: 1.6;
+.mg-result .stats { font-size: 13px; color: var(--subtext-color); margin-bottom: 16px; line-height: 1.6; }
+
+/* DOWNLOAD OPTIONS */
+.mg-dl-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
-.mg-result .dl-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 26px;
-  border-radius: 10px;
-  background: #16a34a;
-  color: #fff;
-  text-decoration: none;
+@media (max-width: 620px) { .mg-dl-grid { grid-template-columns: 1fr; } }
+
+.mg-dl-card {
+  display: flex; flex-direction: column;
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  text-align: left;
+  transition: all 0.18s ease;
+}
+.mg-dl-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.mg-dl-card.free { border-color: #f59e0b; background: #fffbeb; }
+[data-theme="dark"] .mg-dl-card.free { background: #2a1a08; border-color: #d97706; }
+.mg-dl-card.clean { border-color: #16a34a; background: #f0fdf4; }
+[data-theme="dark"] .mg-dl-card.clean { background: #052e16; border-color: #15803d; }
+
+.mg-dl-card .dl-title {
   font-size: 14px;
   font-weight: 800;
-  transition: all 0.18s;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mg-dl-card.free .dl-title { color: #b45309; }
+[data-theme="dark"] .mg-dl-card.free .dl-title { color: #fbbf24; }
+.mg-dl-card.clean .dl-title { color: #15803d; }
+[data-theme="dark"] .mg-dl-card.clean .dl-title { color: #4ade80; }
+
+.mg-dl-card .dl-desc {
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin: 0 0 12px;
+  line-height: 1.5;
+  flex: 1;
+}
+.mg-dl-card .dl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  align-self: flex-start;
+}
+.mg-dl-card.free .dl-badge { background: #fde68a; color: #92400e; }
+[data-theme="dark"] .mg-dl-card.free .dl-badge { background: #78350f; color: #fde68a; }
+.mg-dl-card.clean .dl-badge { background: #bbf7d0; color: #14532d; }
+[data-theme="dark"] .mg-dl-card.clean .dl-badge { background: #14532d; color: #bbf7d0; }
+
+.mg-dl-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 11px 18px; border-radius: 10px;
+  border: none; font-size: 13.5px; font-weight: 800;
+  cursor: pointer; transition: all 0.18s ease;
+  font-family: inherit; text-decoration: none;
+  width: 100%;
+}
+.mg-dl-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; flex-shrink: 0; }
+.mg-dl-btn.free-btn { background: #f59e0b; color: #fff; box-shadow: 0 6px 16px rgba(245,158,11,0.28); }
+.mg-dl-btn.free-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.mg-dl-btn.clean-btn { background: #16a34a; color: #fff; box-shadow: 0 6px 16px rgba(22,163,74,0.28); }
+.mg-dl-btn.clean-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+/* Single download (Word/Excel) */
+.mg-dl-single {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px; border-radius: 10px;
+  background: #16a34a; color: #fff; text-decoration: none;
+  font-size: 14px; font-weight: 800; transition: all 0.18s;
   box-shadow: 0 8px 20px rgba(22,163,74,0.28);
 }
-.mg-result .dl-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
-.mg-result .dl-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.mg-dl-single:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.mg-dl-single svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
 
 /* ERROR */
 .mg-error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  display: none;
-  line-height: 1.55;
+  background: #fef2f2; border: 1px solid #fecaca; color: #991b1b;
+  padding: 12px 16px; border-radius: 10px;
+  font-size: 13px; font-weight: 600; margin-bottom: 16px;
+  display: none; line-height: 1.55;
 }
 [data-theme="dark"] .mg-error { background: #2a0a0a; border-color: #7f1d1d; color: #fca5a5; }
 .mg-error.show { display: block; }
 
-.mg-note {
-  margin-top: 18px;
-  font-size: 12.5px;
-  color: var(--subtext-color);
-  text-align: center;
-  line-height: 1.6;
+.mg-note { margin-top: 18px; font-size: 12.5px; color: var(--subtext-color); text-align: center; line-height: 1.6; }
+
+/* ============ AD MODAL ============ */
+.mg-ad-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 9999;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  animation: mgFadeIn 0.25s ease;
 }
+.mg-ad-modal.show { display: flex; }
+@keyframes mgFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.mg-ad-inner {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  animation: mgSlideUp 0.3s ease;
+}
+@keyframes mgSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.mg-ad-inner h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: var(--text-color);
+}
+.mg-ad-inner p {
+  font-size: 13.5px;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.55;
+}
+
+.mg-ad-slot {
+  background: linear-gradient(135deg, #19398a 0%, #2563eb 100%);
+  border-radius: 12px;
+  padding: 30px 20px;
+  margin-bottom: 18px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.mg-ad-slot::before {
+  content: "";
+  position: absolute;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  top: -60px; right: -60px;
+  background: rgba(255,255,255,0.10);
+}
+.mg-ad-slot-label {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.mg-ad-slot-content {
+  position: relative;
+  z-index: 1;
+}
+.mg-ad-slot-content h4 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: #fff;
+}
+.mg-ad-slot-content p {
+  font-size: 12.5px;
+  margin: 0 0 12px;
+  color: rgba(255,255,255,0.88);
+}
+.mg-ad-slot-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #fff;
+  color: #19398a;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 800;
+  transition: all 0.18s;
+}
+.mg-ad-slot-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+.mg-ad-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.mg-ad-countdown {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--card-hover);
+  border: 3px solid var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--accent);
+}
+.mg-ad-progress-text {
+  font-size: 13px;
+  color: var(--subtext-color);
+  font-weight: 700;
+}
+
+.mg-ad-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 10px;
+  border: none;
+  background: #16a34a;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: inherit;
+  width: 100%;
+  box-shadow: 0 8px 22px rgba(22,163,74,0.28);
+}
+.mg-ad-btn:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
+.mg-ad-btn:disabled {
+  background: var(--card-hover);
+  color: var(--subtext-color);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.mg-ad-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+
+.mg-ad-skip {
+  background: none;
+  border: none;
+  color: var(--subtext-color);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+  padding: 6px 12px;
+  text-decoration: underline;
+  font-family: inherit;
+  transition: color 0.18s;
+}
+.mg-ad-skip:hover { color: var(--accent); }
 
 /* ============ SEO ARTICLE ============ */
 .seo-article {
-  max-width: 860px;
-  margin: 48px auto;
-  padding: 40px 32px;
-  line-height: 1.8;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
+  max-width: 860px; margin: 48px auto; padding: 40px 32px;
+  line-height: 1.8; background: var(--card-bg);
+  border: 1px solid var(--border-color); border-radius: 14px;
 }
-.seo-article h2 {
-  font-size: 26px !important;
-  font-weight: 800;
-  color: var(--text-color);
-  margin: 40px 0 20px;
-  letter-spacing: -0.5px;
-  line-height: 1.3;
-}
+.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; line-height: 1.3; }
 .seo-article h2:first-child { margin-top: 0; }
-.seo-article h3 {
-  font-size: 20px !important;
-  font-weight: 700;
-  color: var(--accent);
-  margin: 32px 0 16px;
-  line-height: 1.4;
-}
-.seo-article h4 {
-  font-size: 17px !important;
-  font-weight: 700;
-  color: var(--text-color);
-  margin: 24px 0 12px;
-}
-.seo-article p {
-  font-size: 16px !important;
-  color: var(--subtext-color);
-  margin: 0 0 20px;
-  line-height: 1.8;
-}
+.seo-article h3 { font-size: 20px !important; font-weight: 700; color: var(--accent); margin: 32px 0 16px; line-height: 1.4; }
+.seo-article h4 { font-size: 17px !important; font-weight: 700; color: var(--text-color); margin: 24px 0 12px; }
+.seo-article p { font-size: 16px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
 .seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
-.seo-article li {
-  font-size: 15.5px !important;
-  color: var(--subtext-color);
-  margin-bottom: 12px;
-  line-height: 1.7;
-}
+.seo-article li { font-size: 15.5px !important; color: var(--subtext-color); margin-bottom: 12px; line-height: 1.7; }
 .seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
 .seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
-.seo-article code {
-  background: var(--card-hover);
-  padding: 2px 8px;
-  border-radius: 5px;
-  font-family: ui-monospace, monospace;
-  font-size: 14px;
-  color: var(--accent);
-}
-.seo-article details {
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 18px 22px;
-  margin-bottom: 12px;
-  transition: all 0.2s;
-}
+.seo-article code { background: var(--card-hover); padding: 2px 8px; border-radius: 5px; font-family: ui-monospace, monospace; font-size: 14px; color: var(--accent); }
+.seo-article details { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; transition: all 0.2s; }
 .seo-article details:hover { border-color: var(--accent); }
-.seo-article details summary {
-  font-size: 16px !important;
-  font-weight: 700;
-  color: var(--text-color);
-  cursor: pointer;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
+.seo-article details summary { font-size: 16px !important; font-weight: 700; color: var(--text-color); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .seo-article details summary::-webkit-details-marker { display: none; }
-.seo-article details summary::after {
-  content: "+";
-  font-size: 22px;
-  color: var(--accent);
-  font-weight: 300;
-}
+.seo-article details summary::after { content: "+"; font-size: 22px; color: var(--accent); font-weight: 300; }
 .seo-article details[open] summary::after { content: "−"; }
-.seo-article details p {
-  margin: 14px 0 0;
-  font-size: 15px !important;
-  line-height: 1.75;
-}
+.seo-article details p { margin: 14px 0 0; font-size: 15px !important; line-height: 1.75; }
 
 /* ============ PC LAYOUT FIX ============ */
 @media (min-width: 900px) {
-  main.main-wrap {
-    max-width: 1000px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  }
-  .hero-box {
-    max-width: 1000px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  .hero-sub {
-    max-width: 700px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  .seo-article {
-    max-width: 900px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding: 36px 40px !important;
-  }
+  main.main-wrap { max-width: 1000px !important; margin-left: auto !important; margin-right: auto !important; padding-left: 24px !important; padding-right: 24px !important; }
+  .hero-box { max-width: 1000px !important; margin-left: auto !important; margin-right: auto !important; }
+  .hero-sub { max-width: 700px !important; margin-left: auto !important; margin-right: auto !important; }
+  .seo-article { max-width: 900px !important; margin-left: auto !important; margin-right: auto !important; padding: 36px 40px !important; }
 }
 
 @media (max-width: 768px) {
@@ -554,7 +496,6 @@
   <div class="mg-card">
     <div class="mg-error" id="errMsg"></div>
 
-    <!-- TABS -->
     <div class="mg-tabs" id="tabs">
       <button class="mg-tab active" data-type="pdf">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -574,7 +515,6 @@
       </button>
     </div>
 
-    <!-- DROP ZONE -->
     <div class="mg-drop" id="dropZone">
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -585,7 +525,6 @@
       <input type="file" id="fileInput" accept=".pdf" multiple>
     </div>
 
-    <!-- FILE LIST -->
     <div class="mg-list" id="fileList">
       <div class="mg-list-head">
         <h3>Files to Merge (<span id="fileCount">0</span>)</h3>
@@ -594,7 +533,6 @@
       <div class="mg-files" id="filesContainer"></div>
     </div>
 
-    <!-- PPT QUICK ACTION BLOCK -->
     <div class="mg-ppt-actions" id="pptActions">
       <div class="mg-ppt-head">
         <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 9v2m0 4h.01M5.07 19h13.86a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0L3.3 16a2 2 0 0 0 1.7 3z"/></svg>
@@ -625,7 +563,6 @@
       </button>
     </div>
 
-    <!-- PDF OPTIONS -->
     <div class="mg-options" id="pdfOptions">
       <div class="mg-option-row">
         <label><input type="checkbox" id="optAddBookmarks" checked> Add PDF bookmarks for each file</label>
@@ -635,7 +572,6 @@
       </div>
     </div>
 
-    <!-- EXCEL OPTIONS -->
     <div class="mg-options" id="excelOptions">
       <div class="mg-option-row">
         <label><input type="radio" name="excelMode" value="sheets" checked> Merge as sheets (one sheet per file)</label>
@@ -648,7 +584,6 @@
       </div>
     </div>
 
-    <!-- WORD OPTIONS -->
     <div class="mg-options" id="wordOptions">
       <div class="mg-option-row">
         <label><input type="checkbox" id="optPageBreak" checked> Insert page break between documents</label>
@@ -658,7 +593,6 @@
       </div>
     </div>
 
-    <!-- MERGE BUTTONS (PDF/Word/Excel) -->
     <div class="mg-actions" id="actions" style="display:none">
       <button class="mg-btn primary" id="mergeBtn" disabled>
         <svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -670,17 +604,46 @@
       </button>
     </div>
 
-    <!-- PROGRESS -->
     <div class="mg-progress" id="progress">
       <div class="mg-progress-bar"><div class="mg-progress-fill" id="progressFill"></div></div>
       <div class="mg-progress-text" id="progressText">Processing…</div>
     </div>
 
-    <!-- RESULT -->
     <div class="mg-result" id="result">
       <h4>✓ Merge Complete!</h4>
       <div class="stats" id="resultStats"></div>
-      <a class="dl-btn" id="downloadBtn" href="#" download="merged-file.pdf">
+
+      <!-- PDF: two-option download -->
+      <div class="mg-dl-grid" id="dlGrid" style="display:none">
+        <div class="mg-dl-card free">
+          <span class="dl-badge">Instant</span>
+          <h5 class="dl-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Free Download
+          </h5>
+          <p class="dl-desc">Instant download with a small DocEasy watermark at the bottom of each page.</p>
+          <button class="mg-dl-btn free-btn" id="downloadFreeBtn">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Free
+          </button>
+        </div>
+
+        <div class="mg-dl-card clean">
+          <span class="dl-badge">Ad-supported</span>
+          <h5 class="dl-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            Clean Download
+          </h5>
+          <p class="dl-desc">Watch a 5-second ad — download the merged PDF without any watermark.</p>
+          <button class="mg-dl-btn clean-btn" id="downloadCleanBtn">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            Watch Ad &amp; Download
+          </button>
+        </div>
+      </div>
+
+      <!-- Word / Excel: single download (no watermark) -->
+      <a class="mg-dl-single" id="downloadSingleBtn" style="display:none" download="merged-file.docx" href="#">
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         Download Merged File
       </a>
@@ -712,8 +675,19 @@
       <li><b>Step 3 — Reorder (optional):</b> Drag files or use ▲▼ arrows to change merge order.</li>
       <li><b>Step 4 — Configure options:</b> Each mode has its own settings (bookmarks, page breaks, etc.).</li>
       <li><b>Step 5 — Click "Merge Files":</b> Processing happens locally — takes seconds.</li>
-      <li><b>Step 6 — Download:</b> Save the merged file to your device.</li>
+      <li><b>Step 6 — Download:</b> Choose "Free" (with watermark) or "Clean" (watch a short ad).</li>
     </ol>
+
+    <h3>Free vs Clean Download — What's the Difference?</h3>
+
+    <p>DocEasy is committed to staying free forever. To fund that without any paywall, we offer two download options for PDF merges:</p>
+
+    <ul>
+      <li><b>Free Download (Instant):</b> Instant download with a small DocEasy watermark at the bottom of each page. No ads, no waiting.</li>
+      <li><b>Clean Download (Ad-supported):</b> Watch a 5-second ad — download the merged PDF with zero watermarks. Perfect for professional or client-facing documents.</li>
+    </ul>
+
+    <p>Both options produce high-quality merges. The only difference is the watermark and the 5-second ad. No account, no payment, no premium tier — just two ways to support a free tool.</p>
 
     <h3>PDF Merge</h3>
 
@@ -761,7 +735,7 @@
       <li><b>Step 2:</b> Merge the resulting PDFs using <a href="pdf-merge.html">PDF Merge</a>.</li>
     </ol>
 
-    <p>When you select PPT mode and upload files, the tool shows two big orange buttons (Step 1 and Step 2) that open the respective tools in new tabs. You can also download all your PPT files as a ZIP for backup.</p>
+    <p>When you select PPT mode and upload files, the tool shows two big orange buttons (Step 1 and Step 2) that open the respective tools in new tabs. You can also download all your PPT files as a ZIP for backup — the ZIP contains a README with FAQ and instructions.</p>
 
     <h3>Common Use Cases</h3>
 
@@ -794,7 +768,17 @@
 
     <details>
       <summary>Is DocEasy's merger free?</summary>
-      <p>Yes — 100% free, forever. No signup, no email, no watermark, no daily limit, no file-size cap, no premium tier. Merge as many files as you want.</p>
+      <p>Yes — 100% free, forever. No signup, no email, no premium tier. For PDF merges, you can choose instant download (with watermark) or watch a 5-second ad for a clean watermark-free download.</p>
+    </details>
+
+    <details>
+      <summary>What's the difference between Free and Clean download?</summary>
+      <p><b>Free Download</b> — Instant download with a small DocEasy watermark at the bottom of each page. No ads, no waiting.<br><b>Clean Download</b> — Watch a 5-second ad, get the PDF without any watermark. Perfect for client-facing or professional documents.</p>
+    </details>
+
+    <details>
+      <summary>Will the watermark appear on Word or Excel merges?</summary>
+      <p>No. Word and Excel merges are always clean — no watermark. Watermark only applies to PDF merges, where it can be rendered cleanly on each page.</p>
     </details>
 
     <details>
@@ -844,7 +828,7 @@
 
     <details>
       <summary>Can I use this for commercial projects?</summary>
-      <p>Yes — everything you merge is yours to use freely, including commercially. No watermarks, no attribution, no restrictions on the output.</p>
+      <p>Yes — everything you merge is yours to use freely, including commercially. For client-facing documents, we recommend the "Clean Download" option (watch a 5-second ad) to remove the DocEasy watermark.</p>
     </details>
 
     <details>
@@ -874,7 +858,7 @@
 
     <details>
       <summary>Does the merged output have a watermark?</summary>
-      <p>No — never. The output is completely clean, identical in quality to the source files.</p>
+      <p>The Free Download option includes a small "Merged with DocEasy" watermark at the bottom of each PDF page. The Clean Download option (watch a 5-second ad) produces watermark-free output. Word and Excel merges are always watermark-free.</p>
     </details>
 
     <details>
@@ -895,6 +879,16 @@
     <details>
       <summary>Is the Universal Merger better than paid tools?</summary>
       <p>For most tasks, yes — it's faster, private, free, and handles four file types in one page. Paid tools like Adobe Acrobat offer advanced features (compression, OCR, annotations), but for straightforward merging, DocEasy wins on simplicity and privacy.</p>
+    </details>
+
+    <details>
+      <summary>Why does the ZIP download contain a README?</summary>
+      <p>The README.html inside the ZIP explains why PPT files can't be merged directly, provides a step-by-step guide for using PowerPoint's "Reuse Slides" feature, and includes FAQ plus links to related DocEasy tools.</p>
+    </details>
+
+    <details>
+      <summary>Does the ad shown during Clean Download support DocEasy?</summary>
+      <p>Yes — watching a short ad is how we keep DocEasy free forever. Ad revenue funds server costs, development time, and new tools. No paywall, no premium tier, just a small ad viewed occasionally.</p>
     </details>
 
     <h3>Related DocEasy Tools</h3>
@@ -920,6 +914,39 @@
 
 </main>
 
+<!-- AD MODAL -->
+<div class="mg-ad-modal" id="adModal">
+  <div class="mg-ad-inner">
+    <h3>Unlocking Clean Download</h3>
+    <p>Your ad will finish in a moment. Then your watermark-free PDF will start downloading automatically.</p>
+
+    <div class="mg-ad-slot">
+      <div class="mg-ad-slot-label">Advertisement</div>
+      <div class="mg-ad-slot-content">
+        <h4>🔒 Try PDF Locker &amp; Unlocker — Free</h4>
+        <p>Password-protect any PDF, or unlock protected files instantly.</p>
+        <a class="mg-ad-slot-cta" href="pdf-lock-unlock.html" target="_blank" rel="noopener">
+          Open Tool →
+        </a>
+      </div>
+      <!-- Real AdSense slot — hidden until approved -->
+      <ins class="adsbygoogle ad-slot-container" style="display:block" data-ad-client="ca-pub-XXXXXXX" data-ad-slot="XXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
+
+    <div class="mg-ad-progress">
+      <div class="mg-ad-countdown" id="adCountdown">5</div>
+      <div class="mg-ad-progress-text">Seconds remaining…</div>
+    </div>
+
+    <button class="mg-ad-btn" id="adDownloadBtn" disabled>
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <span id="adDownloadLabel">Please wait…</span>
+    </button>
+
+    <button class="mg-ad-skip" id="adSkipBtn">Cancel</button>
+  </div>
+</div>
+
 <div id="doceasy-footer"></div>
 
 <!-- Libraries -->
@@ -941,6 +968,12 @@
   var currentType = 'pdf';
   var files = [];
   var nextId = 1;
+  var cleanBlob = null;        // last clean merge result
+  var cleanFilename = '';
+  var watermarkedBlob = null;  // last watermarked merge result
+  var watermarkedFilename = '';
+  var adTimerId = null;
+  var adSecondsLeft = 5;
 
   var tabs = document.getElementById('tabs');
   var dropZone = document.getElementById('dropZone');
@@ -963,8 +996,17 @@
   var progressText = document.getElementById('progressText');
   var result = document.getElementById('result');
   var resultStats = document.getElementById('resultStats');
-  var downloadBtn = document.getElementById('downloadBtn');
+  var dlGrid = document.getElementById('dlGrid');
+  var dlSingleBtn = document.getElementById('downloadSingleBtn');
+  var downloadFreeBtn = document.getElementById('downloadFreeBtn');
+  var downloadCleanBtn = document.getElementById('downloadCleanBtn');
   var errMsg = document.getElementById('errMsg');
+
+  var adModal = document.getElementById('adModal');
+  var adCountdown = document.getElementById('adCountdown');
+  var adDownloadBtn = document.getElementById('adDownloadBtn');
+  var adDownloadLabel = document.getElementById('adDownloadLabel');
+  var adSkipBtn = document.getElementById('adSkipBtn');
 
   function showError(msg) {
     errMsg.textContent = msg;
@@ -979,6 +1021,73 @@
   function updateProgress(ratio, text) {
     progressFill.style.width = Math.round(ratio * 100) + '%';
     if (text) progressText.textContent = text;
+  }
+  function escapeHtml(str) {
+    var d = document.createElement('div');
+    d.textContent = str == null ? '' : str;
+    return d.innerHTML;
+  }
+  function todayStr() {
+    var d = new Date();
+    var dd = String(d.getDate()).padStart(2, '0');
+    var mm = String(d.getMonth() + 1).padStart(2, '0');
+    return dd + '/' + mm + '/' + d.getFullYear();
+  }
+
+  function buildReadmeHtml(toolTitle, fileNames) {
+    var listItems = fileNames.map(function (n) {
+      return '  <li>' + escapeHtml(n) + '</li>';
+    }).join('\n');
+    return '<!DOCTYPE html>\n' +
+      '<html>\n<head>\n<meta charset="UTF-8">\n<title>DocEasy — README</title>\n' +
+      '<style>\n' +
+      '  @page { size: A4; margin: 15mm; }\n' +
+      '  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 12pt; line-height: 1.5; color: #1e293b; max-width: 180mm; margin: 0 auto; padding: 8mm 0; }\n' +
+      '  h1 { font-size: 16pt; color: #19398a; margin: 0 0 10px; border-bottom: 2px solid #19398a; padding-bottom: 6px; }\n' +
+      '  h2 { font-size: 12pt; color: #19398a; margin: 16px 0 6px; }\n' +
+      '  p { margin: 4px 0; }\n' +
+      '  .label { font-weight: 700; color: #19398a; }\n' +
+      '  .box { background: #f1f5f9; border-left: 3px solid #19398a; padding: 8px 12px; margin: 8px 0; border-radius: 4px; }\n' +
+      '  .center { text-align: center; }\n' +
+      '  .small { font-size: 10pt; color: #64748b; }\n' +
+      '  .btn { display: inline-block; background: #19398a; color: #ffffff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 700; margin: 4px 4px 4px 0; }\n' +
+      '  ul { margin: 4px 0; padding-left: 20px; }\n' +
+      '  li { margin-bottom: 2px; }\n' +
+      '  .faq-q { font-weight: 700; color: #19398a; margin-top: 10px; }\n' +
+      '  .faq-a { margin: 2px 0 0 0; color: #475569; }\n' +
+      '</style>\n</head>\n<body>\n' +
+      '<h1>DocEasy — ' + escapeHtml(toolTitle) + '</h1>\n' +
+      '<p>Thank you for using <strong>DocEasy</strong>!</p>\n' +
+      '<div class="box">\n' +
+      '  <p><span class="label">Website:</span> <a href="https://deepaakai.github.io/officekit/">deepaakai.github.io/officekit</a></p>\n' +
+      '  <p><span class="label">Made by:</span> Deepaak Kumar</p>\n' +
+      '</div>\n' +
+      '<h2>Your Files</h2>\n' +
+      '<p><span class="label">Format:</span> PPT / PPTX</p>\n' +
+      '<p><span class="label">Files:</span> ' + fileNames.length + '</p>\n' +
+      '<p><span class="label">Date:</span> ' + todayStr() + '</p>\n' +
+      '<p>This ZIP contains the following files, unchanged:</p>\n' +
+      '<ul>\n' + listItems + '\n</ul>\n' +
+      '<h2>Why These Files Are in a ZIP</h2>\n' +
+      '<p>PowerPoint slides contain themes, master layouts, and embedded fonts that cannot be reliably merged in a browser. Instead of producing a broken merged PPTX, DocEasy gives you your original files safely bundled in a ZIP — so you can merge them yourself in PowerPoint using <strong>Home → New Slide → Reuse Slides</strong>.</p>\n' +
+      '<h2>Quick FAQ</h2>\n' +
+      '<p class="faq-q">Why is this a ZIP and not a single PPTX?</p>\n' +
+      '<p class="faq-a">Merging PPTX files in a browser produces broken formatting, lost fonts, and corrupted slide masters. Bundling the originals in a ZIP ensures zero data loss.</p>\n' +
+      '<p class="faq-q">How do I merge these PPT files into one?</p>\n' +
+      '<p class="faq-a">Open PowerPoint → New Presentation → Home tab → New Slide → Reuse Slides → Browse → Select each file → Insert All Slides.</p>\n' +
+      '<p class="faq-q">Can I convert these PPTs to PDF instead?</p>\n' +
+      '<p class="faq-a">Yes — use DocEasy\'s free PPT to PDF tool, then merge the resulting PDFs with our PDF Merge tool.</p>\n' +
+      '<p class="faq-q">Are my files safe?</p>\n' +
+      '<p class="faq-a">Yes — DocEasy processes everything locally in your browser. No files are ever uploaded to any server.</p>\n' +
+      '<h2>More Tools</h2>\n' +
+      '<p>Explore 40+ free tools for PDFs, images, and documents:</p>\n' +
+      '<p class="center">\n' +
+      '  <a class="btn" href="https://deepaakai.github.io/officekit/">Visit DocEasy →</a>\n' +
+      '</p>\n' +
+      '<p class="small center" style="margin-top:20px;">\n' +
+      '  Generated by DocEasy · 100% browser-based\n' +
+      '</p>\n' +
+      '</body>\n</html>\n';
   }
 
   function switchType(type) {
@@ -1002,6 +1111,8 @@
     if (type === 'word') wordOptions.classList.add('show');
 
     files = [];
+    cleanBlob = null;
+    watermarkedBlob = null;
     renderFiles();
     result.classList.remove('show');
     progress.classList.remove('show');
@@ -1042,7 +1153,7 @@
       row.innerHTML =
         '<span class="handle" title="Drag to reorder">⋮⋮</span>' +
         '<span class="idx">' + (i + 1) + '</span>' +
-        '<span class="name" title="' + f.name + '">' + f.name + '</span>' +
+        '<span class="name" title="' + escapeHtml(f.name) + '">' + escapeHtml(f.name) + '</span>' +
         '<span class="size">' + formatSize(f.size) + '</span>' +
         '<button class="arrow" data-action="up" data-id="' + f.id + '" title="Move up"' + (i === 0 ? ' disabled' : '') + '>▲</button>' +
         '<button class="arrow" data-action="down" data-id="' + f.id + '" title="Move down"' + (i === files.length - 1 ? ' disabled' : '') + '>▼</button>' +
@@ -1110,6 +1221,8 @@
 
   clearBtn.addEventListener('click', function () {
     files = [];
+    cleanBlob = null;
+    watermarkedBlob = null;
     renderFiles();
     result.classList.remove('show');
     progress.classList.remove('show');
@@ -1120,18 +1233,25 @@
     if (files.length === 0) return;
     if (!window.JSZip) { showError('ZIP library not loaded. Please refresh.'); return; }
     var btn = this;
+    if (btn.disabled) return;
     btn.disabled = true;
     progress.classList.add('show');
     updateProgress(0.05, 'Packaging ZIP…');
     try {
       var zip = new JSZip();
+      var names = [];
       for (var i = 0; i < files.length; i++) {
-        updateProgress(0.1 + (i / files.length) * 0.8, 'Adding ' + files[i].name);
+        updateProgress(0.1 + (i / files.length) * 0.7, 'Adding ' + files[i].name);
         var buf = await files[i].file.arrayBuffer();
+        if (!buf || buf.byteLength === 0) throw new Error('"' + files[i].name + '" appears to be empty or unreadable.');
         zip.file(files[i].name, buf);
+        names.push(files[i].name);
       }
-      updateProgress(0.95, 'Compressing…');
+      updateProgress(0.85, 'Adding README…');
+      zip.file('README.html', buildReadmeHtml('Universal File Merger', names));
+      updateProgress(0.92, 'Compressing…');
       var blob = await zip.generateAsync({ type: 'blob' });
+      if (!blob || blob.size === 0) throw new Error('ZIP came out empty — please try again.');
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
@@ -1150,15 +1270,42 @@
     }
   });
 
-  // === MERGE LOGIC ===
+  // === WATERMARK HELPER (PDF only) ===
+  async function addWatermarkToPdf(pdfBytes) {
+    var PDFLib = window.PDFLib;
+    if (!PDFLib) return pdfBytes;
+    try {
+      var pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+      var font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      var pages = pdfDoc.getPages();
+      var watermark = 'Merged with DocEasy — doceasy.org';
+      pages.forEach(function (page) {
+        var w = page.getWidth();
+        var textWidth = font.widthOfTextAtSize(watermark, 8);
+        page.drawText(watermark, {
+          x: (w - textWidth) / 2,
+          y: 16,
+          size: 8,
+          font: font,
+          color: PDFLib.rgb(0.7, 0.7, 0.7),
+          opacity: 0.7
+        });
+      });
+      return await pdfDoc.save();
+    } catch (e) {
+      console.warn('Watermark failed, using original', e);
+      return pdfBytes;
+    }
+  }
 
+  // === MERGE LOGIC ===
   async function mergePDFs() {
     var PDFLib = window.PDFLib;
     if (!PDFLib) throw new Error('PDF library not loaded.');
     var merged = await PDFLib.PDFDocument.create();
     var totalPages = 0;
     for (var i = 0; i < files.length; i++) {
-      updateProgress(0.1 + (i / files.length) * 0.7, 'Reading ' + files[i].name + '…');
+      updateProgress(0.1 + (i / files.length) * 0.5, 'Reading ' + files[i].name + '…');
       var buf = await files[i].file.arrayBuffer();
       try {
         var srcDoc = await PDFLib.PDFDocument.load(buf, { ignoreEncryption: true });
@@ -1169,10 +1316,21 @@
         throw new Error('Could not read "' + files[i].name + '". Password-protected? Unlock it first.');
       }
     }
-    updateProgress(0.85, 'Finalizing PDF…');
+    updateProgress(0.7, 'Finalizing PDF…');
     var bytes = await merged.save();
-    var blob = new Blob([bytes], { type: 'application/pdf' });
-    return { blob: blob, filename: 'merged-' + Date.now() + '.pdf', stats: totalPages + ' pages from ' + files.length + ' file' + (files.length > 1 ? 's' : '') };
+    var cleanBytes = bytes;
+
+    updateProgress(0.85, 'Adding watermark…');
+    var wmBytes = await addWatermarkToPdf(cleanBytes);
+
+    var cleanBlobResult = new Blob([cleanBytes], { type: 'application/pdf' });
+    var wmBlobResult = new Blob([wmBytes], { type: 'application/pdf' });
+    return {
+      cleanBlob: cleanBlobResult,
+      watermarkedBlob: wmBlobResult,
+      filename: 'merged-' + Date.now() + '.pdf',
+      stats: totalPages + ' pages from ' + files.length + ' file' + (files.length > 1 ? 's' : '')
+    };
   }
 
   async function mergeWordDocs() {
@@ -1268,6 +1426,7 @@
     }
   }
 
+  // Main merge button
   mergeBtn.addEventListener('click', async function () {
     if (files.length === 0) return;
     if (currentType === 'ppt') return;
@@ -1285,10 +1444,25 @@
       else throw new Error('Unsupported type');
 
       updateProgress(1, 'Done!');
-      var url = URL.createObjectURL(res.blob);
-      downloadBtn.href = url;
-      downloadBtn.download = res.filename;
-      resultStats.textContent = res.stats + ' · ' + formatSize(res.blob.size);
+
+      if (currentType === 'pdf') {
+        cleanBlob = res.cleanBlob;
+        watermarkedBlob = res.watermarkedBlob;
+        cleanFilename = res.filename;
+        watermarkedFilename = res.filename.replace(/\.pdf$/i, '-watermarked.pdf');
+        resultStats.textContent = res.stats + ' · ' + formatSize(res.cleanBlob.size);
+        dlGrid.style.display = 'grid';
+        dlSingleBtn.style.display = 'none';
+      } else {
+        cleanBlob = res.blob;
+        cleanFilename = res.filename;
+        resultStats.textContent = res.stats + ' · ' + formatSize(res.blob.size);
+        dlGrid.style.display = 'none';
+        dlSingleBtn.style.display = 'inline-flex';
+        dlSingleBtn.href = URL.createObjectURL(res.blob);
+        dlSingleBtn.download = res.filename;
+      }
+
       result.classList.add('show');
       setTimeout(function () { progress.classList.remove('show'); }, 1200);
     } catch (err) {
@@ -1300,8 +1474,71 @@
     }
   });
 
+  // Free download (watermarked)
+  downloadFreeBtn.addEventListener('click', function () {
+    if (!watermarkedBlob) return;
+    var url = URL.createObjectURL(watermarkedBlob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = watermarkedFilename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+  });
+
+  // Clean download (watch ad)
+  downloadCleanBtn.addEventListener('click', function () {
+    if (!cleanBlob) return;
+    openAdModal();
+  });
+
+  // === AD MODAL LOGIC ===
+  function openAdModal() {
+    adSecondsLeft = 5;
+    adCountdown.textContent = adSecondsLeft;
+    adDownloadBtn.disabled = true;
+    adDownloadLabel.textContent = 'Please wait…';
+    adModal.classList.add('show');
+
+    clearInterval(adTimerId);
+    adTimerId = setInterval(function () {
+      adSecondsLeft--;
+      adCountdown.textContent = adSecondsLeft > 0 ? adSecondsLeft : '✓';
+      if (adSecondsLeft <= 0) {
+        clearInterval(adTimerId);
+        adDownloadBtn.disabled = false;
+        adDownloadLabel.textContent = 'Download Now';
+      }
+    }, 1000);
+  }
+
+  function closeAdModal() {
+    adModal.classList.remove('show');
+    clearInterval(adTimerId);
+  }
+
+  adDownloadBtn.addEventListener('click', function () {
+    if (!cleanBlob) return;
+    var url = URL.createObjectURL(cleanBlob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = cleanFilename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    closeAdModal();
+  });
+
+  adSkipBtn.addEventListener('click', closeAdModal);
+
+  adModal.addEventListener('click', function (e) {
+    if (e.target === adModal) closeAdModal();
+  });
+
   switchType('pdf');
 })();
 </script>
 </body>
-</html>
+  </html>
