@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>eMitra &amp; CSC Tools — Government Service Utilities | DocEasy</title>
+<meta name="description" content="Free browser-based tools for eMitra and CSC operators — document scanner, ID card cropper, PDF merge, form fillers, application trackers. No signup, 100% private.">
+<meta name="keywords" content="emitra tools, csc tools, government service tools, common service center, document scanner, kyc tools, aadhaar tools, pan card tools">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/emitra-csc-tools.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="eMitra &amp; CSC Tools — Government Service Utilities | DocEasy">
+<meta property="og:description" content="Free browser-based tools for eMitra and CSC operators. Document scanner, ID card cropper, PDF tools.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/emitra-csc-tools.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="eMitra &amp; CSC Tools — Government Service Utilities | DocEasy">
+<meta name="twitter:description" content="Free tools for eMitra and CSC operators. No signup, 100% private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "eMitra &amp; CSC Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/emitra-csc-tools.html",
+  "description": "Free browser-based tools for eMitra and CSC operators — document scanner, ID card cropper, PDF merge, form fillers."
+}
+</script>
+
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
+<style>
+* { box-sizing: border-box; }
+.main-wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px 80px; overflow-x: hidden; }
+
+/* HERO */
+.ehero {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 42px 32px;
+  margin-top: 34px;
+  background: linear-gradient(135deg, #9a3412 0%, #ea580c 55%, #f97316 100%);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(234,88,12,0.28);
+}
+.ehero::before, .ehero::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+}
+.ehero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.ehero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.ehero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  margin-bottom: 14px; backdrop-filter: blur(6px);
+  position: relative; z-index: 1;
+}
+.ehero h1 {
+  font-size: clamp(26px, 4.5vw, 42px); font-weight: 800;
+  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
+  position: relative; z-index: 1;
+}
+.ehero p {
+  font-size: clamp(14px, 2vw, 16.5px); line-height: 1.6;
+  max-width: 680px; margin: 0; opacity: 0.92;
+  position: relative; z-index: 1;
+}
+.ehero-stats {
+  display: flex; gap: 26px; margin-top: 24px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.ehero-stats .stat { display: flex; flex-direction: column; }
+.ehero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.ehero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.85; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar {
+  display: flex; gap: 12px; align-items: center;
+  margin: 34px 0 22px; flex-wrap: wrap;
+}
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 500px; }
+.search-box svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
+}
+.search-box input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 14px; outline: none; transition: all 0.18s;
+}
+.search-box input:focus { border-color: #ea580c; box-shadow: 0 0 0 3px rgba(234,88,12,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button {
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 12.5px; font-weight: 700; cursor: pointer;
+  transition: all 0.18s; font-family: inherit;
+}
+.filter-pills button:hover { border-color: #ea580c; color: #ea580c; }
+.filter-pills button.active {
+  background: #ea580c; border-color: #ea580c; color: #fff;
+  box-shadow: 0 6px 16px rgba(234,88,12,0.28);
+}
+
+/* CATEGORY BLOCK */
+.cat-block { margin-top: 42px; scroll-margin-top: 90px; }
+.cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-head .icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, #ea580c, #9a3412);
+}
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count {
+  margin-left: auto; font-size: 11.5px; font-weight: 700;
+  color: var(--subtext-color); background: var(--card-hover);
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+.tool-tile {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none; color: var(--text-color);
+  transition: all 0.2s ease; min-height: 140px;
+  position: relative;
+}
+.tool-tile:hover {
+  border-color: #ea580c;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(234,88,12,0.14);
+}
+.tool-tile .tile-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  background: rgba(234,88,12,0.08);
+  color: #ea580c;
+  display: grid; place-items: center;
+  transition: transform 0.22s; flex-shrink: 0;
+}
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag {
+  position: absolute; top: 9px; right: 9px;
+  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
+}
+.tool-tile .tag.soon { background: linear-gradient(135deg,#64748b,#475569); }
+.tool-tile .tag.hot { background: linear-gradient(135deg,#dc2626,#b91c1c); }
+.tool-tile.soon { opacity: 0.78; cursor: not-allowed; }
+.tool-tile.soon:hover { transform: none; border-color: var(--border-color); box-shadow: none; }
+
+/* HOW TO USE */
+.how-to-use { max-width: 940px; margin: 68px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #ea580c; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* FAQ */
+.deep-faq { max-width: 900px; margin: 68px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #ea580c; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #ea580c; font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: #ea580c; font-weight: 600; }
+
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .ehero { padding: 30px 20px; border-radius: 18px; margin-top: 22px; }
+  .ehero-stats { gap: 18px; margin-top: 18px; }
+  .ehero-stats .stat b { font-size: 18px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tool-tile { min-height: 124px; padding: 15px 12px 13px; }
+  .tool-tile h3 { font-size: 12.5px; }
+  .tool-tile p { font-size: 10px; }
+  .cat-head h2 { font-size: 16.5px; }
+  .cat-head .count { display: none; }
+  .toolbar { margin: 24px 0 18px; }
+  .search-box { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .filter-pills button { padding: 8px 12px; font-size: 11.5px; }
+  .tool-tile { padding: 13px 11px 11px; min-height: 116px; }
+  .tool-tile .tile-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .tool-tile .tile-icon svg { width: 18px; height: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <!-- HERO -->
+  <section class="ehero">
+    <div class="ehero-badge">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1c.3-.3.9-.2 1 .2a6 6 0 0 1-8.3 7.1l-7.9 7.9a1 1 0 0 1-3-3l7.9-7.9a6 6 0 0 1 7.1-8.3c.4.1.5.7.2 1z"/>
+      </svg>
+      EMITRA &amp; CSC TOOLS
+    </div>
+    <h1>Digital Service Center Toolkit</h1>
+    <p>Free browser-based tools built for eMitra, CSC, Jan Seva Kendra, and cyber café operators — document scanner, ID card cropper, PDF tools, KYC helpers, and daily-use utilities. No signup, no upload, 100% private.</p>
+    <div class="ehero-stats">
+      <div class="stat"><b>20+</b><span>Service Tools</span></div>
+      <div class="stat"><b>0</b><span>Uploads</span></div>
+      <div class="stat"><b>₹0</b><span>Cost</span></div>
+      <div class="stat"><b>Free</b><span>Forever</span></div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <input type="text" id="toolSearch" placeholder="Search service tools — scanner, KYC, PAN, Aadhaar, form…">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="kyc">KYC &amp; Documents</button>
+      <button data-filter="forms">Forms &amp; Applications</button>
+      <button data-filter="print">Printing</button>
+      <button data-filter="util">Utilities</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">No service tools match your search.</div>
+
+  <!-- ================= KYC & DOCUMENTS ================= -->
+  <section class="cat-block" data-cat="kyc">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg>
+      </div>
+      <div>
+        <h2>KYC &amp; Documents</h2>
+        <p>Crop, resize, and prepare Aadhaar, PAN, Voter ID, and other ID documents for KYC submissions.</p>
+      </div>
+      <span class="count">6 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-tile" href="tools/card-cropper.html" data-tags="id card cropper aadhaar pan voter kyc dual side">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <span class="tag hot">HOT</span>
+        <h3>ID Card Dual-Side Cropper</h3>
+        <p>Aadhaar, PAN at 300 DPI</p>
+      </a>
+      <a class="tool-tile" href="tools/pan-photo-signature-resizer.html" data-tags="pan card photo signature uti resizer">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5"/></svg></div>
+        <span class="tag hot">HOT</span>
+        <h3>PAN Photo &amp; Signature</h3>
+        <p>213×213 &amp; 400×200 for UTI</p>
+      </a>
+      <a class="tool-tile" href="tools/photo-size-resize.html" data-tags="photo size resize exact mm px kb">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M21 3l-7 7M3 21l7-7M9 21H3v-6"/></svg></div>
+        <h3>Photo Size Resize</h3>
+        <p>Exact mm / px / KB</p>
+      </a>
+      <a class="tool-tile" href="tools/signature-resize.html" data-tags="signature resize exam form">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17V21h4L19 9l-4-4zM17 5l2-2 4 4-2 2z"/></svg></div>
+        <h3>Signature Resize</h3>
+        <p>Exact pixel / KB size</p>
+      </a>
+      <a class="tool-tile" href="tools/signature-bg-remover.html" data-tags="signature bg remover clean white">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-3 12H8v-2h8z"/></svg></div>
+        <h3>Signature BG Remover</h3>
+        <p>Clean white background</p>
+      </a>
+      <a class="tool-tile" href="tools/doc-scanner.html" data-tags="document scanner photo to pdf">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg></div>
+        <span class="tag hot">HOT</span>
+        <h3>Document Scanner</h3>
+        <p>Photo to digital PDF</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FORMS & APPLICATIONS ================= -->
+  <section class="cat-block" data-cat="forms">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg>
+      </div>
+      <div>
+        <h2>Forms &amp; Applications</h2>
+        <p>Fill, generate, and manage application forms for government services and exams.</p>
+      </div>
+      <span class="count">5 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-tile" href="tools/invoice-generator.html" data-tags="invoice generator service bill">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
+        <h3>Service Invoice Generator</h3>
+        <p>Bill customers for services</p>
+      </a>
+      <a class="tool-tile" href="tools/word-writer.html" data-tags="word writer letter application">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3>Application Letter Writer</h3>
+        <p>Write official letters</p>
+      </a>
+      <div class="tool-tile soon" data-tags="rent agreement generator">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Rent Agreement Maker</h3>
+        <p>Ready-to-print rent agreements</p>
+      </div>
+      <div class="tool-tile soon" data-tags="affidavit generator">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>Affidavit Generator</h3>
+        <p>Common affidavits for services</p>
+      </div>
+      <div class="tool-tile soon" data-tags="noc generator no objection certificate">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <span class="tag soon">SOON</span>
+        <h3>NOC Generator</h3>
+        <p>No Objection Certificates</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRINTING ================= -->
+  <section class="cat-block" data-cat="print">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+      </div>
+      <div>
+        <h2>Printing</h2>
+        <p>Print ID cards, Aadhaar copies, and passport photos at correct size on A4.</p>
+      </div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-tile" href="printing-tools.html" data-tags="printing hub all tools">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg></div>
+        <span class="tag">HUB</span>
+        <h3>All Printing Tools</h3>
+        <p>Aadhaar, ID card, passport</p>
+      </a>
+      <a class="tool-tile" href="tools/card-cropper.html" data-tags="aadhaar print kyc size">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h3>Aadhaar Card Print</h3>
+        <p>KYC-size on A4</p>
+      </a>
+      <a class="tool-tile" href="tools/passport-maker.html" data-tags="passport photo sheet 8 photos">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="8" rx="1"/><rect x="14" y="3" width="7" height="8" rx="1"/><rect x="3" y="13" width="7" height="8" rx="1"/><rect x="14" y="13" width="7" height="8" rx="1"/></svg></div>
+        <h3>Passport Photo Sheet</h3>
+        <p>8 photos on A4</p>
+      </a>
+      <a class="tool-tile" href="printing-tools.html" data-tags="pan card print voter id">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5"/></svg></div>
+        <h3>PAN Card Print</h3>
+        <p>Original size on A4</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= UTILITIES ================= -->
+  <section class="cat-block" data-cat="util">
+    <div class="cat-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1c.3-.3.9-.2 1 .2a6 6 0 0 1-8.3 7.1l-7.9 7.9a1 1 0 0 1-3-3l7.9-7.9a6 6 0 0 1 7.1-8.3c.4.1.5.7.2 1z"/></svg>
+      </div>
+      <div>
+        <h2>Daily Utilities</h2>
+        <p>Everyday tools for service center operations — PDF, image, QR, and file handling.</p>
+      </div>
+      <span class="count">8 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <a class="tool-tile" href="tools/pdf-merge.html" data-tags="merge pdf combine documents">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Merge PDF</h3>
+        <p>Combine multiple PDFs</p>
+      </a>
+      <a class="tool-tile" href="tools/pdf-compressor.html" data-tags="compress pdf reduce size">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
+        <h3>Compress PDF</h3>
+        <p>Reduce file size</p>
+      </a>
+      <a class="tool-tile" href="tools/image-compressor.html" data-tags="compress image reduce size">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15h6M12 12v6"/></svg></div>
+        <h3>Image Compressor</h3>
+        <p>Reduce image size</p>
+      </a>
+      <a class="tool-tile" href="tools/image-converter.html" data-tags="convert image jpg png webp">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 14h6v6h-6zM10 4h4v2h-4zM14 10h2v4h-2z"/></svg></div>
+        <h3>Image Converter</h3>
+        <p>JPG, PNG, WEBP</p>
+      </a>
+      <a class="tool-tile" href="tools/jpg-to-pdf.html" data-tags="jpg to pdf image convert">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        <h3>JPG to PDF</h3>
+        <p>Images to PDF</p>
+      </a>
+      <a class="tool-tile" href="tools/qr-generator.html" data-tags="qr code generator custom">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
+        <h3>QR Code Generator</h3>
+        <p>Custom colors &amp; logos</p>
+      </a>
+      <a class="tool-tile" href="tools/qr-scanner.html" data-tags="qr scanner camera image">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
+        <h3>QR Code Scanner</h3>
+        <p>Camera + image scan</p>
+      </a>
+      <a class="tool-tile" href="tools/word-counter.html" data-tags="word counter character count">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div>
+        <h3>Word Counter</h3>
+        <p>Chars, words, reading time</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW TO USE -->
+  <section class="how-to-use">
+    <h2>How to Use eMitra &amp; CSC Tools</h2>
+    <p class="lead">Four simple steps to process customer documents, print KYC copies, and complete service requests faster.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Pick a Tool</h3>
+        <p>Choose from KYC, Forms, Printing, or Utilities categories above.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Upload Customer Doc</h3>
+        <p>Drop Aadhaar, PAN, or any document. Nothing leaves your device.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Process Instantly</h3>
+        <p>Crop, resize, compress, or convert — all in your browser, no waiting.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Print or Submit</h3>
+        <p>Download or print the result. KYC-ready, always at correct size.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>eMitra &amp; CSC Tools — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about DocEasy's tools for eMitra, CSC, Jan Seva Kendra, and cyber café operators — KYC, forms, printing, and privacy.</p>
+
+    <details class="faq-item" open>
+      <summary>What are DocEasy eMitra &amp; CSC Tools?</summary>
+      <p>DocEasy's eMitra &amp; CSC Tools are a specialized collection of free, browser-based utilities designed for digital service center operators across India — including eMitra (Rajasthan), CSC (Common Service Centers under MeitY), Jan Seva Kendra (Karnataka, MP, and others), e-District portals, and independent cyber cafés. These operators process hundreds of customer documents daily: Aadhaar copies, PAN card applications, Voter ID updates, Ration card submissions, income certificates, domicile certificates, and much more. DocEasy's tools automate the most tedious tasks — cropping ID cards to exact 8.5 × 5.5 cm size, resizing photos for online applications, compressing PDFs for portal uploads, scanning documents via phone camera, and printing KYC-ready copies on A4. Every tool runs entirely in your browser — no uploads, no signup, no subscription fees. This protects both operator efficiency and customer data privacy, which is critical when handling Aadhaar, PAN, and other sensitive identity documents.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are these tools really free for commercial use?</summary>
+      <p>Yes — every tool is 100% free, forever, with no restrictions on commercial use. eMitra, CSC, Jan Seva Kendra, and cyber café operators can use DocEasy's tools for their daily business without paying anything. There's no signup, no email, no license fee, no per-transaction charge, and no premium tier. You can process 10 customer documents or 10,000 — all free. The site is supported by lightweight display ads. We don't sell your data, we don't track your business volume, and we don't ask for your email to unlock features. Most commercial KYC software charges ₹500–5,000 per month per operator — DocEasy is completely free and privacy-first. This is especially important for small operators in rural areas who can't afford expensive software but need reliable tools to serve their customers.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my customer's Aadhaar, PAN, or ID data safe?</summary>
+      <p>Completely safe — this is one of the most important aspects of DocEasy's design. Every tool runs entirely client-side in your browser — no customer data is ever uploaded to any server. When you drop a customer's Aadhaar PDF or PAN scan, it's read into your browser's memory using the FileReader API. All processing (cropping, resizing, merging) happens locally using Canvas. The result is written back to your device. Nothing is transmitted, logged, or stored anywhere. This is critical for compliance: the Aadhaar Act, 2016, and the DPDP Act, 2023 impose strict penalties for unauthorized storage or transmission of Aadhaar data. By using DocEasy, you eliminate that risk entirely — the data never leaves your device. You can verify this yourself: open Developer Tools (F12), go to the Network tab, drop a customer's Aadhaar PDF, and process it. You'll see zero outgoing requests carrying their data. This is a technical impossibility for us to see your customer's documents, not just a policy promise.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I crop a customer's Aadhaar card to the correct size?</summary>
+      <p>Use the ID Card Dual-Side Cropper tool — it's designed specifically for this. Steps: (1) Open the tool and drop your customer's Aadhaar PDF or scanned image. (2) If the PDF is password-protected (common for e-Aadhaar downloads), enter the password. The common format is the first 4 letters of the name in CAPITALS + birth year (e.g., "DEEP1998" for Deepak born in 1998). (3) Two crop boxes appear — a green one for the front and a blue one for the back. Position each box over the corresponding side of the card. (4) The default size is 8.5 × 5.5 cm (CR80 standard, same as a credit card). This is what banks and KYC portals require. (5) Click "Print Ultra HD" to print both sides side-by-side on A4 at 300 DPI. Or click "Save HD Images" to download the front and back as separate PNG files. Both sides print at exactly 8.5 × 5.5 cm — no measuring, no manual scaling, no errors.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is the correct Aadhaar card size for printing?</summary>
+      <p>The standard Aadhaar card follows the international CR80 standard — 8.5 × 5.5 cm (85.6 × 54 mm), the same size as a credit card. This is the size required by banks, SIM card vendors, and KYC verification portals. Some portals (like UTIITSL for PAN card KYC) ask for slightly different sizes — 8.6 × 5.4 cm for KYC submission. The ID Card Cropper allows you to adjust the dimensions in the toolbar if needed. Always print at 100% scale — never "fit to page" or "shrink to fit", which automatically resizes to fit margins and produces incorrect card sizes. After printing, measure with a ruler to verify exact 8.5 × 5.5 cm before submitting to the customer. Common mistake: operators use "fit to page" and print cards that look correct but are 5–10% smaller — leading to KYC rejections. DocEasy defaults to the correct size and disables auto-scaling in print output.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I resize photos for online application forms?</summary>
+      <p>Most government portals (SSC, UPSC, NEET, JEE, IBPS, RRB, state PSCs) have specific photo size requirements: typically 200 × 230 pixels at 20–50 KB in JPG format for signatures, and 4 × 3 cm at 20–100 KB for photos. The Photo Size Resize tool lets you: (1) Upload the customer's photo; (2) Select the exact dimensions required (or type custom values); (3) Set the target file size in KB (e.g., "Max 50 KB"); (4) The tool automatically crops, resizes, and re-compresses the JPEG to hit your target; (5) Download the result — ready to upload. This eliminates the trial-and-error of manually resizing in MS Paint or Photoshop, where operators often struggle to hit exact file size limits. DocEasy handles all the math in seconds. The tool supports multiple presets for common exams (SSC CGL, UPSC IAS, NEET UG, etc.) plus custom dimensions.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I scan paper documents using my phone?</summary>
+      <p>Yes — the Document Scanner tool turns your phone into a portable scanner. Steps: (1) Open the tool on your phone; (2) Take a photo of the document (Aadhaar, PAN, Voter ID, Ration Card, etc.) using your phone's camera; (3) The tool auto-detects the document edges and straightens the perspective (perspective correction); (4) It enhances contrast, removes shadows, and produces a clean black-and-white or grayscale scan; (5) Save as PDF or JPG. This is far faster than using a flatbed scanner — especially useful for eMitra operators who process dozens of documents daily. The scan quality is comparable to a desktop scanner at 300 DPI. For best results: place the document on a flat, matte surface (not glass), use natural daylight rather than flash, and hold the phone directly above the document (not at an angle).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I merge multiple customer documents into one PDF?</summary>
+      <p>Use the Merge PDF tool. Steps: (1) Open the tool; (2) Drop 2 or more PDF files (e.g., Aadhaar front PDF + Aadhaar back PDF + PAN PDF + bank statement PDF); (3) Drag to reorder them if needed; (4) Click "Merge" — the tool combines them into one PDF in seconds; (5) Download the merged PDF. This is useful when portals require a single file upload combining multiple documents (common for loan applications, KYC submissions, scholarship applications, exam registrations). The merge happens entirely in your browser using PDF-lib — no server round-trip, no waiting. You can merge 2 files or 50 files in one go. File order is preserved exactly as you arrange them.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I compress files to meet portal upload limits?</summary>
+      <p>Yes — this is one of the most common tasks in service centers. Most government portals have strict upload limits: 50 KB, 100 KB, 200 KB, or 500 KB depending on the document. The Compress PDF tool reduces PDF file size by 60–90% using image downsampling and re-encoding. The Image Compressor tool reduces JPG/PNG file size by 50–90% using adjustable quality. For example: a 2 MB Aadhaar PDF can be compressed to 150 KB without visible quality loss. A 5 MB photo can be compressed to 80 KB. Steps: (1) Open the appropriate tool; (2) Drop the file; (3) Select the compression preset or set a target size (e.g., "Target: 100 KB"); (4) The tool compresses and previews the result; (5) Download. All processing is local — no waiting for server queues, no file size limits on upload.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the tool work offline in areas with poor internet?</summary>
+      <p>Yes — this is a critical advantage for rural service centers. After the page loads once, all tools work fully offline. Since all processing happens locally in your browser using JavaScript and Canvas APIs, no internet connection is needed once the page is loaded. You can disconnect Wi-Fi and continue cropping Aadhaar cards, resizing photos, merging PDFs, or scanning documents. This is particularly important for eMitra, CSC, and Jan Seva Kendra operators in areas with unreliable connectivity. The only exception is the very first page load — after that, everything works offline until you refresh. Files processed offline can be saved and submitted later when connectivity is available.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>All modern browsers: Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Chrome and Edge offer the smoothest experience, especially for PDF processing (using PDF.js) and image manipulation (using Canvas API). On Windows desktops running Windows 7, 8, or 10, use the latest Chrome or Edge. On older machines, Firefox also works well. Mobile browsers (Chrome on Android, Safari on iOS) work perfectly for all tools including the Document Scanner. If you see "PDF failed to load" errors on an old browser, update to the latest version — the tools rely on modern JavaScript features like async/await and the File API.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do these tools work on Windows 7 computers?</summary>
+      <p>Yes — DocEasy's tools work on Windows 7, 8, 10, and 11, as long as you use a modern browser. Windows 7 is officially out of support by Microsoft (since 2020), but Chrome, Firefox, and Edge still work on it with limitations. For the best experience on Windows 7: (1) Use the latest Firefox ESR (Extended Support Release) which still supports Windows 7; (2) Or use a portable browser like Chrome Portable from a USB drive; (3) For PDF processing, use Firefox — it has good PDF.js support; (4) Avoid Internet Explorer. Many eMitra and CSC operators still run Windows 7 machines because the eMitra client software only runs on Win7. DocEasy's tools are designed to work on these legacy systems without issues.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use these tools on multiple computers?</summary>
+      <p>Yes — every tool is browser-based, so there's nothing to install. Just open the URL on any computer, and all tools are instantly available. You can use them on your shop desktop, backup laptop, tablet, or phone — same tools, same experience, no syncing needed. This is useful when you want to keep your main shop computer for eMitra software and use a second computer (or tablet) for DocEasy processing. Since nothing is stored on the device (all processing is in-memory), there's no login, no account, and no trace left behind. Every session starts fresh.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is this different from using MS Word or Photoshop?</summary>
+      <p>MS Word and Photoshop can technically produce print-ready ID cards, but they require manual setup: page size, margins, image resolution, print scaling. What would take 10 minutes in Word (and often print at the wrong size) takes 30 seconds in DocEasy with guaranteed correct output. Photoshop is even more complex and requires subscription (₹1,600+/month). DocEasy is purpose-built for KYC workflows: correct CR80 dimensions are pre-set, DPI is automatically 300, page layout is A4 by default, and print scaling is fixed at 100%. This eliminates errors that lead to KYC rejections. For high-volume commercial operations, DocEasy is dramatically faster and safer than generic desktop software. And it's completely free.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I print a physical Aadhaar card for a customer?</summary>
+      <p>Yes — many service centers offer this as a paid service. Steps: (1) Get the customer's Aadhaar number; (2) Download the e-Aadhaar PDF from uidai.gov.in (or ask the customer to share their e-Aadhaar PDF); (3) Open the ID Card Cropper tool; (4) Upload the e-Aadhaar PDF and enter the password if protected; (5) Position the crop boxes over front and back; (6) Print on A4 at 100% scale; (7) Cut along the guides; (8) Optional: Laminate for durability (₹10–20 extra). Customers often need a physical Aadhaar copy for bank KYC, SIM card purchase, or school admission. The service typically costs ₹20–50 per print. Make sure to print the mandatory Aadhaar usage guidelines (mentioned on the e-Aadhaar PDF) alongside — this is a regulatory requirement under the Aadhaar Act.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Are these tools compliant with Aadhaar Act and DPDP Act?</summary>
+      <p>DocEasy's tools are designed with compliance in mind. Under the Aadhaar Act, 2016, and the Digital Personal Data Protection (DPDP) Act, 2023, unauthorized storage, sharing, or transmission of Aadhaar data carries significant penalties. DocEasy eliminates all these risks because nothing is stored, shared, or transmitted. All processing happens in the operator's browser — Aadhaar data never leaves the device. This makes DocEasy the safest possible choice for KYC processing. However, operators must still follow the rules: (1) Never store customer Aadhaar copies beyond what's necessary; (2) Print only with the customer's explicit consent; (3) Never share Aadhaar data over WhatsApp or email without encryption; (4) Delete temporary files immediately after use. DocEasy helps you comply, but compliance is ultimately your responsibility as the operator.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which services can I offer with these tools?</summary>
+      <p>DocEasy's tools support a wide range of digital services: <b>KYC Services</b> — Aadhaar card printing, PAN card printing, KYC document preparation for banks, telecom, and government. <b>Form Filling</b> — Photo/signature resizing for online applications (SSC, UPSC, NEET, JEE, IBPS, RRB, state PSCs, college admissions). <b>Document Processing</b> — Merging multiple PDFs, compressing for upload, converting formats. <b>Printing Services</b> — Aadhaar prints, PAN prints, passport photo sheets, ID card printing. <b>Scanning</b> — Converting customer documents to digital PDFs. <b>Utility</b> — QR code generation for businesses, invoice generation for services. Combined with your existing eMitra/CSC portal access, these tools make you a complete one-stop shop for customers.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you have a mobile app for service centers?</summary>
+      <p>Not yet — but DocEasy works as a Progressive Web App (PWA). On Android (Chrome) or iOS (Safari), tap the share menu and select "Add to Home Screen". The tool will launch in full-screen mode, appearing as a native app icon on your phone. This gives you mobile access to all tools without downloading from an app store. A dedicated native app is on our roadmap but not currently in development. For now, the PWA approach works well — it's fast, works offline, and requires no updates. Many eMitra and CSC operators use DocEasy on their mobile phones for on-the-go document processing.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I handle password-protected PDFs?</summary>
+      <p>Many official PDFs are password-protected: e-Aadhaar PDFs from UIDAI, PAN card PDFs from Protean/NSDL, ITR acknowledgements from Income Tax portal, and bank statements. DocEasy's ID Card Cropper handles password-protected PDFs natively using PDF.js. Common password formats: <b>Aadhaar e-PDF:</b> First 4 letters of name in CAPITALS + birth year (e.g., "DEEP1998"). <b>PAN card:</b> Date of birth in DDMMYYYY (e.g., "15011998"). <b>ITR:</b> PAN number in lowercase + DOB DDMMYYYY (e.g., "abcde1234f15011998"). <b>Bank statements:</b> Varies by bank (often customer ID or DOB). If you don't know the password, ask the customer — they usually have it in the email they received. The tool handles all standard PDF encryption without needing external software.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you keep logs of customer data?</summary>
+      <p>No. We don't log filenames, customer names, Aadhaar numbers, or any metadata about your usage. We don't track which tools you use or when. Our analytics only records anonymous page views — never customer content. Since your data never leaves your browser, there's literally nothing for us to log. This is a critical privacy guarantee for service center operators: even we cannot see your customer's Aadhaar or PAN data. You can verify this yourself: open Developer Tools → Network tab, drop a customer's document, and watch for requests. Zero outgoing requests carry customer data — because it never goes anywhere. This makes DocEasy compliant with the strictest interpretation of the Aadhaar Act and DPDP Act 2023 regarding third-party data handling.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What other tools are coming for eMitra/CSC operators?</summary>
+      <p>We're actively building more tools specifically for service centers: (1) <b>Rent Agreement Maker</b> — ready-to-print rent agreements; (2) <b>Affidavit Generator</b> — common affidavits for services; (3) <b>NOC Generator</b> — No Objection Certificates; (4) <b>Bulk Barcode Generator</b> — A4 sheets of barcodes from CSV; (5) <b>Application Tracker</b> — track customer applications; (6) <b>Fee Calculator</b> — service charge calculator with GST; (7) <b>Customer Database</b> — local customer records; (8) <b>Service Invoice</b> — professional invoice for services rendered. Want a specific tool sooner? Use the "Request Tool" link in the footer — we prioritize the most-requested tools. Many eMitra and CSC operators have already requested features — we read every submission.</p>
+    </details>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Related DocEasy Categories</h3>
+    <p style="text-align:center; color:var(--subtext-color); margin-bottom:20px; font-size:14px;">Explore other free tools on DocEasy</p>
+    <ul style="max-width:680px; margin:0 auto 20px; padding-left:24px; line-height:1.9; font-size:15px; color:var(--subtext-color);">
+      <li><a href="categories.html" style="color:#ea580c; font-weight:600; text-decoration:underline;">All Categories</a> — Browse all 35+ tools</li>
+      <li><a href="printing-tools.html" style="color:#ea580c; font-weight:600; text-decoration:underline;">Printing Tools</a> — Aadhaar, ID card, passport</li>
+      <li><a href="business-tools.html" style="color:#ea580c; font-weight:600; text-decoration:underline;">Business Tools</a> — GST, invoices, stamp duty</li>
+      <li><a href="finance-tools.html" style="color:#ea580c; font-weight:600; text-decoration:underline;">Finance Tools</a> — Loans, tax, salary</li>
+      <li><a href="career-tools.html" style="color:#ea580c; font-weight:600; text-decoration:underline;">Career Tools</a> — Resume, interview, salary</li>
+      <li><a href="index.html#pdf-tools" style="color:#ea580c; font-weight:600; text-decoration:underline;">PDF Tools</a> — Merge, split, compress PDFs</li>
+    </ul>
+
+    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Conclusion</h3>
+    <p style="max-width:860px; margin:20px auto 0; font-size:15.5px; color:var(--subtext-color); line-height:1.8; text-align:center;">
+      DocEasy's eMitra &amp; CSC Tools give digital service center operators fast, private, and free utilities for every daily task — cropping Aadhaar cards, resizing photos for forms, compressing PDFs for uploads, scanning customer documents, and printing KYC-ready copies. No signup, no upload, no subscription. Whether you run an eMitra center in Rajasthan, a CSC in rural India, or a cyber café in a metro, these tools save you time, protect your customers' data, and keep you compliant with Aadhaar and DPDP regulations.
+    </p>
+
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  var searchInput = document.getElementById('toolSearch');
+  var pills = document.getElementById('filterPills');
+  var tiles = document.querySelectorAll('.tool-tile');
+  var cats = document.querySelectorAll('.cat-block');
+  var noResults = document.getElementById('noResults');
+  var activeFilter = 'all';
+
+  function applyFilters() {
+    var q = (searchInput.value || '').toLowerCase().trim();
+    var visibleCount = 0;
+
+    cats.forEach(function (cat) {
+      var catKey = cat.getAttribute('data-cat');
+      var catVisible = false;
+
+      cat.querySelectorAll('.tool-tile').forEach(function (tile) {
+        var text = (tile.textContent + ' ' + (tile.getAttribute('data-tags') || '')).toLowerCase();
+        var matchSearch = !q || text.indexOf(q) !== -1;
+        var matchFilter = activeFilter === 'all' || catKey === activeFilter;
+        var show = matchSearch && matchFilter;
+        tile.style.display = show ? '' : 'none';
+        if (show) { catVisible = true; visibleCount++; }
+      });
+
+      cat.style.display = catVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  pills.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    pills.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    activeFilter = btn.getAttribute('data-filter');
+    applyFilters();
+  });
+})();
+</script>
+</body>
+</html>
