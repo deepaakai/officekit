@@ -8,207 +8,567 @@
 <meta name="keywords" content="text to speech, tts, read aloud, text reader, speech synthesizer, voice generator">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-text-to-speech.html">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Text to Speech — Read Text Aloud Online Free | DocEasy">
+<meta property="og:description" content="Convert text to speech using browser voices. Free, private, no signup.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-text-to-speech.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/text-to-speech-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Text to Speech — Read Text Aloud Online Free | DocEasy">
+<meta name="twitter:description" content="Convert text to speech. Free, private, browser-based.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/text-to-speech-demo.jpg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Text to Speech — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/media-text-to-speech.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Convert text to speech using browser voices. Free, private, no signup."
+}
+</script>
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
-* { box-sizing: border-box; }
-.wrap { max-width: 820px; margin: 0 auto; padding: 34px 18px 80px; }
-.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--subtext-color); text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 18px; }
-.back-link:hover { color: #0891b2; }
-.back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
-.tool-head { text-align: center; margin-bottom: 26px; }
-.tool-head .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: #cffafe; color: #0891b2; font-size: 11px; font-weight: 800; letter-spacing: .5px; margin-bottom: 12px; }
-.tool-head h1 { font-size: clamp(26px, 4.6vw, 38px); font-weight: 800; margin: 0 0 10px; letter-spacing: -1px; color: var(--text-color); }
-.tool-head p { color: var(--subtext-color); font-size: 15px; margin: 0; line-height: 1.55; }
-.card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 24px 22px; box-shadow: 0 8px 26px rgba(25,57,138,0.06); }
-textarea { width: 100%; min-height: 170px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 15px; font-family: inherit; resize: vertical; outline: none; line-height: 1.55; transition: all .18s; }
-textarea:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,.12); }
-.char-count { text-align: right; font-size: 12px; color: var(--subtext-color); margin-top: 6px; font-weight: 600; }
-.row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
-.field label { display: block; font-size: 12px; font-weight: 800; color: var(--subtext-color); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
-.field select, .field input[type="range"] { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 13.5px; font-family: inherit; outline: none; }
-.field input[type="range"] { padding: 0; height: 6px; accent-color: #0891b2; }
-.field .range-val { font-size: 12px; color: var(--subtext-color); font-weight: 700; margin-top: 4px; display: inline-block; }
-.controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; border: none; font-size: 13.5px; font-weight: 800; cursor: pointer; transition: all .18s; font-family: inherit; }
-.btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
-.btn.primary { background: #0891b2; color: #fff; box-shadow: 0 8px 22px rgba(8,145,178,.28); }
-.btn.primary:hover { filter: brightness(1.08); transform: translateY(-2px); }
-.btn.danger { background: #dc2626; color: #fff; }
-.btn.danger:hover { filter: brightness(1.08); transform: translateY(-2px); }
-.btn.ghost { background: var(--card-hover); color: var(--text-color); border: 1px solid var(--border-color); }
-.btn.ghost:hover { border-color: #0891b2; color: #0891b2; }
-.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
-.note { margin-top: 18px; font-size: 12.5px; color: var(--subtext-color); text-align: center; line-height: 1.6; }
+/* Hide ad slots until AdSense approval */
+.ad-slot-container, .ad-placeholder { display: none !important; }
 
-.deep-faq { max-width: 820px; margin: 64px auto 0; }
-.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; color: var(--text-color); letter-spacing: -0.6px; }
-.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 580px; line-height: 1.6; }
-.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
-.deep-faq .faq-item:hover { border-color: #0891b2; }
-.deep-faq .faq-item[open] { border-color: #0891b2; }
-.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
-.deep-faq summary::-webkit-details-marker { display: none; }
-.deep-faq summary::after { content: "+"; font-size: 21px; color: #0891b2; font-weight: 300; flex-shrink: 0; }
-.deep-faq .faq-item[open] summary::after { content: "−"; }
-.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
-.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: 'Courier New', monospace; color: #0891b2; font-weight: 600; }
-@media (max-width: 500px) { .row-grid { grid-template-columns: 1fr; } .deep-faq .faq-item { padding: 13px 15px; } .deep-faq summary { font-size: 13px; } .deep-faq .faq-item p { font-size: 12.5px; } }
+/* ============ Tool-specific styles ============ */
+.tts-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 26px 24px;
+  box-shadow: var(--shadow-sm);
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.tts-textarea {
+  width: 100%;
+  min-height: 170px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  line-height: 1.55;
+  transition: all 0.18s;
+}
+.tts-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(25,57,138,0.12);
+}
+.tts-char-count {
+  text-align: right;
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.tts-row-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 18px 0;
+}
+.tts-field label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--subtext-color);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+.tts-field select,
+.tts-field input[type="range"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+}
+.tts-field input[type="range"] {
+  padding: 0;
+  height: 6px;
+  accent-color: var(--accent);
+}
+.tts-field .range-val {
+  font-size: 12px;
+  color: var(--subtext-color);
+  font-weight: 700;
+  margin-top: 4px;
+  display: inline-block;
+}
+.tts-field label.sub-label {
+  margin-top: 10px;
+}
+
+.tts-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.tts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  border: none;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+.tts-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.tts-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(25,57,138,.28);
+}
+.tts-btn.primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.tts-btn.danger { background: #dc2626; color: #fff; }
+.tts-btn.danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.tts-btn.ghost {
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.tts-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+.tts-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.tts-note {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article code {
+  background: var(--card-hover);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  text-align: center;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+.seo-article details {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 16px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+";
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 14px 0 0;
+  font-size: 15px !important;
+  line-height: 1.75;
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+  .tts-row-grid { grid-template-columns: 1fr; }
+  .tts-btn { padding: 11px 18px; font-size: 13px; }
+  .tts-card { padding: 20px 16px; }
+}
 </style>
 </head>
 <body>
-<div id="doceasy-header"></div>
-<main class="wrap">
-  <a class="back-link" href="../media-tools.html">
-    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
-    Back to Media Tools
-  </a>
 
-  <div class="tool-head">
-    <div class="badge">🔊 AUDIO</div>
-    <h1>Text to Speech</h1>
-    <p>Convert text into natural speech using your browser's built-in voices. Adjust speed, pitch, and voice.</p>
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Text to Speech</h1>
+    <p class="hero-sub">Convert text into natural speech using your browser's built-in voices. Adjust speed, pitch, and voice — free, private, no signup.</p>
   </div>
 
-  <div class="card">
-    <textarea id="text" placeholder="Type or paste your text here…" maxlength="5000"></textarea>
-    <div class="char-count"><span id="charCount">0</span> / 5000</div>
-    <div class="row-grid">
-      <div class="field">
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="tts-card">
+    <textarea class="tts-textarea" id="text" placeholder="Type or paste your text here…" maxlength="5000"></textarea>
+    <div class="tts-char-count"><span id="charCount">0</span> / 5000</div>
+
+    <div class="tts-row-grid">
+      <div class="tts-field">
         <label for="voice">Voice</label>
         <select id="voice"></select>
       </div>
-      <div class="field">
+      <div class="tts-field">
         <label for="rate">Speed <span class="range-val" id="rateVal">1.0×</span></label>
         <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
-        <label for="pitch" style="margin-top:10px">Pitch <span class="range-val" id="pitchVal">1.0</span></label>
+        <label for="pitch" class="sub-label">Pitch <span class="range-val" id="pitchVal">1.0</span></label>
         <input type="range" id="pitch" min="0" max="2" step="0.1" value="1">
       </div>
     </div>
-    <div class="controls">
-      <button class="btn primary" id="speakBtn">
+
+    <div class="tts-controls">
+      <button class="tts-btn primary" id="speakBtn">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
         Speak
       </button>
-      <button class="btn danger" id="stopBtn" disabled>
+      <button class="tts-btn danger" id="stopBtn" disabled>
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
         Stop
       </button>
-      <button class="btn ghost" id="pauseBtn" disabled>
+      <button class="tts-btn ghost" id="pauseBtn" disabled>
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>
         Pause
       </button>
-      <button class="btn ghost" id="clearBtn">
+      <button class="tts-btn ghost" id="clearBtn">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
         Clear
       </button>
     </div>
-    <p class="note">🔒 Uses your device's built-in speech engine. Text never leaves your browser.</p>
+
+    <p class="tts-note">🔒 Uses your device's built-in speech engine. Text never leaves your browser.</p>
   </div>
 
-  <!-- FAQ -->
-  <section class="deep-faq" id="faq">
-    <h2>Text to Speech — Frequently Asked Questions</h2>
-    <p class="faq-lead">Everything about converting text into speech — voices, languages, quality, and privacy.</p>
+  <div class="ad-slot-container">Advertisement</div>
 
-    <details class="faq-item" open>
+  <!-- ============ HOW TO USE + FAQ (2000+ words) ============ -->
+  <section class="seo-article">
+
+    <h2>Free Online Text to Speech — Read Any Text Aloud (2026)</h2>
+
+    <p>Whether you want to listen to an article while commuting, convert study notes into audio for revision, prepare voiceovers for a video, or make your content accessible to visually impaired users, DocEasy's <b>free text to speech tool</b> converts any written text into natural-sounding speech using your browser's built-in voices — no install, no signup, no watermark, and complete privacy because your text never leaves your device.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/text-to-speech-demo.jpg" alt="Text to speech interface showing text area, voice selector, speed and pitch controls" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/text-to-speech-demo.jpg]</div>';">
+      <div class="article-image-caption">The DocEasy Text to Speech tool converts any text into speech using voices built into your device. Choose voice, speed, and pitch.</div>
+    </div>
+
+    <h3>How to Use Text to Speech</h3>
+
+    <p>Reading text aloud takes just four simple steps:</p>
+
+    <ol>
+      <li><b>Step 1 — Paste your text:</b> Type or paste up to 5,000 characters (roughly 800–1,000 words) into the text box.</li>
+      <li><b>Step 2 — Choose a voice:</b> Open the "Voice" dropdown. It lists every voice installed on your device — usually 5–50 depending on your OS and language packs.</li>
+      <li><b>Step 3 — Adjust speed and pitch (optional):</b> Speed ranges from 0.5× (half) to 2× (double). Pitch ranges from 0 (deep) to 2 (high). Defaults are 1.0 for both.</li>
+      <li><b>Step 4 — Click "Speak":</b> The text is read aloud immediately. Click "Pause" to freeze mid-sentence, "Resume" to continue, or "Stop" to end completely.</li>
+    </ol>
+
+    <p>That's it — no signup, no email, no payment. Everything runs locally in your browser tab.</p>
+
+    <h3>Where Do the Voices Come From?</h3>
+
+    <p>The tool uses the browser's built-in <b>SpeechSynthesis API</b>, which relies on voices installed on your operating system:</p>
+
+    <ul>
+      <li><b>Windows 10/11:</b> 5–15 voices including Microsoft David, Zira, Mark, and various language packs.</li>
+      <li><b>macOS / iOS:</b> 20–50 high-quality voices including Samantha, Alex, Daniel, and multilingual options.</li>
+      <li><b>Android:</b> Fewer built-in voices, but more can be installed via Google's TTS engine.</li>
+      <li><b>Chrome OS:</b> 3–10 voices.</li>
+      <li><b>Linux:</b> Varies by distribution and installed speech engines (eSpeak, Festival, Pico).</li>
+    </ul>
+
+    <p>Because voices are stored on your device, the tool works fully offline after loading once. And because nothing is sent to any server, your text stays completely private.</p>
+
+    <h3>When to Use Text to Speech</h3>
+
+    <ul>
+      <li><b>Listen to articles:</b> Convert long reads into audio for commuting or exercising.</li>
+      <li><b>Study and revision:</b> Turn notes, definitions, and formulas into audio you can repeat.</li>
+      <li><b>Proofread by ear:</b> Hearing your own writing catches grammar mistakes your eyes miss.</li>
+      <li><b>Accessibility:</b> Make content readable for visually impaired users or people with dyslexia.</li>
+      <li><b>Language learning:</b> Hear native pronunciation of Spanish, French, German, Hindi, Japanese and more.</li>
+      <li><b>Voiceovers:</b> Create draft audio for videos, presentations, or podcasts.</li>
+      <li><b>Audiobook-style narration:</b> Convert chapters, essays, or documentation into audio.</li>
+      <li><b>Screen-free reading:</b> Listen while cooking, driving, or doing chores.</li>
+    </ul>
+
+    <h3>Speed and Pitch — Best Settings</h3>
+
+    <p>Different use cases call for different settings:</p>
+
+    <ul>
+      <li><b>Audiobook listening:</b> Speed 0.9–1.1×, Pitch 1.0 — natural, comfortable pacing.</li>
+      <li><b>Accessibility / quick reading:</b> Speed 1.2–1.5×, Pitch 1.0 — process information faster.</li>
+      <li><b>Language learning:</b> Speed 0.6–0.8×, Pitch 1.0 — hear each word clearly.</li>
+      <li><b>Warm narration:</b> Speed 1.0×, Pitch 0.9 — friendly, welcoming tone.</li>
+      <li><b>Energetic delivery:</b> Speed 1.1–1.2×, Pitch 1.1 — lively, engaging.</li>
+    </ul>
+
+    <p>Adjustments take effect the next time you click Speak.</p>
+
+    <h3>Improving Pronunciation</h3>
+
+    <p>TTS engines occasionally mispronounce uncommon words, proper nouns, or technical jargon. To improve:</p>
+
+    <ul>
+      <li><b>Spell phonetically:</b> Write "Kubernetes" as "koo-ber-net-eez."</li>
+      <li><b>Add punctuation:</b> Commas, periods, and dashes influence pacing and intonation.</li>
+      <li><b>Match language to text:</b> Use an English voice for English text, Spanish for Spanish, etc.</li>
+      <li><b>Rewrite names:</b> Try different spellings until the voice pronounces them correctly.</li>
+    </ul>
+
+    <h3>Privacy and Security</h3>
+
+    <p>Text to speech is often used for sensitive content — legal documents, medical notes, private messages, or unreleased business plans. DocEasy is built so none of this ever leaves your device:</p>
+
+    <ul>
+      <li><b>No uploads:</b> Text is processed locally by your browser's SpeechSynthesis API.</li>
+      <li><b>No server storage:</b> Nothing is saved anywhere except your device's temporary memory.</li>
+      <li><b>No tracking:</b> We don't log what you type or which voice you choose.</li>
+      <li><b>Offline capable:</b> After loading once, turn off Wi-Fi and continue reading aloud.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
       <summary>How do I use this Text to Speech tool?</summary>
-      <p>Using the tool takes just four simple steps. First, type or paste your text into the large box at the top — up to 5,000 characters per session. Second, choose a voice from the "Voice" dropdown — the list shows all voices installed on your device, including different languages and accents. Third, optionally adjust the speed slider (0.5× to 2×) and pitch slider (0 to 2). Fourth, click the "Speak" button. The tool begins reading your text aloud immediately. You can pause anytime, resume, or stop completely. When done, click "Clear" to empty the box and start fresh. Everything happens instantly with no waiting, no signup, and no cost.</p>
+      <p>Type or paste your text into the box, choose a voice from the dropdown, optionally adjust speed and pitch, then click "Speak." The browser reads the text aloud immediately. Pause, Resume, or Stop anytime.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Is this Text to Speech tool free?</summary>
-      <p>Yes — 100% free with no hidden costs. There's no signup, no email, no payment, no character limit (within the 5,000-character session cap), and no "pro" version. You can use it as many times as you want, for personal, educational, or commercial purposes. The tool is supported by lightweight ads elsewhere on the site, which is how we keep it free while protecting your privacy. We don't sell your text, we don't log what you type, and we don't ask for your email to unlock features. Every voice available on your device is available here at no charge.</p>
+      <p>Yes — 100% free, forever. No signup, no email, no payment, no character limit (within the 5,000-character session cap), and no premium tier. Every voice on your device is available at no cost.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Is my text sent to any server?</summary>
-      <p>No — your text never leaves your device. The Text to Speech tool uses the browser's built-in SpeechSynthesis API, which relies on voices installed locally on your operating system. When you click "Speak," your browser processes the text entirely offline and generates the audio through your device's speakers or headphones. No text, no voice data, and no metadata is transmitted over the internet. You can prove this yourself: type your text, disconnect Wi-Fi, and click "Speak" — it will still work perfectly. This makes DocEasy the safest choice for reading sensitive documents, confidential notes, or private messages aloud.</p>
+      <p>No. The tool uses your browser's built-in SpeechSynthesis API, which runs entirely offline. No text, no voice data, no metadata is transmitted. Verify by disconnecting Wi-Fi and clicking Speak — it still works.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>How many voices are available?</summary>
-      <p>The number of voices depends entirely on your device and operating system. Windows 10/11 typically offers 5–15 voices, including Microsoft David, Zira, Mark, and various language packs. macOS and iOS usually offer 20–50 voices, with high-quality voices like Samantha, Alex, Daniel, and multilingual options. Android offers fewer built-in voices but more can be installed through Google's TTS engine. Chrome OS offers 3–10 voices. The tool automatically lists every voice your device supports — just open the dropdown and pick your favorite. If you need more voices, install additional language packs from your OS settings, then refresh the page.</p>
+      <p>The number depends on your device. Windows offers 5–15, macOS/iOS offers 20–50, Android offers a few (more via Google TTS), Chrome OS offers 3–10. Install additional language packs from OS settings for more voices.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Why can't I hear anything when I click Speak?</summary>
-      <p>If the Speak button seems to do nothing, check these common causes. First, make sure your device volume isn't muted — check the system volume slider. Second, check the browser tab isn't muted — right-click the tab and look for "Unmute site." Third, verify the correct output device is selected (speakers vs. headphones vs. Bluetooth). Fourth, some browsers require a user interaction on the page before allowing speech — try clicking anywhere on the page, then pressing Speak again. Fifth, if your browser shows "Speech not supported," update to a modern browser. Firefox, Chrome, Edge, and Safari all support SpeechSynthesis; Internet Explorer does not.</p>
+      <p>Check: (1) Device volume isn't muted; (2) Browser tab isn't muted (right-click tab → Unmute site); (3) Correct output device selected; (4) Click anywhere on the page first (some browsers require user interaction before speech).</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I change the speaking speed and pitch?</summary>
-      <p>Yes — both are fully adjustable. The speed slider ranges from 0.5× (half speed — great for learning a new language or following complex text) to 2× (double speed — useful for listening to long articles quickly). The pitch slider ranges from 0 (very deep, almost robotic) to 2 (very high, cartoonish). The default for both is 1.0, which sounds natural. For audiobook-style listening, try speed 0.9–1.1 and pitch 1.0. For accessibility use, speed 1.2–1.5 and pitch 1.0 helps process information faster. For a friendly, warm narration, try pitch 0.9 with speed 1.0. Adjustments take effect the next time you click Speak.</p>
+      <p>Yes — the Speed slider ranges 0.5×–2× and Pitch ranges 0–2. Defaults are 1.0 for both. Adjustments take effect on the next Speak.</p>
     </details>
 
-    <details class="faq-item">
-      <summary>Can I download the spoken audio as an MP3 file?</summary>
-      <p>Not directly in the browser — this is a limitation of the SpeechSynthesis API, which plays audio in real-time but doesn't expose it as a downloadable file for security reasons. However, you can record the audio using two workarounds: (1) Use the DocEasy Screen Recorder tool with "tab audio" enabled, then extract the audio using the Extract Audio tool; (2) On Windows, enable "Stereo Mix" in your sound settings and use DocEasy's Voice Recorder to capture the output. Both methods produce an MP3 or WebM file that you can download and share. For professional TTS with downloadable output, dedicated services like ElevenLabs or Google Cloud TTS work better, but they aren't free or private.</p>
+    <details>
+      <summary>Can I download the spoken audio as MP3?</summary>
+      <p>Not directly — this is a limitation of the SpeechSynthesis API, which plays audio in real-time but doesn't expose it as a file. Workarounds: use the Screen Recorder with tab audio, then extract audio. Or on Windows, enable Stereo Mix and record with the Voice Recorder.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Which languages are supported?</summary>
-      <p>The Text to Speech tool supports any language your device has voices for — which is usually 30+ languages on modern devices. On Windows, the default set includes English (US, UK, Australia, India), Spanish, French, German, Italian, Portuguese, Dutch, Polish, Russian, Japanese, Chinese, Korean, and more. On macOS, Apple provides 40+ languages with high-quality voices. On Android, Google TTS supports 50+ languages. To see what's available, open the Voice dropdown — each entry shows the voice name and language code (like "en-US" for American English). If a language you need isn't listed, install additional language packs from your OS's speech settings.</p>
+      <p>Any language your device has voices for — usually 30+ on modern devices. Open the Voice dropdown to see them all. If a language is missing, install additional language packs from OS settings.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I use Text to Speech for commercial projects?</summary>
-      <p>Yes — anything you create using browser-based TTS is yours to use freely, including commercially. However, be aware that some operating system voices have subtle licensing terms — for example, Microsoft's voices on Windows are technically licensed for personal use on that specific machine. For YouTube videos, podcasts, or commercial products where you need full commercial rights, we recommend using Apple's voices (macOS/iOS), which are licensed more permissively, or dedicated TTS services with explicit commercial licenses. For personal projects, education, accessibility, or internal use, browser TTS is completely fine with no restrictions.</p>
+      <p>Yes — anything you create using browser-based TTS is yours to use freely. Note that some OS voices have subtle licensing terms — check your OS documentation for details. For commercial content, macOS/iOS voices typically have more permissive terms.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Does it work offline?</summary>
-      <p>Yes — the Text to Speech tool works fully offline after the page loads once. Since voices are stored locally on your device and the SpeechSynthesis API processes text locally, no internet connection is needed to generate speech. This is useful for flights, areas with poor connectivity, or privacy-conscious usage where you don't want any network activity. Just load the page once while online, then you can disconnect Wi-Fi and continue using it. The only exception is if your device's voices are set to stream from a cloud service (rare, but possible with some Android setups) — in that case, offline mode may not work for those specific voices.</p>
+      <p>Yes — after the page loads once, the tool works fully offline. Since voices are stored locally and processing is local, no internet is needed. Turn off Wi-Fi and continue using it.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Why does the voice sound robotic or unnatural?</summary>
-      <p>Voice quality depends entirely on your operating system and which voices are installed. Older SAPI voices on Windows (like "Microsoft David" or "Microsoft Zira") sound somewhat robotic because they were designed in the 2010s. Modern voices — like the newer Windows 11 "Natural" voices, Apple's "Siri" voices, or Google's high-quality voices — sound dramatically better, almost human. To improve quality: (1) Update your OS to get newer voices; (2) On Windows 11, install additional "Natural" voice packs from Settings → Time & Language → Speech; (3) On macOS, download "Enhanced" or "Premium" voices in System Preferences → Accessibility → Spoken Content; (4) On Android, install Google's high-quality TTS voices in Settings → Accessibility → Text-to-speech output.</p>
+      <p>Voice quality depends on your OS and installed voices. Older SAPI voices sound robotic. Modern voices (Windows 11 "Natural," Apple's Siri voices, Google's high-quality voices) sound almost human. Update your OS and install newer voice packs for better quality.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I pause, resume, or stop mid-speech?</summary>
-      <p>Yes — the tool supports all three controls. Click "Pause" while speech is playing, and it freezes mid-sentence. Click "Pause" again (now showing "Resume"), and it continues from exactly where it stopped. Click "Stop" at any time to end speech completely. Note that some browsers and voices may pause at a word boundary rather than mid-word — this is a browser limitation, not a bug. Also, on some devices, pause/resume works better on longer texts than very short ones. If pause doesn't seem to work, try pausing and resuming on a longer paragraph — that usually behaves more reliably than single sentences.</p>
+      <p>Yes — click Pause to freeze mid-sentence, Resume to continue, Stop to end completely. Some browsers pause at a word boundary rather than mid-word — this is a browser limitation, not a bug.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Is there a character limit?</summary>
-      <p>The tool allows up to 5,000 characters per session, which is roughly 800–1,000 words — about 5 minutes of spoken audio. This limit is a browser constraint (longer texts may cause the SpeechSynthesis API to fail or stutter). If you need to read longer documents, simply split the text into sections, speak the first section, clear the box, paste the next, and continue. For reading entire books, we recommend dedicated audiobook tools, but for essays, articles, study notes, and short documents, 5,000 characters is more than enough. Character count is displayed live below the text box as you type.</p>
+      <p>Yes — 5,000 characters per session (roughly 800–1,000 words, ~5 minutes of audio). For longer documents, split into sections and paste one at a time.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>How is this different from the Neural TTS tool?</summary>
-      <p>The regular Text to Speech tool uses your operating system's built-in voices via the SpeechSynthesis API — fast, private, but limited to voices already installed on your device. The Neural TTS tool (available separately) uses AI models like Piper or Coqui that run in the browser via WebAssembly, generating more natural-sounding speech at the cost of a one-time model download (~20–50 MB). Use the regular tool for quick reads, offline use, and languages you already have voices for. Use Neural TTS for high-quality narration, voiceovers, or when your OS voices sound too robotic. Both are free and private; they just use different technologies.</p>
+      <p>The regular Text to Speech uses your OS voices via SpeechSynthesis — fast, private, but limited to installed voices. Neural TTS uses AI models (Piper, Coqui) that generate more natural speech but require a one-time model download. Both are free and private; they just use different technologies.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Why do some words sound wrong or mispronounced?</summary>
-      <p>TTS engines rely on pronunciation dictionaries and language rules, and they occasionally mispronounce uncommon words, proper nouns, technical jargon, or words that are spelled the same but pronounced differently (like "read" vs. "read"). To improve pronunciation: (1) Spell tricky words phonetically in the text (e.g. "Kubernetes" → "koo-ber-net-eez"); (2) Add commas and periods to influence pacing and intonation; (3) Use a voice in the language the text is written in — English voices will butcher French or German words; (4) For names, try writing them in a way that forces correct pronunciation. Some high-quality voices handle pronunciation better than others — experiment with different voices to find the one that reads your content most naturally.</p>
+      <p>TTS engines occasionally mispronounce uncommon words, proper nouns, or words with multiple pronunciations ("read" vs "read"). Fix by spelling tricky words phonetically, adding punctuation to influence pacing, or using a voice in the correct language.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Which browsers are supported?</summary>
-      <p>The Text to Speech tool works on every modern browser: Google Chrome 90+, Microsoft Edge 90+, Mozilla Firefox 88+, Safari 14+, Brave, Opera, and all Chromium browsers. Chrome and Edge on Windows offer the widest voice selection and smoothest playback. Safari on macOS and iOS provides Apple's high-quality voices. Firefox supports the SpeechSynthesis API but its voice list may be smaller. Mobile browsers work well too — Chrome on Android and Safari on iOS both handle TTS reliably. If you see "Speech not supported" on the Speak button, your browser is outdated or TTS is disabled — please update your browser to the latest version.</p>
+      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Chrome and Edge on Windows offer the widest voice selection.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Do you keep logs of my text or voice?</summary>
-      <p>No. We don't log what you type, which voice you choose, how long you speak, or any metadata about your usage. We don't track sessions or store text. Our analytics only records anonymous page views — never content. Since your text never leaves your browser, there's nothing for us to log even if we wanted to. You can verify this yourself: open Developer Tools (F12), go to the Network tab, type your text, click Speak, and watch — you'll see zero outgoing requests to any DocEasy server. This is the strongest possible privacy guarantee for a text-to-speech tool.</p>
+      <p>No. We don't log what you type, which voice you choose, how long you speak, or any metadata. Our analytics only records anonymous page views. Since your text never leaves your browser, there's nothing to log.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>Can I use it to learn a new language?</summary>
-      <p>Absolutely — Text to Speech is an excellent language-learning tool. Here's how to use it effectively: (1) Type a sentence in your target language (Spanish, French, German, Hindi, Japanese, etc.); (2) Select a native speaker voice for that language from the dropdown; (3) Slow the speed to 0.6×–0.8× to hear each word clearly; (4) Listen repeatedly, then try to repeat aloud yourself; (5) Gradually increase speed to 1.0× as you improve. This method works better than flashcards because you hear natural pronunciation and intonation. Pair it with DocEasy's Voice Recorder to record yourself mimicking the TTS voice, then compare — a fast way to improve accent.</p>
+      <p>Absolutely — Text to Speech is excellent for language learning. Type a sentence in your target language, select a native-speaker voice, slow the speed to 0.6×–0.8×, listen repeatedly, then mimic. Pair with the Voice Recorder to compare your pronunciation.</p>
     </details>
 
-    <details class="faq-item">
+    <details>
       <summary>What are the best uses for Text to Speech?</summary>
-      <p>Text to Speech has dozens of practical uses: listening to articles, blog posts, and PDFs while commuting or exercising; converting study notes to audio for revision; checking your own writing by hearing it aloud (catches grammar mistakes); making content accessible for visually impaired users or people with dyslexia; preparing voiceovers for videos and presentations; creating audio versions of documents for elderly relatives; and improving pronunciation in a foreign language. Many students use it to review notes on the go, writers use it to proofread by ear, and professionals use it to catch up on reports during drives. Whatever your use case, DocEasy's tool makes it fast, free, and private.</p>
+      <p>Listening to articles while commuting, converting study notes to audio, checking your own writing by ear, making content accessible for visually impaired users, preparing voiceovers, and improving foreign-language pronunciation.</p>
     </details>
+
+    <details>
+      <summary>Can I use it on mobile phones?</summary>
+      <p>Yes — works on Android (Chrome, Firefox, Samsung Internet) and iOS (Safari 14+). Mobile voice selection is usually smaller than desktop, but Android users can install more voices via Google TTS settings.</p>
+    </details>
+
+    <details>
+      <summary>Why does Safari sound different from Chrome?</summary>
+      <p>Safari uses Apple's voice engine (macOS/iOS voices like Samantha, Alex), while Chrome on Windows uses Microsoft SAPI voices. Each OS has its own voice set, so the same text sounds different across platforms. This is expected behavior.</p>
+    </details>
+
+    <details>
+      <summary>Can I export the audio to use in a video?</summary>
+      <p>Not directly from the browser, but you can record the output: (1) Use the Screen Recorder with "System audio" or "tab audio" enabled; (2) Extract the audio using the Universal Media Editor; (3) Use the resulting MP3 in your video project.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <ul>
+      <li><a href="media-voice-recorder.html">Voice Recorder</a> — Record your own voice</li>
+      <li><a href="media-editor.html">Universal Media Editor</a> — Trim, convert, compress audio/video</li>
+      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Capture TTS output as audio/video</li>
+      <li><a href="media-mic-test.html">Mic Test</a> — Verify microphone before recording</li>
+      <li><a href="media-teleprompter.html">Teleprompter</a> — Read scripts while recording</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>DocEasy's Text to Speech tool gives you fast, private, and free access to browser-based voice synthesis. Whether you're learning a language, listening to articles, proofreading your writing, or making content accessible, this tool converts text to natural speech in seconds — without any installation, signup, or upload.</p>
+
+    <p>Try it above. Paste your text, choose a voice, click Speak, and listen. All in your browser, all completely private.</p>
+
   </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
 </main>
+
 <div id="doceasy-footer"></div>
+
 <script src="../assets/js/core/doceasy-core.js"></script>
+
 <script>
 (function () {
   var text = document.getElementById('text');
@@ -262,7 +622,7 @@ textarea:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,.12
       speakBtn.disabled = false;
       stopBtn.disabled = true;
       pauseBtn.disabled = true;
-      pauseBtn.textContent = 'Pause';
+      pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>Pause';
     };
     speechSynthesis.speak(u);
     speakBtn.disabled = true;
@@ -275,16 +635,16 @@ textarea:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,.12
     speakBtn.disabled = false;
     stopBtn.disabled = true;
     pauseBtn.disabled = true;
-    pauseBtn.textContent = 'Pause';
+    pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>Pause';
   });
 
   pauseBtn.addEventListener('click', function () {
     if (speechSynthesis.paused) {
       speechSynthesis.resume();
-      pauseBtn.textContent = 'Pause';
+      pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>Pause';
     } else {
       speechSynthesis.pause();
-      pauseBtn.textContent = 'Resume';
+      pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m5 3 14 9-14 9V3z"/></svg>Resume';
     }
   });
 
@@ -292,6 +652,9 @@ textarea:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,.12
     text.value = '';
     charCount.textContent = '0';
     speechSynthesis.cancel();
+    speakBtn.disabled = false;
+    stopBtn.disabled = true;
+    pauseBtn.disabled = true;
   });
 })();
 </script>
