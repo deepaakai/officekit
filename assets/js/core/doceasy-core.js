@@ -262,3 +262,49 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
   else inject();
 })();
+
+/* ==========================================================================
+   AUTO-HIDE HEADER ON SCROLL
+   - Scroll down → header slides up (hidden)
+   - Scroll up → header slides back down (visible)
+   - At top → always visible
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+  var ticking = false;
+  var HIDE_THRESHOLD = 80;   /* Don't hide until scrolled past 80px */
+  var DELTA = 8;             /* Minimum scroll change to trigger */
+
+  function updateHeader() {
+    var currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var header = document.querySelector('.site-header');
+
+    if (!header) { ticking = false; return; }
+
+    /* Scroll DOWN → hide header (past threshold) */
+    if (currentScrollY > lastScrollY + DELTA && currentScrollY > HIDE_THRESHOLD) {
+      header.classList.add('header-hidden');
+    }
+    /* Scroll UP → show header */
+    else if (currentScrollY < lastScrollY - DELTA) {
+      header.classList.remove('header-hidden');
+    }
+
+    /* At very top → always show */
+    if (currentScrollY <= 10) {
+      header.classList.remove('header-hidden');
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+})();
