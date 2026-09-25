@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>All Tools — 25+ Free Document & Image Tools | DocEasy</title>
+<meta name="description" content="Browse 25+ free browser-based tools for PDFs, images, ID cards, and documents. 100% private, no signup.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/all-tools.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<style>
+.ad-slot-container { display: none !important; }
+
+/* ============ LAYOUT ============ */
+.tools-layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+}
+
+/* ============ SIDEBAR ============ */
+.tools-sidebar {
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 12px;
+  scrollbar-width: thin;
+}
+.tools-sidebar::-webkit-scrollbar { width: 6px; }
+.tools-sidebar::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+.sidebar-section {
+  margin-bottom: 14px;
+}
+.sidebar-section:last-child { margin-bottom: 0; }
+
+.sidebar-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s;
+  user-select: none;
+}
+.sidebar-head:hover { background: var(--card-hover); }
+.sidebar-head svg {
+  width: 16px; height: 16px;
+  stroke: var(--accent); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.sidebar-head-text {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--subtext-color);
+  flex: 1;
+}
+.sidebar-head-chevron {
+  width: 12px; height: 12px;
+  stroke: var(--subtext-color) !important;
+  transition: transform 0.2s;
+}
+.sidebar-section.collapsed .sidebar-head-chevron { transform: rotate(-90deg); }
+.sidebar-section.collapsed .sidebar-links { display: none; }
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px 0 0;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 8px 26px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s;
+  position: relative;
+}
+.sidebar-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.sidebar-link.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+.sidebar-link.active::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ============ MAIN ============ */
+.tools-main { min-width: 0; }
+
+/* Hero */
+.tools-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #19398a 0%, #2563eb 55%, #0ea5e9 100%);
+  border-radius: 18px;
+  padding: 32px 28px;
+  color: #fff;
+  margin-bottom: 22px;
+  box-shadow: 0 12px 32px rgba(25,57,138,0.22);
+}
+.tools-hero::before {
+  content: "";
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+  filter: blur(20px);
+}
+.tools-hero::after {
+  content: "";
+  position: absolute;
+  bottom: -60px; left: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  filter: blur(20px);
+}
+.tools-hero-inner { position: relative; z-index: 1; }
+.tools-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
+}
+.tools-hero h1 {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+.tools-hero p {
+  font-size: 14.5px;
+  color: rgba(255,255,255,0.88);
+  margin: 0 0 20px;
+  line-height: 1.55;
+  max-width: 620px;
+}
+
+.tools-search {
+  position: relative;
+  max-width: 520px;
+}
+.tools-search input {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  background: rgba(255,255,255,0.95);
+  border: none;
+  border-radius: 12px;
+  font-size: 14.5px;
+  color: #1a1a1a;
+  font-family: inherit;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.tools-search input::placeholder { color: #6b7280; }
+.tools-search input:focus {
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.35);
+}
+.tools-search svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  stroke: #6b7280; fill: none;
+  stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Category blocks */
+.cat-block { margin-bottom: 32px; }
+.cat-block-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-block-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.cat-block-icon svg {
+  width: 18px; height: 18px;
+  stroke: #fff; fill: none;
+  stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+}
+.cat-block-icon.pdf    { background: linear-gradient(135deg,#ef4444,#b91c1c); }
+.cat-block-icon.image  { background: linear-gradient(135deg,#0ea5e9,#0369a1); }
+.cat-block-icon.id     { background: linear-gradient(135deg,#16a34a,#065f46); }
+.cat-block-icon.conv   { background: linear-gradient(135deg,#7c3aed,#4c1d95); }
+.cat-block-icon.doc    { background: linear-gradient(135deg,#2563eb,#1e40af); }
+.cat-block-icon.util   { background: linear-gradient(135deg,#f59e0b,#b45309); }
+
+.cat-block-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 0;
+  flex: 1;
+  letter-spacing: -0.3px;
+}
+.cat-block-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--subtext-color);
+  background: var(--card-hover);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* Tool grid */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+.tool-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(25,57,138,0.12);
+}
+.tool-card-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.tool-card:hover .tool-card-icon { transform: scale(1.08) rotate(-3deg); }
+.tool-card-icon svg {
+  width: 20px; height: 20px;
+  stroke: var(--accent); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.tool-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+  line-height: 1.35;
+}
+.tool-card-desc {
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin: 0;
+  line-height: 1.45;
+  flex: 1;
+}
+.tool-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  transition: gap 0.15s;
+}
+.tool-card:hover .tool-card-cta { gap: 8px; }
+.tool-card-cta svg {
+  width: 12px; height: 12px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Empty state */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--subtext-color);
+  font-size: 14.5px;
+  display: none;
+}
+.no-results.show { display: block; }
+.no-results b { color: var(--text-color); }
+
+/* ============ MOBILE ============ */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 24px rgba(25,57,138,0.35);
+  cursor: pointer;
+  place-items: center;
+}
+.mobile-menu-btn svg {
+  width: 24px; height: 24px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.4; stroke-linecap: round;
+}
+
+@media (max-width: 899px) {
+  .tools-layout { grid-template-columns: 1fr; padding: 12px; gap: 16px; }
+  .tools-sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 280px;
+    max-height: 100vh;
+    border-radius: 0;
+    border-right: 1px solid var(--border-color);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  }
+  .tools-sidebar.open { transform: translateX(0); }
+  .mobile-menu-btn { display: grid; }
+  .tools-hero { padding: 24px 20px; }
+  .tools-hero h1 { font-size: 22px; }
+  .tool-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tool-card { padding: 12px; }
+  .tool-card-title { font-size: 13px; }
+  .tool-card-desc { font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+  .tool-grid { grid-template-columns: 1fr; }
+}
+
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+.backdrop.show { display: block; }
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<div class="tools-layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="tools-sidebar" id="toolsSidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-head">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="sidebar-head-text">PDF Tools</span>
+        <svg class="sidebar-head-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="pdf-merge.html">Merge PDF</a>
+        <a class="sidebar-link" href="pdf-compressor.html">Compress PDF</a>
+        <a class="sidebar-link" href="pdf-to-word.html">PDF to Word</a>
+        <a class="sidebar-link" href="word-to-pdf.html">Word to PDF</a>
+        <a class="sidebar-link" href="pdf-split.html">Split PDF</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        <span class="sidebar-head-text">Image Tools</span>
+        <svg class="sidebar-head-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="image-compressor.html">Image Compressor</a>
+        <a class="sidebar-link" href="image-converter.html">Image Converter</a>
+        <a class="sidebar-link" href="image-bg-remover.html">BG Remover</a>
+        <a class="sidebar-link" href="image-beautifier.html">Image Beautifier</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg>
+        <span class="sidebar-head-text">ID &amp; Signature</span>
+        <svg class="sidebar-head-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="card-cropper.html">ID Card Cropper</a>
+        <a class="sidebar-link" href="passport-maker.html">Passport Photo</a>
+        <a class="sidebar-link" href="signature-resize.html">Signature Resize</a>
+        <a class="sidebar-link" href="signature-bg-remover.html">Signature BG</a>
+        <a class="sidebar-link" href="pan-photo-signature-resizer.html">PAN Photo</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">
+        <svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+        <span class="sidebar-head-text">Converters</span>
+        <svg class="sidebar-head-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="image-converter.html">Universal Converter</a>
+        <a class="sidebar-link" href="pdf-to-excel.html">PDF to Excel</a>
+        <a class="sidebar-link" href="excel-to-pdf.html">Excel to PDF</a>
+        <a class="sidebar-link" href="ppt-to-pdf.html">PPT to PDF</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+        <span class="sidebar-head-text">Document Tools</span>
+        <svg class="sidebar-head-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="word-writer.html">Word Writer</a>
+        <a class="sidebar-link" href="word-counter.html">Word Counter</a>
+        <a class="sidebar-link" href="invoice-generator.html">Invoice Generator</a>
+        <a class="sidebar-link" href="doc-scanner.html">Document Scanner</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>
+        <span class="sidebar-head-text">Utilities</span>
+        <svg class="sidebar-head-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="qr-generator.html">QR Generator</a>
+        <a class="sidebar-link" href="qr-scanner.html">QR Scanner</a>
+      </div>
+    </div>
+  </aside>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="tools-main">
+
+    <div class="tools-hero">
+      <div class="tools-hero-inner">
+        <div class="tools-hero-badge">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fbbf24;fill:none;stroke-width:2.4"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+          25+ Free Tools · 100% Private
+        </div>
+        <h1>All Tools — Everything in One Place</h1>
+        <p>Browse every DocEasy tool. PDFs, images, ID cards, converters — all run 100% locally in your browser. No signup. No upload. No waiting.</p>
+
+        <div class="tools-search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></svg>
+          <input type="text" id="toolSearch" placeholder="Search tools (e.g. merge, crop, compress)…" autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CATEGORIES ============ -->
+    <section class="cat-block" data-cat="pdf">
+      <div class="cat-block-head">
+        <div class="cat-block-icon pdf">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h2 class="cat-block-title">PDF Tools</h2>
+        <span class="cat-block-count">5 tools</span>
+      </div>
+      <div class="tool-grid">
+        <a class="tool-card" href="pdf-merge.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg></div>
+          <h3 class="tool-card-title">Merge PDF</h3>
+          <p class="tool-card-desc">Combine multiple PDFs into one file.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="pdf-compressor.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="m14 10 7-7"/><path d="M20 10h-6V4"/><path d="m3 21 7-7"/><path d="M4 14h6v6"/></svg></div>
+          <h3 class="tool-card-title">Compress PDF</h3>
+          <p class="tool-card-desc">Reduce PDF file size by up to 80%.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="pdf-to-word.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h3 class="tool-card-title">PDF to Word</h3>
+          <p class="tool-card-desc">Convert PDF to editable .docx.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="word-to-pdf.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h3 class="tool-card-title">Word to PDF</h3>
+          <p class="tool-card-desc">Turn .docx into PDF.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="pdf-split.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"/><path d="m15 9 6-6"/></svg></div>
+          <h3 class="tool-card-title">Split PDF</h3>
+          <p class="tool-card-desc">Extract pages from any PDF.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="cat-block" data-cat="image">
+      <div class="cat-block-head">
+        <div class="cat-block-icon image">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        </div>
+        <h2 class="cat-block-title">Image Tools</h2>
+        <span class="cat-block-count">4 tools</span>
+      </div>
+      <div class="tool-grid">
+        <a class="tool-card" href="image-compressor.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="m14 10 7-7"/><path d="M20 10h-6V4"/><path d="m3 21 7-7"/><path d="M4 14h6v6"/></svg></div>
+          <h3 class="tool-card-title">Image Compressor</h3>
+          <p class="tool-card-desc">Reduce image size without losing quality.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="image-converter.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></div>
+          <h3 class="tool-card-title">Image Converter</h3>
+          <p class="tool-card-desc">JPG, PNG, WEBP conversion.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="image-bg-remover.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div>
+          <h3 class="tool-card-title">Background Remover</h3>
+          <p class="tool-card-desc">AI-powered background removal.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="image-beautifier.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="m12 3-1.9 5.8L4 10.5l5 3.8L8.5 20 12 17l3.5 3 .5-5.7 5-3.8-6.1-1.7z"/></svg></div>
+          <h3 class="tool-card-title">Image Beautifier</h3>
+          <p class="tool-card-desc">Enhance, sharpen, and improve images.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="cat-block" data-cat="id">
+      <div class="cat-block-head">
+        <div class="cat-block-icon id">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg>
+        </div>
+        <h2 class="cat-block-title">ID &amp; Signature Tools</h2>
+        <span class="cat-block-count">5 tools</span>
+      </div>
+      <div class="tool-grid">
+        <a class="tool-card" href="card-cropper.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5"/></svg></div>
+          <h3 class="tool-card-title">ID Card Cropper</h3>
+          <p class="tool-card-desc">Crop Aadhaar, PAN, Voter ID at 300 DPI.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="passport-maker.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="9" r="3"/><path d="M8 17h8"/></svg></div>
+          <h3 class="tool-card-title">Passport Photo Maker</h3>
+          <p class="tool-card-desc">35×45 mm sheet with 8-36 photos.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="signature-resize.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></div>
+          <h3 class="tool-card-title">Signature Resize</h3>
+          <p class="tool-card-desc">Exact pixel or KB signature resize.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="signature-bg-remover.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div>
+          <h3 class="tool-card-title">Signature BG Remover</h3>
+          <p class="tool-card-desc">Clean white transparent background.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="pan-photo-signature-resizer.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5"/></svg></div>
+          <h3 class="tool-card-title">PAN Photo &amp; Signature</h3>
+          <p class="tool-card-desc">213×213 and 400×200 for UTI/NSDL.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="cat-block" data-cat="conv">
+      <div class="cat-block-head">
+        <div class="cat-block-icon conv">
+          <svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+        <h2 class="cat-block-title">Converters</h2>
+        <span class="cat-block-count">4 tools</span>
+      </div>
+      <div class="tool-grid">
+        <a class="tool-card" href="image-converter.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/></svg></div>
+          <h3 class="tool-card-title">Universal Converter</h3>
+          <p class="tool-card-desc">Any format to any format.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="pdf-to-excel.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h3 class="tool-card-title">PDF to Excel</h3>
+          <p class="tool-card-desc">Extract tables to XLSX.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="excel-to-pdf.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h3 class="tool-card-title">Excel to PDF</h3>
+          <p class="tool-card-desc">Spreadsheet to PDF.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="ppt-to-pdf.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+          <h3 class="tool-card-title">PPT to PDF</h3>
+          <p class="tool-card-desc">Slides to PDF.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="cat-block" data-cat="doc">
+      <div class="cat-block-head">
+        <div class="cat-block-icon doc">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+        </div>
+        <h2 class="cat-block-title">Document Tools</h2>
+        <span class="cat-block-count">4 tools</span>
+      </div>
+      <div class="tool-grid">
+        <a class="tool-card" href="word-writer.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/></svg></div>
+          <h3 class="tool-card-title">Word Writer</h3>
+          <p class="tool-card-desc">Hindi, English, Hinglish typing.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="word-counter.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div>
+          <h3 class="tool-card-title">Word Counter</h3>
+          <p class="tool-card-desc">Words, chars, reading time.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="invoice-generator.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/></svg></div>
+          <h3 class="tool-card-title">Invoice Generator</h3>
+          <p class="tool-card-desc">Professional GST invoices.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="doc-scanner.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8"/></svg></div>
+          <h3 class="tool-card-title">Document Scanner</h3>
+          <p class="tool-card-desc">Image to PDF with OCR.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="cat-block" data-cat="util">
+      <div class="cat-block-head">
+        <div class="cat-block-icon util">
+          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>
+        </div>
+        <h2 class="cat-block-title">Utilities</h2>
+        <span class="cat-block-count">2 tools</span>
+      </div>
+      <div class="tool-grid">
+        <a class="tool-card" href="qr-generator.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M19 19h2v2M14 19h2v2"/></svg></div>
+          <h3 class="tool-card-title">QR Generator</h3>
+          <p class="tool-card-desc">Custom QR codes with logos.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+        <a class="tool-card" href="qr-scanner.html">
+          <div class="tool-card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg></div>
+          <h3 class="tool-card-title">QR Scanner</h3>
+          <p class="tool-card-desc">Scan any QR code.</p>
+          <span class="tool-card-cta">Open <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <div class="no-results" id="noResults">
+      कोई tool नहीं मिला — <b>try another word</b>
+    </div>
+
+  </main>
+</div>
+
+<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle tools menu">
+  <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<div id="doceasy-footer"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Collapsible sidebar sections ---------- */
+  document.querySelectorAll('.sidebar-head').forEach(function (head) {
+    head.addEventListener('click', function () {
+      head.parentElement.classList.toggle('collapsed');
+    });
+  });
+
+  /* ---------- Mark active link ---------- */
+  var currentPage = location.pathname.split('/').pop();
+  document.querySelectorAll('.sidebar-link').forEach(function (a) {
+    if (a.getAttribute('href') === currentPage) a.classList.add('active');
+  });
+
+  /* ---------- Mobile sidebar toggle ---------- */
+  var sidebar = document.getElementById('toolsSidebar');
+  var backdrop = document.getElementById('backdrop');
+  var menuBtn = document.getElementById('mobileMenuBtn');
+
+  function toggleSidebar() {
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('show');
+    document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+  }
+  if (menuBtn) menuBtn.addEventListener('click', toggleSidebar);
+  if (backdrop) backdrop.addEventListener('click', toggleSidebar);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) toggleSidebar();
+  });
+  document.querySelectorAll('.sidebar-link').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (window.innerWidth <= 899 && sidebar.classList.contains('open')) toggleSidebar();
+    });
+  });
+
+  /* ---------- Live search filter ---------- */
+  var search = document.getElementById('toolSearch');
+  var noResults = document.getElementById('noResults');
+
+  search.addEventListener('input', function () {
+    var q = this.value.trim().toLowerCase();
+    var visible = 0;
+
+    document.querySelectorAll('.cat-block').forEach(function (block) {
+      var anyVisible = false;
+      block.querySelectorAll('.tool-card').forEach(function (card) {
+        var title = card.querySelector('.tool-card-title').textContent.toLowerCase();
+        var desc = card.querySelector('.tool-card-desc').textContent.toLowerCase();
+        var match = !q || title.indexOf(q) !== -1 || desc.indexOf(q) !== -1;
+        card.style.display = match ? '' : 'none';
+        if (match) anyVisible = true;
+      });
+      block.style.display = anyVisible ? '' : 'none';
+      if (anyVisible) visible++;
+    });
+
+    noResults.classList.toggle('show', visible === 0);
+  });
+
+})();
+</script>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+</body>
+</html>
