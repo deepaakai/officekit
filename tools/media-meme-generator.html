@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teleprompter — Free Online Script Reader | DocEasy</title>
+<meta name="description" content="Free browser teleprompter with adjustable speed, font size, and mirror mode. Perfect for videos, presentations, and interviews. No signup, 100% private.">
+<meta name="keywords" content="teleprompter, online teleprompter, free teleprompter, script reader, autocue, video script tool">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-teleprompter.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teleprompter — Free Online Script Reader | DocEasy">
+<meta property="og:description" content="Free browser teleprompter with speed, font size, and mirror mode.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-teleprompter.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+* { box-sizing: border-box; }
+html[data-theme="light"] { --bg:#f8fafc; --card:#fff; --text:#0f172a; --sub:#64748b; --border:#e2e8f0; --hover:#f1f5f9; }
+html[data-theme="dark"] { --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --sub:#94a3b8; --border:#334155; --hover:#293548; }
+body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; transition:background .2s,color .2s; }
+.main-wrap { max-width:900px; margin:0 auto; padding:34px 18px 60px; }
+.de-header { position:sticky; top:0; z-index:50; background:var(--card); border-bottom:1px solid var(--border); }
+.de-header-inner { max-width:1240px; margin:0 auto; padding:12px 18px; display:flex; align-items:center; gap:20px; }
+.de-logo { display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-size:19px; font-weight:800; color:var(--text); flex-shrink:0; }
+.de-logo em { font-style:normal; color:#db2777; }
+.de-nav { display:flex; gap:4px; flex:1; justify-content:center; }
+.de-nav a { padding:8px 14px; border-radius:9px; font-size:13.5px; font-weight:700; color:var(--sub); text-decoration:none; transition:all .18s; }
+.de-nav a:hover { color:var(--text); background:var(--hover); }
+.de-nav a.active { color:#db2777; background:#fce7f3; }
+.de-header-actions { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.de-btn-primary { padding:9px 18px; border-radius:10px; background:#19398a; color:#fff; text-decoration:none; font-size:13px; font-weight:800; }
+.de-theme-btn, .de-menu-btn { background:var(--hover); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:9px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+.de-theme-btn svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2.2; }
+html[data-theme="light"] .de-theme-btn .moon { display:none; }
+html[data-theme="dark"] .de-theme-btn .sun { display:none; }
+.de-menu-btn { display:none; }
+.de-menu-btn svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2.4; }
+@media (max-width:860px) { .de-nav{display:none;} .de-menu-btn{display:inline-flex;} .de-header.open .de-nav{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--card);padding:12px 18px 16px;border-bottom:1px solid var(--border);box-shadow:0 12px 24px rgba(0,0,0,.08);} .de-header.open .de-nav a{padding:12px 16px;} }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--sub); text-decoration:none; font-size:13px; font-weight:700; margin-bottom:18px; }
+.back-link:hover { color:#db2777; }
+.back-link svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2.4; }
+.tool-head { text-align:center; margin-bottom:26px; }
+.tool-head .badge { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:999px; background:#fce7f3; color:#db2777; font-size:11px; font-weight:800; letter-spacing:.5px; margin-bottom:12px; }
+.tool-head h1 { font-size:clamp(26px,4.6vw,38px); font-weight:800; margin:0 0 10px; letter-spacing:-1px; color:var(--text); }
+.tool-head p { color:var(--sub); font-size:15px; margin:0; line-height:1.55; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px; box-shadow:0 8px 26px rgba(0,0,0,.06); }
+textarea { width:100%; min-height:140px; padding:14px 16px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:15px; font-family:inherit; resize:vertical; outline:none; line-height:1.55; transition:all .18s; }
+textarea:focus { border-color:#db2777; box-shadow:0 0 0 3px rgba(219,39,119,.12); }
+.controls-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:18px 0; }
+.field label { display:block; font-size:11.5px; font-weight:800; color:var(--sub); text-transform:uppercase; letter-spacing:.4px; margin-bottom:6px; }
+.field input[type="range"] { width:100%; height:6px; accent-color:#db2777; }
+.field select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:13.5px; font-family:inherit; outline:none; }
+.field .range-val { font-size:11.5px; color:var(--sub); font-weight:700; margin-top:3px; display:inline-block; }
+.actions-row { display:flex; gap:10px; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:7px; padding:12px 22px; border-radius:11px; border:none; font-size:13.5px; font-weight:800; cursor:pointer; transition:all .18s; font-family:inherit; text-decoration:none; }
+.btn svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2.4; }
+.btn.primary { background:#db2777; color:#fff; box-shadow:0 8px 22px rgba(219,39,119,.28); }
+.btn.primary:hover { filter:brightness(1.08); transform:translateY(-2px); }
+.btn.ghost { background:var(--hover); color:var(--text); border:1px solid var(--border); }
+.btn.ghost:hover { border-color:#db2777; color:#db2777; }
+.btn:disabled { opacity:.45; cursor:not-allowed; }
+.note { margin-top:18px; font-size:12.5px; color:var(--sub); text-align:center; line-height:1.6; }
+/* Prompter overlay */
+.prompter-overlay { display:none; position:fixed; inset:0; z-index:9999; background:#000; color:#fff; }
+.prompter-overlay.show { display:block; }
+.prompter-content { padding:50vh 8% 60vh; font-size:64px; line-height:1.5; text-align:center; font-weight:700; transition:transform .05s linear; }
+.prompter-overlay.mirrored .prompter-content { transform:scaleX(-1); }
+.prompter-header { position:fixed; top:0; left:0; right:0; padding:12px 18px; background:rgba(0,0,0,.85); display:flex; align-items:center; gap:12px; justify-content:space-between; z-index:2; }
+.prompter-header .title { color:#fff; font-size:13px; font-weight:800; opacity:.75; }
+.prompter-header .btns { display:flex; gap:8px; }
+.prompter-header button { padding:8px 14px; border-radius:8px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.1); color:#fff; font-size:12.5px; font-weight:700; cursor:pointer; font-family:inherit; }
+.prompter-header button:hover { background:rgba(255,255,255,.2); }
+.prompter-header button.stop { background:#dc2626; border-color:#dc2626; }
+.how-to-use, .deep-faq { max-width:900px; margin:68px auto 0; }
+.how-to-use h2, .deep-faq h2 { font-size:clamp(22px,3.8vw,30px); font-weight:800; text-align:center; margin:0 0 10px; letter-spacing:-0.6px; }
+.how-to-use .lead, .deep-faq .faq-lead { text-align:center; color:var(--sub); font-size:14px; margin:0 auto 30px; max-width:580px; line-height:1.6; }
+.steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+.step { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px 18px; position:relative; }
+.step-num { position:absolute; top:14px; right:16px; font-size:32px; font-weight:900; color:#db2777; opacity:.15; line-height:1; letter-spacing:-2px; }
+.step img { width:42px; height:42px; margin-bottom:12px; }
+.step h3 { font-size:14.5px; font-weight:800; margin:0 0 6px; }
+.step p { font-size:12.5px; color:var(--sub); margin:0; line-height:1.6; }
+.deep-faq .faq-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:15px 20px; margin-bottom:10px; transition:all .2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color:#db2777; }
+.deep-faq summary { cursor:pointer; font-weight:700; color:var(--text); font-size:14px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; line-height:1.45; }
+.deep-faq summary::-webkit-details-marker { display:none; }
+.deep-faq summary::after { content:"+"; font-size:21px; color:#db2777; font-weight:300; flex-shrink:0; }
+.deep-faq .faq-item[open] summary::after { content:"−"; }
+.deep-faq .faq-item p { margin:12px 0 0; font-size:13.5px; color:var(--sub); line-height:1.72; }
+.deep-faq code { background:var(--hover); padding:1px 6px; border-radius:4px; font-size:12.5px; font-family:monospace; color:#db2777; font-weight:600; }
+.de-footer { background:#0f172a; color:#cbd5e1; margin-top:80px; }
+.de-footer-inner { max-width:1240px; margin:0 auto; padding:50px 18px 30px; display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:30px; }
+.de-footer-brand .de-logo { color:#fff; margin-bottom:14px; font-size:20px; }
+.de-footer-brand p { font-size:13px; line-height:1.65; color:#94a3b8; margin:0; max-width:340px; }
+.de-footer-col h4 { font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; color:#fff; margin:0 0 14px; }
+.de-footer-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px; }
+.de-footer-col ul a { font-size:13px; color:#94a3b8; text-decoration:none; transition:color .18s; }
+.de-footer-col ul a:hover { color:#db2777; }
+.de-footer-bottom { border-top:1px solid #1e293b; max-width:1240px; margin:0 auto; padding:22px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:12px; color:#94a3b8; }
+.de-footer-links { display:flex; gap:20px; }
+.de-footer-links a { color:#94a3b8; text-decoration:none; font-size:12px; }
+.de-footer-links a:hover { color:#db2777; }
+@media (max-width:780px) { .de-footer-inner{grid-template-columns:1fr 1fr;gap:26px;} .de-footer-brand{grid-column:1/-1;} .prompter-content{font-size:42px;} }
+@media (max-width:480px) { .de-footer-inner{grid-template-columns:1fr;} .de-footer-bottom{flex-direction:column;text-align:center;} .card{padding:16px;} .prompter-content{font-size:32px;} }
+</style>
+</head>
+<body>
+
+<header class="de-header" id="deHeader">
+  <div class="de-header-inner">
+    <a class="de-logo" href="../index.html">
+      <img src="../assets/images/logo.svg" alt="DocEasy" width="36" height="36" onerror="this.style.display='none'">
+      <span>Doc<em>Easy</em></span>
+    </a>
+    <nav class="de-nav">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#pdf-tools">PDF Tools</a>
+      <a href="../index.html#image-tools">Image Tools</a>
+      <a href="../media-tools.html" class="active">Media Tools</a>
+      <a href="../index.html#id-tools">ID &amp; Signature</a>
+      <a href="../index.html#utility-tools">Utilities</a>
+    </nav>
+    <div class="de-header-actions">
+      <a class="de-btn-primary" href="../media-tools.html">All Tools</a>
+      <button class="de-theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="de-menu-btn" aria-label="Menu" onclick="document.getElementById('deHeader').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="main-wrap">
+  <a class="back-link" href="../media-tools.html">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+    Back to Media Tools
+  </a>
+
+  <div class="tool-head">
+    <div class="badge">📜 DEVICE TEST</div>
+    <h1>Teleprompter</h1>
+    <p>Read your script while recording — adjustable speed, font size, and mirror mode for professional videos.</p>
+  </div>
+
+  <div class="card">
+    <textarea id="script" placeholder="Paste or type your script here…&#10;&#10;Example:&#10;Hello everyone, welcome back to my channel.&#10;Today we're going to talk about something really interesting.&#10;Let's dive right in…"></textarea>
+
+    <div class="controls-grid">
+      <div class="field">
+        <label>Scroll speed <span class="range-val" id="speedVal">3</span></label>
+        <input type="range" id="speed" min="1" max="10" value="3">
+      </div>
+      <div class="field">
+        <label>Font size <span class="range-val" id="fontSizeVal">64px</span></label>
+        <input type="range" id="fontSize" min="30" max="120" value="64">
+      </div>
+      <div class="field">
+        <label>Font family</label>
+        <select id="fontFamily">
+          <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" selected>Sans-serif (clean)</option>
+          <option value="Georgia, serif">Georgia (serif)</option>
+          <option value="'Courier New', monospace">Courier New (mono)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Mirror mode</label>
+        <select id="mirror">
+          <option value="no" selected>No (normal)</option>
+          <option value="yes">Yes (for teleprompter glass)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button class="btn primary" id="startBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m5 3 14 9-14 9V3z"/></svg>
+        Start Prompter
+      </button>
+      <button class="btn ghost" id="clearBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        Clear
+      </button>
+    </div>
+
+    <p class="note">🔒 Your script stays on your device. Nothing is uploaded, saved, or tracked.</p>
+  </div>
+
+  <section class="how-to-use">
+    <h2>How to Use Teleprompter</h2>
+    <p class="lead">Four simple steps to read your script smoothly on camera — no app install needed.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <img src="../assets/images/icons/step-1.svg" alt="Step 1">
+        <h3>Paste Your Script</h3>
+        <p>Type or paste your text into the box. Use blank lines for pauses between paragraphs.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <img src="../assets/images/icons/step-2.svg" alt="Step 2">
+        <h3>Adjust Settings</h3>
+        <p>Set the scroll speed, font size, and enable mirror mode if using a physical teleprompter rig.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <img src="../assets/images/icons/step-3.svg" alt="Step 3">
+        <h3>Start Prompter</h3>
+        <p>Click "Start Prompter" to enter fullscreen black mode. Text scrolls automatically from bottom to top.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <img src="../assets/images/icons/step-4.svg" alt="Step 4">
+        <h3>Read &amp; Record</h3>
+        <p>Read naturally while looking at the camera. Press ESC or click Stop to exit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="deep-faq" id="faq">
+    <h2>Teleprompter — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about using a teleprompter online — speed, mirror mode, screen setup, and privacy.</p>
+
+    <details class="faq-item" open>
+      <summary>How do I use this online teleprompter?</summary>
+      <p>Using the teleprompter takes four simple steps. First, paste your script into the text box — you can type directly or paste from any document. Second, adjust the scroll speed (1–10), font size (30–120px), and font family using the controls. If you're using a physical teleprompter rig with a beam-splitter glass, set "Mirror mode" to "Yes" so the text reflects correctly. Third, click the pink "Start Prompter" button — the screen goes fullscreen black with large white text. The script begins scrolling automatically from bottom to top. Fourth, read naturally while looking at your camera. The text scrolls at a comfortable pace matching your speech. Click "Stop" in the top-right corner or press ESC to exit. Everything runs in your browser — no app, no account, no watermark.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is this teleprompter really free?</summary>
+      <p>Yes — 100% free, forever, with no strings attached. There's no signup, no email, no watermark, no time limit, no character limit, and no premium tier. You can use it for as many recordings as you want, for as long as you want, without paying anything. The tool is supported by lightweight display ads on other pages of the site. We don't collect your script, we don't track what you read, and we don't ask for your email to unlock features. Most "free" teleprompter apps either watermark output (impossible here since we don't record) or limit sessions to 5 minutes — DocEasy has no such limits. Use it for entire film shoots, podcast recordings, or YouTube marathons.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my script uploaded or stored anywhere?</summary>
+      <p>No — your script stays entirely on your device. The teleprompter runs 100% in your browser with no server communication. When you paste or type text, it lives in your browser's memory only. When you close the tab or refresh the page, the text is discarded. Nothing is stored in localStorage, cookies, or any backend database. You can verify this by opening Developer Tools (F12), going to the Network tab, entering text, and starting the prompter — you'll see zero outgoing requests carrying your script. This makes DocEasy safe for reading scripts containing sensitive info: NDA-bound content, proprietary business plans, medical scripts, legal documents, or unreleased product announcements.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What is mirror mode and when should I use it?</summary>
+      <p>Mirror mode flips the text horizontally (left-to-right reversal). You should use it when reading through a beam-splitter glass — the semi-transparent mirror used in professional teleprompter rigs. The glass reflects the screen toward the presenter, and the reflection naturally mirrors the image. By pre-flipping the text here, the reflected image reads correctly to the presenter. If you're NOT using a beam-splitter — for example, reading directly off your laptop screen or phone — leave mirror mode OFF. Most people don't need mirror mode; it's only for physical teleprompter setups with the classic angled glass in front of the camera lens.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What scroll speed should I use?</summary>
+      <p>Speed depends on your reading pace and text density. As a starting point: <strong>speed 3</strong> is a comfortable conversational pace for most scripts. <strong>Speed 1–2</strong> works for slow, deliberate narration (documentary style, meditation guides). <strong>Speed 5–6</strong> fits fast-paced content (news delivery, energetic vlogs). <strong>Speed 8–10</strong> is very fast — only for experienced presenters reading dense technical content. The best approach: do a 15-second test run with your actual script, note whether you're ahead or behind, then adjust by 1–2 clicks. Once set, the speed stays consistent for the whole script, so you won't have to touch it mid-recording. For very long scripts, use a slower speed and take natural pauses at paragraph breaks.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use this with OBS or other recording software?</summary>
+      <p>Yes — but here's the setup. If you record your screen with OBS, Zoom, or DocEasy's own Screen Recorder, the teleprompter text will appear in the recording, which you don't want. The professional approach: use two devices or two screens. Put the teleprompter on one device (phone, tablet, or secondary monitor) positioned near your camera, and record yourself on another. Or use a physical teleprompter rig where the text is reflected in glass in front of the camera lens — the camera sees through the glass, but only you see the text. For solo creators without a rig: place your phone with the teleprompter right below or beside your webcam — close enough to read, far enough not to be in frame. This is how most YouTubers do it.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does it work on mobile phones?</summary>
+      <p>Yes — the teleprompter works on any modern smartphone, tablet, or desktop browser. On mobile, the fullscreen mode uses your entire screen, and the text auto-scales to your device's resolution. You can hold the phone in portrait or landscape — landscape gives a wider reading line, which is easier for long sentences. Adjust the font size to 40–60px for phone use — larger text means less on screen at once, which can make you scroll faster. For the best mobile experience: turn on "Do Not Disturb" to block notifications, dim your screen brightness (saves battery, reduces eye strain), and prop the phone at eye level using a stand or tripod. Works great on iPhone (Safari), Android (Chrome), and iPad (Safari).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I control the scroll with a keyboard or remote?</summary>
+      <p>Not in the current version — the scroll starts automatically at your chosen speed and runs until you stop it. There's no pause/resume button inside the prompter overlay yet, though you can exit and restart. This works fine for most scripts, but for very long recordings (30+ minutes), you might want finer control. Future versions may add keyboard shortcuts (Space to pause, arrow keys to speed up/down, ESC to exit). For now, if you need to pause mid-script, exit the prompter, adjust, and restart — or plan your script into segments and run separate prompter sessions for each segment. This is actually a common professional technique: record in 5-minute blocks instead of one continuous take.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the best font for teleprompter reading?</summary>
+      <p>Sans-serif fonts are best for teleprompter reading because their letterforms are cleaner at a glance. The default "Sans-serif (clean)" uses your system's native UI font (San Francisco on Apple, Segoe UI on Windows, Roboto on Android) — all tested for hours of comfortable reading. Georgia (serif) works if you prefer a traditional feel but can feel slightly busier at small sizes. Courier New (monospace) is useful for scripts where timing matters, since every character takes equal width. Avoid decorative fonts and very thin weights — bold is essential for legibility. For the highest readability, use font size 56–72px, regular weight, and maximize line spacing (which our layout does automatically). Read at a comfortable distance — about arm's length for laptops, 2–3 feet for desktops.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I include stage directions or pauses in my script?</summary>
+      <p>Yes — but the tool doesn't recognize special syntax. It just displays whatever text you type, so use plain-text conventions: <strong>[PAUSE]</strong> for a moment of silence, <strong>[LOOK AT CAMERA]</strong> for direction reminders, blank lines for paragraph breaks, and <strong>... or —</strong> for natural pauses in delivery. Since the text scrolls at a fixed speed, remember that "[PAUSE]" takes the same screen time as any other word — roughly the same as saying "pause" out loud. For longer pauses (5+ seconds), add multiple blank lines or repeated "[PAUSE]" markers to give yourself extra time. Many professional scriptwriters use this technique: the pause words are written in brackets so you can see them at a glance without accidentally reading them aloud.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the teleprompter save my script between sessions?</summary>
+      <p>No — for privacy reasons, your script is never saved to disk, localStorage, or any backend. When you close the tab or refresh the page, the text is gone. This is intentional: we want to be able to promise that nothing you write is ever stored, even temporarily. If you want to reuse a script later, save it in a separate document (Word, Google Docs, Notes app). For frequently repeated recordings (like a weekly show intro), keep the script in a text file and paste it in each time. The paste takes 2 seconds and the privacy benefit is worth it. Future versions might add optional localStorage saving with explicit user consent, but never automatic.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does my script look too small or too large?</summary>
+      <p>Font size is the main factor. The slider goes from 30px to 120px. For desktop screens viewed at arm's length, 60–80px is ideal. For mobile phones held close, 40–55px works. For secondary monitors positioned far from the presenter (like a studio teleprompter), use 90–120px. Also consider the physical distance between you and the screen — if you're reading off a phone mounted 3 feet away, you need larger text than reading off a laptop at 18 inches. Change the size in 10px increments until you find the sweet spot. Bigger is almost always better for delivery quality: larger text is easier to read at a glance, which means less eye movement, which means more natural on-camera presence.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I read the teleprompter while recording with my webcam?</summary>
+      <p>Yes — this is the most common use case. Position your webcam at the top of your screen (or use a laptop's built-in camera), place the teleprompter window right below the camera, and read from there. Since the camera is at the top and the text is right under it, your eye movement looks natural to viewers — you appear to be looking at the camera, not down. For best results: (1) Use the DocEasy Webcam Recorder in one tab and the Teleprompter in another, or use screen recording software that lets you exclude the teleprompter; (2) Keep the teleprompter window narrow — a strip about 200px tall works perfectly; (3) Position the window so the text baseline is at camera height; (4) Reduce screen brightness slightly so the text doesn't reflect on your face. This setup delivers professional-looking videos without a physical teleprompter rig.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the tool work offline?</summary>
+      <p>Yes — after the page loads once, the teleprompter works fully offline. Since everything runs in your browser with no server communication, you can switch off Wi-Fi and continue reading, scrolling, or adjusting settings. This is useful for on-location shoots, studio recordings with no reliable internet, or privacy-conscious environments. The only time the internet is needed is the very first page load. If you want to be extra safe, load the page while online, then turn off Wi-Fi before you start recording. This guarantees zero network activity during your session — useful for NDA-bound scripts or sensitive content.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>The teleprompter works on every modern browser: Google Chrome 90+, Microsoft Edge 90+, Mozilla Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Fullscreen mode (Fullscreen API) works best in Chrome, Edge, and Firefox. Safari supports fullscreen on macOS but has some limitations on iOS — the text still scrolls, but the address bar remains visible. For the cleanest experience, use Chrome or Edge on desktop, or Safari on iPad. If you see "Fullscreen not supported" in the console, your browser is outdated — update to the latest version. The tool gracefully falls back to windowed mode if fullscreen fails.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use the teleprompter for interviews or Q&amp;A?</summary>
+      <p>Yes — but with a caveat. Teleprompters are designed for scripted content where every word matters. For interviews, you typically want natural, unscripted answers. However, there are three ways to use it for interviews: (1) <strong>Talking points</strong> — put bullet points on the prompter instead of full sentences, so you remember key ideas without sounding robotic; (2) <strong>Scripted questions</strong> — if you're the interviewer, prompt the questions you'll ask; (3) <strong>Opening/closing remarks</strong> — script just the intro and outro, and go unscripted for the middle. Reading full-sentence answers in an interview always sounds unnatural. Use the prompter for support, not as a crutch. Practice a few times with just bullet points before recording for real.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I avoid looking like I'm reading?</summary>
+      <p>Three techniques: (1) <strong>Position the prompter close to the lens</strong> — the closer the text is to the camera, the less your eyes have to move, and the more natural you look. Ideally the text should be within 3 inches of the lens vertically. (2) <strong>Use a smaller window</strong> — a narrow text strip right below the camera is better than fullscreen text. Your eyes move less. (3) <strong>Practice without the prompter</strong> — read your script 2–3 times before recording so you're familiar with it. When you already know what's coming, you can glance at the prompter for key phrases rather than reading every word. (4) <strong>Vary your pace</strong> — the prompter scrolls at a fixed speed, but you can slow down or speed up your delivery. Add natural pauses, smile, and use hand gestures to break up the "reading" rhythm. (5) <strong>Do multiple takes</strong> — even professional anchors don't get it right in one take.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I export or save my script from the prompter?</summary>
+      <p>Not directly — the prompter doesn't have an export button. To keep a copy of your script, save it separately in a text file, Word document, Google Doc, or notes app before pasting it here. The prompter intentionally doesn't persist data for privacy reasons. If you want to reuse a script, keep the original source file. For teams collaborating on scripts, use Google Docs (real-time collaboration) and paste into the prompter when ready to record. The paste operation is instant and works with any text — including formatted text from Word or Docs, which will be stripped to plain text (which is actually better for prompter reading).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you keep any logs of my script?</summary>
+      <p>No — we don't log your script content, length, or any metadata. We don't track what you read or when. Our analytics only records anonymous page views — never script data. Since your script never leaves your browser, there's literally nothing for us to log. You can verify this yourself: open Developer Tools → Network tab, paste your script, start the prompter, and watch for requests. Zero outgoing requests carry your text — because it never goes anywhere. This is the strongest possible privacy guarantee for a teleprompter, especially important if you're reading scripts for unreleased content, confidential business plans, or NDA-bound material.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is this different from a physical teleprompter?</summary>
+      <p>Physical teleprompters use a beam-splitter glass (a half-mirror) placed at a 45° angle in front of the camera lens. The text is reflected off the glass toward the presenter, who appears to be looking at the camera. This setup costs $200–$2,000+ and requires a dedicated screen. DocEasy's web prompter replaces the need for that rig in many cases: for talking-head videos, a phone or laptop positioned just below the camera works nearly as well. The main advantage of a physical rig is that the presenter's eyes stay locked directly on the lens — useful for close-up shots or professional broadcasts. For most YouTubers, podcasters, teachers, and business presenters, the web prompter is more than enough. Use mirror mode if you have a physical rig and want to use DocEasy's prompter with it.</p>
+    </details>
+  </section>
+</main>
+
+<footer class="de-footer">
+  <div class="de-footer-inner">
+    <div class="de-footer-col de-footer-brand">
+      <a class="de-logo" href="../index.html">
+        <img src="../assets/images/logo-white.svg" alt="DocEasy" width="32" height="32" onerror="this.style.display='none'">
+        <span>Doc<em>Easy</em></span>
+      </a>
+      <p>Free browser-based tools for PDF, images, documents, and media. No upload, no signup, 100% private. Works worldwide.</p>
+    </div>
+    <div class="de-footer-col">
+      <h4>Media Tools</h4>
+      <ul>
+        <li><a href="media-screen-recorder.html">Screen Recorder</a></li>
+        <li><a href="media-voice-recorder.html">Voice Recorder</a></li>
+        <li><a href="media-webcam-test.html">Webcam Test</a></li>
+        <li><a href="media-mic-test.html">Mic Test</a></li>
+        <li><a href="media-text-to-speech.html">Text to Speech</a></li>
+        <li><a href="media-editor.html">Universal Editor</a></li>
+        <li><a href="media-meme-generator.html">Meme Generator</a></li>
+        <li><a href="media-teleprompter.html">Teleprompter</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Popular Tools</h4>
+      <ul>
+        <li><a href="../index.html#pdf-tools">Merge PDF</a></li>
+        <li><a href="../index.html#image-tools">Compress Image</a></li>
+        <li><a href="../index.html#id-tools">Passport Photo</a></li>
+        <li><a href="../index.html#converter-tools">JPG to PDF</a></li>
+        <li><a href="../index.html#utility-tools">QR Generator</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../index.html#faq">FAQ</a></li>
+        <li><a href="../media-tools.html">Media Hub</a></li>
+        <li><a href="../index.html">All Categories</a></li>
+        <li><a href="../sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="de-footer-bottom">
+    <p>© 2026 DocEasy. All rights reserved. Made with ❤️ for the world.</p>
+    <div class="de-footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Prompter overlay -->
+<div class="prompter-overlay" id="prompterOverlay">
+  <div class="prompter-header">
+    <span class="title">DocEasy Teleprompter</span>
+    <div class="btns">
+      <button id="pauseBtn">Pause</button>
+      <button id="speedUpBtn">Speed +</button>
+      <button id="speedDownBtn">Speed −</button>
+      <button class="stop" id="stopPrompterBtn">Stop (ESC)</button>
+    </div>
+  </div>
+  <div class="prompter-content" id="prompterContent"></div>
+</div>
+
+<script>
+// Theme
+(function(){var s=localStorage.getItem('doceasy-theme')||'light';document.documentElement.setAttribute('data-theme',s);var b=document.getElementById('themeToggle');if(b)b.addEventListener('click',function(){var n=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('doceasy-theme',n);});})();
+
+// Teleprompter
+(function(){
+  var scriptEl=document.getElementById('script');
+  var speed=document.getElementById('speed');
+  var speedVal=document.getElementById('speedVal');
+  var fontSize=document.getElementById('fontSize');
+  var fontSizeVal=document.getElementById('fontSizeVal');
+  var fontFamily=document.getElementById('fontFamily');
+  var mirror=document.getElementById('mirror');
+  var startBtn=document.getElementById('startBtn');
+  var clearBtn=document.getElementById('clearBtn');
+  var overlay=document.getElementById('prompterOverlay');
+  var content=document.getElementById('prompterContent');
+  var pauseBtn=document.getElementById('pauseBtn');
+  var speedUpBtn=document.getElementById('speedUpBtn');
+  var speedDownBtn=document.getElementById('speedDownBtn');
+  var stopPrompterBtn=document.getElementById('stopPrompterBtn');
+  var scrollPos=0,rafId=null,paused=false,currentSpeed=3;
+
+  speed.addEventListener('input',function(){speedVal.textContent=speed.value;currentSpeed=parseInt(speed.value,10);});
+  fontSize.addEventListener('input',function(){fontSizeVal.textContent=fontSize.value+'px';});
+
+  function startPrompter(){
+    var txt=scriptEl.value.trim();
+    if(!txt){alert('Please enter some text in the script box first.');return;}
+    content.textContent=txt;
+    content.style.fontSize=fontSize.value+'px';
+    content.style.fontFamily=fontFamily.value;
+    currentSpeed=parseInt(speed.value,10);
+    if(mirror.value==='yes')overlay.classList.add('mirrored');else overlay.classList.remove('mirrored');
+    overlay.classList.add('show');
+    if(overlay.requestFullscreen){overlay.requestFullscreen().catch(function(){});}
+    scrollPos=window.innerHeight;
+    content.style.transform='translateY('+scrollPos+'px)';
+    paused=false;
+    pauseBtn.textContent='Pause';
+    animate();
+  }
+
+  function animate(){
+    if(!paused){
+      scrollPos-=currentSpeed*0.6;
+      content.style.transform='translateY('+scrollPos+'px)';
+      var contentHeight=content.scrollHeight;
+      if(scrollPos < -contentHeight - 200){stopPrompter();return;}
+    }
+    rafId=requestAnimationFrame(animate);
+  }
+
+  function stopPrompter(){
+    overlay.classList.remove('show');
+    if(document.fullscreenElement && document.exitFullscreen)document.exitFullscreen().catch(function(){});
+    if(rafId)cancelAnimationFrame(rafId);
+    rafId=null;
+  }
+
+  startBtn.addEventListener('click',startPrompter);
+  stopPrompterBtn.addEventListener('click',stopPrompter);
+  pauseBtn.addEventListener('click',function(){paused=!paused;pauseBtn.textContent=paused?'Resume':'Pause';});
+  speedUpBtn.addEventListener('click',function(){currentSpeed=Math.min(15,currentSpeed+1);});
+  speedDownBtn.addEventListener('click',function(){currentSpeed=Math.max(1,currentSpeed-1);});
+  clearBtn.addEventListener('click',function(){scriptEl.value='';scriptEl.focus();});
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&overlay.classList.contains('show'))stopPrompter();
+    if(e.code==='Space'&&overlay.classList.contains('show')){e.preventDefault();paused=!paused;pauseBtn.textContent=paused?'Resume':'Pause';}
+  });
+})();
+</script>
+</body>
+</html>
