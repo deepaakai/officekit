@@ -67,7 +67,7 @@
   transition: all 0.2s; background: var(--accent-soft); margin-bottom: 18px;
 }
 .mg-drop:hover, .mg-drop.dragover { background: var(--accent-soft-hover); }
-.mg-drop svg { width: 48px; height: 48px; stroke: var(--accent); fill: none; stroke-width: 1.8; margin-bottom: 14px; }
+.mg-drop svg { width: 48px; height: 48px; stroke: var(--accent); fill: none; stroke-width: 2; margin-bottom: 14px; display: inline-block; }
 .mg-drop h3 { font-size: 16px; font-weight: 800; margin: 0 0 6px; color: var(--text-color); }
 .mg-drop p { font-size: 13px; color: var(--subtext-color); margin: 0; line-height: 1.5; }
 .mg-drop input[type="file"] { display: none; }
@@ -497,9 +497,10 @@
     </div>
 
     <div class="mg-drop" id="dropZone">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <path d="M17 8l-5-5-5 5M12 3v12"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
       </svg>
       <h3 id="dropTitle">Drop PDF files here</h3>
       <p id="dropHint">or click to browse · .pdf files only · multiple files supported</p>
@@ -786,7 +787,7 @@
   function showError(msg) {
     errMsg.textContent = msg;
     errMsg.classList.add('show');
-    setTimeout(function () { errMsg.classList.remove('show'); }, 8000);
+    setTimeout(function () { errMsg.classList.remove('show'); }, 10000);
   }
   function formatSize(bytes) {
     if (!bytes) return '0 B';
@@ -859,7 +860,7 @@
 
     fileList.classList.add('show');
     actions.style.display = 'flex';
-    mergeBtn.disabled = files.length < 2; // Strict 2-file validation
+    mergeBtn.disabled = files.length < 2;
 
     files.forEach(function (f, i) {
       var row = document.createElement('div');
@@ -1223,13 +1224,12 @@
   }
 
   // === 4. NATIVE PPT MERGER (Single .pptx + Simplified .pdf) ===
-  // Rewritten: copies each non-base slide's full layout/master/theme chain
-  // with renamed parts, re-links media + slide rIds so PowerPoint opens
-  // the file cleanly. PDF remains a simplified view (browser can't render
-  // true PPTX), with real slide size and first-image embed.
   async function mergePPTs() {
     var JSZip = window.JSZip;
     if (!JSZip) throw new Error('ZIP library not loaded.');
+
+    // Reset any prior skip tracking
+    window.__deSkipped = [];
 
     // helpers
     function attrOf(tag) {
@@ -1244,17 +1244,28 @@
       });
     }
     function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+    // ✅ FIXED resolveRels — properly handles ../ and ./ paths
     function resolveRels(relsDir, target) {
-      var t = String(target || '').replace(/^[./\\]+/, '');
-      if (t.indexOf('../') === 0) {
-        var p = relsDir.split('/').filter(Boolean); p.pop();
-        return resolveRels(p.join('/'), t.substring(3));
+      var t = String(target || '');
+      // Absolute path — strip leading slash
+      if (t.indexOf('/') === 0) return t.substring(1);
+      var dirParts = relsDir ? relsDir.split('/').filter(Boolean) : [];
+      var targetParts = t.split('/');
+      for (var i = 0; i < targetParts.length; i++) {
+        var part = targetParts[i];
+        if (part === '.' || part === '') continue;
+        if (part === '..') {
+          dirParts.pop();
+        } else {
+          dirParts.push(part);
+        }
       }
-      if (t.indexOf('./') === 0) return resolveRels(relsDir, t.substring(2));
-      return (relsDir ? relsDir + '/' : '') + t;
+      return dirParts.join('/');
     }
+
     function mediaContentType(ext) {
-      ext = ext.toLowerCase();
+      ext = (ext || '').toLowerCase();
       if (ext === 'png') return 'image/png';
       if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
       if (ext === 'gif') return 'image/gif';
@@ -1280,7 +1291,6 @@
     var presRels = await presRelsFile.async('string');
     var contentTypes = await ctFile.async('string');
 
-    // unique-id allocators
     function maxRIdIn(relsXml) {
       var max = 0, m; var re = /Id="rId(\d+)"/g;
       while ((m = re.exec(relsXml)) !== null) max = Math.max(max, parseInt(m[1], 10) || 0);
@@ -1300,7 +1310,6 @@
     var rIdN = maxRIdIn(presRels);
     var sldIdN = maxSldIdInLst(presXml);
 
-    // track all paths already in baseZip so reserved names don't collide
     var reserved = Object.create(null);
     baseZip.forEach(function (p, f) { if (!f.dir) reserved[p] = true; });
     function reservePath(p) {
@@ -1317,7 +1326,6 @@
       return out;
     }
 
-    // ensure Default Extension entries for common media types
     var MEDIA_DEFAULTS = [
       ['png', 'image/png'], ['jpeg', 'image/jpeg'], ['jpg', 'image/jpeg'],
       ['gif', 'image/gif'], ['emf', 'image/x-emf'], ['wmf', 'image/x-wmf'],
@@ -1338,9 +1346,9 @@
       }
     }
 
-    // import a slide's layout chain (layout -> master -> theme if any)
     async function importLayoutChain(otherZip, sourceSlidePath) {
-      var srcRelsPath = 'ppt/slides/_rels/' + sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1) + '.rels';
+      var slideFileName = sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1);
+      var srcRelsPath = 'ppt/slides/_rels/' + slideFileName + '.rels';
       var srcRelsFile = otherZip.file(srcRelsPath);
       if (!srcRelsFile) throw new Error('source slide rels missing: ' + srcRelsPath);
       var srcRels = await srcRelsFile.async('string');
@@ -1348,12 +1356,15 @@
       if (!lm) throw new Error('source slide has no slideLayout rel');
       var layoutPath = resolveRels('ppt/slides', attrOf(lm[0]).Target);
 
+      if (!otherZip.file(layoutPath)) {
+        throw new Error('slideLayout not found: ' + layoutPath);
+      }
+
       var newLayoutPath = reservePath('ppt/slideLayouts/' + layoutPath.substring(layoutPath.lastIndexOf('/') + 1));
       baseZip.file(newLayoutPath, await otherZip.file(layoutPath).async('string'));
       ensureOverride(newLayoutPath, 'application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml');
 
-      // copy layout rels -> master (and master -> theme)
-      var srcLayoutRelsFile = otherZip.file(layoutPath.substring(0, layoutPath.lastIndexOf('/') + 1) + '_rels/' + layoutPath.substring(layoutPath.lastIndexOf('/') + 1) + '.rels');
+      var srcLayoutRelsFile = otherZip.file('ppt/slideLayouts/_rels/' + layoutPath.substring(layoutPath.lastIndexOf('/') + 1) + '.rels');
       var srcLayoutRels = srcLayoutRelsFile ? await srcLayoutRelsFile.async('string') : null;
       var masterTarget = null;
       if (srcLayoutRels) {
@@ -1398,17 +1409,17 @@
       return newLayoutPath;
     }
 
-    // import a single slide into baseZip; returns the new slide path stored in baseZip
     async function importSlide(otherZip, sourceSlidePath) {
       var newLayoutPath = await importLayoutChain(otherZip, sourceSlidePath);
 
-      var srcRelsPath = 'ppt/slides/_rels/' + sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1) + '.rels';
+      var slideFileName = sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1);
+      var srcRelsPath = 'ppt/slides/_rels/' + slideFileName + '.rels';
       var srcRelsFile = otherZip.file(srcRelsPath);
       var srcRels = srcRelsFile ? await srcRelsFile.async('string') : '';
 
       var slideXml = await otherZip.file(sourceSlidePath).async('string');
 
-      var newSlidePath = reservePath('ppt/slides/' + sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1));
+      var newSlidePath = reservePath('ppt/slides/' + slideFileName);
       var newRelsPath = 'ppt/slides/_rels/' + newSlidePath.substring(newSlidePath.lastIndexOf('/') + 1) + '.rels';
 
       var rid = 1;
@@ -1423,7 +1434,6 @@
           var target = a.Target || '';
           var myId = 'rId' + (rid++);
 
-          // drop risky / incompatible sidecars entirely
           if (
             /\/notesSlide$/.test(type) || /\/notesMaster$/.test(type) ||
             /\/chart$/.test(type) || /\/diagramData$/.test(type) ||
@@ -1435,16 +1445,14 @@
             /\/endnoteSlide$/.test(type)
           ) continue;
 
-          // hyperlinks pass through untouched
           if (/\/hyperlink$/.test(type)) {
             var tm = a.TargetMode ? ' TargetMode="' + a.TargetMode + '"' : '';
             relsXml += '<Relationship Id="' + myId + '" Type="' + type + '" Target="' + escapeXml(target) + '"' + tm + '/>';
             continue;
           }
 
-          // everything else: treat as media (image/video/audio/file) and copy in
           var absPath = resolveRels('ppt/slides', target);
-          if (!otherZip.file(absPath)) { rid--; continue; } // dangling -> drop
+          if (!otherZip.file(absPath)) { rid--; continue; }
           var cleanName = absPath.substring(absPath.lastIndexOf('/') + 1);
           var newMediaPath = reservePath('ppt/media/' + cleanName);
           baseZip.file(newMediaPath, await otherZip.file(absPath).async('uint8array'));
@@ -1455,7 +1463,6 @@
             : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image';
           relsXml += '<Relationship Id="' + myId + '" Type="' + rType + '" Target="../media/' + cleanName + '"/>';
 
-          // rewrite r:embed / r:link in slide XML so it points at our new local rId
           var oldIdEsc = escapeRe(a.Id);
           var newIdEsc = escapeRe(myId);
           slideXml = slideXml.replace(new RegExp('r:embed="' + oldIdEsc + '"', 'g'), 'r:embed="' + newIdEsc + '"');
@@ -1470,7 +1477,6 @@
       return newSlidePath;
     }
 
-    // Process non-base decks
     for (var fIdx = 1; fIdx < files.length; fIdx++) {
       updateProgress(0.15 + (fIdx / files.length) * 0.45, 'Merging ' + files[fIdx].name + '…');
       var otherBuf = await files[fIdx].file.arrayBuffer();
@@ -1478,19 +1484,20 @@
 
       var op = otherZip.file('ppt/presentation.xml');
       var or = otherZip.file('ppt/_rels/presentation.xml.rels');
-      if (!op || !or) continue;
+      if (!op || !or) {
+        console.warn('[DocEasy PPT] Missing ppt/presentation.xml in ' + files[fIdx].name);
+        continue;
+      }
 
       var oPres = await op.async('string');
       var oRels = await or.async('string');
 
-      // build rId -> Target map for slide relationships
       var map = Object.create(null);
       var rg = /<Relationship\s[^>]*\/>/g; var m;
       while ((m = rg.exec(oRels)) !== null) {
         var a = attrOf(m[0]);
         if (a.Type && /\/slide"$/.test(a.Type)) map[a.Id] = a.Target;
       }
-      // preserve deck-internal order from sldIdLst
       var order = [];
       var lstMatch = oPres.match(/<p:sldIdLst[^>]*>[\s\S]*?<\/p:sldIdLst>/i);
       if (lstMatch) {
@@ -1509,12 +1516,12 @@
         try {
           await importSlide(otherZip, fullOrig);
         } catch (e) {
-          console.warn('Skip slide ' + fullOrig + ': ' + e.message);
+          console.error('[DocEasy PPT] Skipped ' + fullOrig + ' from "' + files[fIdx].name + '": ' + e.message);
+          window.__deSkipped.push(files[fIdx].name + ' → ' + fullOrig + ' (' + e.message + ')');
         }
       }
     }
 
-    // Rebuild sldIdLst with fresh IDs and rIds, in numeric filename order
     var slidePaths = [];
     baseZip.forEach(function (p, f) {
       if (!f.dir && /^ppt\/slides\/slide[^/]+\.xml$/.test(p) && p.indexOf('/_rels/') === -1) {
@@ -1527,7 +1534,6 @@
       return na - nb;
     });
 
-    // Replace sldIdLst contents
     presXml = presXml.replace(/<p:sldIdLst>[\s\S]*?<\/p:sldIdLst>/i, '<p:sldIdLst></p:sldIdLst>');
     var newSldIdXml = '';
     var newPresRelsXml = '';
@@ -1539,7 +1545,6 @@
     presXml = presXml.replace(/<p:sldIdLst>([\s\S]*?)<\/p:sldIdLst>/i,
       '<p:sldIdLst>' + newSldIdXml + '</p:sldIdLst>');
 
-    // Append new slide rels to presentation rels (preserve existing non-slide rels)
     if (!/<\/Relationships>/.test(presRels)) {
       presRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + newPresRelsXml + '</Relationships>';
     } else {
@@ -1561,92 +1566,106 @@
     var generatePdf = document.getElementById('optGeneratePptPdf').checked;
     var mergedPdfBlob = null;
     if (generatePdf) {
-      updateProgress(0.85, 'Rendering simplified PDF view…');
-      var PDFLib = window.PDFLib;
-      var pdfDoc = await PDFLib.PDFDocument.create();
+      try {
+        updateProgress(0.85, 'Rendering simplified PDF view…');
+        var PDFLib = window.PDFLib;
+        if (!PDFLib) throw new Error('PDF library not loaded');
+        var pdfDoc = await PDFLib.PDFDocument.create();
 
-      // Read real slide size from base presentation
-      var slideWIn = 13.333, slideHIn = 7.5;
-      var szMatch = presXml.match(/<p:sldSz\s[^/>]*\/>/i);
-      if (szMatch) {
-        var a = attrOf(szMatch[0]);
-        var cx = parseInt(a.cx || '0', 10);
-        var cy = parseInt(a.cy || '0', 10);
-        if (cx && cy) { slideWIn = cx / 914400; slideHIn = cy / 914400; }
-      }
-      var W = slideWIn * 72, H = slideHIn * 72;
-
-      var fBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-      var fReg = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-
-      for (var pI = 0; pI < slidePaths.length; pI++) {
-        var sp = slidePaths[pI];
-        var f = baseZip.file(sp); if (!f) continue;
-        var xml = await f.async('string');
-
-        var page = pdfDoc.addPage([W, H]);
-        page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: PDFLib.rgb(0.98, 0.98, 0.99) });
-        page.drawLine({ start: { x: 40, y: H - 30 }, end: { x: W - 40, y: H - 30 }, thickness: 2, color: PDFLib.rgb(0.09, 0.22, 0.54) });
-
-        // text
-        var texts = [];
-        var rg = /<a:t[^>]*>([\s\S]*?)<\/a:t>/gi; var m;
-        while ((m = rg.exec(xml)) !== null) {
-          var t = m[1].replace(/<[^>]+>/g, '').trim();
-          if (t) texts.push(t);
+        var slideWIn = 13.333, slideHIn = 7.5;
+        var szMatch = presXml.match(/<p:sldSz\s[^/>]*\/>/i);
+        if (szMatch) {
+          var a = attrOf(szMatch[0]);
+          var cx = parseInt(a.cx || '0', 10);
+          var cy = parseInt(a.cy || '0', 10);
+          if (cx && cy) { slideWIn = cx / 914400; slideHIn = cy / 914400; }
         }
-        var y = H - 80;
-        if (texts.length) {
-          page.drawText(texts[0].substring(0, Math.max(20, Math.floor(W / 9))),
-            { x: 50, y: y, size: 26, font: fBold, color: PDFLib.rgb(0.1, 0.15, 0.3) });
-          y -= 45;
-          var bodyMax = Math.max(40, Math.floor(W / 6));
-          for (var tt = 1; tt < texts.length && y > 70; tt++) {
-            page.drawText('• ' + texts[tt].substring(0, bodyMax),
-              { x: 60, y: y, size: 14, font: fReg, color: PDFLib.rgb(0.25, 0.3, 0.38) });
-            y -= 26;
+        var W = slideWIn * 72, H = slideHIn * 72;
+
+        var fBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        var fReg = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+
+        for (var pI = 0; pI < slidePaths.length; pI++) {
+          var sp = slidePaths[pI];
+          var f = baseZip.file(sp); if (!f) continue;
+          var xml = await f.async('string');
+
+          var page = pdfDoc.addPage([W, H]);
+          page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: PDFLib.rgb(0.98, 0.98, 0.99) });
+          page.drawLine({ start: { x: 40, y: H - 30 }, end: { x: W - 40, y: H - 30 }, thickness: 2, color: PDFLib.rgb(0.09, 0.22, 0.54) });
+
+          var texts = [];
+          var rg = /<a:t[^>]*>([\s\S]*?)<\/a:t>/gi; var m;
+          while ((m = rg.exec(xml)) !== null) {
+            var t = m[1].replace(/<[^>]+>/g, '').trim();
+            if (t) texts.push(t);
           }
-        }
+          var y = H - 80;
+          if (texts.length) {
+            page.drawText(texts[0].substring(0, Math.max(20, Math.floor(W / 9))),
+              { x: 50, y: y, size: 26, font: fBold, color: PDFLib.rgb(0.1, 0.15, 0.3) });
+            y -= 45;
+            var bodyMax = Math.max(40, Math.floor(W / 6));
+            for (var tt = 1; tt < texts.length && y > 70; tt++) {
+              page.drawText('• ' + texts[tt].substring(0, bodyMax),
+                { x: 60, y: y, size: 14, font: fReg, color: PDFLib.rgb(0.25, 0.3, 0.38) });
+              y -= 26;
+            }
+          }
 
-        // embedded first image (if any)
-        var relsPath = 'ppt/slides/_rels/' + sp.substring(sp.lastIndexOf('/') + 1) + '.rels';
-        var rf = baseZip.file(relsPath);
-        if (rf) {
           try {
-            var rx = await rf.async('string');
-            var blip = xml.match(/<a:blip\s[^>]*r:embed="([^"]+)"[^>]*\/>/i);
-            if (blip) {
-              var rIdImg = blip[1];
-              var rgX = new RegExp('Id="' + escapeRe(rIdImg) + '"[^>]*Target="([^"]+)"');
-              var mm = rgX.exec(rx);
-              if (mm) {
-                var abs = resolveRels('ppt/slides', mm[1].replace(/^[./\\]+/, ''));
-                if (baseZip.file(abs)) {
-                  var data = await baseZip.file(abs).async('uint8array');
-                  var img = null;
-                  if (/\.png$/i.test(abs)) img = await pdfDoc.embedPng(data);
-                  else if (/\.jpe?g$/i.test(abs)) img = await pdfDoc.embedJpg(data);
-                  if (img) {
-                    var maxW = W - 100, maxH = y - 80;
-                    var ratio = Math.min(maxW / img.width, maxH / img.height, 1);
-                    var dw = img.width * ratio, dh = img.height * ratio;
-                    page.drawImage(img, { x: 50, y: y - dh, width: dw, height: dh });
-                    y -= dh + 10;
+            var relsPath = 'ppt/slides/_rels/' + sp.substring(sp.lastIndexOf('/') + 1) + '.rels';
+            var rf = baseZip.file(relsPath);
+            if (rf) {
+              var rx = await rf.async('string');
+              var blip = xml.match(/<a:blip\s[^>]*r:embed="([^"]+)"[^>]*\/>/i);
+              if (blip) {
+                var rIdImg = blip[1];
+                var rgX = new RegExp('Id="' + escapeRe(rIdImg) + '"[^>]*Target="([^"]+)"');
+                var mm = rgX.exec(rx);
+                if (mm) {
+                  var abs = resolveRels('ppt/slides', mm[1]);
+                  if (baseZip.file(abs)) {
+                    var data = await baseZip.file(abs).async('uint8array');
+                    var img = null;
+                    if (/\.png$/i.test(abs)) img = await pdfDoc.embedPng(data);
+                    else if (/\.jpe?g$/i.test(abs)) img = await pdfDoc.embedJpg(data);
+                    if (img) {
+                      var maxW = W - 100, maxH = y - 80;
+                      var ratio = Math.min(maxW / img.width, maxH / img.height, 1);
+                      var dw = img.width * ratio, dh = img.height * ratio;
+                      page.drawImage(img, { x: 50, y: y - dh, width: dw, height: dh });
+                      y -= dh + 10;
+                    }
                   }
                 }
               }
             }
-          } catch (eImg) { /* one bad image never blocks the job */ }
+          } catch (eImg) { /* single image failure never blocks */ }
+
+          page.drawText('Slide ' + (pI + 1) + ' of ' + slidePaths.length,
+            { x: W - 130, y: 20, size: 9, font: fReg, color: PDFLib.rgb(0.5, 0.5, 0.5) });
+          page.drawText('DocEasy Merged Deck',
+            { x: 50, y: 20, size: 9, font: fReg, color: PDFLib.rgb(0.6, 0.6, 0.6) });
         }
 
-        page.drawText('Slide ' + (pI + 1) + ' of ' + slidePaths.length,
-          { x: W - 130, y: 20, size: 9, font: fReg, color: PDFLib.rgb(0.5, 0.5, 0.5) });
-        page.drawText('DocEasy Merged Deck — simplified PDF view',
-          { x: 50, y: 20, size: 9, font: fReg, color: PDFLib.rgb(0.6, 0.6, 0.6) });
+        var pdfBytes = await pdfDoc.save();
+        mergedPdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+      } catch (pdfErr) {
+        console.warn('PDF view failed (PPTX still succeeded):', pdfErr);
+        mergedPdfBlob = null;
       }
+    }
 
-      var pdfBytes = await pdfDoc.save();
-      mergedPdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+    // Report skipped slides if any
+    var skipped = window.__deSkipped || [];
+    if (skipped.length > 0) {
+      console.error('[DocEasy] Total skipped slides: ' + skipped.length);
+      skipped.forEach(function (m) { console.error('  • ' + m); });
+      setTimeout(function () {
+        showError('Warning: ' + skipped.length + ' slide(s) from later files could not be imported. ' +
+                  'Merged file contains ' + slidePaths.length + ' slides. Check browser console (F12) for details.');
+      }, 800);
     }
 
     return {
@@ -1654,7 +1673,8 @@
       pdfBlob: mergedPdfBlob,
       pptxFilename: 'merged-' + Date.now() + '.pptx',
       pdfFilename: 'presentation-' + Date.now() + '.pdf',
-      stats: slidePaths.length + ' slides combined from ' + files.length + ' files'
+      stats: slidePaths.length + ' slides combined from ' + files.length + ' files' +
+             (skipped.length ? ' · ' + skipped.length + ' skipped' : '')
     };
   }
 
@@ -1687,17 +1707,15 @@
         downloadPptxBtn.href = pptxDownloadUrl;
         downloadPptxBtn.download = res.pptxFilename;
 
+        var pdfCard = downloadPptPdfBtn.closest('.mg-dl-card');
         if (res.pdfBlob) {
           pptPdfDownloadUrl = URL.createObjectURL(res.pdfBlob);
           downloadPptPdfBtn.href = pptPdfDownloadUrl;
           downloadPptPdfBtn.download = res.pdfFilename;
-          downloadPptPdfBtn.parentElement.parentElement.style.display = '';
-          downloadPptPdfBtn.style.display = '';
+          if (pdfCard) pdfCard.style.display = '';
         } else {
           pptPdfDownloadUrl = null;
-          downloadPptPdfBtn.removeAttribute('href');
-          var pdfCard = downloadPptPdfBtn.parentElement;
-          if (pdfCard && pdfCard.parentElement) pdfCard.parentElement.style.display = 'none';
+          if (pdfCard) pdfCard.style.display = 'none';
         }
 
         resultStats.textContent = res.stats + ' · ' + formatSize(res.pptxBlob.size);
@@ -1729,7 +1747,6 @@
     }
   });
 
-  // Free download (PDF with watermark)
   downloadFreeBtn.addEventListener('click', function () {
     if (!watermarkedBlob) return;
     var url = URL.createObjectURL(watermarkedBlob);
@@ -1742,13 +1759,11 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
   });
 
-  // Clean download (PDF without watermark via ad)
   downloadCleanBtn.addEventListener('click', function () {
     if (!cleanBlob) return;
     openAdModal();
   });
 
-  // === AD MODAL LOGIC ===
   function openAdModal() {
     adSecondsLeft = 5;
     adCountdown.textContent = adSecondsLeft;
