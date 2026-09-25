@@ -12,30 +12,15 @@
 <meta property="og:title" content="Universal File Merger — PDF, Word, Excel, PPT | DocEasy">
 <meta property="og:description" content="Merge PDF, Word, Excel, PPT files in browser. Free, private, no upload.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/merger.html">
-<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Universal File Merger — PDF, Word, Excel, PPT | DocEasy">
 <meta name="twitter:description" content="Merge any document type in your browser. Free, private.">
-<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Universal File Merger — DocEasy",
-  "url": "https://deepaakai.github.io/officekit/tools/merger.html",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Any (Web)",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Merge PDF, Word, Excel, and PowerPoint files in your browser. Free, private, no upload."
-}
-</script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
 <style>
-/* Hide ad slots until AdSense approval */
 .ad-slot-container, .ad-placeholder { display: none !important; }
 
 /* ============ TOOL STYLES ============ */
@@ -51,28 +36,30 @@
 
 /* TABS */
 .mg-tabs {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin-bottom: 22px;
   padding-bottom: 18px;
   border-bottom: 2px solid var(--border-color);
-  justify-content: center;
 }
 .mg-tab {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 11px 18px;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 10px;
   border-radius: 10px;
   border: 1px solid var(--border-color);
   background: var(--card-bg);
   color: var(--text-color);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.18s ease;
   font-family: inherit;
+  text-align: center;
+  white-space: nowrap;
 }
 .mg-tab:hover {
   border-color: var(--accent);
@@ -85,7 +72,19 @@
   color: #fff;
   box-shadow: 0 6px 16px rgba(25,57,138,0.28);
 }
-.mg-tab svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.mg-tab svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2.2; flex-shrink: 0; }
+
+/* Mobile: 2x2 grid */
+@media (max-width: 620px) {
+  .mg-tabs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .mg-tab {
+    padding: 12px 8px;
+    font-size: 12.5px;
+  }
+}
 
 /* DROP ZONE */
 .mg-drop {
@@ -98,31 +97,19 @@
   background: var(--accent-soft);
   margin-bottom: 18px;
 }
-.mg-drop:hover, .mg-drop.dragover {
-  background: var(--accent-soft-hover);
-  transform: scale(1.005);
-}
+.mg-drop:hover, .mg-drop.dragover { background: var(--accent-soft-hover); }
 .mg-drop svg {
   width: 48px; height: 48px;
   stroke: var(--accent);
   fill: none; stroke-width: 1.8;
   margin-bottom: 14px;
 }
-.mg-drop h3 {
-  font-size: 16px; font-weight: 800;
-  margin: 0 0 6px; color: var(--text-color);
-}
-.mg-drop p {
-  font-size: 13px; color: var(--subtext-color);
-  margin: 0; line-height: 1.5;
-}
+.mg-drop h3 { font-size: 16px; font-weight: 800; margin: 0 0 6px; color: var(--text-color); }
+.mg-drop p { font-size: 13px; color: var(--subtext-color); margin: 0; line-height: 1.5; }
 .mg-drop input[type="file"] { display: none; }
 
 /* FILE LIST */
-.mg-list {
-  display: none;
-  margin-bottom: 18px;
-}
+.mg-list { display: none; margin-bottom: 18px; }
 .mg-list.show { display: block; }
 .mg-list-head {
   display: flex;
@@ -132,37 +119,22 @@
   flex-wrap: wrap;
   gap: 10px;
 }
-.mg-list-head h3 {
-  font-size: 14px; font-weight: 800;
-  margin: 0; color: var(--text-color);
-}
-.mg-list-head .hint {
-  font-size: 12px; color: var(--subtext-color);
-  font-weight: 600;
-}
-.mg-files {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.mg-list-head h3 { font-size: 14px; font-weight: 800; margin: 0; color: var(--text-color); }
+.mg-list-head .hint { font-size: 12px; color: var(--subtext-color); font-weight: 600; }
+.mg-files { display: flex; flex-direction: column; gap: 8px; }
 .mg-file {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 12px 14px;
   background: var(--card-hover);
   border-radius: 10px;
   font-size: 13px;
-  transition: all 0.18s;
   border: 1px solid transparent;
+  transition: all 0.18s;
 }
 .mg-file:hover { border-color: var(--accent); }
-.mg-file .handle {
-  cursor: grab;
-  color: var(--subtext-color);
-  font-weight: 700;
-  user-select: none;
-}
+.mg-file .handle { cursor: grab; color: var(--subtext-color); font-weight: 700; user-select: none; }
 .mg-file .idx {
   width: 24px; height: 24px;
   background: var(--accent);
@@ -179,21 +151,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
 }
-.mg-file .size {
-  color: var(--subtext-color);
-  font-size: 12px;
-  white-space: nowrap;
-}
+.mg-file .size { color: var(--subtext-color); font-size: 12px; white-space: nowrap; }
 .mg-file .remove {
   background: none;
   border: none;
   color: #dc2626;
   cursor: pointer;
-  padding: 4px;
+  padding: 4px 8px;
   border-radius: 6px;
   font-size: 18px;
   line-height: 1;
+  font-weight: 700;
   transition: all 0.15s;
 }
 .mg-file .remove:hover { background: rgba(220,38,38,0.1); }
@@ -204,17 +174,17 @@
   cursor: pointer;
   padding: 4px 7px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   transition: all 0.15s;
 }
-.mg-file .arrow:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.mg-file .arrow:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+.mg-file .arrow:hover { border-color: var(--accent); color: var(--accent); }
+.mg-file .arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Hide size on very small */
+@media (max-width: 400px) {
+  .mg-file .size { display: none; }
+  .mg-file .handle { display: none; }
 }
 
 /* OPTIONS */
@@ -248,19 +218,11 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
-}
-.mg-option-row .desc {
-  font-size: 12px;
-  color: var(--subtext-color);
-  margin-left: 24px;
+  flex-shrink: 0;
 }
 
 /* ACTION */
-.mg-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+.mg-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .mg-btn {
   display: inline-flex;
   align-items: center;
@@ -276,38 +238,92 @@
   font-family: inherit;
   text-decoration: none;
 }
-.mg-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.mg-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.4; flex-shrink: 0; }
 .mg-btn.primary {
   background: var(--accent);
   color: #fff;
   box-shadow: 0 8px 22px rgba(25,57,138,0.28);
   flex: 1;
 }
-.mg-btn.primary:hover:not(:disabled) {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-}
+.mg-btn.primary:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-2px); }
 .mg-btn.ghost {
   background: var(--card-hover);
   color: var(--text-color);
   border: 1px solid var(--border-color);
 }
-.mg-btn.ghost:hover:not(:disabled) {
-  border-color: var(--accent);
-  color: var(--accent);
+.mg-btn.ghost:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.mg-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* PPT ACTION BLOCK */
+.mg-ppt-actions {
+  display: none;
+  padding: 20px;
+  background: #fff7ed;
+  border: 2px solid #fdba74;
+  border-radius: 12px;
+  margin-bottom: 18px;
 }
-.mg-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+[data-theme="dark"] .mg-ppt-actions { background: #2a1608; border-color: #7c2d12; }
+.mg-ppt-actions.show { display: block; }
+.mg-ppt-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #c2410c;
+  margin-bottom: 10px;
+  line-height: 1.4;
 }
+[data-theme="dark"] .mg-ppt-head { color: #fdba74; }
+.mg-ppt-head svg { stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
+.mg-ppt-actions > p {
+  font-size: 13.5px;
+  color: #9a3412;
+  margin: 0 0 16px;
+  line-height: 1.65;
+}
+[data-theme="dark"] .mg-ppt-actions > p { color: #fdba74; }
+.mg-ppt-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+@media (max-width: 620px) { .mg-ppt-action-grid { grid-template-columns: 1fr; } }
+.mg-ppt-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #ea580c;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: all 0.18s;
+  box-shadow: 0 6px 14px rgba(234,88,12,0.25);
+}
+.mg-ppt-action:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.mg-ppt-num {
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.22);
+  border-radius: 7px;
+  display: grid; place-items: center;
+  font-size: 13px; font-weight: 900;
+  flex-shrink: 0;
+}
+.mg-ppt-action > div:nth-child(2) { flex: 1; min-width: 0; }
+.mg-ppt-action b { display: block; font-size: 13.5px; }
+.mg-ppt-action span { display: block; font-size: 11.5px; opacity: 0.9; margin-top: 3px; line-height: 1.4; }
+.mg-ppt-action > svg { stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+.mg-ppt-zip { width: 100%; justify-content: center; background: transparent; border: 2px dashed #ea580c; color: #ea580c; }
+.mg-ppt-zip:hover { background: rgba(234,88,12,0.08); border-color: #c2410c; color: #c2410c; }
+[data-theme="dark"] .mg-ppt-zip { color: #fdba74; border-color: #ea580c; }
+[data-theme="dark"] .mg-ppt-zip:hover { background: rgba(253,186,116,0.08); color: #fbbf24; }
 
 /* PROGRESS */
-.mg-progress {
-  display: none;
-  margin-top: 18px;
-}
+.mg-progress { display: none; margin-top: 18px; }
 .mg-progress.show { display: block; }
 .mg-progress-bar {
   height: 8px;
@@ -368,69 +384,8 @@
   transition: all 0.18s;
   box-shadow: 0 8px 20px rgba(22,163,74,0.28);
 }
-.mg-result .dl-btn:hover {
-  filter: brightness(1.08);
-  transform: translateY(-2px);
-}
-.mg-result .dl-btn svg {
-  width: 17px; height: 17px;
-  stroke: currentColor; fill: none;
-  stroke-width: 2.4;
-}
-
-/* PPT REDIRECT NOTICE */
-.mg-ppt-redirect {
-  display: none;
-  padding: 22px;
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
-  border-radius: 12px;
-  text-align: left;
-}
-[data-theme="dark"] .mg-ppt-redirect { background: #2a1608; border-color: #7c2d12; }
-.mg-ppt-redirect.show { display: block; }
-.mg-ppt-redirect h4 {
-  font-size: 15px;
-  font-weight: 800;
-  color: #c2410c;
-  margin: 0 0 10px;
-}
-[data-theme="dark"] .mg-ppt-redirect h4 { color: #fdba74; }
-.mg-ppt-redirect p {
-  font-size: 13.5px;
-  color: #9a3412;
-  margin: 0 0 14px;
-  line-height: 1.65;
-}
-[data-theme="dark"] .mg-ppt-redirect p { color: #fdba74; }
-.mg-ppt-steps {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 14px;
-}
-.mg-ppt-steps a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: #ea580c;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 10px;
-  font-size: 13.5px;
-  font-weight: 700;
-  transition: all 0.18s;
-}
-.mg-ppt-steps a:hover {
-  filter: brightness(1.08);
-  transform: translateY(-2px);
-}
-.mg-ppt-steps a svg {
-  width: 16px; height: 16px;
-  stroke: currentColor; fill: none;
-  stroke-width: 2.4;
-}
+.mg-result .dl-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.mg-result .dl-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
 
 /* ERROR */
 .mg-error {
@@ -578,10 +533,8 @@
   .seo-article h3 { font-size: 18px !important; }
   .seo-article p { font-size: 15.5px !important; }
   .seo-article li { font-size: 15px !important; }
-  .mg-card { padding: 16px; }
-  .mg-tab { padding: 9px 13px; font-size: 12.5px; }
-  .mg-tab svg { width: 14px; height: 14px; }
-  .mg-file .size { display: none; }
+  .mg-card { padding: 18px; }
+  .mg-btn { padding: 13px 20px; font-size: 14px; }
 }
 </style>
 </head>
@@ -605,25 +558,25 @@
     <div class="mg-tabs" id="tabs">
       <button class="mg-tab active" data-type="pdf">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        PDF Merge
+        PDF
       </button>
       <button class="mg-tab" data-type="word">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg>
-        Word Merge
+        Word
       </button>
       <button class="mg-tab" data-type="excel">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
-        Excel Merge
+        Excel
       </button>
       <button class="mg-tab" data-type="ppt">
         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        PPT Merge
+        PPT
       </button>
     </div>
 
     <!-- DROP ZONE -->
     <div class="mg-drop" id="dropZone">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="dropIcon">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <path d="M17 8l-5-5-5 5M12 3v12"/>
       </svg>
@@ -641,79 +594,71 @@
       <div class="mg-files" id="filesContainer"></div>
     </div>
 
-    <!-- OPTIONS (PDF only) -->
+    <!-- PPT QUICK ACTION BLOCK -->
+    <div class="mg-ppt-actions" id="pptActions">
+      <div class="mg-ppt-head">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 9v2m0 4h.01M5.07 19h13.86a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0L3.3 16a2 2 0 0 0 1.7 3z"/></svg>
+        <span>Direct PPT merge not supported — use this 2-step workflow</span>
+      </div>
+      <p>PowerPoint slides contain themes, master layouts, and embedded fonts that can't be reliably merged in a browser. Our two-step workflow produces perfect, professional output:</p>
+      <div class="mg-ppt-action-grid">
+        <a class="mg-ppt-action" href="ppt-to-pdf.html" target="_blank">
+          <div class="mg-ppt-num">1</div>
+          <div>
+            <b>Convert PPT to PDF</b>
+            <span>Opens in new tab → converts each PPT</span>
+          </div>
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+        <a class="mg-ppt-action" href="pdf-merge.html" target="_blank">
+          <div class="mg-ppt-num">2</div>
+          <div>
+            <b>Merge the PDFs</b>
+            <span>Opens in new tab → combines into one</span>
+          </div>
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+      <button class="mg-btn mg-ppt-zip" id="downloadZipBtn">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download all files as ZIP (backup)
+      </button>
+    </div>
+
+    <!-- PDF OPTIONS -->
     <div class="mg-options" id="pdfOptions">
       <div class="mg-option-row">
-        <label>
-          <input type="checkbox" id="optAddBookmarks" checked>
-          Add PDF bookmarks for each file
-        </label>
+        <label><input type="checkbox" id="optAddBookmarks" checked> Add PDF bookmarks for each file</label>
       </div>
       <div class="mg-option-row">
-        <label>
-          <input type="checkbox" id="optAddPageNumbers">
-          Add page numbers to merged PDF
-        </label>
+        <label><input type="checkbox" id="optAddPageNumbers"> Add page numbers to merged PDF</label>
       </div>
     </div>
 
-    <!-- OPTIONS (Excel only) -->
+    <!-- EXCEL OPTIONS -->
     <div class="mg-options" id="excelOptions">
       <div class="mg-option-row">
-        <label>
-          <input type="radio" name="excelMode" value="sheets" checked>
-          Merge as sheets (one sheet per file)
-        </label>
+        <label><input type="radio" name="excelMode" value="sheets" checked> Merge as sheets (one sheet per file)</label>
       </div>
       <div class="mg-option-row">
-        <label>
-          <input type="radio" name="excelMode" value="rows">
-          Merge as rows (append data vertically)
-        </label>
+        <label><input type="radio" name="excelMode" value="rows"> Merge as rows (append data vertically)</label>
       </div>
       <div class="mg-option-row">
-        <label>
-          <input type="checkbox" id="optSkipHeaders" checked>
-          Skip header row in files 2, 3, 4… (avoid duplicates)
-        </label>
+        <label><input type="checkbox" id="optSkipHeaders" checked> Skip header row in files 2, 3, 4… </label>
       </div>
     </div>
 
-    <!-- OPTIONS (Word only) -->
+    <!-- WORD OPTIONS -->
     <div class="mg-options" id="wordOptions">
       <div class="mg-option-row">
-        <label>
-          <input type="checkbox" id="optPageBreak" checked>
-          Insert page break between documents
-        </label>
+        <label><input type="checkbox" id="optPageBreak" checked> Insert page break between documents</label>
       </div>
       <div class="mg-option-row">
-        <label>
-          <input type="checkbox" id="optPreserveStyles" checked>
-          Preserve original formatting (recommended)
-        </label>
+        <label><input type="checkbox" id="optPreserveStyles" checked> Preserve original formatting (recommended)</label>
       </div>
     </div>
 
-    <!-- PPT REDIRECT -->
-    <div class="mg-ppt-redirect" id="pptRedirect">
-      <h4>⚠️ PPT Merge — Use Our Two-Step Workflow</h4>
-      <p>PowerPoint files contain master slides, embedded fonts, and complex layouts that cannot be reliably merged in a browser. <b>Instead, use our proven two-step method</b> — it produces perfect, professional output every time:</p>
-      <p><b>Step 1:</b> Convert each PPT to PDF using PPT to PDF tool.<br>
-      <b>Step 2:</b> Merge the resulting PDFs using PDF Merge.</p>
-      <div class="mg-ppt-steps">
-        <a href="ppt-to-pdf.html">
-          <svg viewBox="0 0 24 24"><path d="M2 3h20v11H2zM7 21l5-5 5 5"/></svg>
-          Step 1: PPT to PDF
-        </a>
-        <a href="pdf-merge.html">
-          <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
-          Step 2: Merge PDFs
-        </a>
-      </div>
-    </div>
-
-    <!-- ACTION BUTTONS -->
+    <!-- MERGE BUTTONS (PDF/Word/Excel) -->
     <div class="mg-actions" id="actions" style="display:none">
       <button class="mg-btn primary" id="mergeBtn" disabled>
         <svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -816,7 +761,7 @@
       <li><b>Step 2:</b> Merge the resulting PDFs using <a href="pdf-merge.html">PDF Merge</a>.</li>
     </ol>
 
-    <p>The result is a clean, professional merged PDF — perfect for sharing, printing, or submitting. If you need to merge back to editable PPT, use Microsoft PowerPoint's built-in "Reuse Slides" feature.</p>
+    <p>When you select PPT mode and upload files, the tool shows two big orange buttons (Step 1 and Step 2) that open the respective tools in new tabs. You can also download all your PPT files as a ZIP for backup.</p>
 
     <h3>Common Use Cases</h3>
 
@@ -839,8 +784,6 @@
       <li><b>No tracking:</b> We don't log filenames, sizes, or content</li>
       <li><b>Offline capable:</b> After loading once, the tool works without internet</li>
     </ul>
-
-    <p>You can verify this by opening Chrome's Developer Tools (F12) → Network tab while merging — you'll see zero outgoing requests carrying your file data.</p>
 
     <h3>Frequently Asked Questions</h3>
 
@@ -886,7 +829,7 @@
 
     <details>
       <summary>Why can't PPT files be merged directly?</summary>
-      <p>PPT files contain master slides, layouts, embedded fonts, and complex relationships that can't be reliably merged in a browser. We recommend the two-step workflow: PPT → PDF → Merge PDF.</p>
+      <p>PPT files contain master slides, layouts, embedded fonts, and complex relationships that can't be reliably merged in a browser. We recommend the two-step workflow: PPT → PDF → Merge PDF. Our tool shows clear buttons for both steps when you select PPT files.</p>
     </details>
 
     <details>
@@ -911,7 +854,7 @@
 
     <details>
       <summary>Can I merge password-protected PDFs?</summary>
-      <p>Not directly. First unlock them using DocEasy's PDF Unlock tool, then merge the unlocked versions.</p>
+      <p>Not directly. First unlock them using DocEasy's <a href="pdf-lock-unlock.html">PDF Locker &amp; Unlocker</a> tool, then merge the unlocked versions.</p>
     </details>
 
     <details>
@@ -957,12 +900,12 @@
     <h3>Related DocEasy Tools</h3>
 
     <ul>
-      <li><a href="pdf-merge.html">PDF Merge</a> — Dedicated PDF merger with advanced options</li>
-      <li><a href="pdf-split.html">PDF Split</a> — Split PDFs into separate pages</li>
+      <li><a href="pdf-merge.html">PDF Merge</a> — Dedicated PDF merger</li>
+      <li><a href="pdf-lock-unlock.html">PDF Locker &amp; Unlocker</a> — Password protect PDFs</li>
+      <li><a href="pdf-split.html">PDF Split</a> — Split PDFs into pages</li>
       <li><a href="pdf-compressor.html">Compress PDF</a> — Reduce merged PDF size</li>
       <li><a href="ppt-to-pdf.html">PPT to PDF</a> — Convert slides before merging</li>
       <li><a href="word-to-pdf.html">Word to PDF</a> — Convert docs for PDF merging</li>
-      <li><a href="emitra-csc-tools.html">eMitra &amp; CSC Tools</a> — Complete toolkit for operators</li>
     </ul>
 
     <h3>Conclusion</h3>
@@ -981,7 +924,6 @@
 
 <!-- Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
@@ -989,24 +931,21 @@
 
 <script>
 (function () {
-  // Config per type
   var configs = {
-    pdf:   { accept: '.pdf',                    title: 'Drop PDF files here',     hint: 'or click to browse · .pdf files only · multiple files supported',  dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' },
-    word:  { accept: '.docx',                   title: 'Drop Word files here',    hint: 'or click to browse · .docx files only (not .doc)',                 dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' },
-    excel: { accept: '.xlsx,.xls',              title: 'Drop Excel files here',   hint: 'or click to browse · .xlsx or .xls files · multiple supported',    dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' },
-    ppt:   { accept: '.pptx,.ppt',              title: 'PPT Merge (Two-Step)',    hint: 'See workflow below — direct PPT merge is not supported',           dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' }
+    pdf:   { accept: '.pdf',         title: 'Drop PDF files here',      hint: 'or click to browse · .pdf files only · multiple files supported' },
+    word:  { accept: '.docx',        title: 'Drop Word files here',     hint: 'or click to browse · .docx files only (not .doc)' },
+    excel: { accept: '.xlsx,.xls',   title: 'Drop Excel files here',    hint: 'or click to browse · .xlsx or .xls files · multiple supported' },
+    ppt:   { accept: '.pptx,.ppt',   title: 'Drop PPT files here',      hint: 'or click to browse · .pptx or .ppt files · multiple supported' }
   };
 
   var currentType = 'pdf';
   var files = [];
   var nextId = 1;
 
-  // DOM refs
   var tabs = document.getElementById('tabs');
   var dropZone = document.getElementById('dropZone');
   var dropTitle = document.getElementById('dropTitle');
   var dropHint = document.getElementById('dropHint');
-  var dropIconPath = document.getElementById('dropIcon');
   var fileInput = document.getElementById('fileInput');
   var fileList = document.getElementById('fileList');
   var filesContainer = document.getElementById('filesContainer');
@@ -1014,10 +953,11 @@
   var pdfOptions = document.getElementById('pdfOptions');
   var excelOptions = document.getElementById('excelOptions');
   var wordOptions = document.getElementById('wordOptions');
-  var pptRedirect = document.getElementById('pptRedirect');
+  var pptActions = document.getElementById('pptActions');
   var actions = document.getElementById('actions');
   var mergeBtn = document.getElementById('mergeBtn');
   var clearBtn = document.getElementById('clearBtn');
+  var downloadZipBtn = document.getElementById('downloadZipBtn');
   var progress = document.getElementById('progress');
   var progressFill = document.getElementById('progressFill');
   var progressText = document.getElementById('progressText');
@@ -1026,68 +966,53 @@
   var downloadBtn = document.getElementById('downloadBtn');
   var errMsg = document.getElementById('errMsg');
 
-  // Helper functions
   function showError(msg) {
     errMsg.textContent = msg;
     errMsg.classList.add('show');
     setTimeout(function () { errMsg.classList.remove('show'); }, 8000);
   }
-
   function formatSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / 1048576).toFixed(1) + ' MB';
   }
-
   function updateProgress(ratio, text) {
     progressFill.style.width = Math.round(ratio * 100) + '%';
     if (text) progressText.textContent = text;
   }
 
-  // Switch type
   function switchType(type) {
     currentType = type;
     var cfg = configs[type];
 
-    // Tabs
     document.querySelectorAll('.mg-tab').forEach(function (t) {
       t.classList.toggle('active', t.getAttribute('data-type') === type);
     });
-
-    // Drop zone
     dropTitle.textContent = cfg.title;
     dropHint.textContent = cfg.hint;
     fileInput.setAttribute('accept', cfg.accept);
 
-    // Hide all options
     pdfOptions.classList.remove('show');
     excelOptions.classList.remove('show');
     wordOptions.classList.remove('show');
-    pptRedirect.classList.remove('show');
+    pptActions.classList.remove('show');
 
-    // Show current options
     if (type === 'pdf') pdfOptions.classList.add('show');
     if (type === 'excel') excelOptions.classList.add('show');
     if (type === 'word') wordOptions.classList.add('show');
-    if (type === 'ppt') pptRedirect.classList.add('show');
 
-    // Clear files on switch
     files = [];
     renderFiles();
-
-    // Hide result
     result.classList.remove('show');
     progress.classList.remove('show');
   }
 
-  // Tab click
   tabs.addEventListener('click', function (e) {
     var btn = e.target.closest('.mg-tab');
     if (!btn) return;
     switchType(btn.getAttribute('data-type'));
   });
 
-  // Render files
   function renderFiles() {
     filesContainer.innerHTML = '';
     fileCount.textContent = files.length;
@@ -1095,15 +1020,19 @@
     if (files.length === 0) {
       fileList.classList.remove('show');
       actions.style.display = 'none';
+      pptActions.classList.remove('show');
       mergeBtn.disabled = true;
       return;
     }
 
     fileList.classList.add('show');
+
     if (currentType === 'ppt') {
       actions.style.display = 'none';
+      pptActions.classList.add('show');
     } else {
       actions.style.display = 'flex';
+      pptActions.classList.remove('show');
       mergeBtn.disabled = files.length < 1;
     }
 
@@ -1122,7 +1051,6 @@
     });
   }
 
-  // Handle file actions
   filesContainer.addEventListener('click', function (e) {
     var action = e.target.getAttribute('data-action');
     var id = parseInt(e.target.getAttribute('data-id'), 10);
@@ -1144,11 +1072,10 @@
     renderFiles();
   });
 
-  // Add files
-  function addFiles(fileList) {
+  function addFiles(fileListObj) {
     var allowed = configs[currentType].accept.split(',');
     var added = 0, skipped = 0;
-    Array.prototype.forEach.call(fileList, function (f) {
+    Array.prototype.forEach.call(fileListObj, function (f) {
       var ext = '.' + f.name.split('.').pop().toLowerCase();
       var ok = allowed.some(function (a) { return a.trim().toLowerCase() === ext; });
       if (ok) {
@@ -1166,7 +1093,6 @@
     renderFiles();
   }
 
-  // Drop zone
   dropZone.addEventListener('click', function () { fileInput.click(); });
   fileInput.addEventListener('change', function () {
     if (this.files.length) addFiles(this.files);
@@ -1182,7 +1108,6 @@
     if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
   });
 
-  // Clear
   clearBtn.addEventListener('click', function () {
     files = [];
     renderFiles();
@@ -1190,17 +1115,48 @@
     progress.classList.remove('show');
   });
 
+  // PPT ZIP download
+  downloadZipBtn.addEventListener('click', async function () {
+    if (files.length === 0) return;
+    if (!window.JSZip) { showError('ZIP library not loaded. Please refresh.'); return; }
+    var btn = this;
+    btn.disabled = true;
+    progress.classList.add('show');
+    updateProgress(0.05, 'Packaging ZIP…');
+    try {
+      var zip = new JSZip();
+      for (var i = 0; i < files.length; i++) {
+        updateProgress(0.1 + (i / files.length) * 0.8, 'Adding ' + files[i].name);
+        var buf = await files[i].file.arrayBuffer();
+        zip.file(files[i].name, buf);
+      }
+      updateProgress(0.95, 'Compressing…');
+      var blob = await zip.generateAsync({ type: 'blob' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'ppt-files-' + Date.now() + '.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+      updateProgress(1, 'Done!');
+      setTimeout(function () { progress.classList.remove('show'); }, 1000);
+    } catch (e) {
+      showError('ZIP failed: ' + e.message);
+      progress.classList.remove('show');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
   // === MERGE LOGIC ===
 
   async function mergePDFs() {
     var PDFLib = window.PDFLib;
-    if (!PDFLib) throw new Error('PDF library not loaded. Check internet and refresh.');
-
+    if (!PDFLib) throw new Error('PDF library not loaded.');
     var merged = await PDFLib.PDFDocument.create();
     var totalPages = 0;
-    var addBookmarks = document.getElementById('optAddBookmarks').checked;
-    var filePages = [];
-
     for (var i = 0; i < files.length; i++) {
       updateProgress(0.1 + (i / files.length) * 0.7, 'Reading ' + files[i].name + '…');
       var buf = await files[i].file.arrayBuffer();
@@ -1208,109 +1164,61 @@
         var srcDoc = await PDFLib.PDFDocument.load(buf, { ignoreEncryption: true });
         var pages = await merged.copyPages(srcDoc, srcDoc.getPageIndices());
         pages.forEach(function (p) { merged.addPage(p); });
-        filePages.push({ name: files[i].name, startPage: totalPages });
         totalPages += pages.length;
       } catch (e) {
-        throw new Error('Could not read "' + files[i].name + '". It may be password-protected. Unlock it first using PDF Unlock tool.');
+        throw new Error('Could not read "' + files[i].name + '". Password-protected? Unlock it first.');
       }
     }
-
-    // Add bookmarks
-    if (addBookmarks && PDFLib.PDFDocument) {
-      // Simple approach — add outline via setOutline if supported
-      try {
-        var outline = filePages.map(function (fp) {
-          return { title: fp.name, pageNumber: fp.startPage };
-        });
-        // pdf-lib doesn't natively support outlines in older versions, skip silently
-      } catch (e) { /* ignore */ }
-    }
-
     updateProgress(0.85, 'Finalizing PDF…');
     var bytes = await merged.save();
     var blob = new Blob([bytes], { type: 'application/pdf' });
-    return {
-      blob: blob,
-      filename: 'merged-' + Date.now() + '.pdf',
-      stats: totalPages + ' pages from ' + files.length + ' file' + (files.length > 1 ? 's' : '')
-    };
+    return { blob: blob, filename: 'merged-' + Date.now() + '.pdf', stats: totalPages + ' pages from ' + files.length + ' file' + (files.length > 1 ? 's' : '') };
   }
 
   async function mergeWordDocs() {
     var JSZip = window.JSZip;
-    if (!JSZip) throw new Error('ZIP library not loaded. Check internet and refresh.');
-
+    if (!JSZip) throw new Error('ZIP library not loaded.');
     var addPageBreak = document.getElementById('optPageBreak').checked;
-
-    // Load all docx as zip
     var docs = [];
     for (var i = 0; i < files.length; i++) {
       updateProgress(0.1 + (i / files.length) * 0.6, 'Reading ' + files[i].name + '…');
       var buf = await files[i].file.arrayBuffer();
       var zip = await JSZip.loadAsync(buf);
       var docXml = await zip.file('word/document.xml').async('string');
-      docs.push({ zip: zip, xml: docXml, name: files[i].name });
+      docs.push({ zip: zip, xml: docXml });
     }
-
-    // Use the first doc as base
     var baseZip = docs[0].zip;
     var baseXml = docs[0].xml;
-
-    // Extract body content from each
     function getBodyContent(xml) {
       var m = xml.match(/<w:body[^>]*>([\s\S]*)<\/w:body>/);
       return m ? m[1] : '';
     }
-
-    // Strip the final section properties from non-first docs
     function stripSectPr(content) {
       return content.replace(/<w:sectPr[\s\S]*?<\/w:sectPr>/g, '');
     }
-
     var combinedBody = getBodyContent(baseXml);
-    // Remove sectPr from first body (will re-add at end)
     var firstSectPrMatch = combinedBody.match(/<w:sectPr[\s\S]*?<\/w:sectPr>/);
     var finalSectPr = firstSectPrMatch ? firstSectPrMatch[0] : '';
     combinedBody = stripSectPr(combinedBody);
-
     for (var j = 1; j < docs.length; j++) {
-      if (addPageBreak) {
-        // Add page break
-        combinedBody += '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
-      }
+      if (addPageBreak) combinedBody += '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
       var content = stripSectPr(getBodyContent(docs[j].xml));
       combinedBody += content;
     }
-
-    // Rebuild document.xml
     var newXml = baseXml.replace(/<w:body[^>]*>[\s\S]*?<\/w:body>/, '<w:body>' + combinedBody + finalSectPr + '</w:body>');
-
-    // Update the zip
     baseZip.file('word/document.xml', newXml);
-
     updateProgress(0.85, 'Packaging Word file…');
-    var blob = await baseZip.generateAsync({
-      type: 'blob',
-      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      compression: 'DEFLATE'
-    });
-
-    return {
-      blob: blob,
-      filename: 'merged-' + Date.now() + '.docx',
-      stats: files.length + ' documents merged'
-    };
+    var blob = await baseZip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', compression: 'DEFLATE' });
+    return { blob: blob, filename: 'merged-' + Date.now() + '.docx', stats: files.length + ' documents merged' };
   }
 
   async function mergeExcelFiles() {
     var XLSX = window.XLSX;
-    if (!XLSX) throw new Error('Excel library not loaded. Check internet and refresh.');
-
+    if (!XLSX) throw new Error('Excel library not loaded.');
     var mode = document.querySelector('input[name="excelMode"]:checked').value;
     var skipHeaders = document.getElementById('optSkipHeaders').checked;
 
     if (mode === 'sheets') {
-      // One sheet per file
       var outWb = XLSX.utils.book_new();
       var sheetNames = {};
       for (var i = 0; i < files.length; i++) {
@@ -1318,19 +1226,14 @@
         var buf = await files[i].file.arrayBuffer();
         var wb = XLSX.read(buf, { type: 'array' });
         var baseName = files[i].name.replace(/\.(xlsx?|XLSX?)$/, '').substring(0, 25);
-
         wb.SheetNames.forEach(function (sn) {
           var ws = wb.Sheets[sn];
           var sheetName = baseName;
           if (wb.SheetNames.length > 1) sheetName += '-' + sn;
-          // Ensure unique + <=31 chars
           sheetName = sheetName.substring(0, 28);
           var finalName = sheetName;
           var k = 1;
-          while (sheetNames[finalName]) {
-            finalName = sheetName.substring(0, 25) + '-' + k;
-            k++;
-          }
+          while (sheetNames[finalName]) { finalName = sheetName.substring(0, 25) + '-' + k; k++; }
           sheetNames[finalName] = true;
           XLSX.utils.book_append_sheet(outWb, ws, finalName);
         });
@@ -1338,50 +1241,33 @@
       updateProgress(0.85, 'Writing Excel file…');
       var out = XLSX.write(outWb, { bookType: 'xlsx', type: 'array' });
       var blob = new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      return {
-        blob: blob,
-        filename: 'merged-' + Date.now() + '.xlsx',
-        stats: files.length + ' files, ' + outWb.SheetNames.length + ' sheets'
-      };
+      return { blob: blob, filename: 'merged-' + Date.now() + '.xlsx', stats: files.length + ' files, ' + outWb.SheetNames.length + ' sheets' };
     } else {
-      // Merge as rows
       var outWb2 = XLSX.utils.book_new();
       var allRows = [];
-      var headerRow = null;
-
       for (var m = 0; m < files.length; m++) {
         updateProgress(0.1 + (m / files.length) * 0.7, 'Reading ' + files[m].name + '…');
         var buf2 = await files[m].file.arrayBuffer();
         var wb2 = XLSX.read(buf2, { type: 'array' });
         var firstSheet = wb2.Sheets[wb2.SheetNames[0]];
         var rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: '' });
-
         if (rows.length === 0) continue;
-
         if (m === 0) {
-          headerRow = rows[0];
-          allRows.push(headerRow);
-          for (var a = 1; a < rows.length; a++) allRows.push(rows[a]);
+          for (var a = 0; a < rows.length; a++) allRows.push(rows[a]);
         } else {
           var start = (skipHeaders && rows.length > 0) ? 1 : 0;
           for (var b = start; b < rows.length; b++) allRows.push(rows[b]);
         }
       }
-
       var newWs = XLSX.utils.aoa_to_sheet(allRows);
       XLSX.utils.book_append_sheet(outWb2, newWs, 'Merged');
       updateProgress(0.85, 'Writing Excel file…');
       var out2 = XLSX.write(outWb2, { bookType: 'xlsx', type: 'array' });
       var blob2 = new Blob([out2], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      return {
-        blob: blob2,
-        filename: 'merged-' + Date.now() + '.xlsx',
-        stats: allRows.length + ' rows from ' + files.length + ' files'
-      };
+      return { blob: blob2, filename: 'merged-' + Date.now() + '.xlsx', stats: allRows.length + ' rows from ' + files.length + ' files' };
     }
   }
 
-  // Merge button
   mergeBtn.addEventListener('click', async function () {
     if (files.length === 0) return;
     if (currentType === 'ppt') return;
@@ -1414,7 +1300,6 @@
     }
   });
 
-  // Initialize
   switchType('pdf');
 })();
 </script>
