@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Microphone Test — Check Your Mic Online Free | DocEasy</title>
+<meta name="description" content="Test your microphone with a live waveform and volume meter. Works in any browser. No upload, no signup. Diagnose mic problems instantly.">
+<meta name="keywords" content="microphone test, mic test, test mic online, microphone checker, mic volume test, browser mic test">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-mic-test.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+* { box-sizing: border-box; }
+.wrap { max-width: 820px; margin: 0 auto; padding: 34px 18px 80px; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--subtext-color); text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 18px; }
+.back-link:hover { color: #16a34a; }
+.back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.tool-head { text-align: center; margin-bottom: 26px; }
+.tool-head .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: #dcfce7; color: #16a34a; font-size: 11px; font-weight: 800; letter-spacing: .5px; margin-bottom: 12px; }
+.tool-head h1 { font-size: clamp(26px, 4.6vw, 38px); font-weight: 800; margin: 0 0 10px; letter-spacing: -1px; color: var(--text-color); }
+.tool-head p { color: var(--subtext-color); font-size: 15px; margin: 0; line-height: 1.55; }
+.card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: 0 8px 26px rgba(25,57,138,0.06); }
+.error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 16px; display: none; }
+.error-msg.show { display: block; }
+.meter-wrap { margin-bottom: 22px; }
+.meter-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--subtext-color); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .6px; }
+.meter { height: 18px; background: var(--card-hover); border-radius: 999px; overflow: hidden; position: relative; }
+.meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg,#16a34a,#22c55e 55%,#f59e0b 75%,#dc2626); border-radius: 999px; transition: width .06s linear; }
+.meter-val { font-variant-numeric: tabular-nums; }
+.viz { width: 100%; height: 140px; background: var(--card-hover); border-radius: 12px; display: block; margin-bottom: 20px; }
+.controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 12px; border: none; font-size: 14px; font-weight: 800; cursor: pointer; transition: all .18s; font-family: inherit; }
+.btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.btn.primary { background: #16a34a; color: #fff; box-shadow: 0 8px 22px rgba(22,163,74,.28); }
+.btn.primary:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.btn.ghost { background: var(--card-hover); color: var(--text-color); border: 1px solid var(--border-color); }
+.btn.ghost:hover { border-color: #16a34a; color: #16a34a; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.device-info { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border-color); font-size: 13px; }
+.device-info h3 { font-size: 13px; font-weight: 800; margin: 0 0 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--subtext-color); }
+.device-info .row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border-color); }
+.device-info .row:last-child { border-bottom: none; }
+.device-info .row b { color: var(--text-color); }
+.note { margin-top: 20px; font-size: 12.5px; color: var(--subtext-color); text-align: center; line-height: 1.6; }
+
+.deep-faq { max-width: 820px; margin: 64px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; color: var(--text-color); letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 580px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover { border-color: #16a34a; }
+.deep-faq .faq-item[open] { border-color: #16a34a; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #16a34a; font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: 'Courier New', monospace; color: #16a34a; font-weight: 600; }
+@media (max-width: 500px) { .deep-faq .faq-item { padding: 13px 15px; } .deep-faq summary { font-size: 13px; } .deep-faq .faq-item p { font-size: 12.5px; } }
+</style>
+</head>
+<body>
+<div id="doceasy-header"></div>
+<main class="wrap">
+  <a class="back-link" href="../media-tools.html">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+    Back to Media Tools
+  </a>
+
+  <div class="tool-head">
+    <div class="badge">🎤 DEVICE TEST</div>
+    <h1>Microphone Test</h1>
+    <p>Check your mic with a live waveform and volume meter. Nothing is recorded or uploaded.</p>
+  </div>
+
+  <div class="card">
+    <div class="error-msg" id="errMsg"></div>
+    <div class="meter-wrap">
+      <div class="meter-label"><span>Input Level</span><span class="meter-val" id="meterVal">0%</span></div>
+      <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+    </div>
+    <canvas class="viz" id="viz"></canvas>
+    <div class="controls">
+      <button class="btn primary" id="startBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+        Start Test
+      </button>
+      <button class="btn ghost" id="stopBtn" disabled>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+        Stop
+      </button>
+    </div>
+    <div class="device-info" id="deviceInfo" style="display:none">
+      <h3>Input Device</h3>
+      <div class="row"><span>Label</span><b id="devLabel">—</b></div>
+      <div class="row"><span>Sample rate</span><b id="devRate">—</b></div>
+      <div class="row"><span>Channels</span><b id="devChannels">—</b></div>
+      <div class="row"><span>Status</span><b style="color:#16a34a">✓ Working</b></div>
+    </div>
+    <p class="note">🔒 Your microphone input is only analysed locally. Nothing is stored or transmitted.</p>
+  </div>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Microphone Test — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about testing your microphone — how it works, troubleshooting, and privacy.</p>
+
+    <details class="faq-item" open>
+      <summary>How do I test my microphone with this tool?</summary>
+      <p>Testing your mic takes just three clicks. First, click the green "Start Test" button on this page. Second, when your browser asks for microphone permission, click "Allow" — this is a one-time grant. Third, speak into your microphone normally. You'll immediately see three things: a green waveform that moves with your voice, a horizontal volume meter that fills up from 0% to 100%, and detailed device information showing your mic's label, sample rate, and channel count. If the waveform stays flat and the meter reads 0%, your mic is either muted, disconnected, or being used by another app. If the waveform jumps and the meter moves — congratulations, your mic is working perfectly.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is this microphone test free?</summary>
+      <p>Yes — 100% free with no strings attached. There's no signup, no email, no payment, no daily limit, and no "pro" version. You can test your microphone as many times as you want, on as many devices as you want, forever. The tool is supported by lightweight display ads on other pages, which is why we can keep it completely free while protecting your privacy. We don't collect any data about your microphone, your voice, or your device beyond what's needed for the test itself — and even that data never leaves your browser.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my voice recorded or sent to any server during the test?</summary>
+      <p>No — nothing is recorded, saved, or transmitted. The Microphone Test uses the browser's Web Audio API to analyse your mic input in real-time and display the waveform and volume meter. No audio data is ever stored to disk, and no audio data ever leaves your device. The moment you click "Stop" or close the tab, everything disappears. You can verify this yourself: open Developer Tools (F12), go to the Network tab, and watch for requests while speaking. You'll see zero outgoing requests during the entire test. This makes DocEasy the safest way to check your mic before important calls or recordings.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does the browser ask for microphone permission?</summary>
+      <p>Every modern browser requires explicit user permission before any website can access the microphone. This is a security feature — it prevents malicious sites from secretly listening to your conversations. When you click "Start Test" for the first time, a popup appears asking something like "Allow this site to use your microphone?" Click "Allow" to proceed. You only need to grant this permission once — the browser remembers your choice for this site. If you accidentally clicked "Block," you can reset it by clicking the padlock or information icon next to the website URL in your address bar, then changing the microphone permission to "Allow" and refreshing the page.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>My microphone shows 0% and no waveform — what's wrong?</summary>
+      <p>If the meter stays at 0% and the waveform is flat, work through these checks in order. First, make sure your microphone isn't muted in your operating system — on Windows, check the taskbar sound icon; on macOS, check System Preferences → Sound → Input. Second, confirm the correct device is selected in your OS sound settings, especially if you have multiple microphones (laptop built-in, headset, USB mic, webcam mic). Third, close any other app that might be holding the microphone exclusively — Zoom, Teams, Discord, Skype, OBS, and browser tabs with other recording tools can all lock the mic. Fourth, check the physical mute switch if your mic has one (many headsets and USB mics do). Fifth, try refreshing the page and clicking "Start Test" again.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does my microphone show a different label than expected?</summary>
+      <p>Some browsers, especially after only granting temporary permission, display generic labels like "Default - Microphone (1)" or hide the label entirely for privacy reasons. This is a browser security feature, not a bug. Once you grant persistent microphone permission (which happens automatically after you click "Allow" on the popup), the browser may reveal the actual device name like "Blue Yeti Nano" or "Logitech C920". If your label still shows as generic, it usually means the browser is in a privacy-restricted mode — try opening the page in a regular (non-incognito) window, or check that your browser has permission to see device names in its settings.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What does the volume meter percentage mean?</summary>
+      <p>The percentage shows the loudness of your microphone input in real-time, calculated using RMS (Root Mean Square) analysis — the same method used by professional audio meters. Here's what the numbers mean: 0–10% means silence or very faint sound; 10–30% is quiet, normal for distant speech; 30–60% is ideal for recording — clear and strong without distortion; 60–80% is loud, good for close-mic recording; 80–95% is very loud, risk of clipping distortion; 95–100% is clipping — the audio is distorting and quality is permanently lost. For the best recordings, aim for peaks in the 50–75% range while speaking normally.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the test work on mobile phones?</summary>
+      <p>Yes — the Microphone Test works on Android phones, iPhones, and iPads running modern browsers. On Android, Chrome, Firefox, and Samsung Internet all support the Web Audio API needed for this test. On iPhone and iPad, Safari supports it from iOS 14.3 onwards. Just tap "Start Test," grant mic permission, and speak into your phone's mic. Note that on mobile, the label may show generic text like "Microphone" instead of the actual device name, and sample rate may vary by device. If your mobile device has multiple microphones (front, back, bottom), the browser typically uses the default — you can change this in your device's sound settings if needed.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I switch between multiple microphones?</summary>
+      <p>Not directly within this tool — it uses your operating system's default input device. To test a different microphone, first click "Stop" to end the current test, then change the default input device in your OS sound settings (Windows: Settings → System → Sound → Input; macOS: System Preferences → Sound → Input), then click "Start Test" again. Alternatively, some browsers let you pick a specific device from the permission popup — click the dropdown in the popup and select your preferred microphone before clicking "Allow." USB microphones and headsets usually appear automatically when plugged in.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What sample rate and channels should I expect?</summary>
+      <p>Most modern microphones report a sample rate of 44,100 Hz (CD quality) or 48,000 Hz (video/film standard). Both are excellent for voice. Some high-end USB mics report 96,000 Hz or 192,000 Hz — overkill for voice, but supported by the browser. Channel count is typically 1 (mono) for a single mic or 2 (stereo) for a stereo microphone setup. Webcams and headsets usually report mono. If your sample rate shows something unusual like 16,000 Hz or 8,000 Hz, it may indicate a Bluetooth headset in call mode (which reduces quality to save bandwidth) — switch to a wired mic for better quality.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does my Bluetooth headset show low sample rate?</summary>
+      <p>Bluetooth headsets use two audio profiles: A2DP for high-quality stereo playback, and HFP/HSP for two-way voice with the microphone. When you use a Bluetooth headset's mic, the browser switches to HFP mode, which reduces sample rate to 8,000 Hz or 16,000 Hz to save bandwidth — audio quality drops noticeably. This is a Bluetooth limitation, not a DocEasy bug. The fix: use a wired headset or a USB microphone for recording, and keep the Bluetooth headset only for listening. If you must record via Bluetooth, accept the lower quality or switch to a wired setup.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I test my microphone without speaking aloud?</summary>
+      <p>You can test whether the mic is picking up any sound by gently tapping the microphone body or the desk it rests on. Even a soft tap produces a visible spike on the waveform and meter. However, tapping won't tell you whether voice pickup is clear — for that, you need to actually speak. If you're in a quiet environment and can't speak (e.g., in a library), whisper softly into the mic and watch the meter — even a whisper should push it to 20–40%. If it stays at 0%, the mic isn't capturing sound at all.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How is this different from recording a voice memo?</summary>
+      <p>The Microphone Test is a diagnostic tool — it shows you live feedback about your mic's input (waveform, volume, device info) but doesn't save anything. It's designed to answer one question: "Is my mic working?" The Voice Recorder tool is for actual recording — it captures your voice into a file that you can download and share. Use the Mic Test to confirm your setup, then switch to the Voice Recorder to record. If the Mic Test shows a healthy waveform but the Voice Recorder produces silent files, the problem is likely a conflicting app holding the mic — close other audio apps and try again.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>The Microphone Test works on every modern browser: Google Chrome 90+, Microsoft Edge 90+, Mozilla Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Chrome and Edge offer the smoothest experience with the most detailed device information. Firefox works well too, though label display is more privacy-restricted. Safari on macOS and iOS works from version 14 onward. If you're on an outdated browser like Internet Explorer or Chrome below version 90, the tool may not function — please update your browser to the latest version, or switch to Chrome or Edge.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use the mic test for job interviews or classes?</summary>
+      <p>Absolutely — this is one of the most common uses. Before any Zoom, Google Meet, Teams, or Webex interview or class, run the Mic Test for 10 seconds to confirm your audio is working. If the meter reads 50–75% when you speak normally, you're ready. If it's too low, move closer to the mic or increase input volume. If it's clipping (95%+), move back or reduce input volume. Many people fail job interviews because their mic wasn't working — a 30-second test eliminates this risk. We recommend testing 15 minutes before any important call, and also testing your webcam using our Webcam Test tool.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the test work offline?</summary>
+      <p>Yes — after this page loads once, the Microphone Test works even without an internet connection. Since all analysis happens locally in your browser, you can switch off Wi-Fi and still test your mic. This is useful for privacy-conscious users or in locations with poor connectivity. The only requirement is that the page has fully loaded once. If you need to verify that no network activity is happening, open Developer Tools → Network tab, turn off Wi-Fi, and watch — you'll see zero requests during the test, proving that everything is running locally on your device.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why is my microphone picking up background noise?</summary>
+      <p>Background noise pickup is usually caused by three things: (1) high input gain — your OS input volume is set too high, amplifying everything including fan hums and distant voices; reduce it to 60–70%; (2) omnidirectional mic — laptop built-in mics pick up all directions; a cardioid USB mic or headset mic rejects background noise much better; (3) no noise suppression — some apps (Zoom, Teams) apply noise suppression, but the Mic Test shows raw input. To reduce noise: record in a quiet room, use a directional mic, keep gain moderate, and consider software noise reduction (Audacity's Noise Reduction filter) for critical recordings.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you keep any logs of my microphone test?</summary>
+      <p>No. We don't log device names, sample rates, durations, or any data from the microphone test. We don't track which devices you use or when you test them. Our analytics only records anonymous page views — never audio or device data. Since nothing leaves your browser, there's literally nothing for us to log. You can verify this by opening Developer Tools → Network tab and watching — zero outgoing requests to any DocEasy server during the test. This is the strongest possible privacy guarantee — not just a policy, but a technical impossibility for us to see your audio.</p>
+    </details>
+  </section>
+</main>
+<div id="doceasy-footer"></div>
+<script src="../assets/js/core/doceasy-core.js"></script>
+<script>
+(function () {
+  var startBtn = document.getElementById('startBtn');
+  var stopBtn = document.getElementById('stopBtn');
+  var meterFill = document.getElementById('meterFill');
+  var meterVal = document.getElementById('meterVal');
+  var viz = document.getElementById('viz');
+  var deviceInfo = document.getElementById('deviceInfo');
+  var errMsg = document.getElementById('errMsg');
+  var stream, audioCtx, analyser, animId, running = false;
+
+  function showError(m) { errMsg.textContent = m; errMsg.classList.add('show'); }
+
+  function loop() {
+    if (!running) return;
+    var w = viz.width = viz.clientWidth * 2;
+    var h = viz.height = 280;
+    var ctx = viz.getContext('2d');
+    var timeData = new Uint8Array(analyser.fftSize);
+
+    (function frame() {
+      if (!running) return;
+      analyser.getByteTimeDomainData(timeData);
+      var sum = 0;
+      for (var i = 0; i < timeData.length; i++) {
+        var v = (timeData[i] - 128) / 128;
+        sum += v * v;
+      }
+      var rms = Math.sqrt(sum / timeData.length);
+      var pct = Math.min(100, Math.round(rms * 320));
+      meterFill.style.width = pct + '%';
+      meterVal.textContent = pct + '%';
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = '#16a34a';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      var slice = w / timeData.length;
+      for (var j = 0; j < timeData.length; j++) {
+        var y = (timeData[j] / 128) * (h / 2);
+        if (j === 0) ctx.moveTo(0, y);
+        else ctx.lineTo(j * slice, y);
+      }
+      ctx.stroke();
+      animId = requestAnimationFrame(frame);
+    })();
+  }
+
+  startBtn.addEventListener('click', async function () {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      showError('Microphone access denied. Please allow mic permission in your browser settings.');
+      return;
+    }
+    var track = stream.getAudioTracks()[0];
+    var settings = track.getSettings ? track.getSettings() : {};
+    document.getElementById('devLabel').textContent = track.label || 'Default microphone';
+    document.getElementById('devRate').textContent = (settings.sampleRate || '—') + ' Hz';
+    document.getElementById('devChannels').textContent = settings.channelCount || 1;
+    deviceInfo.style.display = 'block';
+
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var src = audioCtx.createMediaStreamSource(stream);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 2048;
+    src.connect(analyser);
+    running = true;
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    loop();
+  });
+
+  stopBtn.addEventListener('click', function () {
+    running = false;
+    if (animId) cancelAnimationFrame(animId);
+    if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
+    if (audioCtx) audioCtx.close();
+    var ctx = viz.getContext('2d');
+    ctx.clearRect(0, 0, viz.width, viz.height);
+    meterFill.style.width = '0%';
+    meterVal.textContent = '0%';
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+  });
+})();
+</script>
+</body>
+</html>
