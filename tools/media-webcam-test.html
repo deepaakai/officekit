@@ -1,95 +1,626 @@
-<!-- FAQ -->
-<section class="deep-faq" id="faq">
-  <h2>Webcam Test — Frequently Asked Questions</h2>
-  <p class="faq-lead">Everything about testing your webcam — resolution, frame rate, troubleshooting, and privacy.</p>
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Webcam Test — Check Your Camera Online Free | DocEasy</title>
+<meta name="description" content="Test your webcam with a live preview. See resolution, frame rate, and device label. No upload, no signup, 100% private.">
+<meta name="keywords" content="webcam test, camera test, test webcam online, camera checker, webcam resolution test, browser webcam test">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-webcam-test.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Webcam Test — Check Your Camera Online Free | DocEasy">
+<meta property="og:description" content="Test your webcam with a live preview. Free, private, browser-based.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-webcam-test.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/webcam-test-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Webcam Test — Check Your Camera Online Free | DocEasy">
+<meta name="twitter:description" content="Test your webcam with a live preview. No upload, no signup.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/webcam-test-demo.jpg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Webcam Test — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/media-webcam-test.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Test your webcam with a live preview. Free, private, no signup."
+}
+</script>
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+/* Hide ad slots until AdSense approval */
+.ad-slot-container, .ad-placeholder { display: none !important; }
 
-  <details class="faq-item" open>
-    <summary>How do I test my webcam with this tool?</summary>
-    <p>Testing your webcam takes just two clicks. First, click the green "Start Camera" button on this page. Second, when your browser asks for camera permission, click "Allow" — this is a one-time grant. Your webcam feed appears immediately in the preview box. Below the video, you'll see four pieces of information: your camera's resolution (like 1280 × 720), the frame rate (usually 30 or 60 fps), the device label (like "HD Webcam C920"), and a green "Live" status. If the video appears and the stats show, your webcam is working perfectly. To stop, click "Stop" — the camera stream terminates immediately and no data is retained.</p>
-  </details>
+/* ============ Tool-specific styles ============ */
+.cam-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  max-width: 760px;
+  margin: 0 auto;
+}
+.cam-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: none;
+}
+[data-theme="dark"] .cam-error { background: #2a0a0a; border-color: #7f1d1d; color: #fca5a5; }
+.cam-error.show { display: block; }
 
-  <details class="faq-item">
-    <summary>Is this webcam test free?</summary>
-    <p>Yes — 100% free with no signup, no email, no payment, no daily limit, and no premium version. You can test your webcam as many times as you want, on as many devices as you want, forever. The tool is supported by lightweight display ads on other pages of the site, which is why we can keep it completely free. We don't sell your data, we don't track your camera usage, and we don't ask for your email to unlock features. Every visitor — whether you test once or a hundred times — gets the same full experience with no restrictions.</p>
-  </details>
+.cam-video-frame {
+  position: relative;
+  background: #0f172a;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 18px;
+}
+.cam-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cam-video-frame .placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  padding: 20px;
+}
 
-  <details class="faq-item">
-    <summary>Is my camera being recorded or sent anywhere?</summary>
-    <p>No — nothing is recorded, saved, or transmitted. The Webcam Test only displays a live preview in your browser using the getUserMedia API. It does not record video, does not take screenshots, and does not send anything over the internet. The moment you click "Stop," the camera stream is fully terminated and nothing remains anywhere. You can verify this yourself: open Developer Tools (F12), go to the Network tab, and watch for requests while the camera runs. You'll see zero outgoing data — proving that everything stays on your device. This makes DocEasy's webcam test safe for checking cameras before job interviews, online classes, or sensitive video calls.</p>
-  </details>
+.cam-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.cam-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+.cam-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.cam-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(25,57,138,.28);
+}
+.cam-btn.primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.cam-btn.ghost {
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.cam-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+.cam-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
 
-  <details class="faq-item">
-    <summary>Why does my browser ask for camera permission?</summary>
-    <p>Every modern browser requires explicit user permission before any website can access the camera. This is a fundamental security feature — it prevents malicious websites from secretly spying on you. When you click "Start Camera" for the first time, a popup appears asking "Allow this site to use your camera?" Click "Allow" to proceed. You only grant this permission once per browser — after that, it's remembered. If you accidentally clicked "Block," you can reset it by clicking the padlock or information icon next to the URL in your address bar, changing camera permission to "Allow," and refreshing the page. On mobile, similar permission prompts appear on first use.</p>
-  </details>
+.cam-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+  display: none;
+}
+.cam-stats.show { display: grid; }
+.cam-stat-box {
+  background: var(--card-hover);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.cam-stat-box .lbl {
+  font-size: 11px;
+  color: var(--subtext-color);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.cam-stat-box .val {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+}
+.cam-stat-box .val.ok { color: #16a34a; }
 
-  <details class="faq-item">
-    <summary>My webcam shows a black screen — what's wrong?</summary>
-    <p>A black screen usually means the camera is either blocked, in use by another app, or physically disabled. Work through these checks: (1) Verify camera permission is set to "Allow" in your browser — click the padlock icon in the address bar. (2) Close other apps that might be using the camera — Zoom, Teams, Discord, Skype, OBS, and other browser tabs with video tools all lock the camera exclusively. (3) Check for a physical privacy shutter on your laptop (many have a slider that blocks the lens) or a keyboard shortcut (like Fn+F8 on some Lenovo/HP laptops). (4) On Windows, check Settings → Privacy → Camera and confirm the toggle is on. (5) On macOS, check System Preferences → Security & Privacy → Camera. After fixing, refresh the page and try again.</p>
-  </details>
+.cam-note {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  text-align: center;
+  line-height: 1.6;
+}
 
-  <details class="faq-item">
-    <summary>What resolution and frame rate should I expect?</summary>
-    <p>Most modern webcams output one of the following resolutions: 640 × 480 (SD, rare now), 1280 × 720 (HD, most common), 1920 × 1080 (Full HD, common on newer laptops and USB webcams), 2560 × 1440 (QHD, rare), or 3840 × 2160 (4K, only on high-end webcams). Frame rates are typically 30 fps (standard) or 60 fps (smoother, on better webcams). Laptop built-in cameras usually output 720p at 30 fps. External USB webcams like the Logitech C920/C922/C930e output 1080p at 30 fps. If your resolution shows lower than expected, check that no other app is limiting it — Zoom and Teams sometimes lock the camera to 720p. Close other apps and refresh the page to see the full resolution.</p>
-  </details>
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article code {
+  background: var(--card-hover);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  text-align: center;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+.seo-article details {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 16px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+";
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 14px 0 0;
+  font-size: 15px !important;
+  line-height: 1.75;
+}
 
-  <details class="faq-item">
-    <summary>How can I check if my camera looks good before an interview?</summary>
-    <p>Use the Webcam Test as a 2-minute pre-interview checklist. First, verify the resolution is at least 720p — anything lower will look blurry on video calls. Second, check your lighting — your face should be evenly lit, with the light source in front of you (a window or ring light), not behind you. Third, check the background — a plain wall or bookshelf looks professional; a messy room with a bed or laundry does not. Fourth, position the camera at eye level — looking down at the camera looks unprofessional. Fifth, look directly at the camera lens while speaking, not at your own preview. Once you've adjusted, click "Stop" and open your interview app with confidence.</p>
-  </details>
+@media (max-width: 768px) {
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .article-image-box img { max-height: 260px; padding: 14px; }
+  .cam-btn { padding: 11px 20px; font-size: 13px; }
+  .cam-card { padding: 16px; }
+}
+</style>
+</head>
+<body>
 
-  <details class="faq-item">
-    <summary>Does the test work on mobile phones?</summary>
-    <p>Yes — the Webcam Test works on Android phones, iPhones, and iPads running modern browsers. On Android, Chrome and Firefox support the getUserMedia API, so the test works instantly. On iPhone and iPad, Safari (iOS 14.3 and later) supports it too. Just tap "Start Camera," grant camera permission, and the front or rear camera shows live. On mobile, the resolution may be higher than desktop (some phones have 12 MP cameras) but browsers typically downsample to 1280 × 720 for privacy and performance. Front camera is usually selected by default; the tool cannot currently switch between front and rear on mobile, but you can change this in your browser's camera permission settings.</p>
-  </details>
+<div id="doceasy-header"></div>
 
-  <details class="faq-item">
-    <summary>Can I switch between multiple cameras?</summary>
-    <p>Not directly within this tool — it uses your operating system's default camera. To test a different camera (like an external USB webcam when you have a laptop built-in one), first click "Stop," then change the default camera in your OS settings (Windows: Settings → Bluetooth & Devices → Cameras; macOS: no default, but apps request specific devices), then click "Start Camera" again. Alternatively, some browsers let you pick a specific device from the permission popup dropdown. On desktop, external USB webcams usually appear automatically when plugged in — after plugging one in, refresh the page and click "Start Camera" to use it.</p>
-  </details>
+<main class="main-wrap">
 
-  <details class="faq-item">
-    <summary>Why does my webcam label show as generic text?</summary>
-    <p>For privacy reasons, browsers sometimes show generic labels like "Camera (1)" or "Integrated Camera" instead of the actual device name. This happens most often when you've granted temporary permission (just for this session) rather than persistent permission. Once you grant persistent camera access (which typically happens after you click "Allow" and then refresh, or use the site again), the browser may reveal the actual device name like "Logitech BRIO" or "FaceTime HD Camera." On corporate-managed devices, labels may remain hidden by IT policy — this is intentional and cannot be changed.</p>
-  </details>
+  <div class="hero-box">
+    <h1 class="hero-title">Webcam Test</h1>
+    <p class="hero-sub">Check your webcam with a live preview. See resolution, frame rate, and device label instantly — no upload, no signup, 100% private.</p>
+  </div>
 
-  <details class="faq-item">
-    <summary>Does it work offline?</summary>
-    <p>Yes — after this page loads once, the Webcam Test works even without an internet connection. Since the camera preview runs entirely in your browser using the local getUserMedia API, no internet connection is required once the page is loaded. You can switch off Wi-Fi and still test your camera. This is useful in locations with poor connectivity or for privacy-conscious users who want to be 100% sure that no data is being transmitted. The only requirement is that the page has fully loaded once. If you need to verify offline functionality, turn off Wi-Fi, click "Start Camera," and confirm the preview still appears.</p>
-  </details>
+  <div class="ad-slot-container">Advertisement</div>
 
-  <details class="faq-item">
-    <summary>Which browsers are supported?</summary>
-    <p>The Webcam Test works on every modern browser: Google Chrome 90+, Microsoft Edge 90+, Mozilla Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium-based browsers. Chrome and Edge offer the smoothest experience with the fastest preview startup and most accurate device info. Firefox works well but may take longer to initialize on some systems. Safari on macOS and iOS works from version 14 onward, though some device labels may remain hidden for privacy. If you're using an outdated browser like Internet Explorer or Chrome below version 90, the "Start Camera" button may not work — update your browser to the latest version or switch to Chrome/Edge.</p>
-  </details>
+  <div class="cam-card">
+    <div class="cam-error" id="errMsg"></div>
 
-  <details class="faq-item">
-    <summary>How do I fix a laggy or low-fps preview?</summary>
-    <p>If your webcam preview is choppy, laggy, or shows a low frame rate, try these fixes. First, close other apps that might be competing for CPU — Zoom, Teams, OBS, and Discord are the usual culprits. Second, close other browser tabs with video content — YouTube, Twitch, Netflix all consume CPU and GPU resources. Third, disable browser extensions temporarily (especially ad blockers and video downloaders). Fourth, on Windows, change your camera settings in Privacy → Camera to "Let apps access your camera" if it's off. Fifth, check if your webcam supports 60 fps and whether your browser is requesting it — some cameras default to 30 fps and don't advertise 60 fps support. If the lag persists, the camera hardware itself may be the bottleneck.</p>
-  </details>
+    <div class="cam-video-frame">
+      <video id="video" autoplay playsinline muted></video>
+      <div class="placeholder" id="placeholder">Click "Start Camera" to begin</div>
+    </div>
 
-  <details class="faq-item">
-    <summary>Can I take a screenshot of the webcam preview?</summary>
-    <p>The tool itself doesn't have a screenshot button, but you can take one easily. On Windows, press the Print Screen key, or use Snipping Tool (Win+Shift+S). On macOS, press Cmd+Shift+3 for the full screen or Cmd+Shift+4 for a selection. On Linux, most desktop environments have built-in screenshot tools (like GNOME Screenshot or Spectacle). Alternatively, use the DocEasy Screen Recorder tool with "Current Tab" selected — this captures the webcam preview into a video file. This is useful for checking how you'll look on camera before an interview, or for creating a quick profile picture.</p>
-  </details>
+    <div class="cam-actions">
+      <button class="cam-btn primary" id="startBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
+        Start Camera
+      </button>
+      <button class="cam-btn ghost" id="stopBtn" disabled>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+        Stop
+      </button>
+    </div>
 
-  <details class="faq-item">
-    <summary>Why does my webcam look blurry or out of focus?</summary>
-    <p>Blurry webcam output has three common causes. First, the lens is dirty — fingerprints and dust are the #1 cause of blurry webcams. Gently wipe the lens with a microfibre cloth. Second, autofocus hasn't locked — some webcams take a few seconds to autofocus. Move the camera slightly or cover and uncover the lens to trigger refocus. Third, the resolution is too low — if the camera is outputting 480p and being displayed at a larger size, it will look pixelated. Check the resolution in our test's stats — anything below 720p will look soft on modern screens. Fourth, software interference — some apps (Zoom, Skype) apply aggressive denoise that softens the image. Close them and refresh the page to see the raw webcam output.</p>
-  </details>
+    <div class="cam-stats" id="stats">
+      <div class="cam-stat-box">
+        <div class="lbl">Resolution</div>
+        <div class="val" id="res">—</div>
+      </div>
+      <div class="cam-stat-box">
+        <div class="lbl">Frame Rate</div>
+        <div class="val" id="fps">—</div>
+      </div>
+      <div class="cam-stat-box">
+        <div class="lbl">Device</div>
+        <div class="val" id="label" style="font-size:13px;">—</div>
+      </div>
+      <div class="cam-stat-box">
+        <div class="lbl">Status</div>
+        <div class="val ok">✓ Live</div>
+      </div>
+    </div>
 
-  <details class="faq-item">
-    <summary>Can I use my phone as a webcam?</summary>
-    <p>Yes — with the right app. You can use your phone as a webcam for your computer by installing apps like Iriun Webcam, DroidCam, Camo, or EpocCam. These apps create a virtual camera on your PC/Mac that appears in our Webcam Test as a selectable device. Since these apps typically have higher-quality cameras than laptop webcams, this is a popular upgrade for content creators. Once the virtual camera is installed and running, refresh the Webcam Test page, click "Start Camera," and select the virtual camera from the permission dropdown if prompted. The result: your phone's 4K or 108MP camera feeding your desktop video calls with professional quality.</p>
-  </details>
+    <p class="cam-note">🔒 Video preview stays on your device. Nothing is recorded or uploaded.</p>
+  </div>
 
-  <details class="faq-item">
-    <summary>Does the test record any video?</summary>
-    <p>No — the Webcam Test does not record video at any point. It only displays a live preview that exists in your device's memory. There is no save button, no file output, and no data written to disk or sent over the network. The moment you click "Stop" or close the tab, the entire video stream is discarded and unrecoverable. If you need to record yourself for a video message, use DocEasy's Webcam Recorder tool instead — it captures video to a downloadable file. The test tool is purely for confirming that your camera works, not for capturing content.</p>
-  </details>
+  <div class="ad-slot-container">Advertisement</div>
 
-  <details class="faq-item">
-    <summary>Do you keep logs of my webcam test?</summary>
-    <p>No. We don't log device names, resolutions, frame rates, durations, or any metadata about your webcam test. We don't track which cameras you use or when you test them. Our analytics only records anonymous page views — never camera data. Since the video never leaves your browser, there's literally nothing for us to log. You can verify this by opening Developer Tools → Network tab and watching — zero outgoing requests to any DocEasy server during the test. This is the strongest possible privacy guarantee — not just a policy, but a technical impossibility for us to see your camera feed.</p>
-  </details>
-</section>
+  <!-- ============ HOW TO USE + FAQ (2000+ words) ============ -->
+  <section class="seo-article">
+
+    <h2>Free Online Webcam Test — Check Your Camera in Seconds (2026)</h2>
+
+    <p>Before any video call, online interview, class, or recording session, you need to know: is my webcam actually working? DocEasy's <b>free online webcam test</b> shows a live preview with resolution, frame rate, and device info so you can verify your camera setup in seconds — no install, no signup, no upload, and complete privacy.</p>
+
+    <div class="article-image-box">
+      <img src="../assets/images/webcam-test-demo.jpg" alt="Webcam test interface showing live camera preview and device statistics" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/webcam-test-demo.jpg]</div>';">
+      <div class="article-image-caption">The DocEasy Webcam Test shows a live preview with resolution, frame rate, and device label. Nothing is recorded.</div>
+    </div>
+
+    <h3>How to Use the Webcam Test</h3>
+
+    <p>Testing your webcam takes just two clicks:</p>
+
+    <ol>
+      <li><b>Step 1 — Click "Start Camera":</b> Your browser will ask for camera permission. Click "Allow" once — this is remembered for future visits.</li>
+      <li><b>Step 2 — See your preview:</b> The video feed appears immediately. Below it, you'll see four stats: resolution, frame rate, device label, and a green "Live" status.</li>
+    </ol>
+
+    <p>If the video appears and stats show, your webcam is working perfectly. If not, work through the troubleshooting checklist below.</p>
+
+    <h3>What the Stats Mean</h3>
+
+    <ul>
+      <li><b>Resolution:</b> The pixel dimensions of your camera output. Common values: 640×480 (SD, rare), 1280×720 (HD, most common), 1920×1080 (Full HD), 2560×1440 (QHD), 3840×2160 (4K).</li>
+      <li><b>Frame Rate (FPS):</b> The number of frames captured per second. 30 fps is standard; 60 fps is smoother. Lower FPS may indicate CPU strain or a bandwidth-limited camera.</li>
+      <li><b>Device Label:</b> The name your OS gives the camera (e.g. "HD Webcam C920," "FaceTime HD Camera"). Some browsers show generic names for privacy.</li>
+      <li><b>Status:</b> "✓ Live" confirms the camera stream is active and decoding properly.</li>
+    </ul>
+
+    <h3>Common Reasons Your Webcam Isn't Working</h3>
+
+    <p>If the preview shows a black screen or nothing happens, work through these checks:</p>
+
+    <ol>
+      <li><b>Camera permission denied:</b> Click the padlock icon in the address bar, set camera to "Allow," and refresh the page.</li>
+      <li><b>Another app is using the camera:</b> Zoom, Teams, Discord, Skype, OBS, and browser tabs can all lock the camera exclusively. Close them and try again.</li>
+      <li><b>Physical privacy shutter:</b> Many laptops have a slider that blocks the lens — check and open it.</li>
+      <li><b>OS-level block:</b> Windows — Settings → Privacy → Camera. macOS — System Preferences → Security & Privacy → Camera. Ensure your browser is allowed.</li>
+      <li><b>Wrong device selected:</b> If you have multiple cameras (built-in + USB), the browser uses the OS default. Change it in your OS sound/video settings.</li>
+      <li><b>Driver issues:</b> On Windows, open Device Manager and confirm the webcam isn't showing a warning icon. Update drivers if needed.</li>
+    </ol>
+
+    <h3>Why Webcam Testing Matters</h3>
+
+    <p>A webcam test is one of the most underrated checks you can do. Common scenarios where testing saves the day:</p>
+
+    <ul>
+      <li><b>Job interviews:</b> A black-screen interview immediately loses credibility. Verify before every call.</li>
+      <li><b>Online classes:</b> Teachers and students need to see each other — a dead camera derails the lesson.</li>
+      <li><b>Client meetings:</b> Professional first impressions require a working camera and good lighting.</li>
+      <li><b>Content creation:</b> YouTube videos, streams, and course recordings need reliable camera output.</li>
+      <li><b>Telehealth:</b> Doctors need clear video for remote consultations.</li>
+      <li><b>Family calls:</b> Grandparents want to see faces, not just hear voices.</li>
+    </ul>
+
+    <h3>Privacy and Security</h3>
+
+    <p>Your webcam feed is never recorded, saved, or transmitted. The Webcam Test only shows a live preview in your browser using the getUserMedia API. It does not record video, does not take screenshots, and does not send anything over the internet. The moment you click "Stop," the camera stream is fully terminated.</p>
+
+    <p>You can verify this yourself: open Developer Tools (F12), go to the Network tab, click "Start Camera," and watch. You'll see <b>zero outgoing data</b> — because the video stays entirely on your device.</p>
+
+    <h3>Works on All Modern Devices</h3>
+
+    <p>The Webcam Test works on:</p>
+
+    <ul>
+      <li><b>Desktop:</b> Windows, macOS, Linux, Chrome OS.</li>
+      <li><b>Browsers:</b> Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi.</li>
+      <li><b>Mobile:</b> Android (Chrome, Firefox), iOS (Safari 14.3+).</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
+      <summary>How do I test my webcam with this tool?</summary>
+      <p>Click "Start Camera," grant camera permission when the browser asks, and the live preview appears instantly. You'll see resolution, frame rate, device label, and a green "Live" status below the video.</p>
+    </details>
+
+    <details>
+      <summary>Is this webcam test free?</summary>
+      <p>Yes — 100% free, forever. No signup, no email, no payment, no daily limit, and no premium tier. Test as many times as you want, on any device.</p>
+    </details>
+
+    <details>
+      <summary>Is my camera being recorded or sent anywhere?</summary>
+      <p>No. The Webcam Test only shows a live preview. Nothing is recorded, saved, or transmitted. Verify by opening Developer Tools → Network tab — zero outgoing requests during the test.</p>
+    </details>
+
+    <details>
+      <summary>Why does my browser ask for camera permission?</summary>
+      <p>Every modern browser requires explicit permission before any website can access the camera. This prevents malicious sites from secretly spying on you. A "Stop Sharing" bar stays visible whenever the camera is active.</p>
+    </details>
+
+    <details>
+      <summary>My webcam shows a black screen — what's wrong?</summary>
+      <p>Check: (1) Camera permission set to "Allow" in the browser; (2) No other app (Zoom, Teams) holding the camera; (3) Physical privacy shutter open; (4) OS privacy settings allow browser access; (5) Correct camera selected in OS settings.</p>
+    </details>
+
+    <details>
+      <summary>What resolution and frame rate should I expect?</summary>
+      <p>Most laptop webcams output 1280×720 at 30 fps. External USB webcams (Logitech C920/C922) output 1920×1080 at 30 fps. Newer high-end webcams support 60 fps and 4K.</p>
+    </details>
+
+    <details>
+      <summary>How can I check if my camera looks good before an interview?</summary>
+      <p>Verify: (1) Resolution at least 720p; (2) Even lighting with light source in front (not behind); (3) Clean background; (4) Camera at eye level; (5) You look directly at the lens, not the preview.</p>
+    </details>
+
+    <details>
+      <summary>Does the test work on mobile phones?</summary>
+      <p>Yes — works on Android (Chrome, Firefox) and iPhone/iPad (Safari 14.3+). Tap "Start Camera," grant permission, and the front camera shows live. Mobile resolutions may be higher than desktop.</p>
+    </details>
+
+    <details>
+      <summary>Can I switch between multiple cameras?</summary>
+      <p>Not directly in the tool. To test a different camera, click "Stop," change the default camera in your OS settings, then click "Start Camera" again. Some browsers let you pick a specific device from the permission popup.</p>
+    </details>
+
+    <details>
+      <summary>Why does my webcam label show as generic text?</summary>
+      <p>For privacy, browsers sometimes show labels like "Camera (1)" until you grant persistent permission. Once granted, actual device names may appear. Corporate-managed devices may hide labels permanently.</p>
+    </details>
+
+    <details>
+      <summary>Does it work offline?</summary>
+      <p>Yes — after the page loads once, it works fully offline. Since the preview runs entirely locally via getUserMedia, no internet is needed. Turn off Wi-Fi and continue testing.</p>
+    </details>
+
+    <details>
+      <summary>Which browsers are supported?</summary>
+      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Chrome and Edge offer the fastest preview startup.</p>
+    </details>
+
+    <details>
+      <summary>How do I fix a laggy or low-fps preview?</summary>
+      <p>Close other CPU-heavy apps (Zoom, OBS, games), close other browser tabs with video, disable browser extensions temporarily, and check that Windows Privacy → Camera is enabled for your browser.</p>
+    </details>
+
+    <details>
+      <summary>Can I take a screenshot of the webcam preview?</summary>
+      <p>Yes — the tool has no built-in screenshot button, but use your OS tool (Windows: Win+Shift+S, macOS: Cmd+Shift+4). Or use the Screen Recorder with "Current Tab" to capture the preview as video.</p>
+    </details>
+
+    <details>
+      <summary>Why does my webcam look blurry or out of focus?</summary>
+      <p>Common causes: (1) Dirty lens — wipe with a microfibre cloth; (2) Autofocus hasn't locked — move the camera slightly; (3) Low resolution — verify 720p+ in the stats; (4) Software interference — close Zoom/Skype and refresh.</p>
+    </details>
+
+    <details>
+      <summary>Can I use my phone as a webcam?</summary>
+      <p>Yes — install apps like Iriun Webcam, DroidCam, Camo, or EpocCam to create a virtual camera on your PC/Mac. It appears in the Webcam Test as a selectable device. Great for upgrading to your phone's higher-quality camera.</p>
+    </details>
+
+    <details>
+      <summary>Does the test record any video?</summary>
+      <p>No. The Webcam Test only displays a live preview. There's no save button, no file output, no data written to disk. The moment you click "Stop," the video is discarded. For recording, use the Webcam Recorder tool.</p>
+    </details>
+
+    <details>
+      <summary>Do you keep logs of my webcam test?</summary>
+      <p>No. We don't log device names, resolutions, or any metadata. Our analytics only records anonymous page views. Since video never leaves your browser, there's nothing to log.</p>
+    </details>
+
+    <details>
+      <summary>Can I test on a Chromebook?</summary>
+      <p>Yes — Chrome OS runs Chrome, which supports getUserMedia fully. The test works identically to Windows, Mac, and Linux.</p>
+    </details>
+
+    <details>
+      <summary>What if the stats show but the video is black?</summary>
+      <p>This usually means DRM, driver issues, or GPU decode failure. Try switching to Chrome or Edge, updating your graphics driver, or restarting the browser. If a virtual camera app is running, close it and retry.</p>
+    </details>
+
+    <details>
+      <summary>How often should I test my webcam?</summary>
+      <p>Before every important video call, interview, or recording session. A 20-second test eliminates the risk of a dead camera at the worst moment. Some users bookmark this page as a pre-call checklist.</p>
+    </details>
+
+    <details>
+      <summary>Can I use this webcam test commercially?</summary>
+      <p>Yes — nothing is saved, so there's no output to license. Use the tool freely for personal, educational, or commercial purposes. No restrictions.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <ul>
+      <li><a href="media-webcam-recorder.html">Webcam Recorder</a> — Record video from your camera</li>
+      <li><a href="media-mic-test.html">Mic Test</a> — Verify microphone before video calls</li>
+      <li><a href="media-voice-recorder.html">Voice Recorder</a> — Record audio from your microphone</li>
+      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Capture screen with audio</li>
+      <li><a href="media-editor.html">Universal Media Editor</a> — Edit and convert media files</li>
+      <li><a href="media-teleprompter.html">Teleprompter</a> — Read scripts while recording</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>DocEasy's Webcam Test gives you instant camera verification in your browser — no install, no signup, no upload, no privacy risk. Whether you're preparing for a job interview, launching a stream, teaching online, or making family calls, a 20-second test ensures your camera works before the moment matters.</p>
+
+    <p>Try it above. Click "Start Camera," verify your preview and stats, and stop. All in your browser, all completely private.</p>
+
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  var video = document.getElementById('video');
+  var placeholder = document.getElementById('placeholder');
+  var startBtn = document.getElementById('startBtn');
+  var stopBtn = document.getElementById('stopBtn');
+  var stats = document.getElementById('stats');
+  var res = document.getElementById('res');
+  var fps = document.getElementById('fps');
+  var label = document.getElementById('label');
+  var errMsg = document.getElementById('errMsg');
+  var stream = null;
+
+  function showError(m) {
+    errMsg.textContent = m;
+    errMsg.classList.add('show');
+    setTimeout(function(){ errMsg.classList.remove('show'); }, 6000);
+  }
+
+  function measureFps() {
+    var last = performance.now(), frames = 0;
+    function tick(now) {
+      frames++;
+      var dt = now - last;
+      if (dt >= 1000) {
+        fps.textContent = frames + ' fps';
+        frames = 0;
+        last = now;
+      }
+      if (stream) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  startBtn.addEventListener('click', async function () {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false
+      });
+    } catch (e) {
+      showError('Camera access denied or unavailable. Please check permissions.');
+      return;
+    }
+
+    video.srcObject = stream;
+    placeholder.style.display = 'none';
+    var track = stream.getVideoTracks()[0];
+    var s = track.getSettings ? track.getSettings() : {};
+    res.textContent = (s.width || '—') + ' × ' + (s.height || '—');
+    label.textContent = track.label || 'Default camera';
+    stats.classList.add('show');
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    measureFps();
+  });
+
+  stopBtn.addEventListener('click', function () {
+    if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
+    stream = null;
+    video.srcObject = null;
+    placeholder.style.display = 'grid';
+    stats.classList.remove('show');
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+  });
+})();
+</script>
+</body>
+</html>
