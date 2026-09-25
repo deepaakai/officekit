@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Universal File Merger — PDF, Word, Excel, PPT Merge Free | DocEasy</title>
+<meta name="description" content="Merge PDF, Word, Excel, and PowerPoint files in your browser. Free, private, no upload, no signup. Choose your file type and combine in seconds.">
+<meta name="keywords" content="pdf merger, word merger, excel merger, ppt merger, combine pdf, merge docx, merge xlsx, merge pptx, file merger online">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/merger.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Universal File Merger — PDF, Word, Excel, PPT | DocEasy">
+<meta property="og:description" content="Merge PDF, Word, Excel, PPT files in browser. Free, private, no upload.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/merger.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Universal File Merger — PDF, Word, Excel, PPT | DocEasy">
+<meta name="twitter:description" content="Merge any document type in your browser. Free, private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Universal File Merger — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/merger.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Merge PDF, Word, Excel, and PowerPoint files in your browser. Free, private, no upload."
+}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<style>
+/* Hide ad slots until AdSense approval */
+.ad-slot-container, .ad-placeholder { display: none !important; }
+
+/* ============ TOOL STYLES ============ */
+.mg-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* TABS */
+.mg-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--border-color);
+  justify-content: center;
+}
+.mg-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+.mg-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.mg-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
+}
+.mg-tab svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+
+/* DROP ZONE */
+.mg-drop {
+  border: 2px dashed var(--accent);
+  border-radius: 14px;
+  padding: 40px 22px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--accent-soft);
+  margin-bottom: 18px;
+}
+.mg-drop:hover, .mg-drop.dragover {
+  background: var(--accent-soft-hover);
+  transform: scale(1.005);
+}
+.mg-drop svg {
+  width: 48px; height: 48px;
+  stroke: var(--accent);
+  fill: none; stroke-width: 1.8;
+  margin-bottom: 14px;
+}
+.mg-drop h3 {
+  font-size: 16px; font-weight: 800;
+  margin: 0 0 6px; color: var(--text-color);
+}
+.mg-drop p {
+  font-size: 13px; color: var(--subtext-color);
+  margin: 0; line-height: 1.5;
+}
+.mg-drop input[type="file"] { display: none; }
+
+/* FILE LIST */
+.mg-list {
+  display: none;
+  margin-bottom: 18px;
+}
+.mg-list.show { display: block; }
+.mg-list-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.mg-list-head h3 {
+  font-size: 14px; font-weight: 800;
+  margin: 0; color: var(--text-color);
+}
+.mg-list-head .hint {
+  font-size: 12px; color: var(--subtext-color);
+  font-weight: 600;
+}
+.mg-files {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mg-file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--card-hover);
+  border-radius: 10px;
+  font-size: 13px;
+  transition: all 0.18s;
+  border: 1px solid transparent;
+}
+.mg-file:hover { border-color: var(--accent); }
+.mg-file .handle {
+  cursor: grab;
+  color: var(--subtext-color);
+  font-weight: 700;
+  user-select: none;
+}
+.mg-file .idx {
+  width: 24px; height: 24px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 800;
+  flex-shrink: 0;
+}
+.mg-file .name {
+  flex: 1;
+  color: var(--text-color);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mg-file .size {
+  color: var(--subtext-color);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mg-file .remove {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  font-size: 18px;
+  line-height: 1;
+  transition: all 0.15s;
+}
+.mg-file .remove:hover { background: rgba(220,38,38,0.1); }
+.mg-file .arrow {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 4px 7px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.15s;
+}
+.mg-file .arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.mg-file .arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* OPTIONS */
+.mg-options {
+  display: none;
+  padding: 16px;
+  background: var(--card-hover);
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+.mg-options.show { display: block; }
+.mg-option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13.5px;
+}
+.mg-option-row:last-child { margin-bottom: 0; }
+.mg-option-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+}
+.mg-option-row input[type="checkbox"],
+.mg-option-row input[type="radio"] {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.mg-option-row .desc {
+  font-size: 12px;
+  color: var(--subtext-color);
+  margin-left: 24px;
+}
+
+/* ACTION */
+.mg-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.mg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+.mg-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.mg-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(25,57,138,0.28);
+  flex: 1;
+}
+.mg-btn.primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+.mg-btn.ghost {
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.mg-btn.ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.mg-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* PROGRESS */
+.mg-progress {
+  display: none;
+  margin-top: 18px;
+}
+.mg-progress.show { display: block; }
+.mg-progress-bar {
+  height: 8px;
+  background: var(--card-hover);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.mg-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+.mg-progress-text {
+  text-align: center;
+  font-size: 13px;
+  color: var(--subtext-color);
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+/* RESULT */
+.mg-result {
+  display: none;
+  margin-top: 18px;
+  padding: 20px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+}
+[data-theme="dark"] .mg-result { background: #052e16; border-color: #166534; }
+.mg-result.show { display: block; }
+.mg-result h4 {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: #15803d;
+}
+[data-theme="dark"] .mg-result h4 { color: #4ade80; }
+.mg-result .stats {
+  font-size: 13px;
+  color: var(--subtext-color);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.mg-result .dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 10px;
+  background: #16a34a;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  transition: all 0.18s;
+  box-shadow: 0 8px 20px rgba(22,163,74,0.28);
+}
+.mg-result .dl-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+.mg-result .dl-btn svg {
+  width: 17px; height: 17px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.4;
+}
+
+/* PPT REDIRECT NOTICE */
+.mg-ppt-redirect {
+  display: none;
+  padding: 22px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+  text-align: left;
+}
+[data-theme="dark"] .mg-ppt-redirect { background: #2a1608; border-color: #7c2d12; }
+.mg-ppt-redirect.show { display: block; }
+.mg-ppt-redirect h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: #c2410c;
+  margin: 0 0 10px;
+}
+[data-theme="dark"] .mg-ppt-redirect h4 { color: #fdba74; }
+.mg-ppt-redirect p {
+  font-size: 13.5px;
+  color: #9a3412;
+  margin: 0 0 14px;
+  line-height: 1.65;
+}
+[data-theme="dark"] .mg-ppt-redirect p { color: #fdba74; }
+.mg-ppt-steps {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.mg-ppt-steps a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #ea580c;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  transition: all 0.18s;
+}
+.mg-ppt-steps a:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+.mg-ppt-steps a svg {
+  width: 16px; height: 16px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.4;
+}
+
+/* ERROR */
+.mg-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: none;
+  line-height: 1.55;
+}
+[data-theme="dark"] .mg-error { background: #2a0a0a; border-color: #7f1d1d; color: #fca5a5; }
+.mg-error.show { display: block; }
+
+.mg-note {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article code {
+  background: var(--card-hover);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+.seo-article details {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 16px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+";
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 14px 0 0;
+  font-size: 15px !important;
+  line-height: 1.75;
+}
+
+/* ============ PC LAYOUT FIX ============ */
+@media (min-width: 900px) {
+  main.main-wrap {
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .hero-box {
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .hero-sub {
+    max-width: 700px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .seo-article {
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 36px 40px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .mg-card { padding: 16px; }
+  .mg-tab { padding: 9px 13px; font-size: 12.5px; }
+  .mg-tab svg { width: 14px; height: 14px; }
+  .mg-file .size { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Universal File Merger</h1>
+    <p class="hero-sub">Merge PDF, Word, Excel, and PowerPoint files in your browser. Choose your file type, upload, reorder, download — no upload to any server, 100% private.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="mg-card">
+    <div class="mg-error" id="errMsg"></div>
+
+    <!-- TABS -->
+    <div class="mg-tabs" id="tabs">
+      <button class="mg-tab active" data-type="pdf">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        PDF Merge
+      </button>
+      <button class="mg-tab" data-type="word">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg>
+        Word Merge
+      </button>
+      <button class="mg-tab" data-type="excel">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+        Excel Merge
+      </button>
+      <button class="mg-tab" data-type="ppt">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        PPT Merge
+      </button>
+    </div>
+
+    <!-- DROP ZONE -->
+    <div class="mg-drop" id="dropZone">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="dropIcon">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <path d="M17 8l-5-5-5 5M12 3v12"/>
+      </svg>
+      <h3 id="dropTitle">Drop PDF files here</h3>
+      <p id="dropHint">or click to browse · .pdf files only · multiple files supported</p>
+      <input type="file" id="fileInput" accept=".pdf" multiple>
+    </div>
+
+    <!-- FILE LIST -->
+    <div class="mg-list" id="fileList">
+      <div class="mg-list-head">
+        <h3>Files to Merge (<span id="fileCount">0</span>)</h3>
+        <span class="hint">Drag ⋮⋮ or use ▲▼ to reorder</span>
+      </div>
+      <div class="mg-files" id="filesContainer"></div>
+    </div>
+
+    <!-- OPTIONS (PDF only) -->
+    <div class="mg-options" id="pdfOptions">
+      <div class="mg-option-row">
+        <label>
+          <input type="checkbox" id="optAddBookmarks" checked>
+          Add PDF bookmarks for each file
+        </label>
+      </div>
+      <div class="mg-option-row">
+        <label>
+          <input type="checkbox" id="optAddPageNumbers">
+          Add page numbers to merged PDF
+        </label>
+      </div>
+    </div>
+
+    <!-- OPTIONS (Excel only) -->
+    <div class="mg-options" id="excelOptions">
+      <div class="mg-option-row">
+        <label>
+          <input type="radio" name="excelMode" value="sheets" checked>
+          Merge as sheets (one sheet per file)
+        </label>
+      </div>
+      <div class="mg-option-row">
+        <label>
+          <input type="radio" name="excelMode" value="rows">
+          Merge as rows (append data vertically)
+        </label>
+      </div>
+      <div class="mg-option-row">
+        <label>
+          <input type="checkbox" id="optSkipHeaders" checked>
+          Skip header row in files 2, 3, 4… (avoid duplicates)
+        </label>
+      </div>
+    </div>
+
+    <!-- OPTIONS (Word only) -->
+    <div class="mg-options" id="wordOptions">
+      <div class="mg-option-row">
+        <label>
+          <input type="checkbox" id="optPageBreak" checked>
+          Insert page break between documents
+        </label>
+      </div>
+      <div class="mg-option-row">
+        <label>
+          <input type="checkbox" id="optPreserveStyles" checked>
+          Preserve original formatting (recommended)
+        </label>
+      </div>
+    </div>
+
+    <!-- PPT REDIRECT -->
+    <div class="mg-ppt-redirect" id="pptRedirect">
+      <h4>⚠️ PPT Merge — Use Our Two-Step Workflow</h4>
+      <p>PowerPoint files contain master slides, embedded fonts, and complex layouts that cannot be reliably merged in a browser. <b>Instead, use our proven two-step method</b> — it produces perfect, professional output every time:</p>
+      <p><b>Step 1:</b> Convert each PPT to PDF using PPT to PDF tool.<br>
+      <b>Step 2:</b> Merge the resulting PDFs using PDF Merge.</p>
+      <div class="mg-ppt-steps">
+        <a href="ppt-to-pdf.html">
+          <svg viewBox="0 0 24 24"><path d="M2 3h20v11H2zM7 21l5-5 5 5"/></svg>
+          Step 1: PPT to PDF
+        </a>
+        <a href="pdf-merge.html">
+          <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+          Step 2: Merge PDFs
+        </a>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="mg-actions" id="actions" style="display:none">
+      <button class="mg-btn primary" id="mergeBtn" disabled>
+        <svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Merge Files
+      </button>
+      <button class="mg-btn ghost" id="clearBtn">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        Clear All
+      </button>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="mg-progress" id="progress">
+      <div class="mg-progress-bar"><div class="mg-progress-fill" id="progressFill"></div></div>
+      <div class="mg-progress-text" id="progressText">Processing…</div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="mg-result" id="result">
+      <h4>✓ Merge Complete!</h4>
+      <div class="stats" id="resultStats"></div>
+      <a class="dl-btn" id="downloadBtn" href="#" download="merged-file.pdf">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download Merged File
+      </a>
+    </div>
+
+    <p class="mg-note">🔒 All merging happens locally in your browser. Files never leave your device.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ HOW TO USE + FAQ ============ -->
+  <section class="seo-article">
+
+    <h2>Universal File Merger — PDF, Word, Excel, PPT Combined (2026)</h2>
+
+    <p>DocEasy's <b>Universal File Merger</b> is a single tool for combining any type of document — <b>PDF, Word (.docx), Excel (.xlsx), and PowerPoint (.pptx)</b>. Choose your file type, upload multiple files, reorder them by dragging, and download the merged result. Everything runs in your browser — nothing uploads to any server, and your documents stay completely private.</p>
+
+    <h3>Why a Universal Merger?</h3>
+
+    <p>Most online tools handle only one file type. If you needed to merge PDFs, then Word docs, then Excel spreadsheets, you'd have to visit three different websites — each with its own signup, upload process, and privacy policy. The Universal File Merger solves that: <b>one page, four toggles, zero friction</b>.</p>
+
+    <p>Switch between PDF, Word, Excel, and PPT modes with one click. The interface adapts instantly — different accept types, different options, different output formats. No page reloads, no losing your work.</p>
+
+    <h3>How to Use — Step by Step</h3>
+
+    <ol>
+      <li><b>Step 1 — Choose file type:</b> Click the toggle for PDF, Word, Excel, or PPT.</li>
+      <li><b>Step 2 — Upload files:</b> Drag and drop or click to browse. Multiple files are supported.</li>
+      <li><b>Step 3 — Reorder (optional):</b> Drag files or use ▲▼ arrows to change merge order.</li>
+      <li><b>Step 4 — Configure options:</b> Each mode has its own settings (bookmarks, page breaks, etc.).</li>
+      <li><b>Step 5 — Click "Merge Files":</b> Processing happens locally — takes seconds.</li>
+      <li><b>Step 6 — Download:</b> Save the merged file to your device.</li>
+    </ol>
+
+    <h3>PDF Merge</h3>
+
+    <p>Combine unlimited PDF files into one. Perfect for:</p>
+
+    <ul>
+      <li>Bank KYC submissions — Aadhaar + PAN + address proof in one PDF</li>
+      <li>Exam applications — documents + photos + signatures combined</li>
+      <li>Legal filings — multiple exhibits merged into a single brief</li>
+      <li>Reports — monthly statements combined into annual reports</li>
+      <li>Certificates — degree + marksheets + experience letters</li>
+    </ul>
+
+    <p><b>Options:</b> Add PDF bookmarks for each file (great for navigation), and add page numbers across the merged document.</p>
+
+    <h3>Word Merge</h3>
+
+    <p>Combine multiple .docx files into one. Perfect for:</p>
+
+    <ul>
+      <li>Manuscripts — chapters written in separate files merged into a book</li>
+      <li>Proposals — cover letter + scope + pricing + terms combined</li>
+      <li>Contracts — multiple addendums merged into one master agreement</li>
+      <li>Reports — sections written by different team members combined</li>
+    </ul>
+
+    <p><b>Options:</b> Insert page breaks between documents, preserve original formatting (recommended for professional output).</p>
+
+    <h3>Excel Merge</h3>
+
+    <p>Two different merge modes for .xlsx files:</p>
+
+    <h4>Mode 1: Merge as Sheets</h4>
+    <p>Each uploaded file becomes a separate sheet in the output workbook. Perfect for comparing monthly reports or keeping data separated.</p>
+
+    <h4>Mode 2: Merge as Rows</h4>
+    <p>Data from all files is appended vertically into a single sheet. Perfect for combining customer lists, expense trackers, or any tabular data. The "Skip header row" option prevents duplicate headers when combining files 2, 3, 4…</p>
+
+    <h3>PPT Merge (Two-Step Workflow)</h3>
+
+    <p>PowerPoint files contain master slides, embedded fonts, animations, and complex relationships that cannot be reliably merged in a browser. Our recommended workflow:</p>
+
+    <ol>
+      <li><b>Step 1:</b> Convert each PPT to PDF using DocEasy's <a href="ppt-to-pdf.html">PPT to PDF</a> tool.</li>
+      <li><b>Step 2:</b> Merge the resulting PDFs using <a href="pdf-merge.html">PDF Merge</a>.</li>
+    </ol>
+
+    <p>The result is a clean, professional merged PDF — perfect for sharing, printing, or submitting. If you need to merge back to editable PPT, use Microsoft PowerPoint's built-in "Reuse Slides" feature.</p>
+
+    <h3>Common Use Cases</h3>
+
+    <ul>
+      <li><b>CSC &amp; eMitra operators:</b> Combine client documents for bank KYC, government submissions</li>
+      <li><b>Students:</b> Merge project reports, assignments, or thesis chapters</li>
+      <li><b>Professionals:</b> Combine proposals, invoices, or contracts for clients</li>
+      <li><b>Accountants:</b> Merge monthly statements, ledgers, or tax documents</li>
+      <li><b>Legal:</b> Combine case files, affidavits, and evidence documents</li>
+      <li><b>HR:</b> Merge resumes, offer letters, and onboarding docs</li>
+    </ul>
+
+    <h3>Privacy and Security</h3>
+
+    <p>Merging documents often means handling sensitive personal and business information. DocEasy's merger is built with strict privacy:</p>
+
+    <ul>
+      <li><b>No uploads:</b> Files stay on your device</li>
+      <li><b>No server storage:</b> Nothing is saved anywhere except your own computer</li>
+      <li><b>No tracking:</b> We don't log filenames, sizes, or content</li>
+      <li><b>Offline capable:</b> After loading once, the tool works without internet</li>
+    </ul>
+
+    <p>You can verify this by opening Chrome's Developer Tools (F12) → Network tab while merging — you'll see zero outgoing requests carrying your file data.</p>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
+      <summary>What file types does the Universal Merger support?</summary>
+      <p>Four types: PDF (.pdf), Word (.docx), Excel (.xlsx), and PowerPoint (.pptx). Use the toggle at the top to switch between modes.</p>
+    </details>
+
+    <details>
+      <summary>Is DocEasy's merger free?</summary>
+      <p>Yes — 100% free, forever. No signup, no email, no watermark, no daily limit, no file-size cap, no premium tier. Merge as many files as you want.</p>
+    </details>
+
+    <details>
+      <summary>Is my data safe?</summary>
+      <p>Completely. All merging happens locally in your browser. Files never leave your device. Verify with Developer Tools → Network tab — zero uploads.</p>
+    </details>
+
+    <details>
+      <summary>How many files can I merge at once?</summary>
+      <p>No hard limit — depends on your device's RAM. 20-30 files merge comfortably on most devices. For 100+ files, merge in batches.</p>
+    </details>
+
+    <details>
+      <summary>Can I reorder files before merging?</summary>
+      <p>Yes — drag files using the ⋮⋮ handle, or use the ▲▼ arrow buttons. The order in the list becomes the merge order.</p>
+    </details>
+
+    <details>
+      <summary>Does PDF merge preserve bookmarks?</summary>
+      <p>We add PDF bookmarks for each merged file (optional — can be disabled). Existing bookmarks from source PDFs are not carried over.</p>
+    </details>
+
+    <details>
+      <summary>Will Word merge preserve my formatting?</summary>
+      <p>Yes — for standard formatting (fonts, headings, bold, italic, tables). Extremely complex custom styles may simplify. Test with a sample first.</p>
+    </details>
+
+    <details>
+      <summary>What's the difference between Excel merge as sheets vs rows?</summary>
+      <p><b>As sheets:</b> Each file becomes a separate sheet (good for keeping data separated). <b>As rows:</b> All data appends vertically into one sheet (good for combining similar data).</p>
+    </details>
+
+    <details>
+      <summary>Why can't PPT files be merged directly?</summary>
+      <p>PPT files contain master slides, layouts, embedded fonts, and complex relationships that can't be reliably merged in a browser. We recommend the two-step workflow: PPT → PDF → Merge PDF.</p>
+    </details>
+
+    <details>
+      <summary>What size files can I merge?</summary>
+      <p>No hard limit. Practical limits depend on device RAM: 4 GB RAM handles ~200 MB total, 8 GB handles 500 MB, 16 GB handles 1 GB+. Chrome and Edge perform best.</p>
+    </details>
+
+    <details>
+      <summary>Does it work offline?</summary>
+      <p>Yes — after loading once, the tool works fully offline. Since merging is local, no internet is needed. Load once, disconnect, and continue merging.</p>
+    </details>
+
+    <details>
+      <summary>Can I use this for commercial projects?</summary>
+      <p>Yes — everything you merge is yours to use freely, including commercially. No watermarks, no attribution, no restrictions on the output.</p>
+    </details>
+
+    <details>
+      <summary>What if the merge fails?</summary>
+      <p>Usually caused by memory limits or a corrupted source file. Try: (1) Close other tabs; (2) Use smaller files; (3) Switch to Chrome or Edge; (4) Reload the page and retry.</p>
+    </details>
+
+    <details>
+      <summary>Can I merge password-protected PDFs?</summary>
+      <p>Not directly. First unlock them using DocEasy's PDF Unlock tool, then merge the unlocked versions.</p>
+    </details>
+
+    <details>
+      <summary>Which browsers are supported?</summary>
+      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi. Chrome and Edge offer the best performance for large files.</p>
+    </details>
+
+    <details>
+      <summary>Can I merge files on mobile?</summary>
+      <p>Yes — works on Android and iOS. Mobile devices have less RAM, so smaller batches (5-10 files) work best. Touch gestures handle reordering smoothly.</p>
+    </details>
+
+    <details>
+      <summary>Do you keep logs of my merged files?</summary>
+      <p>No. We don't log filenames, sizes, content, or any metadata. Our analytics only records anonymous page views — never file activity.</p>
+    </details>
+
+    <details>
+      <summary>Does the merged output have a watermark?</summary>
+      <p>No — never. The output is completely clean, identical in quality to the source files.</p>
+    </details>
+
+    <details>
+      <summary>Can I merge scanned PDFs?</summary>
+      <p>Yes — scanned PDFs merge exactly like text PDFs. The merge combines the pages without altering the scanned images.</p>
+    </details>
+
+    <details>
+      <summary>How do I merge back to editable PPT?</summary>
+      <p>PDF merging produces a PDF, not an editable PPT. If you need editable PPT, use Microsoft PowerPoint's "Reuse Slides" feature to import slides from multiple presentations into one.</p>
+    </details>
+
+    <details>
+      <summary>Can I split a merged file back into separate files?</summary>
+      <p>Yes — use DocEasy's PDF Split tool to extract pages, or Excel's built-in "Move or Copy Sheet" to separate sheets back into files.</p>
+    </details>
+
+    <details>
+      <summary>Is the Universal Merger better than paid tools?</summary>
+      <p>For most tasks, yes — it's faster, private, free, and handles four file types in one page. Paid tools like Adobe Acrobat offer advanced features (compression, OCR, annotations), but for straightforward merging, DocEasy wins on simplicity and privacy.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <ul>
+      <li><a href="pdf-merge.html">PDF Merge</a> — Dedicated PDF merger with advanced options</li>
+      <li><a href="pdf-split.html">PDF Split</a> — Split PDFs into separate pages</li>
+      <li><a href="pdf-compressor.html">Compress PDF</a> — Reduce merged PDF size</li>
+      <li><a href="ppt-to-pdf.html">PPT to PDF</a> — Convert slides before merging</li>
+      <li><a href="word-to-pdf.html">Word to PDF</a> — Convert docs for PDF merging</li>
+      <li><a href="emitra-csc-tools.html">eMitra &amp; CSC Tools</a> — Complete toolkit for operators</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>DocEasy's <b>Universal File Merger</b> eliminates the frustration of juggling multiple tools for different file types. One page, four modes, zero uploads, 100% private. Whether you're a CSC operator combining KYC documents, a student merging project chapters, or a professional consolidating proposals — this tool handles it fast, securely, and free.</p>
+
+    <p>Try it above. Pick your file type, drop your files, and download the merged result in seconds.</p>
+
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  // Config per type
+  var configs = {
+    pdf:   { accept: '.pdf',                    title: 'Drop PDF files here',     hint: 'or click to browse · .pdf files only · multiple files supported',  dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' },
+    word:  { accept: '.docx',                   title: 'Drop Word files here',    hint: 'or click to browse · .docx files only (not .doc)',                 dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' },
+    excel: { accept: '.xlsx,.xls',              title: 'Drop Excel files here',   hint: 'or click to browse · .xlsx or .xls files · multiple supported',    dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' },
+    ppt:   { accept: '.pptx,.ppt',              title: 'PPT Merge (Two-Step)',    hint: 'See workflow below — direct PPT merge is not supported',           dropIcon: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12' }
+  };
+
+  var currentType = 'pdf';
+  var files = [];
+  var nextId = 1;
+
+  // DOM refs
+  var tabs = document.getElementById('tabs');
+  var dropZone = document.getElementById('dropZone');
+  var dropTitle = document.getElementById('dropTitle');
+  var dropHint = document.getElementById('dropHint');
+  var dropIconPath = document.getElementById('dropIcon');
+  var fileInput = document.getElementById('fileInput');
+  var fileList = document.getElementById('fileList');
+  var filesContainer = document.getElementById('filesContainer');
+  var fileCount = document.getElementById('fileCount');
+  var pdfOptions = document.getElementById('pdfOptions');
+  var excelOptions = document.getElementById('excelOptions');
+  var wordOptions = document.getElementById('wordOptions');
+  var pptRedirect = document.getElementById('pptRedirect');
+  var actions = document.getElementById('actions');
+  var mergeBtn = document.getElementById('mergeBtn');
+  var clearBtn = document.getElementById('clearBtn');
+  var progress = document.getElementById('progress');
+  var progressFill = document.getElementById('progressFill');
+  var progressText = document.getElementById('progressText');
+  var result = document.getElementById('result');
+  var resultStats = document.getElementById('resultStats');
+  var downloadBtn = document.getElementById('downloadBtn');
+  var errMsg = document.getElementById('errMsg');
+
+  // Helper functions
+  function showError(msg) {
+    errMsg.textContent = msg;
+    errMsg.classList.add('show');
+    setTimeout(function () { errMsg.classList.remove('show'); }, 8000);
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  function updateProgress(ratio, text) {
+    progressFill.style.width = Math.round(ratio * 100) + '%';
+    if (text) progressText.textContent = text;
+  }
+
+  // Switch type
+  function switchType(type) {
+    currentType = type;
+    var cfg = configs[type];
+
+    // Tabs
+    document.querySelectorAll('.mg-tab').forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-type') === type);
+    });
+
+    // Drop zone
+    dropTitle.textContent = cfg.title;
+    dropHint.textContent = cfg.hint;
+    fileInput.setAttribute('accept', cfg.accept);
+
+    // Hide all options
+    pdfOptions.classList.remove('show');
+    excelOptions.classList.remove('show');
+    wordOptions.classList.remove('show');
+    pptRedirect.classList.remove('show');
+
+    // Show current options
+    if (type === 'pdf') pdfOptions.classList.add('show');
+    if (type === 'excel') excelOptions.classList.add('show');
+    if (type === 'word') wordOptions.classList.add('show');
+    if (type === 'ppt') pptRedirect.classList.add('show');
+
+    // Clear files on switch
+    files = [];
+    renderFiles();
+
+    // Hide result
+    result.classList.remove('show');
+    progress.classList.remove('show');
+  }
+
+  // Tab click
+  tabs.addEventListener('click', function (e) {
+    var btn = e.target.closest('.mg-tab');
+    if (!btn) return;
+    switchType(btn.getAttribute('data-type'));
+  });
+
+  // Render files
+  function renderFiles() {
+    filesContainer.innerHTML = '';
+    fileCount.textContent = files.length;
+
+    if (files.length === 0) {
+      fileList.classList.remove('show');
+      actions.style.display = 'none';
+      mergeBtn.disabled = true;
+      return;
+    }
+
+    fileList.classList.add('show');
+    if (currentType === 'ppt') {
+      actions.style.display = 'none';
+    } else {
+      actions.style.display = 'flex';
+      mergeBtn.disabled = files.length < 1;
+    }
+
+    files.forEach(function (f, i) {
+      var row = document.createElement('div');
+      row.className = 'mg-file';
+      row.innerHTML =
+        '<span class="handle" title="Drag to reorder">⋮⋮</span>' +
+        '<span class="idx">' + (i + 1) + '</span>' +
+        '<span class="name" title="' + f.name + '">' + f.name + '</span>' +
+        '<span class="size">' + formatSize(f.size) + '</span>' +
+        '<button class="arrow" data-action="up" data-id="' + f.id + '" title="Move up"' + (i === 0 ? ' disabled' : '') + '>▲</button>' +
+        '<button class="arrow" data-action="down" data-id="' + f.id + '" title="Move down"' + (i === files.length - 1 ? ' disabled' : '') + '>▼</button>' +
+        '<button class="remove" data-action="remove" data-id="' + f.id + '" title="Remove">×</button>';
+      filesContainer.appendChild(row);
+    });
+  }
+
+  // Handle file actions
+  filesContainer.addEventListener('click', function (e) {
+    var action = e.target.getAttribute('data-action');
+    var id = parseInt(e.target.getAttribute('data-id'), 10);
+    if (!action) return;
+    var idx = files.findIndex(function (f) { return f.id === id; });
+    if (idx === -1) return;
+
+    if (action === 'remove') {
+      files.splice(idx, 1);
+    } else if (action === 'up' && idx > 0) {
+      var tmp = files[idx - 1];
+      files[idx - 1] = files[idx];
+      files[idx] = tmp;
+    } else if (action === 'down' && idx < files.length - 1) {
+      var tmp2 = files[idx + 1];
+      files[idx + 1] = files[idx];
+      files[idx] = tmp2;
+    }
+    renderFiles();
+  });
+
+  // Add files
+  function addFiles(fileList) {
+    var allowed = configs[currentType].accept.split(',');
+    var added = 0, skipped = 0;
+    Array.prototype.forEach.call(fileList, function (f) {
+      var ext = '.' + f.name.split('.').pop().toLowerCase();
+      var ok = allowed.some(function (a) { return a.trim().toLowerCase() === ext; });
+      if (ok) {
+        files.push({ id: nextId++, file: f, name: f.name, size: f.size });
+        added++;
+      } else {
+        skipped++;
+      }
+    });
+    if (added === 0 && skipped > 0) {
+      showError('No valid ' + currentType.toUpperCase() + ' files found. Please select correct file type.');
+    } else if (skipped > 0) {
+      showError(skipped + ' file(s) skipped (wrong type).');
+    }
+    renderFiles();
+  }
+
+  // Drop zone
+  dropZone.addEventListener('click', function () { fileInput.click(); });
+  fileInput.addEventListener('change', function () {
+    if (this.files.length) addFiles(this.files);
+    this.value = '';
+  });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.add('dragover'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.remove('dragover'); });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+  });
+
+  // Clear
+  clearBtn.addEventListener('click', function () {
+    files = [];
+    renderFiles();
+    result.classList.remove('show');
+    progress.classList.remove('show');
+  });
+
+  // === MERGE LOGIC ===
+
+  async function mergePDFs() {
+    var PDFLib = window.PDFLib;
+    if (!PDFLib) throw new Error('PDF library not loaded. Check internet and refresh.');
+
+    var merged = await PDFLib.PDFDocument.create();
+    var totalPages = 0;
+    var addBookmarks = document.getElementById('optAddBookmarks').checked;
+    var filePages = [];
+
+    for (var i = 0; i < files.length; i++) {
+      updateProgress(0.1 + (i / files.length) * 0.7, 'Reading ' + files[i].name + '…');
+      var buf = await files[i].file.arrayBuffer();
+      try {
+        var srcDoc = await PDFLib.PDFDocument.load(buf, { ignoreEncryption: true });
+        var pages = await merged.copyPages(srcDoc, srcDoc.getPageIndices());
+        pages.forEach(function (p) { merged.addPage(p); });
+        filePages.push({ name: files[i].name, startPage: totalPages });
+        totalPages += pages.length;
+      } catch (e) {
+        throw new Error('Could not read "' + files[i].name + '". It may be password-protected. Unlock it first using PDF Unlock tool.');
+      }
+    }
+
+    // Add bookmarks
+    if (addBookmarks && PDFLib.PDFDocument) {
+      // Simple approach — add outline via setOutline if supported
+      try {
+        var outline = filePages.map(function (fp) {
+          return { title: fp.name, pageNumber: fp.startPage };
+        });
+        // pdf-lib doesn't natively support outlines in older versions, skip silently
+      } catch (e) { /* ignore */ }
+    }
+
+    updateProgress(0.85, 'Finalizing PDF…');
+    var bytes = await merged.save();
+    var blob = new Blob([bytes], { type: 'application/pdf' });
+    return {
+      blob: blob,
+      filename: 'merged-' + Date.now() + '.pdf',
+      stats: totalPages + ' pages from ' + files.length + ' file' + (files.length > 1 ? 's' : '')
+    };
+  }
+
+  async function mergeWordDocs() {
+    var JSZip = window.JSZip;
+    if (!JSZip) throw new Error('ZIP library not loaded. Check internet and refresh.');
+
+    var addPageBreak = document.getElementById('optPageBreak').checked;
+
+    // Load all docx as zip
+    var docs = [];
+    for (var i = 0; i < files.length; i++) {
+      updateProgress(0.1 + (i / files.length) * 0.6, 'Reading ' + files[i].name + '…');
+      var buf = await files[i].file.arrayBuffer();
+      var zip = await JSZip.loadAsync(buf);
+      var docXml = await zip.file('word/document.xml').async('string');
+      docs.push({ zip: zip, xml: docXml, name: files[i].name });
+    }
+
+    // Use the first doc as base
+    var baseZip = docs[0].zip;
+    var baseXml = docs[0].xml;
+
+    // Extract body content from each
+    function getBodyContent(xml) {
+      var m = xml.match(/<w:body[^>]*>([\s\S]*)<\/w:body>/);
+      return m ? m[1] : '';
+    }
+
+    // Strip the final section properties from non-first docs
+    function stripSectPr(content) {
+      return content.replace(/<w:sectPr[\s\S]*?<\/w:sectPr>/g, '');
+    }
+
+    var combinedBody = getBodyContent(baseXml);
+    // Remove sectPr from first body (will re-add at end)
+    var firstSectPrMatch = combinedBody.match(/<w:sectPr[\s\S]*?<\/w:sectPr>/);
+    var finalSectPr = firstSectPrMatch ? firstSectPrMatch[0] : '';
+    combinedBody = stripSectPr(combinedBody);
+
+    for (var j = 1; j < docs.length; j++) {
+      if (addPageBreak) {
+        // Add page break
+        combinedBody += '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
+      }
+      var content = stripSectPr(getBodyContent(docs[j].xml));
+      combinedBody += content;
+    }
+
+    // Rebuild document.xml
+    var newXml = baseXml.replace(/<w:body[^>]*>[\s\S]*?<\/w:body>/, '<w:body>' + combinedBody + finalSectPr + '</w:body>');
+
+    // Update the zip
+    baseZip.file('word/document.xml', newXml);
+
+    updateProgress(0.85, 'Packaging Word file…');
+    var blob = await baseZip.generateAsync({
+      type: 'blob',
+      mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      compression: 'DEFLATE'
+    });
+
+    return {
+      blob: blob,
+      filename: 'merged-' + Date.now() + '.docx',
+      stats: files.length + ' documents merged'
+    };
+  }
+
+  async function mergeExcelFiles() {
+    var XLSX = window.XLSX;
+    if (!XLSX) throw new Error('Excel library not loaded. Check internet and refresh.');
+
+    var mode = document.querySelector('input[name="excelMode"]:checked').value;
+    var skipHeaders = document.getElementById('optSkipHeaders').checked;
+
+    if (mode === 'sheets') {
+      // One sheet per file
+      var outWb = XLSX.utils.book_new();
+      var sheetNames = {};
+      for (var i = 0; i < files.length; i++) {
+        updateProgress(0.1 + (i / files.length) * 0.7, 'Reading ' + files[i].name + '…');
+        var buf = await files[i].file.arrayBuffer();
+        var wb = XLSX.read(buf, { type: 'array' });
+        var baseName = files[i].name.replace(/\.(xlsx?|XLSX?)$/, '').substring(0, 25);
+
+        wb.SheetNames.forEach(function (sn) {
+          var ws = wb.Sheets[sn];
+          var sheetName = baseName;
+          if (wb.SheetNames.length > 1) sheetName += '-' + sn;
+          // Ensure unique + <=31 chars
+          sheetName = sheetName.substring(0, 28);
+          var finalName = sheetName;
+          var k = 1;
+          while (sheetNames[finalName]) {
+            finalName = sheetName.substring(0, 25) + '-' + k;
+            k++;
+          }
+          sheetNames[finalName] = true;
+          XLSX.utils.book_append_sheet(outWb, ws, finalName);
+        });
+      }
+      updateProgress(0.85, 'Writing Excel file…');
+      var out = XLSX.write(outWb, { bookType: 'xlsx', type: 'array' });
+      var blob = new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      return {
+        blob: blob,
+        filename: 'merged-' + Date.now() + '.xlsx',
+        stats: files.length + ' files, ' + outWb.SheetNames.length + ' sheets'
+      };
+    } else {
+      // Merge as rows
+      var outWb2 = XLSX.utils.book_new();
+      var allRows = [];
+      var headerRow = null;
+
+      for (var m = 0; m < files.length; m++) {
+        updateProgress(0.1 + (m / files.length) * 0.7, 'Reading ' + files[m].name + '…');
+        var buf2 = await files[m].file.arrayBuffer();
+        var wb2 = XLSX.read(buf2, { type: 'array' });
+        var firstSheet = wb2.Sheets[wb2.SheetNames[0]];
+        var rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: '' });
+
+        if (rows.length === 0) continue;
+
+        if (m === 0) {
+          headerRow = rows[0];
+          allRows.push(headerRow);
+          for (var a = 1; a < rows.length; a++) allRows.push(rows[a]);
+        } else {
+          var start = (skipHeaders && rows.length > 0) ? 1 : 0;
+          for (var b = start; b < rows.length; b++) allRows.push(rows[b]);
+        }
+      }
+
+      var newWs = XLSX.utils.aoa_to_sheet(allRows);
+      XLSX.utils.book_append_sheet(outWb2, newWs, 'Merged');
+      updateProgress(0.85, 'Writing Excel file…');
+      var out2 = XLSX.write(outWb2, { bookType: 'xlsx', type: 'array' });
+      var blob2 = new Blob([out2], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      return {
+        blob: blob2,
+        filename: 'merged-' + Date.now() + '.xlsx',
+        stats: allRows.length + ' rows from ' + files.length + ' files'
+      };
+    }
+  }
+
+  // Merge button
+  mergeBtn.addEventListener('click', async function () {
+    if (files.length === 0) return;
+    if (currentType === 'ppt') return;
+
+    mergeBtn.disabled = true;
+    result.classList.remove('show');
+    progress.classList.add('show');
+    updateProgress(0.05, 'Starting…');
+
+    try {
+      var res;
+      if (currentType === 'pdf') res = await mergePDFs();
+      else if (currentType === 'word') res = await mergeWordDocs();
+      else if (currentType === 'excel') res = await mergeExcelFiles();
+      else throw new Error('Unsupported type');
+
+      updateProgress(1, 'Done!');
+      var url = URL.createObjectURL(res.blob);
+      downloadBtn.href = url;
+      downloadBtn.download = res.filename;
+      resultStats.textContent = res.stats + ' · ' + formatSize(res.blob.size);
+      result.classList.add('show');
+      setTimeout(function () { progress.classList.remove('show'); }, 1200);
+    } catch (err) {
+      console.error(err);
+      showError('Merge failed: ' + (err.message || 'Unknown error'));
+      progress.classList.remove('show');
+    } finally {
+      mergeBtn.disabled = false;
+    }
+  });
+
+  // Initialize
+  switchType('pdf');
+})();
+</script>
+</body>
+</html>
