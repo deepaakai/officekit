@@ -546,7 +546,7 @@
 
     <div class="mg-options" id="pptOptions">
       <div class="mg-option-row">
-        <label><input type="checkbox" id="optGeneratePptPdf" checked> Also generate a merged presentation PDF (.pdf)</label>
+        <label><input type="checkbox" id="optGeneratePptPdf" checked> Also generate a simplified PDF view (.pdf)</label>
       </div>
     </div>
 
@@ -599,7 +599,7 @@
         </div>
       </div>
 
-      <!-- PPT Download Grid: Single PPTX File + Single PDF File -->
+      <!-- PPT Download Grid: Single PPTX File + Simplified PDF View -->
       <div class="mg-dl-grid" id="dlPptGrid" style="display:none">
         <div class="mg-dl-card ppt">
           <span class="dl-badge">Direct Presentation</span>
@@ -618,9 +618,9 @@
           <span class="dl-badge">Document View</span>
           <h5 class="dl-title">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Merged PDF (.pdf)
+            Simplified PDF (.pdf)
           </h5>
-          <p class="dl-desc">Download all merged slides as a single, multi-page presentation PDF document.</p>
+          <p class="dl-desc">A simplified PDF view of all slides — opens the merged deck in any reader.</p>
           <a class="mg-dl-btn clean-btn" id="downloadPptPdfBtn" href="#" download="presentation.pdf">
             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
             Download as PDF
@@ -646,7 +646,7 @@
     <p>DocEasy's <b>Universal File Merger</b> is a single tool for combining any type of document — <b>PDF, Word (.docx), Excel (.xlsx), and PowerPoint (.pptx)</b>. Choose your file type, upload multiple files, reorder them by dragging, and download the merged result directly. Everything runs in your browser — nothing uploads to any server, and your documents stay completely private.</p>
 
     <h3>Direct PPT Merging Without ZIP</h3>
-    <p>Unlike other online tools that force you into a ZIP archive, DocEasy combines presentation files directly inside the browser into a <b>single, native .pptx presentation</b>. It automatically registers all slides, re-maps relationship IDs, and preserves embedded slide media so you can open your combined presentation directly in Microsoft PowerPoint, Google Slides, or Keynote without errors. You also get an instant option to download the entire deck as a single, beautifully formatted <b>PDF</b>.</p>
+    <p>Unlike other online tools that force you into a ZIP archive, DocEasy combines presentation files directly inside the browser into a <b>single, native .pptx presentation</b>. It re-registers all slides in a continuous order, copies each slide's layout, master and theme parts (renamed as needed) so themes stay intact, brings over embedded media, and drops risky sidecar parts like charts and notes. You also get a <b>simplified PDF view</b> you can open in any reader.</p>
 
     <h3>How to Use — Step by Step</h3>
     <ol>
@@ -989,7 +989,7 @@
         var srcDoc = await PDFLib.PDFDocument.load(buf, { ignoreEncryption: true });
         var pageIndices = srcDoc.getPageIndices();
         var copiedPages = await merged.copyPages(srcDoc, pageIndices);
-        
+
         var firstPageIndex = totalPages;
         copiedPages.forEach(function (p) { merged.addPage(p); });
         totalPages += copiedPages.length;
@@ -1073,7 +1073,7 @@
     var JSZip = window.JSZip;
     if (!JSZip) throw new Error('ZIP library not loaded.');
     var addPageBreak = document.getElementById('optPageBreak').checked;
-    
+
     var docs = [];
     for (var i = 0; i < files.length; i++) {
       updateProgress(0.1 + (i / files.length) * 0.5, 'Reading ' + files[i].name + '…');
@@ -1124,7 +1124,7 @@
           if (idMatch && targetMatch) {
             var oldId = idMatch[1];
             var newId = 'rIdDE_' + j + '_' + rIdx;
-            
+
             var targetPattern = new RegExp('"' + oldId + '"', 'g');
             otherContent = otherContent.replace(targetPattern, '"' + newId + '"');
 
@@ -1218,232 +1218,443 @@
       updateProgress(0.85, 'Writing Excel file…');
       var out2 = XLSX.write(outWb2, { bookType: 'xlsx', type: 'array' });
       var blob2 = new Blob([out2], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      return { blob: blob2, filename: 'merged-' + Date.now() + '.xlsx', stats: allRows.length + ' rows from ' + files.length + ' files' };
+      return { blob2: blob2, filename: 'merged-' + Date.now() + '.xlsx', stats: allRows.length + ' rows from ' + files.length + ' files' };
     }
   }
 
-  // === 4. NATIVE PPT MERGER (Single .pptx & Single .pdf) ===
+  // === 4. NATIVE PPT MERGER (Single .pptx + Simplified .pdf) ===
+  // Rewritten: copies each non-base slide's full layout/master/theme chain
+  // with renamed parts, re-links media + slide rIds so PowerPoint opens
+  // the file cleanly. PDF remains a simplified view (browser can't render
+  // true PPTX), with real slide size and first-image embed.
   async function mergePPTs() {
     var JSZip = window.JSZip;
     if (!JSZip) throw new Error('ZIP library not loaded.');
 
-    updateProgress(0.1, 'Loading base presentation…');
+    // helpers
+    function attrOf(tag) {
+      var out = {};
+      var re = /(\w+)="([^"]*)"/g; var m;
+      while ((m = re.exec(tag)) !== null) out[m[1]] = m[2];
+      return out;
+    }
+    function escapeXml(s) {
+      return String(s).replace(/[<>&"]/g, function (c) {
+        return { '<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;' }[c];
+      });
+    }
+    function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function resolveRels(relsDir, target) {
+      var t = String(target || '').replace(/^[./\\]+/, '');
+      if (t.indexOf('../') === 0) {
+        var p = relsDir.split('/').filter(Boolean); p.pop();
+        return resolveRels(p.join('/'), t.substring(3));
+      }
+      if (t.indexOf('./') === 0) return resolveRels(relsDir, t.substring(2));
+      return (relsDir ? relsDir + '/' : '') + t;
+    }
+    function mediaContentType(ext) {
+      ext = ext.toLowerCase();
+      if (ext === 'png') return 'image/png';
+      if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
+      if (ext === 'gif') return 'image/gif';
+      if (ext === 'svg') return 'image/svg+xml';
+      if (ext === 'emf') return 'image/x-emf';
+      if (ext === 'wmf') return 'image/x-wmf';
+      if (ext === 'mp4') return 'video/mp4';
+      return 'application/octet-stream';
+    }
+
+    updateProgress(0.05, 'Loading base presentation…');
     var baseBuf = await files[0].file.arrayBuffer();
     var baseZip = await JSZip.loadAsync(baseBuf);
 
     var presXmlFile = baseZip.file('ppt/presentation.xml');
     var presRelsFile = baseZip.file('ppt/_rels/presentation.xml.rels');
-    var contentTypesFile = baseZip.file('[Content_Types].xml');
-
-    if (!presXmlFile || !presRelsFile) {
-      throw new Error('"' + files[0].name + '" is not a valid modern PowerPoint (.pptx) presentation.');
+    var ctFile = baseZip.file('[Content_Types].xml');
+    if (!presXmlFile || !presRelsFile || !ctFile) {
+      throw new Error('"' + files[0].name + '" is not a valid modern PowerPoint (.pptx).');
     }
 
-    var basePresXml = await presXmlFile.async('string');
-    var basePresRels = await presRelsFile.async('string');
-    var contentTypesXml = await contentTypesFile.async('string');
+    var presXml = await presXmlFile.async('string');
+    var presRels = await presRelsFile.async('string');
+    var contentTypes = await ctFile.async('string');
 
-    // Count existing base slides
-    var baseSlideMatches = basePresXml.match(/<p:sldId[^>]+>/g) || [];
-    var totalSlides = baseSlideMatches.length;
+    // unique-id allocators
+    function maxRIdIn(relsXml) {
+      var max = 0, m; var re = /Id="rId(\d+)"/g;
+      while ((m = re.exec(relsXml)) !== null) max = Math.max(max, parseInt(m[1], 10) || 0);
+      return max;
+    }
+    function maxSldIdInLst(pres) {
+      var lst = pres.match(/<p:sldIdLst[^>]*>[\s\S]*?<\/p:sldIdLst>/i);
+      if (!lst) return 255;
+      var max = 255; var m; var re = /<p:sldId\b[^>]*>/gi;
+      while ((m = re.exec(lst[0])) !== null) {
+        var a = attrOf(m[0]);
+        var n = parseInt(a.id || '255', 10);
+        if (!isNaN(n) && n > max) max = n;
+      }
+      return max;
+    }
+    var rIdN = maxRIdIn(presRels);
+    var sldIdN = maxSldIdInLst(presXml);
 
-    // Find max sldId
-    var sldIdMatches = basePresXml.match(/id="(\d+)"/g) || [];
-    var maxSldId = 255;
-    sldIdMatches.forEach(function (m) {
-      var num = parseInt(m.replace(/\D/g, ''), 10);
-      if (num > maxSldId) maxSldId = num;
-    });
+    // track all paths already in baseZip so reserved names don't collide
+    var reserved = Object.create(null);
+    baseZip.forEach(function (p, f) { if (!f.dir) reserved[p] = true; });
+    function reservePath(p) {
+      if (!reserved[p]) { reserved[p] = true; return p; }
+      var ext = p.substring(p.lastIndexOf('.'));
+      var dir = p.substring(0, p.lastIndexOf('/') + 1);
+      var stem = p.substring(dir.length, p.length - ext.length);
+      var i = 1, out;
+      do {
+        out = dir + stem + '__' + Date.now().toString(36) + '_' + i + ext;
+        i++;
+      } while (reserved[out]);
+      reserved[out] = true;
+      return out;
+    }
 
-    // Find max rId in presentation rels
-    var rIdMatches = basePresRels.match(/Id="rId(\d+)"/g) || [];
-    var maxRId = 1;
-    rIdMatches.forEach(function (m) {
-      var num = parseInt(m.replace(/\D/g, ''), 10);
-      if (num > maxRId) maxRId = num;
-    });
-
-    var newSldIdXml = '';
-    var newPresRelsXml = '';
-    var newContentTypesXml = '';
-
-    // Append subsequent PPTX presentations
-    for (var fIdx = 1; fIdx < files.length; fIdx++) {
-      updateProgress(0.2 + (fIdx / files.length) * 0.4, 'Merging ' + files[fIdx].name + '…');
-      var buf = await files[fIdx].file.arrayBuffer();
-      var zip = await JSZip.loadAsync(buf);
-
-      var otherPresFile = zip.file('ppt/presentation.xml');
-      var otherRelsFile = zip.file('ppt/_rels/presentation.xml.rels');
-      if (!otherPresFile || !otherRelsFile) continue;
-
-      var otherPresRels = await otherRelsFile.async('string');
-
-      // Identify slides in chronological order via presentation relationships
-      var slideRelMatches = otherPresRels.match(/<Relationship[^>]+Type="[^"]*\/slide"[^>]*>/gi) || [];
-
-      for (var s = 0; s < slideRelMatches.length; s++) {
-        var relTag = slideRelMatches[s];
-        var targetMatch = relTag.match(/Target="([^"]+)"/i);
-        if (!targetMatch) continue;
-
-        var origSlidePath = targetMatch[1].replace(/^[./\\]+/, '');
-        if (origSlidePath.indexOf('slides/') === -1) origSlidePath = 'slides/' + origSlidePath;
-        var fullOrigSlidePath = 'ppt/' + origSlidePath;
-
-        var slideXmlFile = zip.file(fullOrigSlidePath);
-        if (!slideXmlFile) continue;
-
-        totalSlides++;
-        maxSldId++;
-        maxRId++;
-
-        var newSlideName = 'slide' + totalSlides + '.xml';
-        var newSlideRelName = 'slide' + totalSlides + '.xml.rels';
-        var newSlidePath = 'ppt/slides/' + newSlideName;
-        var newSlideRelPath = 'ppt/slides/_rels/' + newSlideRelName;
-
-        var slideXml = await slideXmlFile.async('string');
-
-        // Copy and re-link slide relationships and media
-        var origRelPath = 'ppt/slides/_rels/' + origSlidePath.replace('slides/', '') + '.rels';
-        var slideRelFile = zip.file(origRelPath);
-        var slideRelXml = '';
-
-        if (slideRelFile) {
-          slideRelXml = await slideRelFile.async('string');
-          var mediaRels = slideRelXml.match(/<Relationship[^>]+Target="[^"]*media\/[^"]+"[^>]*>/gi) || [];
-
-          for (var mIdx = 0; mIdx < mediaRels.length; mIdx++) {
-            var mRel = mediaRels[mIdx];
-            var mTarget = (mRel.match(/Target="([^"]+)"/i) || [])[1];
-            if (mTarget) {
-              var cleanMediaName = mTarget.replace(/^.*[\\/]/, '');
-              var uniqueMediaName = 'f' + fIdx + '_s' + totalSlides + '_' + cleanMediaName;
-              var oldMediaPath = 'ppt/media/' + cleanMediaName;
-              var newMediaPath = 'ppt/media/' + uniqueMediaName;
-
-              var mFile = zip.file(oldMediaPath);
-              if (mFile) {
-                var mData = await mFile.async('uint8array');
-                baseZip.file(newMediaPath, mData);
-                slideRelXml = slideRelXml.replace(new RegExp(mTarget, 'g'), '../media/' + uniqueMediaName);
-              }
-            }
-          }
-          baseZip.file(newSlideRelPath, slideRelXml);
-        }
-
-        baseZip.file(newSlidePath, slideXml);
-
-        // Register in presentation.xml
-        newSldIdXml += '<p:sldId id="' + maxSldId + '" r:id="rId' + maxRId + '"/>';
-
-        // Register in presentation.xml.rels
-        newPresRelsXml += '<Relationship Id="rId' + maxRId + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/' + newSlideName + '"/>';
-
-        // Register in [Content_Types].xml
-        newContentTypesXml += '<Override PartName="/ppt/slides/' + newSlideName + '" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>';
+    // ensure Default Extension entries for common media types
+    var MEDIA_DEFAULTS = [
+      ['png', 'image/png'], ['jpeg', 'image/jpeg'], ['jpg', 'image/jpeg'],
+      ['gif', 'image/gif'], ['emf', 'image/x-emf'], ['wmf', 'image/x-wmf'],
+      ['svg', 'image/svg+xml'], ['mp4', 'video/mp4']
+    ];
+    for (var mi = 0; mi < MEDIA_DEFAULTS.length; mi++) {
+      var ext = MEDIA_DEFAULTS[mi][0], ct = MEDIA_DEFAULTS[mi][1];
+      if (!new RegExp('<Default Extension="' + ext + '"').test(contentTypes)) {
+        contentTypes = contentTypes.replace(/<\/[Tt]ypes>/g,
+          '<Default Extension="' + ext + '" ContentType="' + ct + '"/></Types>');
+      }
+    }
+    function ensureOverride(partPath, ct) {
+      var pn = '/' + partPath.replace(/^\/+/, '');
+      if (!new RegExp('<Override\\s+PartName="' + escapeRe(pn) + '"').test(contentTypes)) {
+        contentTypes = contentTypes.replace(/<\/[Tt]ypes>/g,
+          '<Override PartName="' + pn + '" ContentType="' + ct + '"/></Types>');
       }
     }
 
-    // Commit manifest updates
-    if (newSldIdXml) {
-      basePresXml = basePresXml.replace(/<\/p:sldIdLst>/i, newSldIdXml + '</p:sldIdLst>');
-      baseZip.file('ppt/presentation.xml', basePresXml);
-    }
-    if (newPresRelsXml) {
-      basePresRels = basePresRels.replace(/<\/Relationships>/i, newPresRelsXml + '</Relationships>');
-      baseZip.file('ppt/_rels/presentation.xml.rels', basePresRels);
-    }
-    if (newContentTypesXml) {
-      contentTypesXml = contentTypesXml.replace(/<\/Types>/i, newContentTypesXml + '</Types>');
-      baseZip.file('[Content_Types].xml', contentTypesXml);
+    // import a slide's layout chain (layout -> master -> theme if any)
+    async function importLayoutChain(otherZip, sourceSlidePath) {
+      var srcRelsPath = 'ppt/slides/_rels/' + sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1) + '.rels';
+      var srcRelsFile = otherZip.file(srcRelsPath);
+      if (!srcRelsFile) throw new Error('source slide rels missing: ' + srcRelsPath);
+      var srcRels = await srcRelsFile.async('string');
+      var lm = srcRels.match(/<Relationship\s[^>]*Type="[^"]*\/slideLayout"[^>]*\/>/i);
+      if (!lm) throw new Error('source slide has no slideLayout rel');
+      var layoutPath = resolveRels('ppt/slides', attrOf(lm[0]).Target);
+
+      var newLayoutPath = reservePath('ppt/slideLayouts/' + layoutPath.substring(layoutPath.lastIndexOf('/') + 1));
+      baseZip.file(newLayoutPath, await otherZip.file(layoutPath).async('string'));
+      ensureOverride(newLayoutPath, 'application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml');
+
+      // copy layout rels -> master (and master -> theme)
+      var srcLayoutRelsFile = otherZip.file(layoutPath.substring(0, layoutPath.lastIndexOf('/') + 1) + '_rels/' + layoutPath.substring(layoutPath.lastIndexOf('/') + 1) + '.rels');
+      var srcLayoutRels = srcLayoutRelsFile ? await srcLayoutRelsFile.async('string') : null;
+      var masterTarget = null;
+      if (srcLayoutRels) {
+        var mm = srcLayoutRels.match(/<Relationship\s[^>]*Type="[^"]*\/slideMaster"[^>]*\/>/i);
+        if (mm) masterTarget = attrOf(mm[0]).Target;
+      }
+      if (masterTarget) {
+        var masterPath = resolveRels('ppt/slideLayouts', masterTarget);
+        if (otherZip.file(masterPath)) {
+          var newMasterPath = reservePath('ppt/slideMasters/' + masterPath.substring(masterPath.lastIndexOf('/') + 1));
+          baseZip.file(newMasterPath, await otherZip.file(masterPath).async('uint8array'));
+          ensureOverride(newMasterPath, 'application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml');
+
+          var srcMasterRelsFile = otherZip.file('ppt/slideMasters/_rels/' + masterPath.substring(masterPath.lastIndexOf('/') + 1) + '.rels');
+          var themeTarget = null;
+          if (srcMasterRelsFile) {
+            var r = await srcMasterRelsFile.async('string');
+            var mm2 = r.match(/<Relationship\s[^>]*Type="[^"]*\/theme"[^>]*\/>/i);
+            if (mm2) themeTarget = attrOf(mm2[0]).Target;
+          }
+          var masterRelsXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">';
+          if (themeTarget) {
+            var themePath = resolveRels('ppt/slideMasters', themeTarget);
+            if (otherZip.file(themePath)) {
+              var newThemePath = reservePath('ppt/theme/' + themePath.substring(themePath.lastIndexOf('/') + 1));
+              baseZip.file(newThemePath, await otherZip.file(themePath).async('uint8array'));
+              ensureOverride(newThemePath, 'application/vnd.openxmlformats-officedocument.theme+xml');
+              masterRelsXml += '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme" Target="../theme/' + newThemePath.substring(newThemePath.lastIndexOf('/') + 1) + '"/>';
+            }
+          }
+          masterRelsXml += '</Relationships>';
+          baseZip.file('ppt/slideMasters/_rels/' + newMasterPath.substring(newMasterPath.lastIndexOf('/') + 1) + '.rels', masterRelsXml);
+
+          baseZip.file('ppt/slideLayouts/_rels/' + newLayoutPath.substring(newLayoutPath.lastIndexOf('/') + 1) + '.rels',
+            '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster" Target="../slideMasters/' + newMasterPath.substring(newMasterPath.lastIndexOf('/') + 1) + '"/></Relationships>');
+        } else {
+          if (srcLayoutRels) baseZip.file('ppt/slideLayouts/_rels/' + newLayoutPath.substring(newLayoutPath.lastIndexOf('/') + 1) + '.rels', srcLayoutRels);
+        }
+      } else {
+        if (srcLayoutRels) baseZip.file('ppt/slideLayouts/_rels/' + newLayoutPath.substring(newLayoutPath.lastIndexOf('/') + 1) + '.rels', srcLayoutRels);
+      }
+      return newLayoutPath;
     }
 
-    updateProgress(0.7, 'Packaging single PowerPoint (.pptx)…');
+    // import a single slide into baseZip; returns the new slide path stored in baseZip
+    async function importSlide(otherZip, sourceSlidePath) {
+      var newLayoutPath = await importLayoutChain(otherZip, sourceSlidePath);
+
+      var srcRelsPath = 'ppt/slides/_rels/' + sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1) + '.rels';
+      var srcRelsFile = otherZip.file(srcRelsPath);
+      var srcRels = srcRelsFile ? await srcRelsFile.async('string') : '';
+
+      var slideXml = await otherZip.file(sourceSlidePath).async('string');
+
+      var newSlidePath = reservePath('ppt/slides/' + sourceSlidePath.substring(sourceSlidePath.lastIndexOf('/') + 1));
+      var newRelsPath = 'ppt/slides/_rels/' + newSlidePath.substring(newSlidePath.lastIndexOf('/') + 1) + '.rels';
+
+      var rid = 1;
+      var relsXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId' + (rid++) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/' + newLayoutPath.substring(newLayoutPath.lastIndexOf('/') + 1) + '"/>';
+
+      if (srcRels) {
+        var reR = /<Relationship\s[^>]*\/>/g; var m;
+        while ((m = reR.exec(srcRels)) !== null) {
+          var a = attrOf(m[0]);
+          var type = a.Type || '';
+          var target = a.Target || '';
+          var myId = 'rId' + (rid++);
+
+          // drop risky / incompatible sidecars entirely
+          if (
+            /\/notesSlide$/.test(type) || /\/notesMaster$/.test(type) ||
+            /\/chart$/.test(type) || /\/diagramData$/.test(type) ||
+            /\/diagramColors$/.test(type) || /\/diagramLayout$/.test(type) ||
+            /\/diagramQuickStyle$/.test(type) || /\/embeddedFont$/.test(type) ||
+            /\/printerSettings$/.test(type) || /\/vbaProject$/.test(type) ||
+            /\/customXml$/.test(type) || /\/slideLayout$/.test(type) ||
+            /\/oleObject$/.test(type) || /\/footnoteSlide$/.test(type) ||
+            /\/endnoteSlide$/.test(type)
+          ) continue;
+
+          // hyperlinks pass through untouched
+          if (/\/hyperlink$/.test(type)) {
+            var tm = a.TargetMode ? ' TargetMode="' + a.TargetMode + '"' : '';
+            relsXml += '<Relationship Id="' + myId + '" Type="' + type + '" Target="' + escapeXml(target) + '"' + tm + '/>';
+            continue;
+          }
+
+          // everything else: treat as media (image/video/audio/file) and copy in
+          var absPath = resolveRels('ppt/slides', target);
+          if (!otherZip.file(absPath)) { rid--; continue; } // dangling -> drop
+          var cleanName = absPath.substring(absPath.lastIndexOf('/') + 1);
+          var newMediaPath = reservePath('ppt/media/' + cleanName);
+          baseZip.file(newMediaPath, await otherZip.file(absPath).async('uint8array'));
+          var ext = newMediaPath.substring(newMediaPath.lastIndexOf('.') + 1);
+          ensureOverride(newMediaPath, mediaContentType(ext));
+          var rType = type.indexOf('/image') !== -1 || type.indexOf('/video') !== -1 || type.indexOf('/audio') !== -1
+            ? type
+            : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image';
+          relsXml += '<Relationship Id="' + myId + '" Type="' + rType + '" Target="../media/' + cleanName + '"/>';
+
+          // rewrite r:embed / r:link in slide XML so it points at our new local rId
+          var oldIdEsc = escapeRe(a.Id);
+          var newIdEsc = escapeRe(myId);
+          slideXml = slideXml.replace(new RegExp('r:embed="' + oldIdEsc + '"', 'g'), 'r:embed="' + newIdEsc + '"');
+          slideXml = slideXml.replace(new RegExp('r:link="' + oldIdEsc + '"', 'g'), 'r:link="' + newIdEsc + '"');
+        }
+      }
+      relsXml += '</Relationships>';
+
+      baseZip.file(newRelsPath, relsXml);
+      baseZip.file(newSlidePath, slideXml);
+      ensureOverride(newSlidePath, 'application/vnd.openxmlformats-officedocument.presentationml.slide+xml');
+      return newSlidePath;
+    }
+
+    // Process non-base decks
+    for (var fIdx = 1; fIdx < files.length; fIdx++) {
+      updateProgress(0.15 + (fIdx / files.length) * 0.45, 'Merging ' + files[fIdx].name + '…');
+      var otherBuf = await files[fIdx].file.arrayBuffer();
+      var otherZip = await JSZip.loadAsync(otherBuf);
+
+      var op = otherZip.file('ppt/presentation.xml');
+      var or = otherZip.file('ppt/_rels/presentation.xml.rels');
+      if (!op || !or) continue;
+
+      var oPres = await op.async('string');
+      var oRels = await or.async('string');
+
+      // build rId -> Target map for slide relationships
+      var map = Object.create(null);
+      var rg = /<Relationship\s[^>]*\/>/g; var m;
+      while ((m = rg.exec(oRels)) !== null) {
+        var a = attrOf(m[0]);
+        if (a.Type && /\/slide"$/.test(a.Type)) map[a.Id] = a.Target;
+      }
+      // preserve deck-internal order from sldIdLst
+      var order = [];
+      var lstMatch = oPres.match(/<p:sldIdLst[^>]*>[\s\S]*?<\/p:sldIdLst>/i);
+      if (lstMatch) {
+        var rg2 = /r:id="([^"]+)"/g; var m2;
+        while ((m2 = rg2.exec(lstMatch[0])) !== null) {
+          if (map[m2[1]]) order.push(map[m2[1]]);
+        }
+      }
+      if (order.length === 0) {
+        for (var k in map) if (Object.prototype.hasOwnProperty.call(map, k)) order.push(map[k]);
+      }
+      for (var s = 0; s < order.length; s++) {
+        var tgt = ('' + order[s]).replace(/^[./\\]+/, '');
+        if (tgt.indexOf('slides/') !== 0) tgt = 'slides/' + tgt;
+        var fullOrig = 'ppt/' + tgt;
+        try {
+          await importSlide(otherZip, fullOrig);
+        } catch (e) {
+          console.warn('Skip slide ' + fullOrig + ': ' + e.message);
+        }
+      }
+    }
+
+    // Rebuild sldIdLst with fresh IDs and rIds, in numeric filename order
+    var slidePaths = [];
+    baseZip.forEach(function (p, f) {
+      if (!f.dir && /^ppt\/slides\/slide[^/]+\.xml$/.test(p) && p.indexOf('/_rels/') === -1) {
+        slidePaths.push(p);
+      }
+    });
+    slidePaths.sort(function (a, b) {
+      var na = parseInt((a.match(/slide(\d+)\.xml$/i) || [0, '9e9'])[1], 10);
+      var nb = parseInt((b.match(/slide(\d+)\.xml$/i) || [0, '9e9'])[1], 10);
+      return na - nb;
+    });
+
+    // Replace sldIdLst contents
+    presXml = presXml.replace(/<p:sldIdLst>[\s\S]*?<\/p:sldIdLst>/i, '<p:sldIdLst></p:sldIdLst>');
+    var newSldIdXml = '';
+    var newPresRelsXml = '';
+    for (var i = 0; i < slidePaths.length; i++) {
+      sldIdN++; rIdN++;
+      newSldIdXml += '<p:sldId id="' + sldIdN + '" r:id="rId' + rIdN + '"/>';
+      newPresRelsXml += '<Relationship Id="rId' + rIdN + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/' + slidePaths[i].substring(slidePaths[i].lastIndexOf('/') + 1) + '"/>';
+    }
+    presXml = presXml.replace(/<p:sldIdLst>([\s\S]*?)<\/p:sldIdLst>/i,
+      '<p:sldIdLst>' + newSldIdXml + '</p:sldIdLst>');
+
+    // Append new slide rels to presentation rels (preserve existing non-slide rels)
+    if (!/<\/Relationships>/.test(presRels)) {
+      presRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + newPresRelsXml + '</Relationships>';
+    } else {
+      presRels = presRels.replace(/<\/Relationships>/i, newPresRelsXml + '</Relationships>');
+    }
+
+    baseZip.file('ppt/presentation.xml', presXml);
+    baseZip.file('ppt/_rels/presentation.xml.rels', presRels);
+    baseZip.file('[Content_Types].xml', contentTypes);
+
+    updateProgress(0.75, 'Packaging single PowerPoint (.pptx)…');
     var mergedPptxBlob = await baseZip.generateAsync({
       type: 'blob',
       mimeType: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
       compression: 'DEFLATE'
     });
 
-    // === GENERATE MERGED PRESENTATION PDF ===
-    updateProgress(0.8, 'Rendering presentation PDF…');
-    var PDFLib = window.PDFLib;
-    var pdfDoc = await PDFLib.PDFDocument.create();
+    // === SIMPLIFIED PDF VIEW ===
+    var generatePdf = document.getElementById('optGeneratePptPdf').checked;
+    var mergedPdfBlob = null;
+    if (generatePdf) {
+      updateProgress(0.85, 'Rendering simplified PDF view…');
+      var PDFLib = window.PDFLib;
+      var pdfDoc = await PDFLib.PDFDocument.create();
 
-    // Default widescreen 16:9 presentation dimensions
-    var slideW = 960;
-    var slideH = 540;
+      // Read real slide size from base presentation
+      var slideWIn = 13.333, slideHIn = 7.5;
+      var szMatch = presXml.match(/<p:sldSz\s[^/>]*\/>/i);
+      if (szMatch) {
+        var a = attrOf(szMatch[0]);
+        var cx = parseInt(a.cx || '0', 10);
+        var cy = parseInt(a.cy || '0', 10);
+        if (cx && cy) { slideWIn = cx / 914400; slideHIn = cy / 914400; }
+      }
+      var W = slideWIn * 72, H = slideHIn * 72;
 
-    var fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-    var fontRegular = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      var fBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      var fReg = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
-    for (var sIdx = 1; sIdx <= totalSlides; sIdx++) {
-      var sFile = baseZip.file('ppt/slides/slide' + sIdx + '.xml');
-      if (!sFile) continue;
+      for (var pI = 0; pI < slidePaths.length; pI++) {
+        var sp = slidePaths[pI];
+        var f = baseZip.file(sp); if (!f) continue;
+        var xml = await f.async('string');
 
-      var sXml = await sFile.async('string');
-      var page = pdfDoc.addPage([slideW, slideH]);
+        var page = pdfDoc.addPage([W, H]);
+        page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: PDFLib.rgb(0.98, 0.98, 0.99) });
+        page.drawLine({ start: { x: 40, y: H - 30 }, end: { x: W - 40, y: H - 30 }, thickness: 2, color: PDFLib.rgb(0.09, 0.22, 0.54) });
 
-      // Subtle modern presentation border & background
-      page.drawRectangle({
-        x: 0, y: 0, width: slideW, height: slideH,
-        color: PDFLib.rgb(0.98, 0.98, 0.99)
-      });
-      page.drawLine({
-        start: { x: 40, y: slideH - 30 },
-        end: { x: slideW - 40, y: slideH - 30 },
-        thickness: 2,
-        color: PDFLib.rgb(0.09, 0.22, 0.54)
-      });
-
-      // Extract texts
-      var textMatches = sXml.match(/<a:t[^>]*>([\s\S]*?)<\/a:t>/gi) || [];
-      var cleanTexts = [];
-      textMatches.forEach(function (tm) {
-        var t = tm.replace(/<[^>]+>/g, '').trim();
-        if (t && cleanTexts.indexOf(t) === -1) cleanTexts.push(t);
-      });
-
-      var currentY = slideH - 80;
-      for (var tIdx = 0; tIdx < cleanTexts.length; tIdx++) {
-        if (currentY < 70) break;
-        var textLine = cleanTexts[tIdx];
-        if (tIdx === 0) {
-          // Slide Heading
-          page.drawText(textLine.substring(0, 60), {
-            x: 50, y: currentY, size: 24, font: fontBold, color: PDFLib.rgb(0.1, 0.15, 0.3)
-          });
-          currentY -= 45;
-        } else {
-          // Body bullet point
-          page.drawText('• ' + textLine.substring(0, 95), {
-            x: 60, y: currentY, size: 14, font: fontRegular, color: PDFLib.rgb(0.25, 0.3, 0.38)
-          });
-          currentY -= 28;
+        // text
+        var texts = [];
+        var rg = /<a:t[^>]*>([\s\S]*?)<\/a:t>/gi; var m;
+        while ((m = rg.exec(xml)) !== null) {
+          var t = m[1].replace(/<[^>]+>/g, '').trim();
+          if (t) texts.push(t);
         }
+        var y = H - 80;
+        if (texts.length) {
+          page.drawText(texts[0].substring(0, Math.max(20, Math.floor(W / 9))),
+            { x: 50, y: y, size: 26, font: fBold, color: PDFLib.rgb(0.1, 0.15, 0.3) });
+          y -= 45;
+          var bodyMax = Math.max(40, Math.floor(W / 6));
+          for (var tt = 1; tt < texts.length && y > 70; tt++) {
+            page.drawText('• ' + texts[tt].substring(0, bodyMax),
+              { x: 60, y: y, size: 14, font: fReg, color: PDFLib.rgb(0.25, 0.3, 0.38) });
+            y -= 26;
+          }
+        }
+
+        // embedded first image (if any)
+        var relsPath = 'ppt/slides/_rels/' + sp.substring(sp.lastIndexOf('/') + 1) + '.rels';
+        var rf = baseZip.file(relsPath);
+        if (rf) {
+          try {
+            var rx = await rf.async('string');
+            var blip = xml.match(/<a:blip\s[^>]*r:embed="([^"]+)"[^>]*\/>/i);
+            if (blip) {
+              var rIdImg = blip[1];
+              var rgX = new RegExp('Id="' + escapeRe(rIdImg) + '"[^>]*Target="([^"]+)"');
+              var mm = rgX.exec(rx);
+              if (mm) {
+                var abs = resolveRels('ppt/slides', mm[1].replace(/^[./\\]+/, ''));
+                if (baseZip.file(abs)) {
+                  var data = await baseZip.file(abs).async('uint8array');
+                  var img = null;
+                  if (/\.png$/i.test(abs)) img = await pdfDoc.embedPng(data);
+                  else if (/\.jpe?g$/i.test(abs)) img = await pdfDoc.embedJpg(data);
+                  if (img) {
+                    var maxW = W - 100, maxH = y - 80;
+                    var ratio = Math.min(maxW / img.width, maxH / img.height, 1);
+                    var dw = img.width * ratio, dh = img.height * ratio;
+                    page.drawImage(img, { x: 50, y: y - dh, width: dw, height: dh });
+                    y -= dh + 10;
+                  }
+                }
+              }
+            }
+          } catch (eImg) { /* one bad image never blocks the job */ }
+        }
+
+        page.drawText('Slide ' + (pI + 1) + ' of ' + slidePaths.length,
+          { x: W - 130, y: 20, size: 9, font: fReg, color: PDFLib.rgb(0.5, 0.5, 0.5) });
+        page.drawText('DocEasy Merged Deck — simplified PDF view',
+          { x: 50, y: 20, size: 9, font: fReg, color: PDFLib.rgb(0.6, 0.6, 0.6) });
       }
 
-      // Slide footer
-      page.drawText('Slide ' + sIdx + ' of ' + totalSlides, {
-        x: slideW - 130, y: 20, size: 10, font: fontRegular, color: PDFLib.rgb(0.5, 0.5, 0.5)
-      });
-      page.drawText('DocEasy Presentation Engine', {
-        x: 50, y: 20, size: 10, font: fontRegular, color: PDFLib.rgb(0.6, 0.6, 0.6)
-      });
+      var pdfBytes = await pdfDoc.save();
+      mergedPdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
     }
-
-    var pdfBytes = await pdfDoc.save();
-    var mergedPdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
 
     return {
       pptxBlob: mergedPptxBlob,
       pdfBlob: mergedPdfBlob,
       pptxFilename: 'merged-' + Date.now() + '.pptx',
       pdfFilename: 'presentation-' + Date.now() + '.pdf',
-      stats: totalSlides + ' slides combined from ' + files.length + ' files'
+      stats: slidePaths.length + ' slides combined from ' + files.length + ' files'
     };
   }
 
@@ -1473,13 +1684,21 @@
       } else if (currentType === 'ppt') {
         res = await mergePPTs();
         pptxDownloadUrl = URL.createObjectURL(res.pptxBlob);
-        pptPdfDownloadUrl = URL.createObjectURL(res.pdfBlob);
-
         downloadPptxBtn.href = pptxDownloadUrl;
         downloadPptxBtn.download = res.pptxFilename;
 
-        downloadPptPdfBtn.href = pptPdfDownloadUrl;
-        downloadPptPdfBtn.download = res.pdfFilename;
+        if (res.pdfBlob) {
+          pptPdfDownloadUrl = URL.createObjectURL(res.pdfBlob);
+          downloadPptPdfBtn.href = pptPdfDownloadUrl;
+          downloadPptPdfBtn.download = res.pdfFilename;
+          downloadPptPdfBtn.parentElement.parentElement.style.display = '';
+          downloadPptPdfBtn.style.display = '';
+        } else {
+          pptPdfDownloadUrl = null;
+          downloadPptPdfBtn.removeAttribute('href');
+          var pdfCard = downloadPptPdfBtn.parentElement;
+          if (pdfCard && pdfCard.parentElement) pdfCard.parentElement.style.display = 'none';
+        }
 
         resultStats.textContent = res.stats + ' · ' + formatSize(res.pptxBlob.size);
         dlGrid.style.display = 'none';
@@ -1488,7 +1707,7 @@
       } else {
         if (currentType === 'word') res = await mergeWordDocs();
         else if (currentType === 'excel') res = await mergeExcelFiles();
-        
+
         singleDownloadUrl = URL.createObjectURL(res.blob);
         resultStats.textContent = res.stats + ' · ' + formatSize(res.blob.size);
         dlGrid.style.display = 'none';
