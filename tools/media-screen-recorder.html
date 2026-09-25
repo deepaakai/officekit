@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Screen Recorder — Record Screen Online Free | DocEasy</title>
+<meta name="description" content="Free online screen recorder. Record your screen, window, or browser tab with audio in HD. No signup, no upload, 100% private. Works on Windows, Mac, Linux, Chromebook.">
+<meta name="keywords" content="screen recorder, online screen recorder, record screen, browser screen recorder, free screen recorder, tab recorder">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-screen-recorder.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Screen Recorder — Record Screen Online Free | DocEasy">
+<meta property="og:description" content="Record your screen with audio in HD. No signup, no upload, 100% private.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-screen-recorder.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<style>
+* { box-sizing: border-box; }
+html[data-theme="light"] { --bg: #f8fafc; --card: #fff; --text: #0f172a; --sub: #64748b; --border: #e2e8f0; --hover: #f1f5f9; }
+html[data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --sub: #94a3b8; --border: #334155; --hover: #293548; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: background .2s, color .2s; }
+.main-wrap { max-width: 880px; margin: 0 auto; padding: 34px 18px 60px; }
+
+/* ============ HEADER ============ */
+.de-header { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--border); }
+.de-header-inner { max-width: 1240px; margin: 0 auto; padding: 12px 18px; display: flex; align-items: center; gap: 20px; }
+.de-logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 19px; font-weight: 800; color: var(--text); flex-shrink: 0; }
+.de-logo em { font-style: normal; color: #db2777; }
+.de-nav { display: flex; gap: 4px; flex: 1; justify-content: center; }
+.de-nav a { padding: 8px 14px; border-radius: 9px; font-size: 13.5px; font-weight: 700; color: var(--sub); text-decoration: none; transition: all .18s; }
+.de-nav a:hover { color: var(--text); background: var(--hover); }
+.de-nav a.active { color: #db2777; background: #fce7f3; }
+.de-header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.de-btn-primary { padding: 9px 18px; border-radius: 10px; background: #19398a; color: #fff; text-decoration: none; font-size: 13px; font-weight: 800; }
+.de-theme-btn, .de-menu-btn { background: var(--hover); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 9px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.de-theme-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+html[data-theme="light"] .de-theme-btn .moon { display: none; }
+html[data-theme="dark"] .de-theme-btn .sun { display: none; }
+.de-menu-btn { display: none; }
+.de-menu-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+@media (max-width: 860px) {
+  .de-nav { display: none; }
+  .de-menu-btn { display: inline-flex; }
+  .de-header.open .de-nav { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--card); padding: 12px 18px 16px; border-bottom: 1px solid var(--border); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
+  .de-header.open .de-nav a { padding: 12px 16px; }
+}
+
+/* ============ TOOL ============ */
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--sub); text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 18px; }
+.back-link:hover { color: #db2777; }
+.back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.tool-head { text-align: center; margin-bottom: 26px; }
+.tool-head .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: #fce7f3; color: #db2777; font-size: 11px; font-weight: 800; letter-spacing: .5px; margin-bottom: 12px; }
+.tool-head h1 { font-size: clamp(26px, 4.6vw, 38px); font-weight: 800; margin: 0 0 10px; letter-spacing: -1px; color: var(--text); }
+.tool-head p { color: var(--sub); font-size: 15px; margin: 0; line-height: 1.55; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 28px 24px; box-shadow: 0 8px 26px rgba(0,0,0,.06); }
+.timer { font-size: 52px; font-weight: 800; text-align: center; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -2px; margin: 8px 0 6px; }
+.timer.rec { color: #dc2626; }
+.rec-status { text-align: center; font-size: 13px; font-weight: 700; color: var(--sub); margin-bottom: 22px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.rec-dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; }
+.rec-dot.on { background: #dc2626; animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; transform: scale(1.15);} }
+.controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 12px; border: none; font-size: 14px; font-weight: 800; cursor: pointer; transition: all .18s; font-family: inherit; text-decoration: none; }
+.btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.btn.primary { background: #db2777; color: #fff; box-shadow: 0 8px 22px rgba(219,39,119,.28); }
+.btn.primary:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.btn.danger { background: #dc2626; color: #fff; }
+.btn.danger:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.btn.ghost { background: var(--hover); color: var(--text); border: 1px solid var(--border); }
+.btn.ghost:hover { border-color: #db2777; color: #db2777; }
+.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.options-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.options-row label { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; }
+.options-row input[type="checkbox"] { accent-color: #db2777; width: 16px; height: 16px; }
+.preview-video { width: 100%; max-height: 320px; background: #000; border-radius: 12px; margin-bottom: 18px; display: none; }
+.preview-video.show { display: block; }
+.preview { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); display: none; }
+.preview.show { display: block; }
+.preview h3 { font-size: 14px; font-weight: 800; margin: 0 0 12px; }
+.preview video { width: 100%; border-radius: 10px; margin-bottom: 14px; max-height: 340px; background: #000; }
+.preview .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.note { margin-top: 20px; font-size: 12.5px; color: var(--sub); text-align: center; line-height: 1.6; }
+.error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 16px; display: none; }
+.error-msg.show { display: block; }
+
+/* ============ HOW TO USE ============ */
+.how-to-use { max-width: 880px; margin: 68px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--sub); font-size: 14px; margin: 0 auto 30px; max-width: 580px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #db2777; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step img { width: 42px; height: 42px; margin-bottom: 12px; }
+.step h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step p { font-size: 12.5px; color: var(--sub); margin: 0; line-height: 1.6; }
+
+/* ============ FAQ ============ */
+.deep-faq { max-width: 880px; margin: 68px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--sub); font-size: 14px; margin: 0 auto 30px; max-width: 580px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #db2777; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #db2777; font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--sub); line-height: 1.72; }
+.deep-faq code { background: var(--hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: #db2777; font-weight: 600; }
+
+/* ============ FOOTER ============ */
+.de-footer { background: #0f172a; color: #cbd5e1; margin-top: 80px; }
+.de-footer-inner { max-width: 1240px; margin: 0 auto; padding: 50px 18px 30px; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 30px; }
+.de-footer-brand .de-logo { color: #fff; margin-bottom: 14px; font-size: 20px; }
+.de-footer-brand p { font-size: 13px; line-height: 1.65; color: #94a3b8; margin: 0; max-width: 340px; }
+.de-footer-col h4 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #fff; margin: 0 0 14px; }
+.de-footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.de-footer-col ul a { font-size: 13px; color: #94a3b8; text-decoration: none; transition: color .18s; }
+.de-footer-col ul a:hover { color: #db2777; }
+.de-footer-bottom { border-top: 1px solid #1e293b; max-width: 1240px; margin: 0 auto; padding: 22px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #94a3b8; }
+.de-footer-links { display: flex; gap: 20px; }
+.de-footer-links a { color: #94a3b8; text-decoration: none; font-size: 12px; }
+.de-footer-links a:hover { color: #db2777; }
+@media (max-width: 780px) { .de-footer-inner { grid-template-columns: 1fr 1fr; gap: 26px; } .de-footer-brand { grid-column: 1 / -1; } }
+@media (max-width: 480px) { .de-footer-inner { grid-template-columns: 1fr; } .de-footer-bottom { flex-direction: column; text-align: center; } .card { padding: 20px 16px; } .timer { font-size: 42px; } .btn { padding: 12px 20px; font-size: 13px; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="de-header" id="deHeader">
+  <div class="de-header-inner">
+    <a class="de-logo" href="../index.html">
+      <img src="../assets/images/logo.svg" alt="DocEasy" width="36" height="36" onerror="this.style.display='none'">
+      <span>Doc<em>Easy</em></span>
+    </a>
+    <nav class="de-nav">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#pdf-tools">PDF Tools</a>
+      <a href="../index.html#image-tools">Image Tools</a>
+      <a href="../media-tools.html" class="active">Media Tools</a>
+      <a href="../index.html#id-tools">ID &amp; Signature</a>
+      <a href="../index.html#utility-tools">Utilities</a>
+    </nav>
+    <div class="de-header-actions">
+      <a class="de-btn-primary" href="../media-tools.html">All Tools</a>
+      <button class="de-theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="de-menu-btn" aria-label="Menu" onclick="document.getElementById('deHeader').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="main-wrap">
+  <a class="back-link" href="../media-tools.html">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+    Back to Media Tools
+  </a>
+
+  <div class="tool-head">
+    <div class="badge">🖥️ RECORDER</div>
+    <h1>Screen Recorder</h1>
+    <p>Record your entire screen, a single window, or a browser tab — with optional audio. Nothing is uploaded.</p>
+  </div>
+
+  <div class="card">
+    <div class="error-msg" id="errMsg"></div>
+    <div class="timer" id="timer">00:00</div>
+    <div class="rec-status"><span class="rec-dot" id="recDot"></span><span id="statusText">Ready to record</span></div>
+
+    <div class="options-row">
+      <label><input type="checkbox" id="optSystem" checked> System audio</label>
+      <label><input type="checkbox" id="optMic"> Microphone</label>
+    </div>
+
+    <video class="preview-video" id="livePreview" autoplay muted playsinline></video>
+
+    <div class="controls">
+      <button class="btn primary" id="startBtn">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/><circle cx="12" cy="11" r="3"/></svg>
+        Start Recording
+      </button>
+      <button class="btn danger" id="stopBtn" disabled>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+        Stop
+      </button>
+      <button class="btn ghost" id="pauseBtn" disabled>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>
+        Pause
+      </button>
+    </div>
+
+    <div class="preview" id="preview">
+      <h3>Your Recording</h3>
+      <video id="outputVideo" controls></video>
+      <div class="actions">
+        <a class="btn primary" id="downloadBtn" download="screen-recording.webm" href="#">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download
+        </a>
+        <button class="btn ghost" id="resetBtn">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+          Record Again
+        </button>
+      </div>
+    </div>
+
+    <p class="note">🔒 All video is processed locally in your browser. Nothing is ever uploaded to a server.</p>
+  </div>
+
+  <!-- HOW TO USE -->
+  <section class="how-to-use">
+    <h2>How to Use Screen Recorder</h2>
+    <p class="lead">Four simple steps to record your screen with audio — no installation, no signup, no watermark.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <img src="../assets/images/icons/step-1.svg" alt="Step 1">
+        <h3>Choose Audio Options</h3>
+        <p>Tick "System audio" to capture sound from your computer, and "Microphone" to include your voice.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <img src="../assets/images/icons/step-2.svg" alt="Step 2">
+        <h3>Click Start Recording</h3>
+        <p>Your browser shows a picker — choose Entire Screen, a Window, or a Browser Tab, then click Share.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <img src="../assets/images/icons/step-3.svg" alt="Step 3">
+        <h3>Record Your Content</h3>
+        <p>Do whatever you need to record. Click Pause to temporarily stop, or Stop when you're finished.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <img src="../assets/images/icons/step-4.svg" alt="Step 4">
+        <h3>Preview &amp; Download</h3>
+        <p>Watch the preview, then click Download to save your recording as a WebM video file.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Screen Recorder — Frequently Asked Questions</h2>
+    <p class="faq-lead">Everything about recording your screen in the browser — audio, quality, troubleshooting, and privacy.</p>
+
+    <details class="faq-item" open>
+      <summary>How do I record my screen using DocEasy Screen Recorder?</summary>
+      <p>Recording your screen takes just four steps. First, decide whether you want audio: tick "System audio" to capture whatever plays through your speakers (like a YouTube video or Zoom call), and "Microphone" if you want your voice included. Second, click the pink "Start Recording" button. Third, your browser displays a picker dialog where you choose what to share — Entire Screen, a single Application Window (like PowerPoint or Chrome), or a specific Browser Tab. Click "Share" to confirm. Fourth, recording begins immediately. The timer counts up, the red dot pulses, and a small "Stop Sharing" bar appears at the top of your screen. When you're done, either click "Stop Sharing" or the "Stop" button here. A preview appears below, and you can click "Download" to save the recording.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is this screen recorder really free?</summary>
+      <p>Yes — 100% free, forever, with no strings attached. There's no signup, no email, no watermark, no recording time limit, no file-size cap, and no premium tier. You can record as many sessions as you want, for as long as you want, without paying a single rupee. The tool is supported by lightweight, non-intrusive ads elsewhere on the site. We don't collect your recordings, we don't track what you share, and we don't ask for your email to unlock features. Most free online screen recorders limit recordings to 5 minutes or 720p and then charge for longer or higher-quality output — DocEasy has no such limits. Record full lectures, long tutorials, entire meetings — all free.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is my screen being recorded or sent to your servers?</summary>
+      <p>No — nothing is uploaded. The entire recording happens locally in your browser using the getDisplayMedia API. The video stream is captured directly into your device's memory, and when you click "Download," the file is saved to your Downloads folder. At no point does any video, audio, or metadata travel to DocEasy's servers. You can verify this yourself: open Developer Tools (F12), go to the Network tab, start a recording, and watch for outgoing requests. You'll see zero requests carrying your video data — because nothing is transmitted. This makes DocEasy safe for recording sensitive content like client meetings, medical consultations, or internal company presentations.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I record system audio (sound from my computer)?</summary>
+      <p>Yes — tick the "System audio" checkbox before starting. When the browser picker appears, make sure to select "Entire Screen" or "Browser Tab" (not "Window") and ensure the "Share audio" option is enabled — the exact wording varies by browser. Chrome and Edge on Windows 10/11 capture full system audio perfectly. On macOS, Chrome and Safari can capture tab audio but not full system audio due to OS-level restrictions. On Linux, support depends on your desktop environment and PulseAudio configuration. If system audio isn't captured, try recording a browser tab instead of the entire screen — tab audio is more reliably supported.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I record my microphone along with the screen?</summary>
+      <p>Yes — tick the "Microphone" checkbox before starting. Your browser will ask for microphone permission (separate from the screen picker). Once granted, your voice is mixed into the recording alongside the screen and any system audio. This is perfect for creating tutorials, narrating presentations, or recording video calls where you want to capture both sides. Note that your browser uses the default microphone selected in your OS sound settings — if you have multiple mics (laptop built-in, headset, USB), change the default in your system settings before recording. Wearing headphones is strongly recommended when the mic is on, to prevent feedback and echo from your speakers.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which recording format is used?</summary>
+      <p>Recordings save as WebM files using the VP9 video codec and Opus audio codec — both are modern, efficient, and royalty-free. WebM plays natively in Chrome, Edge, Firefox, Opera, Vivaldi, Brave, and most Android browsers. It also plays in VLC, MPV, and most desktop media players. If you need MP4 instead (for iOS or legacy software), use DocEasy's Universal Media Editor to convert WebM to MP4 in a few seconds — the conversion happens locally in your browser. File sizes are typically 5–15 MB per minute for 1080p screen content, which is highly efficient compared to uncompressed formats.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the maximum recording length?</summary>
+      <p>There's no imposed time limit — you can record for hours if your device has enough memory. A one-hour 1080p recording is roughly 300–500 MB, which most modern devices handle fine. Multi-hour recordings are possible on desktops with 8 GB+ RAM. On phones and low-memory devices, longer recordings may cause the browser tab to slow down or crash. For long sessions (like recording a 3-hour class), use a desktop or laptop, plug in power, close other apps, and keep the browser tab visible. If you need to record very long sessions regularly, consider recording in segments (Stop → Download → Start again) to keep file sizes manageable.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does the browser ask for screen-sharing permission?</summary>
+      <p>Every modern browser requires explicit user permission before any website can capture your screen. This is a fundamental security feature — it prevents malicious sites from silently recording your screen, spying on your messages, or stealing passwords. When you click "Start Recording," the browser displays a picker dialog. You must actively choose what to share (Entire Screen, Window, or Tab) and click "Share" for recording to begin. Nothing is captured before you grant permission. A "Stop Sharing" bar stays visible at the top of your screen the entire time, so you always know when recording is active. You can end recording instantly by clicking "Stop Sharing" in that bar.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which browsers are supported?</summary>
+      <p>Chrome 72+, Edge 79+, Firefox 66+, Safari 13+, Brave, Opera, Vivaldi, and all Chromium-based browsers support screen recording via the getDisplayMedia API. For the best experience — especially system audio capture — use Chrome or Edge on Windows 10/11. Firefox works well for screen and window recording but has limited system audio support. Safari on macOS supports tab audio but not full system audio. On Chromebooks, Chrome works perfectly with system audio. On mobile devices (Android/iOS), getDisplayMedia has limited support — some Android browsers allow tab recording but not full screen. For mobile screen recording, use the built-in OS recorder instead.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does it work on mobile phones or tablets?</summary>
+      <p>Partially. Mobile browsers have limited support for screen recording due to OS restrictions. Chrome on Android (version 88+) supports capturing a browser tab via getDisplayMedia, but not the entire device screen. Safari on iOS does not support getDisplayMedia as of iOS 17. For full-device screen recording on mobile, use the built-in recorder: Android has a built-in screen recorder in the Quick Settings panel; iOS has Screen Recording in Control Center. DocEasy's screen recorder is optimized for desktop and laptop use — that's where it shines, especially for capturing lectures, tutorials, presentations, and online meetings.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I record just one browser tab, not the whole screen?</summary>
+      <p>Yes — this is actually the most reliable option for capturing audio. When the browser picker appears, select the "Chrome Tab" (or "Browser Tab") option and then choose the specific tab you want to record. Tab recording captures only the content of that tab, not your desktop, notifications, or other windows. It also reliably captures tab audio on all platforms — Windows, macOS, Linux, and Chrome OS. This is ideal for recording webinars, YouTube videos, online classes, or any browser-based content. It's also the most privacy-friendly option, since other windows and your desktop stay private.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I pause and resume a recording?</summary>
+      <p>Click the "Pause" button while recording. The timer stops, the red dot turns grey, and no content is captured. Click "Pause" again (now labelled "Resume") to continue from exactly where you stopped. When you eventually click "Stop" and download, the paused sections are automatically removed — you get one continuous recording without gaps. This is perfect for pausing mid-recording to take a break, answer the door, or hide sensitive content. Pause/resume works reliably on Chrome, Edge, and Firefox. Safari's implementation may occasionally produce a brief frame freeze at pause points — for critical recordings on Safari, avoid pausing.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why is my recording file so large?</summary>
+      <p>Screen recordings are inherently larger than voice recordings because they contain full video frames. A 1-hour 1080p recording is typically 300–500 MB. To reduce size: (1) Record at a lower resolution — before starting, reduce your screen resolution or make the shared window smaller; (2) Record only the tab you need instead of the entire screen; (3) Use DocEasy's Compress Video tool after recording to shrink the file by 50–70% with minimal quality loss; (4) Convert to a more efficient format like H.265 using the Universal Media Editor. For email or WhatsApp sharing, aim for files under 25 MB — that's roughly 3–5 minutes at 720p.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the tool work offline?</summary>
+      <p>Yes — after the page loads once, the Screen Recorder works fully offline. Since all recording happens in your browser using local APIs (getDisplayMedia, MediaRecorder), no internet connection is required once the page is loaded. You can switch off Wi-Fi and still record your screen. This is useful for flights, areas with poor connectivity, or privacy-conscious recording where you want zero network activity. The only requirement is that the page itself has loaded once. If you want to record truly offline, load this page while online, wait for it to fully render, then turn off Wi-Fi and start recording.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I use the recordings for commercial projects?</summary>
+      <p>Yes — everything you record with DocEasy is yours to use freely, including for commercial purposes. There are no watermarks, no attribution requirements, and no licensing restrictions on the output. If you record a product demo for a client, a tutorial for YouTube, or a course lesson for paid students, you own 100% of the result and can monetize it however you like. The only exception is if the content you record itself is copyrighted by someone else (for example, recording a paid course you don't own) — DocEasy doesn't grant you rights to material you don't own. But the tool imposes no restrictions on your output.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>My recording is silent — how do I fix it?</summary>
+      <p>If your recording has no audio, check these common causes. First, did you tick the "System audio" or "Microphone" checkbox before clicking Start? Without these, the recording is video-only. Second, when the browser picker appeared, did you check "Share audio"? Some browsers hide this option unless you select "Entire Screen" or "Browser Tab" — it's often disabled for "Window" selection. Third, on macOS, system audio capture requires additional permission — check System Preferences → Security & Privacy → Screen Recording and enable your browser. Fourth, if using a microphone, confirm the correct input device is selected in your OS sound settings. Fifth, some apps (Zoom, Teams) hog the audio stream — close them and try again.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does my recording stop by itself?</summary>
+      <p>Recording may stop automatically for three reasons. First, if you clicked "Stop Sharing" in the browser's top bar — that ends the recording immediately. Second, if the shared window or tab was closed, the browser terminates the stream. Third, if your device went to sleep or the browser tab was heavily backgrounded — mobile devices often suspend inactive tabs. To prevent unexpected stops: keep the browser tab visible, disable sleep mode in your OS power settings, and don't close the shared window or tab while recording. If the tab was backgrounded, bring it back to the foreground within a few seconds and recording should continue on desktop.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I record a Zoom, Teams, or Google Meet call?</summary>
+      <p>Yes — with important caveats. Most meeting apps (Zoom, Teams, Meet) show a notification when the meeting is being recorded, and some display a red recording indicator to all participants. Recording without consent may violate laws in your jurisdiction (many regions require all-party consent for recordings). Always inform participants and get explicit permission before recording. Technically, DocEasy's screen recorder can capture the meeting window with system audio perfectly. The best approach: select "Entire Screen" or the specific meeting window, tick both System Audio and Microphone, and click Record. Just be aware that Zoom and Teams have their own built-in recording features that may be simpler and less legally ambiguous.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I record games or streaming video?</summary>
+      <p>Yes, but with quality caveats. Games and DRM-protected streaming services (Netflix, Disney+, Prime Video) may show a black screen when recorded — this is DRM protection enforced by the content provider, not a limitation of DocEasy. YouTube, Twitch, and most non-DRM content record fine. Games record well if your device has enough GPU power — recording consumes 10–20% extra CPU/GPU, so high-end games may drop frames. For the smoothest game recording, reduce the game's resolution slightly (1080p instead of 4K), use Chrome or Edge, and record only the game window (not the entire screen) to reduce processing load.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Where is my recording saved on my device?</summary>
+      <p>Clicking "Download" saves the file to your browser's default Downloads folder — usually <code>C:\Users\YourName\Downloads</code> on Windows, <code>~/Downloads</code> on macOS and Linux. On mobile, downloads go to the Downloads or Files app. The filename starts with "screen-recording" followed by a timestamp. You can rename it after downloading, move it anywhere, or share it however you like. The file is a standard WebM video — it plays in any modern browser, VLC, Windows Media Player (recent versions), QuickTime (with plugin), or after conversion to MP4 in any player.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you keep any logs of what I record?</summary>
+      <p>No. We don't log the content of your recordings, the applications you record, durations, or any metadata. We don't track which windows or tabs you share or when you start and stop. Our analytics only records anonymous page views — never recording activity. Since your screen content never leaves your device, there's literally nothing for us to log. You can verify this yourself: open Developer Tools → Network tab, start a recording, and watch for requests during the entire session. Zero outgoing requests carry your video data — because it never goes anywhere.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does this compare to OBS Studio or Loom?</summary>
+      <p>OBS Studio is a professional desktop app with advanced features: multi-source scenes, live streaming, filters, transitions, and virtual cameras. It's ideal for content creators doing regular streaming or high-production recording. DocEasy is simpler — it's for quick, one-off recordings where you don't want to install software or configure scenes. Loom is a cloud-based service that uploads recordings to their servers and provides sharing links — convenient but privacy-invasive. DocEasy is fully local, requires no account, and never uploads. Choose DocEasy for privacy and simplicity; choose OBS for professional production; choose Loom for quick team sharing where privacy isn't critical.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I add captions, trim, or edit the recording?</summary>
+      <p>Not in this tool — but yes, using DocEasy's other tools. After downloading the WebM, use the <strong>Universal Media Editor</strong> to trim, compress, resize, mute, extract audio, or convert to MP4. Use the <strong>Audio to Text</strong> tool (when available) to transcribe the recording's audio into captions. Use <strong>Add Subtitles</strong> (when available) to burn subtitles into the video. This modular approach keeps each tool fast and focused — you use only what you need, without a bloated interface. If you need advanced editing (multi-track, keyframes, effects), use a desktop editor like DaVinci Resolve or Shotcut.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Why does the preview show a black or blank video?</summary>
+      <p>A black preview usually means one of three things. First, DRM-protected content — if you recorded Netflix, Disney+, or similar, the browser intentionally blacks out the video stream to prevent unauthorized copying. This is enforced by the content provider. Second, GPU rendering issues — try switching to Chrome or Edge, updating your graphics drivers, or restarting the browser. Third, a codec mismatch — your browser may not be able to decode the recorded WebM in the preview player. Try downloading the file and playing it in VLC — if it plays fine in VLC, the recording succeeded and only the preview is broken. If it's black in VLC too, DRM protection is the cause.</p>
+    </details>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="de-footer">
+  <div class="de-footer-inner">
+    <div class="de-footer-col de-footer-brand">
+      <a class="de-logo" href="../index.html">
+        <img src="../assets/images/logo-white.svg" alt="DocEasy" width="32" height="32" onerror="this.style.display='none'">
+        <span>Doc<em>Easy</em></span>
+      </a>
+      <p>Free browser-based tools for PDF, images, documents, and media. No upload, no signup, 100% private. Works worldwide.</p>
+    </div>
+    <div class="de-footer-col">
+      <h4>Media Tools</h4>
+      <ul>
+        <li><a href="media-screen-recorder.html">Screen Recorder</a></li>
+        <li><a href="media-voice-recorder.html">Voice Recorder</a></li>
+        <li><a href="media-webcam-test.html">Webcam Test</a></li>
+        <li><a href="media-mic-test.html">Mic Test</a></li>
+        <li><a href="media-text-to-speech.html">Text to Speech</a></li>
+        <li><a href="media-editor.html">Universal Editor</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Popular Tools</h4>
+      <ul>
+        <li><a href="../index.html#pdf-tools">Merge PDF</a></li>
+        <li><a href="../index.html#image-tools">Compress Image</a></li>
+        <li><a href="../index.html#id-tools">Passport Photo</a></li>
+        <li><a href="../index.html#converter-tools">JPG to PDF</a></li>
+        <li><a href="../index.html#utility-tools">QR Generator</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../index.html#faq">FAQ</a></li>
+        <li><a href="../media-tools.html">Media Hub</a></li>
+        <li><a href="../index.html">All Categories</a></li>
+        <li><a href="../sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="de-footer-bottom">
+    <p>© 2026 DocEasy. All rights reserved. Made with ❤️ for the world.</p>
+    <div class="de-footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+<script>
+// Theme toggle
+(function () {
+  var saved = localStorage.getItem('doceasy-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  var btn = document.getElementById('themeToggle');
+  if (btn) btn.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('doceasy-theme', next);
+  });
+})();
+
+// Screen Recorder logic
+(function () {
+  var startBtn = document.getElementById('startBtn');
+  var stopBtn = document.getElementById('stopBtn');
+  var pauseBtn = document.getElementById('pauseBtn');
+  var resetBtn = document.getElementById('resetBtn');
+  var timerEl = document.getElementById('timer');
+  var recDot = document.getElementById('recDot');
+  var statusText = document.getElementById('statusText');
+  var livePreview = document.getElementById('livePreview');
+  var preview = document.getElementById('preview');
+  var outputVideo = document.getElementById('outputVideo');
+  var downloadBtn = document.getElementById('downloadBtn');
+  var errMsg = document.getElementById('errMsg');
+  var optSystem = document.getElementById('optSystem');
+  var optMic = document.getElementById('optMic');
+
+  var mediaRecorder = null;
+  var chunks = [];
+  var displayStream = null;
+  var micStream = null;
+  var combinedStream = null;
+  var timerId = null;
+  var startTime = 0;
+  var pausedAt = 0;
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    var m = Math.floor(s / 60);
+    var sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+  function showError(m) {
+    errMsg.textContent = m;
+    errMsg.classList.add('show');
+    setTimeout(function(){ errMsg.classList.remove('show'); }, 8000);
+  }
+
+  startBtn.addEventListener('click', async function () {
+    try {
+      displayStream = await navigator.mediaDevices.getDisplayMedia({
+        video: { frameRate: { ideal: 30 } },
+        audio: optSystem.checked
+      });
+    } catch (e) {
+      showError('Screen capture cancelled or denied.');
+      return;
+    }
+
+    if (optMic.checked) {
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (e) {
+        showError('Microphone access denied. Recording without mic.');
+      }
+    }
+
+    // Combine streams
+    var tracks = [];
+    displayStream.getVideoTracks().forEach(function (t) { tracks.push(t); });
+    if (optSystem.checked) displayStream.getAudioTracks().forEach(function (t) { tracks.push(t); });
+    if (micStream) micStream.getAudioTracks().forEach(function (t) { tracks.push(t); });
+    combinedStream = new MediaStream(tracks);
+
+    livePreview.srcObject = displayStream;
+    livePreview.classList.add('show');
+
+    // Handle user clicking "Stop Sharing" in browser bar
+    displayStream.getVideoTracks()[0].addEventListener('ended', function () {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        stopRecording();
+      }
+    });
+
+    var mimeType = '';
+    ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].some(function (t) {
+      if (MediaRecorder.isTypeSupported(t)) { mimeType = t; return true; }
+      return false;
+    });
+
+    mediaRecorder = new MediaRecorder(combinedStream, mimeType ? { mimeType: mimeType } : undefined);
+    chunks = [];
+    mediaRecorder.ondataavailable = function (e) { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = function () {
+      var blob = new Blob(chunks, { type: 'video/webm' });
+      var url = URL.createObjectURL(blob);
+      outputVideo.src = url;
+      downloadBtn.href = url;
+      downloadBtn.download = 'screen-recording-' + Date.now() + '.webm';
+      preview.classList.add('show');
+      livePreview.classList.remove('show');
+    };
+
+    mediaRecorder.start(1000);
+    startTime = Date.now();
+    pausedAt = 0;
+    timerId = setInterval(function () {
+      timerEl.textContent = fmt(Date.now() - startTime);
+    }, 100);
+    timerEl.classList.add('rec');
+    recDot.classList.add('on');
+    statusText.textContent = 'Recording…';
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    pauseBtn.disabled = false;
+    pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>Pause';
+  });
+
+  function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+    if (displayStream) displayStream.getTracks().forEach(function (t) { t.stop(); });
+    if (micStream) micStream.getTracks().forEach(function (t) { t.stop(); });
+    clearInterval(timerId);
+    timerEl.classList.remove('rec');
+    recDot.classList.remove('on');
+    statusText.textContent = 'Recording stopped';
+    startBtn.disabled = true;
+    stopBtn.disabled = true;
+    pauseBtn.disabled = true;
+    livePreview.classList.remove('show');
+  }
+
+  stopBtn.addEventListener('click', stopRecording);
+
+  pauseBtn.addEventListener('click', function () {
+    if (!mediaRecorder) return;
+    if (mediaRecorder.state === 'recording') {
+      mediaRecorder.pause();
+      clearInterval(timerId);
+      timerId = null;
+      pausedAt = Date.now();
+      statusText.textContent = 'Paused';
+      recDot.classList.remove('on');
+      pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m5 3 14 9-14 9V3z"/></svg>Resume';
+    } else if (mediaRecorder.state === 'paused') {
+      mediaRecorder.resume();
+      startTime += Date.now() - pausedAt;
+      timerId = setInterval(function () {
+        timerEl.textContent = fmt(Date.now() - startTime);
+      }, 100);
+      statusText.textContent = 'Recording…';
+      recDot.classList.add('on');
+      pauseBtn.innerHTML = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v16M15 4v16"/></svg>Pause';
+    }
+  });
+
+  resetBtn.addEventListener('click', function () {
+    preview.classList.remove('show');
+    outputVideo.src = '';
+    timerEl.textContent = '00:00';
+    timerEl.classList.remove('rec');
+    recDot.classList.remove('on');
+    statusText.textContent = 'Ready to record';
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    pauseBtn.disabled = true;
+    chunks = [];
+  });
+})();
+</script>
+</body>
+</html>
