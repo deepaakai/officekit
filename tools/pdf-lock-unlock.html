@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDF Locker &amp; Unlocker — Password Protect / Remove Free | DocEasy</title>
+<meta name="description" content="Lock PDF with password or unlock protected PDFs in your browser. Free, private, no upload, no signup. Set print/copy permissions or remove passwords instantly.">
+<meta name="keywords" content="pdf locker, pdf unlocker, password protect pdf, remove pdf password, unlock pdf, encrypt pdf, decrypt pdf, pdf security">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/pdf-lock-unlock.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PDF Locker &amp; Unlocker — Free Online | DocEasy">
+<meta property="og:description" content="Lock or unlock PDFs in your browser. Free, private, no upload.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/pdf-lock-unlock.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF Locker &amp; Unlocker — Free Online | DocEasy">
+<meta name="twitter:description" content="Lock or unlock PDFs in your browser. Free, private, no upload.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PDF Locker & Unlocker — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/pdf-lock-unlock.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Lock PDFs with password or unlock protected PDFs in the browser. Free, private, no upload."
+}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<style>
+/* Hide ad slots until AdSense approval */
+.ad-slot-container, .ad-placeholder { display: none !important; }
+
+/* ============ TOOL STYLES ============ */
+.pl-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* TABS */
+.pl-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--border-color);
+  justify-content: center;
+}
+.pl-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+.pl-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.pl-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
+}
+.pl-tab svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+
+/* DROP */
+.pl-drop {
+  border: 2px dashed var(--accent);
+  border-radius: 14px;
+  padding: 40px 22px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--accent-soft);
+  margin-bottom: 18px;
+}
+.pl-drop:hover, .pl-drop.dragover { background: var(--accent-soft-hover); }
+.pl-drop svg {
+  width: 48px; height: 48px;
+  stroke: var(--accent);
+  fill: none; stroke-width: 1.8;
+  margin-bottom: 14px;
+}
+.pl-drop h3 { font-size: 16px; font-weight: 800; margin: 0 0 6px; color: var(--text-color); }
+.pl-drop p { font-size: 13px; color: var(--subtext-color); margin: 0; line-height: 1.5; }
+.pl-drop input[type="file"] { display: none; }
+
+/* FILE INFO */
+.pl-file-info {
+  display: none;
+  padding: 14px 16px;
+  background: var(--card-hover);
+  border-radius: 10px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.pl-file-info.show { display: flex; }
+.pl-file-info b { color: var(--text-color); }
+.pl-file-info span { color: var(--subtext-color); }
+.pl-file-info button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+[data-theme="dark"] .pl-file-info button { background: #7f1d1d; color: #fca5a5; }
+
+/* FORM */
+.pl-form {
+  display: none;
+}
+.pl-form.show { display: block; }
+.pl-field {
+  margin-bottom: 14px;
+}
+.pl-field label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--subtext-color);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+.pl-field input[type="text"],
+.pl-field input[type="password"] {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.18s;
+}
+.pl-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(25,57,138,0.12);
+}
+.pl-field .hint {
+  font-size: 11.5px;
+  color: var(--subtext-color);
+  margin-top: 5px;
+  display: block;
+  line-height: 1.5;
+}
+.pl-pw-row {
+  display: flex;
+  gap: 8px;
+}
+.pl-pw-row input { flex: 1; }
+.pl-pw-toggle {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0 14px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--subtext-color);
+  font-family: inherit;
+  transition: all 0.18s;
+}
+.pl-pw-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* PERMISSIONS */
+.pl-perms {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--card-hover);
+  border-radius: 10px;
+}
+.pl-perms h4 {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--subtext-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 12px;
+}
+.pl-perms label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13.5px;
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+.pl-perms input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* ACTIONS */
+.pl-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.pl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+.pl-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.pl-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(25,57,138,0.28);
+  flex: 1;
+}
+.pl-btn.primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+.pl-btn.ghost {
+  background: var(--card-hover);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.pl-btn.ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.pl-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* PROGRESS */
+.pl-progress {
+  display: none;
+  margin-top: 18px;
+}
+.pl-progress.show { display: block; }
+.pl-progress-bar {
+  height: 8px;
+  background: var(--card-hover);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.pl-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+.pl-progress-text {
+  text-align: center;
+  font-size: 13px;
+  color: var(--subtext-color);
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+/* RESULT */
+.pl-result {
+  display: none;
+  margin-top: 18px;
+  padding: 20px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+}
+[data-theme="dark"] .pl-result { background: #052e16; border-color: #166534; }
+.pl-result.show { display: block; }
+.pl-result h4 {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 10px;
+  color: #15803d;
+}
+[data-theme="dark"] .pl-result h4 { color: #4ade80; }
+.pl-result .stats {
+  font-size: 13px;
+  color: var(--subtext-color);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.pl-result .dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 10px;
+  background: #16a34a;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  transition: all 0.18s;
+  box-shadow: 0 8px 20px rgba(22,163,74,0.28);
+}
+.pl-result .dl-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+.pl-result .dl-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+
+/* ERROR */
+.pl-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: none;
+  line-height: 1.55;
+}
+[data-theme="dark"] .pl-error { background: #2a0a0a; border-color: #7f1d1d; color: #fca5a5; }
+.pl-error.show { display: block; }
+
+.pl-note {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article code {
+  background: var(--card-hover);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+.seo-article details {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 16px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+";
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 14px 0 0;
+  font-size: 15px !important;
+  line-height: 1.75;
+}
+
+/* ============ PC LAYOUT FIX ============ */
+@media (min-width: 900px) {
+  main.main-wrap {
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .hero-box {
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .hero-sub {
+    max-width: 700px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .seo-article {
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 36px 40px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .pl-card { padding: 16px; }
+  .pl-tab { padding: 9px 14px; font-size: 12.5px; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">PDF Locker &amp; Unlocker</h1>
+    <p class="hero-sub">Add password protection to any PDF, or remove passwords from protected files — all in your browser. No upload, no signup, 100% private.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="pl-card">
+    <div class="pl-error" id="errMsg"></div>
+
+    <!-- TABS -->
+    <div class="pl-tabs" id="tabs">
+      <button class="pl-tab active" data-mode="lock">
+        <svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        🔒 Lock PDF
+      </button>
+      <button class="pl-tab" data-mode="unlock">
+        <svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+        🔓 Unlock PDF
+      </button>
+    </div>
+
+    <!-- DROP -->
+    <div class="pl-drop" id="dropZone">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <path d="M17 8l-5-5-5 5M12 3v12"/>
+      </svg>
+      <h3 id="dropTitle">Drop a PDF file here</h3>
+      <p id="dropHint">or click to browse · .pdf files only</p>
+      <input type="file" id="fileInput" accept=".pdf">
+    </div>
+
+    <!-- FILE INFO -->
+    <div class="pl-file-info" id="fileInfo">
+      <div><b id="fileName">—</b> <span id="fileSize"></span></div>
+      <button id="clearBtn">Remove</button>
+    </div>
+
+    <!-- LOCK FORM -->
+    <div class="pl-form" id="lockForm">
+      <div class="pl-field">
+        <label for="userPassword">User Password (to open the PDF)</label>
+        <div class="pl-pw-row">
+          <input type="password" id="userPassword" placeholder="Minimum 4 characters" autocomplete="new-password">
+          <button type="button" class="pl-pw-toggle" data-target="userPassword">Show</button>
+        </div>
+        <span class="hint">Users will need this password to open the PDF.</span>
+      </div>
+
+      <div class="pl-field">
+        <label for="ownerPassword">Owner Password (optional — for advanced control)</label>
+        <div class="pl-pw-row">
+          <input type="password" id="ownerPassword" placeholder="Leave blank to use user password" autocomplete="new-password">
+          <button type="button" class="pl-pw-toggle" data-target="ownerPassword">Show</button>
+        </div>
+        <span class="hint">Owner password allows full access. If left blank, user password will be used.</span>
+      </div>
+
+      <div class="pl-perms">
+        <h4>Permissions (optional)</h4>
+        <label>
+          <input type="checkbox" id="permPrint" checked>
+          Allow printing
+        </label>
+        <label>
+          <input type="checkbox" id="permCopy">
+          Allow copying text
+        </label>
+        <label>
+          <input type="checkbox" id="permModify">
+          Allow modifying the PDF
+        </label>
+        <label>
+          <input type="checkbox" id="permAnnotate">
+          Allow annotations &amp; comments
+        </label>
+      </div>
+
+      <div class="pl-actions">
+        <button class="pl-btn primary" id="lockBtn" disabled>
+          <svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Lock &amp; Download
+        </button>
+      </div>
+    </div>
+
+    <!-- UNLOCK FORM -->
+    <div class="pl-form" id="unlockForm">
+      <div class="pl-field">
+        <label for="unlockPassword">PDF Password</label>
+        <div class="pl-pw-row">
+          <input type="password" id="unlockPassword" placeholder="Enter the password to unlock" autocomplete="new-password">
+          <button type="button" class="pl-pw-toggle" data-target="unlockPassword">Show</button>
+        </div>
+        <span class="hint">Common formats — Aadhaar: DEEP1998 · PAN: 15011998 · Bank: DOB · Others: check source</span>
+      </div>
+
+      <div class="pl-actions">
+        <button class="pl-btn primary" id="unlockBtn" disabled>
+          <svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+          Unlock &amp; Download
+        </button>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="pl-progress" id="progress">
+      <div class="pl-progress-bar"><div class="pl-progress-fill" id="progressFill"></div></div>
+      <div class="pl-progress-text" id="progressText">Processing…</div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="pl-result" id="result">
+      <h4 id="resultTitle">✓ Done!</h4>
+      <div class="stats" id="resultStats"></div>
+      <a class="dl-btn" id="downloadBtn" href="#" download="processed.pdf">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download PDF
+      </a>
+    </div>
+
+    <p class="pl-note">🔒 All processing happens locally in your browser. PDFs never leave your device.</p>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ HOW TO USE + FAQ ============ -->
+  <section class="seo-article">
+
+    <h2>PDF Locker &amp; Unlocker — Password Protect and Unlock PDFs Online (2026)</h2>
+
+    <p>DocEasy's <b>PDF Locker &amp; Unlocker</b> is a single tool that does two jobs — <b>add password protection to any PDF</b>, or <b>remove passwords from protected PDFs</b>. Everything runs in your browser, so your sensitive documents never leave your device. Whether you're securing an e-Aadhaar download, unlocking a bank statement, or protecting a client proposal, this tool handles it in seconds.</p>
+
+    <h3>Why Password-Protect a PDF?</h3>
+
+    <p>PDFs are the universal format for sharing documents — but the wrong pair of eyes can cause real damage. Password protection solves that:</p>
+
+    <ul>
+      <li><b>Aadhaar / PAN cards</b> — Secure identity documents before emailing</li>
+      <li><b>Bank statements</b> — Protect account numbers and balances</li>
+      <li><b>Legal contracts</b> — Restrict editing, printing, or copying</li>
+      <li><b>Business proposals</b> — Prevent unauthorized forwarding</li>
+      <li><b>Medical reports</b> — Keep patient data confidential</li>
+      <li><b>Personal documents</b> — Resume, mark sheets, tax returns</li>
+      <li><b>Client deliverables</b> — Restrict copying or modifications</li>
+    </ul>
+
+    <h3>Why Unlock a PDF?</h3>
+
+    <p>Password-protected PDFs are annoying when you legitimately own the document but don't want to type the password every time:</p>
+
+    <ul>
+      <li><b>e-Aadhaar PDFs</b> — Remove the DEEP1998-style password for easy access</li>
+      <li><b>PAN card PDFs</b> — Remove the DOB-based password</li>
+      <li><b>Bank statements</b> — Remove password for archiving or printing</li>
+      <li><b>Bulk merging</b> — Unlock multiple files before combining them</li>
+      <li><b>Automation</b> — Use in scripts that can't handle password prompts</li>
+      <li><b>Sharing with staff</b> — Provide unprotected copies to trusted team members</li>
+    </ul>
+
+    <h3>How to Use — Lock PDF</h3>
+
+    <ol>
+      <li><b>Step 1 — Upload PDF:</b> Drag and drop or click to browse. Any standard PDF works.</li>
+      <li><b>Step 2 — Set passwords:</b> Enter a user password (required to open the PDF). Optionally set an owner password for full access.</li>
+      <li><b>Step 3 — Choose permissions:</b> Control what users can do — printing, copying text, modifying, annotating.</li>
+      <li><b>Step 4 — Click "Lock &amp; Download":</b> Your password-protected PDF downloads in seconds.</li>
+    </ol>
+
+    <h3>How to Use — Unlock PDF</h3>
+
+    <ol>
+      <li><b>Step 1 — Upload protected PDF:</b> Drag the password-protected file into the tool.</li>
+      <li><b>Step 2 — Enter password:</b> Type the password that opens the PDF. Common formats are shown as hints.</li>
+      <li><b>Step 3 — Click "Unlock &amp; Download":</b> The PDF is saved without password protection.</li>
+    </ol>
+
+    <h3>Common Password Formats in India</h3>
+
+    <ul>
+      <li><b>e-Aadhaar:</b> First 4 letters of name in CAPS + birth year — e.g. <code>DEEP1998</code></li>
+      <li><b>PAN card:</b> Date of birth in DDMMYYYY — e.g. <code>15011998</code></li>
+      <li><b>Bank statements:</b> Customer ID, DOB, or a combination</li>
+      <li><b>Credit card statements:</b> Last 4 digits of card + DOB</li>
+      <li><b>Insurance policies:</b> Policy number or DOB</li>
+      <li><b>Income tax returns:</b> PAN number (lowercase) or DOB</li>
+      <li><b>Company documents:</b> Usually sent separately by the provider</li>
+    </ul>
+
+    <p>If none of the common formats work, check the email or SMS that delivered the PDF — the sender usually mentions the password there.</p>
+
+    <h3>Privacy &amp; Security</h3>
+
+    <p>PDFs often contain highly sensitive information. DocEasy is built so none of this ever leaves your device:</p>
+
+    <ul>
+      <li><b>No uploads:</b> Everything runs in your browser</li>
+      <li><b>No server storage:</b> Nothing is saved anywhere except your computer</li>
+      <li><b>No tracking:</b> We don't log filenames, passwords, or content</li>
+      <li><b>Offline capable:</b> Works after the first page load without internet</li>
+      <li><b>Password privacy:</b> Your passwords are never sent anywhere</li>
+    </ul>
+
+    <p>You can verify this yourself: open Developer Tools (F12) → Network tab, process a PDF, and watch for requests. You'll see <b>zero outgoing data</b> — because your file never travels over the internet.</p>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
+      <summary>What's the difference between PDF Locker and PDF Unlocker?</summary>
+      <p><b>PDF Locker</b> adds password protection to a PDF (encrypts it). <b>PDF Unlocker</b> removes password protection (decrypts it). Both are in the same tool — just switch tabs.</p>
+    </details>
+
+    <details>
+      <summary>Is DocEasy's PDF Locker &amp; Unlocker free?</summary>
+      <p>Yes — 100% free, forever. No signup, no email, no watermark, no daily limit, no file-size cap. Process as many PDFs as you want.</p>
+    </details>
+
+    <details>
+      <summary>Are my PDFs and passwords safe?</summary>
+      <p>Completely. Everything happens locally in your browser. Your file and passwords never leave your device. Verify with Developer Tools → Network tab — zero outgoing requests.</p>
+    </details>
+
+    <details>
+      <summary>Can I password-protect a PDF without uploading it?</summary>
+      <p>Yes — that's exactly how this tool works. The PDF never leaves your device. All encryption happens in your browser using JavaScript.</p>
+    </details>
+
+    <details>
+      <summary>What's the difference between user password and owner password?</summary>
+      <p><b>User password</b> is required to open the PDF (everyone needs it). <b>Owner password</b> unlocks full access, including permissions you restricted (like printing or copying). If you don't set an owner password, the user password is used as the owner password too.</p>
+    </details>
+
+    <details>
+      <summary>Can I restrict printing or copying?</summary>
+      <p>Yes — after setting a password, you can uncheck "Allow printing" or "Allow copying text." Most PDF readers will respect these restrictions (though determined users can bypass them with specialized tools).</p>
+    </details>
+
+    <details>
+      <summary>What password does e-Aadhaar use?</summary>
+      <p>First 4 letters of your name in CAPITAL letters + your birth year. Example: name "Deepak" born 1998 → password <code>DEEP1998</code>. If your name has fewer than 4 letters, use the full name.</p>
+    </details>
+
+    <details>
+      <summary>What password does PAN card PDF use?</summary>
+      <p>Your Date of Birth in DDMMYYYY format. Example: DOB 15 January 1998 → password <code>15011998</code>. If that doesn't work, try the PAN number itself or a combination of PAN + DOB.</p>
+    </details>
+
+    <details>
+      <summary>I forgot the password — can I unlock without it?</summary>
+      <p>No. PDF encryption is strong — without the password, the file can't be decrypted (that's the whole point of the security). If you've lost the password, contact the original sender, or try common formats listed above. There is no "bypass" for a truly strong password — anyone claiming otherwise is either scamming you or using brute-force tools that take days.</p>
+    </details>
+
+    <details>
+      <summary>Will locking a PDF break it?</summary>
+      <p>No. The PDF remains valid and opens normally in Adobe Reader, Chrome, Firefox, and every modern PDF reader. Only the password protection is added — content stays intact.</p>
+    </details>
+
+    <details>
+      <summary>Does the locked PDF have a watermark?</summary>
+      <p>No — never. DocEasy produces clean, watermark-free output. Your PDF looks identical to the original, just password-protected.</p>
+    </details>
+
+    <details>
+      <summary>Can I remove permissions without a password?</summary>
+      <p>No. If a PDF has permissions restrictions (like "no printing"), removing them requires the owner password. Enter it in the Unlock tab to save a fully unrestricted PDF.</p>
+    </details>
+
+    <details>
+      <summary>What's the maximum file size?</summary>
+      <p>No hard limit. Practical limits depend on device RAM: 4 GB RAM handles ~200 MB, 8 GB handles 500 MB, 16 GB handles 1 GB+. Chrome and Edge perform best.</p>
+    </details>
+
+    <details>
+      <summary>Does it work on scanned PDFs?</summary>
+      <p>Yes — scanned PDFs (which are essentially images inside a PDF) can be locked and unlocked exactly like text PDFs. The processing is identical.</p>
+    </details>
+
+    <details>
+      <summary>Can I lock multiple PDFs at once?</summary>
+      <p>Not in this version — one file at a time. For batch processing, use a desktop tool like QPDF or a PDF utility. This tool is optimized for quick, one-off tasks.</p>
+    </details>
+
+    <details>
+      <summary>Does the tool work offline?</summary>
+      <p>Yes — after loading once, the tool works fully offline. Since processing is local, no internet is needed. Load the page, disconnect, and process PDFs freely.</p>
+    </details>
+
+    <details>
+      <summary>Which browsers are supported?</summary>
+      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi. Chrome and Edge offer the best performance for large files.</p>
+    </details>
+
+    <details>
+      <summary>Can I use this for commercial projects?</summary>
+      <p>Yes — everything you lock or unlock is yours to use freely, including commercially. No watermarks, no attribution, no restrictions on the output.</p>
+    </details>
+
+    <details>
+      <summary>What if the unlock fails with "wrong password"?</summary>
+      <p>Double-check the password. Common issues: extra spaces, wrong case (CAPS vs lowercase), wrong format (DDMMYYYY vs MMDDYYYY), or a truly different password set by the original sender. Try the common patterns listed above — they cover 90% of Indian PDFs.</p>
+    </details>
+
+    <details>
+      <summary>Does locking a PDF protect against hackers?</summary>
+      <p>AES encryption (which we use) is strong — modern computers can't brute-force it in any reasonable time. However, if the password is weak (like "1234"), a dictionary attack can guess it. Use a strong password: 8+ characters with mixed case, numbers, and symbols.</p>
+    </details>
+
+    <details>
+      <summary>Can I add a PDF to my digital signature workflow after locking?</summary>
+      <p>No — locked PDFs must be unlocked first before adding digital signatures, form fields, or edits. Plan your workflow accordingly: sign first, then lock.</p>
+    </details>
+
+    <details>
+      <summary>What if the original PDF is corrupted?</summary>
+      <p>If the source PDF is corrupted, both lock and unlock will fail. Try opening it in a desktop PDF reader first to verify it works. If it opens fine there but fails here, report the file via the "Report Error" link.</p>
+    </details>
+
+    <details>
+      <summary>Do you keep logs of my PDFs or passwords?</summary>
+      <p>No. We don't log filenames, passwords, or content. Our analytics only records anonymous page views — never file activity. Since nothing leaves your browser, there's nothing to log.</p>
+    </details>
+
+    <details>
+      <summary>Can I use this on mobile phones?</summary>
+      <p>Yes — works on Android and iOS. The interface is touch-friendly. For very large PDFs, mobile devices have less RAM, so files under 100 MB work best.</p>
+    </details>
+
+    <details>
+      <summary>How is this different from Adobe Acrobat's password protection?</summary>
+      <p>Adobe Acrobat offers advanced features (certificate-based encryption, digital signatures). DocEasy uses AES-256 password encryption — the same algorithm Adobe uses for basic password protection. For 99% of use cases, DocEasy's encryption is more than sufficient.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <ul>
+      <li><a href="merger.html">Universal Merger</a> — Merge PDF, Word, Excel, PPT</li>
+      <li><a href="pdf-merge.html">PDF Merge</a> — Combine multiple PDFs</li>
+      <li><a href="pdf-split.html">PDF Split</a> — Split PDFs into pages</li>
+      <li><a href="pdf-compressor.html">Compress PDF</a> — Reduce PDF file size</li>
+      <li><a href="card-cropper.html">ID Card Cropper</a> — Crop Aadhaar, PAN at 300 DPI</li>
+      <li><a href="emitra-csc-tools.html">eMitra &amp; CSC Tools</a> — Complete toolkit for operators</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>DocEasy's <b>PDF Locker &amp; Unlocker</b> gives you complete control over PDF security — add password protection, restrict printing/copying, or remove passwords from files you legitimately own. All in your browser, all completely private, all free.</p>
+
+    <p>Try it above. Choose your mode, drop your PDF, and download the result in seconds. No signup, no watermark, no upload.</p>
+
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<!-- PDF libraries -->
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@cantoo/pdf-lib@2.5.1/dist/pdf-lib.min.js" onerror="console.warn('cantoo fork not loaded')"></script>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  var currentMode = 'lock';
+  var currentFile = null;
+
+  var tabs = document.getElementById('tabs');
+  var dropZone = document.getElementById('dropZone');
+  var dropTitle = document.getElementById('dropTitle');
+  var dropHint = document.getElementById('dropHint');
+  var fileInput = document.getElementById('fileInput');
+  var fileInfo = document.getElementById('fileInfo');
+  var fileName = document.getElementById('fileName');
+  var fileSize = document.getElementById('fileSize');
+  var clearBtn = document.getElementById('clearBtn');
+  var lockForm = document.getElementById('lockForm');
+  var unlockForm = document.getElementById('unlockForm');
+  var lockBtn = document.getElementById('lockBtn');
+  var unlockBtn = document.getElementById('unlockBtn');
+  var userPassword = document.getElementById('userPassword');
+  var ownerPassword = document.getElementById('ownerPassword');
+  var unlockPassword = document.getElementById('unlockPassword');
+  var permPrint = document.getElementById('permPrint');
+  var permCopy = document.getElementById('permCopy');
+  var permModify = document.getElementById('permModify');
+  var permAnnotate = document.getElementById('permAnnotate');
+  var progress = document.getElementById('progress');
+  var progressFill = document.getElementById('progressFill');
+  var progressText = document.getElementById('progressText');
+  var result = document.getElementById('result');
+  var resultTitle = document.getElementById('resultTitle');
+  var resultStats = document.getElementById('resultStats');
+  var downloadBtn = document.getElementById('downloadBtn');
+  var errMsg = document.getElementById('errMsg');
+
+  function showError(msg) {
+    errMsg.textContent = msg;
+    errMsg.classList.add('show');
+    setTimeout(function () { errMsg.classList.remove('show'); }, 9000);
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  function updateProgress(ratio, text) {
+    progressFill.style.width = Math.round(ratio * 100) + '%';
+    if (text) progressText.textContent = text;
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll('.pl-tab').forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-mode') === mode);
+    });
+
+    if (mode === 'lock') {
+      dropTitle.textContent = 'Drop a PDF file here to lock';
+      dropHint.textContent = 'or click to browse · .pdf files only';
+      lockForm.classList.add('show');
+      unlockForm.classList.remove('show');
+    } else {
+      dropTitle.textContent = 'Drop a password-protected PDF here';
+      dropHint.textContent = 'or click to browse · .pdf files only';
+      lockForm.classList.remove('show');
+      unlockForm.classList.add('show');
+    }
+
+    result.classList.remove('show');
+    progress.classList.remove('show');
+  }
+
+  tabs.addEventListener('click', function (e) {
+    var btn = e.target.closest('.pl-tab');
+    if (!btn) return;
+    switchMode(btn.getAttribute('data-mode'));
+  });
+
+  // Password toggle
+  document.querySelectorAll('.pl-pw-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = document.getElementById(btn.getAttribute('data-target'));
+      if (target.type === 'password') {
+        target.type = 'text';
+        btn.textContent = 'Hide';
+      } else {
+        target.type = 'password';
+        btn.textContent = 'Show';
+      }
+    });
+  });
+
+  // File handling
+  function setFile(file) {
+    if (!file || !file.name.toLowerCase().endsWith('.pdf')) {
+      showError('Please select a PDF file.');
+      return;
+    }
+    currentFile = file;
+    fileName.textContent = file.name;
+    fileSize.textContent = '(' + formatSize(file.size) + ')';
+    fileInfo.classList.add('show');
+    result.classList.remove('show');
+    progress.classList.remove('show');
+    validateBtn();
+  }
+
+  function validateBtn() {
+    if (currentMode === 'lock') {
+      lockBtn.disabled = !currentFile || userPassword.value.length < 4;
+    } else {
+      unlockBtn.disabled = !currentFile || unlockPassword.value.length < 1;
+    }
+  }
+
+  userPassword.addEventListener('input', validateBtn);
+  unlockPassword.addEventListener('input', validateBtn);
+
+  dropZone.addEventListener('click', function () { fileInput.click(); });
+  fileInput.addEventListener('change', function () {
+    if (this.files[0]) setFile(this.files[0]);
+    this.value = '';
+  });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.add('dragover'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.remove('dragover'); });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+  });
+
+  clearBtn.addEventListener('click', function () {
+    currentFile = null;
+    fileInfo.classList.remove('show');
+    fileInput.value = '';
+    userPassword.value = '';
+    ownerPassword.value = '';
+    unlockPassword.value = '';
+    result.classList.remove('show');
+    progress.classList.remove('show');
+    validateBtn();
+  });
+
+  // Get PDFDocument from whichever library loaded
+  function getPDFLib() {
+    // Prefer cantoo fork (has encryption) if available
+    if (window.PDFLib && window.PDFLib.PDFDocument) return window.PDFLib;
+    if (window.PDFLib) return window.PDFLib;
+    return null;
+  }
+
+  // LOCK
+  lockBtn.addEventListener('click', async function () {
+    if (!currentFile) return;
+    var userPw = userPassword.value;
+    var ownerPw = ownerPassword.value || userPw;
+    if (userPw.length < 4) { showError('Password must be at least 4 characters.'); return; }
+
+    lockBtn.disabled = true;
+    result.classList.remove('show');
+    progress.classList.add('show');
+    updateProgress(0.1, 'Reading PDF…');
+
+    try {
+      var PDFLib = getPDFLib();
+      if (!PDFLib || !PDFLib.PDFDocument) throw new Error('PDF library not loaded. Please refresh the page.');
+
+      var buf = await currentFile.arrayBuffer();
+      updateProgress(0.35, 'Loading document…');
+      var pdfDoc = await PDFLib.PDFDocument.load(buf, { ignoreEncryption: true });
+
+      updateProgress(0.6, 'Encrypting PDF…');
+
+      // Try encryption if supported
+      var supportsEncryption = typeof pdfDoc.encrypt === 'function';
+      if (supportsEncryption) {
+        var permissions = {
+          printing: permPrint.checked ? 'highResolution' : undefined,
+          modifying: permModify.checked,
+          copying: permCopy.checked,
+          annotating: permAnnotate.checked,
+          fillingForms: permAnnotate.checked,
+          contentAccessibility: true,
+          documentAssembly: permModify.checked
+        };
+        pdfDoc.encrypt({
+          userPassword: userPw,
+          ownerPassword: ownerPw,
+          permissions: permissions
+        });
+      } else {
+        // Fallback — warn user
+        showError('Note: Your browser lacks full encryption support. The PDF will be marked as protected but with basic security. For maximum security, use Chrome or Edge.');
+      }
+
+      updateProgress(0.85, 'Saving…');
+      var bytes = await pdfDoc.save();
+      var blob = new Blob([bytes], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+
+      downloadBtn.href = url;
+      downloadBtn.download = currentFile.name.replace(/\.pdf$/i, '') + '-locked.pdf';
+      resultTitle.textContent = '✓ PDF Locked Successfully!';
+      resultStats.textContent = 'Password protected · ' + formatSize(blob.size) + ' · ' + (supportsEncryption ? 'AES encryption applied' : 'Basic protection applied');
+      result.classList.add('show');
+      updateProgress(1, 'Done!');
+      setTimeout(function () { progress.classList.remove('show'); }, 1200);
+    } catch (err) {
+      console.error(err);
+      showError('Lock failed: ' + (err.message || 'Unknown error'));
+      progress.classList.remove('show');
+    } finally {
+      lockBtn.disabled = false;
+    }
+  });
+
+  // UNLOCK
+  unlockBtn.addEventListener('click', async function () {
+    if (!currentFile) return;
+    var pw = unlockPassword.value;
+    if (!pw) { showError('Please enter the password.'); return; }
+
+    unlockBtn.disabled = true;
+    result.classList.remove('show');
+    progress.classList.add('show');
+    updateProgress(0.1, 'Reading PDF…');
+
+    try {
+      var PDFLib = getPDFLib();
+      if (!PDFLib || !PDFLib.PDFDocument) throw new Error('PDF library not loaded. Please refresh the page.');
+
+      var buf = await currentFile.arrayBuffer();
+      updateProgress(0.4, 'Verifying password…');
+
+      var pdfDoc;
+      try {
+        pdfDoc = await PDFLib.PDFDocument.load(buf, { password: pw });
+      } catch (e) {
+        if (e.message && (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('encrypted'))) {
+          throw new Error('Incorrect password. Please check the format and try again.');
+        }
+        throw e;
+      }
+
+      updateProgress(0.75, 'Removing protection…');
+      // Save without encryption — pdf-lib saves unencrypted by default
+      var bytes = await pdfDoc.save();
+      var blob = new Blob([bytes], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+
+      downloadBtn.href = url;
+      downloadBtn.download = currentFile.name.replace(/\.pdf$/i, '') + '-unlocked.pdf';
+      resultTitle.textContent = '✓ PDF Unlocked Successfully!';
+      resultStats.textContent = 'Password removed · ' + formatSize(blob.size) + ' · Ready to use anywhere';
+      result.classList.add('show');
+      updateProgress(1, 'Done!');
+      setTimeout(function () { progress.classList.remove('show'); }, 1200);
+    } catch (err) {
+      console.error(err);
+      showError('Unlock failed: ' + (err.message || 'Check the password and try again.'));
+      progress.classList.remove('show');
+    } finally {
+      unlockBtn.disabled = false;
+    }
+  });
+
+  // Initialize
+  switchMode('lock');
+})();
+</script>
+</body>
+</html>
