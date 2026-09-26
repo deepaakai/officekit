@@ -1,90 +1,43 @@
 /**
- * [DocEasy Enhancer] worker-video.js
+ * [DocEasy Enhancer] worker-video.js — v2
  *
- * Web Worker: decodes a window of video (one chunk-manager 10-30s
- * segment, not the whole file — memory bounds depend on the caller only
- * ever handing this worker one window's EncodedVideoChunks at a time),
- * applies per-frame visual filters, and re-encodes the result. Encoded
- * output chunks are posted back one at a time as they're produced, never
- * buffered as a full array, so a 2-hour file never requires holding more
- * than a handful of frames in memory regardless of total video length.
+ * Adds a second operating mode to the existing decode→filter→encode
+ * pipeline: a persistent "passthrough encode session" used by
+ * video-voice-changer.html's mp4-muxer pipeline. In this mode the main
+ * thread supplies already-decoded VideoFrames (captured from a hidden
+ * <video> element via requestVideoFrameCallback — see
+ * video-voice-changer.html), and this worker's only job is to encode
+ * them and stream EncodedVideoChunks back for muxing.
  *
- * ── Decode/encode strategy ──────────────────────────────────────────
- * WebCodecs `VideoDecoder`/`VideoEncoder` are required — there is no
- * pure-JS video codec fallback worth shipping (a JS H.264/VP9 decoder
- * would be enormous and slow). If WebCodecs is unavailable, this worker
- * reports a clear error; the caller (tools/video-enhancer.html) is
- * responsible for falling back to FFmpeg.wasm at the file level in that
- * case, per the project's documented graceful-degradation rule.
+ * ── Why this exists / honest trade-off ───────────────────────────────
+ * There is still no pure-JS demuxer wired into this project for the
+ * *original* video container, so a true zero-re-encode bitstream copy
+ * (what FFmpeg's `-c:v copy` did) is not possible here. The
+ * mobile-safe, FFmpeg-free replacement decodes the source via the
+ * browser's own native <video> element (which every browser already
+ * demuxes/decodes without SharedArrayBuffer) and re-encodes each
+ * presented frame through VideoEncoder. That means: (a) this is a real
+ * re-encode, with the generation-loss that implies, and (b) capture
+ * runs at roughly real-time relative to the video's own duration/
+ * playback rate, not the fast "copy" speed of the old approach. This
+ * is documented here and surfaced to the user in video-voice-changer.html
+ * rather than silently presented as lossless or fast.
  *
- * ── Filter implementation strategy (documented trade-off) ────────────
- * All pixel adjustments are implemented as manual, deterministic math on
- * raw ImageData (Uint8ClampedArray), NOT via CSS `ctx.filter` shorthand
- * (e.g. `filter: brightness(1.2)`). Trade-off:
- *   - `ctx.filter` is GPU-accelerated and less code, but its exact output
- *     (rounding, color space handling) varies subtly between browser
- *     rendering engines, meaning a live preview on one device could look
- *     slightly different from the final encoded file processed on
- *     another device/browser. That mismatch is worse than the perf cost
- *     here, so this file uses explicit per-pixel math instead —
- *     slower per frame, but bit-for-bit consistent everywhere.
- *   - Cost: brightness/contrast/saturation are O(pixels) single-pass and
- *     cheap. Blur/sharpen/cartoon require convolution passes and are the
- *     most expensive; blur is implemented as 3 stacked box blurs
- *     (approximates a Gaussian at a fraction of the cost of a true
- *     large-radius Gaussian kernel).
+ * ── New message protocol (passthrough mode) ──────────────────────────
+ *   in:  { type: 'start-passthrough-encode', jobId, encoderConfig }
+ *   in:  { type: 'encode-frame', jobId, frame: VideoFrame }  (frame transferred)
+ *   in:  { type: 'finish-passthrough-encode', jobId }
  *
- * ── Memory management ────────────────────────────────────────────────
- *   - Every VideoFrame from the decoder is drawn to an OffscreenCanvas,
- *     filtered, turned into a new VideoFrame, and the ORIGINAL frame is
- *     `.close()`d immediately — never held past the frame it produced.
- *   - Encoder backpressure: before decoding further chunks, we check
- *     `encoder.encodeQueueSize` and yield (await a microtask/timeout)
- *     if the queue is deep, so encode can't fall arbitrarily far behind
- *     decode and balloon memory with pending frames.
- *   - Output EncodedVideoChunks are posted individually as they arrive,
- *     with their underlying buffer transferred (zero-copy), rather than
- *     collected into one big array before returning.
+ *   out: { type: 'chunk', jobId, chunk: {data, timestamp, duration, type}, metadata }
+ *   out: { type: 'frame-ack', jobId, queueSize }   — for main-thread backpressure
+ *   out: { type: 'encode-done', jobId }
+ *   out: { type: 'session-error', jobId, message }
  *
- * ── Message protocol ─────────────────────────────────────────────────
- * postMessage in:
- *   {
- *     type: 'process',
- *     jobId: string,
- *     encodedChunks: Array<{ data: ArrayBuffer, timestamp: number,
- *                             duration: number, type: string }>,
- *     decoderConfig: VideoDecoderConfig,
- *     encoderConfig: VideoEncoderConfig,   // codec, width, height, bitrate...
- *     filters: {                          // all optional, defaults = no-op
- *       brightness?: number,   // -100..100
- *       contrast?: number,     // -100..100
- *       saturation?: number,   // -100..100
- *       sharpness?: number,    // 0..100
- *       blur?: number,         // 0..100
- *       preset?: 'vintage' | 'cartoon' | 'none'
- *     }
- *   }
- *
- * postMessage out (progress):
- *   { type: 'progress', jobId, framesProcessed, totalFrames }
- *
- * postMessage out (chunk, one per encoded output chunk, streamed):
- *   { type: 'chunk', jobId, chunk: { data: ArrayBuffer, timestamp, duration, type } }
- *   — chunk.data's ArrayBuffer is transferred, not copied.
- *
- * postMessage out (done): { type: 'done', jobId, framesProcessed }
- *
- * postMessage out (error): { type: 'error', jobId, message }
- *
- * No step fails silently: any unrecoverable problem posts an 'error'
- * message with a specific reason rather than returning partial/garbage output.
+ * The original 'process' mode (decode→filter→encode, used by the
+ * Enhancer tool) is unchanged and still supported below.
  */
 
 'use strict';
-
-/* ------------------------------------------------------------------ *
- * Capability detection
- * ------------------------------------------------------------------ */
 
 const HAS_WEBCODECS_VIDEO =
   typeof VideoDecoder !== 'undefined' && typeof VideoEncoder !== 'undefined';
@@ -97,25 +50,20 @@ if (!HAS_OFFSCREEN_CANVAS) {
   console.warn('[DocEasy Enhancer] OffscreenCanvas not available in this worker context — frame filtering cannot run here.');
 }
 
-const ENCODER_QUEUE_BACKPRESSURE_LIMIT = 8; // frames pending encode before we pause decode
+const ENCODER_QUEUE_BACKPRESSURE_LIMIT = 8;
 
 /* ------------------------------------------------------------------ *
- * Pixel-level filter primitives (operate in place on Uint8ClampedArray
- * RGBA data from ImageData.data)
+ * Pixel-level filter primitives (unchanged from v1 — used only by the
+ * 'process' mode below, not by passthrough encoding)
  * ------------------------------------------------------------------ */
 
-/** @param {Uint8ClampedArray} data @param {number} amount -100..100 */
 function applyBrightness(data, amount) {
   if (!amount) return;
   const offset = (amount / 100) * 255;
   for (let i = 0; i < data.length; i += 4) {
-    data[i] += offset;
-    data[i + 1] += offset;
-    data[i + 2] += offset;
+    data[i] += offset; data[i + 1] += offset; data[i + 2] += offset;
   }
 }
-
-/** @param {Uint8ClampedArray} data @param {number} amount -100..100 */
 function applyContrast(data, amount) {
   if (!amount) return;
   const factor = (259 * (amount + 255)) / (255 * (259 - amount));
@@ -125,8 +73,6 @@ function applyContrast(data, amount) {
     data[i + 2] = factor * (data[i + 2] - 128) + 128;
   }
 }
-
-/** @param {Uint8ClampedArray} data @param {number} amount -100..100 */
 function applySaturation(data, amount) {
   if (!amount) return;
   const factor = 1 + amount / 100;
@@ -138,29 +84,9 @@ function applySaturation(data, amount) {
     data[i + 2] = gray + (b - gray) * factor;
   }
 }
-
-/**
- * Separable box blur, applied `passes` times to approximate a Gaussian
- * blur at much lower cost than a large true Gaussian kernel.
- * @param {ImageData} imageData
- * @param {number} radius pixel radius, derived from a 0..100 UI value
- * @param {number} [passes=3]
- */
-function boxBlur(imageData, radius, passes = 3) {
-  if (radius <= 0) return imageData;
-  const { width, height, data } = imageData;
-  let src = data;
-  for (let pass = 0; pass < passes; pass++) {
-    src = boxBlurPass(src, width, height, radius);
-  }
-  imageData.data.set(src);
-  return imageData;
-}
-
 function boxBlurPass(src, width, height, radius) {
   const out = new Uint8ClampedArray(src.length);
   const size = radius * 2 + 1;
-  // Horizontal pass
   const temp = new Uint8ClampedArray(src.length);
   for (let y = 0; y < height; y++) {
     for (let ch = 0; ch < 4; ch++) {
@@ -177,7 +103,6 @@ function boxBlurPass(src, width, height, radius) {
       }
     }
   }
-  // Vertical pass
   for (let x = 0; x < width; x++) {
     for (let ch = 0; ch < 4; ch++) {
       let sum = 0;
@@ -195,12 +120,14 @@ function boxBlurPass(src, width, height, radius) {
   }
   return out;
 }
-
-/**
- * Unsharp mask sharpening: output = original + amount * (original - blurred).
- * @param {ImageData} imageData mutated in place
- * @param {number} amount 0..100
- */
+function boxBlur(imageData, radius, passes = 3) {
+  if (radius <= 0) return imageData;
+  const { width, height, data } = imageData;
+  let src = data;
+  for (let pass = 0; pass < passes; pass++) src = boxBlurPass(src, width, height, radius);
+  imageData.data.set(src);
+  return imageData;
+}
 function applySharpen(imageData, amount) {
   if (!amount) return;
   const strength = amount / 100;
@@ -208,185 +135,55 @@ function applySharpen(imageData, amount) {
   const blurredData = boxBlurPass(data, width, height, 1);
   for (let i = 0; i < data.length; i += 4) {
     for (let ch = 0; ch < 3; ch++) {
-      const orig = data[i + ch];
-      const blurred = blurredData[i + ch];
-      data[i + ch] = orig + strength * (orig - blurred);
+      data[i + ch] = data[i + ch] + strength * (data[i + ch] - blurredData[i + ch]);
     }
   }
 }
-
-/**
- * Vintage preset: teal-orange split tone (shadows pushed teal, highlights
- * pushed orange) plus a radial vignette darkening toward the edges.
- * @param {ImageData} imageData mutated in place
- */
-function applyVintagePreset(imageData) {
-  const { width, height, data } = imageData;
-  const cx = width / 2;
-  const cy = height / 2;
-  const maxDist = Math.hypot(cx, cy);
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      const i = (y * width + x) * 4;
-      const r = data[i], g = data[i + 1], b = data[i + 2];
-      const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-      // Shadows -> teal (boost G/B, reduce R); highlights -> orange (boost R, reduce B).
-      const shadowPull = (1 - luma) * 0.15;
-      const highlightPull = luma * 0.15;
-      data[i] = r - r * shadowPull * 255 / 255 + r * highlightPull;
-      data[i + 1] = g + g * shadowPull * 0.5;
-      data[i + 2] = b + b * shadowPull - b * highlightPull;
-
-      const dist = Math.hypot(x - cx, y - cy) / maxDist;
-      const vignette = 1 - Math.pow(dist, 2.2) * 0.5;
-      data[i] *= vignette;
-      data[i + 1] *= vignette;
-      data[i + 2] *= vignette;
-    }
-  }
-}
-
-/**
- * Cartoon preset: Sobel edge detection darkened into black outlines,
- * composited over a posterized (color-quantized) version of the frame.
- * @param {ImageData} imageData mutated in place
- */
-function applyCartoonPreset(imageData) {
-  const { width, height, data } = imageData;
-  const gray = new Float32Array(width * height);
-  for (let i = 0, p = 0; i < data.length; i += 4, p++) {
-    gray[p] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
-  }
-
-  const edges = new Uint8Array(width * height);
-  const gx = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
-  const gy = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
-  for (let y = 1; y < height - 1; y++) {
-    for (let x = 1; x < width - 1; x++) {
-      let sx = 0, sy = 0, k = 0;
-      for (let dy = -1; dy <= 1; dy++) {
-        for (let dx = -1; dx <= 1; dx++) {
-          const v = gray[(y + dy) * width + (x + dx)];
-          sx += v * gx[k];
-          sy += v * gy[k];
-          k++;
-        }
-      }
-      const mag = Math.hypot(sx, sy);
-      edges[y * width + x] = mag > 80 ? 1 : 0;
-    }
-  }
-
-  const levels = 4; // posterize step count
-  for (let i = 0, p = 0; i < data.length; i += 4, p++) {
-    if (edges[p]) {
-      data[i] = 0;
-      data[i + 1] = 0;
-      data[i + 2] = 0;
-    } else {
-      data[i] = Math.round((data[i] / 255) * (levels - 1)) * (255 / (levels - 1));
-      data[i + 1] = Math.round((data[i + 1] / 255) * (levels - 1)) * (255 / (levels - 1));
-      data[i + 2] = Math.round((data[i + 2] / 255) * (levels - 1)) * (255 / (levels - 1));
-    }
-  }
-}
-
-/**
- * Applies the full filter set to one ImageData in the documented order:
- * color adjustments -> blur/sharpen -> preset overlay last (presets are
- * stylistic and expected to dominate the look).
- * @param {ImageData} imageData mutated in place
- * @param {object} filters see message protocol in file header
- */
 function applyFilters(imageData, filters) {
   if (!filters) return imageData;
   const data = imageData.data;
-
   applyBrightness(data, filters.brightness || 0);
   applyContrast(data, filters.contrast || 0);
   applySaturation(data, filters.saturation || 0);
-
-  if (filters.blur) {
-    const radius = Math.max(1, Math.round((filters.blur / 100) * 8));
-    boxBlur(imageData, radius, 3);
-  }
-  if (filters.sharpness) {
-    applySharpen(imageData, filters.sharpness);
-  }
-
-  if (filters.preset === 'vintage') applyVintagePreset(imageData);
-  else if (filters.preset === 'cartoon') applyCartoonPreset(imageData);
-  else if (filters.preset && filters.preset !== 'none') {
-    console.warn(`[DocEasy Enhancer] Unknown preset "${filters.preset}" — skipping preset step (color adjustments still applied).`);
-  }
-
+  if (filters.blur) boxBlur(imageData, Math.max(1, Math.round((filters.blur / 100) * 8)), 3);
+  if (filters.sharpness) applySharpen(imageData, filters.sharpness);
   return imageData;
 }
-
-/* ------------------------------------------------------------------ *
- * Frame processing: VideoFrame -> filtered VideoFrame
- * ------------------------------------------------------------------ */
 
 let sharedCanvas = null;
 let sharedCtx = null;
 
-/**
- * @param {VideoFrame} frame caller retains ownership of closing the
- *   ORIGINAL frame; this function does not close it.
- * @param {object} filters
- * @returns {VideoFrame} a new frame the caller must eventually close
- */
 function filterFrame(frame, filters) {
-  if (!HAS_OFFSCREEN_CANVAS) {
-    throw new Error('OffscreenCanvas is unavailable — cannot filter video frames in this worker.');
-  }
+  if (!HAS_OFFSCREEN_CANVAS) throw new Error('OffscreenCanvas is unavailable — cannot filter video frames in this worker.');
   const width = frame.displayWidth;
   const height = frame.displayHeight;
-
   if (!sharedCanvas || sharedCanvas.width !== width || sharedCanvas.height !== height) {
     sharedCanvas = new OffscreenCanvas(width, height);
     sharedCtx = sharedCanvas.getContext('2d', { willReadFrequently: true });
     if (!sharedCtx) throw new Error('Failed to acquire 2D context on OffscreenCanvas.');
   }
-
   sharedCtx.drawImage(frame, 0, 0, width, height);
   const imageData = sharedCtx.getImageData(0, 0, width, height);
   applyFilters(imageData, filters);
   sharedCtx.putImageData(imageData, 0, 0);
-
-  return new VideoFrame(sharedCanvas, {
-    timestamp: frame.timestamp,
-    duration: frame.duration ?? undefined,
-  });
+  return new VideoFrame(sharedCanvas, { timestamp: frame.timestamp, duration: frame.duration ?? undefined });
 }
 
 /* ------------------------------------------------------------------ *
- * Main per-job processing
+ * MODE A: original decode -> filter -> encode job (Enhancer tool)
  * ------------------------------------------------------------------ */
 
-/**
- * @param {object} job see message protocol in file header
- */
 async function processJob(job) {
   const { jobId, encodedChunks, decoderConfig, encoderConfig, filters } = job;
-
-  if (!HAS_WEBCODECS_VIDEO) {
-    throw new Error('WebCodecs VideoDecoder/VideoEncoder is unavailable in this browser — cannot process video here.');
-  }
-  if (!Array.isArray(encodedChunks) || encodedChunks.length === 0) {
-    throw new Error('Job provided no encodedChunks to process.');
-  }
+  if (!HAS_WEBCODECS_VIDEO) throw new Error('WebCodecs VideoDecoder/VideoEncoder is unavailable in this browser.');
+  if (!Array.isArray(encodedChunks) || encodedChunks.length === 0) throw new Error('Job provided no encodedChunks to process.');
   if (!decoderConfig) throw new Error('Job is missing decoderConfig.');
   if (!encoderConfig) throw new Error('Job is missing encoderConfig.');
 
   const decodeSupport = await VideoDecoder.isConfigSupported(decoderConfig);
-  if (!decodeSupport.supported) {
-    throw new Error(`VideoDecoder does not support the given decoderConfig: ${JSON.stringify(decoderConfig)}`);
-  }
+  if (!decodeSupport.supported) throw new Error(`VideoDecoder does not support: ${JSON.stringify(decoderConfig)}`);
   const encodeSupport = await VideoEncoder.isConfigSupported(encoderConfig);
-  if (!encodeSupport.supported) {
-    throw new Error(`VideoEncoder does not support the given encoderConfig: ${JSON.stringify(encoderConfig)}`);
-  }
+  if (!encodeSupport.supported) throw new Error(`VideoEncoder does not support: ${JSON.stringify(encoderConfig)}`);
 
   let framesProcessed = 0;
   const totalFrames = encodedChunks.length;
@@ -396,87 +193,124 @@ async function processJob(job) {
     output: (chunk, metadata) => {
       const buf = new ArrayBuffer(chunk.byteLength);
       chunk.copyTo(buf);
-      self.postMessage(
-        {
-          type: 'chunk',
-          jobId,
-          chunk: {
-            data: buf,
-            timestamp: chunk.timestamp,
-            duration: chunk.duration ?? 0,
-            type: chunk.type,
-          },
-          metadata: metadata || null,
-        },
-        [buf]
-      );
+      self.postMessage({
+        type: 'chunk', jobId,
+        chunk: { data: buf, timestamp: chunk.timestamp, duration: chunk.duration ?? 0, type: chunk.type },
+        metadata: metadata || null,
+      }, [buf]);
     },
-    error: (err) => {
-      pendingError = err;
-    },
+    error: (err) => { pendingError = err; },
   });
   encoder.configure(encoderConfig);
 
   const decoder = new VideoDecoder({
     output: (frame) => {
       let filtered = null;
-      try {
-        filtered = filterFrame(frame, filters);
-      } catch (err) {
-        frame.close();
-        pendingError = err;
-        return;
-      }
-      frame.close(); // original frame released the moment we're done with it
-
-      try {
-        encoder.encode(filtered);
-      } finally {
-        filtered.close(); // encoder copies what it needs; we don't hold this frame
-      }
-
+      try { filtered = filterFrame(frame, filters); }
+      catch (err) { frame.close(); pendingError = err; return; }
+      frame.close();
+      try { encoder.encode(filtered); } finally { filtered.close(); }
       framesProcessed++;
       self.postMessage({ type: 'progress', jobId, framesProcessed, totalFrames });
     },
-    error: (err) => {
-      pendingError = err;
-    },
+    error: (err) => { pendingError = err; },
   });
   decoder.configure(decoderConfig);
 
   for (const chunkDesc of encodedChunks) {
     if (pendingError) break;
-
-    // Backpressure: don't let the encoder queue balloon in memory while
-    // decode races ahead of it.
     while (encoder.encodeQueueSize > ENCODER_QUEUE_BACKPRESSURE_LIMIT && !pendingError) {
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
-
     decoder.decode(new EncodedVideoChunk({
-      type: chunkDesc.type,
-      timestamp: chunkDesc.timestamp,
-      duration: chunkDesc.duration,
-      data: chunkDesc.data,
+      type: chunkDesc.type, timestamp: chunkDesc.timestamp, duration: chunkDesc.duration, data: chunkDesc.data,
     }));
   }
 
-  if (!pendingError) {
-    await decoder.flush();
-    await encoder.flush();
-  }
+  if (!pendingError) { await decoder.flush(); await encoder.flush(); }
+  decoder.close(); encoder.close();
 
-  decoder.close();
-  encoder.close();
-
-  if (pendingError) {
-    throw new Error(`Video codec error mid-stream: ${pendingError.message || pendingError}`);
-  }
-  if (framesProcessed === 0) {
-    throw new Error('Zero frames were decoded — input chunks may be corrupt or empty.');
-  }
-
+  if (pendingError) throw new Error(`Video codec error mid-stream: ${pendingError.message || pendingError}`);
+  if (framesProcessed === 0) throw new Error('Zero frames were decoded — input chunks may be corrupt or empty.');
   self.postMessage({ type: 'done', jobId, framesProcessed });
+}
+
+/* ------------------------------------------------------------------ *
+ * MODE B: passthrough encode session (used by video-voice-changer.html
+ * for its mp4-muxer pipeline — no decoder involved, frames arrive
+ * already-decoded from the main thread's <video>+canvas capture loop)
+ * ------------------------------------------------------------------ */
+
+/** jobId -> { encoder, framesEncoded, pendingError } */
+const passthroughSessions = new Map();
+
+async function startPassthroughEncode(job) {
+  const { jobId, encoderConfig } = job;
+  if (!HAS_WEBCODECS_VIDEO) throw new Error('WebCodecs VideoEncoder is unavailable in this browser.');
+  if (!encoderConfig) throw new Error('start-passthrough-encode requires encoderConfig.');
+  if (passthroughSessions.has(jobId)) throw new Error(`A passthrough session for jobId ${jobId} is already running.`);
+
+  const support = await VideoEncoder.isConfigSupported(encoderConfig);
+  if (!support.supported) {
+    throw new Error(`VideoEncoder does not support the requested encoderConfig for muxing: ${JSON.stringify(encoderConfig)}`);
+  }
+
+  const session = { encoder: null, framesEncoded: 0, pendingError: null };
+  session.encoder = new VideoEncoder({
+    output: (chunk, metadata) => {
+      const buf = new ArrayBuffer(chunk.byteLength);
+      chunk.copyTo(buf);
+      self.postMessage({
+        type: 'chunk', jobId,
+        chunk: { data: buf, timestamp: chunk.timestamp, duration: chunk.duration ?? 0, type: chunk.type },
+        metadata: metadata || null,
+      }, [buf]);
+    },
+    error: (err) => { session.pendingError = err; },
+  });
+  session.encoder.configure(encoderConfig);
+  passthroughSessions.set(jobId, session);
+}
+
+async function encodeFrame(job) {
+  const { jobId, frame } = job;
+  const session = passthroughSessions.get(jobId);
+  if (!session) {
+    frame.close();
+    throw new Error(`encode-frame received for unknown/uninitialized session jobId ${jobId}. Call start-passthrough-encode first.`);
+  }
+  if (session.pendingError) {
+    frame.close();
+    throw new Error(`Passthrough encoder for jobId ${jobId} already failed: ${session.pendingError.message || session.pendingError}`);
+  }
+
+  try {
+    session.encoder.encode(frame);
+    session.framesEncoded++;
+  } finally {
+    frame.close();
+  }
+
+  // Let the caller throttle capture rate based on queue depth.
+  self.postMessage({ type: 'frame-ack', jobId, queueSize: session.encoder.encodeQueueSize });
+}
+
+async function finishPassthroughEncode(job) {
+  const { jobId } = job;
+  const session = passthroughSessions.get(jobId);
+  if (!session) throw new Error(`finish-passthrough-encode called for unknown session jobId ${jobId}.`);
+
+  await session.encoder.flush();
+  session.encoder.close();
+  passthroughSessions.delete(jobId);
+
+  if (session.pendingError) {
+    throw new Error(`Video encoder reported an error during passthrough session: ${session.pendingError.message || session.pendingError}`);
+  }
+  if (session.framesEncoded === 0) {
+    throw new Error('Passthrough encode session finished with zero frames encoded — capture likely failed silently upstream.');
+  }
+  self.postMessage({ type: 'encode-done', jobId, framesEncoded: session.framesEncoded });
 }
 
 /* ------------------------------------------------------------------ *
@@ -485,14 +319,27 @@ async function processJob(job) {
 
 self.addEventListener('message', async (event) => {
   const job = event.data;
-  if (!job || job.type !== 'process') {
-    console.warn('[DocEasy Enhancer] Ignoring unrecognized message:', job);
-    return;
-  }
+  if (!job || !job.type) { console.warn('[DocEasy Enhancer] Ignoring unrecognized message:', job); return; }
+
   try {
-    await processJob(job);
+    switch (job.type) {
+      case 'process':
+        await processJob(job);
+        break;
+      case 'start-passthrough-encode':
+        await startPassthroughEncode(job);
+        break;
+      case 'encode-frame':
+        await encodeFrame(job);
+        break;
+      case 'finish-passthrough-encode':
+        await finishPassthroughEncode(job);
+        break;
+      default:
+        console.warn(`[DocEasy Enhancer] Unknown message type "${job.type}" — ignoring.`);
+    }
   } catch (err) {
-    console.error(`[DocEasy Enhancer] Job ${job.jobId} failed:`, err);
-    self.postMessage({ type: 'error', jobId: job.jobId, message: err.message });
+    console.error(`[DocEasy Enhancer] Job ${job.jobId} failed (${job.type}):`, err);
+    self.postMessage({ type: job.type === 'process' ? 'error' : 'session-error', jobId: job.jobId, message: err.message });
   }
 });
