@@ -11,33 +11,17 @@
  */
 
 class SpeakerDetector {
-    /**
-     * Create a SpeakerDetector.
-     * @param {Object} [options] - Configuration options.
-     * @param {number} [options.sampleRate=44100] - Audio sample rate.
-     * @param {number} [options.vadThreshold=-50] - VAD threshold in dB (default -50dB).
-     * @param {number} [options.minSegmentDuration=0.3] - Minimum voice segment duration in seconds.
-     * @param {number} [options.pitchMin=80] - Minimum pitch frequency in Hz.
-     * @param {number} [options.pitchMax=350] - Maximum pitch frequency in Hz.
-     * @param {number} [options.yinThreshold=0.2] - YIN absolute threshold for pitch detection.
-     * @param {number} [options.maxSpeakers=5] - Maximum number of speakers to cluster.
-     * @param {number} [options.minSpeakers=2] - Minimum number of speakers to cluster.
-     * @param {boolean} [options.debug=false] - Enable debug logging.
-     */
     constructor(options = {}) {
         this.sampleRate = options.sampleRate || 44100;
-        // Default threshold lowered to -50dB to catch quieter voices
         this.vadThresholdDb = options.vadThreshold !== undefined ? options.vadThreshold : -50;
         this.minSegmentDuration = options.minSegmentDuration !== undefined ? options.minSegmentDuration : 0.3;
         this.pitchMin = options.pitchMin || 80;
         this.pitchMax = options.pitchMax || 350;
-        // Default YIN threshold increased to 0.2 to be more forgiving
         this.yinThreshold = options.yinThreshold || 0.2;
         this.maxSpeakers = options.maxSpeakers || 5;
         this.minSpeakers = options.minSpeakers || 2;
         this.debug = options.debug || false;
         
-        // Frame size is 50ms (2205 samples at 44100Hz) to satisfy YIN requirements
         this.frameSize = Math.floor(this.sampleRate * 0.05);
     }
 
@@ -49,7 +33,6 @@ class SpeakerDetector {
         
         const activeFrames = [];
         
-        // 1. VAD
         for (let i = 0; i < totalFrames; i++) {
             const startSample = i * this.frameSize;
             const endSample = Math.min(startSample + this.frameSize, channelData.length);
@@ -59,17 +42,6 @@ class SpeakerDetector {
             activeFrames.push({ index: i, startSample, endSample, rms, db, isActive });
         }
 
-        if (this.debug) {
-            const activeCount = activeFrames.filter(f => f.isActive).length;
-            console.log(`[SpeakerDetector] Total frames: ${totalFrames}, Active frames: ${activeCount} (Threshold: ${this.vadThresholdDb}dB)`);
-            // Log a few sample RMS values for debugging
-            for (let i = 0; i < Math.min(5, totalFrames); i++) {
-                const f = activeFrames[Math.floor(Math.random() * totalFrames)];
-                if (f) console.log(`[SpeakerDetector] Sample frame ${f.index}: RMS=${f.rms.toFixed(4)}, dB=${f.db.toFixed(2)}`);
-            }
-        }
-
-        // 2. Extract Pitches
         const segments = [];
         let currentSegment = null;
 
@@ -120,7 +92,6 @@ class SpeakerDetector {
         if (currentSegment) this._finalizeSegment(currentSegment, segments);
         if (segments.length > 0) this._assignSpeakers(segments);
 
-        if (this.debug) console.log(`[SpeakerDetector] Final segments detected: ${segments.length}`);
         return segments;
     }
 
@@ -241,5 +212,21 @@ class SpeakerDetector {
     }
 }
 
-if (typeof module !== 'undefined' && module.exports) module.exports = SpeakerDetector;
-else self.SpeakerDetector = SpeakerDetector;
+// 🌟 यह सबसे नीचे जोड़ना ज़रूरी है ताकि मेन टूल इसे पहचान सके
+if (typeof self !== 'undefined') {
+    self.DocEasySpeakerDetector = {
+        detectSpeakers: async function({ channelData, sampleRate, numberOfChannels }) {
+            const detector = new SpeakerDetector({ sampleRate: sampleRate });
+            const mockAudioBuffer = {
+                numberOfChannels: numberOfChannels,
+                sampleRate: sampleRate,
+                length: channelData[0].length,
+                duration: channelData[0].length / sampleRate,
+                getChannelData: (ch) => channelData[ch]
+            };
+            const segments = await detector.detect(mockAudioBuffer);
+            const speakerIds = new Set(segments.map(s => s.speakerId));
+            return { segments: segments, speakerCount: speakerIds.size };
+        }
+    };
+}
