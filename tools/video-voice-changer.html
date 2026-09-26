@@ -4,22 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Smart Video Voice Changer — Multi-Character Auto Detection | DocEasy</title>
-<meta name="description" content="Automatically detect different speakers in your video and give each one a unique voice. 100% in-browser, no upload.">
+<meta name="description" content="Automatically detect different speakers in your video and give each one a unique voice — deep, chipmunk, robot, echo, and more. 100% in-browser, no upload.">
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
-  body { font-family: system-ui, sans-serif; margin: 0; padding: 85px 14px 50px; color: #222; }
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 0 14px 50px; color: #222; }
   h1 { color: #19398a; font-size: 22px; margin-top: 18px; }
   h2 { color: #19398a; font-size: 18px; }
   h3 { color: #19398a; font-size: 15px; }
   .panel { border: 1px solid #d7dcec; border-radius: 10px; padding: 16px; margin: 16px 0; background: #fbfbfe; }
-  .btn { display: block; width: 100%; padding: 14px; font-size: 16px; margin: 8px 0; border-radius: 8px; border: none; color: #fff; background: #19398a; cursor: pointer; }
+  .btn { display: block; width: 100%; padding: 14px; font-size: 16px; margin: 8px 0;
+         border-radius: 8px; border: none; color: #fff; background: #19398a; cursor: pointer; }
   .btn:disabled { background: #9aa5c9; cursor: not-allowed; }
   .btn.danger { background: #b3261e; }
   .btn.secondary { background: #47506e; }
   .btn.outline { background: #fff; color: #19398a; border: 2px solid #19398a; }
   select, input[type=range] { width: 100%; padding: 8px; font-size: 15px; border-radius: 6px; border: 1px solid #ccc; }
   progress { width: 100%; height: 22px; }
-  #logPanel { background: #0d0d12; color: #baffc9; font-family: monospace; font-size: 12px; height: 180px; overflow-y: auto; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
+  #logPanel { background: #0d0d12; color: #baffc9; font-family: monospace; font-size: 12px;
+              height: 180px; overflow-y: auto; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
   .banner { padding: 10px; border-radius: 6px; margin: 8px 0; font-size: 14px; }
   .banner.warn { background: #fff3cd; color: #6b5300; border: 1px solid #e0c14b; }
   .banner.error { background: #fbdede; color: #7a1414; border: 1px solid #d98a8a; }
@@ -34,7 +36,8 @@
   .ad-slot-container { display: none; }
   details.faq-item { border-bottom: 1px solid #e2e6f2; padding: 10px 0; }
   details.faq-item summary { font-weight: 600; color: #19398a; cursor: pointer; }
-  .step-badge { display: inline-block; background: #19398a; color: #fff; border-radius: 50%; width: 22px; height: 22px; text-align: center; line-height: 22px; font-size: 12px; margin-right: 6px; }
+  .step-badge { display: inline-block; background: #19398a; color: #fff; border-radius: 50%;
+                width: 22px; height: 22px; text-align: center; line-height: 22px; font-size: 12px; margin-right: 6px; }
 </style>
 </head>
 <body>
@@ -42,11 +45,11 @@
 <div id="doceasy-header"></div>
 
 <h1>Smart Video Voice Changer</h1>
-<p>Upload a video, let DocEasy automatically find each speaker, and give every voice its own effect. Everything runs on your device; your video is never uploaded anywhere.</p>
+<p>Upload a video, let DocEasy automatically find each speaker, give every voice its own effect, and download one finished MP4. Everything runs on your device — nothing is uploaded.</p>
 
 <div class="ad-slot-container"><div class="ad-slot"></div></div>
 
-<!-- STEP 1: UPLOAD -->
+<!-- ================= STEP 1: UPLOAD ================= -->
 <div class="panel" id="panelUpload">
   <h2><span class="step-badge">1</span>Choose a video</h2>
   <input type="file" id="fileInput" accept="video/*" style="width:100%;">
@@ -60,7 +63,7 @@
   <div id="progressLabel" style="text-align:center;font-size:13px;margin-top:4px;">Waiting for file…</div>
 </div>
 
-<!-- STEP 2: SPEAKERS -->
+<!-- ================= STEP 2: SPEAKERS ================= -->
 <div class="panel" id="panelSpeakers" style="display:none;">
   <h2><span class="step-badge">2</span>Detected speakers</h2>
   <div id="speakerSummary" class="banner info"></div>
@@ -69,7 +72,7 @@
   <button class="btn outline" id="btnReplay">Preview Original Audio</button>
 </div>
 
-<!-- STEP 3: PROCESS -->
+<!-- ================= STEP 3: PROCESS ================= -->
 <div class="panel" id="panelProcess" style="display:none;">
   <h2><span class="step-badge">3</span>Apply voice effects</h2>
   <button class="btn" id="btnProcess">Process Audio With These Effects</button>
@@ -77,12 +80,27 @@
   <div id="processProgressLabel" style="text-align:center;font-size:13px;margin-top:4px;"></div>
 </div>
 
-<!-- STEP 4: DOWNLOAD -->
+<!-- ================= STEP 4: MUX + DOWNLOAD ================= -->
 <div class="panel" id="panelDownload" style="display:none;">
-  <h2><span class="step-badge">4</span>Download your result</h2>
-  <div id="muxingStatus" class="banner info">Preparing final video…</div>
+  <h2><span class="step-badge">4</span>Create your final video</h2>
+  <div id="muxCapabilityBanner" class="banner info"></div>
+  <div class="banner warn">
+    <strong>How this works:</strong> there's no FFmpeg here anymore (it needs SharedArrayBuffer,
+    which mobile browsers block). Instead, the original video is played back once, captured
+    frame-by-frame, and re-encoded alongside your new audio into a fresh MP4 using
+    <code>mp4-muxer</code> + WebCodecs. That means: (1) this is a real re-encode, not a lossless
+    copy of your original video stream, and (2) it takes roughly as long as the video's own
+    length to run, not a quick "copy" — a 10-minute video takes roughly 10 minutes. It works on
+    mobile because nothing here needs SharedArrayBuffer.
+  </div>
+  <button class="btn" id="btnMux" disabled>Create Final Muxed MP4</button>
   <progress id="muxProgressBar" value="0" max="100"></progress>
-  <button class="btn" id="btnDownloadFinal" disabled>Download Final Video (.mp4)</button>
+  <div id="muxProgressLabel" style="text-align:center;font-size:13px;margin-top:4px;"></div>
+  <button class="btn secondary" id="btnDownloadMuxed" disabled>Download Final Video (.mp4)</button>
+  <hr style="border:none;border-top:1px solid #e2e6f2;margin:16px 0;">
+  <p style="font-size:13px;color:#555;">Prefer the raw pieces instead, or muxing isn't supported on this device?</p>
+  <button class="btn outline" id="btnDownloadAudio" disabled>Download Processed Audio Only (.wav)</button>
+  <button class="btn outline" id="btnDownloadVideo" disabled>Download Original Video (unchanged)</button>
 </div>
 
 <div class="panel">
@@ -90,24 +108,94 @@
   <div id="logPanel"></div>
 </div>
 
+<!-- ================= HOW TO USE ================= -->
+<div class="panel">
+<h2>How to Use the Smart Video Voice Changer</h2>
+<ol>
+  <li><strong>Choose your video file.</strong> Chrome or Edge on desktop is most reliable; files up to 2GB / 2 hours are supported for the read/detect stage.</li>
+  <li><strong>Click "Read Video &amp; Detect Speakers."</strong> DocEasy reads your file in chunks, decodes the audio, and automatically groups distinct voices.</li>
+  <li><strong>Review the detected speakers</strong> on the colored timeline — click a band to hear that segment.</li>
+  <li><strong>Pick an effect per speaker</strong> — Normal, Deep, Chipmunk, Monster, Robot, Echo, Alien, Whisper, or Custom.</li>
+  <li><strong>Click "Process Audio With These Effects."</strong> This runs in a background Web Worker.</li>
+  <li><strong>Click "Create Final Muxed MP4."</strong> This plays your video once in the background to capture and re-encode every frame, encodes your new audio track, and combines both into one downloadable MP4 — no FFmpeg, works on mobile. Expect it to take about as long as your video is long.</li>
+  <li><strong>Download your finished video</strong>, or fall back to the separate audio/video files if muxing isn't supported on your device.</li>
+</ol>
+</div>
+
+<!-- ================= FAQ ================= -->
 <div class="panel" id="faqPanel">
 <h2>Frequently Asked Questions</h2>
+
 <details class="faq-item" open>
 <summary>Does my video get uploaded anywhere?</summary>
-<p>No. Every step — reading, detecting, processing, and muxing — happens inside your browser. Nothing is sent to a server.</p>
+<p>No. Reading, decoding, speaker detection, effects, playback capture, re-encoding, and muxing all happen inside your browser tab using the File System, Streams, Web Audio, and WebCodecs APIs. Nothing is sent to a server.</p>
 </details>
+
+<details class="faq-item">
+<summary>Why did DocEasy stop using FFmpeg.wasm?</summary>
+<p>FFmpeg.wasm needs <code>SharedArrayBuffer</code> and a fair amount of memory to run, and most mobile browsers either block <code>SharedArrayBuffer</code> entirely or restrict it heavily for security reasons (it requires specific cross-origin isolation headers that aren't always practical to set, and even when set, mobile Safari and many mobile Chrome configurations still refuse it or run out of memory). That made muxing fail silently or crash on phones. The replacement — <code>mp4-muxer</code>, a small pure-JavaScript MP4 writer built on the WebCodecs standard — needs none of that, so it works the same way on a phone as on a laptop.</p>
+</details>
+
+<details class="faq-item">
+<summary>Is the final video an exact copy of my original, with only the audio changed?</summary>
+<p>The audio is newly generated from your effect choices, as expected. The video picture, however, is <strong>re-encoded</strong>, not losslessly copied. Doing a true byte-level copy of your original video stream (what FFmpeg's "copy" mode did) requires understanding and unpacking the exact container format your file came in — a "demuxer" — and this build doesn't include one. Instead, your original video is played back once in the background, each displayed frame is captured, and that captured frame is compressed again into a new H.264 video stream. This means there is a small, real quality trade-off from that second compression pass, the same way saving a JPEG a second time loses a little more detail than the first save. For most videos this is not visually obvious, but it is a genuine trade-off worth knowing about rather than a lossless copy.</p>
+</details>
+
+<details class="faq-item">
+<summary>Why does muxing take so long?</summary>
+<p>Because of the re-encode explained above, DocEasy has to actually play your video from start to finish in the background to capture every frame — there's no shortcut around watching it once. A 10-minute video takes roughly 10 minutes to mux; a 2-hour video takes roughly 2 hours. This is slower than the original "copy" approach was designed to be, and is the direct cost of removing the FFmpeg/SharedArrayBuffer dependency so the tool works reliably on mobile.</p>
+</details>
+
+<details class="faq-item">
+<summary>What if muxing isn't supported on my device?</summary>
+<p>DocEasy checks, before you click the button, whether your browser's WebCodecs <code>VideoEncoder</code> and <code>AudioEncoder</code> actually support the codecs needed (H.264 video, and AAC audio with an Opus fallback). If they don't, the muxing button stays disabled and a clear message explains why — you can still download your processed audio and your original video separately and combine them yourself in a video editor.</p>
+</details>
+
 <details class="faq-item">
 <summary>How does automatic speaker detection work?</summary>
-<p>The audio track is decoded and split into short windows. DocEasy measures loudness to find where someone is speaking, then estimates each segment's fundamental pitch. Segments with similar average pitch are grouped together into "Speaker 1," "Speaker 2," etc.</p>
+<p>Audio is split into short windows; loudness finds where someone is actually speaking, and an autocorrelation-based pitch detector estimates each segment's fundamental pitch. Segments with similar pitch are grouped into "Speaker 1," "Speaker 2," and so on. This is a real pitch-based heuristic, not a trained neural voice-recognition model — it works best when speakers have noticeably different vocal pitch ranges, and less well when two speakers sound similar or a single speaker's pitch varies a lot.</p>
 </details>
+
 <details class="faq-item">
-<summary>What is muxing?</summary>
-<p>Muxing is the process of combining the newly generated audio track with the original video track into a single video file. We use FFmpeg.wasm (a browser version of FFmpeg) to do this without uploading your files.</p>
+<summary>What do the different voice effects actually do?</summary>
+<p><strong>Deep</strong> and <strong>Chipmunk</strong> shift pitch down or up with a phase vocoder, preserving your original speaking speed. <strong>Monster</strong> adds a bigger downward shift plus a simple echo-based reverb. <strong>Robot</strong> uses ring modulation for that buzzy, mechanical tone. <strong>Echo</strong> repeats the voice with decaying feedback. <strong>Alien</strong> combines a pitch shift with a rhythmic volume wobble (tremolo). <strong>Whisper</strong> gates out quiet moments and flattens loud peaks. <strong>Custom</strong> exposes raw pitch and formant sliders.</p>
 </details>
+
 <details class="faq-item">
-<summary>Why do big pitch shifts sound a little "phasey"?</summary>
-<p>DocEasy uses a phase vocoder implemented in plain JavaScript. This works well for shifts within ±1 octave. Push it further and you'll start to hear phase-vocoder artifacts. This is an inherent trade-off of doing real pitch shifting in the browser.</p>
+<summary>Why do big pitch shifts sound a little robotic?</summary>
+<p>The phase vocoder used here is a genuine, from-scratch implementation with no external audio library, and it's honest about its limits: shifts within about plus or minus one octave sound natural; push further, or apply it to breathy/noisy audio, and you'll hear phase-vocoder smearing artifacts. If a shift sounds too artificial, dial it back.</p>
 </details>
+
+<details class="faq-item">
+<summary>Which browsers are supported?</summary>
+<p>Chrome and Edge (90+) have the most complete WebCodecs and Origin Private File System support and are recommended, especially for the muxing step, which depends on <code>VideoEncoder</code>/<code>AudioEncoder</code> and <code>requestVideoFrameCallback</code>. Firefox and Safari support varies — DocEasy checks capability before offering muxing rather than pretending it works everywhere.</p>
+</details>
+
+<details class="faq-item">
+<summary>Can I use this on my phone?</summary>
+<p>Yes — that's specifically why FFmpeg.wasm was removed. Very large files (over 1GB) will still warn you, since mobile devices have much less memory than a desktop, but the muxing pipeline itself no longer depends on anything mobile browsers block.</p>
+</details>
+
+<details class="faq-item">
+<summary>What happens if my browser or tab crashes partway through?</summary>
+<p>The file-reading stage checkpoints its progress, so a reload can detect leftover chunks from an interrupted session. Speaker detection, effects processing, and the muxing/capture stage do not currently have their own save points — if the tab closes during those, you'll need to restart from file selection. Making every stage resumable is on the roadmap.</p>
+</details>
+
+<details class="faq-item">
+<summary>Does this work if my video has no audio track?</summary>
+<p>No — an audio track is required for speaker detection and voice effects. DocEasy will tell you plainly if none is found rather than silently producing a broken result.</p>
+</details>
+
+<details class="faq-item">
+<summary>Only one speaker was detected in a video with two people talking.</summary>
+<p>This usually means the two speakers have similar vocal pitch, or one speaks only briefly. This is a known limit of a pitch-based clustering approach rather than a full neural diarization model.</p>
+</details>
+
+<details class="faq-item">
+<summary>Why does the tool check storage space before starting?</summary>
+<p>Processing and muxing use your browser's on-device Origin Private File System (or IndexedDB as a fallback) to hold data temporarily. DocEasy checks how much free space is actually available and warns you up front rather than failing partway through a long file.</p>
+</details>
+
 </div>
 
 <div id="doceasy-footer"></div>
@@ -115,21 +203,38 @@
 <script src="../assets/js/core/doceasy-core.js"></script>
 <script src="../assets/js/core/chunk-manager.js"></script>
 <script src="../assets/js/core/speaker-detector.js"></script>
-<!-- FFmpeg.wasm for Muxing -->
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
-<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
-
+<script src="https://unpkg.com/mp4-muxer@latest/build/mp4-muxer.min.js"></script>
 <script>
 'use strict';
 
+/*
+ * ── What changed from the previous build ─────────────────────────────
+ * - FFmpeg.wasm is gone entirely: no <script> tags for it, no
+ *   startMuxing() function that shelled out to it. It was never
+ *   actually wired into THIS file in the prior delivered version (that
+ *   version shipped two separate downloads deliberately, with muxing
+ *   marked "next milestone") — this build fulfills that milestone using
+ *   mp4-muxer + WebCodecs instead of FFmpeg, per the mobile constraint.
+ * - New Step 4 pipeline: encode processed audio to AAC (or Opus
+ *   fallback) via AudioEncoder, capture+re-encode video frames via a
+ *   hidden <video> + canvas + requestVideoFrameCallback loop piped into
+ *   worker-video.js's new passthrough-encode-session mode, and stream
+ *   both into an mp4-muxer Muxer writing straight to an OPFS file (so
+ *   the muxed output is never fully held in memory during creation).
+ * - See the FAQ/banners above for the honest trade-off: this is a
+ *   re-encode of the picture, not a lossless copy, and runs at roughly
+ *   real-time speed relative to the video's own duration.
+ */
+
 const $ = (id) => document.getElementById(id);
 const logPanel = $('logPanel');
+const MAX_LOG_LINES = 200;
 let logLines = [];
 
 function log(msg, isError) {
   const time = new Date().toLocaleTimeString();
   logLines.push(`[${time}] ${msg}`);
-  if (logLines.length > 200) logLines.shift();
+  if (logLines.length > MAX_LOG_LINES) logLines.shift();
   logPanel.textContent = logLines.join('\n');
   logPanel.scrollTop = logPanel.scrollHeight;
   if (isError) console.error('[DocEasy Voice UI]', msg);
@@ -163,9 +268,12 @@ let detectedSegments = [];
 let effectMapUI = {};
 let processedChannelData = null;
 let audioWorker = null;
+let videoWorker = null;
 let audioCtxForPreview = null;
 
 const CHUNK_BYTES = 8 * 1024 * 1024;
+
+/* ---------------- Backend detection ---------------- */
 
 (async function initBackend() {
   try {
@@ -176,7 +284,7 @@ const CHUNK_BYTES = 8 * 1024 * 1024;
       el.textContent = 'Storage: OPFS (fast, disk-backed) — ready.';
     } else if (currentBackend === 'indexeddb') {
       el.className = 'banner warn';
-      el.textContent = 'Storage: IndexedDB fallback in use — large files will be slower.';
+      el.textContent = 'Storage: IndexedDB fallback — large files will be slower, and muxing needs OPFS (see Step 4).';
     } else {
       el.className = 'banner error';
       el.textContent = 'No usable storage backend in this browser — this tool cannot run here.';
@@ -189,6 +297,8 @@ const CHUNK_BYTES = 8 * 1024 * 1024;
     log('Backend detection failed: ' + err.message, true);
   }
 })();
+
+/* ---------------- File selection ---------------- */
 
 $('fileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
@@ -232,13 +342,18 @@ function resetDownstreamUI() {
   $('panelProcess').style.display = 'none';
   $('panelDownload').style.display = 'none';
   $('speakerList').innerHTML = '';
-  $('btnDownloadFinal').disabled = true;
+  $('btnDownloadAudio').disabled = true;
+  $('btnDownloadVideo').disabled = true;
+  $('btnDownloadMuxed').disabled = true;
+  $('btnMux').disabled = true;
   decodedBuffer = null;
   channelDataArrays = [];
   detectedSegments = [];
   effectMapUI = {};
   processedChannelData = null;
 }
+
+/* ---------------- Step 1: Read (chunked) + Decode + Detect ---------------- */
 
 $('btnAnalyze').addEventListener('click', async () => {
   if (!selectedFile) return;
@@ -267,8 +382,7 @@ $('btnAnalyze').addEventListener('click', async () => {
         chunkManager.checkpoint({ lastChunkWritten: index, totalChunks: total, fileName: selectedFile.name });
       },
       (processedBytes, totalBytes) => {
-        const pct = Math.round((processedBytes / totalBytes) * 40);
-        setProgress(pct, `Reading file… ${Math.round((processedBytes / totalBytes) * 100)}%`);
+        setProgress(Math.round((processedBytes / totalBytes) * 40), `Reading file… ${Math.round((processedBytes / totalBytes) * 100)}%`);
       }
     );
     if (readResult.cancelled || cancelled) { log('Cancelled during file read.'); return finishCancelled(); }
@@ -276,11 +390,8 @@ $('btnAnalyze').addEventListener('click', async () => {
 
     setProgress(45, 'Reassembling file for audio decode…');
     let mergedFile;
-    if (backend === 'opfs') {
-      mergedFile = await mergeChunksToOPFSFile(chunkManager);
-    } else {
-      mergedFile = await chunkManager.mergeChunks(selectedFile.type || 'video/mp4');
-    }
+    if (backend === 'opfs') mergedFile = await mergeChunksToOPFSFile(chunkManager);
+    else mergedFile = await chunkManager.mergeChunks(selectedFile.type || 'video/mp4');
     if (cancelled) return finishCancelled();
 
     setProgress(55, 'Decoding audio track…');
@@ -293,10 +404,14 @@ $('btnAnalyze').addEventListener('click', async () => {
     try {
       audioBuffer = await decodeCtx.decodeAudioData(arrayBuffer);
     } catch (err) {
-      throw new Error(`Could not decode an audio track from this file (it may have no audio, or use an unsupported codec): ${err.message}`);
+      throw new Error(`Could not decode an audio track from this file: ${err.message}`);
     }
     decodedBuffer = audioBuffer;
     if (cancelled) return finishCancelled();
+
+    if (audioBuffer.duration > 60 * 60) {
+      log(`Warning: audio track is ${formatTime(audioBuffer.duration)} long — full in-memory decode may use significant RAM.`, true);
+    }
 
     channelDataArrays = [];
     for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
@@ -309,16 +424,12 @@ $('btnAnalyze').addEventListener('click', async () => {
       throw new Error('speaker-detector.js did not expose window.DocEasySpeakerDetector.detectSpeakers() — cannot continue.');
     }
     const detection = await window.DocEasySpeakerDetector.detectSpeakers({
-      channelData: channelDataArrays,
-      sampleRate: audioBuffer.sampleRate,
-      numberOfChannels: audioBuffer.numberOfChannels,
+      channelData: channelDataArrays, sampleRate: audioBuffer.sampleRate, numberOfChannels: audioBuffer.numberOfChannels,
     });
     detectedSegments = detection.segments || [];
     if (cancelled) return finishCancelled();
+    if (detectedSegments.length === 0) throw new Error('No speech segments were detected in this audio track.');
 
-    if (detectedSegments.length === 0) {
-      throw new Error('No speech segments were detected in this audio track.');
-    }
     const speakerIds = [...new Set(detectedSegments.map((s) => s.speakerId))].sort((a, b) => a - b);
     log(`Detected ${speakerIds.length} speaker(s) across ${detectedSegments.length} segments.`);
 
@@ -340,18 +451,13 @@ function finishCancelled() {
   $('btnAnalyze').disabled = false;
   $('btnCancel').disabled = true;
 }
-
 $('btnCancel').addEventListener('click', () => {
   cancelled = true;
   if (fileReader) fileReader.cancel();
   if (chunkManager) chunkManager.cancel();
   log('Cancel requested…');
 });
-
-function setProgress(pct, label) {
-  $('progressBar').value = pct;
-  $('progressLabel').textContent = label;
-}
+function setProgress(pct, label) { $('progressBar').value = pct; $('progressLabel').textContent = label; }
 
 async function mergeChunksToOPFSFile(mgr) {
   const indices = await mgr.listChunkIndices();
@@ -359,17 +465,15 @@ async function mergeChunksToOPFSFile(mgr) {
   const root = await navigator.storage.getDirectory();
   const outHandle = await root.getFileHandle(`merged_${mgr.jobId}`, { create: true });
   const writable = await outHandle.createWritable();
-  for (const idx of indices) {
-    const blob = await mgr.store.readChunk(idx);
-    await writable.write(blob);
-  }
+  for (const idx of indices) { const blob = await mgr.store.readChunk(idx); await writable.write(blob); }
   await writable.close();
   return outHandle.getFile();
 }
 
+/* ---------------- Step 2: Speaker UI + timeline ---------------- */
+
 function renderSpeakerUI(speakerIds, duration) {
   $('speakerSummary').textContent = `${speakerIds.length} speaker(s) detected over ${formatTime(duration)} of audio. Assign an effect to each below.`;
-
   const list = $('speakerList');
   list.innerHTML = '';
   effectMapUI = {};
@@ -377,7 +481,6 @@ function renderSpeakerUI(speakerIds, duration) {
   speakerIds.forEach((id, idx) => {
     const color = SPEAKER_COLORS[idx % SPEAKER_COLORS.length];
     effectMapUI[id] = { type: 'normal', pitchShift: 0, formantShift: 0 };
-
     const card = document.createElement('div');
     card.className = 'speaker-card';
     card.innerHTML = `
@@ -390,8 +493,7 @@ function renderSpeakerUI(speakerIds, duration) {
         <input type="range" min="-24" max="24" value="0" class="pitchSlider" data-speaker="${id}">
         <label>Formant shift (semitones): <span class="formantVal">0</span></label>
         <input type="range" min="-12" max="12" value="0" class="formantSlider" data-speaker="${id}">
-      </div>
-    `;
+      </div>`;
     list.appendChild(card);
   });
 
@@ -399,8 +501,7 @@ function renderSpeakerUI(speakerIds, duration) {
     sel.addEventListener('change', (e) => {
       const speakerId = parseInt(e.target.dataset.speaker, 10);
       effectMapUI[speakerId].type = e.target.value;
-      const customBlock = list.querySelector(`.custom-sliders[data-speaker-custom="${speakerId}"]`);
-      customBlock.classList.toggle('active', e.target.value === 'custom');
+      list.querySelector(`.custom-sliders[data-speaker-custom="${speakerId}"]`).classList.toggle('active', e.target.value === 'custom');
       log(`Speaker ${speakerId}: effect set to "${e.target.value}"`);
     });
   });
@@ -429,25 +530,18 @@ function drawTimeline(speakerIds, duration) {
   canvas.width = canvas.clientWidth * dpr;
   canvas.height = 90 * dpr;
   ctx.scale(dpr, dpr);
-  const w = canvas.clientWidth;
-  const h = 90;
-
-  ctx.fillStyle = '#f0f2fa';
-  ctx.fillRect(0, 0, w, h);
-
+  const w = canvas.clientWidth, h = 90;
+  ctx.fillStyle = '#f0f2fa'; ctx.fillRect(0, 0, w, h);
   detectedSegments.forEach((seg) => {
     const idx = speakerIds.indexOf(seg.speakerId);
-    const color = SPEAKER_COLORS[idx % SPEAKER_COLORS.length];
+    ctx.fillStyle = SPEAKER_COLORS[idx % SPEAKER_COLORS.length];
     const x = (seg.start / duration) * w;
     const width = Math.max(1, ((seg.end - seg.start) / duration) * w);
-    ctx.fillStyle = color;
     ctx.fillRect(x, 10, width, h - 20);
   });
-
   canvas.onclick = (e) => {
     const rect = canvas.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickTime = (clickX / w) * duration;
+    const clickTime = ((e.clientX - rect.left) / w) * duration;
     const seg = detectedSegments.find((s) => clickTime >= s.start && clickTime <= s.end);
     if (seg) playPreview(seg.start, seg.end);
   };
@@ -462,31 +556,25 @@ function playPreview(start, end) {
   source.buffer = decodedBuffer;
   source.connect(audioCtxForPreview.destination);
   source.start(0, start, Math.max(0.05, end - start));
+  log(`Previewing ${formatTime(start)} – ${formatTime(end)}`);
 }
+$('btnReplay').addEventListener('click', () => { if (decodedBuffer) playPreview(0, decodedBuffer.duration); });
 
-$('btnReplay').addEventListener('click', () => {
-  if (decodedBuffer) playPreview(0, decodedBuffer.duration);
-});
+/* ---------------- Step 3: Process via worker-audio.js ---------------- */
 
 $('btnProcess').addEventListener('click', () => {
-  if (!decodedBuffer || detectedSegments.length === 0) {
-    log('Nothing to process — run detection first.', true);
-    return;
-  }
+  if (!decodedBuffer || detectedSegments.length === 0) { log('Nothing to process — run detection first.', true); return; }
   $('btnProcess').disabled = true;
   $('processProgressBar').value = 0;
   $('processProgressLabel').textContent = 'Starting…';
 
   if (audioWorker) audioWorker.terminate();
   audioWorker = new Worker('../assets/js/core/worker-audio.js');
-
   const jobId = `voice_${Date.now()}`;
-  const totalSeconds = decodedBuffer.duration;
 
   audioWorker.onmessage = (e) => {
     const msg = e.data;
     if (msg.jobId !== jobId) return;
-
     if (msg.type === 'progress') {
       const pct = Math.min(100, Math.round((msg.processedSeconds / msg.totalSeconds) * 100));
       $('processProgressBar').value = pct;
@@ -498,136 +586,308 @@ $('btnProcess').addEventListener('click', () => {
       $('processProgressLabel').textContent = 'Done.';
       $('btnProcess').disabled = false;
       $('panelDownload').style.display = 'block';
-      startMuxing();
+      $('btnDownloadAudio').disabled = false;
+      $('btnDownloadVideo').disabled = false;
+      checkMuxCapability();
     } else if (msg.type === 'error') {
       log('worker-audio.js error: ' + msg.message, true);
       $('processProgressLabel').textContent = 'Failed — see log.';
       $('btnProcess').disabled = false;
     }
   };
-  audioWorker.onerror = (err) => {
-    log('Audio worker crashed: ' + err.message, true);
-    $('btnProcess').disabled = false;
-  };
+  audioWorker.onerror = (err) => { log('Audio worker crashed: ' + err.message, true); $('btnProcess').disabled = false; };
 
   const channelDataForWorker = channelDataArrays.map((ch) => ch.slice());
-  log(`Sending ${totalSeconds.toFixed(1)}s of audio to worker-audio.js with ${detectedSegments.length} segments…`);
-  audioWorker.postMessage(
-    {
-      type: 'process',
-      jobId,
-      sampleRate: decodedBuffer.sampleRate,
-      numberOfChannels: decodedBuffer.numberOfChannels,
-      channelData: channelDataForWorker,
-      segments: detectedSegments,
-      effectMap: effectMapUI,
-    },
-    channelDataForWorker.map((ch) => ch.buffer)
-  );
+  log(`Sending ${decodedBuffer.duration.toFixed(1)}s of audio to worker-audio.js with ${detectedSegments.length} segments…`);
+  audioWorker.postMessage({
+    type: 'process', jobId, sampleRate: decodedBuffer.sampleRate, numberOfChannels: decodedBuffer.numberOfChannels,
+    channelData: channelDataForWorker, segments: detectedSegments, effectMap: effectMapUI,
+  }, channelDataForWorker.map((ch) => ch.buffer));
 });
 
-let ffmpeg = null;
-let muxedBlob = null;
+/* ---------------- Step 4: mp4-muxer capability check ---------------- */
 
-async function startMuxing() {
-  const statusEl = $('muxingStatus');
-  const progressBar = $('muxProgressBar');
-  statusEl.className = 'banner info';
-  statusEl.textContent = 'Loading FFmpeg.wasm (first time takes a few seconds)…';
-  progressBar.value = 0;
+const HAS_RVFC = typeof HTMLVideoElement !== 'undefined' && 'requestVideoFrameCallback' in HTMLVideoElement.prototype;
+const HAS_WEBCODECS = typeof VideoEncoder !== 'undefined' && typeof AudioEncoder !== 'undefined';
+const HAS_MP4_MUXER = typeof window.Mp4Muxer !== 'undefined';
+
+let chosenAudioCodec = null; // set by checkMuxCapability
+
+async function checkMuxCapability() {
+  const banner = $('muxCapabilityBanner');
+  const reasons = [];
+  if (!HAS_WEBCODECS) reasons.push('this browser lacks WebCodecs VideoEncoder/AudioEncoder');
+  if (!HAS_RVFC) reasons.push('this browser lacks video.requestVideoFrameCallback (needed for accurate frame capture)');
+  if (!HAS_MP4_MUXER) reasons.push('mp4-muxer failed to load from CDN');
+  if (currentBackend !== 'opfs') reasons.push('OPFS is required to stream the muxed output without holding it fully in memory');
+
+  if (reasons.length > 0) {
+    banner.className = 'banner error';
+    banner.textContent = `Muxing isn't available here: ${reasons.join('; ')}. Use the separate audio/video downloads below instead.`;
+    $('btnMux').disabled = true;
+    log('Mux capability check failed: ' + reasons.join('; '), true);
+    return;
+  }
 
   try {
-    if (!window.FFmpegWASM) throw new Error('FFmpeg.wasm library not loaded. Check your internet connection and refresh.');
-    
-    const { FFmpeg } = window.FFmpegWASM;
-    ffmpeg = new FFmpeg();
-    
-    await ffmpeg.load({
-      coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
-      wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
+    const aacSupport = await AudioEncoder.isConfigSupported({ codec: 'mp4a.40.2', sampleRate: decodedBuffer.sampleRate, numberOfChannels: decodedBuffer.numberOfChannels, bitrate: 128000 });
+    if (aacSupport.supported) chosenAudioCodec = 'aac';
+    else {
+      const opusSupport = await AudioEncoder.isConfigSupported({ codec: 'opus', sampleRate: decodedBuffer.sampleRate, numberOfChannels: decodedBuffer.numberOfChannels, bitrate: 128000 });
+      if (opusSupport.supported) chosenAudioCodec = 'opus';
+    }
+  } catch (err) {
+    log('Audio codec support check failed: ' + err.message, true);
+  }
+
+  if (!chosenAudioCodec) {
+    banner.className = 'banner error';
+    banner.textContent = 'Muxing isn\'t available: no supported audio encoder codec (AAC or Opus) found. Use the separate downloads below.';
+    $('btnMux').disabled = true;
+    return;
+  }
+
+  banner.className = 'banner info';
+  banner.textContent = `Muxing is available on this device (audio will be encoded as ${chosenAudioCodec.toUpperCase()}).`;
+  $('btnMux').disabled = false;
+}
+
+/* ---------------- Step 4: audio -> AAC/Opus EncodedAudioChunks ---------------- */
+
+/**
+ * Encodes processed PCM to AAC (or Opus fallback, decided in
+ * checkMuxCapability) via WebCodecs AudioEncoder.
+ * @param {Function} onChunk (chunk, metadata) => void
+ * @returns {Promise<void>}
+ */
+async function encodeAudioForMux(onChunk) {
+  const sampleRate = decodedBuffer.sampleRate;
+  const numberOfChannels = decodedBuffer.numberOfChannels;
+  const config = { codec: chosenAudioCodec === 'aac' ? 'mp4a.40.2' : 'opus', sampleRate, numberOfChannels, bitrate: 128000 };
+
+  let pendingError = null;
+  const encoder = new AudioEncoder({
+    output: (chunk, metadata) => onChunk(chunk, metadata),
+    error: (err) => { pendingError = err; },
+  });
+  encoder.configure(config);
+
+  const frameSize = 1024;
+  const totalFrames = processedChannelData[0].length;
+  let offset = 0;
+  while (offset < totalFrames) {
+    if (pendingError) break;
+    const len = Math.min(frameSize, totalFrames - offset);
+    const planar = new Float32Array(len * numberOfChannels);
+    for (let ch = 0; ch < numberOfChannels; ch++) {
+      planar.set(processedChannelData[ch].subarray(offset, offset + len), ch * len);
+    }
+    const audioData = new AudioData({
+      format: 'f32-planar', sampleRate, numberOfFrames: len, numberOfChannels,
+      timestamp: Math.round((offset / sampleRate) * 1e6), data: planar,
+    });
+    encoder.encode(audioData);
+    audioData.close();
+    offset += len;
+    if ((offset / frameSize) % 200 === 0) await new Promise((r) => setTimeout(r, 0));
+  }
+  await encoder.flush();
+  encoder.close();
+  if (pendingError) throw new Error(`AudioEncoder error while muxing: ${pendingError.message || pendingError}`);
+}
+
+/* ---------------- Step 4: video capture -> worker-video.js passthrough session ---------------- */
+
+/**
+ * Plays the original file once in a hidden <video>, captures each
+ * presented frame via requestVideoFrameCallback, and streams frames
+ * into worker-video.js's passthrough encode session. See file header
+ * for the honest re-encode/real-time trade-off this implies.
+ */
+function captureAndEncodeVideo(file, jobId, onProgress) {
+  return new Promise((resolve, reject) => {
+    const videoEl = document.createElement('video');
+    videoEl.muted = true;
+    videoEl.playsInline = true;
+    videoEl.src = URL.createObjectURL(file);
+    let canvas = null, ctx = null;
+    let lastQueueSize = 0;
+    let settled = false;
+
+    function onWorkerMsg(e) {
+      const msg = e.data;
+      if (msg.jobId !== jobId) return;
+      if (msg.type === 'frame-ack') lastQueueSize = msg.queueSize;
+      if (msg.type === 'session-error' && !settled) { settled = true; cleanup(); reject(new Error(msg.message)); }
+    }
+    videoWorker.addEventListener('message', onWorkerMsg);
+
+    function cleanup() {
+      videoWorker.removeEventListener('message', onWorkerMsg);
+      URL.revokeObjectURL(videoEl.src);
+    }
+
+    videoEl.addEventListener('loadedmetadata', () => {
+      canvas = new OffscreenCanvas(videoEl.videoWidth, videoEl.videoHeight);
+      ctx = canvas.getContext('2d');
+      videoEl.play().catch((err) => {
+        if (settled) return; settled = true; cleanup();
+        reject(new Error('Could not start video playback for frame capture: ' + err.message));
+      });
     });
 
-    statusEl.textContent = 'Muxing audio and video… (this may take a moment)';
-    log('FFmpeg loaded. Writing files…');
+    function frameCallback(now, metadata) {
+      if (settled) return;
+      try {
+        ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+        const frame = new VideoFrame(canvas, { timestamp: Math.round(metadata.mediaTime * 1e6) });
+        videoWorker.postMessage({ type: 'encode-frame', jobId, frame }, [frame]);
+        onProgress(metadata.mediaTime, videoEl.duration || 0);
+        videoEl.playbackRate = lastQueueSize > 12 ? 0.5 : 1.0;
+      } catch (err) {
+        if (!settled) { settled = true; cleanup(); reject(err); return; }
+      }
+      if (!videoEl.ended && !settled) videoEl.requestVideoFrameCallback(frameCallback);
+    }
+    videoEl.requestVideoFrameCallback(frameCallback);
 
-    const videoData = await selectedFile.arrayBuffer();
-    await ffmpeg.writeFile('input.mp4', new Uint8Array(videoData));
+    videoEl.addEventListener('ended', () => { if (settled) return; settled = true; cleanup(); resolve(); });
+    videoEl.addEventListener('error', () => {
+      if (settled) return; settled = true; cleanup();
+      reject(new Error('Video element failed to load/play for frame capture.'));
+    });
+  });
+}
 
-    const wavBlob = encodeWAV(processedChannelData, decodedBuffer.sampleRate);
-    await ffmpeg.writeFile('audio.wav', new Uint8Array(await wavBlob.arrayBuffer()));
+/* ---------------- Step 4: full mux pipeline ---------------- */
 
-    log('Running FFmpeg mux command…');
-    await ffmpeg.exec([
-      '-i', 'input.mp4',
-      '-i', 'audio.wav',
-      '-c:v', 'copy',
-      '-c:a', 'aac',
-      '-map', '0:v:0',
-      '-map', '1:a:0',
-      '-shortest',
-      'output.mp4'
-    ]);
+$('btnMux').addEventListener('click', async () => {
+  $('btnMux').disabled = true;
+  $('muxProgressBar').value = 0;
+  $('muxProgressLabel').textContent = 'Preparing…';
 
-    log('FFmpeg muxing complete. Reading output…');
-    const data = await ffmpeg.readFile('output.mp4');
-    muxedBlob = new Blob([data.buffer], { type: 'video/mp4' });
+  try {
+    if (!processedChannelData) throw new Error('Process audio effects first (Step 3).');
 
-    progressBar.value = 100;
-    statusEl.className = 'banner info';
-    statusEl.textContent = 'Muxing complete! Your final video is ready.';
-    $('btnDownloadFinal').disabled = false;
-    log(`Final video size: ${formatBytes(muxedBlob.size)}`);
+    // Need video dimensions before configuring the encoder.
+    const probeVideo = document.createElement('video');
+    probeVideo.src = URL.createObjectURL(selectedFile);
+    await new Promise((resolve, reject) => {
+      probeVideo.onloadedmetadata = resolve;
+      probeVideo.onerror = () => reject(new Error('Could not read video dimensions for muxing.'));
+    });
+    const width = probeVideo.videoWidth;
+    const height = probeVideo.videoHeight;
+    URL.revokeObjectURL(probeVideo.src);
+    if (!width || !height) throw new Error('Video has no readable dimensions.');
 
-    await ffmpeg.deleteFile('input.mp4');
-    await ffmpeg.deleteFile('audio.wav');
-    await ffmpeg.deleteFile('output.mp4');
+    log(`Preparing mux: ${width}x${height}, audio codec ${chosenAudioCodec}.`);
 
-  } catch (err) {
-    log('Muxing failed: ' + err.message, true);
-    statusEl.className = 'banner error';
-    statusEl.textContent = 'Muxing failed. You can still download the processed audio separately.';
-    
-    $('btnDownloadFinal').disabled = false;
-    $('btnDownloadFinal').textContent = 'Download Processed Audio (.wav) instead';
-    $('btnDownloadFinal').onclick = () => {
-      const blob = encodeWAV(processedChannelData, decodedBuffer.sampleRate);
-      const url = URL.createObjectURL(blob);
+    const root = await navigator.storage.getDirectory();
+    const outHandle = await root.getFileHandle(`muxed_${Date.now()}.mp4`, { create: true });
+    const writable = await outHandle.createWritable();
+
+    const muxer = new window.Mp4Muxer.Muxer({
+      target: new window.Mp4Muxer.StreamTarget({
+        onData: (data, position) => { writable.write({ type: 'write', data, position }); },
+      }),
+      video: { codec: 'avc', width, height },
+      audio: { codec: chosenAudioCodec, sampleRate: decodedBuffer.sampleRate, numberOfChannels: decodedBuffer.numberOfChannels },
+      fastStart: false,
+    });
+
+    // --- Audio (fast) ---
+    $('muxProgressLabel').textContent = 'Encoding audio track…';
+    await encodeAudioForMux((chunk, metadata) => { muxer.addAudioChunk(chunk, metadata); });
+    $('muxProgressBar').value = 15;
+    log('Audio track encoded and added to muxer.');
+
+    // --- Video (slow — see FAQ) ---
+    if (videoWorker) videoWorker.terminate();
+    videoWorker = new Worker('../assets/js/core/worker-video.js');
+    const jobId = `mux_${Date.now()}`;
+
+    let videoSessionError = null;
+    videoWorker.onmessage = (e) => {
+      const msg = e.data;
+      if (msg.jobId !== jobId) return;
+      if (msg.type === 'chunk') {
+        const chunk = new EncodedVideoChunk({ type: msg.chunk.type, timestamp: msg.chunk.timestamp, duration: msg.chunk.duration, data: msg.chunk.data });
+        muxer.addVideoChunk(chunk, msg.metadata || undefined);
+      } else if (msg.type === 'session-error') {
+        videoSessionError = msg.message;
+      }
+    };
+    videoWorker.onerror = (err) => { videoSessionError = err.message; };
+
+    videoWorker.postMessage({
+      type: 'start-passthrough-encode', jobId,
+      encoderConfig: { codec: 'avc1.42001f', width, height, bitrate: 4_000_000, avc: { format: 'avc' } },
+    });
+
+    await captureAndEncodeVideo(selectedFile, jobId, (mediaTime, duration) => {
+      if (videoSessionError) return;
+      const pct = 15 + Math.round((duration ? mediaTime / duration : 0) * 75);
+      $('muxProgressBar').value = Math.min(90, pct);
+      $('muxProgressLabel').textContent = `Capturing &amp; re-encoding video… ${formatTime(mediaTime)} / ${formatTime(duration)}`;
+    });
+
+    if (videoSessionError) throw new Error(`Video encode session failed: ${videoSessionError}`);
+
+    await new Promise((resolve, reject) => {
+      const finishHandler = (e) => {
+        if (e.data.jobId !== jobId) return;
+        if (e.data.type === 'encode-done') { videoWorker.removeEventListener('message', finishHandler); resolve(); }
+        else if (e.data.type === 'session-error') { videoWorker.removeEventListener('message', finishHandler); reject(new Error(e.data.message)); }
+      };
+      videoWorker.addEventListener('message', finishHandler);
+      videoWorker.postMessage({ type: 'finish-passthrough-encode', jobId });
+    });
+
+    $('muxProgressBar').value = 95;
+    $('muxProgressLabel').textContent = 'Finalizing MP4…';
+    muxer.finalize();
+    await writable.close();
+    log('Muxing complete — MP4 finalized.');
+
+    const finalFile = await outHandle.getFile();
+    const url = URL.createObjectURL(finalFile);
+    $('btnDownloadMuxed').disabled = false;
+    $('btnDownloadMuxed').onclick = () => {
       const a = document.createElement('a');
       a.href = url;
-      a.download = `voice-changed-audio.wav`;
+      a.download = `voice-changed-${selectedFile.name.replace(/\.[^.]+$/, '')}.mp4`;
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(url);
+      a.remove();
     };
+    window.addEventListener('beforeunload', () => URL.revokeObjectURL(url));
+
+    $('muxProgressBar').value = 100;
+    $('muxProgressLabel').textContent = `Done — ${formatBytes(finalFile.size)} ready to download.`;
+  } catch (err) {
+    log('Muxing failed: ' + err.message, true);
+    $('muxProgressLabel').textContent = 'Muxing failed — see log. Use the separate downloads below instead.';
+  } finally {
+    $('btnMux').disabled = false;
   }
-}
+});
+
+/* ---------------- Fallback: separate downloads ---------------- */
 
 function encodeWAV(channelData, sampleRate) {
   const numChannels = channelData.length;
   const numFrames = channelData[0].length;
-  const bytesPerSample = 2;
-  const blockAlign = numChannels * bytesPerSample;
+  const blockAlign = numChannels * 2;
   const dataSize = numFrames * blockAlign;
   const buffer = new ArrayBuffer(44 + dataSize);
   const view = new DataView(buffer);
-
-  function writeString(offset, str) {
-    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-  }
-
-  writeString(0, 'RIFF');
-  view.setUint32(4, 36 + dataSize, true);
-  writeString(8, 'WAVE');
-  writeString(12, 'fmt ');
-  view.setUint32(16, 16, true);
-  view.setUint16(20, 1, true);
-  view.setUint16(22, numChannels, true);
-  view.setUint32(24, sampleRate, true);
-  view.setUint32(28, sampleRate * blockAlign, true);
-  view.setUint16(32, blockAlign, true);
-  view.setUint16(34, 16, true);
-  writeString(36, 'data');
-  view.setUint32(40, dataSize, true);
-
+  function writeString(offset, str) { for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i)); }
+  writeString(0, 'RIFF'); view.setUint32(4, 36 + dataSize, true); writeString(8, 'WAVE');
+  writeString(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+  view.setUint16(22, numChannels, true); view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * blockAlign, true); view.setUint16(32, blockAlign, true); view.setUint16(34, 16, true);
+  writeString(36, 'data'); view.setUint32(40, dataSize, true);
   let offset = 44;
   for (let i = 0; i < numFrames; i++) {
     for (let ch = 0; ch < numChannels; ch++) {
@@ -639,21 +899,30 @@ function encodeWAV(channelData, sampleRate) {
   return new Blob([buffer], { type: 'audio/wav' });
 }
 
-$('btnDownloadFinal').addEventListener('click', () => {
-  if (!muxedBlob) return;
-  const url = URL.createObjectURL(muxedBlob);
+$('btnDownloadAudio').addEventListener('click', () => {
+  if (!processedChannelData) return;
+  const blob = encodeWAV(processedChannelData, decodedBuffer.sampleRate);
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = `voice-changed-${(selectedFile.name || 'video').replace(/\.[^.]+$/, '')}.mp4`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  a.href = url; a.download = `voice-changed-${(selectedFile.name || 'audio').replace(/\.[^.]+$/, '')}.wav`;
+  document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 30 * 60 * 1000);
-  log('Downloaded final muxed video (.mp4).');
+  log('Downloaded processed audio (.wav).');
+});
+
+$('btnDownloadVideo').addEventListener('click', () => {
+  if (!selectedFile) return;
+  const url = URL.createObjectURL(selectedFile);
+  const a = document.createElement('a');
+  a.href = url; a.download = `original-${selectedFile.name}`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30 * 60 * 1000);
+  log('Downloaded original video (unchanged).');
 });
 
 window.addEventListener('beforeunload', () => {
   if (audioWorker) audioWorker.terminate();
+  if (videoWorker) videoWorker.terminate();
   if (audioCtxForPreview) audioCtxForPreview.close();
 });
 </script>
