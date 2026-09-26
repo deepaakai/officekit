@@ -6,7 +6,8 @@
 <title>DocEasy — Speaker Detector Test</title>
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
-  body { font-family: system-ui, sans-serif; margin: 0; padding: 0 12px 40px; }
+  /* 🔴 FIX: Top padding 85px added to push content below the fixed header */
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 85px 12px 40px; }
   .panel { border: 1px solid #ccc; border-radius: 8px; padding: 14px; margin: 14px 0; }
   .btn { display: block; width: 100%; padding: 14px; font-size: 16px; margin: 8px 0; border-radius: 8px; border: none; color: #fff; background: #19398a; cursor: pointer; }
   .btn:disabled { background: #9aa5c9; cursor: not-allowed; }
@@ -27,12 +28,14 @@
 <h1>Speaker Detector — Test Harness</h1>
 <p style="font-size:13px;color:#555;">Upload a short audio/video file to test automatic speaker detection.</p>
 
+<!-- 1. SELECT FILE PANEL -->
 <div class="panel">
   <h2>1. Select File</h2>
   <input type="file" id="fileInput" accept="audio/*,video/*" style="width:100%;">
   <div id="fileInfo" style="font-size:14px; margin-top:8px;"></div>
 </div>
 
+<!-- 2. DETECTION SETTINGS PANEL -->
 <div class="panel">
   <h2>2. Detection Settings</h2>
   <div class="slider-group">
@@ -46,11 +49,13 @@
   <button class="btn secondary" id="btnDetect" disabled>Detect Speakers</button>
 </div>
 
+<!-- 3. RESULTS PANEL -->
 <div class="panel">
   <h2>3. Detection Results</h2>
   <div id="resultBox" class="result-box">No results yet. Upload a file and click detect.</div>
 </div>
 
+<!-- LOG PANEL -->
 <div class="panel">
   <h2>Log (Check console too for debug details)</h2>
   <div id="logPanel"></div>
