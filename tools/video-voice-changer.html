@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Smart Video Voice Changer — Multi-Character Auto Detection | DocEasy</title>
+<meta name="description" content="Automatically detect different speakers in your video and give each one a unique voice. 100% in-browser, no upload.">
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 85px 14px 50px; color: #222; }
+  h1 { color: #19398a; font-size: 22px; margin-top: 18px; }
+  h2 { color: #19398a; font-size: 18px; }
+  h3 { color: #19398a; font-size: 15px; }
+  .panel { border: 1px solid #d7dcec; border-radius: 10px; padding: 16px; margin: 16px 0; background: #fbfbfe; }
+  .btn { display: block; width: 100%; padding: 14px; font-size: 16px; margin: 8px 0; border-radius: 8px; border: none; color: #fff; background: #19398a; cursor: pointer; }
+  .btn:disabled { background: #9aa5c9; cursor: not-allowed; }
+  .btn.danger { background: #b3261e; }
+  .btn.secondary { background: #47506e; }
+  .btn.outline { background: #fff; color: #19398a; border: 2px solid #19398a; }
+  select, input[type=range] { width: 100%; padding: 8px; font-size: 15px; border-radius: 6px; border: 1px solid #ccc; }
+  progress { width: 100%; height: 22px; }
+  #logPanel { background: #0d0d12; color: #baffc9; font-family: monospace; font-size: 12px; height: 180px; overflow-y: auto; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
+  .banner { padding: 10px; border-radius: 6px; margin: 8px 0; font-size: 14px; }
+  .banner.warn { background: #fff3cd; color: #6b5300; border: 1px solid #e0c14b; }
+  .banner.error { background: #fbdede; color: #7a1414; border: 1px solid #d98a8a; }
+  .banner.info { background: #e7ecfa; color: #19398a; border: 1px solid #b7c3ea; }
+  .speaker-card { border: 1px solid #d7dcec; border-radius: 8px; padding: 12px; margin: 10px 0; background: #fff; }
+  .speaker-card .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+  .custom-sliders { display: none; margin-top: 8px; }
+  .custom-sliders.active { display: block; }
+  .custom-sliders label { font-size: 12px; color: #555; display: block; margin-top: 6px; }
+  #timelineCanvas { width: 100%; height: 90px; border-radius: 6px; border: 1px solid #d7dcec; touch-action: none; }
+  .fileinfo div { font-size: 14px; margin: 3px 0; }
+  .ad-slot-container { display: none; }
+  details.faq-item { border-bottom: 1px solid #e2e6f2; padding: 10px 0; }
+  details.faq-item summary { font-weight: 600; color: #19398a; cursor: pointer; }
+  .step-badge { display: inline-block; background: #19398a; color: #fff; border-radius: 50%; width: 22px; height: 22px; text-align: center; line-height: 22px; font-size: 12px; margin-right: 6px; }
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<h1>Smart Video Voice Changer</h1>
+<p>Upload a video, let DocEasy automatically find each speaker, and give every voice its own effect. Everything runs on your device; your video is never uploaded anywhere.</p>
+
+<div class="ad-slot-container"><div class="ad-slot"></div></div>
+
+<!-- STEP 1: UPLOAD -->
+<div class="panel" id="panelUpload">
+  <h2><span class="step-badge">1</span>Choose a video</h2>
+  <input type="file" id="fileInput" accept="video/*" style="width:100%;">
+  <div id="fileInfo" class="fileinfo" style="margin-top:10px;"></div>
+  <div id="warnLargeFile"></div>
+  <div id="warnQuota"></div>
+  <div id="backendInfo" class="banner info" style="margin-top:10px;">Checking browser storage…</div>
+  <button class="btn" id="btnAnalyze" disabled>Read Video &amp; Detect Speakers</button>
+  <button class="btn danger" id="btnCancel" disabled>Cancel</button>
+  <progress id="progressBar" value="0" max="100"></progress>
+  <div id="progressLabel" style="text-align:center;font-size:13px;margin-top:4px;">Waiting for file…</div>
+</div>
+
+<!-- STEP 2: SPEAKERS -->
+<div class="panel" id="panelSpeakers" style="display:none;">
+  <h2><span class="step-badge">2</span>Detected speakers</h2>
+  <div id="speakerSummary" class="banner info"></div>
+  <canvas id="timelineCanvas" width="800" height="90"></canvas>
+  <div id="speakerList"></div>
+  <button class="btn outline" id="btnReplay">Preview Original Audio</button>
+</div>
+
+<!-- STEP 3: PROCESS -->
+<div class="panel" id="panelProcess" style="display:none;">
+  <h2><span class="step-badge">3</span>Apply voice effects</h2>
+  <button class="btn" id="btnProcess">Process Audio With These Effects</button>
+  <progress id="processProgressBar" value="0" max="100"></progress>
+  <div id="processProgressLabel" style="text-align:center;font-size:13px;margin-top:4px;"></div>
+</div>
+
+<!-- STEP 4: DOWNLOAD -->
+<div class="panel" id="panelDownload" style="display:none;">
+  <h2><span class="step-badge">4</span>Download your result</h2>
+  <div id="muxingStatus" class="banner info">Preparing final video…</div>
+  <progress id="muxProgressBar" value="0" max="100"></progress>
+  <button class="btn" id="btnDownloadFinal" disabled>Download Final Video (.mp4)</button>
+</div>
+
+<div class="panel">
+  <h2>Log</h2>
+  <div id="logPanel"></div>
+</div>
+
+<div class="panel" id="faqPanel">
+<h2>Frequently Asked Questions</h2>
+<details class="faq-item" open>
+<summary>Does my video get uploaded anywhere?</summary>
+<p>No. Every step — reading, detecting, processing, and muxing — happens inside your browser. Nothing is sent to a server.</p>
+</details>
+<details class="faq-item">
+<summary>How does automatic speaker detection work?</summary>
+<p>The audio track is decoded and split into short windows. DocEasy measures loudness to find where someone is speaking, then estimates each segment's fundamental pitch. Segments with similar average pitch are grouped together into "Speaker 1," "Speaker 2," etc.</p>
+</details>
+<details class="faq-item">
+<summary>What is muxing?</summary>
+<p>Muxing is the process of combining the newly generated audio track with the original video track into a single video file. We use FFmpeg.wasm (a browser version of FFmpeg) to do this without uploading your files.</p>
+</details>
+<details class="faq-item">
+<summary>Why do big pitch shifts sound a little "phasey"?</summary>
+<p>DocEasy uses a phase vocoder implemented in plain JavaScript. This works well for shifts within ±1 octave. Push it further and you'll start to hear phase-vocoder artifacts. This is an inherent trade-off of doing real pitch shifting in the browser.</p>
+</details>
+</div>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+<script src="../assets/js/core/chunk-manager.js"></script>
+<script src="../assets/js/core/speaker-detector.js"></script>
+<!-- FFmpeg.wasm for Muxing -->
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+
+<script>
+'use strict';
+
+const $ = (id) => document.getElementById(id);
+const logPanel = $('logPanel');
+let logLines = [];
+
+function log(msg, isError) {
+  const time = new Date().toLocaleTimeString();
+  logLines.push(`[${time}] ${msg}`);
+  if (logLines.length > 200) logLines.shift();
+  logPanel.textContent = logLines.join('\n');
+  logPanel.scrollTop = logPanel.scrollHeight;
+  if (isError) console.error('[DocEasy Voice UI]', msg);
+  else console.log('[DocEasy Voice UI]', msg);
+}
+
+function formatBytes(bytes) {
+  if (bytes >= 1024 ** 3) return (bytes / 1024 ** 3).toFixed(2) + ' GB';
+  if (bytes >= 1024 ** 2) return (bytes / 1024 ** 2).toFixed(2) + ' MB';
+  if (bytes >= 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return bytes + ' B';
+}
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+const EFFECT_TYPES = ['normal', 'deep', 'chipmunk', 'monster', 'robot', 'echo', 'alien', 'whisper', 'custom'];
+const SPEAKER_COLORS = ['#2f7dd1', '#2eae6b', '#e0a721', '#c04ba0', '#5a5fcf', '#d1592f'];
+
+let selectedFile = null;
+let currentBackend = null;
+let chunkManager = null;
+let fileReader = null;
+let cancelled = false;
+
+let decodedBuffer = null;
+let channelDataArrays = [];
+let detectedSegments = [];
+let effectMapUI = {};
+let processedChannelData = null;
+let audioWorker = null;
+let audioCtxForPreview = null;
+
+const CHUNK_BYTES = 8 * 1024 * 1024;
+
+(async function initBackend() {
+  try {
+    currentBackend = await window.DocEasyChunkManager.detectStorageBackend();
+    const el = $('backendInfo');
+    if (currentBackend === 'opfs') {
+      el.className = 'banner info';
+      el.textContent = 'Storage: OPFS (fast, disk-backed) — ready.';
+    } else if (currentBackend === 'indexeddb') {
+      el.className = 'banner warn';
+      el.textContent = 'Storage: IndexedDB fallback in use — large files will be slower.';
+    } else {
+      el.className = 'banner error';
+      el.textContent = 'No usable storage backend in this browser — this tool cannot run here.';
+      $('btnAnalyze').disabled = true;
+    }
+    log(`Storage backend: ${currentBackend}`);
+  } catch (err) {
+    $('backendInfo').className = 'banner error';
+    $('backendInfo').textContent = 'Could not detect storage backend: ' + err.message;
+    log('Backend detection failed: ' + err.message, true);
+  }
+})();
+
+$('fileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  $('warnLargeFile').innerHTML = '';
+  $('warnQuota').innerHTML = '';
+  resetDownstreamUI();
+
+  if (!file) { selectedFile = null; $('btnAnalyze').disabled = true; $('fileInfo').innerHTML = ''; return; }
+  selectedFile = file;
+
+  const totalChunks = Math.ceil(file.size / CHUNK_BYTES);
+  let quotaLine = '';
+  try {
+    const est = await navigator.storage.estimate();
+    const free = (est.quota || 0) - (est.usage || 0);
+    quotaLine = `<div><strong>Storage free:</strong> ${formatBytes(free)}</div>`;
+    if (free < file.size * 1.2) {
+      $('warnQuota').innerHTML = `<div class="banner error">Not enough browser storage. Need ~${formatBytes(file.size * 1.2)}, only ${formatBytes(free)} free.</div>`;
+    }
+  } catch (err) {
+    quotaLine = '<div>Storage estimate unavailable.</div>';
+  }
+
+  $('fileInfo').innerHTML = `
+    <div><strong>Name:</strong> ${file.name}</div>
+    <div><strong>Size:</strong> ${formatBytes(file.size)}</div>
+    <div><strong>Chunks to read:</strong> ${totalChunks}</div>
+    ${quotaLine}
+  `;
+
+  if (file.size > 1024 ** 3) {
+    $('warnLargeFile').innerHTML = `<div class="banner warn">Large file (${formatBytes(file.size)}). On mobile this may crash — desktop Chrome/Edge recommended.</div>`;
+  }
+
+  log(`Selected file: ${file.name} (${formatBytes(file.size)})`);
+  $('btnAnalyze').disabled = (currentBackend === 'none');
+});
+
+function resetDownstreamUI() {
+  $('panelSpeakers').style.display = 'none';
+  $('panelProcess').style.display = 'none';
+  $('panelDownload').style.display = 'none';
+  $('speakerList').innerHTML = '';
+  $('btnDownloadFinal').disabled = true;
+  decodedBuffer = null;
+  channelDataArrays = [];
+  detectedSegments = [];
+  effectMapUI = {};
+  processedChannelData = null;
+}
+
+$('btnAnalyze').addEventListener('click', async () => {
+  if (!selectedFile) return;
+  cancelled = false;
+  $('btnAnalyze').disabled = true;
+  $('btnCancel').disabled = false;
+  resetDownstreamUI();
+  setProgress(0, 'Starting…');
+
+  try {
+    const est = await navigator.storage.estimate();
+    const free = (est.quota || 0) - (est.usage || 0);
+    if (free < selectedFile.size * 1.2) {
+      throw new Error(`Not enough storage: need ~${formatBytes(selectedFile.size * 1.2)}, only ${formatBytes(free)} free.`);
+    }
+
+    const jobId = window.DocEasyChunkManager.makeJobId(selectedFile);
+    chunkManager = new window.DocEasyChunkManager.ChunkManager(jobId);
+    const backend = await chunkManager.init();
+    log(`Reading "${selectedFile.name}" in chunks (backend: ${backend})…`);
+
+    fileReader = new window.DocEasyChunkManager.FileChunkReader(selectedFile, CHUNK_BYTES);
+    const readResult = await fileReader.readAll(
+      async (chunkBlob, index, total) => {
+        await chunkManager.writeChunk(index, chunkBlob);
+        chunkManager.checkpoint({ lastChunkWritten: index, totalChunks: total, fileName: selectedFile.name });
+      },
+      (processedBytes, totalBytes) => {
+        const pct = Math.round((processedBytes / totalBytes) * 40);
+        setProgress(pct, `Reading file… ${Math.round((processedBytes / totalBytes) * 100)}%`);
+      }
+    );
+    if (readResult.cancelled || cancelled) { log('Cancelled during file read.'); return finishCancelled(); }
+    log(`File read complete (${readResult.chunksRead} chunks stored).`);
+
+    setProgress(45, 'Reassembling file for audio decode…');
+    let mergedFile;
+    if (backend === 'opfs') {
+      mergedFile = await mergeChunksToOPFSFile(chunkManager);
+    } else {
+      mergedFile = await chunkManager.mergeChunks(selectedFile.type || 'video/mp4');
+    }
+    if (cancelled) return finishCancelled();
+
+    setProgress(55, 'Decoding audio track…');
+    log('Decoding audio track via AudioContext.decodeAudioData()…');
+    const arrayBuffer = await mergedFile.arrayBuffer();
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) throw new Error('This browser has no Web Audio API — cannot decode audio.');
+    const decodeCtx = new AudioContextClass();
+    let audioBuffer;
+    try {
+      audioBuffer = await decodeCtx.decodeAudioData(arrayBuffer);
+    } catch (err) {
+      throw new Error(`Could not decode an audio track from this file (it may have no audio, or use an unsupported codec): ${err.message}`);
+    }
+    decodedBuffer = audioBuffer;
+    if (cancelled) return finishCancelled();
+
+    channelDataArrays = [];
+    for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
+      channelDataArrays.push(audioBuffer.getChannelData(ch).slice());
+    }
+    log(`Audio decoded: ${audioBuffer.numberOfChannels} channel(s), ${audioBuffer.sampleRate} Hz, ${formatTime(audioBuffer.duration)}.`);
+
+    setProgress(70, 'Detecting speakers…');
+    if (!window.DocEasySpeakerDetector || typeof window.DocEasySpeakerDetector.detectSpeakers !== 'function') {
+      throw new Error('speaker-detector.js did not expose window.DocEasySpeakerDetector.detectSpeakers() — cannot continue.');
+    }
+    const detection = await window.DocEasySpeakerDetector.detectSpeakers({
+      channelData: channelDataArrays,
+      sampleRate: audioBuffer.sampleRate,
+      numberOfChannels: audioBuffer.numberOfChannels,
+    });
+    detectedSegments = detection.segments || [];
+    if (cancelled) return finishCancelled();
+
+    if (detectedSegments.length === 0) {
+      throw new Error('No speech segments were detected in this audio track.');
+    }
+    const speakerIds = [...new Set(detectedSegments.map((s) => s.speakerId))].sort((a, b) => a - b);
+    log(`Detected ${speakerIds.length} speaker(s) across ${detectedSegments.length} segments.`);
+
+    setProgress(100, 'Analysis complete.');
+    renderSpeakerUI(speakerIds, audioBuffer.duration);
+    $('panelSpeakers').style.display = 'block';
+    $('panelProcess').style.display = 'block';
+  } catch (err) {
+    log('Error: ' + err.message, true);
+    setProgress(0, 'Failed — see log.');
+  } finally {
+    $('btnAnalyze').disabled = false;
+    $('btnCancel').disabled = true;
+  }
+});
+
+function finishCancelled() {
+  setProgress(0, 'Cancelled.');
+  $('btnAnalyze').disabled = false;
+  $('btnCancel').disabled = true;
+}
+
+$('btnCancel').addEventListener('click', () => {
+  cancelled = true;
+  if (fileReader) fileReader.cancel();
+  if (chunkManager) chunkManager.cancel();
+  log('Cancel requested…');
+});
+
+function setProgress(pct, label) {
+  $('progressBar').value = pct;
+  $('progressLabel').textContent = label;
+}
+
+async function mergeChunksToOPFSFile(mgr) {
+  const indices = await mgr.listChunkIndices();
+  if (indices.length === 0) throw new Error('No chunks found to merge.');
+  const root = await navigator.storage.getDirectory();
+  const outHandle = await root.getFileHandle(`merged_${mgr.jobId}`, { create: true });
+  const writable = await outHandle.createWritable();
+  for (const idx of indices) {
+    const blob = await mgr.store.readChunk(idx);
+    await writable.write(blob);
+  }
+  await writable.close();
+  return outHandle.getFile();
+}
+
+function renderSpeakerUI(speakerIds, duration) {
+  $('speakerSummary').textContent = `${speakerIds.length} speaker(s) detected over ${formatTime(duration)} of audio. Assign an effect to each below.`;
+
+  const list = $('speakerList');
+  list.innerHTML = '';
+  effectMapUI = {};
+
+  speakerIds.forEach((id, idx) => {
+    const color = SPEAKER_COLORS[idx % SPEAKER_COLORS.length];
+    effectMapUI[id] = { type: 'normal', pitchShift: 0, formantShift: 0 };
+
+    const card = document.createElement('div');
+    card.className = 'speaker-card';
+    card.innerHTML = `
+      <h3><span class="swatch" style="background:${color}"></span>Speaker ${idx + 1}</h3>
+      <select data-speaker="${id}" class="effectSelect">
+        ${EFFECT_TYPES.map((t) => `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`).join('')}
+      </select>
+      <div class="custom-sliders" data-speaker-custom="${id}">
+        <label>Pitch shift (semitones): <span class="pitchVal">0</span></label>
+        <input type="range" min="-24" max="24" value="0" class="pitchSlider" data-speaker="${id}">
+        <label>Formant shift (semitones): <span class="formantVal">0</span></label>
+        <input type="range" min="-12" max="12" value="0" class="formantSlider" data-speaker="${id}">
+      </div>
+    `;
+    list.appendChild(card);
+  });
+
+  list.querySelectorAll('.effectSelect').forEach((sel) => {
+    sel.addEventListener('change', (e) => {
+      const speakerId = parseInt(e.target.dataset.speaker, 10);
+      effectMapUI[speakerId].type = e.target.value;
+      const customBlock = list.querySelector(`.custom-sliders[data-speaker-custom="${speakerId}"]`);
+      customBlock.classList.toggle('active', e.target.value === 'custom');
+      log(`Speaker ${speakerId}: effect set to "${e.target.value}"`);
+    });
+  });
+  list.querySelectorAll('.pitchSlider').forEach((sl) => {
+    sl.addEventListener('input', (e) => {
+      const speakerId = parseInt(e.target.dataset.speaker, 10);
+      effectMapUI[speakerId].pitchShift = parseInt(e.target.value, 10);
+      e.target.parentElement.querySelector('.pitchVal').textContent = e.target.value;
+    });
+  });
+  list.querySelectorAll('.formantSlider').forEach((sl) => {
+    sl.addEventListener('input', (e) => {
+      const speakerId = parseInt(e.target.dataset.speaker, 10);
+      effectMapUI[speakerId].formantShift = parseInt(e.target.value, 10);
+      e.target.parentElement.querySelector('.formantVal').textContent = e.target.value;
+    });
+  });
+
+  drawTimeline(speakerIds, duration);
+}
+
+function drawTimeline(speakerIds, duration) {
+  const canvas = $('timelineCanvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = canvas.clientWidth * dpr;
+  canvas.height = 90 * dpr;
+  ctx.scale(dpr, dpr);
+  const w = canvas.clientWidth;
+  const h = 90;
+
+  ctx.fillStyle = '#f0f2fa';
+  ctx.fillRect(0, 0, w, h);
+
+  detectedSegments.forEach((seg) => {
+    const idx = speakerIds.indexOf(seg.speakerId);
+    const color = SPEAKER_COLORS[idx % SPEAKER_COLORS.length];
+    const x = (seg.start / duration) * w;
+    const width = Math.max(1, ((seg.end - seg.start) / duration) * w);
+    ctx.fillStyle = color;
+    ctx.fillRect(x, 10, width, h - 20);
+  });
+
+  canvas.onclick = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickTime = (clickX / w) * duration;
+    const seg = detectedSegments.find((s) => clickTime >= s.start && clickTime <= s.end);
+    if (seg) playPreview(seg.start, seg.end);
+  };
+}
+
+function playPreview(start, end) {
+  if (!decodedBuffer) return;
+  if (audioCtxForPreview) audioCtxForPreview.close();
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  audioCtxForPreview = new AudioContextClass();
+  const source = audioCtxForPreview.createBufferSource();
+  source.buffer = decodedBuffer;
+  source.connect(audioCtxForPreview.destination);
+  source.start(0, start, Math.max(0.05, end - start));
+}
+
+$('btnReplay').addEventListener('click', () => {
+  if (decodedBuffer) playPreview(0, decodedBuffer.duration);
+});
+
+$('btnProcess').addEventListener('click', () => {
+  if (!decodedBuffer || detectedSegments.length === 0) {
+    log('Nothing to process — run detection first.', true);
+    return;
+  }
+  $('btnProcess').disabled = true;
+  $('processProgressBar').value = 0;
+  $('processProgressLabel').textContent = 'Starting…';
+
+  if (audioWorker) audioWorker.terminate();
+  audioWorker = new Worker('../assets/js/core/worker-audio.js');
+
+  const jobId = `voice_${Date.now()}`;
+  const totalSeconds = decodedBuffer.duration;
+
+  audioWorker.onmessage = (e) => {
+    const msg = e.data;
+    if (msg.jobId !== jobId) return;
+
+    if (msg.type === 'progress') {
+      const pct = Math.min(100, Math.round((msg.processedSeconds / msg.totalSeconds) * 100));
+      $('processProgressBar').value = pct;
+      $('processProgressLabel').textContent = `Processing… ${formatTime(msg.processedSeconds)} / ${formatTime(msg.totalSeconds)}`;
+    } else if (msg.type === 'result') {
+      processedChannelData = msg.channelData;
+      log('Audio effects applied successfully.');
+      $('processProgressBar').value = 100;
+      $('processProgressLabel').textContent = 'Done.';
+      $('btnProcess').disabled = false;
+      $('panelDownload').style.display = 'block';
+      startMuxing();
+    } else if (msg.type === 'error') {
+      log('worker-audio.js error: ' + msg.message, true);
+      $('processProgressLabel').textContent = 'Failed — see log.';
+      $('btnProcess').disabled = false;
+    }
+  };
+  audioWorker.onerror = (err) => {
+    log('Audio worker crashed: ' + err.message, true);
+    $('btnProcess').disabled = false;
+  };
+
+  const channelDataForWorker = channelDataArrays.map((ch) => ch.slice());
+  log(`Sending ${totalSeconds.toFixed(1)}s of audio to worker-audio.js with ${detectedSegments.length} segments…`);
+  audioWorker.postMessage(
+    {
+      type: 'process',
+      jobId,
+      sampleRate: decodedBuffer.sampleRate,
+      numberOfChannels: decodedBuffer.numberOfChannels,
+      channelData: channelDataForWorker,
+      segments: detectedSegments,
+      effectMap: effectMapUI,
+    },
+    channelDataForWorker.map((ch) => ch.buffer)
+  );
+});
+
+let ffmpeg = null;
+let muxedBlob = null;
+
+async function startMuxing() {
+  const statusEl = $('muxingStatus');
+  const progressBar = $('muxProgressBar');
+  statusEl.className = 'banner info';
+  statusEl.textContent = 'Loading FFmpeg.wasm (first time takes a few seconds)…';
+  progressBar.value = 0;
+
+  try {
+    if (!window.FFmpegWASM) throw new Error('FFmpeg.wasm library not loaded. Check your internet connection and refresh.');
+    
+    const { FFmpeg } = window.FFmpegWASM;
+    ffmpeg = new FFmpeg();
+    
+    await ffmpeg.load({
+      coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+      wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
+    });
+
+    statusEl.textContent = 'Muxing audio and video… (this may take a moment)';
+    log('FFmpeg loaded. Writing files…');
+
+    const videoData = await selectedFile.arrayBuffer();
+    await ffmpeg.writeFile('input.mp4', new Uint8Array(videoData));
+
+    const wavBlob = encodeWAV(processedChannelData, decodedBuffer.sampleRate);
+    await ffmpeg.writeFile('audio.wav', new Uint8Array(await wavBlob.arrayBuffer()));
+
+    log('Running FFmpeg mux command…');
+    await ffmpeg.exec([
+      '-i', 'input.mp4',
+      '-i', 'audio.wav',
+      '-c:v', 'copy',
+      '-c:a', 'aac',
+      '-map', '0:v:0',
+      '-map', '1:a:0',
+      '-shortest',
+      'output.mp4'
+    ]);
+
+    log('FFmpeg muxing complete. Reading output…');
+    const data = await ffmpeg.readFile('output.mp4');
+    muxedBlob = new Blob([data.buffer], { type: 'video/mp4' });
+
+    progressBar.value = 100;
+    statusEl.className = 'banner info';
+    statusEl.textContent = 'Muxing complete! Your final video is ready.';
+    $('btnDownloadFinal').disabled = false;
+    log(`Final video size: ${formatBytes(muxedBlob.size)}`);
+
+    await ffmpeg.deleteFile('input.mp4');
+    await ffmpeg.deleteFile('audio.wav');
+    await ffmpeg.deleteFile('output.mp4');
+
+  } catch (err) {
+    log('Muxing failed: ' + err.message, true);
+    statusEl.className = 'banner error';
+    statusEl.textContent = 'Muxing failed. You can still download the processed audio separately.';
+    
+    $('btnDownloadFinal').disabled = false;
+    $('btnDownloadFinal').textContent = 'Download Processed Audio (.wav) instead';
+    $('btnDownloadFinal').onclick = () => {
+      const blob = encodeWAV(processedChannelData, decodedBuffer.sampleRate);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `voice-changed-audio.wav`;
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+  }
+}
+
+function encodeWAV(channelData, sampleRate) {
+  const numChannels = channelData.length;
+  const numFrames = channelData[0].length;
+  const bytesPerSample = 2;
+  const blockAlign = numChannels * bytesPerSample;
+  const dataSize = numFrames * blockAlign;
+  const buffer = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(buffer);
+
+  function writeString(offset, str) {
+    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+  }
+
+  writeString(0, 'RIFF');
+  view.setUint32(4, 36 + dataSize, true);
+  writeString(8, 'WAVE');
+  writeString(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, numChannels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * blockAlign, true);
+  view.setUint16(32, blockAlign, true);
+  view.setUint16(34, 16, true);
+  writeString(36, 'data');
+  view.setUint32(40, dataSize, true);
+
+  let offset = 44;
+  for (let i = 0; i < numFrames; i++) {
+    for (let ch = 0; ch < numChannels; ch++) {
+      const sample = Math.max(-1, Math.min(1, channelData[ch][i]));
+      view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7fff, true);
+      offset += 2;
+    }
+  }
+  return new Blob([buffer], { type: 'audio/wav' });
+}
+
+$('btnDownloadFinal').addEventListener('click', () => {
+  if (!muxedBlob) return;
+  const url = URL.createObjectURL(muxedBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `voice-changed-${(selectedFile.name || 'video').replace(/\.[^.]+$/, '')}.mp4`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30 * 60 * 1000);
+  log('Downloaded final muxed video (.mp4).');
+});
+
+window.addEventListener('beforeunload', () => {
+  if (audioWorker) audioWorker.terminate();
+  if (audioCtxForPreview) audioCtxForPreview.close();
+});
+</script>
+</body>
+</html>
