@@ -10,7 +10,11 @@
   .panel { border: 1px solid #ccc; border-radius: 8px; padding: 14px; margin: 14px 0; }
   .btn { display: block; width: 100%; padding: 14px; font-size: 16px; margin: 8px 0; border-radius: 8px; border: none; color: #fff; background: #19398a; cursor: pointer; }
   .btn:disabled { background: #9aa5c9; cursor: not-allowed; }
-  #logPanel { background: #0d0d12; color: #baffc9; font-family: monospace; font-size: 12px; height: 240px; overflow-y: auto; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
+  .btn.secondary { background: #445; }
+  .slider-group { margin: 10px 0; }
+  .slider-group label { display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; color: #19398a; }
+  .slider-group input[type=range] { width: 100%; margin-top: 5px; }
+  #logPanel { background: #0d0d12; color: #baffc9; font-family: monospace; font-size: 12px; height: 200px; overflow-y: auto; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
   .result-box { background: #f4f6f9; border: 1px solid #ddd; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 13px; max-height: 300px; overflow-y: auto; }
   h1 { font-size: 18px; color: #19398a; }
   h2 { font-size: 15px; color: #19398a; margin-bottom: 6px; }
@@ -30,13 +34,25 @@
 </div>
 
 <div class="panel">
-  <h2>2. Detection Results</h2>
-  <button class="btn" id="btnDetect" disabled>Detect Speakers</button>
-  <div id="resultBox" class="result-box" style="margin-top:10px;">No results yet. Upload a file and click detect.</div>
+  <h2>2. Detection Settings</h2>
+  <div class="slider-group">
+    <label>VAD Threshold (dB) <span id="vadVal">-50</span></label>
+    <input type="range" id="vadSlider" min="-80" max="-20" value="-50" step="1">
+  </div>
+  <div class="slider-group">
+    <label>YIN Threshold <span id="yinVal">0.2</span></label>
+    <input type="range" id="yinSlider" min="0.05" max="0.5" value="0.2" step="0.05">
+  </div>
+  <button class="btn secondary" id="btnDetect" disabled>Detect Speakers</button>
 </div>
 
 <div class="panel">
-  <h2>Log</h2>
+  <h2>3. Detection Results</h2>
+  <div id="resultBox" class="result-box">No results yet. Upload a file and click detect.</div>
+</div>
+
+<div class="panel">
+  <h2>Log (Check console too for debug details)</h2>
   <div id="logPanel"></div>
 </div>
 
@@ -47,7 +63,6 @@
 <script>
 'use strict';
 const $ = (id) => document.getElementById(id);
-const logPanel = $('logPanel');
 let logLines = [];
 
 function log(msg, isError) {
@@ -55,11 +70,15 @@ function log(msg, isError) {
   const line = `[${time}] ${msg}`;
   logLines.push(line);
   if (logLines.length > 200) logLines.shift();
-  logPanel.textContent = logLines.join('\n');
-  logPanel.scrollTop = logPanel.scrollHeight;
+  $('logPanel').textContent = logLines.join('\n');
+  $('logPanel').scrollTop = $('logPanel').scrollHeight;
   if (isError) console.error('[DocEasy Test]', msg);
   else console.log('[DocEasy Test]', msg);
 }
+
+// Update slider display values
+$('vadSlider').addEventListener('input', (e) => $('vadVal').textContent = e.target.value);
+$('yinSlider').addEventListener('input', (e) => $('yinVal').textContent = e.target.value);
 
 let selectedFile = null;
 
@@ -81,6 +100,9 @@ $('btnDetect').addEventListener('click', async () => {
   $('resultBox').textContent = 'Processing... Please wait.';
   log('Starting speaker detection...');
 
+  const vadThreshold = parseFloat($('vadSlider').value);
+  const yinThreshold = parseFloat($('yinSlider').value);
+
   try {
     const arrayBuffer = await selectedFile.arrayBuffer();
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -90,14 +112,19 @@ $('btnDetect').addEventListener('click', async () => {
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
     log(`Audio decoded. Duration: ${audioBuffer.duration.toFixed(2)}s, Channels: ${audioBuffer.numberOfChannels}`);
 
-    const detector = new SpeakerDetector({ sampleRate: audioContext.sampleRate });
-    const segments = await detector.detect(audioBuffer);
+    // Pass sliders to detector, enable debug mode
+    const detector = new SpeakerDetector({ 
+      sampleRate: audioContext.sampleRate, 
+      vadThreshold: vadThreshold,
+      yinThreshold: yinThreshold,
+      debug: true 
+    });
     
+    const segments = await detector.detect(audioBuffer);
     log(`Detection complete. Found ${segments.length} segments.`);
     
-    // Format output
     if (segments.length === 0) {
-      $('resultBox').textContent = 'No speech segments detected.';
+      $('resultBox').textContent = 'No speech segments detected. Try adjusting the sliders and detecting again.';
     } else {
       let html = '<table style="width:100%; border-collapse:collapse; font-size:12px;">';
       html += '<tr style="background:#19398a; color:#fff;"><th>Start (s)</th><th>End (s)</th><th>Pitch (Hz)</th><th>Speaker ID</th><th>Confidence</th></tr>';
