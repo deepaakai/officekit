@@ -1,13 +1,7 @@
 /**
  * speaker-detector.js
- * 
  * DocEasy — Video Tools Project
  * Core module: Automatic Speaker Diarization & Detection
- * 
- * @module SpeakerDetector
- * @version 1.0.2
- * @author DocEasy Team
- * @license MIT
  */
 
 class SpeakerDetector {
@@ -21,16 +15,13 @@ class SpeakerDetector {
         this.maxSpeakers = options.maxSpeakers || 5;
         this.minSpeakers = options.minSpeakers || 2;
         this.debug = options.debug || false;
-        
         this.frameSize = Math.floor(this.sampleRate * 0.05);
     }
 
     async detect(audioBuffer) {
         if (!audioBuffer) throw new Error('AudioBuffer is required.');
-
         const channelData = audioBuffer.getChannelData(0);
         const totalFrames = Math.floor(channelData.length / this.frameSize);
-        
         const activeFrames = [];
         
         for (let i = 0; i < totalFrames; i++) {
@@ -47,33 +38,17 @@ class SpeakerDetector {
 
         for (let i = 0; i < activeFrames.length; i++) {
             const frame = activeFrames[i];
-            
             if (frame.isActive) {
-                const pitchData = this._yinPitch(
-                    channelData, frame.startSample, frame.endSample, 
-                    this.sampleRate, this.pitchMin, this.pitchMax, this.yinThreshold
-                );
-
+                const pitchData = this._yinPitch(channelData, frame.startSample, frame.endSample, this.sampleRate, this.pitchMin, this.pitchMax, this.yinThreshold);
                 if (pitchData.pitch > 0 && pitchData.confidence > 0) {
                     if (!currentSegment) {
-                        currentSegment = {
-                            start: frame.startSample / this.sampleRate,
-                            end: frame.endSample / this.sampleRate,
-                            pitches: [pitchData.pitch],
-                            confidences: [pitchData.confidence]
-                        };
+                        currentSegment = { start: frame.startSample / this.sampleRate, end: frame.endSample / this.sampleRate, pitches: [pitchData.pitch], confidences: [pitchData.confidence] };
                     } else {
                         const gapSamples = frame.startSample - (currentSegment.end * this.sampleRate);
                         const gapSeconds = gapSamples / this.sampleRate;
-                        
                         if (gapSeconds > 0.1) {
                             this._finalizeSegment(currentSegment, segments);
-                            currentSegment = {
-                                start: frame.startSample / this.sampleRate,
-                                end: frame.endSample / this.sampleRate,
-                                pitches: [pitchData.pitch],
-                                confidences: [pitchData.confidence]
-                            };
+                            currentSegment = { start: frame.startSample / this.sampleRate, end: frame.endSample / this.sampleRate, pitches: [pitchData.pitch], confidences: [pitchData.confidence] };
                         } else {
                             currentSegment.end = frame.endSample / this.sampleRate;
                             currentSegment.pitches.push(pitchData.pitch);
@@ -82,16 +57,11 @@ class SpeakerDetector {
                     }
                 }
             } else {
-                if (currentSegment) {
-                    this._finalizeSegment(currentSegment, segments);
-                    currentSegment = null;
-                }
+                if (currentSegment) { this._finalizeSegment(currentSegment, segments); currentSegment = null; }
             }
         }
-
         if (currentSegment) this._finalizeSegment(currentSegment, segments);
         if (segments.length > 0) this._assignSpeakers(segments);
-
         return segments;
     }
 
@@ -104,26 +74,16 @@ class SpeakerDetector {
     _finalizeSegment(segmentData, segmentsArray) {
         const duration = segmentData.end - segmentData.start;
         if (duration < this.minSegmentDuration) return;
-
         const avgPitch = segmentData.pitches.reduce((a, b) => a + b, 0) / segmentData.pitches.length;
         const avgConfidence = segmentData.confidences.reduce((a, b) => a + b, 0) / segmentData.confidences.length;
-
-        segmentsArray.push({
-            start: segmentData.start,
-            end: segmentData.end,
-            pitch: avgPitch,
-            speakerId: -1,
-            confidence: avgConfidence
-        });
+        segmentsArray.push({ start: segmentData.start, end: segmentData.end, pitch: avgPitch, speakerId: -1, confidence: avgConfidence });
     }
 
     _yinPitch(buffer, startSample, endSample, sampleRate, minFreq, maxFreq, threshold) {
         const length = endSample - startSample;
         const minPeriod = Math.floor(sampleRate / maxFreq);
         const maxPeriod = Math.floor(sampleRate / minFreq);
-        
         if (length < maxPeriod * 2) return { pitch: 0, confidence: 0 };
-
         const yinBuffer = new Float32Array(maxPeriod);
         for (let tau = 0; tau < maxPeriod; tau++) {
             let sum = 0;
@@ -133,14 +93,12 @@ class SpeakerDetector {
             }
             yinBuffer[tau] = sum;
         }
-
         yinBuffer[0] = 1;
         let runningSum = 0;
         for (let tau = 1; tau < maxPeriod; tau++) {
             runningSum += yinBuffer[tau];
             yinBuffer[tau] = yinBuffer[tau] * tau / runningSum;
         }
-
         let tauEstimate = -1;
         for (let tau = minPeriod; tau < maxPeriod; tau++) {
             if (yinBuffer[tau] < threshold) {
@@ -149,9 +107,7 @@ class SpeakerDetector {
                 break;
             }
         }
-
         if (tauEstimate === -1) return { pitch: 0, confidence: 0 };
-
         let betterTau;
         const x0 = tauEstimate < 1 ? tauEstimate : tauEstimate - 1;
         const x2 = tauEstimate + 1 < maxPeriod ? tauEstimate + 1 : tauEstimate;
@@ -161,7 +117,6 @@ class SpeakerDetector {
             const s0 = yinBuffer[x0], s1 = yinBuffer[tauEstimate], s2 = yinBuffer[x2];
             betterTau = tauEstimate + (s2 - s0) / (2 * (2 * s1 - s2 - s0));
         }
-
         const pitch = sampleRate / betterTau;
         const confidence = 1 - yinBuffer[tauEstimate];
         if (pitch < minFreq || pitch > maxFreq) return { pitch: 0, confidence: 0 };
@@ -212,7 +167,7 @@ class SpeakerDetector {
     }
 }
 
-// 🌟 यह सबसे नीचे जोड़ना ज़रूरी है ताकि मेन टूल इसे पहचान सके
+// 🌟 यह सबसे नीचे होना ज़रूरी है, ताकि मेन HTML टूल इसे पहचान सके
 if (typeof self !== 'undefined') {
     self.DocEasySpeakerDetector = {
         detectSpeakers: async function({ channelData, sampleRate, numberOfChannels }) {
@@ -229,4 +184,4 @@ if (typeof self !== 'undefined') {
             return { segments: segments, speakerCount: speakerIds.size };
         }
     };
-}
+    }
