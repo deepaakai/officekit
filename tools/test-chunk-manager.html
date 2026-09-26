@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DocEasy — Chunk Manager Test</title>
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 0 12px 40px; }
+  .panel { border: 1px solid #ccc; border-radius: 8px; padding: 14px; margin: 14px 0; }
+  .btn { display: block; width: 100%; padding: 14px; font-size: 16px; margin: 8px 0;
+         border-radius: 8px; border: none; color: #fff; background: #19398a; cursor: pointer; }
+  .btn:disabled { background: #9aa5c9; cursor: not-allowed; }
+  .btn.danger { background: #b3261e; }
+  .btn.secondary { background: #445; }
+  progress { width: 100%; height: 22px; }
+  #logPanel { background: #0d0d12; color: #baffc9; font-family: monospace; font-size: 12px;
+              height: 240px; overflow-y: auto; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
+  .banner { padding: 10px; border-radius: 6px; margin: 8px 0; font-size: 14px; }
+  .banner.warn { background: #fff3cd; color: #6b5300; border: 1px solid #e0c14b; }
+  .banner.error { background: #fbdede; color: #7a1414; border: 1px solid #d98a8a; }
+  .banner.info { background: #e7ecfa; color: #19398a; border: 1px solid #b7c3ea; }
+  .fileinfo div { margin: 3px 0; font-size: 14px; }
+  h1 { font-size: 18px; color: #19398a; }
+  h2 { font-size: 15px; color: #19398a; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<h1>Chunk Manager — Test Harness</h1>
+<p style="font-size:13px;color:#555;">Internal test page. Not linked from the site nav.</p>
+
+<button class="btn danger" id="btnClearAll">Clear ALL DocEasy Storage (every job)</button>
+
+<div class="panel">
+  <h2>1. Select File</h2>
+  <input type="file" id="fileInput" accept="video/*" style="width:100%;">
+  <div id="fileInfo" class="fileinfo" style="margin-top:10px;"></div>
+  <div id="warnLargeFile"></div>
+  <div id="warnOrphan"></div>
+  <div id="warnQuota"></div>
+</div>
+
+<div class="panel">
+  <h2>2. Storage Backend</h2>
+  <div id="backendInfo" class="banner info">Detecting…</div>
+</div>
+
+<div class="panel">
+  <h2>3. Chunking</h2>
+  <button class="btn" id="btnStart" disabled>Start Chunking</button>
+  <button class="btn danger" id="btnCancel" disabled>Cancel</button>
+  <progress id="progressBar" value="0" max="100"></progress>
+  <div id="progressPct" style="text-align:center;font-size:13px;margin-top:4px;">0%</div>
+</div>
+
+<div class="panel">
+  <h2>4. Stored Chunks</h2>
+  <button class="btn secondary" id="btnList">List Stored Chunks</button>
+  <div id="listResult" style="font-size:13px;margin-top:8px;"></div>
+</div>
+
+<div class="panel">
+  <h2>5. Merge &amp; Download</h2>
+  <button class="btn" id="btnMerge" disabled>Merge &amp; Download</button>
+  <div id="mergeResult" style="font-size:13px;margin-top:8px;"></div>
+</div>
+
+<div class="panel">
+  <h2>6. Cleanup</h2>
+  <button class="btn danger" id="btnCleanup">Cleanup This Job</button>
+</div>
+
+<div class="panel">
+  <h2>Log</h2>
+  <div id="logPanel"></div>
+</div>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+<script src="../assets/js/video-core/chunk-manager.js"></script>
+<script>
+'use strict';
+
+/*
+ * ── new Blob(parts) memory note ──────────────────────────────────────
+ * See mergeChunksToOPFSFile() below: on the OPFS backend we stream each
+ * stored chunk straight into a single OPFS output file via
+ * FileSystemWritableFileStream, so the merged result is never assembled
+ * as one in-memory Blob. IndexedDB has no streaming write equivalent, so
+ * that path still falls back to manager.mergeChunks() (new Blob(parts)),
+ * which is logged as a memory warning when it happens.
+ */
+
+const $ = (id) => document.getElementById(id);
+const logPanel = $('logPanel');
+const MAX_LOG_LINES = 200;
+let logLines = [];
+
+function log(msg, isError) {
+  const time = new Date().toLocaleTimeString();
+  const line = `[${time}] ${msg}`;
+  logLines.push(line);
+  if (logLines.length > MAX_LOG_LINES) logLines.shift();
+  logPanel.textContent = logLines.join('\n');
+  logPanel.scrollTop = logPanel.scrollHeight;
+  if (isError) console.error('[DocEasy Test]', msg);
+  else console.log('[DocEasy Test]', msg);
+}
+
+function formatBytes(bytes) {
+  if (bytes >= 1024 ** 3) return (bytes / 1024 ** 3).toFixed(2) + ' GB';
+  if (bytes >= 1024 ** 2) return (bytes / 1024 ** 2).toFixed(2) + ' MB';
+  if (bytes >= 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return bytes + ' B';
+}
+
+let selectedFile = null;
+let manager = null;
+let reader = null;
+let currentBackend = null;
+let activeObjectUrl = null;
+
+const CHUNK_BYTES = 8 * 1024 * 1024; // 8 MB
+const JOB_HISTORY_KEY = 'doceasy-job-history';
+// Rough throughput assumption for the estimate shown in file info —
+// deliberately conservative; real speed depends on device I/O.
+const ASSUMED_MB_PER_SEC = 15;
+
+/* ---------------- Job history bookkeeping (for orphan detection) ---------------- */
+
+function getJobHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(JOB_HISTORY_KEY) || '[]');
+  } catch (e) { return []; }
+}
+
+function addJobToHistory(jobId, fileName) {
+  const history = getJobHistory().filter((j) => j.jobId !== jobId);
+  history.push({ jobId, fileName, at: Date.now() });
+  try {
+    localStorage.setItem(JOB_HISTORY_KEY, JSON.stringify(history));
+  } catch (e) {
+    log('Could not persist job history (localStorage full?): ' + e.message, true);
+  }
+}
+
+function removeJobFromHistory(jobId) {
+  const history = getJobHistory().filter((j) => j.jobId !== jobId);
+  try {
+    localStorage.setItem(JOB_HISTORY_KEY, JSON.stringify(history));
+  } catch (e) { /* non-fatal */ }
+}
+
+/** Deletes a job's chunks from whichever backend is active, plus its resume state. */
+async function cleanupJobById(jobId) {
+  const tempManager = new window.DocEasyChunkManager.ChunkManager(jobId);
+  await tempManager.init();
+  await tempManager.cleanup();
+  try {
+    const root = await navigator.storage.getDirectory();
+    await root.removeEntry(`merged_${jobId}`);
+  } catch (e) { /* may not exist */ }
+  removeJobFromHistory(jobId);
+}
+
+/* ---------------- Backend detection on load ---------------- */
+
+(async function initBackend() {
+  try {
+    const backend = await window.DocEasyChunkManager.detectStorageBackend();
+    currentBackend = backend;
+    const el = $('backendInfo');
+    if (backend === 'opfs') {
+      el.className = 'banner info';
+      el.textContent = 'Backend: OPFS (fast, disk-backed)';
+    } else if (backend === 'indexeddb') {
+      el.className = 'banner warn';
+      el.textContent = 'Backend: IndexedDB — Slower fallback in use';
+    } else {
+      el.className = 'banner error';
+      el.textContent = 'No storage backend available (OPFS and IndexedDB both blocked). Chunking disabled.';
+      $('btnStart').disabled = true;
+    }
+    log(`Detected backend: ${backend}`);
+  } catch (err) {
+    $('backendInfo').className = 'banner error';
+    $('backendInfo').textContent = 'Error detecting storage backend: ' + err.message;
+    $('btnStart').disabled = true;
+    log('Backend detection failed: ' + err.message, true);
+  }
+})();
+
+/* ---------------- Clear ALL storage (testing convenience) ---------------- */
+
+$('btnClearAll').addEventListener('click', async () => {
+  if (!confirm('Delete ALL DocEasy chunk storage across every job? This cannot be undone.')) return;
+  try {
+    const history = getJobHistory();
+    for (const job of history) {
+      await cleanupJobById(job.jobId);
+      log(`Cleared job ${job.jobId} (${job.fileName})`);
+    }
+    // Also sweep any OPFS job directories not tracked in history (belt and suspenders).
+    if (currentBackend === 'opfs' && navigator.storage.getDirectory) {
+      const root = await navigator.storage.getDirectory();
+      for await (const name of root.keys()) {
+        if (name.startsWith('doceasy-job-') || name.startsWith('merged_job_')) {
+          try { await root.removeEntry(name, { recursive: true }); } catch (e) { /* ignore */ }
+        }
+      }
+    }
+    localStorage.removeItem(JOB_HISTORY_KEY);
+    log('All DocEasy storage cleared.');
+    $('listResult').textContent = '';
+    $('warnOrphan').innerHTML = '';
+  } catch (err) {
+    log('Error clearing all storage: ' + err.message, true);
+  }
+});
+
+/* ---------------- File selection ---------------- */
+
+$('fileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  const warnEl = $('warnLargeFile');
+  const orphanEl = $('warnOrphan');
+  const quotaEl = $('warnQuota');
+  warnEl.innerHTML = '';
+  orphanEl.innerHTML = '';
+  quotaEl.innerHTML = '';
+
+  if (!file) {
+    selectedFile = null;
+    $('btnStart').disabled = true;
+    $('fileInfo').innerHTML = '';
+    return;
+  }
+  selectedFile = file;
+  const totalChunks = Math.ceil(file.size / CHUNK_BYTES);
+  const estSeconds = Math.ceil(file.size / (ASSUMED_MB_PER_SEC * 1024 * 1024));
+
+  let quotaLine = '';
+  try {
+    const est = await navigator.storage.estimate();
+    const free = (est.quota || 0) - (est.usage || 0);
+    quotaLine = `<div><strong>Storage free:</strong> ${formatBytes(free)} of ${formatBytes(est.quota || 0)} quota</div>`;
+    if (free < file.size * 1.2) {
+      quotaEl.innerHTML = `<div class="banner error">Not enough storage. Need ~${formatBytes(file.size * 1.2)}, only ${formatBytes(free)} free. Free up space or cleanup old jobs.</div>`;
+    }
+  } catch (err) {
+    quotaLine = '<div>Storage estimate unavailable in this browser.</div>';
+    log('navigator.storage.estimate() failed: ' + err.message, true);
+  }
+
+  $('fileInfo').innerHTML = `
+    <div><strong>Name:</strong> ${file.name}</div>
+    <div><strong>Size:</strong> ${formatBytes(file.size)}</div>
+    <div><strong>Chunk size:</strong> ${formatBytes(CHUNK_BYTES)}</div>
+    <div><strong>Estimated chunks:</strong> ${totalChunks}</div>
+    <div><strong>Estimated time:</strong> ~${estSeconds}s (rough, based on 8MB chunks @ ~${ASSUMED_MB_PER_SEC}MB/s)</div>
+    ${quotaLine}
+  `;
+
+  if (file.size > 1024 ** 3) {
+    warnEl.innerHTML = `<div class="banner warn">Large file (${formatBytes(file.size)}) — mobile may crash. Proceed with caution.</div>`;
+  }
+
+  log(`Selected file: ${file.name} (${formatBytes(file.size)}, ${totalChunks} chunks expected)`);
+
+  // Orphan detection: any OTHER job in history still has chunks?
+  const newJobId = window.DocEasyChunkManager.makeJobId(file);
+  const history = getJobHistory().filter((j) => j.jobId !== newJobId);
+  if (history.length > 0) {
+    const names = history.map((j) => j.fileName).join(', ');
+    orphanEl.innerHTML = `<div class="banner warn">Previous job chunks found (${names}). Cleanup first?
+      <button class="btn secondary" id="btnCleanupOrphans" style="margin-top:8px;">Cleanup Previous Job(s) Now</button>
+    </div>`;
+    $('btnCleanupOrphans').addEventListener('click', async () => {
+      try {
+        for (const job of history) {
+          await cleanupJobById(job.jobId);
+          log(`Cleaned up orphaned job ${job.jobId} (${job.fileName})`);
+        }
+        orphanEl.innerHTML = '<div class="banner info">Previous job chunks removed.</div>';
+      } catch (err) {
+        log('Error cleaning orphaned job: ' + err.message, true);
+      }
+    });
+  }
+
+  $('btnStart').disabled = (currentBackend === 'none');
+  $('btnMerge').disabled = true;
+});
+
+/* ---------------- Start Chunking ---------------- */
+
+$('btnStart').addEventListener('click', async () => {
+  if (!selectedFile) return;
+
+  // Re-check quota right before starting (state may have changed since file select).
+  try {
+    const est = await navigator.storage.estimate();
+    const free = (est.quota || 0) - (est.usage || 0);
+    if (free < selectedFile.size * 1.2) {
+      log(`Aborting: not enough storage. Need ~${formatBytes(selectedFile.size * 1.2)}, only ${formatBytes(free)} free.`, true);
+      $('warnQuota').innerHTML = `<div class="banner error">Not enough storage. Need ~${formatBytes(selectedFile.size * 1.2)}, only ${formatBytes(free)} free.</div>`;
+      return;
+    }
+  } catch (err) {
+    log('Could not verify storage quota, proceeding anyway: ' + err.message, true);
+  }
+
+  $('btnStart').disabled = true;
+  $('btnCancel').disabled = false;
+  $('btnMerge').disabled = true;
+  $('progressBar').value = 0;
+  $('progressPct').textContent = '0%';
+
+  try {
+    const jobId = window.DocEasyChunkManager.makeJobId(selectedFile);
+    manager = new window.DocEasyChunkManager.ChunkManager(jobId);
+    const backend = await manager.init();
+    addJobToHistory(jobId, selectedFile.name);
+    log(`ChunkManager initialized (job ${jobId}, backend: ${backend})`);
+
+    reader = new window.DocEasyChunkManager.FileChunkReader(selectedFile, CHUNK_BYTES);
+
+    const result = await reader.readAll(
+      async (chunkBlob, index, total) => {
+        log(`Reading chunk ${index + 1} of ${total} (${formatBytes(chunkBlob.size)})`);
+        log(`Writing chunk ${index + 1} to ${backend.toUpperCase()}…`);
+        await manager.writeChunk(index, chunkBlob);
+        log(`Chunk ${index + 1} written successfully`);
+        manager.checkpoint({ lastChunkWritten: index, totalChunks: total, fileName: selectedFile.name });
+      },
+      (processedBytes, totalBytes) => {
+        const pct = Math.round((processedBytes / totalBytes) * 100);
+        $('progressBar').value = pct;
+        $('progressPct').textContent = pct + '%';
+      }
+    );
+
+    if (result.cancelled) {
+      log('Chunking cancelled by user — partial chunks remain in storage.');
+    } else {
+      log(`Chunking complete: ${result.chunksRead} chunks written.`);
+      $('btnMerge').disabled = false;
+    }
+  } catch (err) {
+    log('Error during chunking: ' + err.message, true);
+  } finally {
+    $('btnStart').disabled = false;
+    $('btnCancel').disabled = true;
+  }
+});
+
+/* ---------------- Cancel ---------------- */
+
+$('btnCancel').addEventListener('click', () => {
+  if (reader) reader.cancel();
+  if (manager) manager.cancel();
+  log('Cancel requested — stopping at next chunk boundary…');
+  $('btnCancel').disabled = true;
+});
+
+/* ---------------- List Stored Chunks ---------------- */
+
+$('btnList').addEventListener('click', async () => {
+  if (!manager) {
+    log('No active job — select a file and start chunking first.', true);
+    return;
+  }
+  try {
+    const indices = await manager.listChunkIndices();
+    if (indices.length === 0) {
+      $('listResult').textContent = 'No chunks stored.';
+      log('List Stored Chunks: none found.');
+      return;
+    }
+    const first = indices[0];
+    const last = indices[indices.length - 1];
+    $('listResult').innerHTML = `
+      <div><strong>Count:</strong> ${indices.length}</div>
+      <div><strong>First index:</strong> ${first}</div>
+      <div><strong>Last index:</strong> ${last}</div>
+    `;
+    log(`Listed ${indices.length} stored chunks (first=${first}, last=${last})`);
+  } catch (err) {
+    log('Error listing chunks: ' + err.message, true);
+  }
+});
+
+/* ---------------- Merge & Download ---------------- */
+
+/**
+ * Streams stored chunks directly into a single OPFS output file when OPFS
+ * is the active backend, avoiding ever assembling the full merged size as
+ * one in-memory Blob. Falls back to Blob assembly on IndexedDB.
+ */
+async function mergeChunksToOPFSFile(mgr, indices, onProgress) {
+  const root = await navigator.storage.getDirectory();
+  const outName = `merged_${mgr.jobId}`;
+  const outHandle = await root.getFileHandle(outName, { create: true });
+  const writable = await outHandle.createWritable();
+  for (let i = 0; i < indices.length; i++) {
+    const chunkBlob = await mgr.store.readChunk(indices[i]);
+    await writable.write(chunkBlob);
+    if (onProgress) onProgress(i + 1, indices.length);
+  }
+  await writable.close();
+  return outHandle.getFile();
+}
+
+$('btnMerge').addEventListener('click', async () => {
+  if (!manager) {
+    log('No active job to merge.', true);
+    return;
+  }
+  $('btnMerge').disabled = true;
+  try {
+    const indices = await manager.listChunkIndices();
+    if (indices.length === 0) throw new Error('No chunks found to merge.');
+
+    let mergedFile;
+    if (currentBackend === 'opfs') {
+      log(`Streaming merge of ${indices.length} chunks directly to OPFS output file…`);
+      mergedFile = await mergeChunksToOPFSFile(manager, indices, (done, total) => {
+        log(`Merged ${done} of ${total} chunks…`);
+      });
+    } else {
+      log('IndexedDB backend has no streaming write — assembling Blob in memory (watch RAM on large files).');
+      mergedFile = await manager.mergeChunks('video/mp4', (done, total) => {
+        log(`Merged ${done} of ${total} chunks…`);
+      });
+    }
+
+    // Revoke policy: NOT on a short timer — a large download over a slow
+    // connection can easily outlive 10s. Revoke on page unload, or after
+    // a generous 30-minute backstop, whichever comes first.
+    if (activeObjectUrl) {
+      URL.revokeObjectURL(activeObjectUrl);
+      activeObjectUrl = null;
+    }
+    const url = URL.createObjectURL(mergedFile);
+    activeObjectUrl = url;
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `test-output-${selectedFile.name}`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => {
+      if (activeObjectUrl === url) {
+        URL.revokeObjectURL(url);
+        activeObjectUrl = null;
+        log('Download URL revoked (30-minute backstop).');
+      }
+    }, 30 * 60 * 1000);
+
+    $('mergeResult').textContent = `Downloaded: test-output-${selectedFile.name} (${formatBytes(mergedFile.size)})`;
+    log(`Merge complete. Triggered download of ${formatBytes(mergedFile.size)}.`);
+  } catch (err) {
+    log('Error during merge: ' + err.message, true);
+  } finally {
+    $('btnMerge').disabled = false;
+  }
+});
+
+window.addEventListener('beforeunload', () => {
+  if (activeObjectUrl) {
+    URL.revokeObjectURL(activeObjectUrl);
+    activeObjectUrl = null;
+  }
+});
+
+/* ---------------- Cleanup (current job) ---------------- */
+
+$('btnCleanup').addEventListener('click', async () => {
+  if (!manager) {
+    log('No active job to clean up.');
+    return;
+  }
+  try {
+    await manager.cleanup();
+    removeJobFromHistory(manager.jobId);
+    try {
+      const root = await navigator.storage.getDirectory();
+      await root.removeEntry(`merged_${manager.jobId}`);
+    } catch (e) { /* may not exist */ }
+    logLines = [];
+    logPanel.textContent = '';
+    $('listResult').textContent = '';
+    $('mergeResult').textContent = '';
+    $('progressBar').value = 0;
+    $('progressPct').textContent = '0%';
+    $('btnMerge').disabled = true;
+    log('Storage cleaned up. Ready for a new test.');
+  } catch (err) {
+    log('Error during cleanup: ' + err.message, true);
+  }
+});
+</script>
+</body>
+</html>
