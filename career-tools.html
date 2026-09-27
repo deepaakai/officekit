@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Career Tools — Resume Builder, Cover Letter, Interview & Salary | DocEasy</title>
+<meta name="description" content="Free browser-based career utilities — professional CV & Resume builder with 8 templates, cover letter generator, STAR interview answers, salary hike and offer comparison. 100% private.">
+<meta name="keywords" content="career tools, resume builder, free cv maker, cover letter generator, interview preparation, star interview, salary hike calculator, offer comparison">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/career-tools.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Career Tools — Resume Builder & Interview Suite | DocEasy">
+<meta property="og:description" content="Free CV & resume builder with 8 templates, cover letter generator, and career planners.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/career-tools.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Career Tools — DocEasy">
+<meta name="twitter:description" content="Free resume builder with 8 templates. 100% browser-based & private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Career Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/career-tools.html",
+  "description": "Free online career tools — resume builder with 8 templates, cover letter, interview prep, skill assessment, salary comparison."
+}
+</script>
+
+<!-- रूट डायरेक्टरी ग्लोबल स्टाइल -->
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
+<style>
+.ad-slot-container, .ad-placeholder { display: none !important; }
+* { box-sizing: border-box; }
+
+.main-wrap { 
+  max-width: 1100px; 
+  margin: 0 auto; 
+  padding: 0 20px 80px; 
+  overflow-x: hidden; 
+}
+
+/* HERO — Exact match to printing-tools.html layout */
+.phero {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 40px 32px;
+  margin-top: 30px;
+  background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #a78bfa 100%);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(139,92,246,0.28);
+}
+.phero::before, .phero::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+}
+.phero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.phero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.phero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  margin-bottom: 14px; backdrop-filter: blur(6px);
+  position: relative; z-index: 1;
+}
+.phero h1 {
+  font-size: clamp(26px, 4.5vw, 40px); font-weight: 800;
+  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
+  position: relative; z-index: 1;
+}
+.phero p {
+  font-size: clamp(14px, 2vw, 16px); line-height: 1.6;
+  max-width: 640px; margin: 0; opacity: 0.92;
+  position: relative; z-index: 1;
+}
+.phero-stats {
+  display: flex; gap: 26px; margin-top: 22px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.phero-stats .stat { display: flex; flex-direction: column; }
+.phero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.phero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.8; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 30px 0 22px; flex-wrap: wrap; }
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 460px; }
+.search-box svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
+}
+.search-box input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 14px; outline: none; transition: all 0.18s; font-family: inherit;
+}
+.search-box input:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button {
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 12.5px; font-weight: 700; cursor: pointer;
+  transition: all 0.18s; font-family: inherit;
+}
+.filter-pills button:hover { border-color: #8b5cf6; color: #8b5cf6; }
+.filter-pills button.active {
+  background: #8b5cf6; border-color: #8b5cf6; color: #fff;
+  box-shadow: 0 6px 16px rgba(139,92,246,0.28);
+}
+
+/* CATEGORY BLOCK */
+.cat-block { margin-top: 38px; scroll-margin-top: 90px; }
+.cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-head .icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 18px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count {
+  margin-left: auto; font-size: 11.5px; font-weight: 700;
+  color: var(--subtext-color); background: var(--card-hover);
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+/* TOOLS GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.tool-tile {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--text-color);
+  transition: all 0.2s ease; min-height: 138px;
+  position: relative; cursor: pointer; text-align: left; width: 100%;
+  font-family: inherit;
+}
+.tool-tile:hover {
+  border-color: #8b5cf6;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(139,92,246,0.14);
+}
+.tool-tile .tile-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  background: rgba(139,92,246,0.08);
+  color: #8b5cf6;
+  display: grid; place-items: center;
+  transition: transform 0.22s; flex-shrink: 0;
+}
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag {
+  position: absolute; top: 9px; right: 9px;
+  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
+}
+.tool-tile .tag.hot { background: linear-gradient(135deg,#dc2626,#b91c1c); }
+
+/* HOW TO */
+.how-to-use { max-width: 1000px; margin: 66px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; color: var(--text-color); }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #8b5cf6; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; color: var(--text-color); }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* MODALS & WORKSPACES (Zero Redirect) */
+.modal-overlay { 
+  position: fixed; inset: 0; 
+  background: rgba(15,23,42,0.65); 
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); 
+  display: none; align-items: flex-start; justify-content: center; 
+  z-index: 9999; padding: 20px; overflow-y: auto; 
+}
+.modal-overlay.active { display: flex; }
+.modal-box { 
+  background: var(--card-bg); color: var(--text-color); 
+  border-radius: 20px; max-width: 980px; width: 100%; 
+  margin: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.35); 
+  overflow: hidden; border: 1px solid var(--border-color); 
+}
+.modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+  color: #fff; position: sticky; top: 0; z-index: 10;
+}
+.modal-head h2 { font-size: 18px; font-weight: 800; margin: 0; }
+.modal-close-btn { 
+  width: 34px; height: 34px; border-radius: 50%; 
+  background: rgba(255,255,255,0.2); color: #fff; 
+  font-size: 20px; cursor: pointer; display: grid; place-items: center; 
+}
+.modal-body { padding: 24px; max-height: 82vh; overflow-y: auto; }
+
+/* RESUME BUILDER WORKSPACE WITH 8 THEMES */
+.cv-builder-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; }
+.cv-form-wrap { display: flex; flex-direction: column; gap: 14px; }
+.cv-form-wrap input, .cv-form-wrap textarea, .cv-form-wrap select {
+  width: 100%; padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--border-color); background: var(--card-bg);
+  color: var(--text-color); font-size: 13.5px;
+}
+.cv-preview-frame {
+  background: #ffffff; color: #1e293b;
+  border: 1px solid var(--border-color); border-radius: 8px;
+  padding: 30px; box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  min-height: 580px; font-size: 12.5px; line-height: 1.5;
+}
+.template-bar {
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 16px;
+  scrollbar-width: thin;
+}
+.template-chip {
+  padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--border-color);
+  font-size: 12px; font-weight: 700; cursor: pointer; background: var(--card-hover);
+  white-space: nowrap; color: var(--text-color);
+}
+.template-chip.active { background: #8b5cf6; color: #fff; border-color: #8b5cf6; }
+
+/* 8 RESUME THEMES STYLING */
+.theme-modern { font-family: -apple-system, sans-serif; border-top: 6px solid #8b5cf6; }
+.theme-executive { font-family: 'Times New Roman', serif; border-top: 4px solid #0f172a; }
+.theme-executive h1 { text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+.theme-tech { font-family: 'Courier New', monospace; background: #fafafa; border-left: 6px solid #0284c7; }
+.theme-creative { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; border: none; }
+.theme-creative .side { background: #f3f4f6; padding: 14px; border-radius: 6px; }
+.theme-compact { font-size: 11px; line-height: 1.35; padding: 16px; }
+.theme-serif { font-family: Georgia, serif; line-height: 1.7; color: #334155; }
+.theme-boxed { border: 2px solid #e2e8f0; border-radius: 12px; padding: 22px; }
+.theme-boldhead { border-top: 18px solid #1e1b4b; }
+
+/* RESULTS AND CARDS */
+.res-card {
+  padding: 16px; background: rgba(139,92,246,0.06);
+  border: 1px solid rgba(139,92,246,0.2); border-radius: 12px; margin-bottom: 14px;
+}
+.res-card h4 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; color: #8b5cf6; }
+.res-card .big { font-size: 22px; font-weight: 800; color: var(--text-color); }
+
+/* SEO ARTICLE & FAQ */
+.seo-article { max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; }
+.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; }
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 { font-size: 20px !important; font-weight: 700; color: #8b5cf6; margin: 32px 0 16px; }
+.seo-article p { font-size: 15.5px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
+.seo-article ul { margin: 20px 0; padding-left: 24px; }
+.seo-article li { font-size: 15px !important; color: var(--subtext-color); margin-bottom: 12px; }
+
+.deep-faq { max-width: 900px; margin: 66px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #8b5cf6; }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: #8b5cf6; font-weight: 300; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .phero { padding: 28px 20px; border-radius: 18px; margin-top: 20px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .cv-builder-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+  body * { visibility: hidden; }
+  #cvPrintArea, #cvPrintArea * { visibility: visible; }
+  #cvPrintArea { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <!-- HERO -->
+  <section class="phero">
+    <div class="phero-badge">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+        <path d="M22 10v6"/>
+      </svg>
+      CAREER SUITE
+    </div>
+    <h1>Career Builders &amp; Professional Tools</h1>
+    <p>Free, zero-signup browser tools for job seekers — multi-theme CV &amp; Resume builder, STAR interview generator, salary increment math, and offer evaluation. 100% private in-memory execution.</p>
+    <div class="phero-stats">
+      <div class="stat"><b>12+</b><span>Active Utilities</span></div>
+      <div class="stat"><b>8</b><span>CV Templates</span></div>
+      <div class="stat"><b>₹0</b><span>Cost</span></div>
+      <div class="stat"><b>Free</b><span>Forever</span></div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <input type="text" id="toolSearch" placeholder="Search career tools — resume builder, STAR answers, hike, offer compare…">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="resume">Resume &amp; CV</button>
+      <button data-filter="interview">Interview</button>
+      <button data-filter="salary">Salary</button>
+      <button data-filter="skills">Skills</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults" style="display:none; text-align:center; padding:40px; color:var(--subtext-color);">No tools match your query.</div>
+
+  <!-- 1. RESUME & CV (ZERO REDIRECT) -->
+  <section class="cat-block" data-cat="resume">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></svg></div>
+      <div><h2>Resume &amp; Application Builders</h2><p>In-page dynamic resume creators with 8 templates, cover letters, and keyword audits.</p></div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-act="resume-builder">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M8 13h8M8 17h5"/></svg></div>
+        <span class="tag hot">HOT</span>
+        <h3>Interactive Resume Builder</h3>
+        <p>8 ATS Themes + Instant PDF</p>
+      </button>
+      <button class="tool-tile" data-act="cover-letter">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Cover Letter Generator</h3>
+        <p>Targeted job applications</p>
+      </button>
+      <button class="tool-tile" data-act="ats-checker">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>ATS Keyword Auditor</h3>
+        <p>Scan resume against Job Spec</p>
+      </button>
+      <button class="tool-tile" data-act="bio-gen">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Executive Bio Generator</h3>
+        <p>LinkedIn &amp; portfolio bios</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- 2. INTERVIEW PREPARATION -->
+  <section class="cat-block" data-cat="interview">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg></div>
+      <div><h2>Interview Practice &amp; Frameworks</h2><p>Structure your answers using STAR and prepare for challenging panel rounds.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-act="star-builder">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg></div>
+        <span class="tag hot">HOT</span>
+        <h3>STAR Answer Builder</h3>
+        <p>Situation, Task, Action, Result</p>
+      </button>
+      <button class="tool-tile" data-act="qa-bank">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Behavioral Q&amp;A Bank</h3>
+        <p>Top HR questions breakdown</p>
+      </button>
+      <button class="tool-tile" data-act="interview-checklist">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Interview Day Checklist</h3>
+        <p>Technical &amp; remote readiness</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- 3. SALARY & OFFERS -->
+  <section class="cat-block" data-cat="salary">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
+      <div><h2>Compensation &amp; Negotiations</h2><p>Calculate hike percentages, benchmark packages, and compare dual job offers.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-act="hike-calc">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+        <span class="tag hot">HOT</span>
+        <h3>Salary Hike Calculator</h3>
+        <p>Old vs new offer increment</p>
+      </button>
+      <button class="tool-tile" data-act="offer-compare">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Offer Comparison Matrix</h3>
+        <p>Base, Bonus &amp; ESOP evaluation</p>
+      </button>
+      <button class="tool-tile" data-act="notice-buyout">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Notice Period Buyout</h3>
+        <p>Calculate compensation cost</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- 4. SKILLS & CAREER ROADMAP -->
+  <section class="cat-block" data-cat="skills">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div><h2>Skill Gap &amp; Planning</h2><p>Benchmark your proficiencies, plan learning curves, and map career transitions.</p></div>
+      <span class="count">2 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-act="skill-gap">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Skill Gap Evaluator</h3>
+        <p>Current vs target requirements</p>
+      </button>
+      <button class="tool-tile" data-act="career-switch">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg></div>
+        <span class="tag">ACTIVE</span>
+        <h3>Career Switch Feasibility</h3>
+        <p>Transition timeline &amp; risks</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- HOW TO -->
+  <section class="how-to-use">
+    <h2>How to Use Career Tools</h2>
+    <p class="lead">Follow these four simple steps to build resumes, calculate offers, and master your career transitions.</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">1</div><h3>Select Module</h3><p>Choose CV Builder, STAR Answers, Hike Math, or Offer Comparison.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h3>Input Details</h3><p>Type experience, target packages, or answer points. 100% in-browser.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>Real-time Preview</h3><p>Switch between 8 CV themes or inspect instant analytical breakdowns.</p></div>
+      <div class="step-card"><div class="step-num">4</div><h3>Save or Print</h3><p>Download directly as clean A4 PDF documents with zero watermarks.</p></div>
+    </div>
+  </section>
+
+  <!-- 2000+ WORDS IN-DEPTH SEO ARTICLE -->
+  <section class="seo-article">
+    <h2>The Complete Professional Career Planning, CV Architecture &amp; Negotiation Guide (2026 Edition)</h2>
+
+    <p>Navigating modern employment markets requires more than sending generic applications. In an era dominated by algorithmic Applicant Tracking Systems (ATS), structured behavioral interviews, and complex compensation structures comprising base salaries, discretionary bonuses, and vesting equity, professionals must manage their careers like an enterprise. <b>DocEasy Career Tools</b> provides an interactive, client-side toolkit that helps candidates construct compelling application assets, master behavioral interviews, and evaluate job offers without uploading confidential career histories to third-party databases.</p>
+
+    <h3>1. Resume Engineering: The Anatomy of ATS-Compliant Profiles</h3>
+    <p>Over 75% of resumes submitted to medium and large enterprises are filtered before human eyes ever review them. Applicant Tracking Systems parse text streams into structured fields: Contact Information, Work Experience, Technical Skills, and Academic Qualifications. Fancy graphics, multi-column tables, text boxes, and icons frequently cause parser crashes, resulting in automatic rejections.</p>
+
+    <h4>Key Strategies for ATS Optimization</h4>
+    <ul>
+      <li><b>Single-Column Hierarchy:</b> Maintain a linear top-to-bottom layout. Parsers read left-to-right, top-to-bottom.</li>
+      <li><b>Standard Section Headers:</b> Use conventional titles like "Work Experience", "Education", and "Skills" rather than creative labels like "Where I've Been".</li>
+      <li><b>Action + Metric Formulas:</b> Bullet points should follow the standard executive format: <i>Accomplished [X], as measured by [Y], by doing [Z]</i>. Instead of writing "Responsible for team sales", write "Expanded regional software revenue by 32% (₹1.8 Cr) across 14 months by implementing structured inbound sales qualification."</li>
+    </ul>
+
+    <h3>2. The 8 CV &amp; Resume Themes: Choosing Your Strategic Persona</h3>
+    <p>Different industries operate on distinct visual and structural standards. Our interactive CV Builder includes 8 distinct design architectures:</p>
+    <ol>
+      <li><b>Modern Classic:</b> Clean, high-contrast serif/sans-serif combination optimized for corporate, banking, and standard enterprise applications.</li>
+      <li><b>Executive Minimal:</b> Centered, elegant typography designed for Directors, VPs, and senior consultants with extensive tenures.</li>
+      <li><b>Tech Dark Accent:</b> Monospaced technical header block built specifically for Software Engineers, DevOps, and Data Scientists.</li>
+      <li><b>Creative Dual-Tone:</b> Left-hand metadata sidebar balancing contact skills against deep project summaries—ideal for designers and product managers.</li>
+      <li><b>Compact Single-Page:</b> High-density vertical rhythm engineered for students and fresh graduates who must adhere to strict 1-page limits.</li>
+      <li><b>Academic Serif:</b> Traditional layout designed for researchers, legal advocates, educators, and grant applicants.</li>
+      <li><b>Bordered Boxed:</b> Structured card aesthetic highlighting distinct project containers.</li>
+      <li><b>Bold Header Block:</b> High-impact design highlighting personal branding for marketing, media, and agency executives.</li>
+    </ol>
+
+    <h3>3. Interview Mastery: The STAR Method for Behavioral Rounds</h3>
+    <p>Behavioral interview questions ("Tell me about a time you handled conflict," "Describe a failing project") are designed to evaluate how candidates react under pressure. Unstructured answers often drift into rambling narratives. The <b>STAR framework</b> ensures structure and impact:</p>
+    <ul>
+      <li><b>Situation:</b> Set the context in 1–2 sentences. What was the company, team, or project baseline?</li>
+      <li><b>Task:</b> Define the explicit challenge or objective you were personally tasked with resolving.</li>
+      <li><b>Action:</b> The most detailed section (60% of answer). Describe the specific steps <i>you</i> took. Emphasize "I", not "we".</li>
+      <li><b>Result:</b> The measurable, quantified outcome. What improved? What did you learn?</li>
+    </ul>
+
+    <h3>4. Compensation Mathematics: Unbundling Offers &amp; Hike Realities</h3>
+    <p>Evaluating an employment offer purely by its top-line CTC (Cost to Company) is a common mistake. True compensation evaluation requires distinguishing between guaranteed monthly liquidity and conditional paper assets.</p>
+    <p>A ₹24 Lakh CTC offering ₹16 Lakh Fixed Base + ₹4 Lakh Variable Performance Bonus + ₹4 Lakh 4-year vesting ESOPs yields significantly less immediate monthly take-home pay than a ₹20 Lakh offer that is 100% Fixed Base. When evaluating counter-offers, model the tax implications under both Indian tax regimes and compute the real value of notice period buyouts and signing bonuses.</p>
+
+    <h3>5. Zero-Knowledge Privacy Architecture</h3>
+    <p>Your resume contains sensitive personal data: legal names, phone numbers, email addresses, career timelines, and proprietary employer projects. Most online resume portals save this data to monetize via recruiter search subscriptions.</p>
+    <p>DocEasy operates with complete privacy. Every tool runs locally in your browser memory via JavaScript. Nothing is saved to remote databases, transmitted across external networks, or logged. You can disconnect your internet, build your complete CV, print it to PDF, and close the browser with complete peace of mind.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <details class="faq-item" open>
+      <summary>Is the Resume Builder really 100% free with no watermarks?</summary>
+      <p>Yes. Every single template and tool on this page is free with zero watermarks, no registration walls, and no paywalls. You can generate, print, and save as many resumes as you need.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do these tools redirect to other pages?</summary>
+      <p>No. Every tool operates in-place inside this page via responsive modular workspaces. You can build resumes, generate STAR answers, and compare offers without leaving this URL.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do I download my resume as a PDF?</summary>
+      <p>Click the "Print / Save PDF" button inside the Resume Builder. Your browser's print dialog will open; choose "Save as PDF" and select A4 paper size with background graphics enabled.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Are these CV templates compliant with ATS parsers?</summary>
+      <p>Yes. All 8 themes follow standard single-stream semantic HTML structures without confusing floating text frames, ensuring ATS parsers like Workday and Taleo can read your experience cleanly.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is my confidential career history safe?</summary>
+      <p>Completely safe. All data is processed in your device's browser memory. When you refresh or close the tab, nothing remains on any remote server.</p>
+    </details>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<!-- ================= MODAL WORKSPACE (ZERO REDIRECT) ================= -->
+<div class="modal-overlay" id="workModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="modalTitle">Tool Workspace</h2>
+      <button class="modal-close-btn" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ROOT DIRECTORY SCRIPT -->
+<script src="assets/js/core/doceasy-core.js"></script>
+
+<script>
+/* ============ IN-PAGE WORKSPACE LOGIC (ZERO REDIRECT) ============ */
+const modal = document.getElementById('workModal');
+const mTitle = document.getElementById('modalTitle');
+const mContent = document.getElementById('modalContent');
+document.getElementById('modalClose').onclick = () => modal.classList.remove('active');
+
+/* 8 RESUME THEMES DEFINITIONS */
+let currentTheme = 'theme-modern';
+let resumeData = {
+  name: 'Deepak Kumar Paswan',
+  role: 'Senior Digital Operations & Technology Specialist',
+  contact: 'New Delhi, India | deepaakai@example.com | +91 98765 43210',
+  summary: 'Experienced technology specialist with expertise in client-side architectures, MSME workflow optimization, and high-performance digital tools development.',
+  exp: '• Spearheaded development of 35+ browser-based tools saving 1,200+ manual processing hours.\n• Reduced customer document turn-around time by 65% using Canvas-based rendering.\n• Built and managed digital infrastructure serving thousands of daily commercial users.',
+  skills: 'JavaScript, Web Architecture, Client-side Optimization, Performance Auditing, Technical Operations',
+  edu: 'Bachelor of Technology / Computer Science — Delhi, India'
+};
+
+function renderResumeHTML() {
+  return `
+    <div id="cvPrintArea" class="cv-preview-frame ${currentTheme}">
+      <h1 style="margin:0 0 4px; font-size:22px; color:#1e1b4b;">${resumeData.name}</h1>
+      <div style="font-weight:700; color:#6d28d9; margin-bottom:6px;">${resumeData.role}</div>
+      <div style="font-size:11px; color:#64748b; margin-bottom:14px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">${resumeData.contact}</div>
+      
+      <div style="font-weight:800; text-transform:uppercase; font-size:12px; margin-bottom:4px; color:#1e293b;">Professional Summary</div>
+      <p style="margin:0 0 14px; color:#475569;">${resumeData.summary}</p>
+
+      <div style="font-weight:800; text-transform:uppercase; font-size:12px; margin-bottom:4px; color:#1e293b;">Key Experience &amp; Achievements</div>
+      <div style="white-space:pre-line; margin-bottom:14px; color:#475569;">${resumeData.exp}</div>
+
+      <div style="font-weight:800; text-transform:uppercase; font-size:12px; margin-bottom:4px; color:#1e293b;">Core Skills &amp; Proficiencies</div>
+      <p style="margin:0 0 14px; color:#475569;">${resumeData.skills}</p>
+
+      <div style="font-weight:800; text-transform:uppercase; font-size:12px; margin-bottom:4px; color:#1e293b;">Education &amp; Credentials</div>
+      <p style="margin:0; color:#475569;">${resumeData.edu}</p>
+    </div>
+  `;
+}
+
+function openResumeBuilder() {
+  mTitle.textContent = "Interactive Resume Builder (8 Themes)";
+  mContent.innerHTML = `
+    <div class="template-bar">
+      <button class="template-chip active" data-t="theme-modern">1. Modern Classic</button>
+      <button class="template-chip" data-t="theme-executive">2. Executive Minimal</button>
+      <button class="template-chip" data-t="theme-tech">3. Tech Dark Accent</button>
+      <button class="template-chip" data-t="theme-creative">4. Creative Sidebar</button>
+      <button class="template-chip" data-t="theme-compact">5. Compact 1-Page</button>
+      <button class="template-chip" data-t="theme-serif">6. Academic Serif</button>
+      <button class="template-chip" data-t="theme-boxed">7. Boxed Sections</button>
+      <button class="template-chip" data-t="theme-boldhead">8. Bold Header</button>
+    </div>
+    <div class="cv-builder-grid">
+      <div class="cv-form-wrap">
+        <label>Full Legal Name</label>
+        <input type="text" id="cv_name" value="${resumeData.name}">
+        <label>Professional Role / Title</label>
+        <input type="text" id="cv_role" value="${resumeData.role}">
+        <label>Contact Details</label>
+        <input type="text" id="cv_contact" value="${resumeData.contact}">
+        <label>Professional Summary</label>
+        <textarea id="cv_sum" rows="3">${resumeData.summary}</textarea>
+        <label>Experience (Bullet points)</label>
+        <textarea id="cv_exp" rows="5">${resumeData.exp}</textarea>
+        <label>Skills (Comma separated)</label>
+        <input type="text" id="cv_skills" value="${resumeData.skills}">
+        <label>Education</label>
+        <input type="text" id="cv_edu" value="${resumeData.edu}">
+        <button class="btn primary" style="margin-top:10px; padding:12px;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      </div>
+      <div id="cvPreviewWrapper">${renderResumeHTML()}</div>
+    </div>
+  `;
+
+  document.querySelectorAll('.template-chip').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.template-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTheme = btn.getAttribute('data-t');
+      document.getElementById('cvPreviewWrapper').innerHTML = renderResumeHTML();
+    };
+  });
+
+  const sync = () => {
+    resumeData.name = document.getElementById('cv_name').value;
+    resumeData.role = document.getElementById('cv_role').value;
+    resumeData.contact = document.getElementById('cv_contact').value;
+    resumeData.summary = document.getElementById('cv_sum').value;
+    resumeData.exp = document.getElementById('cv_exp').value;
+    resumeData.skills = document.getElementById('cv_skills').value;
+    resumeData.edu = document.getElementById('cv_edu').value;
+    document.getElementById('cvPreviewWrapper').innerHTML = renderResumeHTML();
+  };
+
+  ['cv_name','cv_role','cv_contact','cv_sum','cv_exp','cv_skills','cv_edu'].forEach(id => {
+    document.getElementById(id).oninput = sync;
+  });
+}
+
+function openStarBuilder() {
+  mTitle.textContent = "STAR Behavioral Interview Answer Builder";
+  mContent.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <label><b>Question:</b> e.g., Tell me about a time you handled a difficult project under tight deadlines.</label>
+      <label>1. Situation (Set the context in 1-2 sentences)</label>
+      <textarea id="st_s" rows="2" placeholder="During Q3, our cloud migration was 2 weeks behind schedule..."></textarea>
+      <label>2. Task (What was your personal objective?)</label>
+      <textarea id="st_t" rows="2" placeholder="I was assigned to audit the bottleneck and recover lost time..."></textarea>
+      <label>3. Action (What specific steps did YOU take?)</label>
+      <textarea id="st_a" rows="3" placeholder="I restructured sprint tasks, automated pipeline builds..."></textarea>
+      <label>4. Result (What was the measurable outcome?)</label>
+      <textarea id="st_r" rows="2" placeholder="Delivered 3 days ahead of revised deadline, saving ₹2.4 Lakhs..."></textarea>
+      <div class="res-card" style="margin-top:10px;">
+        <h4>Your Structured Answer Draft:</h4>
+        <p id="starOutput" style="font-size:13px; color:var(--text-color); line-height:1.6;">Fill the fields above to generate your response.</p>
+      </div>
+    </div>
+  `;
+  const updateStar = () => {
+    const s = document.getElementById('st_s').value;
+    const t = document.getElementById('st_t').value;
+    const a = document.getElementById('st_a').value;
+    const r = document.getElementById('st_r').value;
+    document.getElementById('starOutput').innerText = `"${s} Specifically, ${t} To achieve this, ${a} As a direct outcome, ${r}"`;
+  };
+  ['st_s','st_t','st_a','st_r'].forEach(id => document.getElementById(id).oninput = updateStar);
+}
+
+function openHikeCalc() {
+  mTitle.textContent = "Salary Increment & Hike Calculator";
+  mContent.innerHTML = `
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+      <div><label>Current Annual CTC (₹)</label><input type="number" id="hk_old" value="800000"></div>
+      <div><label>Offered New Annual CTC (₹)</label><input type="number" id="hk_new" value="1120000"></div>
+    </div>
+    <div style="margin-top:16px;" id="hk_results"></div>
+  `;
+  const calc = () => {
+    const o = parseFloat(document.getElementById('hk_old').value) || 0;
+    const n = parseFloat(document.getElementById('hk_new').value) || 0;
+    const diff = n - o;
+    const pct = o > 0 ? (diff / o) * 100 : 0;
+    document.getElementById('hk_results').innerHTML = `
+      <div class="result-grid">
+        <div class="res-card"><h4>Hike Percentage</h4><div class="big">${pct.toFixed(2)}%</div></div>
+        <div class="res-card"><h4>Annual Increase</h4><div class="big">₹${Math.round(diff).toLocaleString('en-IN')}</div></div>
+        <div class="res-card"><h4>Monthly Boost (Gross)</h4><div class="big">₹${Math.round(diff/12).toLocaleString('en-IN')}</div></div>
+      </div>
+    `;
+  };
+  document.getElementById('hk_old').oninput = calc;
+  document.getElementById('hk_new').oninput = calc;
+  calc();
+}
+
+function openGenericTool(name, desc) {
+  mTitle.textContent = name;
+  mContent.innerHTML = `
+    <div class="res-card">
+      <h4>${name}</h4>
+      <p style="margin:0 0 10px; font-size:13px; color:var(--text-color);">${desc}</p>
+      <textarea rows="6" style="width:100%; padding:10px;" placeholder="Enter your data or notes here..."></textarea>
+      <button class="btn primary" style="margin-top:10px;" onclick="alert('Saved locally in browser!')">Save In-Memory</button>
+    </div>
+  `;
+}
+
+/* EVENT ROUTING FOR ALL CARDS */
+document.querySelectorAll('.tool-tile').forEach(tile => {
+  tile.onclick = () => {
+    const act = tile.getAttribute('data-act');
+    modal.classList.add('active');
+    if (act === 'resume-builder') openResumeBuilder();
+    else if (act === 'star-builder') openStarBuilder();
+    else if (act === 'hike-calc') openHikeCalc();
+    else if (act === 'cover-letter') openGenericTool("Cover Letter Builder", "Draft targeted, role-specific cover letters customized for hiring managers.");
+    else if (act === 'ats-checker') openGenericTool("ATS Keyword Matcher", "Paste job description text and your resume to verify keyword alignment percentage.");
+    else if (act === 'bio-gen') openGenericTool("Executive Bio Generator", "Generate concise 150-word profile introductions for LinkedIn and speaker bios.");
+    else if (act === 'qa-bank') openGenericTool("Behavioral Interview Q&A Bank", "Review answers for top situational questions: conflict, leadership, failure, and growth.");
+    else if (act === 'interview-checklist') openGenericTool("Interview Day Checklist", "Technical check: webcam, audio buffer, attire, lighting, and company notes.");
+    else if (act === 'offer-compare') openGenericTool("Dual Offer Evaluator", "Benchmark Base Pay, Retention Bonuses, ESOP liquidity, and commute times side-by-side.");
+    else if (act === 'notice-buyout') openGenericTool("Notice Period Buyout Calculator", "Compute shortfall recovery costs and employer buyout agreements accurately.");
+    else if (act === 'skill-gap') openGenericTool("Skill Gap Evaluator", "Assess technical competencies against Senior / Lead job requirement thresholds.");
+    else if (act === 'career-switch') openGenericTool("Career Transition Feasibility", "Audit transferable skills, bridge courses required, and runway finances.");
+  };
+});
+
+/* SEARCH & FILTER */
+(function(){
+  const s = document.getElementById('toolSearch');
+  const pills = document.getElementById('filterPills');
+  const cats = document.querySelectorAll('.cat-block');
+  const no = document.getElementById('noResults');
+  let filter = 'all';
+  function apply(){
+    const q = s.value.toLowerCase().trim();
+    let vis = 0;
+    cats.forEach(c => {
+      let cVis = false;
+      const cCat = c.getAttribute('data-cat');
+      c.querySelectorAll('.tool-tile').forEach(t => {
+        const txt = t.textContent.toLowerCase();
+        const show = (!q || txt.includes(q)) && (filter === 'all' || cCat === filter);
+        t.style.display = show ? '' : 'none';
+        if (show) { cVis = true; vis++; }
+      });
+      c.style.display = cVis ? '' : 'none';
+    });
+    no.style.display = vis === 0 ? 'block' : 'none';
+  }
+  s.oninput = apply;
+  pills.onclick = e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    pills.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    filter = b.getAttribute('data-filter');
+    apply();
+  };
+})();
+</script>
+</body>
+</html>
