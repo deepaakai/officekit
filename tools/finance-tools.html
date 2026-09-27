@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Finance Tools — Loan EMI, Income Tax, Salary, SIP, EPF, HRA | DocEasy</title>
-<meta name="description" content="Free online finance calculators — loan EMI, income tax (old vs new regime), in-hand salary, HRA exemption, SIP, FD, PPF, gratuity, EPF, NPS, TDS. No signup, browser-based, 100% private.">
-<meta name="keywords" content="finance tools, loan emi calculator, income tax calculator, salary calculator, gratuity calculator, epf calculator, hra calculator, sip calculator, ppf calculator, nps calculator, tds calculator">
+<meta name="description" content="Free online finance calculators — loan EMI, income tax, in-hand salary, HRA exemption, SIP, FD, PPF, gratuity, EPF, NPS, TDS. No signup, 100% private.">
+<meta name="keywords" content="finance tools, loan emi calculator, income tax calculator, salary calculator, gratuity calculator, epf calculator, hra calculator, sip calculator, ppf calculator">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/finance-tools.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Finance Tools — Loan EMI, Income Tax, Salary, SIP, EPF | DocEasy">
-<meta property="og:description" content="17 free finance calculators — loans, tax, salary, investments, retirement. No signup, 100% private.">
+<meta property="og:title" content="Finance Tools — Loan EMI, Income Tax, Salary | DocEasy">
+<meta property="og:description" content="17 free finance calculators. No signup, 100% private.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/finance-tools.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
@@ -19,249 +19,199 @@
 <meta name="twitter:description" content="Free finance calculators. No signup, 100% private.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2316a34a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"Finance Tools — DocEasy","url":"https://deepaakai.github.io/officekit/finance-tools.html","description":"Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD, PPF, NPS, TDS."}
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Finance Tools — DocEasy","url":"https://deepaakai.github.io/officekit/finance-tools.html","description":"Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD, PPF."}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Are DocEasy finance calculators free?","acceptedAnswer":{"@type":"Answer","text":"Yes, every calculator is 100% free forever. No signup, no email, no credit card."}},
-{"@type":"Question","name":"Is my financial data safe?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. All calculations run client-side in your browser. No data is uploaded or stored on any server."}},
+{"@type":"Question","name":"Is my financial data safe?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. All calculations run in your browser. No data is uploaded or stored on any server."}},
 {"@type":"Question","name":"Which calculators are available?","acceptedAnswer":{"@type":"Answer","text":"Home loan EMI, car loan EMI, personal loan EMI, education loan EMI, in-hand salary, HRA exemption, salary increment, SIP, FD, PPF, compound interest, income tax, TDS, tax saving, gratuity, EPF, and NPS."}}
 ]}
 </script>
 
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
 <style>
-/* ============ GLOBAL THEME ============ */
-:root{
-  --bg-color:#f7fafc; --card-bg:#ffffff; --card-hover:#f1f5f9;
-  --text-color:#0f172a; --subtext-color:#64748b; --border-color:#e2e8f0;
-  --accent:#16a34a; --accent-hover:#15803d;
-  --accent-soft:rgba(22,163,74,0.08); --accent-soft-hover:rgba(22,163,74,0.14);
-  --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow-md:0 10px 30px rgba(0,0,0,.08);
+.main-wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px 80px; overflow-x: hidden; }
+
+/* HERO — same style as card-cropper hero-box */
+.fhero { position: relative; overflow: hidden; border-radius: 22px; padding: 42px 32px; margin-top: 34px; background: linear-gradient(135deg, #065f46 0%, #16a34a 55%, #22c55e 100%); color: #fff; box-shadow: 0 20px 48px rgba(22,163,74,0.28); }
+.fhero::before, .fhero::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,0.10); }
+.fhero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.fhero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.fhero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28); font-size: 11px; font-weight: 700; letter-spacing: 0.4px; margin-bottom: 14px; position: relative; z-index: 1; }
+.fhero h1 { font-size: clamp(26px, 4.5vw, 42px); font-weight: 800; margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1; position: relative; z-index: 1; }
+.fhero p { font-size: clamp(14px, 2vw, 16.5px); line-height: 1.6; max-width: 680px; margin: 0; opacity: 0.92; position: relative; z-index: 1; }
+.fhero-stats { display: flex; gap: 26px; margin-top: 24px; flex-wrap: wrap; position: relative; z-index: 1; }
+.fhero-stats .stat { display: flex; flex-direction: column; }
+.fhero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.fhero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.85; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 34px 0 22px; flex-wrap: wrap; }
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 500px; }
+.search-box svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2; }
+.search-box input { width: 100%; padding: 12px 14px 12px 42px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 14px; outline: none; transition: all 0.18s; font-family: inherit; }
+.search-box input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button { padding: 9px 15px; border-radius: 999px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.18s; font-family: inherit; }
+.filter-pills button:hover { border-color: #16a34a; color: #16a34a; }
+.filter-pills button.active { background: #16a34a; border-color: #16a34a; color: #fff; box-shadow: 0 6px 16px rgba(22,163,74,0.28); }
+
+/* CATEGORY */
+.cat-block { margin-top: 42px; scroll-margin-top: 90px; }
+.cat-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid var(--border-color); }
+.cat-head .icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; background: linear-gradient(135deg, #16a34a, #065f46); }
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count { margin-left: auto; font-size: 11.5px; font-weight: 700; color: var(--subtext-color); background: var(--card-hover); padding: 5px 11px; border-radius: 999px; white-space: nowrap; }
+
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.tool-tile { display: flex; flex-direction: column; gap: 10px; padding: 18px 16px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; color: var(--text-color); transition: all 0.2s ease; min-height: 140px; position: relative; cursor: pointer; font-family: inherit; text-align: left; width: 100%; }
+.tool-tile:hover { border-color: #16a34a; transform: translateY(-4px); box-shadow: 0 14px 30px rgba(22,163,74,0.14); }
+.tool-tile .tile-icon { width: 42px; height: 42px; border-radius: 11px; background: rgba(22,163,74,0.08); color: #16a34a; display: grid; place-items: center; transition: transform 0.22s; flex-shrink: 0; }
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag { position: absolute; top: 9px; right: 9px; font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px; padding: 2px 6px; border-radius: 5px; background: linear-gradient(135deg,#16a34a,#15803d); color: #fff; }
+.tool-tile .tag.hot { background: linear-gradient(135deg,#dc2626,#b91c1c); }
+
+/* STEPS */
+.how-to-use { max-width: 940px; margin: 68px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #16a34a; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* SEO ARTICLE — identical typography to card-cropper */
+.seo-article { max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; }
+.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; line-height: 1.3; }
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 { font-size: 20px !important; font-weight: 700; color: #16a34a; margin: 32px 0 16px; line-height: 1.4; }
+.seo-article h4 { font-size: 17px !important; font-weight: 700; color: var(--text-color); margin: 24px 0 12px; }
+.seo-article p { font-size: 16px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
+.seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
+.seo-article li { font-size: 15.5px !important; color: var(--subtext-color); margin-bottom: 12px; line-height: 1.7; }
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: #16a34a; text-decoration: underline; font-weight: 600; }
+.seo-article a:hover { color: #15803d; }
+.seo-article code { background: var(--card-hover); padding: 2px 8px; border-radius: 5px; font-family: ui-monospace, monospace; font-size: 14px; color: #16a34a; }
+.seo-article details { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; transition: all 0.2s; }
+.seo-article details:hover { border-color: #16a34a; }
+.seo-article details summary { font-size: 16px !important; font-weight: 700; color: var(--text-color); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after { content: "+"; font-size: 22px; color: #16a34a; font-weight: 300; }
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p { margin: 14px 0 0; font-size: 15px !important; line-height: 1.75; }
+
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: flex-start; justify-content: center; z-index: 9999; padding: 20px; overflow-y: auto; }
+.modal-overlay.active { display: flex; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.modal { background: var(--card-bg); color: var(--text-color); border-radius: 20px; max-width: 760px; width: 100%; margin: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.35); animation: slideUp 0.25s ease; overflow: hidden; border: 1px solid var(--border-color); }
+.modal-header { display: flex; align-items: center; gap: 12px; padding: 18px 22px; background: linear-gradient(135deg, #065f46, #16a34a); color: #fff; position: sticky; top: 0; z-index: 5; }
+.modal-header .mh-icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); }
+.modal-header .mh-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+.modal-header h2 { font-size: 16.5px; font-weight: 800; margin: 0; line-height: 1.2; }
+.modal-header p { font-size: 11.5px; margin: 2px 0 0; opacity: 0.85; }
+.modal-close { margin-left: auto; width: 34px; height: 34px; border-radius: 10px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); color: #fff; cursor: pointer; font-size: 20px; line-height: 1; display: grid; place-items: center; font-family: inherit; }
+.modal-close:hover { background: rgba(255,255,255,0.28); }
+.modal-body { padding: 22px; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 11.5px; font-weight: 700; color: var(--text-color); text-transform: uppercase; letter-spacing: 0.5px; }
+.field-input-wrap { position: relative; display: flex; align-items: center; }
+.field-input-wrap .pre, .field-input-wrap .suf { position: absolute; font-size: 13px; font-weight: 700; color: var(--subtext-color); pointer-events: none; }
+.field-input-wrap .pre { left: 12px; }
+.field-input-wrap .suf { right: 12px; }
+.field input, .field select { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 14px; font-weight: 600; outline: none; font-family: inherit; transition: all 0.15s; }
+.field.has-pre input { padding-left: 30px; }
+.field.has-suf input { padding-right: 50px; }
+.field input:focus, .field select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
+.field .hint { font-size: 10.5px; color: var(--subtext-color); font-weight: 500; }
+.result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.result-card { padding: 14px; background: rgba(22,163,74,0.06); border: 1px solid rgba(22,163,74,0.18); border-radius: 12px; }
+.result-card.alt { background: rgba(59,130,246,0.06); border-color: rgba(59,130,246,0.18); }
+.result-card.alt .val { color: #2563eb; }
+.result-card.warn { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.18); }
+.result-card.warn .val { color: #dc2626; }
+.result-card .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 800; color: var(--subtext-color); }
+.result-card .val { font-size: 19px; font-weight: 800; color: #16a34a; margin-top: 4px; letter-spacing: -0.4px; line-height: 1.15; word-break: break-word; }
+.result-card .sub { font-size: 10.5px; color: var(--subtext-color); margin-top: 2px; font-weight: 600; }
+.chart-row { display: flex; gap: 18px; align-items: center; padding: 14px; background: var(--card-hover); border-radius: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+.chart-row .legend { flex: 1; min-width: 160px; }
+.chart-row .legend .li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.chart-row .legend .li .dot { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
+.chart-row .legend .li span { color: var(--subtext-color); font-weight: 600; margin-left: auto; }
+.sch-wrap { max-height: 260px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 16px; }
+.sch-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.sch-wrap th, .sch-wrap td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border-color); }
+.sch-wrap th { background: var(--card-hover); color: var(--text-color); font-weight: 800; position: sticky; top: 0; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.4px; }
+.sch-wrap td { color: var(--subtext-color); font-weight: 600; }
+.sch-wrap td:first-child { text-align: left; color: var(--text-color); font-weight: 700; }
+.sch-wrap tr:last-child td { border-bottom: none; }
+.section-title { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-color); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+.section-title::before { content: ""; width: 3px; height: 14px; border-radius: 2px; background: #16a34a; }
+.note { font-size: 11.5px; color: var(--subtext-color); line-height: 1.6; padding: 10px 12px; background: var(--card-hover); border-left: 3px solid #16a34a; border-radius: 6px; margin-top: 14px; }
+.btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+.btn { padding: 11px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.btn:hover { border-color: #16a34a; color: #16a34a; }
+.btn.primary { background: linear-gradient(135deg,#16a34a,#15803d); color: #fff; border-color: #16a34a; box-shadow: 0 6px 16px rgba(22,163,74,0.28); }
+.btn.primary:hover { color: #fff; }
+.tax-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.tax-box { padding: 16px; border-radius: 14px; border: 1.5px solid var(--border-color); }
+.tax-box.winner { border-color: #16a34a; background: rgba(22,163,74,0.06); }
+.tax-box .tb-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.tax-box .tb-head h4 { font-size: 13px; font-weight: 800; margin: 0; }
+.tax-box .tb-head .badge { font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: linear-gradient(135deg,#16a34a,#15803d); color: #fff; }
+.tax-box .tb-row { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; color: var(--subtext-color); font-weight: 600; }
+.tax-box .tb-row.total { border-top: 1px dashed var(--border-color); margin-top: 6px; padding-top: 8px; color: var(--text-color); font-weight: 800; font-size: 13px; }
+.tax-box .tb-row.total span:last-child { color: #16a34a; }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .fhero { padding: 30px 20px; border-radius: 18px; margin-top: 22px; }
+  .fhero-stats { gap: 18px; margin-top: 18px; }
+  .fhero-stats .stat b { font-size: 18px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tool-tile { min-height: 124px; padding: 15px 12px 13px; }
+  .tool-tile h3 { font-size: 12.5px; }
+  .tool-tile p { font-size: 10px; }
+  .cat-head h2 { font-size: 16.5px; }
+  .cat-head .count { display: none; }
+  .toolbar { margin: 24px 0 18px; }
+  .search-box { max-width: 100%; }
+  .field-grid { grid-template-columns: 1fr; }
+  .modal { border-radius: 16px; }
+  .modal-body { padding: 16px; }
+  .modal-overlay { padding: 10px; }
+  .tax-compare { grid-template-columns: 1fr; }
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
 }
-[data-theme="dark"]{
-  --bg-color:#0f172a; --card-bg:#1e293b; --card-hover:#334155;
-  --text-color:#f1f5f9; --subtext-color:#94a3b8; --border-color:#334155;
-}
-*{box-sizing:border-box;}
-body{margin:0;background:var(--bg-color);color:var(--text-color);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
-a{color:inherit;text-decoration:none;}
-.main-wrap{max-width:1240px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden;}
-
-/* ============ HEADER ============ */
-.de-header{background:var(--card-bg);border-bottom:1px solid var(--border-color);position:sticky;top:0;z-index:900;}
-.de-header-inner{max-width:1240px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.de-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;color:var(--text-color);}
-.de-brand-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#065f46,#16a34a);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;letter-spacing:-0.5px;}
-.de-nav{display:flex;gap:6px;flex-wrap:wrap;}
-.de-nav a{padding:8px 14px;border-radius:8px;font-size:13.5px;font-weight:700;color:var(--subtext-color);transition:all .15s;}
-.de-nav a:hover{background:var(--card-hover);color:var(--accent);}
-.de-nav a.active{background:var(--accent-soft);color:var(--accent);}
-@media(max-width:640px){
-  .de-header-inner{padding:10px 14px;}
-  .de-nav a{padding:7px 10px;font-size:12.5px;}
-}
-
-/* ============ FOOTER ============ */
-.de-footer{background:#0f172a;color:#cbd5e1;padding:48px 20px 24px;margin-top:48px;}
-.de-footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;}
-.de-footer h4{color:#fff;font-size:14px;font-weight:800;margin:0 0 14px;letter-spacing:0.3px;text-transform:uppercase;}
-.de-footer p{font-size:13px;line-height:1.7;margin:0 0 10px;color:#94a3b8;}
-.de-footer ul{list-style:none;padding:0;margin:0;}
-.de-footer li{margin-bottom:8px;font-size:13.5px;}
-.de-footer a{color:#cbd5e1;transition:color .15s;}
-.de-footer a:hover{color:#22c55e;}
-.de-footer-bottom{max-width:1240px;margin:36px auto 0;padding-top:20px;border-top:1px solid #1e293b;font-size:12.5px;color:#64748b;text-align:center;}
-@media(max-width:768px){.de-footer-inner{grid-template-columns:1fr 1fr;gap:24px;}}
-@media(max-width:480px){.de-footer-inner{grid-template-columns:1fr;}}
-
-/* ============ HERO ============ */
-.fhero{position:relative;overflow:hidden;border-radius:22px;padding:42px 32px;margin-top:24px;background:linear-gradient(135deg,#065f46 0%,#16a34a 55%,#22c55e 100%);color:#fff;box-shadow:0 20px 48px rgba(22,163,74,0.28);}
-.fhero::before,.fhero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,0.10);}
-.fhero::before{width:280px;height:280px;top:-110px;right:-80px;}
-.fhero::after{width:200px;height:200px;bottom:-90px;left:-60px;}
-.fhero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.28);font-size:11px;font-weight:700;letter-spacing:0.4px;margin-bottom:14px;position:relative;z-index:1;}
-.fhero h1{font-size:clamp(26px,4.5vw,42px);font-weight:800;margin:0 0 10px;letter-spacing:-1px;line-height:1.1;position:relative;z-index:1;}
-.fhero p{font-size:clamp(14px,2vw,16.5px);line-height:1.6;max-width:680px;margin:0;opacity:0.92;position:relative;z-index:1;}
-.fhero-stats{display:flex;gap:26px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:1;}
-.fhero-stats .stat{display:flex;flex-direction:column;}
-.fhero-stats .stat b{font-size:22px;font-weight:800;}
-.fhero-stats .stat span{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;opacity:0.85;font-weight:700;margin-top:2px;}
-
-/* ============ TOOLBAR ============ */
-.toolbar{display:flex;gap:12px;align-items:center;margin:34px 0 22px;flex-wrap:wrap;}
-.search-box{position:relative;flex:1;min-width:240px;max-width:500px;}
-.search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--subtext-color);fill:none;stroke-width:2;}
-.search-box input{width:100%;padding:12px 14px 12px 42px;border-radius:12px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-size:14px;outline:none;transition:all .18s;font-family:inherit;}
-.search-box input:focus{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,0.12);}
-.filter-pills{display:flex;gap:8px;flex-wrap:wrap;}
-.filter-pills button{padding:9px 15px;border-radius:999px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s;font-family:inherit;}
-.filter-pills button:hover{border-color:#16a34a;color:#16a34a;}
-.filter-pills button.active{background:#16a34a;border-color:#16a34a;color:#fff;box-shadow:0 6px 16px rgba(22,163,74,0.28);}
-
-/* ============ CATEGORY ============ */
-.cat-block{margin-top:42px;}
-.cat-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border-color);}
-.cat-head .icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;background:linear-gradient(135deg,#16a34a,#065f46);}
-.cat-head .icon svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:2;}
-.cat-head h2{font-size:19px;font-weight:800;margin:0;letter-spacing:-0.4px;color:var(--text-color);}
-.cat-head p{font-size:12.5px;color:var(--subtext-color);margin:2px 0 0;}
-.cat-head .count{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--subtext-color);background:var(--card-hover);padding:5px 11px;border-radius:999px;white-space:nowrap;}
-
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;}
-.tool-tile{display:flex;flex-direction:column;gap:10px;padding:18px 16px 16px;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--text-color);transition:all .2s ease;min-height:140px;position:relative;cursor:pointer;font-family:inherit;text-align:left;width:100%;}
-.tool-tile:hover{border-color:#16a34a;transform:translateY(-4px);box-shadow:0 14px 30px rgba(22,163,74,0.14);}
-.tool-tile .tile-icon{width:42px;height:42px;border-radius:11px;background:var(--accent-soft);color:#16a34a;display:grid;place-items:center;transition:transform .22s;flex-shrink:0;}
-.tool-tile:hover .tile-icon{transform:scale(1.1) rotate(-4deg);}
-.tool-tile .tile-icon svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;}
-.tool-tile h3{font-size:13.5px;font-weight:700;margin:0;line-height:1.35;}
-.tool-tile p{font-size:11px;color:var(--subtext-color);margin:0;line-height:1.45;}
-.tool-tile .tag{position:absolute;top:9px;right:9px;font-size:8.5px;font-weight:800;letter-spacing:0.5px;padding:2px 6px;border-radius:5px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
-
-/* ============ STEPS ============ */
-.how-to-use{max-width:940px;margin:68px auto 0;}
-.how-to-use h2{font-size:clamp(22px,3.8vw,30px);font-weight:800;text-align:center;margin:0 0 10px;letter-spacing:-0.6px;}
-.how-to-use .lead{text-align:center;color:var(--subtext-color);font-size:14px;margin:0 auto 30px;max-width:620px;line-height:1.6;}
-.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
-.step-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;padding:24px 18px;position:relative;}
-.step-num{position:absolute;top:14px;right:16px;font-size:32px;font-weight:900;color:#16a34a;opacity:.15;line-height:1;letter-spacing:-2px;}
-.step-card h3{font-size:14.5px;font-weight:800;margin:0 0 6px;}
-.step-card p{font-size:12.5px;color:var(--subtext-color);margin:0;line-height:1.6;}
-
-.no-results{display:none;text-align:center;padding:60px 20px;color:var(--subtext-color);font-size:14.5px;}
-
-/* ============ SEO ARTICLE (same as card-cropper) ============ */
-.seo-article{max-width:860px;margin:48px auto;padding:40px 32px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;}
-.seo-article h2{font-size:26px !important;font-weight:800;color:var(--text-color);margin:40px 0 20px;letter-spacing:-0.5px;line-height:1.3;}
-.seo-article h2:first-child{margin-top:0;}
-.seo-article h3{font-size:20px !important;font-weight:700;color:var(--accent);margin:32px 0 16px;line-height:1.4;}
-.seo-article h4{font-size:17px !important;font-weight:700;color:var(--text-color);margin:24px 0 12px;}
-.seo-article p{font-size:16px !important;color:var(--subtext-color);margin:0 0 20px;line-height:1.8;}
-.seo-article ul,.seo-article ol{margin:20px 0;padding-left:24px;}
-.seo-article li{font-size:15.5px !important;color:var(--subtext-color);margin-bottom:12px;line-height:1.7;}
-.seo-article b,.seo-article strong{color:var(--text-color);font-weight:700;}
-.seo-article a{color:var(--accent);text-decoration:underline;font-weight:600;}
-.seo-article a:hover{color:var(--accent-hover);}
-.seo-article code{background:var(--card-hover);padding:2px 8px;border-radius:5px;font-family:ui-monospace,monospace;font-size:14px;color:var(--accent);}
-.seo-article table{width:100%;border-collapse:collapse;margin:20px 0 28px;font-size:14px;border:1px solid var(--border-color);border-radius:12px;overflow:hidden;}
-.seo-article th,.seo-article td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border-color);}
-.seo-article th{background:var(--card-hover);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-color);}
-.seo-article td{color:var(--subtext-color);font-weight:600;}
-.seo-article tr:last-child td{border-bottom:none;}
-.seo-article details{background:var(--bg-color);border:1px solid var(--border-color);border-radius:12px;padding:18px 22px;margin-bottom:12px;transition:all .2s;}
-.seo-article details:hover{border-color:var(--accent);}
-.seo-article details summary{font-size:16px !important;font-weight:700;color:var(--text-color);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
-.seo-article details summary::-webkit-details-marker{display:none;}
-.seo-article details summary::after{content:"+";font-size:22px;color:var(--accent);font-weight:300;}
-.seo-article details[open] summary::after{content:"−";}
-.seo-article details p{margin:14px 0 0;font-size:15px !important;line-height:1.75;}
-@media(max-width:768px){
-  .seo-article{padding:28px 20px;margin:32px auto;}
-  .seo-article h2{font-size:22px !important;}
-  .seo-article h3{font-size:18px !important;}
-  .seo-article p{font-size:15.5px !important;}
-  .seo-article li{font-size:15px !important;}
-}
-
-/* ============ MODAL ============ */
-.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;z-index:9999;padding:20px;overflow-y:auto;}
-.modal-overlay.active{display:flex;}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.modal{background:var(--card-bg);color:var(--text-color);border-radius:20px;max-width:760px;width:100%;margin:auto;box-shadow:0 30px 80px rgba(0,0,0,0.35);animation:slideUp .25s ease;overflow:hidden;border:1px solid var(--border-color);}
-.modal-header{display:flex;align-items:center;gap:12px;padding:18px 22px;background:linear-gradient(135deg,#065f46,#16a34a);color:#fff;position:sticky;top:0;z-index:5;}
-.modal-header .mh-icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.22);}
-.modal-header .mh-icon svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;}
-.modal-header h2{font-size:16.5px;font-weight:800;margin:0;line-height:1.2;}
-.modal-header p{font-size:11.5px;margin:2px 0 0;opacity:0.85;}
-.modal-close{margin-left:auto;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.22);color:#fff;cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center;font-family:inherit;transition:background .15s;}
-.modal-close:hover{background:rgba(255,255,255,0.28);}
-.modal-body{padding:22px;}
-.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
-.field{display:flex;flex-direction:column;gap:6px;}
-.field label{font-size:11.5px;font-weight:700;color:var(--text-color);text-transform:uppercase;letter-spacing:0.5px;}
-.field-input-wrap{position:relative;display:flex;align-items:center;}
-.field-input-wrap .pre,.field-input-wrap .suf{position:absolute;font-size:13px;font-weight:700;color:var(--subtext-color);pointer-events:none;}
-.field-input-wrap .pre{left:12px;}
-.field-input-wrap .suf{right:12px;}
-.field input,.field select{width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-size:14px;font-weight:600;outline:none;font-family:inherit;transition:all .15s;}
-.field.has-pre input{padding-left:30px;}
-.field.has-suf input{padding-right:50px;}
-.field input:focus,.field select:focus{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,0.12);}
-.field .hint{font-size:10.5px;color:var(--subtext-color);font-weight:500;}
-.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
-.result-card{padding:14px;background:rgba(22,163,74,0.06);border:1px solid rgba(22,163,74,0.18);border-radius:12px;}
-.result-card.alt{background:rgba(59,130,246,0.06);border-color:rgba(59,130,246,0.18);}
-.result-card.alt .val{color:#2563eb;}
-.result-card.warn{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.18);}
-.result-card.warn .val{color:#dc2626;}
-.result-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.6px;font-weight:800;color:var(--subtext-color);}
-.result-card .val{font-size:19px;font-weight:800;color:#16a34a;margin-top:4px;letter-spacing:-0.4px;line-height:1.15;word-break:break-word;}
-.result-card .sub{font-size:10.5px;color:var(--subtext-color);margin-top:2px;font-weight:600;}
-.chart-row{display:flex;gap:18px;align-items:center;padding:14px;background:var(--card-hover);border-radius:14px;margin-bottom:16px;flex-wrap:wrap;}
-.chart-row .legend{flex:1;min-width:160px;}
-.chart-row .legend .li{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-color);margin-bottom:8px;}
-.chart-row .legend .li .dot{width:12px;height:12px;border-radius:4px;flex-shrink:0;}
-.chart-row .legend .li span{color:var(--subtext-color);font-weight:600;margin-left:auto;}
-.sch-wrap{max-height:260px;overflow-y:auto;border:1px solid var(--border-color);border-radius:12px;margin-bottom:16px;}
-.sch-wrap table{width:100%;border-collapse:collapse;font-size:12px;}
-.sch-wrap th,.sch-wrap td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border-color);}
-.sch-wrap th{background:var(--card-hover);color:var(--text-color);font-weight:800;position:sticky;top:0;font-size:10.5px;text-transform:uppercase;letter-spacing:0.4px;}
-.sch-wrap td{color:var(--subtext-color);font-weight:600;}
-.sch-wrap td:first-child{text-align:left;color:var(--text-color);font-weight:700;}
-.sch-wrap tr:last-child td{border-bottom:none;}
-.section-title{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-color);margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
-.section-title::before{content:"";width:3px;height:14px;border-radius:2px;background:#16a34a;}
-.note{font-size:11.5px;color:var(--subtext-color);line-height:1.6;padding:10px 12px;background:var(--card-hover);border-left:3px solid #16a34a;border-radius:6px;margin-top:14px;}
-.btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
-.btn{padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;font-family:inherit;transition:all .15s;}
-.btn:hover{border-color:#16a34a;color:#16a34a;}
-.btn.primary{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-color:#16a34a;box-shadow:0 6px 16px rgba(22,163,74,0.28);}
-.btn.primary:hover{transform:translateY(-1px);color:#fff;}
-.tax-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
-.tax-box{padding:16px;border-radius:14px;border:1.5px solid var(--border-color);}
-.tax-box.winner{border-color:#16a34a;background:rgba(22,163,74,0.06);}
-.tax-box .tb-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.tax-box .tb-head h4{font-size:13px;font-weight:800;margin:0;}
-.tax-box .tb-head .badge{font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:999px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;}
-.tax-box .tb-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;color:var(--subtext-color);font-weight:600;}
-.tax-box .tb-row.total{border-top:1px dashed var(--border-color);margin-top:6px;padding-top:8px;color:var(--text-color);font-weight:800;font-size:13px;}
-.tax-box .tb-row.total span:last-child{color:#16a34a;}
-@media(max-width:768px){
-  .main-wrap{padding:0 14px 60px;}
-  .fhero{padding:30px 20px;border-radius:18px;margin-top:18px;}
-  .tools-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
-  .tool-tile{min-height:124px;padding:15px 12px 13px;}
-  .tool-tile h3{font-size:12.5px;}
-  .tool-tile p{font-size:10px;}
-  .cat-head h2{font-size:16.5px;}
-  .cat-head .count{display:none;}
-  .field-grid{grid-template-columns:1fr;}
-  .modal{border-radius:16px;}
-  .modal-body{padding:16px;}
-  .modal-overlay{padding:10px;}
-  .tax-compare{grid-template-columns:1fr;}
+@media (max-width: 480px) {
+  .filter-pills button { padding: 8px 12px; font-size: 11.5px; }
+  .tool-tile { padding: 13px 11px 11px; min-height: 116px; }
+  .tool-tile .tile-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .tool-tile .tile-icon svg { width: 18px; height: 18px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ============ HEADER (inline) ============ -->
-<header class="de-header">
-  <div class="de-header-inner">
-    <a href="index.html" class="de-brand">
-      <span class="de-brand-icon">DE</span>
-      <span>DocEasy</span>
-    </a>
-    <nav class="de-nav">
-      <a href="index.html">Home</a>
-      <a href="categories.html">Categories</a>
-      <a href="finance-tools.html" class="active">Finance</a>
-      <a href="printing-tools.html">Printing</a>
-      <a href="media-tools.html">Media</a>
-      <a href="business-tools.html">Business</a>
-    </nav>
-  </div>
-</header>
+<div id="doceasy-header"></div>
 
 <main class="main-wrap">
 
@@ -297,6 +247,7 @@ a{color:inherit;text-decoration:none;}
 
   <div class="no-results" id="noResults">No finance tools match your search.</div>
 
+  <!-- LOANS -->
   <section class="cat-block" data-cat="loan">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
@@ -304,13 +255,26 @@ a{color:inherit;text-decoration:none;}
       <span class="count">4 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="home-loan-emi" data-tags="home loan emi calculator mortgage property"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="tag">NEW</span><h3>Home Loan EMI</h3><p>Monthly EMI + amortization</p></button>
-      <button class="tool-tile" data-tool="car-loan-emi" data-tags="car loan emi calculator auto vehicle"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg></div><span class="tag">NEW</span><h3>Car Loan EMI</h3><p>Auto loan calculator</p></button>
-      <button class="tool-tile" data-tool="personal-loan-emi" data-tags="personal loan emi calculator unsecured"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div><span class="tag">NEW</span><h3>Personal Loan EMI</h3><p>Unsecured loan estimate</p></button>
-      <button class="tool-tile" data-tool="education-loan-emi" data-tags="education loan emi calculator student"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><span class="tag">NEW</span><h3>Education Loan EMI</h3><p>Student loan repayment</p></button>
+      <button class="tool-tile" data-tool="home-loan-emi" data-tags="home loan emi calculator mortgage property">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+        <span class="tag hot">HOT</span><h3>Home Loan EMI</h3><p>Monthly EMI + amortization</p>
+      </button>
+      <button class="tool-tile" data-tool="car-loan-emi" data-tags="car loan emi calculator auto vehicle">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg></div>
+        <span class="tag">NEW</span><h3>Car Loan EMI</h3><p>Auto loan calculator</p>
+      </button>
+      <button class="tool-tile" data-tool="personal-loan-emi" data-tags="personal loan emi calculator unsecured">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div>
+        <span class="tag">NEW</span><h3>Personal Loan EMI</h3><p>Unsecured loan estimate</p>
+      </button>
+      <button class="tool-tile" data-tool="education-loan-emi" data-tags="education loan emi calculator student">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <span class="tag">NEW</span><h3>Education Loan EMI</h3><p>Student loan repayment</p>
+      </button>
     </div>
   </section>
 
+  <!-- SALARY -->
   <section class="cat-block" data-cat="salary">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
@@ -318,12 +282,22 @@ a{color:inherit;text-decoration:none;}
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="in-hand-salary" data-tags="in hand salary calculator ctc take home"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div><span class="tag">NEW</span><h3>In-Hand Salary</h3><p>CTC → take-home monthly</p></button>
-      <button class="tool-tile" data-tool="hra-exemption" data-tags="hra exemption calculator house rent allowance"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="tag">NEW</span><h3>HRA Exemption</h3><p>House rent allowance tax break</p></button>
-      <button class="tool-tile" data-tool="salary-increment" data-tags="salary increment calculator hike percentage"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div><span class="tag">NEW</span><h3>Salary Increment</h3><p>Old vs new salary hike</p></button>
+      <button class="tool-tile" data-tool="in-hand-salary" data-tags="in hand salary calculator ctc take home">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
+        <span class="tag hot">HOT</span><h3>In-Hand Salary</h3><p>CTC → take-home monthly</p>
+      </button>
+      <button class="tool-tile" data-tool="hra-exemption" data-tags="hra exemption calculator house rent allowance">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+        <span class="tag">NEW</span><h3>HRA Exemption</h3><p>Section 10(13A) tax break</p>
+      </button>
+      <button class="tool-tile" data-tool="salary-increment" data-tags="salary increment calculator hike percentage">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+        <span class="tag">NEW</span><h3>Salary Increment</h3><p>Old vs new salary hike</p>
+      </button>
     </div>
   </section>
 
+  <!-- INVESTMENTS -->
   <section class="cat-block" data-cat="invest">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
@@ -331,13 +305,26 @@ a{color:inherit;text-decoration:none;}
       <span class="count">4 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="sip" data-tags="sip calculator mutual fund monthly investment"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><span class="tag">NEW</span><h3>SIP Calculator</h3><p>Mutual fund SIP returns</p></button>
-      <button class="tool-tile" data-tool="fd" data-tags="fd calculator fixed deposit maturity"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></div><span class="tag">NEW</span><h3>FD Calculator</h3><p>Fixed deposit maturity</p></button>
-      <button class="tool-tile" data-tool="ppf" data-tags="ppf calculator public provident fund"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div><span class="tag">NEW</span><h3>PPF Calculator</h3><p>15-year PPF projection</p></button>
-      <button class="tool-tile" data-tool="compound-interest" data-tags="compound interest calculator ci"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/></svg></div><span class="tag">NEW</span><h3>Compound Interest</h3><p>CI for any period</p></button>
+      <button class="tool-tile" data-tool="sip" data-tags="sip calculator mutual fund monthly investment">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+        <span class="tag hot">HOT</span><h3>SIP Calculator</h3><p>Mutual fund SIP returns</p>
+      </button>
+      <button class="tool-tile" data-tool="fd" data-tags="fd calculator fixed deposit maturity">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></div>
+        <span class="tag">NEW</span><h3>FD Calculator</h3><p>Fixed deposit maturity</p>
+      </button>
+      <button class="tool-tile" data-tool="ppf" data-tags="ppf calculator public provident fund">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div>
+        <span class="tag">NEW</span><h3>PPF Calculator</h3><p>15-year PPF projection</p>
+      </button>
+      <button class="tool-tile" data-tool="compound-interest" data-tags="compound interest calculator ci">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/></svg></div>
+        <span class="tag">NEW</span><h3>Compound Interest</h3><p>CI for any period</p>
+      </button>
     </div>
   </section>
 
+  <!-- TAX -->
   <section class="cat-block" data-cat="tax">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
@@ -345,12 +332,22 @@ a{color:inherit;text-decoration:none;}
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="income-tax" data-tags="income tax calculator old new regime"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><span class="tag">NEW</span><h3>Income Tax Calculator</h3><p>Old vs new regime</p></button>
-      <button class="tool-tile" data-tool="tds" data-tags="tds calculator tax deduction"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="tag">NEW</span><h3>TDS Calculator</h3><p>By section (194C, 194J)</p></button>
-      <button class="tool-tile" data-tool="tax-saving" data-tags="tax saving calculator 80c deduction"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="tag">NEW</span><h3>Tax Saving Planner</h3><p>Section 80C, 80D, NPS</p></button>
+      <button class="tool-tile" data-tool="income-tax" data-tags="income tax calculator old new regime">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+        <span class="tag hot">HOT</span><h3>Income Tax Calculator</h3><p>Old vs new regime</p>
+      </button>
+      <button class="tool-tile" data-tool="tds" data-tags="tds calculator tax deduction">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <span class="tag">NEW</span><h3>TDS Calculator</h3><p>By section (194C, 194J)</p>
+      </button>
+      <button class="tool-tile" data-tool="tax-saving" data-tags="tax saving calculator 80c deduction">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="tag">NEW</span><h3>Tax Saving Planner</h3><p>80C, 80D, NPS</p>
+      </button>
     </div>
   </section>
 
+  <!-- RETIREMENT -->
   <section class="cat-block" data-cat="retire">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
@@ -358,12 +355,22 @@ a{color:inherit;text-decoration:none;}
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="gratuity" data-tags="gratuity calculator employee benefit"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div><span class="tag">NEW</span><h3>Gratuity Calculator</h3><p>On retirement/resignation</p></button>
-      <button class="tool-tile" data-tool="epf" data-tags="epf calculator provident fund employee"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><span class="tag">NEW</span><h3>EPF Calculator</h3><p>Provident fund balance</p></button>
-      <button class="tool-tile" data-tool="nps" data-tags="nps calculator national pension scheme"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div><span class="tag">NEW</span><h3>NPS Calculator</h3><p>Pension scheme corpus</p></button>
+      <button class="tool-tile" data-tool="gratuity" data-tags="gratuity calculator employee benefit">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+        <span class="tag">NEW</span><h3>Gratuity Calculator</h3><p>On retirement/resignation</p>
+      </button>
+      <button class="tool-tile" data-tool="epf" data-tags="epf calculator provident fund employee">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
+        <span class="tag">NEW</span><h3>EPF Calculator</h3><p>Provident fund balance</p>
+      </button>
+      <button class="tool-tile" data-tool="nps" data-tags="nps calculator national pension scheme">
+        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
+        <span class="tag">NEW</span><h3>NPS Calculator</h3><p>Pension scheme corpus</p>
+      </button>
     </div>
   </section>
 
+  <!-- HOW TO -->
   <section class="how-to-use">
     <h2>How to Use Finance Tools</h2>
     <p class="lead">Four simple steps to calculate EMIs, taxes, salaries, or investment returns — all in your browser.</p>
@@ -375,7 +382,7 @@ a{color:inherit;text-decoration:none;}
     </div>
   </section>
 
-  <!-- ============ SEO ARTICLE 2200+ WORDS ============ -->
+  <!-- SEO ARTICLE -->
   <section class="seo-article">
     <h2>Complete Guide: Free Finance Calculators for Every Indian (2025)</h2>
 
@@ -486,80 +493,30 @@ a{color:inherit;text-decoration:none;}
 
     <details><summary>Are the calculators compliant with Indian tax laws?</summary><p>They implement FY 2024-25 slabs and rules. Tax laws change yearly — always verify with a CA or the Income Tax Department before filing.</p></details>
 
-    <details><summary>Can I use these tools on mobile?</summary><p>Yes — every tool is fully responsive and works on Android, iPhone, and tablet. Touch-friendly inputs throughout.</p></details>
-
-    <details><summary>Do you store any logs?</summary><p>No. We don't log inputs, timings, or calculator usage. Since nothing leaves your browser, there is nothing for us to log.</p></details>
-
-    <details><summary>What is the difference between old and new tax regimes?</summary><p>Old regime has higher rates with deductions (80C, 80D, HRA, Sec 24, std deduction ₹50k). New regime has lower rates with only std deduction ₹75k (FY 2024-25). Use the calculator to compare.</p></details>
-
-    <details><summary>How is HRA exemption calculated?</summary><p>Least of: (1) actual HRA received, (2) rent paid − 10% of basic, (3) 50% of basic (metro) or 40% (non-metro). Available only under the old regime.</p></details>
+    <details><summary>How is HRA exemption calculated?</summary><p>Least of: (1) actual HRA received, (2) rent paid − 10% of basic, (3) 50% of basic (metro) or 40% (non-metro). Only available in the old regime.</p></details>
 
     <details><summary>How is gratuity calculated?</summary><p>For covered employees: (Last Salary × 15 × Years) / 26. For non-covered: (Last Salary × 15 × Years) / 30. Tax-exempt up to ₹20 lakh.</p></details>
 
-    <details><summary>What is the SIP compounding assumption?</summary><p>SIP returns are compounded monthly at the expected annual rate. Actual mutual fund returns are market-linked and not guaranteed.</p></details>
-
-    <details><summary>How does NPS withdrawal work?</summary><p>At 60, you can withdraw 60% as tax-free lump sum. The remaining 40% must be used to purchase an annuity that pays monthly pension.</p></details>
-
-    <details><summary>Can I plan prepayments?</summary><p>Yes — the loan calculators include an optional extra monthly payment field. Prepayments reduce tenure (recommended) and save substantial interest.</p></details>
+    <details><summary>How does NPS withdrawal work?</summary><p>At 60, you can withdraw 60% as tax-free lump sum. The remaining 40% must purchase an annuity that pays monthly pension.</p></details>
 
     <h3>Related DocEasy Tools</h3>
     <ul>
-      <li><a href="card-cropper.html">ID Card Cropper</a> — 300 DPI dual-side Aadhaar, PAN</li>
-      <li><a href="printing-tools.html">Printing Tools</a> — Print Aadhaar, ID cards, passport photos</li>
-      <li><a href="media-tools.html">Media Tools</a> — Screen recorder, voice recorder</li>
+      <li><a href="card-cropper.html">ID Card Cropper</a> — 300 DPI Aadhaar, PAN</li>
+      <li><a href="tools/emitra-csc-tools.html">eMitra &amp; CSC Tools</a> — Service center utilities</li>
+      <li><a href="printing-tools.html">Printing Tools</a> — Aadhaar, ID cards, passport</li>
       <li><a href="business-tools.html">Business Tools</a> — GST, invoices, stamp duty</li>
-      <li><a href="categories.html">All Categories</a> — Browse 35+ free tools</li>
+      <li><a href="categories.html">All Categories</a> — Browse all tools</li>
     </ul>
 
     <h3>Conclusion</h3>
-
-    <p>DocEasy Finance Tools give you fast, private, and free calculators for every major financial decision — home loans, income tax, salary, SIP, gratuity, EPF, NPS, and more. No signup, no data sharing, no sales calls. Whether you're planning your first home, comparing tax regimes, or projecting retirement, these tools give you clear numbers to make confident decisions. Bookmark this page and use it whenever you need to crunch numbers.</p>
+    <p>DocEasy Finance Tools give you fast, private, and free calculators for every major financial decision — home loans, income tax, salary, SIP, gratuity, EPF, NPS, and more. No signup, no data sharing, no sales calls. Whether you're planning your first home, comparing tax regimes, or projecting retirement, these tools give you clear numbers to make confident decisions.</p>
   </section>
 
 </main>
 
-<!-- ============ FOOTER (inline) ============ -->
-<footer class="de-footer">
-  <div class="de-footer-inner">
-    <div>
-      <h4>DocEasy</h4>
-      <p>Free browser-based tools for PDFs, images, ID cards, finance, and business. No signup, 100% private.</p>
-      <p>Your files never leave your device.</p>
-    </div>
-    <div>
-      <h4>Finance</h4>
-      <ul>
-        <li><a href="finance-tools.html">Loan EMI</a></li>
-        <li><a href="finance-tools.html">Income Tax</a></li>
-        <li><a href="finance-tools.html">SIP Calculator</a></li>
-        <li><a href="finance-tools.html">Gratuity</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Tools</h4>
-      <ul>
-        <li><a href="card-cropper.html">ID Card Cropper</a></li>
-        <li><a href="printing-tools.html">Printing Tools</a></li>
-        <li><a href="media-tools.html">Media Tools</a></li>
-        <li><a href="business-tools.html">Business Tools</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Info</h4>
-      <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="categories.html">All Categories</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="de-footer-bottom">
-    © 2025 DocEasy. All rights reserved. Made with ❤ in India.
-  </div>
-</footer>
+<div id="doceasy-footer"></div>
 
-<!-- ============ MODAL ============ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
   <div class="modal" id="modalBox">
     <div class="modal-header">
@@ -573,6 +530,8 @@ a{color:inherit;text-decoration:none;}
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
+
+<script src="assets/js/core/doceasy-core.js"></script>
 
 <script>
 /* ============ HELPERS ============ */
@@ -722,7 +681,7 @@ const TOOLS={
       const totalTax=tax+tax*0.04;
       const profTaxAnnual=v.profTax*12;
       const annualTakeHome=grossAnnual-employeePF-totalTax-profTaxAnnual;
-      return {ctc:v.ctc,basic,hra,specialAllow,employerPF,gratuity,employeePF,grossAnnual,hraExempt,taxable,tax,cess:tax*0.04,totalTax,profTaxAnnual,annualTakeHome,monthlyTakeHome:annualTakeHome/12,regime:v.regime};
+      return {ctc:v.ctc,basic,hra,specialAllow,employerPF,gratuity,employeePF,grossAnnual,hraExempt,taxable,totalTax,profTaxAnnual,annualTakeHome,monthlyTakeHome:annualTakeHome/12,regime:v.regime};
     },
     render:r=>`<div class="result-grid">
       <div class="result-card"><div class="lbl">Monthly Take-Home</div><div class="val">${inr(r.monthlyTakeHome)}</div><div class="sub">in-hand salary</div></div>
@@ -840,7 +799,7 @@ const TOOLS={
       fN('P','Deposit Amount',500000,{prefix:'₹',min:1000,step:1000}),
       fN('rate','Interest Rate (p.a.)',7.1,{suffix:'%',min:1,max:15,step:0.05}),
       fN('years','Tenure',5,{suffix:'yrs',min:0.5,max:20,step:0.5}),
-      fS('freq','Compounding','quarterly',[{value:'yearly',label:'Yearly'},{value:'half',label:'Half-Yearly'},{value:'quarterly',label:'Quarterly (bank standard)'},{value:'monthly',label:'Monthly'}])
+      fS('freq','Compounding','quarterly',[{value:'yearly',label:'Yearly'},{value:'half',label:'Half-Yearly'},{value:'quarterly',label:'Quarterly'},{value:'monthly',label:'Monthly'}])
     ],
     calc:v=>{
       const nMap={yearly:1,half:2,quarterly:4,monthly:12};
@@ -993,9 +952,9 @@ const TOOLS={
     ],
     calc:v=>{
       const rateMap={'194C-ind':1,'194C-oth':2,'194J':10,'194I-land':10,'194I-mach':2,'194A':10,'194H':5,'194':10,'194D':5,'194Q':0.1};
-      let rate=rateMap[v.section]||10; const normalRate=rate;
+      let rate=rateMap[v.section]||10;
       if(v.pan==='no')rate=Math.max(20,rate);
-      return {amount:v.amount,rate,normalRate,tds:v.amount*rate/100,net:v.amount-v.amount*rate/100,pan:v.pan};
+      return {amount:v.amount,rate,tds:v.amount*rate/100,net:v.amount-v.amount*rate/100,pan:v.pan};
     },
     render:r=>`<div class="result-grid">
       <div class="result-card warn"><div class="lbl">TDS Deducted</div><div class="val">${inr(r.tds)}</div><div class="sub">@ ${r.rate}%</div></div>
@@ -1020,11 +979,11 @@ const TOOLS={
       const totalDed=50000+v.d80C+v.d80D+v.d80CCD+v.homeLoan;
       const taxableAfter=Math.max(0,v.income-totalDed);
       const taxAfter=Math.max(0,taxOldRegime(taxableAfter)-rebateOld(taxOldRegime(taxableAfter),taxableAfter))*1.04;
-      const remaining80C=Math.max(0,150000-v.d80C);
-      const remaining80D=Math.max(0,100000-v.d80D);
-      const remaining80CCD=Math.max(0,50000-v.d80CCD);
-      const remainingHome=Math.max(0,200000-v.homeLoan);
-      return {income:v.income,taxBefore,taxAfter,taxSaved:taxBefore-taxAfter,totalDed,remaining80C,remaining80D,remaining80CCD,remainingHome};
+      return {income:v.income,taxBefore,taxAfter,taxSaved:taxBefore-taxAfter,
+        remaining80C:Math.max(0,150000-v.d80C),
+        remaining80D:Math.max(0,100000-v.d80D),
+        remaining80CCD:Math.max(0,50000-v.d80CCD),
+        remainingHome:Math.max(0,200000-v.homeLoan)};
     },
     render:r=>`<div class="result-grid">
       <div class="result-card"><div class="lbl">Tax Saved</div><div class="val">${inr(r.taxSaved)}</div></div>
@@ -1127,12 +1086,12 @@ const TOOLS={
 
 /* ============ MODAL ============ */
 const modalOverlay=document.getElementById('modalOverlay');
+const modalBox=document.getElementById('modalBox');
 const modalIcon=document.getElementById('modalIcon');
 const modalTitle=document.getElementById('modalTitle');
 const modalSubtitle=document.getElementById('modalSubtitle');
 const modalBody=document.getElementById('modalBody');
 const modalClose=document.getElementById('modalClose');
-const modalBox=document.getElementById('modalBox');
 
 function closeModal(){ modalOverlay.classList.remove('active'); document.body.style.overflow=''; }
 modalClose.onclick=closeModal;
