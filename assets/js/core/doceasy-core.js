@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DocEasy Core — Auto-injects header, footer, theme toggle on every page.
+   DocEasy Core — Auto-injects clean header, footer, theme toggle on every page.
    IDs: #doceasy-header, #doceasy-footer  |  Theme key: doceasy_theme
    ========================================================================== */
 (function () {
@@ -16,36 +16,28 @@
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
-    /* Pill Nav (Row 1) */
-    pillNav: [
-      { href: 'index.html',           label: 'Home',       root: true },
-      { href: 'index.html#tools',     label: 'Tools',      root: true },
-      { href: 'index.html#ai',        label: 'AI Tools',   root: true },
-      { href: 'index.html#templates', label: 'Templates',  root: true },
-      { href: 'index.html#faq',       label: 'FAQ',        root: true },
-      { href: 'index.html#blog',      label: 'Blog',       root: true }
+    /* Clean Main Nav — Index.html के मुख्य सेक्शन्स */
+    mainNav: [
+      { href: 'index.html',                 label: 'Home',       root: true },
+      { href: 'index.html#pdf-tools',       label: 'PDF Tools',  root: true },
+      { href: 'index.html#image-tools',     label: 'Images',     root: true },
+      { href: 'index.html#id-tools',        label: 'ID Cards',   root: true },
+      { href: 'index.html#media-tools',     label: 'Media',      root: true },
+      { href: 'index.html#utility-tools',   label: 'Utilities',  root: true },
+      { href: 'index.html#more-tools',      label: 'More Hubs',  root: true }
     ],
 
-    /* Top Nav (Row 2) — Quick tools */
-    topNav: [
-      { href: 'pdf-merge.html',         label: 'Merge PDF',        page: 'pdf-merge' },
-      { href: 'pdf-compressor.html',    label: 'Compress PDF',     page: 'pdf-compressor' },
-      { href: 'image-compressor.html',  label: 'Compress Image',   page: 'image-compressor' },
-      { href: 'passport-maker.html',    label: 'Passport Photo',   page: 'passport-maker' },
-      { href: 'signature-resize.html',  label: 'Signature Resize', page: 'signature-resize' },
-      { href: 'image-bg-remover.html',  label: 'BG Remover',       page: 'image-bg-remover' },
-      { href: 'card-cropper.html',      label: 'ID Card Crop',     page: 'card-cropper' },
-      { href: 'qr-generator.html',      label: 'QR Code',          page: 'qr-generator' }
-    ],
-
-    /* Category Nav (Row 3) — All pages */
-    categoryNav: [
-      { href: '#pdf-tools',       label: 'PDF' },
-      { href: '#image-tools',     label: 'Image' },
-      { href: '#id-tools',        label: 'ID Cards' },
-      { href: '#converter-tools', label: 'Converters' },
-      { href: '#utility-tools',   label: 'Utilities' },
-      { href: '#faq',             label: 'FAQ' }
+    /* Quick Top Bar Tools */
+    quickTools: [
+      { href: 'card-cropper.html',          label: 'ID Card Crop',     page: 'card-cropper' },
+      { href: 'invoice-generator.html',     label: 'Invoice Maker',    page: 'invoice-generator' },
+      { href: 'business-tools.html',        label: 'Business Tools',   page: 'business-tools' },
+      { href: 'finance-tools.html',         label: 'Finance Tools',    page: 'finance-tools' },
+      { href: 'emitra-csc-tools.html',      label: 'eMitra / CSC',     page: 'emitra-csc-tools' },
+      { href: 'pdf-merge.html',             label: 'Merge PDF',        page: 'pdf-merge' },
+      { href: 'image-compressor.html',      label: 'Compress Image',   page: 'image-compressor' },
+      { href: 'passport-maker.html',        label: 'Passport Photo',   page: 'passport-maker' },
+      { href: 'qr-generator.html',          label: 'QR Code',          page: 'qr-generator' }
     ],
 
     footer: {
@@ -56,12 +48,12 @@
         { href: 'pdf-editor.html',      label: 'PDF Editor' },
         { href: 'pdf-to-word.html',     label: 'PDF to Word' }
       ],
-      imageTools: [
-        { href: 'image-compressor.html',  label: 'Image Compressor' },
-        { href: 'image-bg-remover.html',  label: 'Background Remover' },
-        { href: 'passport-maker.html',    label: 'Passport Photo' },
+      businessTools: [
+        { href: 'business-tools.html',    label: 'Business Suite' },
+        { href: 'finance-tools.html',     label: 'Finance Calculators' },
+        { href: 'invoice-generator.html', label: 'GST Invoice Maker' },
         { href: 'card-cropper.html',      label: 'ID Card Cropper' },
-        { href: 'signature-resize.html',  label: 'Signature Resize' }
+        { href: 'emitra-csc-tools.html',  label: 'eMitra / CSC Tools' }
       ],
       legal: [
         { href: 'about.html',   label: 'About',   root: true },
@@ -85,7 +77,8 @@
         'pdf-to-jpg','doc-scanner','card-cropper','passport-maker','signature-bg-remover',
         'pdf-editor','pdf-compressor','pdf-to-word','pdf-to-excel','pdf-writer',
         'qr-generator','qr-scanner','word-counter','word-writer','word-to-pdf',
-        'excel-to-pdf','ppt-to-pdf','pan-photo-signature-resizer'
+        'excel-to-pdf','ppt-to-pdf','pan-photo-signature-resizer','business-tools',
+        'finance-tools','emitra-csc-tools'
       ];
       var name = href.replace('.html', '');
       if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
@@ -95,25 +88,16 @@
 
   /* ---------- Header builder ---------- */
   function buildHeader() {
-    var pills = CONFIG.pillNav.map(function (p) {
+    var navLinks = CONFIG.mainNav.map(function (p) {
       return '<a href="' + resolvePath(p.href, p.root) + '">' + p.label + '</a>';
     }).join('');
 
-    var tools = CONFIG.topNav.map(function (t) {
+    var quickLinks = CONFIG.quickTools.map(function (t) {
       return '<a href="' + resolvePath(t.href, false) + '" data-page="' + t.page + '">' + t.label + '</a>';
-    }).join('');
-
-    var catLinks = CONFIG.categoryNav.map(function (c) {
-      var href = c.href;
-      if (CONFIG.isSubPage && href.charAt(0) === '#') {
-        href = '../index.html' + href;
-      }
-      return '<a href="' + href + '">' + c.label + '</a>';
     }).join('');
 
     var homeHref = resolvePath('index.html', true);
 
-    /* ============ SUPPORT MODAL HTML ============ */
     var supportModal =
       '<div class="support-modal-backdrop" id="supportModal">' +
         '<div class="support-modal">' +
@@ -154,7 +138,7 @@
             '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
           '</span>' +
         '</a>' +
-        '<nav class="pill-nav" aria-label="Sections">' + pills + '</nav>' +
+        '<nav class="pill-nav" aria-label="Sections">' + navLinks + '</nav>' +
         '<button type="button" class="support-link" onclick="docEasyOpenSupport()" aria-label="Support">' +
           '<span class="support-icon">☕</span>' +
           '<span class="support-text">Support</span>' +
@@ -164,8 +148,7 @@
           '<span class="slider"></span>' +
         '</label>' +
       '</div>' +
-      '<nav class="top-nav" aria-label="Quick tools">' + tools + '</nav>' +
-      '<nav class="category-nav" aria-label="Categories">' + catLinks + '</nav>' +
+      '<nav class="top-nav" aria-label="Quick tools">' + quickLinks + '</nav>' +
     '</header>' + supportModal;
   }
 
@@ -184,15 +167,15 @@
           '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
         '</span>' +
         '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
-          '25+ free browser-based tools for PDFs, images, and documents. 100% private — your files never leave your device.' +
+          '40+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
         '</p>' +
         '<button type="button" class="footer-support-btn" onclick="docEasyOpenSupport()">' +
           '<span>☕</span> Support DocEasy' +
         '</button>' +
       '</div>' +
-      col('PDF Tools',   CONFIG.footer.pdfTools,   false) +
-      col('Image Tools', CONFIG.footer.imageTools, false) +
-      col('Company',     CONFIG.footer.legal,      true)  +
+      col('PDF Tools',      CONFIG.footer.pdfTools,      false) +
+      col('Business Suite', CONFIG.footer.businessTools, false) +
+      col('Company',        CONFIG.footer.legal,         true)  +
       '</div><div class="footer-bottom-bar">' +
         '<div>© <span id="de-year"></span> DocEasy. All rights reserved.</div>' +
         '<div><a class="made-with-love-link" href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Made with ❤️ by Deepaak Kumar</a></div>' +
@@ -263,19 +246,14 @@
   else inject();
 })();
 
-/* ==========================================================================
-   AUTO-HIDE HEADER ON SCROLL
-   - Scroll down → header slides up (hidden)
-   - Scroll up → header slides back down (visible)
-   - At top → always visible
-   ========================================================================== */
+/* ============ Auto-Hide Header On Scroll ============ */
 (function () {
   'use strict';
 
   var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
   var ticking = false;
-  var HIDE_THRESHOLD = 80;   /* Don't hide until scrolled past 80px */
-  var DELTA = 8;             /* Minimum scroll change to trigger */
+  var HIDE_THRESHOLD = 80;
+  var DELTA = 8;
 
   function updateHeader() {
     var currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
@@ -283,16 +261,12 @@
 
     if (!header) { ticking = false; return; }
 
-    /* Scroll DOWN → hide header (past threshold) */
     if (currentScrollY > lastScrollY + DELTA && currentScrollY > HIDE_THRESHOLD) {
       header.classList.add('header-hidden');
-    }
-    /* Scroll UP → show header */
-    else if (currentScrollY < lastScrollY - DELTA) {
+    } else if (currentScrollY < lastScrollY - DELTA) {
       header.classList.remove('header-hidden');
     }
 
-    /* At very top → always show */
     if (currentScrollY <= 10) {
       header.classList.remove('header-hidden');
     }
