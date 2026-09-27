@@ -8,7 +8,6 @@
 <meta name="keywords" content="finance tools, loan emi calculator, income tax calculator, salary calculator, gratuity calculator, epf calculator, hra calculator, sip calculator">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/finance-tools.html">
-
 <meta property="og:type" content="website">
 <meta property="og:title" content="Finance Tools — Loan EMI, Salary, Tax Calculators | DocEasy">
 <meta property="og:description" content="Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA.">
@@ -21,424 +20,238 @@
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Finance Tools — DocEasy",
-  "url": "https://deepaakai.github.io/officekit/finance-tools.html",
-  "description": "Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD."
-}
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Finance Tools — DocEasy","url":"https://deepaakai.github.io/officekit/finance-tools.html","description":"Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD."}
 </script>
 
-<link rel="stylesheet" href="assets/css/doceasy-global.css">
-
 <style>
-* { box-sizing: border-box; }
-.main-wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px 80px; overflow-x: hidden; }
+:root{
+  --bg-color:#f7fafc; --card-bg:#ffffff; --card-hover:#f1f5f9;
+  --text-color:#0f172a; --subtext-color:#64748b; --border-color:#e2e8f0;
+  --accent:#16a34a; --accent-hover:#15803d;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow-md:0 10px 30px rgba(0,0,0,.08);
+}
+[data-theme="dark"]{
+  --bg-color:#0f172a; --card-bg:#1e293b; --card-hover:#334155;
+  --text-color:#f1f5f9; --subtext-color:#94a3b8; --border-color:#334155;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg-color);color:var(--text-color);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+.main-wrap{max-width:1240px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden;}
 
-/* HERO */
-.fhero {
-  position: relative; overflow: hidden;
-  border-radius: 22px; padding: 42px 32px;
-  margin-top: 34px;
-  background: linear-gradient(135deg, #065f46 0%, #16a34a 55%, #22c55e 100%);
-  color: #fff;
-  box-shadow: 0 20px 48px rgba(22,163,74,0.28);
-}
-.fhero::before, .fhero::after {
-  content: ""; position: absolute; border-radius: 50%;
-  background: rgba(255,255,255,0.10);
-}
-.fhero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
-.fhero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
-.fhero-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 12px; border-radius: 999px;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.28);
-  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
-  margin-bottom: 14px; backdrop-filter: blur(6px);
-  position: relative; z-index: 1;
-}
-.fhero h1 {
-  font-size: clamp(26px, 4.5vw, 42px); font-weight: 800;
-  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
-  position: relative; z-index: 1;
-}
-.fhero p {
-  font-size: clamp(14px, 2vw, 16.5px); line-height: 1.6;
-  max-width: 680px; margin: 0; opacity: 0.92;
-  position: relative; z-index: 1;
-}
-.fhero-stats {
-  display: flex; gap: 26px; margin-top: 24px; flex-wrap: wrap;
-  position: relative; z-index: 1;
-}
-.fhero-stats .stat { display: flex; flex-direction: column; }
-.fhero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-.fhero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.85; font-weight: 700; margin-top: 2px; }
-
-/* TOOLBAR */
-.toolbar {
-  display: flex; gap: 12px; align-items: center;
-  margin: 34px 0 22px; flex-wrap: wrap;
-}
-.search-box { position: relative; flex: 1; min-width: 240px; max-width: 500px; }
-.search-box svg {
-  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
-}
-.search-box input {
-  width: 100%; padding: 12px 14px 12px 42px;
-  border-radius: 12px; border: 1px solid var(--border-color);
-  background: var(--card-bg); color: var(--text-color);
-  font-size: 14px; outline: none; transition: all 0.18s;
-}
-.search-box input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
-.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-.filter-pills button {
-  padding: 9px 15px; border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg); color: var(--text-color);
-  font-size: 12.5px; font-weight: 700; cursor: pointer;
-  transition: all 0.18s; font-family: inherit;
-}
-.filter-pills button:hover { border-color: #16a34a; color: #16a34a; }
-.filter-pills button.active {
-  background: #16a34a; border-color: #16a34a; color: #fff;
-  box-shadow: 0 6px 16px rgba(22,163,74,0.28);
+/* ============ HEADER ============ */
+.de-header{background:var(--card-bg);border-bottom:1px solid var(--border-color);position:sticky;top:0;z-index:900;}
+.de-header-inner{max-width:1240px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.de-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;color:var(--text-color);}
+.de-brand-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#065f46,#16a34a);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;letter-spacing:-0.5px;}
+.de-nav{display:flex;gap:6px;flex-wrap:wrap;}
+.de-nav a{padding:8px 14px;border-radius:8px;font-size:13.5px;font-weight:700;color:var(--subtext-color);transition:all .15s;}
+.de-nav a:hover{background:var(--card-hover);color:var(--accent);}
+.de-nav a.active{background:rgba(22,163,74,0.1);color:var(--accent);}
+@media(max-width:640px){
+  .de-header-inner{padding:10px 14px;}
+  .de-nav a{padding:7px 10px;font-size:12.5px;}
 }
 
-/* CATEGORY BLOCK */
-.cat-block { margin-top: 42px; scroll-margin-top: 90px; }
-.cat-head {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 18px; padding-bottom: 12px;
-  border-bottom: 2px solid var(--border-color);
+/* ============ FOOTER ============ */
+.de-footer{background:#0f172a;color:#cbd5e1;padding:48px 20px 24px;margin-top:0;}
+.de-footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;}
+.de-footer h4{color:#fff;font-size:14px;font-weight:800;margin:0 0 14px;letter-spacing:0.3px;text-transform:uppercase;}
+.de-footer p{font-size:13px;line-height:1.7;margin:0 0 10px;color:#94a3b8;}
+.de-footer ul{list-style:none;padding:0;margin:0;}
+.de-footer li{margin-bottom:8px;font-size:13.5px;}
+.de-footer a{color:#cbd5e1;transition:color .15s;}
+.de-footer a:hover{color:#22c55e;}
+.de-footer-bottom{max-width:1240px;margin:36px auto 0;padding-top:20px;border-top:1px solid #1e293b;font-size:12.5px;color:#64748b;text-align:center;}
+@media(max-width:768px){
+  .de-footer-inner{grid-template-columns:1fr 1fr;gap:24px;}
 }
-.cat-head .icon {
-  width: 42px; height: 42px; border-radius: 12px;
-  display: grid; place-items: center; flex-shrink: 0;
-  background: linear-gradient(135deg, #16a34a, #065f46);
-}
-.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
-.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
-.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
-.cat-head .count {
-  margin-left: auto; font-size: 11.5px; font-weight: 700;
-  color: var(--subtext-color); background: var(--card-hover);
-  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+@media(max-width:480px){
+  .de-footer-inner{grid-template-columns:1fr;}
 }
 
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 12px;
-}
-.tool-tile {
-  display: flex; flex-direction: column; gap: 10px;
-  padding: 18px 16px 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  text-decoration: none; color: var(--text-color);
-  transition: all 0.2s ease; min-height: 140px;
-  position: relative; cursor: pointer; font-family: inherit;
-  text-align: left; width: 100%;
-}
-.tool-tile:hover {
-  border-color: #16a34a;
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(22,163,74,0.14);
-}
-.tool-tile .tile-icon {
-  width: 42px; height: 42px; border-radius: 11px;
-  background: rgba(22,163,74,0.08);
-  color: #16a34a;
-  display: grid; place-items: center;
-  transition: transform 0.22s; flex-shrink: 0;
-}
-.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
-.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
-.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
-.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
-.tool-tile .tag {
-  position: absolute; top: 9px; right: 9px;
-  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
-  padding: 2px 6px; border-radius: 5px;
-  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
-}
-.tool-tile .tag.new { background: linear-gradient(135deg,#f59e0b,#d97706); }
+/* ============ HERO ============ */
+.fhero{position:relative;overflow:hidden;border-radius:22px;padding:42px 32px;margin-top:24px;background:linear-gradient(135deg,#065f46 0%,#16a34a 55%,#22c55e 100%);color:#fff;box-shadow:0 20px 48px rgba(22,163,74,0.28);}
+.fhero::before,.fhero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,0.10);}
+.fhero::before{width:280px;height:280px;top:-110px;right:-80px;}
+.fhero::after{width:200px;height:200px;bottom:-90px;left:-60px;}
+.fhero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.28);font-size:11px;font-weight:700;letter-spacing:0.4px;margin-bottom:14px;position:relative;z-index:1;}
+.fhero h1{font-size:clamp(26px,4.5vw,42px);font-weight:800;margin:0 0 10px;letter-spacing:-1px;line-height:1.1;position:relative;z-index:1;}
+.fhero p{font-size:clamp(14px,2vw,16.5px);line-height:1.6;max-width:680px;margin:0;opacity:0.92;position:relative;z-index:1;}
+.fhero-stats{display:flex;gap:26px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:1;}
+.fhero-stats .stat{display:flex;flex-direction:column;}
+.fhero-stats .stat b{font-size:22px;font-weight:800;}
+.fhero-stats .stat span{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;opacity:0.85;font-weight:700;margin-top:2px;}
 
-/* HOW TO USE */
-.how-to-use { max-width: 940px; margin: 68px auto 0; }
-.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
-.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
-.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
-.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #16a34a; opacity: .15; line-height: 1; letter-spacing: -2px; }
-.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
-.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+/* ============ TOOLBAR ============ */
+.toolbar{display:flex;gap:12px;align-items:center;margin:34px 0 22px;flex-wrap:wrap;}
+.search-box{position:relative;flex:1;min-width:240px;max-width:500px;}
+.search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--subtext-color);fill:none;stroke-width:2;}
+.search-box input{width:100%;padding:12px 14px 12px 42px;border-radius:12px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-size:14px;outline:none;transition:all .18s;font-family:inherit;}
+.search-box input:focus{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,0.12);}
+.filter-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-pills button{padding:9px 15px;border-radius:999px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s;font-family:inherit;}
+.filter-pills button:hover{border-color:#16a34a;color:#16a34a;}
+.filter-pills button.active{background:#16a34a;border-color:#16a34a;color:#fff;box-shadow:0 6px 16px rgba(22,163,74,0.28);}
 
-/* FAQ */
-.deep-faq { max-width: 900px; margin: 68px auto 0; }
-.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
-.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
-.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
-.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: #16a34a; }
-.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
-.deep-faq summary::-webkit-details-marker { display: none; }
-.deep-faq summary::after { content: "+"; font-size: 21px; color: #16a34a; font-weight: 300; flex-shrink: 0; }
-.deep-faq .faq-item[open] summary::after { content: "−"; }
-.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
-.deep-faq code { background: var(--card-hover); padding: 1px 6px; border-radius: 4px; font-size: 12.5px; font-family: monospace; color: #16a34a; font-weight: 600; }
+/* ============ CATEGORY ============ */
+.cat-block{margin-top:42px;}
+.cat-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border-color);}
+.cat-head .icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;background:linear-gradient(135deg,#16a34a,#065f46);}
+.cat-head .icon svg{width:21px;height:21px;stroke:#fff;fill:none;stroke-width:2;}
+.cat-head h2{font-size:19px;font-weight:800;margin:0;letter-spacing:-0.4px;color:var(--text-color);}
+.cat-head p{font-size:12.5px;color:var(--subtext-color);margin:2px 0 0;}
+.cat-head .count{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--subtext-color);background:var(--card-hover);padding:5px 11px;border-radius:999px;white-space:nowrap;}
 
-.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;}
+.tool-tile{display:flex;flex-direction:column;gap:10px;padding:18px 16px 16px;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--text-color);transition:all .2s ease;min-height:140px;position:relative;cursor:pointer;font-family:inherit;text-align:left;width:100%;}
+.tool-tile:hover{border-color:#16a34a;transform:translateY(-4px);box-shadow:0 14px 30px rgba(22,163,74,0.14);}
+.tool-tile .tile-icon{width:42px;height:42px;border-radius:11px;background:rgba(22,163,74,0.08);color:#16a34a;display:grid;place-items:center;transition:transform .22s;flex-shrink:0;}
+.tool-tile:hover .tile-icon{transform:scale(1.1) rotate(-4deg);}
+.tool-tile .tile-icon svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;}
+.tool-tile h3{font-size:13.5px;font-weight:700;margin:0;line-height:1.35;}
+.tool-tile p{font-size:11px;color:var(--subtext-color);margin:0;line-height:1.45;}
+.tool-tile .tag{position:absolute;top:9px;right:9px;font-size:8.5px;font-weight:800;letter-spacing:0.5px;padding:2px 6px;border-radius:5px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
 
-/* ============ MODAL / CALCULATOR STYLES ============ */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(15,23,42,0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display: none; align-items: flex-start; justify-content: center;
-  z-index: 9999; padding: 20px; overflow-y: auto;
-  animation: fadeIn 0.2s ease;
-}
-.modal-overlay.active { display: flex; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+/* ============ HOW TO ============ */
+.how-to-use{max-width:940px;margin:68px auto 0;}
+.how-to-use h2{font-size:clamp(22px,3.8vw,30px);font-weight:800;text-align:center;margin:0 0 10px;letter-spacing:-0.6px;}
+.how-to-use .lead{text-align:center;color:var(--subtext-color);font-size:14px;margin:0 auto 30px;max-width:620px;line-height:1.6;}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.step-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;padding:24px 18px;position:relative;}
+.step-num{position:absolute;top:14px;right:16px;font-size:32px;font-weight:900;color:#16a34a;opacity:.15;line-height:1;letter-spacing:-2px;}
+.step-card h3{font-size:14.5px;font-weight:800;margin:0 0 6px;}
+.step-card p{font-size:12.5px;color:var(--subtext-color);margin:0;line-height:1.6;}
 
-.modal {
-  background: var(--card-bg, #fff);
-  color: var(--text-color, #0f172a);
-  border-radius: 20px;
-  max-width: 760px; width: 100%;
-  margin: auto;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-  animation: slideUp 0.25s ease;
-  overflow: hidden;
-  border: 1px solid var(--border-color, #e2e8f0);
-}
-.modal-header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 18px 22px;
-  background: linear-gradient(135deg, #065f46, #16a34a);
-  color: #fff;
-  position: sticky; top: 0; z-index: 5;
-}
-.modal-header .mh-icon {
-  width: 38px; height: 38px; border-radius: 10px;
-  display: grid; place-items: center; flex-shrink: 0;
-  background: rgba(255,255,255,0.16);
-  border: 1px solid rgba(255,255,255,0.22);
-}
-.modal-header .mh-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
-.modal-header h2 { font-size: 16.5px; font-weight: 800; margin: 0; letter-spacing: -0.3px; line-height: 1.2; }
-.modal-header p { font-size: 11.5px; margin: 2px 0 0; opacity: 0.85; }
-.modal-close {
-  margin-left: auto; width: 34px; height: 34px; border-radius: 10px;
-  background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22);
-  color: #fff; cursor: pointer; font-size: 20px; line-height: 1;
-  display: grid; place-items: center; font-family: inherit;
-  transition: background 0.15s;
-}
-.modal-close:hover { background: rgba(255,255,255,0.28); }
+/* ============ FAQ ============ */
+.deep-faq{max-width:900px;margin:68px auto 0;}
+.deep-faq h2{font-size:clamp(22px,3.8vw,30px);font-weight:800;text-align:center;margin:0 0 10px;letter-spacing:-0.6px;}
+.deep-faq .faq-lead{text-align:center;color:var(--subtext-color);font-size:14px;margin:0 auto 30px;max-width:620px;line-height:1.6;}
+.deep-faq .faq-item{background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:15px 20px;margin-bottom:10px;transition:all .2s;}
+.deep-faq .faq-item:hover,.deep-faq .faq-item[open]{border-color:#16a34a;}
+.deep-faq summary{cursor:pointer;font-weight:700;color:var(--text-color);font-size:14px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;line-height:1.45;}
+.deep-faq summary::-webkit-details-marker{display:none;}
+.deep-faq summary::after{content:"+";font-size:21px;color:#16a34a;font-weight:300;flex-shrink:0;}
+.deep-faq .faq-item[open] summary::after{content:"−";}
+.deep-faq .faq-item p{margin:12px 0 0;font-size:13.5px;color:var(--subtext-color);line-height:1.72;}
+.deep-faq code{background:var(--card-hover);padding:1px 6px;border-radius:4px;font-size:12.5px;font-family:monospace;color:#16a34a;font-weight:600;}
 
-.modal-body { padding: 22px; }
+.no-results{display:none;text-align:center;padding:60px 20px;color:var(--subtext-color);font-size:14.5px;}
 
-.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
-.field { display: flex; flex-direction: column; gap: 6px; }
-.field.full { grid-column: 1 / -1; }
-.field label {
-  font-size: 11.5px; font-weight: 700; color: var(--text-color);
-  text-transform: uppercase; letter-spacing: 0.5px;
-}
-.field-input-wrap { position: relative; display: flex; align-items: center; }
-.field-input-wrap .pre, .field-input-wrap .suf {
-  position: absolute; font-size: 13px; font-weight: 700;
-  color: var(--subtext-color); pointer-events: none;
-}
-.field-input-wrap .pre { left: 12px; }
-.field-input-wrap .suf { right: 12px; }
-.field input[type="number"], .field input[type="text"], .field select {
-  width: 100%; padding: 11px 12px;
-  border-radius: 10px; border: 1.5px solid var(--border-color);
-  background: var(--card-bg); color: var(--text-color);
-  font-size: 14px; font-weight: 600; outline: none;
-  font-family: inherit; transition: all 0.15s;
-}
-.field.has-pre input { padding-left: 30px; }
-.field.has-suf input { padding-right: 46px; }
-.field input:focus, .field select:focus {
-  border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
-}
-.field .hint { font-size: 10.5px; color: var(--subtext-color); font-weight: 500; }
+/* ============ MODAL ============ */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;z-index:9999;padding:20px;overflow-y:auto;}
+.modal-overlay.active{display:flex;}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.modal{background:var(--card-bg);color:var(--text-color);border-radius:20px;max-width:760px;width:100%;margin:auto;box-shadow:0 30px 80px rgba(0,0,0,0.35);animation:slideUp .25s ease;overflow:hidden;border:1px solid var(--border-color);}
+.modal-header{display:flex;align-items:center;gap:12px;padding:18px 22px;background:linear-gradient(135deg,#065f46,#16a34a);color:#fff;position:sticky;top:0;z-index:5;}
+.modal-header .mh-icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.22);}
+.modal-header .mh-icon svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;}
+.modal-header h2{font-size:16.5px;font-weight:800;margin:0;line-height:1.2;}
+.modal-header p{font-size:11.5px;margin:2px 0 0;opacity:0.85;}
+.modal-close{margin-left:auto;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.22);color:#fff;cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center;font-family:inherit;transition:background .15s;}
+.modal-close:hover{background:rgba(255,255,255,0.28);}
+.modal-body{padding:22px;}
 
-.range-row {
-  display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
-}
-.range-row input[type="range"] { width: 100%; accent-color: #16a34a; }
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:11.5px;font-weight:700;color:var(--text-color);text-transform:uppercase;letter-spacing:0.5px;}
+.field-input-wrap{position:relative;display:flex;align-items:center;}
+.field-input-wrap .pre,.field-input-wrap .suf{position:absolute;font-size:13px;font-weight:700;color:var(--subtext-color);pointer-events:none;}
+.field-input-wrap .pre{left:12px;}
+.field-input-wrap .suf{right:12px;}
+.field input,.field select{width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-size:14px;font-weight:600;outline:none;font-family:inherit;transition:all .15s;}
+.field.has-pre input{padding-left:30px;}
+.field.has-suf input{padding-right:50px;}
+.field input:focus,.field select:focus{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,0.12);}
+.field .hint{font-size:10.5px;color:var(--subtext-color);font-weight:500;}
 
-/* Result cards */
-.result-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px; margin-bottom: 16px;
-}
-.result-card {
-  padding: 14px 14px 12px;
-  background: rgba(22,163,74,0.06);
-  border: 1px solid rgba(22,163,74,0.18);
-  border-radius: 12px;
-}
-.result-card.alt { background: rgba(59,130,246,0.06); border-color: rgba(59,130,246,0.18); }
-.result-card.alt .val { color: #2563eb; }
-.result-card.warn { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.18); }
-.result-card.warn .val { color: #dc2626; }
-.result-card .lbl {
-  font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px;
-  font-weight: 800; color: var(--subtext-color);
-}
-.result-card .val {
-  font-size: 19px; font-weight: 800; color: #16a34a;
-  margin-top: 4px; letter-spacing: -0.4px; line-height: 1.15;
-  word-break: break-word;
-}
-.result-card .sub { font-size: 10.5px; color: var(--subtext-color); margin-top: 2px; font-weight: 600; }
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
+.result-card{padding:14px;background:rgba(22,163,74,0.06);border:1px solid rgba(22,163,74,0.18);border-radius:12px;}
+.result-card.alt{background:rgba(59,130,246,0.06);border-color:rgba(59,130,246,0.18);}
+.result-card.alt .val{color:#2563eb;}
+.result-card.warn{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.18);}
+.result-card.warn .val{color:#dc2626;}
+.result-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.6px;font-weight:800;color:var(--subtext-color);}
+.result-card .val{font-size:19px;font-weight:800;color:#16a34a;margin-top:4px;letter-spacing:-0.4px;line-height:1.15;word-break:break-word;}
+.result-card .sub{font-size:10.5px;color:var(--subtext-color);margin-top:2px;font-weight:600;}
 
-/* Chart + legend */
-.chart-row {
-  display: flex; gap: 18px; align-items: center;
-  padding: 14px; background: var(--card-hover);
-  border-radius: 14px; margin-bottom: 16px; flex-wrap: wrap;
-}
-.chart-row .legend { flex: 1; min-width: 160px; }
-.chart-row .legend .li {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12.5px; font-weight: 700; color: var(--text-color);
-  margin-bottom: 8px;
-}
-.chart-row .legend .li .dot {
-  width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0;
-}
-.chart-row .legend .li span { color: var(--subtext-color); font-weight: 600; margin-left: auto; }
+.chart-row{display:flex;gap:18px;align-items:center;padding:14px;background:var(--card-hover);border-radius:14px;margin-bottom:16px;flex-wrap:wrap;}
+.chart-row .legend{flex:1;min-width:160px;}
+.chart-row .legend .li{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-color);margin-bottom:8px;}
+.chart-row .legend .li .dot{width:12px;height:12px;border-radius:4px;flex-shrink:0;}
+.chart-row .legend .li span{color:var(--subtext-color);font-weight:600;margin-left:auto;}
 
-/* Schedule table */
-.sch-wrap {
-  max-height: 260px; overflow-y: auto;
-  border: 1px solid var(--border-color); border-radius: 12px;
-  margin-bottom: 16px;
-}
-.sch-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.sch-wrap th, .sch-wrap td {
-  padding: 8px 10px; text-align: right;
-  border-bottom: 1px solid var(--border-color);
-}
-.sch-wrap th {
-  background: var(--card-hover); color: var(--text-color);
-  font-weight: 800; position: sticky; top: 0;
-  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.4px;
-}
-.sch-wrap td { color: var(--subtext-color); font-weight: 600; }
-.sch-wrap td:first-child { text-align: left; color: var(--text-color); font-weight: 700; }
-.sch-wrap tr:last-child td { border-bottom: none; }
+.sch-wrap{max-height:260px;overflow-y:auto;border:1px solid var(--border-color);border-radius:12px;margin-bottom:16px;}
+.sch-wrap table{width:100%;border-collapse:collapse;font-size:12px;}
+.sch-wrap th,.sch-wrap td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border-color);}
+.sch-wrap th{background:var(--card-hover);color:var(--text-color);font-weight:800;position:sticky;top:0;font-size:10.5px;text-transform:uppercase;letter-spacing:0.4px;}
+.sch-wrap td{color:var(--subtext-color);font-weight:600;}
+.sch-wrap td:first-child{text-align:left;color:var(--text-color);font-weight:700;}
+.sch-wrap tr:last-child td{border-bottom:none;}
 
-.section-title {
-  font-size: 12.5px; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.6px; color: var(--text-color);
-  margin: 20px 0 10px;
-  display: flex; align-items: center; gap: 8px;
-}
-.section-title::before {
-  content: ""; width: 3px; height: 14px; border-radius: 2px;
-  background: #16a34a;
-}
+.section-title{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-color);margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:"";width:3px;height:14px;border-radius:2px;background:#16a34a;}
 
-.note {
-  font-size: 11.5px; color: var(--subtext-color); line-height: 1.6;
-  padding: 10px 12px; background: var(--card-hover);
-  border-left: 3px solid #16a34a; border-radius: 6px; margin-top: 14px;
-}
+.note{font-size:11.5px;color:var(--subtext-color);line-height:1.6;padding:10px 12px;background:var(--card-hover);border-left:3px solid #16a34a;border-radius:6px;margin-top:14px;}
 
-.btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
-.btn {
-  padding: 11px 18px; border-radius: 10px; font-size: 13px; font-weight: 700;
-  border: 1.5px solid var(--border-color); background: var(--card-bg);
-  color: var(--text-color); cursor: pointer; font-family: inherit;
-  transition: all 0.15s;
-}
-.btn:hover { border-color: #16a34a; color: #16a34a; }
-.btn.primary {
-  background: linear-gradient(135deg, #16a34a, #15803d);
-  color: #fff; border-color: #16a34a;
-  box-shadow: 0 6px 16px rgba(22,163,74,0.28);
-}
-.btn.primary:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(22,163,74,0.35); color: #fff; }
+.btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.btn{padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;font-family:inherit;transition:all .15s;}
+.btn:hover{border-color:#16a34a;color:#16a34a;}
+.btn.primary{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-color:#16a34a;box-shadow:0 6px 16px rgba(22,163,74,0.28);}
+.btn.primary:hover{transform:translateY(-1px);color:#fff;}
 
-.tax-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.tax-box { padding: 16px; border-radius: 14px; border: 1.5px solid var(--border-color); }
-.tax-box.winner { border-color: #16a34a; background: rgba(22,163,74,0.06); position: relative; }
-.tax-box .tb-head {
-  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
-}
-.tax-box .tb-head h4 { font-size: 13px; font-weight: 800; margin: 0; }
-.tax-box .tb-head .badge {
-  font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px;
-  background: linear-gradient(135deg, #16a34a, #15803d); color: #fff;
-  letter-spacing: 0.4px;
-}
-.tax-box .tb-row {
-  display: flex; justify-content: space-between; font-size: 12px;
-  padding: 5px 0; color: var(--subtext-color); font-weight: 600;
-}
-.tax-box .tb-row.total {
-  border-top: 1px dashed var(--border-color);
-  margin-top: 6px; padding-top: 8px;
-  color: var(--text-color); font-weight: 800; font-size: 13px;
-}
-.tax-box .tb-row.total span:last-child { color: #16a34a; }
+.tax-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.tax-box{padding:16px;border-radius:14px;border:1.5px solid var(--border-color);}
+.tax-box.winner{border-color:#16a34a;background:rgba(22,163,74,0.06);}
+.tax-box .tb-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.tax-box .tb-head h4{font-size:13px;font-weight:800;margin:0;}
+.tax-box .tb-head .badge{font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:999px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;}
+.tax-box .tb-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;color:var(--subtext-color);font-weight:600;}
+.tax-box .tb-row.total{border-top:1px dashed var(--border-color);margin-top:6px;padding-top:8px;color:var(--text-color);font-weight:800;font-size:13px;}
+.tax-box .tb-row.total span:last-child{color:#16a34a;}
 
-/* Mobile */
-@media (max-width: 768px) {
-  .main-wrap { padding: 0 14px 60px; }
-  .fhero { padding: 30px 20px; border-radius: 18px; margin-top: 22px; }
-  .fhero-stats { gap: 18px; margin-top: 18px; }
-  .fhero-stats .stat b { font-size: 18px; }
-  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .tool-tile { min-height: 124px; padding: 15px 12px 13px; }
-  .tool-tile h3 { font-size: 12.5px; }
-  .tool-tile p { font-size: 10px; }
-  .cat-head h2 { font-size: 16.5px; }
-  .cat-head .count { display: none; }
-  .toolbar { margin: 24px 0 18px; }
-  .search-box { max-width: 100%; }
-  .field-grid { grid-template-columns: 1fr; }
-  .modal { border-radius: 16px; }
-  .modal-body { padding: 16px; }
-  .modal-overlay { padding: 10px; }
-  .tax-compare { grid-template-columns: 1fr; }
-  .result-card .val { font-size: 16.5px; }
-}
-@media (max-width: 480px) {
-  .filter-pills button { padding: 8px 12px; font-size: 11.5px; }
-  .tool-tile { padding: 13px 11px 11px; min-height: 116px; }
-  .tool-tile .tile-icon { width: 36px; height: 36px; border-radius: 10px; }
-  .tool-tile .tile-icon svg { width: 18px; height: 18px; }
+@media(max-width:768px){
+  .main-wrap{padding:0 14px 60px;}
+  .fhero{padding:30px 20px;border-radius:18px;margin-top:18px;}
+  .tools-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .tool-tile{min-height:124px;padding:15px 12px 13px;}
+  .tool-tile h3{font-size:12.5px;}
+  .tool-tile p{font-size:10px;}
+  .cat-head h2{font-size:16.5px;}
+  .cat-head .count{display:none;}
+  .field-grid{grid-template-columns:1fr;}
+  .modal{border-radius:16px;}
+  .modal-body{padding:16px;}
+  .modal-overlay{padding:10px;}
+  .tax-compare{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
-<div id="doceasy-header"></div>
+<!-- ============ HEADER (inline) ============ -->
+<header class="de-header">
+  <div class="de-header-inner">
+    <a href="index.html" class="de-brand">
+      <span class="de-brand-icon">DE</span>
+      <span>DocEasy</span>
+    </a>
+    <nav class="de-nav">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="finance-tools.html" class="active">Finance</a>
+      <a href="printing-tools.html">Printing</a>
+      <a href="media-tools.html">Media</a>
+      <a href="business-tools.html">Business</a>
+    </nav>
+  </div>
+</header>
 
 <main class="main-wrap">
 
-  <!-- HERO -->
   <section class="fhero">
     <div class="fhero-badge">
-      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"/>
-      </svg>
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"/></svg>
       FINANCE TOOLS
     </div>
     <h1>Finance Calculators &amp; Planners</h1>
@@ -451,7 +264,6 @@
     </div>
   </section>
 
-  <!-- TOOLBAR -->
   <div class="toolbar">
     <div class="search-box">
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
@@ -469,213 +281,138 @@
 
   <div class="no-results" id="noResults">No finance tools match your search.</div>
 
-  <!-- ================= LOAN CALCULATORS ================= -->
+  <!-- LOANS -->
   <section class="cat-block" data-cat="loan">
     <div class="cat-head">
-      <div class="icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      </div>
-      <div>
-        <h2>Loan Calculators</h2>
-        <p>Calculate monthly EMI, total interest, and amortization for home, car, personal, and education loans.</p>
-      </div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div><h2>Loan Calculators</h2><p>Monthly EMI, total interest, and amortization for home, car, personal, education loans.</p></div>
       <span class="count">4 Tools</span>
     </div>
     <div class="tools-grid">
       <button class="tool-tile" data-tool="home-loan-emi" data-tags="home loan emi calculator mortgage property">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Home Loan EMI</h3>
-        <p>Monthly EMI + amortization</p>
+        <span class="tag">NEW</span><h3>Home Loan EMI</h3><p>Monthly EMI + amortization</p>
       </button>
       <button class="tool-tile" data-tool="car-loan-emi" data-tags="car loan emi calculator auto vehicle">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Car Loan EMI</h3>
-        <p>Auto loan calculator</p>
+        <span class="tag">NEW</span><h3>Car Loan EMI</h3><p>Auto loan calculator</p>
       </button>
       <button class="tool-tile" data-tool="personal-loan-emi" data-tags="personal loan emi calculator unsecured">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Personal Loan EMI</h3>
-        <p>Quick personal loan estimate</p>
+        <span class="tag">NEW</span><h3>Personal Loan EMI</h3><p>Unsecured loan estimate</p>
       </button>
       <button class="tool-tile" data-tool="education-loan-emi" data-tags="education loan emi calculator student">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Education Loan EMI</h3>
-        <p>Student loan repayment</p>
+        <span class="tag">NEW</span><h3>Education Loan EMI</h3><p>Student loan repayment</p>
       </button>
     </div>
   </section>
 
-  <!-- ================= SALARY CALCULATORS ================= -->
+  <!-- SALARY -->
   <section class="cat-block" data-cat="salary">
     <div class="cat-head">
-      <div class="icon">
-        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg>
-      </div>
-      <div>
-        <h2>Salary &amp; Payroll</h2>
-        <p>Break down CTC into take-home salary, calculate HRA exemption, and estimate monthly pay.</p>
-      </div>
+      <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
+      <div><h2>Salary &amp; Payroll</h2><p>Break down CTC into take-home salary, calculate HRA exemption, and estimate monthly pay.</p></div>
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
       <button class="tool-tile" data-tool="in-hand-salary" data-tags="in hand salary calculator ctc take home">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>In-Hand Salary</h3>
-        <p>CTC → take-home monthly</p>
+        <span class="tag">NEW</span><h3>In-Hand Salary</h3><p>CTC → take-home monthly</p>
       </button>
       <button class="tool-tile" data-tool="hra-exemption" data-tags="hra exemption calculator house rent allowance">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>HRA Exemption</h3>
-        <p>House rent allowance tax break</p>
+        <span class="tag">NEW</span><h3>HRA Exemption</h3><p>House rent allowance tax break</p>
       </button>
       <button class="tool-tile" data-tool="salary-increment" data-tags="salary increment calculator hike percentage">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Salary Increment</h3>
-        <p>Old vs new salary hike</p>
+        <span class="tag">NEW</span><h3>Salary Increment</h3><p>Old vs new salary hike</p>
       </button>
     </div>
   </section>
 
-  <!-- ================= INVESTMENT CALCULATORS ================= -->
+  <!-- INVESTMENTS -->
   <section class="cat-block" data-cat="invest">
     <div class="cat-head">
-      <div class="icon">
-        <svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg>
-      </div>
-      <div>
-        <h2>Investment Tools</h2>
-        <p>Calculate SIP returns, FD maturity, PPF growth, and compound interest projections.</p>
-      </div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+      <div><h2>Investment Tools</h2><p>SIP returns, FD maturity, PPF growth, and compound interest projections.</p></div>
       <span class="count">4 Tools</span>
     </div>
     <div class="tools-grid">
       <button class="tool-tile" data-tool="sip" data-tags="sip calculator mutual fund monthly investment">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>SIP Calculator</h3>
-        <p>Mutual fund SIP returns</p>
+        <span class="tag">NEW</span><h3>SIP Calculator</h3><p>Mutual fund SIP returns</p>
       </button>
       <button class="tool-tile" data-tool="fd" data-tags="fd calculator fixed deposit maturity">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>FD Calculator</h3>
-        <p>Fixed deposit maturity amount</p>
+        <span class="tag">NEW</span><h3>FD Calculator</h3><p>Fixed deposit maturity</p>
       </button>
       <button class="tool-tile" data-tool="ppf" data-tags="ppf calculator public provident fund">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>PPF Calculator</h3>
-        <p>15-year PPF projection</p>
+        <span class="tag">NEW</span><h3>PPF Calculator</h3><p>15-year PPF projection</p>
       </button>
       <button class="tool-tile" data-tool="compound-interest" data-tags="compound interest calculator ci">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Compound Interest</h3>
-        <p>CI calculator for any period</p>
+        <span class="tag">NEW</span><h3>Compound Interest</h3><p>CI for any period</p>
       </button>
     </div>
   </section>
 
-  <!-- ================= TAX CALCULATORS ================= -->
+  <!-- TAX -->
   <section class="cat-block" data-cat="tax">
     <div class="cat-head">
-      <div class="icon">
-        <svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-      </div>
-      <div>
-        <h2>Tax Calculators</h2>
-        <p>Estimate income tax under old and new regimes, calculate TDS, and plan tax-saving investments.</p>
-      </div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+      <div><h2>Tax Calculators</h2><p>Income tax under old and new regimes, TDS, and tax-saving investments.</p></div>
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
       <button class="tool-tile" data-tool="income-tax" data-tags="income tax calculator old new regime">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Income Tax Calculator</h3>
-        <p>Old vs new regime comparison</p>
+        <span class="tag">NEW</span><h3>Income Tax Calculator</h3><p>Old vs new regime</p>
       </button>
       <button class="tool-tile" data-tool="tds" data-tags="tds calculator tax deduction">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>TDS Calculator</h3>
-        <p>By section (194C, 194J, etc.)</p>
+        <span class="tag">NEW</span><h3>TDS Calculator</h3><p>By section (194C, 194J)</p>
       </button>
       <button class="tool-tile" data-tool="tax-saving" data-tags="tax saving calculator 80c deduction">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Tax Saving Planner</h3>
-        <p>Section 80C, 80D, NPS</p>
+        <span class="tag">NEW</span><h3>Tax Saving Planner</h3><p>Section 80C, 80D, NPS</p>
       </button>
     </div>
   </section>
 
-  <!-- ================= RETIREMENT ================= -->
+  <!-- RETIREMENT -->
   <section class="cat-block" data-cat="retire">
     <div class="cat-head">
-      <div class="icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
-      </div>
-      <div>
-        <h2>Retirement &amp; Benefits</h2>
-        <p>Calculate gratuity, EPF balance, NPS pension, and retirement corpus projections.</p>
-      </div>
+      <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+      <div><h2>Retirement &amp; Benefits</h2><p>Gratuity, EPF balance, NPS pension, and retirement corpus projections.</p></div>
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
       <button class="tool-tile" data-tool="gratuity" data-tags="gratuity calculator employee benefit">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>Gratuity Calculator</h3>
-        <p>Payment on retirement/resignation</p>
+        <span class="tag">NEW</span><h3>Gratuity Calculator</h3><p>On retirement/resignation</p>
       </button>
       <button class="tool-tile" data-tool="epf" data-tags="epf calculator provident fund employee">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>EPF Calculator</h3>
-        <p>Employee provident fund balance</p>
+        <span class="tag">NEW</span><h3>EPF Calculator</h3><p>Provident fund balance</p>
       </button>
       <button class="tool-tile" data-tool="nps" data-tags="nps calculator national pension scheme">
         <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
-        <span class="tag">NEW</span>
-        <h3>NPS Calculator</h3>
-        <p>National Pension Scheme corpus</p>
+        <span class="tag">NEW</span><h3>NPS Calculator</h3><p>Pension scheme corpus</p>
       </button>
     </div>
   </section>
 
-  <!-- HOW TO USE -->
+  <!-- HOW TO -->
   <section class="how-to-use">
     <h2>How to Use Finance Tools</h2>
     <p class="lead">Four simple steps to calculate EMIs, taxes, salaries, or investment returns — all in your browser.</p>
     <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h3>Pick a Calculator</h3>
-        <p>Choose from loan, salary, investment, tax, or retirement categories above.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h3>Enter Your Numbers</h3>
-        <p>Type loan amounts, interest rates, tenure, or salary. Nothing leaves your device.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h3>See Instant Results</h3>
-        <p>Real-time calculations with breakdowns, charts, and amortization schedules.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <h3>Save or Share</h3>
-        <p>Download the schedule as PDF or share results — no signup needed.</p>
-      </div>
+      <div class="step-card"><div class="step-num">1</div><h3>Pick a Calculator</h3><p>Choose from loan, salary, investment, tax, or retirement categories above.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h3>Enter Your Numbers</h3><p>Type loan amounts, interest rates, tenure, or salary. Nothing leaves your device.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>See Instant Results</h3><p>Real-time calculations with breakdowns, charts, and amortization schedules.</p></div>
+      <div class="step-card"><div class="step-num">4</div><h3>Save or Share</h3><p>Download the schedule as CSV — no signup needed.</p></div>
     </div>
   </section>
 
@@ -683,137 +420,65 @@
   <section class="deep-faq" id="faq">
     <h2>Finance Tools — Frequently Asked Questions</h2>
     <p class="faq-lead">Everything about DocEasy's finance calculators — loans, taxes, salary, investments, and privacy.</p>
-
-    <details class="faq-item" open>
-      <summary>What are DocEasy Finance Tools?</summary>
-      <p>DocEasy Finance Tools are a growing collection of free, browser-based financial calculators designed for Indian users. They cover four major areas: Loan Calculators (home, car, personal, education EMI), Salary &amp; Payroll (in-hand salary, HRA exemption, salary increment), Investment Tools (SIP, FD, PPF, compound interest), Tax Calculators (income tax under both regimes, TDS, tax saving), and Retirement &amp; Benefits (gratuity, EPF, NPS). Every calculator runs entirely in your browser using JavaScript — no data is uploaded, no signup is required, and no personal financial information ever leaves your device. Unlike most finance sites that require registration or bombard you with ads, DocEasy gives you instant, private calculations in seconds.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Are these finance calculators really free?</summary>
-      <p>Yes — every calculator is 100% free, forever, with no strings attached. There's no signup, no email, no credit card, no trial period, no daily limit, and no premium tier. You can calculate home loan EMIs, SIP returns, or income tax as many times as you want, all free. The site is supported by lightweight display ads elsewhere. We don't sell your financial data, we don't track your inputs, and we don't ask for your email to unlock features. Most finance sites lure you in with free calculators and then upsell loan products, credit cards, or investment advice — DocEasy doesn't sell anything. It's just calculations, free forever.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Is my financial data safe?</summary>
-      <p>Completely safe. Every finance calculator runs entirely client-side in your browser — no data is ever uploaded to any server. When you enter your loan amount, salary, or investment details, those numbers live only in your browser's memory. Nothing is transmitted, logged, or stored anywhere. You can verify this yourself: open Developer Tools (F12), go to the Network tab, enter your financial data, and watch for requests. You'll see zero outgoing data — because nothing is transmitted. This makes DocEasy safe for sensitive financial information like salary, loan details, investment portfolio values, and tax computations. Even we cannot see your numbers.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>How accurate is the Home Loan EMI Calculator?</summary>
-      <p>The Home Loan EMI Calculator uses the standard compound interest formula prescribed by banks: <code>EMI = P × r × (1+r)^n / ((1+r)^n - 1)</code>, where P is the principal, r is the monthly interest rate (annual rate / 12 / 100), and n is the loan tenure in months. The calculation matches the output of major bank EMI calculators (HDFC, SBI, ICICI) to 2 decimal places. The tool also generates a detailed amortization schedule showing the split between principal and interest for each month — useful for understanding how much total interest you'll pay over the life of the loan. For loans with floating rates or prepayments, the calculation is an estimate — actual EMI may vary slightly based on the bank's day-count conventions.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>What is the difference between old and new tax regimes?</summary>
-      <p>India has two income tax regimes since April 2020. <b>Old Regime:</b> Higher tax rates but allows numerous deductions and exemptions — Section 80C (up to ₹1.5 lakh), 80D (health insurance), HRA exemption, home loan interest (Section 24), and standard deduction of ₹50,000. Best for people with significant investments and home loans. <b>New Regime:</b> Lower tax rates and wider slabs but no major deductions except standard deduction of ₹50,000 (₹75,000 from FY 2024-25). Best for people with fewer deductions or those who prefer simplicity. DocEasy's Income Tax Calculator compares both regimes side-by-side and tells you which one saves you more tax for your specific income. Choosing the right regime can save ₹10,000–50,000 per year.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>How is in-hand salary calculated from CTC?</summary>
-      <p>In-hand salary is your CTC minus all deductions. The main deductions are: <b>(1) Employer PF contribution:</b> 12% of basic salary (part of CTC but not paid to you directly). <b>(2) Employee PF contribution:</b> 12% of basic salary (deducted from your gross salary). <b>(3) Professional Tax:</b> ₹200 per month (varies by state). <b>(4) Income Tax (TDS):</b> As per your applicable tax slab, divided into 12 monthly deductions. <b>(5) Gratuity:</b> 4.81% of basic (part of CTC but paid only on exit). The rough formula: In-hand ≈ CTC × 0.75 to 0.85, depending on your tax bracket and structure. DocEasy's In-Hand Salary Calculator gives you an exact breakdown with all components itemized.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>How does the HRA exemption work?</summary>
-      <p>House Rent Allowance (HRA) exemption under Section 10(13A) is the <b>least</b> of three values: (1) Actual HRA received from your employer; (2) Rent paid minus 10% of your basic salary; (3) 50% of basic salary (if living in metro cities — Delhi, Mumbai, Kolkata, Chennai) or 40% of basic (non-metro). The exempted amount is subtracted from your taxable income, reducing your tax liability. For example, if your basic is ₹50,000/month, HRA is ₹20,000/month, and you pay ₹18,000/month rent in Delhi — the exemption is the minimum of ₹20,000, ₹18,000 − ₹5,000 = ₹13,000, and ₹25,000 → ₹13,000/month, which is ₹1,56,000/year tax-free. The HRA Exemption Calculator handles this automatically.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>What is SIP and how do returns compound?</summary>
-      <p>SIP (Systematic Investment Plan) is a method of investing a fixed amount in mutual funds at regular intervals — usually monthly. For example, investing ₹5,000 every month into an equity mutual fund. The power of SIP comes from <b>rupee cost averaging</b> and <b>compounding</b>. When markets are down, your fixed SIP buys more units; when markets are up, it buys fewer — averaging out your purchase cost over time. Compounding works by generating returns on your returns: a 12% annual return over 20 years on a ₹10,000 monthly SIP grows to about ₹99 lakh, of which ₹76 lakh is pure returns. The SIP Calculator projects this growth based on your monthly amount, expected return rate, and investment tenure. Returns are compounded monthly in the calculation.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>How is gratuity calculated?</summary>
-      <p>Gratuity is a lump-sum payment made by an employer to an employee who has completed at least 5 years of continuous service. The formula under the Payment of Gratuity Act, 1972 is: <code>Gratuity = (Last drawn salary × 15 × Years of service) / 26</code>, where "last drawn salary" means basic + dearness allowance, and 26 represents the average number of working days in a month. For example, if your last drawn salary is ₹50,000 and you've worked 10 years: Gratuity = (50,000 × 15 × 10) / 26 = ₹2,88,461. Gratuity is tax-exempt up to ₹20 lakh (for non-government employees). The Gratuity Calculator handles the formula and shows your payable amount instantly, including the tax treatment.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>What is EPF and how do I calculate my balance?</summary>
-      <p>EPF (Employees' Provident Fund) is a retirement savings scheme where both you and your employer contribute 12% of your basic salary every month. Your contribution goes entirely to your EPF account, while your employer's contribution is split — 8.33% goes to EPS (pension) and 3.67% to EPF. The EPF balance grows with interest, currently around 8.25% per annum (revised annually by EPFO). For example, if your basic salary is ₹30,000/month and you work for 20 years at 8.25% interest, your EPF corpus could be roughly ₹45–55 lakh. The EPF Calculator projects this based on your current salary, expected salary growth, and interest rate. Your actual EPF balance is available on the EPFO member portal (unifiedportal-mem.epfindia.gov.in).</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Which browsers are supported?</summary>
-      <p>All modern browsers: Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Since the calculators use only standard JavaScript and Canvas APIs (for charts), they work identically across all browsers. Chrome and Edge offer the smoothest experience with the fastest chart rendering. Mobile browsers (Chrome on Android, Safari on iOS) work perfectly for all calculations. If you see calculation errors or layout issues on an old browser, updating to the latest version usually fixes them. All calculations use IEEE 754 double-precision floating-point math, which is standard across all browsers.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Does it work offline?</summary>
-      <p>Yes — after the page loads once, all finance calculators work fully offline. Since all calculations happen locally in your browser using JavaScript, no internet connection is needed once the page is loaded. This is particularly useful when you're traveling, in areas with poor connectivity, or in a privacy-conscious environment where you don't want any network activity during financial calculations. You can switch off Wi-Fi and continue calculating EMIs, SIPs, taxes, or gratuity. The only exception is the very first page load — after that, everything works offline until you refresh.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Can I use these tools on mobile?</summary>
-      <p>Yes — every finance tool is fully responsive and works on Android phones, iPhones, and tablets. The interface adapts to narrow screens with touch-friendly inputs and larger tap targets. You can calculate EMIs on the go, check SIP projections during a meeting, or estimate taxes at your desk. The charts and amortization schedules are also mobile-optimized — they scale down gracefully and remain readable. On mobile, we recommend landscape mode for the more complex calculators (like Income Tax and Home Loan EMI), which need slightly more screen width for the schedule tables.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>How is this different from BankBazaar or PolicyBazaar?</summary>
-      <p>BankBazaar, PolicyBazaar, and similar sites are <b>lead-generation platforms</b> — they offer free calculators but their real business is selling you loans, credit cards, and insurance. Every calculation is a hook to collect your phone number and email so their sales team can call you. DocEasy is the opposite: we don't sell anything, don't collect your contact info, and don't share your data with anyone. Our calculators are pure utilities — you use them, get your answer, and close the tab. No follow-up calls, no spam emails, no aggressive sales tactics. Just honest calculators, free forever.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Can I download my amortization schedule?</summary>
-      <p>Yes — the Loan EMI Calculators let you download the full amortization schedule as a CSV file, showing month-by-month breakdown of principal and interest payments. This is useful for: (1) Understanding how much total interest you'll pay; (2) Tracking your loan progress; (3) Planning prepayments to save interest; (4) Sharing with your CA for tax filing. The CSV is generated entirely in your browser — no server round-trip, no delay, no file upload. You can also print the schedule directly if you prefer a paper copy.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Are the calculators compliant with Indian tax laws?</summary>
-      <p>The calculators implement the current income tax slabs, standard deductions, Section 80C/80D limits, HRA rules, gratuity formula, and EPF interest rates as prescribed by Indian law for FY 2024-25. However, tax laws change every year during the Union Budget — slabs are revised, deductions are added or removed, and rules are updated. DocEasy aims to keep the calculators in sync with official rates, and we update them within days of budget announcements. However, always verify critical calculations against the Income Tax Department website (incometax.gov.in) or consult a Chartered Accountant before making major financial decisions. These tools are for estimation and planning — not a substitute for professional advice.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Can I use these tools for financial planning advice?</summary>
-      <p>DocEasy's calculators help you understand numbers — EMI amounts, tax liabilities, investment projections — but they don't provide financial advice. We don't recommend specific loans, mutual funds, insurance products, or investment strategies. Financial decisions depend on many personal factors: your risk tolerance, cash flow, family situation, career stage, and long-term goals. These calculators give you data to make informed choices, but for personalized advice, consult a SEBI-registered investment advisor (RIA) or a certified financial planner (CFP). The calculators are tools for planning, not substitutes for professional judgment.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Do you keep logs of my financial data?</summary>
-      <p>No. We don't log loan amounts, salary figures, tax rates, investment values, or any metadata about your usage. We don't track which calculators you use or when. Our analytics only records anonymous page views — never financial content. Since your data never leaves your browser, there's literally nothing for us to log. You can verify this yourself: open Developer Tools → Network tab, enter your financial data, and watch for requests. Zero outgoing requests carry your financial information — because it never goes anywhere. This is the strongest possible privacy guarantee for any finance tool.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>How do I calculate the best loan tenure?</summary>
-      <p>Shorter tenure means higher EMI but lower total interest — longer tenure means lower EMI but higher total interest. For example, on a ₹50 lakh home loan at 8.5% interest: 15-year tenure → EMI ₹49,233, total interest ₹38.6 lakh. 20-year tenure → EMI ₹43,391, total interest ₹54.1 lakh. 25-year tenure → EMI ₹40,247, total interest ₹70.7 lakh. The "best" tenure depends on your cash flow — choose the shortest tenure you can comfortably afford. A common rule of thumb: EMI should not exceed 40% of your monthly take-home salary. Our Home Loan EMI Calculator lets you compare tenures side-by-side to find your sweet spot.</p>
-    </details>
-
-    <details class="faq-item">
-      <summary>Can I plan prepayments to save interest?</summary>
-      <p>Yes — our loan calculators include an optional extra monthly payment field. When you make a prepayment, you have two choices: reduce tenure (keep EMI same) or reduce EMI (keep tenure same). <b>Reducing tenure saves more interest</b> — this is almost always the better financial choice. For example, on a ₹50 lakh home loan at 8.5% for 20 years, prepaying ₹5 lakh in year 5 and choosing tenure reduction saves about ₹15 lakh in interest over the loan's life. If you choose EMI reduction instead, you save about ₹6 lakh. The Home Loan EMI Calculator lets you model prepayments and see the savings in real-time.</p>
-    </details>
-
-    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Related DocEasy Categories</h3>
-    <p style="text-align:center; color:var(--subtext-color); margin-bottom:20px; font-size:14px;">Explore other free tools on DocEasy</p>
-    <ul style="max-width:680px; margin:0 auto 20px; padding-left:24px; line-height:1.9; font-size:15px; color:var(--subtext-color);">
-      <li><a href="categories.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">All Categories</a> — Browse all 35+ tools</li>
-      <li><a href="business-tools.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">Business Tools</a> — GST, invoices, stamp duty</li>
-      <li><a href="printing-tools.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">Printing Tools</a> — Aadhaar, ID card, passport</li>
-      <li><a href="media-tools.html" style="color:#16a34a; font-weight:600; text-decoration:underline;">Media Tools</a> — Screen recorder, voice recorder</li>
-      <li><a href="index.html#pdf-tools" style="color:#16a34a; font-weight:600; text-decoration:underline;">PDF Tools</a> — Merge, split, compress PDFs</li>
-      <li><a href="index.html#image-tools" style="color:#16a34a; font-weight:600; text-decoration:underline;">Image Tools</a> — Compress, convert, resize images</li>
-    </ul>
-
-    <h3 style="text-align:center; margin-top:40px; font-size:20px; font-weight:800; color:var(--text-color);">Conclusion</h3>
-    <p style="max-width:860px; margin:20px auto 0; font-size:15.5px; color:var(--subtext-color); line-height:1.8; text-align:center;">
-      DocEasy's Finance Tools give you fast, private, and free calculators for every major financial decision — home loans, income tax, salary, SIP, gratuity, EPF, and more. No signup, no data sharing, no sales calls. Whether you're planning your first home purchase, comparing tax regimes, or projecting retirement savings, these tools give you clear numbers to make confident decisions.
-    </p>
-
+    <details class="faq-item" open><summary>What are DocEasy Finance Tools?</summary><p>DocEasy Finance Tools are a growing collection of free, browser-based financial calculators designed for Indian users. They cover loan EMI, salary &amp; payroll, investments, tax, and retirement planning. Every calculator runs entirely in your browser — no data is uploaded, no signup is required, and no personal financial information ever leaves your device.</p></details>
+    <details class="faq-item"><summary>Are these finance calculators really free?</summary><p>Yes — every calculator is 100% free, forever. No signup, no email, no credit card, no trial, no premium tier. We don't sell your data and don't ask for your email to unlock features.</p></details>
+    <details class="faq-item"><summary>Is my financial data safe?</summary><p>Completely safe. Every calculator runs client-side. Open Developer Tools → Network tab, enter your data, and watch for requests — you'll see zero outgoing data. Even we cannot see your numbers.</p></details>
+    <details class="faq-item"><summary>How accurate is the Home Loan EMI Calculator?</summary><p>It uses the standard bank formula: <code>EMI = P × r × (1+r)^n / ((1+r)^n − 1)</code>. Matches HDFC, SBI, and ICICI calculators to 2 decimal places. For floating rates or prepayments, it's an estimate.</p></details>
+    <details class="faq-item"><summary>What is the difference between old and new tax regimes?</summary><p>Old regime: higher rates but allows 80C, 80D, HRA, home loan interest, standard deduction ₹50k. New regime: lower rates but only standard deduction ₹75k (FY 2024-25). Use the Income Tax Calculator to compare both side-by-side.</p></details>
+    <details class="faq-item"><summary>Does it work offline?</summary><p>Yes — after the page loads once, all calculators work fully offline. No internet needed for calculations.</p></details>
+    <details class="faq-item"><summary>Do you keep logs of my financial data?</summary><p>No. We don't log loan amounts, salaries, tax rates, or any metadata. Your data never leaves your browser, so there's nothing for us to log.</p></details>
+    <details class="faq-item"><summary>Can I download my amortization schedule?</summary><p>Yes — the Loan EMI Calculators let you download the full schedule as a CSV file. Generated entirely in your browser, no server round-trip.</p></details>
   </section>
 
 </main>
 
-<div id="doceasy-footer"></div>
-
-<script src="assets/js/core/doceasy-core.js"></script>
+<!-- ============ FOOTER (inline) ============ -->
+<footer class="de-footer">
+  <div class="de-footer-inner">
+    <div>
+      <h4>DocEasy</h4>
+      <p>Free browser-based tools for PDFs, images, ID cards, finance, and business. No signup, 100% private.</p>
+      <p>Your files never leave your device.</p>
+    </div>
+    <div>
+      <h4>Finance</h4>
+      <ul>
+        <li><a href="finance-tools.html">Loan EMI</a></li>
+        <li><a href="finance-tools.html">Income Tax</a></li>
+        <li><a href="finance-tools.html">SIP Calculator</a></li>
+        <li><a href="finance-tools.html">Gratuity</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <ul>
+        <li><a href="card-cropper.html">ID Card Cropper</a></li>
+        <li><a href="printing-tools.html">Printing Tools</a></li>
+        <li><a href="media-tools.html">Media Tools</a></li>
+        <li><a href="business-tools.html">Business Tools</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Info</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="categories.html">All Categories</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="de-footer-bottom">
+    © 2025 DocEasy. All rights reserved. Made with ❤ in India.
+  </div>
+</footer>
 
 <!-- ============ MODAL ============ -->
 <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
   <div class="modal" id="modalBox">
     <div class="modal-header">
       <div class="mh-icon" id="modalIcon"></div>
-      <div>
+      <div style="flex:1;">
         <h2 id="modalTitle">Calculator</h2>
         <p id="modalSubtitle"></p>
       </div>
@@ -824,836 +489,693 @@
 </div>
 
 <script>
-/* =========================================================
-   UTILITIES
-   ========================================================= */
-function inr(n) {
-  if (!isFinite(n)) return '₹0';
-  const neg = n < 0;
-  n = Math.abs(Math.round(n));
-  const s = n.toLocaleString('en-IN');
-  return (neg ? '-₹' : '₹') + s;
-}
-function inr2(n) {
-  if (!isFinite(n)) return '₹0.00';
-  return '₹' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-function num(n) { return (Math.round(n * 100) / 100).toLocaleString('en-IN'); }
-function pct(n) { return (Math.round(n * 100) / 100) + '%'; }
-
-function calcEMI(P, annualRate, months) {
-  if (months <= 0) return 0;
-  const r = annualRate / 12 / 100;
-  if (r === 0) return P / months;
-  const pow = Math.pow(1 + r, months);
-  return P * r * pow / (pow - 1);
-}
-
-function amortize(P, annualRate, months, extraMonthly) {
-  extraMonthly = extraMonthly || 0;
-  const r = annualRate / 12 / 100;
-  const baseEMI = calcEMI(P, annualRate, months);
-  let balance = P;
-  let totalInterest = 0;
-  let totalPrincipal = 0;
-  let paidMonths = 0;
-  const rows = [];
-  const safety = months * 3 + 24;
-  while (balance > 0.5 && paidMonths < safety) {
-    paidMonths++;
-    const interest = balance * r;
-    let principal = baseEMI + extraMonthly - interest;
-    if (principal <= 0) { principal = 0.01; }
-    if (principal > balance) principal = balance;
-    balance -= principal;
-    totalInterest += interest;
-    totalPrincipal += principal;
-    rows.push({
-      month: paidMonths,
-      emi: baseEMI + extraMonthly,
-      principal: principal,
-      interest: interest,
-      balance: Math.max(0, balance)
-    });
-    if (paidMonths > months && extraMonthly === 0) break;
+/* ============ HELPERS ============ */
+function inr(n){ if(!isFinite(n))return '₹0'; const neg=n<0; n=Math.abs(Math.round(n)); return (neg?'-₹':'₹')+n.toLocaleString('en-IN'); }
+function inr2(n){ if(!isFinite(n))return '₹0.00'; return '₹'+n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function calcEMI(P,annualRate,months){ if(months<=0)return 0; const r=annualRate/12/100; if(r===0)return P/months; const pow=Math.pow(1+r,months); return P*r*pow/(pow-1); }
+function amortize(P,annualRate,months,extra){
+  extra=extra||0; const r=annualRate/12/100; const baseEMI=calcEMI(P,annualRate,months);
+  let balance=P,totalInterest=0,totalPrincipal=0,paidMonths=0; const rows=[]; const safety=months*3+24;
+  while(balance>0.5 && paidMonths<safety){
+    paidMonths++; const interest=balance*r; let principal=baseEMI+extra-interest;
+    if(principal<=0)principal=0.01; if(principal>balance)principal=balance;
+    balance-=principal; totalInterest+=interest; totalPrincipal+=principal;
+    rows.push({month:paidMonths,emi:baseEMI+extra,principal,interest,balance:Math.max(0,balance)});
+    if(paidMonths>months && extra===0)break;
   }
-  return { rows, totalInterest, totalPrincipal, months: paidMonths, baseEMI };
+  return {rows,totalInterest,totalPrincipal,months:paidMonths,baseEMI};
 }
-
-function donutSVG(pctA, colorA, colorB) {
-  const r = 48, c = 2 * Math.PI * r;
-  const dash = (Math.max(0, Math.min(100, pctA)) / 100) * c;
+function donutSVG(pctA,colorA,colorB){
+  const r=48,c=2*Math.PI*r; const dash=(Math.max(0,Math.min(100,pctA))/100)*c;
   return `<svg viewBox="0 0 120 120" width="130" height="130" style="flex-shrink:0">
     <circle cx="60" cy="60" r="${r}" fill="none" stroke="${colorB}" stroke-width="16"/>
-    <circle cx="60" cy="60" r="${r}" fill="none" stroke="${colorA}" stroke-width="16"
-      stroke-dasharray="${dash} ${c}" transform="rotate(-90 60 60)" stroke-linecap="round"/>
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="${colorA}" stroke-width="16" stroke-dasharray="${dash} ${c}" transform="rotate(-90 60 60)" stroke-linecap="round"/>
     <text x="60" y="58" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor">${Math.round(pctA)}%</text>
     <text x="60" y="74" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" opacity="0.6">INTEREST</text>
   </svg>`;
 }
+function legendRow(color,label,value){ return `<div class="li"><span class="dot" style="background:${color}"></span>${label}<span>${value}</span></div>`; }
 
-function legendRow(color, label, value) {
-  return `<div class="li"><span class="dot" style="background:${color}"></span>${label}<span>${value}</span></div>`;
-}
+/* ============ TAX ============ */
+function taxNewRegime(t){ let tax=0,inc=t; const slabs=[[1500000,0.30],[1200000,0.20],[1000000,0.15],[700000,0.10],[300000,0.05]]; for(const[l,r]of slabs){if(inc>l){tax+=(inc-l)*r;inc=l;}} return tax; }
+function taxOldRegime(t){ let tax=0,inc=t; const slabs=[[1000000,0.30],[500000,0.20],[250000,0.05]]; for(const[l,r]of slabs){if(inc>l){tax+=(inc-l)*r;inc=l;}} return tax; }
+function rebateNew(tax,t){ return t<=700000?Math.min(tax,25000):0; }
+function rebateOld(tax,t){ return t<=500000?Math.min(tax,12500):0; }
 
-/* =========================================================
-   TAX HELPERS (FY 2024-25)
-   ========================================================= */
-function taxNewRegime(taxable) {
-  let tax = 0, inc = taxable;
-  const slabs = [[1500000, 0.30], [1200000, 0.20], [1000000, 0.15], [700000, 0.10], [300000, 0.05]];
-  for (const [lim, rate] of slabs) {
-    if (inc > lim) { tax += (inc - lim) * rate; inc = lim; }
-  }
-  return tax;
-}
-function taxOldRegime(taxable) {
-  let tax = 0, inc = taxable;
-  const slabs = [[1000000, 0.30], [500000, 0.20], [250000, 0.05]];
-  for (const [lim, rate] of slabs) {
-    if (inc > lim) { tax += (inc - lim) * rate; inc = lim; }
-  }
-  return tax;
-}
-function rebate87A_New(tax, taxable) {
-  if (taxable <= 700000) return Math.min(tax, 25000);
-  return 0;
-}
-function rebate87A_Old(tax, taxable) {
-  if (taxable <= 500000) return Math.min(tax, 12500);
-  return 0;
-}
-
-/* =========================================================
-   TOOL CONFIGURATIONS
-   ========================================================= */
-const ICONS = {
-  home: '<path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
-  car: '<path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/>',
-  person: '<circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/>',
-  edu: '<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
-  salary: '<rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/>',
-  chart: '<path d="M3 3v18h18M7 14l4-4 4 4 6-6"/>',
-  bank: '<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/>',
-  plus: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/>',
-  ci: '<path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/>',
-  tax: '<path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/>',
-  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/>',
-  epf: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/>',
-  nps: '<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/>'
+/* ============ ICONS ============ */
+const ICONS={
+  home:'<path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  car:'<path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/>',
+  person:'<circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/>',
+  edu:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+  salary:'<rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/>',
+  chart:'<path d="M3 3v18h18M7 14l4-4 4 4 6-6"/>',
+  bank:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/>',
+  plus:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/>',
+  ci:'<path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/>',
+  tax:'<path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/>',
+  epf:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/>',
+  nps:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/>'
 };
 
-/* --- FIELD BUILDERS --- */
-function fieldNum(key, label, def, opts) {
-  opts = opts || {};
-  return {
-    key, label, type: 'number', default: def,
-    prefix: opts.prefix || '', suffix: opts.suffix || '',
-    min: opts.min, max: opts.max, step: opts.step || 1, hint: opts.hint || ''
-  };
-}
-function fieldSelect(key, label, def, options) {
-  return { key, label, type: 'select', default: def, options };
-}
+function fN(key,label,def,opts){ opts=opts||{}; return {key,label,type:'number',default:def,prefix:opts.prefix||'',suffix:opts.suffix||'',min:opts.min,max:opts.max,step:opts.step||1,hint:opts.hint||''}; }
+function fS(key,label,def,options){ return {key,label,type:'select',default:def,options}; }
 
-/* =========================================================
-   LOAN TOOLS
-   ========================================================= */
-function loanTool(cfg) {
+/* ============ LOAN TOOL FACTORY ============ */
+function loanTool(cfg){
   return {
-    title: cfg.title,
-    subtitle: cfg.subtitle,
-    icon: cfg.icon,
-    fields: [
-      fieldNum('P', 'Loan Amount', cfg.defaultP, { prefix: '₹', min: 10000, step: 10000 }),
-      fieldNum('rate', 'Interest Rate (p.a.)', cfg.defaultRate, { suffix: '%', min: 0.1, max: 30, step: 0.05 }),
-      fieldNum('years', 'Loan Tenure', cfg.defaultYears, { suffix: 'yrs', min: 1, max: 40, step: 1 }),
-      fieldNum('extra', 'Extra Monthly Prepayment (optional)', 0, { prefix: '₹', min: 0, step: 500, hint: 'Reduces tenure & saves interest' })
+    title:cfg.title, subtitle:cfg.subtitle, icon:cfg.icon,
+    fields:[
+      fN('P','Loan Amount',cfg.defaultP,{prefix:'₹',min:10000,step:10000}),
+      fN('rate','Interest Rate (p.a.)',cfg.defaultRate,{suffix:'%',min:0.1,max:30,step:0.05}),
+      fN('years','Loan Tenure',cfg.defaultYears,{suffix:'yrs',min:1,max:40,step:1}),
+      fN('extra','Extra Monthly Prepayment (optional)',0,{prefix:'₹',min:0,step:500,hint:'Reduces tenure & saves interest'})
     ],
-    calc: v => {
-      const months = Math.round(v.years * 12);
-      const baseEMI = calcEMI(v.P, v.rate, months);
-      const am = amortize(v.P, v.rate, months, v.extra || 0);
-      return {
-        emi: baseEMI,
-        total: baseEMI * months,
-        interest: baseEMI * months - v.P,
-        months,
-        P: v.P,
-        rate: v.rate,
-        extra: v.extra || 0,
-        am
-      };
+    calc:v=>{
+      const months=Math.round(v.years*12);
+      const baseEMI=calcEMI(v.P,v.rate,months);
+      const am=amortize(v.P,v.rate,months,v.extra||0);
+      return {emi:baseEMI,total:baseEMI*months,interest:baseEMI*months-v.P,months,P:v.P,rate:v.rate,extra:v.extra||0,am};
     },
-    render: (r, v) => {
-      const interestPct = r.total > 0 ? (r.interest / r.total) * 100 : 0;
-      const principalPct = 100 - interestPct;
-      const saved = r.extra > 0 ? (r.total - (r.am.totalPrincipal + r.am.totalInterest)) : 0;
-      const savedMonths = r.extra > 0 ? (r.months - r.am.months) : 0;
-
-      let html = `
-        <div class="result-grid">
-          <div class="result-card">
-            <div class="lbl">Monthly EMI</div>
-            <div class="val">${inr2(r.emi)}</div>
-            <div class="sub">${r.months} months</div>
-          </div>
-          <div class="result-card alt">
-            <div class="lbl">Total Interest</div>
-            <div class="val">${inr(r.interest)}</div>
-            <div class="sub">over loan life</div>
-          </div>
-          <div class="result-card">
-            <div class="lbl">Total Payment</div>
-            <div class="val">${inr(r.total)}</div>
-            <div class="sub">principal + interest</div>
-          </div>
+    render:r=>{
+      const interestPct=r.total>0?(r.interest/r.total)*100:0;
+      let html=`<div class="result-grid">
+        <div class="result-card"><div class="lbl">Monthly EMI</div><div class="val">${inr2(r.emi)}</div><div class="sub">${r.months} months</div></div>
+        <div class="result-card alt"><div class="lbl">Total Interest</div><div class="val">${inr(r.interest)}</div><div class="sub">over loan life</div></div>
+        <div class="result-card"><div class="lbl">Total Payment</div><div class="val">${inr(r.total)}</div><div class="sub">principal + interest</div></div>
+      </div>
+      <div class="chart-row">${donutSVG(interestPct,'#16a34a','#f59e0b')}
+        <div class="legend">
+          ${legendRow('#16a34a','Principal',inr(r.P))}
+          ${legendRow('#f59e0b','Interest',inr(r.interest))}
+          <div class="li" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-color);font-size:11.5px;color:var(--subtext-color);font-weight:700;">Interest is ${interestPct.toFixed(1)}% of total payment</div>
         </div>
-
-        <div class="chart-row">
-          ${donutSVG(interestPct, '#16a34a', '#f59e0b')}
-          <div class="legend">
-            ${legendRow('#16a34a', 'Principal', inr(r.P))}
-            ${legendRow('#f59e0b', 'Interest', inr(r.interest))}
-            <div class="li" style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border-color); font-size:11.5px; color:var(--subtext-color); font-weight:700;">
-              Interest is ${interestPct.toFixed(1)}% of total payment
-            </div>
-          </div>
+      </div>`;
+      if(r.extra>0){
+        html+=`<div class="result-grid">
+          <div class="result-card"><div class="lbl">New Payoff Time</div><div class="val">${r.am.months} mo</div><div class="sub">${(r.am.months/12).toFixed(1)} years</div></div>
+          <div class="result-card warn"><div class="lbl">Time Saved</div><div class="val">${Math.max(0,r.months-r.am.months)} mo</div></div>
+          <div class="result-card"><div class="lbl">Interest Saved</div><div class="val">${inr(Math.max(0,r.interest-r.am.totalInterest))}</div></div>
         </div>`;
-
-      if (r.extra > 0) {
-        html += `
-          <div class="result-grid">
-            <div class="result-card">
-              <div class="lbl">New Payoff Time</div>
-              <div class="val">${r.am.months} mo</div>
-              <div class="sub">${(r.am.months/12).toFixed(1)} years</div>
-            </div>
-            <div class="result-card warn">
-              <div class="lbl">Time Saved</div>
-              <div class="val">${Math.max(0, r.months - r.am.months)} mo</div>
-            </div>
-            <div class="result-card">
-              <div class="lbl">Interest Saved</div>
-              <div class="val">${inr(Math.max(0, r.interest - r.am.totalInterest))}</div>
-            </div>
-          </div>`;
       }
-
-      html += `<div class="section-title">Amortization Schedule (first 12 months)</div>
-        <div class="sch-wrap">
-          <table>
-            <thead><tr><th>Month</th><th>EMI</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
-            <tbody>`;
-      r.am.rows.slice(0, 12).forEach(row => {
-        html += `<tr>
-          <td>${row.month}</td>
-          <td>${inr(row.emi)}</td>
-          <td>${inr(row.principal)}</td>
-          <td>${inr(row.interest)}</td>
-          <td>${inr(row.balance)}</td>
-        </tr>`;
+      html+=`<div class="section-title">Amortization Schedule (first 12 months)</div>
+        <div class="sch-wrap"><table><thead><tr><th>Month</th><th>EMI</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody>`;
+      r.am.rows.slice(0,12).forEach(row=>{
+        html+=`<tr><td>${row.month}</td><td>${inr(row.emi)}</td><td>${inr(row.principal)}</td><td>${inr(row.interest)}</td><td>${inr(row.balance)}</td></tr>`;
       });
-      html += `</tbody></table></div>
-        <div class="btn-row">
-          <button class="btn primary" onclick="downloadAmortization()">Download Full Schedule (CSV)</button>
-        </div>
-        <div class="note">EMI formula: P × r × (1+r)^n / ((1+r)^n − 1), where r = annual rate / 12 / 100 and n = tenure in months. Matches bank calculators to 2 decimal places. Prepayments assumed to reduce tenure (keep EMI same) — the recommended option.</div>`;
+      html+=`</tbody></table></div>
+        <div class="btn-row"><button class="btn primary" id="dlCsvBtn">Download Full Schedule (CSV)</button></div>
+        <div class="note">EMI formula: P × r × (1+r)^n / ((1+r)^n − 1). Matches bank calculators to 2 decimal places.</div>`;
+      setTimeout(()=>{
+        const b=document.getElementById('dlCsvBtn');
+        if(b) b.onclick=()=>{
+          let csv='Month,EMI,Principal,Interest,Balance\n';
+          r.am.rows.forEach(row=>{ csv+=`${row.month},${row.emi.toFixed(2)},${row.principal.toFixed(2)},${row.interest.toFixed(2)},${row.balance.toFixed(2)}\n`; });
+          const blob=new Blob([csv],{type:'text/csv'});
+          const url=URL.createObjectURL(blob);
+          const a=document.createElement('a'); a.href=url; a.download='loan-amortization.csv'; a.click();
+          URL.revokeObjectURL(url);
+        };
+      },50);
       return html;
     }
   };
 }
 
-/* =========================================================
-   TOOLS MASTER
-   ========================================================= */
-const TOOLS = {
+/* ============ TOOLS ============ */
+const TOOLS={
+  'home-loan-emi':loanTool({title:'Home Loan EMI Calculator',subtitle:'Monthly EMI + full amortization',icon:ICONS.home,defaultP:5000000,defaultRate:8.5,defaultYears:20}),
+  'car-loan-emi':loanTool({title:'Car Loan EMI Calculator',subtitle:'Auto loan EMI with amortization',icon:ICONS.car,defaultP:800000,defaultRate:9.5,defaultYears:5}),
+  'personal-loan-emi':loanTool({title:'Personal Loan EMI Calculator',subtitle:'Unsecured personal loan estimate',icon:ICONS.person,defaultP:300000,defaultRate:12,defaultYears:3}),
+  'education-loan-emi':loanTool({title:'Education Loan EMI Calculator',subtitle:'Student loan repayment plan',icon:ICONS.edu,defaultP:1500000,defaultRate:10.5,defaultYears:7}),
 
-  /* ---------- LOANS ---------- */
-  'home-loan-emi': loanTool({ title: 'Home Loan EMI Calculator', subtitle: 'Monthly EMI + full amortization schedule', icon: ICONS.home, defaultP: 5000000, defaultRate: 8.5, defaultYears: 20 }),
-  'car-loan-emi': loanTool({ title: 'Car Loan EMI Calculator', subtitle: 'Auto loan EMI with amortization', icon: ICONS.car, defaultP: 800000, defaultRate: 9.5, defaultYears: 5 }),
-  'personal-loan-emi': loanTool({ title: 'Personal Loan EMI Calculator', subtitle: 'Unsecured personal loan estimate', icon: ICONS.person, defaultP: 300000, defaultRate: 12, defaultYears: 3 }),
-  'education-loan-emi': loanTool({ title: 'Education Loan EMI Calculator', subtitle: 'Student loan repayment plan', icon: ICONS.edu, defaultP: 1500000, defaultRate: 10.5, defaultYears: 7 }),
-
-  /* ---------- SALARY ---------- */
-  'in-hand-salary': {
-    title: 'In-Hand Salary Calculator',
-    subtitle: 'Break CTC down into monthly take-home pay',
-    icon: ICONS.salary,
-    fields: [
-      fieldNum('ctc', 'Annual CTC', 1200000, { prefix: '₹', min: 100000, step: 50000 }),
-      fieldNum('basicPct', 'Basic % of CTC', 40, { suffix: '%', min: 30, max: 60, step: 1, hint: 'Usually 40–50%' }),
-      fieldNum('hraPct', 'HRA % of Basic', 50, { suffix: '%', min: 0, max: 50, step: 5 }),
-      fieldSelect('regime', 'Tax Regime', 'new', [
-        { value: 'new', label: 'New Regime (FY 2024-25)' },
-        { value: 'old', label: 'Old Regime' }
-      ]),
-      fieldSelect('metro', 'City Type (for HRA)', 'metro', [
-        { value: 'metro', label: 'Metro (Delhi/Mumbai/Kolkata/Chennai)' },
-        { value: 'nonmetro', label: 'Non-Metro' }
-      ]),
-      fieldNum('rent', 'Monthly Rent Paid', 20000, { prefix: '₹', min: 0, step: 1000, hint: 'For HRA exemption (old regime)' }),
-      fieldNum('invest80C', 'Section 80C Investments', 150000, { prefix: '₹', min: 0, max: 150000, step: 5000, hint: 'Old regime only' }),
-      fieldNum('profTax', 'Professional Tax (monthly)', 200, { prefix: '₹', min: 0, step: 50 })
+  'in-hand-salary':{
+    title:'In-Hand Salary Calculator',subtitle:'Break CTC into monthly take-home',icon:ICONS.salary,
+    fields:[
+      fN('ctc','Annual CTC',1200000,{prefix:'₹',min:100000,step:50000}),
+      fN('basicPct','Basic % of CTC',40,{suffix:'%',min:30,max:60,step:1,hint:'Usually 40–50%'}),
+      fN('hraPct','HRA % of Basic',50,{suffix:'%',min:0,max:50,step:5}),
+      fS('regime','Tax Regime','new',[{value:'new',label:'New Regime (FY 2024-25)'},{value:'old',label:'Old Regime'}]),
+      fS('metro','City Type','metro',[{value:'metro',label:'Metro'},{value:'nonmetro',label:'Non-Metro'}]),
+      fN('rent','Monthly Rent Paid',20000,{prefix:'₹',min:0,step:1000}),
+      fN('invest80C','Section 80C',150000,{prefix:'₹',min:0,max:150000,step:5000,hint:'Old regime only'}),
+      fN('profTax','Professional Tax (monthly)',200,{prefix:'₹',min:0,step:50})
     ],
-    calc: v => {
-      const basic = v.ctc * v.basicPct / 100;
-      const hra = basic * v.hraPct / 100;
-      const employerPF = basic * 0.12;
-      const gratuity = basic * 0.0481;
-      const employeePF = basic * 0.12;
-      const specialAllow = v.ctc - basic - hra - employerPF - gratuity;
-
-      // HRA exemption (old regime only)
-      let hraExempt = 0;
-      if (v.regime === 'old') {
-        const basicMonthly = basic / 12;
-        const hraMonthly = hra / 12;
-        const rentMinus = Math.max(0, v.rent - 0.10 * basicMonthly);
-        const cap = (v.metro === 'metro' ? 0.50 : 0.40) * basicMonthly;
-        hraExempt = Math.min(hraMonthly, rentMinus, cap) * 12;
+    calc:v=>{
+      const basic=v.ctc*v.basicPct/100;
+      const hra=basic*v.hraPct/100;
+      const employerPF=basic*0.12;
+      const gratuity=basic*0.0481;
+      const employeePF=basic*0.12;
+      const specialAllow=v.ctc-basic-hra-employerPF-gratuity;
+      let hraExempt=0;
+      if(v.regime==='old'){
+        const bm=basic/12, hm=hra/12;
+        const rentMinus=Math.max(0,v.rent-0.10*bm);
+        const cap=(v.metro==='metro'?0.50:0.40)*bm;
+        hraExempt=Math.min(hm,rentMinus,cap)*12;
       }
-
-      const grossAnnual = basic + hra + specialAllow;
-      let taxable, tax;
-      if (v.regime === 'new') {
-        const std = 75000;
-        taxable = Math.max(0, grossAnnual - std);
-        tax = taxNewRegime(taxable);
-        tax = Math.max(0, tax - rebate87A_New(tax, taxable));
+      const grossAnnual=basic+hra+specialAllow;
+      let taxable,tax;
+      if(v.regime==='new'){
+        taxable=Math.max(0,grossAnnual-75000);
+        tax=Math.max(0,taxNewRegime(taxable)-rebateNew(taxNewRegime(taxable),taxable));
       } else {
-        const std = 50000;
-        const deductions = std + Math.min(150000, v.invest80C) + hraExempt;
-        taxable = Math.max(0, grossAnnual - deductions);
-        tax = taxOldRegime(taxable);
-        tax = Math.max(0, tax - rebate87A_Old(tax, taxable));
+        const deductions=50000+Math.min(150000,v.invest80C)+hraExempt;
+        taxable=Math.max(0,grossAnnual-deductions);
+        tax=Math.max(0,taxOldRegime(taxable)-rebateOld(taxOldRegime(taxable),taxable));
       }
-      const cess = tax * 0.04;
-      const totalTax = tax + cess;
-      const profTaxAnnual = v.profTax * 12;
-      const annualTakeHome = grossAnnual - employeePF - totalTax - profTaxAnnual;
-      const monthlyTakeHome = annualTakeHome / 12;
-
-      return {
-        ctc: v.ctc, basic, hra, specialAllow, employerPF, gratuity,
-        employeePF, grossAnnual, hraExempt, taxable, tax, cess, totalTax,
-        profTaxAnnual, annualTakeHome, monthlyTakeHome, regime: v.regime
-      };
+      const totalTax=tax+tax*0.04;
+      const profTaxAnnual=v.profTax*12;
+      const annualTakeHome=grossAnnual-employeePF-totalTax-profTaxAnnual;
+      return {ctc:v.ctc,basic,hra,specialAllow,employerPF,gratuity,employeePF,grossAnnual,hraExempt,taxable,tax,cess:tax*0.04,totalTax,profTaxAnnual,annualTakeHome,monthlyTakeHome:annualTakeHome/12,regime:v.regime};
     },
-    render: r => `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Monthly Take-Home</div>
-          <div class="val">${inr(r.monthlyTakeHome)}</div>
-          <div class="sub">in-hand salary</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">Annual Take-Home</div>
-          <div class="val">${inr(r.annualTakeHome)}</div>
-        </div>
-        <div class="result-card warn">
-          <div class="lbl">Annual Tax (incl. cess)</div>
-          <div class="val">${inr(r.totalTax)}</div>
-          <div class="sub">${r.regime === 'new' ? 'New' : 'Old'} regime</div>
-        </div>
-      </div>
-
-      <div class="section-title">CTC Breakdown (annual)</div>
-      <div class="sch-wrap"><table>
-        <thead><tr><th>Component</th><th>Amount</th></tr></thead>
-        <tbody>
-          <tr><td>Basic Salary</td><td>${inr(r.basic)}</td></tr>
-          <tr><td>HRA</td><td>${inr(r.hra)}</td></tr>
-          <tr><td>Special Allowance</td><td>${inr(r.specialAllow)}</td></tr>
-          <tr><td>Employer PF (12% of basic)</td><td>${inr(r.employerPF)}</td></tr>
-          <tr><td>Gratuity (4.81% of basic)</td><td>${inr(r.gratuity)}</td></tr>
-          <tr><td><b>Gross CTC</b></td><td><b>${inr(r.ctc)}</b></td></tr>
-        </tbody>
-      </table></div>
-
-      <div class="section-title">Deductions</div>
-      <div class="sch-wrap"><table>
-        <thead><tr><th>Deduction</th><th>Amount</th></tr></thead>
-        <tbody>
-          <tr><td>Employee PF (12% of basic)</td><td>${inr(r.employeePF)}</td></tr>
-          <tr><td>Income Tax + 4% cess</td><td>${inr(r.totalTax)}</td></tr>
-          <tr><td>Professional Tax</td><td>${inr(r.profTaxAnnual)}</td></tr>
-          <tr><td><b>Total Deductions</b></td><td><b>${inr(r.employeePF + r.totalTax + r.profTaxAnnual)}</b></td></tr>
-        </tbody>
-      </table></div>
-
-      <div class="note">
-        Assumes standard CTC structure. Taxable income computed after standard deduction${r.regime === 'old' ? ', Section 80C, and HRA exemption' : ''}.
-        Actual take-home may vary with company-specific structure (LTA, food coupons, NPS, etc.).
-      </div>
-    `
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Monthly Take-Home</div><div class="val">${inr(r.monthlyTakeHome)}</div><div class="sub">in-hand salary</div></div>
+      <div class="result-card alt"><div class="lbl">Annual Take-Home</div><div class="val">${inr(r.annualTakeHome)}</div></div>
+      <div class="result-card warn"><div class="lbl">Annual Tax (incl. cess)</div><div class="val">${inr(r.totalTax)}</div><div class="sub">${r.regime==='new'?'New':'Old'} regime</div></div>
+    </div>
+    <div class="section-title">CTC Breakdown (annual)</div>
+    <div class="sch-wrap"><table><thead><tr><th>Component</th><th>Amount</th></tr></thead><tbody>
+      <tr><td>Basic</td><td>${inr(r.basic)}</td></tr>
+      <tr><td>HRA</td><td>${inr(r.hra)}</td></tr>
+      <tr><td>Special Allowance</td><td>${inr(r.specialAllow)}</td></tr>
+      <tr><td>Employer PF</td><td>${inr(r.employerPF)}</td></tr>
+      <tr><td>Gratuity</td><td>${inr(r.gratuity)}</td></tr>
+      <tr><td><b>Gross CTC</b></td><td><b>${inr(r.ctc)}</b></td></tr>
+    </tbody></table></div>
+    <div class="section-title">Deductions</div>
+    <div class="sch-wrap"><table><thead><tr><th>Deduction</th><th>Amount</th></tr></thead><tbody>
+      <tr><td>Employee PF</td><td>${inr(r.employeePF)}</td></tr>
+      <tr><td>Income Tax + cess</td><td>${inr(r.totalTax)}</td></tr>
+      <tr><td>Professional Tax</td><td>${inr(r.profTaxAnnual)}</td></tr>
+    </tbody></table></div>
+    <div class="note">Actual take-home may vary with company structure (LTA, food coupons, NPS, etc.).</div>`
   },
 
-  'hra-exemption': {
-    title: 'HRA Exemption Calculator',
-    subtitle: 'Section 10(13A) — house rent allowance tax break',
-    icon: ICONS.home,
-    fields: [
-      fieldNum('basic', 'Monthly Basic Salary', 50000, { prefix: '₹', min: 1000, step: 1000 }),
-      fieldNum('hra', 'Monthly HRA Received', 20000, { prefix: '₹', min: 0, step: 1000 }),
-      fieldNum('rent', 'Monthly Rent Paid', 18000, { prefix: '₹', min: 0, step: 1000 }),
-      fieldSelect('city', 'City Type', 'metro', [
-        { value: 'metro', label: 'Metro — Delhi / Mumbai / Kolkata / Chennai' },
-        { value: 'nonmetro', label: 'Non-Metro' }
-      ])
+  'hra-exemption':{
+    title:'HRA Exemption Calculator',subtitle:'Section 10(13A)',icon:ICONS.home,
+    fields:[
+      fN('basic','Monthly Basic Salary',50000,{prefix:'₹',min:1000,step:1000}),
+      fN('hra','Monthly HRA Received',20000,{prefix:'₹',min:0,step:1000}),
+      fN('rent','Monthly Rent Paid',18000,{prefix:'₹',min:0,step:1000}),
+      fS('city','City Type','metro',[{value:'metro',label:'Metro'},{value:'nonmetro',label:'Non-Metro'}])
     ],
-    calc: v => {
-      const t1 = v.hra;
-      const t2 = Math.max(0, v.rent - 0.10 * v.basic);
-      const t3 = (v.city === 'metro' ? 0.50 : 0.40) * v.basic;
-      const exempt = Math.min(t1, t2, t3);
-      return { t1, t2, t3, exempt, annualExempt: exempt * 12, basic: v.basic, city: v.city };
+    calc:v=>{
+      const t1=v.hra, t2=Math.max(0,v.rent-0.10*v.basic), t3=(v.city==='metro'?0.50:0.40)*v.basic;
+      const exempt=Math.min(t1,t2,t3);
+      return {t1,t2,t3,exempt,annualExempt:exempt*12,city:v.city};
     },
-    render: r => `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Monthly HRA Exempt</div>
-          <div class="val">${inr(r.exempt)}</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">Annual HRA Exempt</div>
-          <div class="val">${inr(r.annualExempt)}</div>
-          <div class="sub">tax-free</div>
-        </div>
-      </div>
-
-      <div class="section-title">HRA exemption = least of the three</div>
-      <div class="sch-wrap"><table>
-        <thead><tr><th>Rule</th><th>Amount / month</th></tr></thead>
-        <tbody>
-          <tr><td>1. Actual HRA received</td><td>${inr(r.t1)}</td></tr>
-          <tr><td>2. Rent paid − 10% of basic</td><td>${inr(r.t2)}</td></tr>
-          <tr><td>3. ${r.city === 'metro' ? '50%' : '40%'} of basic (${r.city === 'metro' ? 'metro' : 'non-metro'})</td><td>${inr(r.t3)}</td></tr>
-          <tr><td><b>Exempt (minimum)</b></td><td><b>${inr(r.exempt)}</b></td></tr>
-        </tbody>
-      </table></div>
-      <div class="note">HRA exemption applies only under the old tax regime. Under the new regime, HRA is fully taxable.</div>
-    `
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Monthly HRA Exempt</div><div class="val">${inr(r.exempt)}</div></div>
+      <div class="result-card alt"><div class="lbl">Annual HRA Exempt</div><div class="val">${inr(r.annualExempt)}</div><div class="sub">tax-free</div></div>
+    </div>
+    <div class="section-title">Least of three</div>
+    <div class="sch-wrap"><table><thead><tr><th>Rule</th><th>Amount/month</th></tr></thead><tbody>
+      <tr><td>1. Actual HRA</td><td>${inr(r.t1)}</td></tr>
+      <tr><td>2. Rent − 10% basic</td><td>${inr(r.t2)}</td></tr>
+      <tr><td>3. ${r.city==='metro'?'50%':'40%'} of basic</td><td>${inr(r.t3)}</td></tr>
+      <tr><td><b>Exempt</b></td><td><b>${inr(r.exempt)}</b></td></tr>
+    </tbody></table></div>
+    <div class="note">HRA exemption only in old regime.</div>`
   },
 
-  'salary-increment': {
-    title: 'Salary Increment Calculator',
-    subtitle: 'Compare old vs new salary and hike percentage',
-    icon: ICONS.chart,
-    fields: [
-      fieldNum('oldSal', 'Old Annual Salary', 600000, { prefix: '₹', min: 0, step: 10000 }),
-      fieldNum('newSal', 'New Annual Salary', 780000, { prefix: '₹', min: 0, step: 10000 }),
-      fieldSelect('mode', 'Calculate', 'hike', [
-        { value: 'hike', label: 'Hike % from old & new' },
-        { value: 'new', label: 'New salary from old + hike %' }
-      ]),
-      fieldNum('hikePct', 'Hike %', 30, { suffix: '%', min: 0, max: 200, step: 1, hint: 'Used only in "New salary" mode' })
+  'salary-increment':{
+    title:'Salary Increment Calculator',subtitle:'Old vs new salary hike',icon:ICONS.chart,
+    fields:[
+      fN('oldSal','Old Annual Salary',600000,{prefix:'₹',min:0,step:10000}),
+      fN('newSal','New Annual Salary',780000,{prefix:'₹',min:0,step:10000}),
+      fS('mode','Mode','hike',[{value:'hike',label:'Hike % from old & new'},{value:'new',label:'New salary from old + hike %'}]),
+      fN('hikePct','Hike %',30,{suffix:'%',min:0,max:200,step:1})
     ],
-    calc: v => {
-      let newSal = v.newSal, hike = 0;
-      if (v.mode === 'hike') {
-        hike = v.oldSal > 0 ? ((v.newSal - v.oldSal) / v.oldSal) * 100 : 0;
-      } else {
-        newSal = v.oldSal * (1 + v.hikePct / 100);
-        hike = v.hikePct;
-      }
-      const diffAnnual = newSal - v.oldSal;
-      const diffMonthly = diffAnnual / 12;
-      return { oldSal: v.oldSal, newSal, hike, diffAnnual, diffMonthly,
-               oldMonthly: v.oldSal / 12, newMonthly: newSal / 12, mode: v.mode };
+    calc:v=>{
+      let newSal=v.newSal,hike=0;
+      if(v.mode==='hike'){ hike=v.oldSal>0?((v.newSal-v.oldSal)/v.oldSal)*100:0; }
+      else { newSal=v.oldSal*(1+v.hikePct/100); hike=v.hikePct; }
+      return {oldSal:v.oldSal,newSal,hike,diffAnnual:newSal-v.oldSal,diffMonthly:(newSal-v.oldSal)/12,oldMonthly:v.oldSal/12,newMonthly:newSal/12};
     },
-    render: r => `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Hike Percentage</div>
-          <div class="val">${r.hike.toFixed(2)}%</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">Annual Increase</div>
-          <div class="val">${inr(r.diffAnnual)}</div>
-        </div>
-        <div class="result-card">
-          <div class="lbl">Monthly Increase</div>
-          <div class="val">${inr(r.diffMonthly)}</div>
-        </div>
-      </div>
-      <div class="section-title">Before vs After</div>
-      <div class="sch-wrap"><table>
-        <thead><tr><th>Period</th><th>Old</th><th>New</th></tr></thead>
-        <tbody>
-          <tr><td>Monthly</td><td>${inr(r.oldMonthly)}</td><td>${inr(r.newMonthly)}</td></tr>
-          <tr><td>Annual</td><td>${inr(r.oldSal)}</td><td>${inr(r.newSal)}</td></tr>
-        </tbody>
-      </table></div>
-    `
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Hike %</div><div class="val">${r.hike.toFixed(2)}%</div></div>
+      <div class="result-card alt"><div class="lbl">Annual Increase</div><div class="val">${inr(r.diffAnnual)}</div></div>
+      <div class="result-card"><div class="lbl">Monthly Increase</div><div class="val">${inr(r.diffMonthly)}</div></div>
+    </div>
+    <div class="sch-wrap"><table><thead><tr><th>Period</th><th>Old</th><th>New</th></tr></thead><tbody>
+      <tr><td>Monthly</td><td>${inr(r.oldMonthly)}</td><td>${inr(r.newMonthly)}</td></tr>
+      <tr><td>Annual</td><td>${inr(r.oldSal)}</td><td>${inr(r.newSal)}</td></tr>
+    </tbody></table></div>`
   },
 
-  /* ---------- INVESTMENTS ---------- */
-  'sip': {
-    title: 'SIP Calculator',
-    subtitle: 'Project mutual fund SIP returns with compounding',
-    icon: ICONS.chart,
-    fields: [
-      fieldNum('monthly', 'Monthly SIP Amount', 10000, { prefix: '₹', min: 500, step: 500 }),
-      fieldNum('rate', 'Expected Return (p.a.)', 12, { suffix: '%', min: 1, max: 30, step: 0.5 }),
-      fieldNum('years', 'Investment Duration', 10, { suffix: 'yrs', min: 1, max: 40, step: 1 }),
-      fieldNum('stepUp', 'Annual Step-Up', 0, { suffix: '%', min: 0, max: 30, step: 1, hint: 'Increase SIP every year' })
+  'sip':{
+    title:'SIP Calculator',subtitle:'Mutual fund SIP projections',icon:ICONS.chart,
+    fields:[
+      fN('monthly','Monthly SIP',10000,{prefix:'₹',min:500,step:500}),
+      fN('rate','Expected Return (p.a.)',12,{suffix:'%',min:1,max:30,step:0.5}),
+      fN('years','Duration',10,{suffix:'yrs',min:1,max:40,step:1}),
+      fN('stepUp','Annual Step-Up',0,{suffix:'%',min:0,max:30,step:1})
     ],
-    calc: v => {
-      let balance = 0, invested = 0, monthly = v.monthly;
-      const i = v.rate / 12 / 100;
-      const rows = [];
-      for (let y = 1; y <= v.years; y++) {
-        for (let m = 0; m < 12; m++) {
-          balance = (balance + monthly) * (1 + i);
-          invested += monthly;
-        }
-        rows.push({ year: y, monthly, invested, value: balance,
-                    gain: balance - invested });
-        monthly = monthly * (1 + v.stepUp / 100);
+    calc:v=>{
+      let balance=0,invested=0,monthly=v.monthly; const i=v.rate/12/100; const rows=[];
+      for(let y=1;y<=v.years;y++){
+        for(let m=0;m<12;m++){ balance=(balance+monthly)*(1+i); invested+=monthly; }
+        rows.push({year:y,monthly,invested,value:balance,gain:balance-invested});
+        monthly*=(1+v.stepUp/100);
       }
-      return { finalValue: balance, invested, gain: balance - invested,
-               years: v.years, rows, rate: v.rate };
+      return {finalValue:balance,invested,gain:balance-invested,years:v.years,rows,rate:v.rate};
     },
-    render: r => {
-      const gainPct = r.finalValue > 0 ? (r.gain / r.finalValue) * 100 : 0;
-      return `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Maturity Value</div>
-          <div class="val">${inr(r.finalValue)}</div>
-          <div class="sub">after ${r.years} years</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">Total Invested</div>
-          <div class="val">${inr(r.invested)}</div>
-        </div>
-        <div class="result-card">
-          <div class="lbl">Wealth Gained</div>
-          <div class="val">${inr(r.gain)}</div>
-        </div>
+    render:r=>{
+      const gp=r.finalValue>0?(r.gain/r.finalValue)*100:0;
+      return `<div class="result-grid">
+        <div class="result-card"><div class="lbl">Maturity Value</div><div class="val">${inr(r.finalValue)}</div><div class="sub">after ${r.years} yrs</div></div>
+        <div class="result-card alt"><div class="lbl">Total Invested</div><div class="val">${inr(r.invested)}</div></div>
+        <div class="result-card"><div class="lbl">Wealth Gained</div><div class="val">${inr(r.gain)}</div></div>
       </div>
-      <div class="chart-row">
-        ${donutSVG(gainPct, '#16a34a', '#3b82f6')}
-        <div class="legend">
-          ${legendRow('#3b82f6', 'Invested', inr(r.invested))}
-          ${legendRow('#16a34a', 'Returns', inr(r.gain))}
-          <div class="li" style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border-color); font-size:11.5px; color:var(--subtext-color); font-weight:700;">
-            Returns are ${gainPct.toFixed(1)}% of maturity value
-          </div>
-        </div>
+      <div class="chart-row">${donutSVG(gp,'#16a34a','#3b82f6')}
+        <div class="legend">${legendRow('#3b82f6','Invested',inr(r.invested))}${legendRow('#16a34a','Returns',inr(r.gain))}</div>
       </div>
       <div class="section-title">Year-wise Growth</div>
-      <div class="sch-wrap"><table>
-        <thead><tr><th>Year</th><th>SIP/mo</th><th>Invested</th><th>Value</th><th>Gain</th></tr></thead>
-        <tbody>
-          ${r.rows.map(row => `<tr>
-            <td>${row.year}</td>
-            <td>${inr(row.monthly)}</td>
-            <td>${inr(row.invested)}</td>
-            <td>${inr(row.value)}</td>
-            <td>${inr(row.gain)}</td>
-          </tr>`).join('')}
-        </tbody>
-      </table></div>
-      <div class="note">Compounded monthly at ${r.rate}% per annum. SIP instalments assumed at the start of each month. Actual mutual fund returns are market-linked and not guaranteed.</div>`;
+      <div class="sch-wrap"><table><thead><tr><th>Year</th><th>SIP/mo</th><th>Invested</th><th>Value</th><th>Gain</th></tr></thead><tbody>
+        ${r.rows.map(x=>`<tr><td>${x.year}</td><td>${inr(x.monthly)}</td><td>${inr(x.invested)}</td><td>${inr(x.value)}</td><td>${inr(x.gain)}</td></tr>`).join('')}
+      </tbody></table></div>
+      <div class="note">Compounded monthly at ${r.rate}% p.a. Actual returns are market-linked.</div>`;
     }
   },
 
-  'fd': {
-    title: 'FD Calculator',
-    subtitle: 'Fixed deposit maturity value with compound interest',
-    icon: ICONS.bank,
-    fields: [
-      fieldNum('P', 'Deposit Amount', 500000, { prefix: '₹', min: 1000, step: 1000 }),
-      fieldNum('rate', 'Interest Rate (p.a.)', 7.1, { suffix: '%', min: 1, max: 15, step: 0.05 }),
-      fieldNum('years', 'Tenure', 5, { suffix: 'yrs', min: 0.5, max: 20, step: 0.5 }),
-      fieldSelect('freq', 'Compounding Frequency', 'quarterly', [
-        { value: 'yearly', label: 'Yearly' },
-        { value: 'half', label: 'Half-Yearly' },
-        { value: 'quarterly', label: 'Quarterly (bank standard)' },
-        { value: 'monthly', label: 'Monthly' }
-      ])
+  'fd':{
+    title:'FD Calculator',subtitle:'Fixed deposit maturity',icon:ICONS.bank,
+    fields:[
+      fN('P','Deposit Amount',500000,{prefix:'₹',min:1000,step:1000}),
+      fN('rate','Interest Rate (p.a.)',7.1,{suffix:'%',min:1,max:15,step:0.05}),
+      fN('years','Tenure',5,{suffix:'yrs',min:0.5,max:20,step:0.5}),
+      fS('freq','Compounding','quarterly',[{value:'yearly',label:'Yearly'},{value:'half',label:'Half-Yearly'},{value:'quarterly',label:'Quarterly (bank standard)'},{value:'monthly',label:'Monthly'}])
     ],
-    calc: v => {
-      const nMap = { yearly: 1, half: 2, quarterly: 4, monthly: 12 };
-      const n = nMap[v.freq];
-      const r = v.rate / 100;
-      const maturity = v.P * Math.pow(1 + r / n, n * v.years);
-      const interest = maturity - v.P;
-      return { P: v.P, rate: v.rate, years: v.years, maturity, interest, freq: v.freq };
+    calc:v=>{
+      const nMap={yearly:1,half:2,quarterly:4,monthly:12};
+      const n=nMap[v.freq]; const r=v.rate/100;
+      const maturity=v.P*Math.pow(1+r/n,n*v.years);
+      return {P:v.P,rate:v.rate,years:v.years,maturity,interest:maturity-v.P,freq:v.freq};
     },
-    render: r => `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Maturity Amount</div>
-          <div class="val">${inr(r.maturity)}</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">Interest Earned</div>
-          <div class="val">${inr(r.interest)}</div>
-        </div>
-        <div class="result-card">
-          <div class="lbl">Effective Yield</div>
-          <div class="val">${((r.interest / r.P) * 100).toFixed(2)}%</div>
-          <div class="sub">total, not annual</div>
-        </div>
-      </div>
-      <div class="note">Compounded <b>${r.freq}</b> at ${r.rate}% p.a. for ${r.years} years. Interest is taxable as per your slab; TDS applies if interest exceeds ₹40,000 (₹50,000 for seniors) in a year.</div>
-    `
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Maturity Amount</div><div class="val">${inr(r.maturity)}</div></div>
+      <div class="result-card alt"><div class="lbl">Interest Earned</div><div class="val">${inr(r.interest)}</div></div>
+      <div class="result-card"><div class="lbl">Effective Yield</div><div class="val">${((r.interest/r.P)*100).toFixed(2)}%</div></div>
+    </div>
+    <div class="note">Interest taxable as per your slab. TDS if interest > ₹40,000/yr.</div>`
   },
 
-  'ppf': {
-    title: 'PPF Calculator',
-    subtitle: '15-year Public Provident Fund projection',
-    icon: ICONS.plus,
-    fields: [
-      fieldNum('yearly', 'Yearly Investment', 150000, { prefix: '₹', min: 500, max: 150000, step: 500, hint: 'Max ₹1.5L per year' }),
-      fieldNum('rate', 'Interest Rate (p.a.)', 7.1, { suffix: '%', min: 1, max: 15, step: 0.05 }),
-      fieldNum('years', 'Tenure', 15, { suffix: 'yrs', min: 1, max: 50, step: 1 })
+  'ppf':{
+    title:'PPF Calculator',subtitle:'15-year PPF projection',icon:ICONS.plus,
+    fields:[
+      fN('yearly','Yearly Investment',150000,{prefix:'₹',min:500,max:150000,step:500,hint:'Max ₹1.5L/yr'}),
+      fN('rate','Interest Rate (p.a.)',7.1,{suffix:'%',min:1,max:15,step:0.05}),
+      fN('years','Tenure',15,{suffix:'yrs',min:1,max:50,step:1})
     ],
-    calc: v => {
-      let balance = 0, invested = 0;
-      const rows = [];
-      for (let y = 1; y <= v.years; y++) {
-        balance = (balance + v.yearly) * (1 + v.rate / 100);
-        invested += v.yearly;
-        rows.push({ year: y, invested, value: balance });
+    calc:v=>{
+      let balance=0,invested=0; const rows=[];
+      for(let y=1;y<=v.years;y++){
+        balance=(balance+v.yearly)*(1+v.rate/100);
+        invested+=v.yearly;
+        rows.push({year:y,invested,value:balance});
       }
-      return { maturity: balance, invested, interest: balance - invested, rows, rate: v.rate };
+      return {maturity:balance,invested,interest:balance-invested,rows,rate:v.rate};
     },
-    render: r => `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Maturity Value</div>
-          <div class="val">${inr(r.maturity)}</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">Total Invested</div>
-          <div class="val">${inr(r.invested)}</div>
-        </div>
-        <div class="result-card">
-          <div class="lbl">Interest Earned</div>
-          <div class="val">${inr(r.interest)}</div>
-        </div>
-      </div>
-      <div class="section-title">Year-wise Growth</div>
-      <div class="sch-wrap"><table>
-        <thead><tr><th>Year</th><th>Invested</th><th>Value</th></tr></thead>
-        <tbody>
-          ${r.rows.map(row => `<tr><td>${row.year}</td><td>${inr(row.invested)}</td><td>${inr(row.value)}</td></tr>`).join('')}
-        </tbody>
-      </table></div>
-      <div class="note">PPF interest is fully tax-free (EEE status). Current rate ~7.1% p.a.; government revises quarterly. Minimum ₹500/yr, max ₹1.5L/yr. 15-year lock-in with partial withdrawal from year 7.</div>
-    `
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Maturity Value</div><div class="val">${inr(r.maturity)}</div></div>
+      <div class="result-card alt"><div class="lbl">Total Invested</div><div class="val">${inr(r.invested)}</div></div>
+      <div class="result-card"><div class="lbl">Interest Earned</div><div class="val">${inr(r.interest)}</div></div>
+    </div>
+    <div class="section-title">Year-wise Growth</div>
+    <div class="sch-wrap"><table><thead><tr><th>Year</th><th>Invested</th><th>Value</th></tr></thead><tbody>
+      ${r.rows.map(x=>`<tr><td>${x.year}</td><td>${inr(x.invested)}</td><td>${inr(x.value)}</td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="note">PPF interest is fully tax-free (EEE). Current ~7.1% p.a. 15-year lock-in.</div>`
   },
 
-  'compound-interest': {
-    title: 'Compound Interest Calculator',
-    subtitle: 'Calculate compound growth for any period',
-    icon: ICONS.ci,
-    fields: [
-      fieldNum('P', 'Principal Amount', 100000, { prefix: '₹', min: 100, step: 1000 }),
-      fieldNum('rate', 'Interest Rate (p.a.)', 10, { suffix: '%', min: 0.1, max: 50, step: 0.1 }),
-      fieldNum('years', 'Time Period', 10, { suffix: 'yrs', min: 0.1, max: 50, step: 0.5 }),
-      fieldSelect('freq', 'Compounding Frequency', 'yearly', [
-        { value: 'yearly', label: 'Yearly' },
-        { value: 'half', label: 'Half-Yearly' },
-        { value: 'quarterly', label: 'Quarterly' },
-        { value: 'monthly', label: 'Monthly' },
-        { value: 'daily', label: 'Daily' }
-      ])
+  'compound-interest':{
+    title:'Compound Interest Calculator',subtitle:'CI for any period',icon:ICONS.ci,
+    fields:[
+      fN('P','Principal',100000,{prefix:'₹',min:100,step:1000}),
+      fN('rate','Interest Rate (p.a.)',10,{suffix:'%',min:0.1,max:50,step:0.1}),
+      fN('years','Time Period',10,{suffix:'yrs',min:0.1,max:50,step:0.5}),
+      fS('freq','Compounding','yearly',[{value:'yearly',label:'Yearly'},{value:'half',label:'Half-Yearly'},{value:'quarterly',label:'Quarterly'},{value:'monthly',label:'Monthly'},{value:'daily',label:'Daily'}])
     ],
-    calc: v => {
-      const nMap = { yearly: 1, half: 2, quarterly: 4, monthly: 12, daily: 365 };
-      const n = nMap[v.freq];
-      const r = v.rate / 100;
-      const A = v.P * Math.pow(1 + r / n, n * v.years);
-      const interest = A - v.P;
-      // Year-wise breakdown
-      const rows = [];
-      for (let y = 1; y <= Math.ceil(v.years); y++) {
-        const t = Math.min(y, v.years);
-        const val = v.P * Math.pow(1 + r / n, n * t);
-        rows.push({ year: y, value: val, interest: val - v.P });
+    calc:v=>{
+      const nMap={yearly:1,half:2,quarterly:4,monthly:12,daily:365};
+      const n=nMap[v.freq]; const r=v.rate/100;
+      const A=v.P*Math.pow(1+r/n,n*v.years);
+      const rows=[];
+      for(let y=1;y<=Math.ceil(v.years);y++){
+        const t=Math.min(y,v.years);
+        const val=v.P*Math.pow(1+r/n,n*t);
+        rows.push({year:y,value:val,interest:val-v.P});
       }
-      return { P: v.P, maturity: A, interest, rate: v.rate, years: v.years, rows, freq: v.freq };
+      return {P:v.P,maturity:A,interest:A-v.P,rate:v.rate,years:v.years,rows,freq:v.freq};
     },
-    render: r => `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Final Amount</div>
-          <div class="val">${inr(r.maturity)}</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">Total Interest</div>
-          <div class="val">${inr(r.interest)}</div>
-        </div>
-        <div class="result-card">
-          <div class="lbl">Growth Multiple</div>
-          <div class="val">${(r.maturity / r.P).toFixed(2)}×</div>
-        </div>
-      </div>
-      <div class="section-title">Year-wise Breakdown</div>
-      <div class="sch-wrap"><table>
-        <thead><tr><th>Year</th><th>Value</th><th>Interest</th></tr></thead>
-        <tbody>
-          ${r.rows.map(row => `<tr><td>${row.year}</td><td>${inr(row.value)}</td><td>${inr(row.interest)}</td></tr>`).join('')}
-        </tbody>
-      </table></div>
-      <div class="note">Formula: A = P(1 + r/n)<sup>nt</sup>. Compounded ${r.freq} at ${r.rate}% p.a. for ${r.years} years.</div>
-    `
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Final Amount</div><div class="val">${inr(r.maturity)}</div></div>
+      <div class="result-card alt"><div class="lbl">Total Interest</div><div class="val">${inr(r.interest)}</div></div>
+      <div class="result-card"><div class="lbl">Growth Multiple</div><div class="val">${(r.maturity/r.P).toFixed(2)}×</div></div>
+    </div>
+    <div class="sch-wrap"><table><thead><tr><th>Year</th><th>Value</th><th>Interest</th></tr></thead><tbody>
+      ${r.rows.map(x=>`<tr><td>${x.year}</td><td>${inr(x.value)}</td><td>${inr(x.interest)}</td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="note">A = P(1 + r/n)^(nt).</div>`
   },
 
-  /* ---------- TAX ---------- */
-  'income-tax': {
-    title: 'Income Tax Calculator',
-    subtitle: 'Compare old vs new regime — FY 2024-25',
-    icon: ICONS.tax,
-    fields: [
-      fieldNum('income', 'Gross Annual Income', 1200000, { prefix: '₹', min: 0, step: 50000, hint: 'Before standard deduction' }),
-      fieldNum('basic', 'Annual Basic Salary', 480000, { prefix: '₹', min: 0, step: 10000, hint: 'For HRA calculation' }),
-      fieldNum('hra', 'Annual HRA Received', 240000, { prefix: '₹', min: 0, step: 10000 }),
-      fieldNum('rent', 'Annual Rent Paid', 240000, { prefix: '₹', min: 0, step: 10000 }),
-      fieldNum('d80C', 'Section 80C', 150000, { prefix: '₹', min: 0, max: 150000, step: 5000 }),
-      fieldNum('d80D', 'Section 80D (Health Insurance)', 25000, { prefix: '₹', min: 0, max: 100000, step: 5000 }),
-      fieldNum('d80CCD', 'Section 80CCD(1B) NPS', 50000, { prefix: '₹', min: 0, max: 50000, step: 5000 }),
-      fieldNum('homeLoan', 'Home Loan Interest (Sec 24)', 0, { prefix: '₹', min: 0, max: 200000, step: 10000 }),
-      fieldSelect('city', 'City for HRA', 'metro', [
-        { value: 'metro', label: 'Metro' },
-        { value: 'nonmetro', label: 'Non-Metro' }
-      ])
+  'income-tax':{
+    title:'Income Tax Calculator',subtitle:'Old vs new regime — FY 2024-25',icon:ICONS.tax,
+    fields:[
+      fN('income','Gross Annual Income',1200000,{prefix:'₹',min:0,step:50000}),
+      fN('basic','Annual Basic',480000,{prefix:'₹',min:0,step:10000}),
+      fN('hra','Annual HRA',240000,{prefix:'₹',min:0,step:10000}),
+      fN('rent','Annual Rent Paid',240000,{prefix:'₹',min:0,step:10000}),
+      fN('d80C','Section 80C',150000,{prefix:'₹',min:0,max:150000,step:5000}),
+      fN('d80D','Section 80D',25000,{prefix:'₹',min:0,max:100000,step:5000}),
+      fN('d80CCD','NPS 80CCD(1B)',50000,{prefix:'₹',min:0,max:50000,step:5000}),
+      fN('homeLoan','Home Loan Interest',0,{prefix:'₹',min:0,max:200000,step:10000}),
+      fS('city','City','metro',[{value:'metro',label:'Metro'},{value:'nonmetro',label:'Non-Metro'}])
     ],
-    calc: v => {
-      // Standard deductions
-      const stdNew = 75000;
-      const stdOld = 50000;
-
-      // HRA exemption for old regime
-      const hraT1 = v.hra;
-      const hraT2 = Math.max(0, v.rent - 0.10 * v.basic);
-      const hraT3 = (v.city === 'metro' ? 0.50 : 0.40) * v.basic;
-      const hraExempt = Math.min(hraT1, hraT2, hraT3);
-
-      // NEW REGIME
-      const taxableNew = Math.max(0, v.income - stdNew);
-      let taxNew = taxNewRegime(taxableNew);
-      taxNew = Math.max(0, taxNew - rebate87A_New(taxNew, taxableNew));
-      const cessNew = taxNew * 0.04;
-      const totalNew = taxNew + cessNew;
-
-      // OLD REGIME
-      const d80C = Math.min(150000, v.d80C);
-      const d80D = Math.min(100000, v.d80D);
-      const d80CCD = Math.min(50000, v.d80CCD);
-      const homeLoan = Math.min(200000, v.homeLoan);
-      const deductionsOld = stdOld + hraExempt + d80C + d80D + d80CCD + homeLoan;
-      const taxableOld = Math.max(0, v.income - deductionsOld);
-      let taxOld = taxOldRegime(taxableOld);
-      taxOld = Math.max(0, taxOld - rebate87A_Old(taxOld, taxableOld));
-      const cessOld = taxOld * 0.04;
-      const totalOld = taxOld + cessOld;
-
-      return {
-        income: v.income, hraExempt, deductionsOld, taxableNew, taxableOld,
-        taxNew, cessNew, totalNew, taxOld, cessOld, totalOld,
-        savings: Math.abs(totalNew - totalOld),
-        better: totalNew < totalOld ? 'new' : 'old'
-      };
+    calc:v=>{
+      const hraT1=v.hra, hraT2=Math.max(0,v.rent-0.10*v.basic), hraT3=(v.city==='metro'?0.50:0.40)*v.basic;
+      const hraExempt=Math.min(hraT1,hraT2,hraT3);
+      const taxableNew=Math.max(0,v.income-75000);
+      let taxNew=taxNewRegime(taxableNew);
+      taxNew=Math.max(0,taxNew-rebateNew(taxNew,taxableNew));
+      const cessNew=taxNew*0.04, totalNew=taxNew+cessNew;
+      const deductionsOld=50000+hraExempt+Math.min(150000,v.d80C)+Math.min(100000,v.d80D)+Math.min(50000,v.d80CCD)+Math.min(200000,v.homeLoan);
+      const taxableOld=Math.max(0,v.income-deductionsOld);
+      let taxOld=taxOldRegime(taxableOld);
+      taxOld=Math.max(0,taxOld-rebateOld(taxOld,taxableOld));
+      const cessOld=taxOld*0.04, totalOld=taxOld+cessOld;
+      return {income:v.income,hraExempt,deductionsOld,taxableNew,taxableOld,taxNew,cessNew,totalNew,taxOld,cessOld,totalOld,savings:Math.abs(totalNew-totalOld),better:totalNew<totalOld?'new':'old'};
     },
-    render: r => {
-      const newWinner = r.better === 'new';
-      return `
-      <div class="result-grid">
-        <div class="result-card">
-          <div class="lbl">Old Regime Tax</div>
-          <div class="val">${inr(r.totalOld)}</div>
-          <div class="sub">taxable: ${inr(r.taxableOld)}</div>
-        </div>
-        <div class="result-card alt">
-          <div class="lbl">New Regime Tax</div>
-          <div class="val">${inr(r.totalNew)}</div>
-          <div class="sub">taxable: ${inr(r.taxableNew)}</div>
-        </div>
-        <div class="result-card">
-          <div class="lbl">You Save</div>
-          <div class="val">${inr(r.savings)}</div>
-          <div class="sub">with ${r.better} regime</div>
-        </div>
+    render:r=>{
+      const nw=r.better==='new';
+      return `<div class="result-grid">
+        <div class="result-card"><div class="lbl">Old Regime Tax</div><div class="val">${inr(r.totalOld)}</div><div class="sub">taxable: ${inr(r.taxableOld)}</div></div>
+        <div class="result-card alt"><div class="lbl">New Regime Tax</div><div class="val">${inr(r.totalNew)}</div><div class="sub">taxable: ${inr(r.taxableNew)}</div></div>
+        <div class="result-card"><div class="lbl">You Save</div><div class="val">${inr(r.savings)}</div><div class="sub">with ${r.better} regime</div></div>
       </div>
-
       <div class="tax-compare">
-        <div class="tax-box ${!newWinner ? 'winner' : ''}">
-          <div class="tb-head">
-            <h4>Old Regime</h4>
-            ${!newWinner ? '<span class="badge">BETTER</span>' : ''}
-          </div>
+        <div class="tax-box ${!nw?'winner':''}">
+          <div class="tb-head"><h4>Old Regime</h4>${!nw?'<span class="badge">BETTER</span>':''}</div>
           <div class="tb-row"><span>Gross Income</span><span>${inr(r.income)}</span></div>
           <div class="tb-row"><span>Deductions</span><span>−${inr(r.deductionsOld)}</span></div>
-          <div class="tb-row"><span>Taxable Income</span><span>${inr(r.taxableOld)}</span></div>
+          <div class="tb-row"><span>Taxable</span><span>${inr(r.taxableOld)}</span></div>
           <div class="tb-row"><span>Income Tax</span><span>${inr(r.taxOld)}</span></div>
-          <div class="tb-row"><span>Health &amp; Edu Cess (4%)</span><span>${inr(r.cessOld)}</span></div>
-          <div class="tb-row total"><span>Total Tax</span><span>${inr(r.totalOld)}</span></div>
+          <div class="tb-row"><span>Cess 4%</span><span>${inr(r.cessOld)}</span></div>
+          <div class="tb-row total"><span>Total</span><span>${inr(r.totalOld)}</span></div>
         </div>
-        <div class="tax-box ${newWinner ? 'winner' : ''}">
-          <div class="tb-head">
-            <h4>New Regime</h4>
-            ${newWinner ? '<span class="badge">BETTER</span>' : ''}
-          </div>
+        <div class="tax-box ${nw?'winner':''}">
+          <div class="tb-head"><h4>New Regime</h4>${nw?'<span class="badge">BETTER</span>':''}</div>
           <div class="tb-row"><span>Gross Income</span><span>${inr(r.income)}</span></div>
           <div class="tb-row"><span>Std. Deduction</span><span>−₹75,000</span></div>
-          <div class="tb-row"><span>Taxable Income</span><span>${inr(r.taxableNew)}</span></div>
+          <div class="tb-row"><span>Taxable</span><span>${inr(r.taxableNew)}</span></div>
           <div class="tb-row"><span>Income Tax</span><span>${inr(r.taxNew)}</span></div>
-          <div class="tb-row"><span>Health &amp; Edu Cess (4%)</span><span>${inr(r.cessNew)}</span></div>
-          <div class="tb-row total"><span>Total Tax</span><span>${inr(r.totalNew)}</span></div>
+          <div class="tb-row"><span>Cess 4%</span><span>${inr(r.cessNew)}</span></div>
+          <div class="tb-row total"><span>Total</span><span>${inr(r.totalNew)}</span></div>
         </div>
       </div>
-
-      <div class="note">
-        <b>New Regime slabs (FY 2024-25):</b> 0–3L: 0% | 3–7L: 5% | 7–10L: 10% | 10–12L: 15% | 12–15L: 20% | 15L+: 30%. Rebate u/s 87A up to ₹25,000 for income ≤ ₹7L.<br>
-        <b>Old Regime slabs:</b> 0–2.5L: 0% | 2.5–5L: 5% | 5–10L: 20% | 10L+: 30%. Rebate u/s 87A up to ₹12,500 for income ≤ ₹5L.<br>
-        HRA exemption computed at ${inr(r.hraExempt)}/year. Verify with a CA before filing.
-      </div>`;
+      <div class="note">New slabs: 0–3L: 0% | 3–7L: 5% | 7–10L: 10% | 10–12L: 15% | 12–15L: 20% | 15L+: 30%. Rebate u/s 87A ₹25k ≤₹7L. Old slabs: 0–2.5L: 0% | 2.5–5L: 5% | 5–10L: 20% | 10L+: 30%. HRA exemption ${inr(r.hraExempt)}/yr. Verify with a CA.</div>`;
     }
   },
 
-  'tds': {
-    title: 'TDS Calculator',
-    subtitle: 'Tax Deducted at Source by section',
-    icon: ICONS.tax,
-    fields: [
-      fieldNum('amount', 'Payment Amount', 100000, { prefix: '₹', min: 100, step: 1000 }),
-      fieldSelect('section', 'TDS Section', '194J', [
-        { value: '194C-ind', label: '194C — Contractor (Individual/HUF) — 1%' },
-        { value: '194C-oth', label: '194C — Contractor (Other) — 2%' },
-        { value: '194J', label: '194J — Professional / Technical — 10%' },
-        { value: '194I-land', label: '194I — Rent (Land/Building) — 10%' },
-        { value: '194I-mach', label: '194I — Rent (Plant/Machinery) — 2%' },
-        { value: '194A', label: '194A — Interest (other than securities) — 10%' },
-        { value: '194H', label: '194H — Commission / Brokerage — 5%' },
-        { value: '194', label: '194 — Dividend — 10%' },
-        { value: '194D', label: '194D — Insurance Commission — 5%' },
-        { value: '194Q', label: '194Q — Purchase of Goods — 0.1%' }
+  'tds':{
+    title:'TDS Calculator',subtitle:'Tax Deducted at Source',icon:ICONS.tax,
+    fields:[
+      fN('amount','Payment Amount',100000,{prefix:'₹',min:100,step:1000}),
+      fS('section','Section','194J',[
+        {value:'194C-ind',label:'194C — Contractor (Ind/HUF) — 1%'},
+        {value:'194C-oth',label:'194C — Contractor (Other) — 2%'},
+        {value:'194J',label:'194J — Professional/Technical — 10%'},
+        {value:'194I-land',label:'194I — Rent (Land/Building) — 10%'},
+        {value:'194I-mach',label:'194I — Rent (Plant/Machinery) — 2%'},
+        {value:'194A',label:'194A — Interest — 10%'},
+        {value:'194H',label:'194H — Commission — 5%'},
+        {value:'194',label:'194 — Dividend — 10%'},
+        {value:'194D',label:'194D — Insurance Comm — 5%'},
+        {value:'194Q',label:'194Q — Purchase of Goods — 0.1%'}
       ]),
-      fieldSelect('pan', 'PAN Available?', 'yes', [
-        { value: 'yes', label: 'Yes — normal rate' },
-        { value: 'no', label: 'No — 20% higher rate' }
-      ])
+      fS('pan','PAN Available?','yes',[{value:'yes',label:'Yes — normal'},{value:'no',label:'No — 20% higher'}])
     ],
-    calc: v => {
-      const rateMap = {
-        '194C-ind': 1, '194C-oth': 2, '194J': 10, '194I-land': 10,
-        '194I-mach': 2, '194A': 10, '194H': 5, '194': 10, '194D': 5, '194Q': 0.1
-      };
-      let rate = rateMap[v.section] || 10;
-      const normalRate = rate;
-      if (v.pan === 'no') rate = Math.max(20, rate);
-      const tds = v.amount * rate / 100;
-      const net = v.amount - tds;
-      return { amount: v.amount, rate, normalRate, tds, net, pan: v.pan };
+    calc:v=>{
+      const rateMap={'194C-ind':1,'194C-oth':2,'194J':10,'194I-land':10,'194I-mach':2,'194A':10,'194H':5,'194':10,'194D':5,'194Q':0.1};
+      let rate=rateMap[v.section]||10; const normalRate=rate;
+      if(v.pan==='no')rate=Math.max(20,rate);
+      return {amount:v.amount,rate,normalRate,tds:v.amount*rate/100,net:v.amount-v.amount*rate/100,pan:v.pan};
     },
-    render: r => `
-      <div class="result-grid">
-        <div class="result-card warn">
-          <
+    render:r=>`<div class="result-grid">
+      <div class="result-card warn"><div class="lbl">TDS Deducted</div><div class="val">${inr(r.tds)}</div><div class="sub">@ ${r.rate}%</div></div>
+      <div class="result-card"><div class="lbl">Net Payable</div><div class="val">${inr(r.net)}</div></div>
+      <div class="result-card alt"><div class="lbl">Original Amount</div><div class="val">${inr(r.amount)}</div></div>
+    </div>
+    ${r.pan==='no'?'<div class="note" style="border-left-color:#dc2626;">⚠️ No PAN: higher rate applied u/s 206AA.</div>':''}
+    <div class="note">TDS rates as per Finance Act. Surcharge/cess may apply for high-value payments. Verify with CA.</div>`
+  },
+
+  'tax-saving':{
+    title:'Tax Saving Planner',subtitle:'80C, 80D, NPS optimizer',icon:ICONS.shield,
+    fields:[
+      fN('income','Gross Annual Income',1200000,{prefix:'₹',min:0,step:50000}),
+      fN('d80C','Section 80C Used',100000,{prefix:'₹',min:0,max:150000,step:5000,hint:'ELSS, PPF, LIC, EPF, etc.'}),
+      fN('d80D','Section 80D Used',15000,{prefix:'₹',min:0,max:100000,step:5000,hint:'Health insurance'}),
+      fN('d80CCD','NPS 80CCD(1B) Used',0,{prefix:'₹',min:0,max:50000,step:5000}),
+      fN('homeLoan','Home Loan Interest Used',0,{prefix:'₹',min:0,max:200000,step:10000,hint:'Section 24'})
+    ],
+    calc:v=>{
+      const taxBefore=Math.max(0,taxOldRegime(Math.max(0,v.income-50000))-rebateOld(taxOldRegime(Math.max(0,v.income-50000)),Math.max(0,v.income-50000)))*1.04;
+      const totalDed=50000+v.d80C+v.d80D+v.d80CCD+v.homeLoan;
+      const taxableAfter=Math.max(0,v.income-totalDed);
+      const taxAfter=Math.max(0,taxOldRegime(taxableAfter)-rebateOld(taxOldRegime(taxableAfter),taxableAfter))*1.04;
+      const remaining80C=Math.max(0,150000-v.d80C);
+      const remaining80D=Math.max(0,100000-v.d80D);
+      const remaining80CCD=Math.max(0,50000-v.d80CCD);
+      const remainingHome=Math.max(0,200000-v.homeLoan);
+      return {income:v.income,taxBefore,taxAfter,taxSaved:taxBefore-taxAfter,totalDed,remaining80C,remaining80D,remaining80CCD,remainingHome};
+    },
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Tax Saved (approx.)</div><div class="val">${inr(r.taxSaved)}</div></div>
+      <div class="result-card alt"><div class="lbl">Tax Before</div><div class="val">${inr(r.taxBefore)}</div></div>
+      <div class="result-card"><div class="lbl">Tax After</div><div class="val">${inr(r.taxAfter)}</div></div>
+    </div>
+    <div class="section-title">Remaining deduction room</div>
+    <div class="sch-wrap"><table><thead><tr><th>Section</th><th>Room Left</th></tr></thead><tbody>
+      <tr><td>80C (max ₹1.5L)</td><td>${inr(r.remaining80C)}</td></tr>
+      <tr><td>80D (max ₹1L)</td><td>${inr(r.remaining80D)}</td></tr>
+      <tr><td>80CCD(1B) NPS (max ₹50k)</td><td>${inr(r.remaining80CCD)}</td></tr>
+      <tr><td>Sec 24 Home Loan (max ₹2L)</td><td>${inr(r.remainingHome)}</td></tr>
+    </tbody></table></div>
+    <div class="note">Old regime comparison. New regime has no 80C/80D benefits. Verify with CA before investing.</div>`
+  },
+
+  'gratuity':{
+    title:'Gratuity Calculator',subtitle:'On retirement/resignation',icon:ICONS.clock,
+    fields:[
+      fN('salary','Last Drawn Monthly Salary (Basic+DA)',50000,{prefix:'₹',min:1000,step:1000}),
+      fN('years','Years of Service',10,{suffix:'yrs',min:0,max:50,step:0.5}),
+      fS('covered','Covered under Gratuity Act?','yes',[{value:'yes',label:'Yes — covered'},{value:'no',label:'No — not covered'}])
+    ],
+    calc:v=>{
+      let gratuity;
+      if(v.covered==='yes'){ gratuity=(v.salary*15*v.years)/26; }
+      else { gratuity=(v.salary*15*v.years)/30; }
+      const taxExempt=Math.min(gratuity,2000000);
+      const taxable=Math.max(0,gratuity-taxExempt);
+      return {salary:v.salary,years:v.years,covered:v.covered,gratuity,taxExempt,taxable,eligible:v.years>=5};
+    },
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Gratuity Payable</div><div class="val">${inr(r.gratuity)}</div></div>
+      <div class="result-card alt"><div class="lbl">Tax Exempt</div><div class="val">${inr(r.taxExempt)}</div><div class="sub">up to ₹20L</div></div>
+      <div class="result-card ${r.taxable>0?'warn':''}"><div class="lbl">Taxable Portion</div><div class="val">${inr(r.taxable)}</div></div>
+    </div>
+    ${!r.eligible?'<div class="note" style="border-left-color:#dc2626;">⚠️ Minimum 5 years continuous service required for gratuity.</div>':''}
+    <div class="note">Formula: ${r.covered==='yes'?'(Salary × 15 × Years) / 26':'(Salary × 15 × Years) / 30'}. Tax exempt up to ₹20 lakh for non-government employees.</div>`
+  },
+
+  'epf':{
+    title:'EPF Calculator',subtitle:'Provident fund corpus projection',icon:ICONS.epf,
+    fields:[
+      fN('basic','Current Monthly Basic + DA',30000,{prefix:'₹',min:1000,step:1000}),
+      fN('years','Years to Retirement',20,{suffix:'yrs',min:1,max:40,step:1}),
+      fN('growth','Annual Salary Growth',5,{suffix:'%',min:0,max:15,step:0.5}),
+      fN('rate','EPF Interest Rate',8.25,{suffix:'%',min:1,max:15,step:0.05})
+    ],
+    calc:v=>{
+      let balance=0,basic=v.basic; const rows=[]; const monthlyRate=v.rate/12/100;
+      for(let y=1;y<=v.years;y++){
+        for(let m=0;m<12;m++){
+          const employee=basic*0.12, employer=basic*0.0367; // 3.67% to EPF
+          balance=(balance+employee+employer)*(1+monthlyRate);
+        }
+        rows.push({year:y,basic,balance});
+        basic*=(1+v.growth/100);
+      }
+      return {balance,rows,years:v.years,rate:v.rate};
+    },
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">EPF Corpus at Retirement</div><div class="val">${inr(r.balance)}</div><div class="sub">after ${r.years} years</div></div>
+    </div>
+    <div class="sch-wrap"><table><thead><tr><th>Year</th><th>Basic</th><th>Balance</th></tr></thead><tbody>
+      ${r.rows.map(x=>`<tr><td>${x.year}</td><td>${inr(x.basic)}</td><td>${inr(x.balance)}</td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="note">Assumes 12% employee + 3.67% employer contributions to EPF (8.33% goes to EPS). Interest compounded monthly at ${r.rate}% p.a. Actual corpus depends on EPFO rates.</div>`
+  },
+
+  'nps':{
+    title:'NPS Calculator',subtitle:'National Pension Scheme projection',icon:ICONS.nps,
+    fields:[
+      fN('monthly','Monthly Contribution',5000,{prefix:'₹',min:500,step:500}),
+      fN('years','Years to Retirement',30,{suffix:'yrs',min:1,max:40,step:1}),
+      fN('rate','Expected Return',10,{suffix:'%',min:1,max:20,step:0.5}),
+      fN('annuity','Annuity %',40,{suffix:'%',min:40,max:100,step:5,hint:'Min 40% must be annuitized'}),
+      fN('annuityRate','Annuity Rate',6,{suffix:'%',min:1,max:12,step:0.5})
+    ],
+    calc:v=>{
+      const i=v.rate/12/100; let balance=0,invested=0;
+      for(let m=0;m<v.years*12;m++){ balance=(balance+v.monthly)*(1+i); invested+=v.monthly; }
+      const annuityCorpus=balance*v.annuity/100;
+      const lumpSum=balance-annuityCorpus;
+      const monthlyPension=annuityCorpus*v.annuityRate/100/12;
+      return {corpus:balance,invested,gain:balance-invested,annuityCorpus,lumpSum,monthlyPension,years:v.years};
+    },
+    render:r=>`<div class="result-grid">
+      <div class="result-card"><div class="lbl">Total Corpus</div><div class="val">${inr(r.corpus)}</div><div class="sub">at retirement</div></div>
+      <div class="result-card alt"><div class="lbl">Lump Sum (60%)</div><div class="val">${inr(r.lumpSum)}</div><div class="sub">tax-free</div></div>
+      <div class="result-card"><div class="lbl">Monthly Pension</div><div class="val">${inr(r.monthlyPension)}</div><div class="sub">from annuity</div></div>
+    </div>
+    <div class="sch-wrap"><table><tbody>
+      <tr><td>Total Invested</td><td>${inr(r.invested)}</td></tr>
+      <tr><td>Returns Gained</td><td>${inr(r.gain)}</td></tr>
+      <tr><td>Annuity Corpus</td><td>${inr(r.annuityCorpus)}</td></tr>
+    </tbody></table></div>
+    <div class="note">NPS allows 60% lump sum withdrawal (tax-free), 40% must be used to buy annuity. Additional ₹50k deduction u/s 80CCD(1B).</div>`
+  }
+};
+
+/* ============ MODAL LOGIC ============ */
+const modalOverlay=document.getElementById('modalOverlay');
+const modalBox=document.getElementById('modalBox');
+const modalIcon=document.getElementById('modalIcon');
+const modalTitle=document.getElementById('modalTitle');
+const modalSubtitle=document.getElementById('modalSubtitle');
+const modalBody=document.getElementById('modalBody');
+const modalClose=document.getElementById('modalClose');
+
+let currentRenderFn=null;
+
+function closeModal(){
+  modalOverlay.classList.remove('active');
+  document.body.style.overflow='';
+}
+
+modalClose.onclick=closeModal;
+modalOverlay.onclick=e=>{ if(e.target===modalOverlay) closeModal(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&modalOverlay.classList.contains('active')) closeModal(); });
+
+function openTool(key){
+  const cfg=TOOLS[key];
+  if(!cfg){ alert('Tool not found: '+key); return; }
+  modalIcon.innerHTML=`<svg viewBox="0 0 24 24">${cfg.icon}</svg>`;
+  modalTitle.textContent=cfg.title;
+  modalSubtitle.textContent=cfg.subtitle;
+  modalBody.innerHTML='';
+  const form=document.createElement('div');
+  form.className='field-grid';
+  const inputs={};
+  cfg.fields.forEach(f=>{
+    const wrap=document.createElement('div');
+    wrap.className='field'+(f.prefix?' has-pre':'')+(f.suffix?' has-suf':'');
+    wrap.innerHTML=`<label>${f.label}${f.hint?` <span class="hint">· ${f.hint}</span>`:''}</label>`;
+    const iw=document.createElement('div');
+    iw.className='field-input-wrap';
+    let input;
+    if(f.type==='select'){
+      input=document.createElement('select');
+      f.options.forEach(o=>{ const opt=document.createElement('option'); opt.value=o.value; opt.textContent=o.label; if(o.value===f.default) opt.selected=true; input.appendChild(opt); });
+    } else {
+      input=document.createElement('input');
+      input.type='number';
+      input.value=f.default;
+      if(f.min!==undefined) input.min=f.min;
+      if(f.max!==undefined) input.max=f.max;
+      if(f.step!==undefined) input.step=f.step;
+    }
+    iw.appendChild(input);
+    if(f.prefix) iw.insertAdjacentHTML('afterbegin',`<span class="pre">${f.prefix}</span>`);
+    if(f.suffix) iw.insertAdjacentHTML('beforeend',`<span class="suf">${f.suffix}</span>`);
+    wrap.appendChild(iw);
+    form.appendChild(wrap);
+    inputs[f.key]=input;
+  });
+  modalBody.appendChild(form);
+  const results=document.createElement('div');
+  results.id='toolResults';
+  modalBody.appendChild(results);
+  function runCalc(){
+    const v={};
+    cfg.fields.forEach(f=>{
+      const raw=inputs[f.key].value;
+      v[f.key]=(f.type==='number')?(parseFloat(raw)||0):raw;
+    });
+    const r=cfg.calc(v);
+    results.innerHTML=cfg.render(r,v);
+  }
+  Object.values(inputs).forEach(inp=>{
+    inp.addEventListener('input',runCalc);
+    inp.addEventListener('change',runCalc);
+  });
+  runCalc();
+  modalOverlay.classList.add('active');
+  document.body.style.overflow='hidden';
+  modalBox.scrollTop=0;
+  modalOverlay.scrollTop=0;
+}
+
+/* ============ TILE CLICK ============ */
+document.querySelectorAll('.tool-tile').forEach(tile=>{
+  tile.addEventListener('click',()=>{
+    const key=tile.getAttribute('data-tool');
+    if(key) openTool(key);
+  });
+});
+
+/* ============ SEARCH + FILTER ============ */
+(function(){
+  const searchInput=document.getElementById('toolSearch');
+  const pills=document.getElementById('filterPills');
+  const tiles=document.querySelectorAll('.tool-tile');
+  const cats=document.querySelectorAll('.cat-block');
+  const noResults=document.getElementById('noResults');
+  let activeFilter='all';
+  function applyFilters(){
+    const q=(searchInput.value||'').toLowerCase().trim();
+    let visibleCount=0;
+    cats.forEach(cat=>{
+      const catKey=cat.getAttribute('data-cat');
+      let catVisible=false;
+      cat.querySelectorAll('.tool-tile').forEach(tile=>{
+        const text=(tile.textContent+' '+(tile.getAttribute('data-tags')||'')).toLowerCase();
+        const matchSearch=!q||text.indexOf(q)!==-1;
+        const matchFilter=activeFilter==='all'||catKey===activeFilter;
+        const show=matchSearch&&matchFilter;
+        tile.style.display=show?'':'none';
+        if(show){catVisible=true;visibleCount++;}
+      });
+      cat.style.display=catVisible?'':'none';
+    });
+    noResults.style.display=visibleCount===0?'block':'none';
+  }
+  searchInput.addEventListener('input',applyFilters);
+  pills.addEventListener('click',e=>{
+    const btn=e.target.closest('button');
+    if(!btn)return;
+    pills.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter=btn.getAttribute('data-filter');
+    applyFilters();
+  });
+})();
+</script>
+</body>
+</html>
