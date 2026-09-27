@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Business Tools — GST, Margin, Break-even, ROI &amp; Invoices | DocEasy</title>
+<meta name="description" content="Free online commercial calculators — GST calculator, profit margin, markup, break-even point, ROI, CAGR. 100% private, browser-based.">
+<meta name="keywords" content="business tools, gst calculator, profit margin calculator, break even calculator, roi calculator, cagr calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/business-tools.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Business Tools — DocEasy">
+<meta property="og:description" content="Free commercial calculators for MSMEs and retailers.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/business-tools.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Business Tools — DocEasy">
+<meta name="twitter:description" content="Free online business calculators. 100% private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Business Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/business-tools.html",
+  "description": "Free online commercial calculators for GST, Margin, Break-Even, ROI."
+}
+</script>
+
+<!-- रूट डायरेक्टरी स्टाइल -->
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
+<style>
+.ad-slot-container, .ad-placeholder { display: none !important; }
+* { box-sizing: border-box; }
+
+.main-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+  overflow-x: hidden;
+}
+
+/* HERO (Same as printing-tools.html) */
+.phero {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 40px 32px;
+  margin-top: 30px;
+  background: linear-gradient(135deg, var(--accent) 0%, #2563eb 55%, #4f46e5 100%);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(25,57,138,0.28);
+}
+.phero::before, .phero::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+}
+.phero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.phero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.phero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  margin-bottom: 14px; backdrop-filter: blur(6px);
+  position: relative; z-index: 1;
+}
+.phero h1 {
+  font-size: clamp(26px, 4.5vw, 40px); font-weight: 800;
+  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
+  position: relative; z-index: 1;
+}
+.phero p {
+  font-size: clamp(14px, 2vw, 16px); line-height: 1.6;
+  max-width: 620px; margin: 0; opacity: 0.92;
+  position: relative; z-index: 1;
+}
+.phero-stats {
+  display: flex; gap: 26px; margin-top: 22px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.phero-stats .stat { display: flex; flex-direction: column; }
+.phero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.phero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.8; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 30px 0 22px; flex-wrap: wrap; }
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 460px; }
+.search-box svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
+}
+.search-box input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 14px; outline: none; transition: all 0.18s;
+}
+.search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button {
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 12.5px; font-weight: 700; cursor: pointer;
+  transition: all 0.18s; font-family: inherit;
+}
+.filter-pills button:hover { border-color: var(--accent); color: var(--accent); }
+.filter-pills button.active {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
+}
+
+/* CATEGORY BLOCK */
+.cat-block { margin-top: 38px; scroll-margin-top: 90px; }
+.cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-head .icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), #2563eb);
+}
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 18px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count {
+  margin-left: auto; font-size: 11.5px; font-weight: 700;
+  color: var(--subtext-color); background: var(--card-hover);
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+/* TOOLS GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.tool-tile {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--text-color);
+  transition: all 0.2s ease; min-height: 138px;
+  position: relative; cursor: pointer; text-align: left; width: 100%; text-decoration: none;
+}
+.tool-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(25,57,138,0.14);
+}
+.tool-tile .tile-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  background: var(--accent-soft, rgba(25,57,138,0.08));
+  color: var(--accent);
+  display: grid; place-items: center;
+  transition: transform 0.22s; flex-shrink: 0;
+}
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag {
+  position: absolute; top: 9px; right: 9px;
+  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#f59e0b,#d97706); color: #fff;
+}
+.tool-tile .tag.new { background: linear-gradient(135deg,#16a34a,#15803d); }
+.tool-tile .tag.hot { background: linear-gradient(135deg,#dc2626,#b91c1c); }
+
+/* HOW TO */
+.how-to-use { max-width: 1000px; margin: 66px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: var(--accent); opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* FAQ & ARTICLE */
+.deep-faq { max-width: 900px; margin: 66px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: var(--accent); }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: var(--accent); font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+
+.seo-article { max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; }
+.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; }
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 { font-size: 20px !important; font-weight: 700; color: var(--accent); margin: 32px 0 16px; }
+.seo-article p { font-size: 15.5px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
+.seo-article ul { margin: 20px 0; padding-left: 24px; }
+.seo-article li { font-size: 15px !important; color: var(--subtext-color); margin-bottom: 12px; }
+
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: flex-start; justify-content: center; z-index: 9999; padding: 20px; overflow-y: auto; }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--card-bg); color: var(--text-color); border-radius: 20px; max-width: 760px; width: 100%; margin: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.35); overflow: hidden; border: 1px solid var(--border-color); }
+.modal-header { display: flex; align-items: center; gap: 12px; padding: 18px 22px; background: linear-gradient(135deg, var(--accent), #2563eb); color: #fff; position: sticky; top: 0; z-index: 5; }
+.modal-header .mh-icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); }
+.modal-header .mh-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+.modal-header h2 { font-size: 16.5px; font-weight: 800; margin: 0; line-height: 1.2; color:#fff; }
+.modal-close { margin-left: auto; width: 34px; height: 34px; border-radius: 10px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); color: #fff; cursor: pointer; font-size: 20px; line-height: 1; display: grid; place-items: center; }
+.modal-body { padding: 22px; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 11.5px; font-weight: 700; color: var(--text-color); text-transform: uppercase; letter-spacing: 0.5px; }
+.field input, .field select { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 14px; font-weight: 600; outline: none; }
+.field input:focus, .field select:focus { border-color: var(--accent); }
+.result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.result-card { padding: 14px; background: rgba(25,57,138,0.06); border: 1px solid rgba(25,57,138,0.18); border-radius: 12px; }
+.result-card .lbl { font-size: 10px; text-transform: uppercase; font-weight: 800; color: var(--subtext-color); }
+.result-card .val { font-size: 19px; font-weight: 800; color: var(--accent); margin-top: 4px; }
+.sch-wrap { max-height: 260px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 16px; }
+.sch-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.sch-wrap th, .sch-wrap td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border-color); }
+.sch-wrap th { background: var(--card-hover); color: var(--text-color); font-weight: 800; position: sticky; top: 0; }
+.sch-wrap td:first-child { text-align: left; color: var(--text-color); font-weight: 700; }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .phero { padding: 28px 20px; border-radius: 18px; margin-top: 20px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .field-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <section class="phero">
+    <div class="phero-badge">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"/></svg>
+      COMMERCIAL &amp; MSME SUITE
+    </div>
+    <h1>Business Tools &amp; Financial Utilities</h1>
+    <p>Free commercial calculators for GST, profit margins, break-even targets, ROI, and invoices. 100% private — client-side execution.</p>
+    <div class="phero-stats">
+      <div class="stat"><b>12+</b><span>Business Tools</span></div>
+      <div class="stat"><b>0</b><span>Uploads</span></div>
+      <div class="stat"><b>₹0</b><span>Cost</span></div>
+      <div class="stat"><b>Free</b><span>Commercial</span></div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <input type="text" id="toolSearch" placeholder="Search business tools — GST, margins, ROI, break-even…">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="tax">Tax &amp; GST</button>
+      <button data-filter="profit">Pricing &amp; Margins</button>
+      <button data-filter="growth">Growth &amp; Returns</button>
+      <button data-filter="ops">Operations</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">No business tools match your search.</div>
+
+  <!-- TAX & GST -->
+  <section class="cat-block" data-cat="tax">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div><h2>GST &amp; Invoicing</h2><p>Calculate GST additions, reverse extractions, and print bills.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-tool="gst-calc"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="tag hot">HOT</span><h3>GST Calculator</h3><p>Inclusive/exclusive splits</p></button>
+      <button class="tool-tile" data-tool="reverse-gst"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/></svg></div><span class="tag new">NEW</span><h3>Reverse GST (RCM)</h3><p>Extract base from gross</p></button>
+      <a class="tool-tile" href="tools/invoice-generator.html"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v18l4-4 4 4 4-4 4 4V4a2 2 0 0 0-2-2z"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><span class="tag">OPEN</span><h3>Invoice Generator</h3><p>Professional GST invoices</p></a>
+    </div>
+  </section>
+
+  <!-- PRICING & MARGINS -->
+  <section class="cat-block" data-cat="profit">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+      <div><h2>Pricing, Margins &amp; Volume</h2><p>Establish sustainable retail pricing and compute break-even sales.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-tool="profit-margin"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4z"/><circle cx="12" cy="12" r="9"/></svg></div><span class="tag hot">HOT</span><h3>Profit Margin &amp; Markup</h3><p>Cost to sales percentage</p></button>
+      <button class="tool-tile" data-tool="break-even"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></div><span class="tag new">NEW</span><h3>Break-Even Calculator</h3><p>Zero-loss volume target</p></button>
+      <button class="tool-tile" data-tool="discount-calc"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg></div><span class="tag new">NEW</span><h3>Discount &amp; Bulk Pricing</h3><p>Margin after dealer rebate</p></button>
+    </div>
+  </section>
+
+  <!-- GROWTH & RETURNS -->
+  <section class="cat-block" data-cat="growth">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div><h2>Growth &amp; Capital</h2><p>Calculate enterprise returns and compound growth.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-tool="roi-calc"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"/><path d="M18 8l4 4-4 4"/></svg></div><span class="tag hot">HOT</span><h3>ROI Calculator</h3><p>Return on investment</p></button>
+      <button class="tool-tile" data-tool="cagr-calc"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div><span class="tag new">NEW</span><h3>CAGR Growth Rate</h3><p>Compounded annual growth</p></button>
+      <button class="tool-tile" data-tool="working-capital"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><span class="tag new">NEW</span><h3>Working Capital Ratio</h3><p>Current liquidity health</p></button>
+    </div>
+  </section>
+
+  <!-- HOW TO -->
+  <section class="how-to-use">
+    <h2>How to Use Business Tools</h2>
+    <p class="lead">Four structured steps to evaluate margins, calculate GST, and forecast break-even sales.</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">1</div><h3>Select Calculator</h3><p>Pick from GST, Pricing, Margins, or Capital utilities.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h3>Enter Financials</h3><p>Provide costs, selling rates, or turnover targets locally.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>Instant Metrics</h3><p>Immediate breakdowns of net revenues and tax splits.</p></div>
+      <div class="step-card"><div class="step-num">4</div><h3>Apply to Billing</h3><p>Use figures in your accounting entries and invoices.</p></div>
+    </div>
+  </section>
+
+  <!-- SEO ARTICLE -->
+  <section class="seo-article">
+    <h2>Complete Guide to Commercial Operations &amp; MSME Math (2026)</h2>
+    <p>Operating a profitable commercial business, retail store, agency, or digital service kiosk in India requires strict mathematical oversight of pricing architectures, tax withholdings, working capital liquidity, and capital asset returns. Under the contemporary Goods and Services Tax (GST) regime, businesses cannot rely on arbitrary guesswork. <b>DocEasy Business Tools</b> provides commercial enterprises with a zero-cost, private, client-side toolkit engineered to eliminate financial friction.</p>
+
+    <h3>1. Forward vs. Reverse GST Accounting</h3>
+    <p>When quoting wholesale or service rates that do not include taxation, the tax and gross billing amounts evaluate as: <code>GST Amount = (Base Price × GST Rate %) ÷ 100</code>. On consumer retail products sold on inclusive Maximum Retail Prices (MRP), use reverse extraction: <code>Base = Gross ÷ (1 + (Rate ÷ 100))</code>.</p>
+
+    <h3>2. Profit Margin vs. Markup Percentage</h3>
+    <p>Markup is the percentage added to the Cost of Goods Sold (COGS) to arrive at a selling price: <code>[(Selling Price - Cost) ÷ Cost] × 100</code>. Profit margin is the percentage of the final selling price that remains as earnings: <code>[(Selling Price - Cost) ÷ Selling Price] × 100</code>. Confusing these two leads to severe operating deficits.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <details class="faq-item" open>
+      <summary>Are these business tools free for commercial use?</summary>
+      <p>Yes. Every tool is 100% free forever for MSMEs, sole proprietors, CSC operators, and accounting firms.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is company data private?</summary>
+      <p>Completely. All computations run in local browser memory. Zero financial metrics are ever transmitted across networks.</p>
+    </details>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon" id="modalIcon"></div>
+      <div style="flex:1;"><h2 id="modalTitle">Calculator</h2></div>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- रूट डायरेक्टरी स्क्रिप्ट -->
+<script src="assets/js/core/doceasy-core.js"></script>
+
+<script>
+function inr(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+function inr2(n){ return '₹'+n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+const B_TOOLS={
+  'gst-calc':{
+    title:'GST Calculator',
+    fields:[{k:'b',l:'Base Amount (₹)',v:10000},{k:'r',l:'GST Rate (%)',v:18}],
+    run:v=>{ const t=v.b*(v.r/100); return `<div class="result-grid"><div class="result-card"><div class="lbl">Total Invoice</div><div class="val">${inr2(v.b+t)}</div></div><div class="result-card"><div class="lbl">Total GST</div><div class="val">${inr2(t)}</div></div><div class="result-card"><div class="lbl">CGST / SGST</div><div class="val">${inr2(t/2)} each</div></div></div>`; }
+  },
+  'reverse-gst':{
+    title:'Reverse GST Calculator',
+    fields:[{k:'g',l:'Gross Amount (₹)',v:11800},{k:'r',l:'GST Rate (%)',v:18}],
+    run:v=>{ const b=v.g/(1+v.r/100), t=v.g-b; return `<div class="result-grid"><div class="result-card"><div class="lbl">Base Amount</div><div class="val">${inr2(b)}</div></div><div class="result-card"><div class="lbl">Embedded GST</div><div class="val">${inr2(t)}</div></div></div>`; }
+  },
+  'profit-margin':{
+    title:'Profit Margin & Markup',
+    fields:[{k:'c',l:'Cost Price (₹)',v:1000},{k:'s',l:'Selling Price (₹)',v:1500}],
+    run:v=>{ const p=v.s-v.c, m=v.s>0?(p/v.s)*100:0, mu=v.c>0?(p/v.c)*100:0; return `<div class="result-grid"><div class="result-card"><div class="lbl">Profit Margin</div><div class="val">${m.toFixed(2)}%</div></div><div class="result-card"><div class="lbl">Markup %</div><div class="val">${mu.toFixed(2)}%</div></div><div class="result-card"><div class="lbl">Gross Profit</div><div class="val">${inr2(p)}</div></div></div>`; }
+  },
+  'break-even':{
+    title:'Break-Even Calculator',
+    fields:[{k:'f',l:'Monthly Fixed Costs (₹)',v:150000},{k:'p',l:'Selling Price / Unit (₹)',v:1000},{k:'vc',l:'Variable Cost / Unit (₹)',v:600}],
+    run:v=>{ const cm=v.p-v.vc, u=cm>0?Math.ceil(v.f/cm):0; return `<div class="result-grid"><div class="result-card"><div class="lbl">Break-Even Units</div><div class="val">${u} units</div></div><div class="result-card"><div class="lbl">Break-Even Sales</div><div class="val">${inr(u*v.p)}</div></div></div>`; }
+  },
+  'discount-calc':{
+    title:'Discount & Bulk Pricing',
+    fields:[{k:'l',l:'List Price (₹)',v:5000},{k:'d',l:'Discount %',v:15}],
+    run:v=>{ const s=v.l*(v.d/100); return `<div class="result-grid"><div class="result-card"><div class="lbl">Final Price</div><div class="val">${inr2(v.l-s)}</div></div><div class="result-card"><div class="lbl">Discount Saved</div><div class="val">${inr2(s)}</div></div></div>`; }
+  },
+  'roi-calc':{
+    title:'ROI Calculator',
+    fields:[{k:'i',l:'Total Investment (₹)',v:100000},{k:'r',l:'Total Return (₹)',v:160000}],
+    run:v=>{ const g=v.r-v.i, roi=v.i>0?(g/v.i)*100:0; return `<div class="result-grid"><div class="result-card"><div class="lbl">ROI %</div><div class="val">${roi.toFixed(2)}%</div></div><div class="result-card"><div class="lbl">Net Gain</div><div class="val">${inr(g)}</div></div></div>`; }
+  },
+  'cagr-calc':{
+    title:'CAGR Calculator',
+    fields:[{k:'s',l:'Initial Value (₹)',v:500000},{k:'e',l:'Ending Value (₹)',v:1500000},{k:'y',l:'Years',v:3}],
+    run:v=>{ const c=(Math.pow(v.e/v.s, 1/v.y)-1)*100; return `<div class="result-grid"><div class="result-card"><div class="lbl">Annual CAGR</div><div class="val">${c.toFixed(2)}%</div></div><div class="result-card"><div class="lbl">Total Growth</div><div class="val">${inr(v.e-v.s)}</div></div></div>`; }
+  },
+  'working-capital':{
+    title:'Working Capital Calculator',
+    fields:[{k:'a',l:'Current Assets (₹)',v:800000},{k:'l',l:'Current Liabilities (₹)',v:450000}],
+    run:v=>{ const wc=v.a-v.l, r=v.l>0?v.a/v.l:0; return `<div class="result-grid"><div class="result-card"><div class="lbl">Current Ratio</div><div class="val">${r.toFixed(2)} : 1</div></div><div class="result-card"><div class="lbl">Working Capital</div><div class="val">${inr(wc)}</div></div></div>`; }
+  }
+};
+
+const overlay=document.getElementById('modalOverlay');
+const mTitle=document.getElementById('modalTitle');
+const mBody=document.getElementById('modalBody');
+document.getElementById('modalClose').onclick=()=>overlay.classList.remove('active');
+
+document.querySelectorAll('button.tool-tile').forEach(tile=>{
+  tile.onclick=()=>{
+    const k=tile.getAttribute('data-tool');
+    const t=B_TOOLS[k];
+    if(!t) return;
+    mTitle.textContent=t.title;
+    mBody.innerHTML='<div class="field-grid">'+t.fields.map(f=>`<div class="field"><label>${f.l}</label><input type="number" id="inp_${f.k}" value="${f.v}"></div>`).join('')+'</div><div id="resBox"></div>';
+    const render=()=>{
+      const v={};
+      t.fields.forEach(f=>v[f.k]=parseFloat(document.getElementById('inp_'+f.k).value)||0);
+      document.getElementById('resBox').innerHTML=t.run(v);
+    };
+    t.fields.forEach(f=>document.getElementById('inp_'+f.k).oninput=render);
+    render();
+    overlay.classList.add('active');
+  };
+});
+
+(function(){
+  const s=document.getElementById('toolSearch');
+  const pills=document.getElementById('filterPills');
+  const cats=document.querySelectorAll('.cat-block');
+  const no=document.getElementById('noResults');
+  let filter='all';
+  function apply(){
+    const q=s.value.toLowerCase().trim();
+    let vis=0;
+    cats.forEach(c=>{
+      let cVis=false;
+      const cCat=c.getAttribute('data-cat');
+      c.querySelectorAll('.tool-tile').forEach(tile=>{
+        const txt=tile.textContent.toLowerCase();
+        const show=(!q||txt.includes(q))&&(filter==='all'||cCat===filter);
+        tile.style.display=show?'':'none';
+        if(show){ cVis=true; vis++; }
+      });
+      c.style.display=cVis?'':'none';
+    });
+    no.style.display=vis===0?'block':'none';
+  }
+  s.oninput=apply;
+  pills.onclick=e=>{
+    const b=e.target.closest('button');
+    if(!b)return;
+    pills.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    filter=b.getAttribute('data-filter');
+    apply();
+  };
+})();
+</script>
+</body>
+</html>
