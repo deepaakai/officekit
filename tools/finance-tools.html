@@ -63,26 +63,30 @@
 }
 </script>
 
+<!-- Global CSS Link (same as emitra-csc-tools & card-cropper) -->
 <link rel="stylesheet" href="assets/css/doceasy-global.css">
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
 <style>
+/* Exact typography & variable integration from card-cropper & emitra */
 :root {
   --accent: #19398a;
   --accent-hover: #2563eb;
   --accent-soft: rgba(25, 57, 138, 0.08);
   --accent-soft-hover: rgba(25, 57, 138, 0.14);
-  --font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-}
-
-html, body {
-  font-family: var(--font-base);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * { 
   box-sizing: border-box; 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--text-color, #1e293b);
+  background: var(--bg-color, #f8fafc);
   font-family: inherit;
+  -webkit-font-smoothing: antialiased;
 }
 
 .main-wrap { 
@@ -92,7 +96,7 @@ html, body {
   overflow-x: hidden; 
 }
 
-/* HERO */
+/* HERO (Exact replica of emitra-csc-tools.html) */
 .chero {
   position: relative; 
   overflow: hidden;
@@ -174,7 +178,7 @@ html, body {
   transform: translateY(-50%); 
   width: 17px; 
   height: 17px; 
-  stroke: var(--subtext-color); 
+  stroke: var(--subtext-color, #64748b); 
   fill: none; 
   stroke-width: 2; 
 }
@@ -182,9 +186,9 @@ html, body {
   width: 100%; 
   padding: 12px 14px 12px 42px; 
   border-radius: 12px; 
-  border: 1px solid var(--border-color); 
-  background: var(--card-bg); 
-  color: var(--text-color); 
+  border: 1px solid var(--border-color, #e2e8f0); 
+  background: var(--card-bg, #ffffff); 
+  color: var(--text-color, #1e293b); 
   font-size: 14px; 
   outline: none; 
   transition: all 0.18s; 
@@ -197,9 +201,9 @@ html, body {
 .filter-pills button { 
   padding: 9px 15px; 
   border-radius: 999px; 
-  border: 1px solid var(--border-color); 
-  background: var(--card-bg); 
-  color: var(--text-color); 
+  border: 1px solid var(--border-color, #e2e8f0); 
+  background: var(--card-bg, #ffffff); 
+  color: var(--text-color, #1e293b); 
   font-size: 12.5px; 
   font-weight: 700; 
   cursor: pointer; 
@@ -221,7 +225,7 @@ html, body {
   gap: 12px; 
   margin-bottom: 18px; 
   padding-bottom: 12px; 
-  border-bottom: 2px solid var(--border-color); 
+  border-bottom: 2px solid var(--border-color, #e2e8f0); 
 }
 .cat-head .icon { 
   width: 42px; 
@@ -233,14 +237,14 @@ html, body {
   background: linear-gradient(135deg, var(--accent), #2563eb); 
 }
 .cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
-.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
-.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color, #1e293b); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color, #64748b); margin: 2px 0 0; }
 .cat-head .count { 
   margin-left: auto; 
   font-size: 11.5px; 
   font-weight: 700; 
-  color: var(--subtext-color); 
-  background: var(--card-hover); 
+  color: var(--subtext-color, #64748b); 
+  background: var(--card-hover, #f1f5f9); 
   padding: 5px 11px; 
   border-radius: 999px; 
   white-space: nowrap; 
@@ -256,10 +260,10 @@ html, body {
   flex-direction: column; 
   gap: 10px; 
   padding: 18px 16px 16px; 
-  background: var(--card-bg); 
-  border: 1px solid var(--border-color); 
+  background: var(--card-bg, #ffffff); 
+  border: 1px solid var(--border-color, #e2e8f0); 
   border-radius: 14px; 
-  color: var(--text-color); 
+  color: var(--text-color, #1e293b); 
   transition: all 0.2s ease; 
   min-height: 140px; 
   position: relative; 
@@ -286,7 +290,7 @@ html, body {
 .tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
 .tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
 .tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
-.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color, #64748b); margin: 0; line-height: 1.45; }
 .tool-tile .tag { 
   position: absolute; 
   top: 9px; 
@@ -304,11 +308,11 @@ html, body {
 /* HOW TO */
 .how-to-use { max-width: 940px; margin: 68px auto 0; }
 .how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
-.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color, #64748b); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
 .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
 .step-card { 
-  background: var(--card-bg); 
-  border: 1px solid var(--border-color); 
+  background: var(--card-bg, #ffffff); 
+  border: 1px solid var(--border-color, #e2e8f0); 
   border-radius: 14px; 
   padding: 24px 18px; 
   position: relative; 
@@ -325,22 +329,22 @@ html, body {
   letter-spacing: -2px; 
 }
 .step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
-.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color, #64748b); margin: 0; line-height: 1.6; }
 
-/* SEO ARTICLE & FAQ */
+/* SEO ARTICLE & FAQ (Exact match to card-cropper.html) */
 .seo-article { 
   max-width: 860px; 
   margin: 48px auto; 
   padding: 40px 32px; 
   line-height: 1.8; 
-  background: var(--card-bg); 
-  border: 1px solid var(--border-color); 
+  background: var(--card-bg, #ffffff); 
+  border: 1px solid var(--border-color, #e2e8f0); 
   border-radius: 14px; 
 }
 .seo-article h2 { 
   font-size: 26px !important; 
   font-weight: 800; 
-  color: var(--text-color); 
+  color: var(--text-color, #1e293b); 
   margin: 40px 0 20px; 
   letter-spacing: -0.5px; 
   line-height: 1.3; 
@@ -356,27 +360,27 @@ html, body {
 .seo-article h4 { 
   font-size: 17px !important; 
   font-weight: 700; 
-  color: var(--text-color); 
+  color: var(--text-color, #1e293b); 
   margin: 24px 0 12px; 
 }
 .seo-article p { 
   font-size: 16px !important; 
-  color: var(--subtext-color); 
+  color: var(--subtext-color, #64748b); 
   margin: 0 0 20px; 
   line-height: 1.8; 
 }
 .seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
 .seo-article li { 
   font-size: 15.5px !important; 
-  color: var(--subtext-color); 
+  color: var(--subtext-color, #64748b); 
   margin-bottom: 12px; 
   line-height: 1.7; 
 }
-.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article b, .seo-article strong { color: var(--text-color, #1e293b); font-weight: 700; }
 .seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
 .seo-article a:hover { color: var(--accent-hover); }
 .seo-article code { 
-  background: var(--card-hover); 
+  background: var(--card-hover, #f1f5f9); 
   padding: 2px 8px; 
   border-radius: 5px; 
   font-family: ui-monospace, monospace; 
@@ -384,8 +388,8 @@ html, body {
   color: var(--accent); 
 }
 .seo-article details { 
-  background: var(--bg-color); 
-  border: 1px solid var(--border-color); 
+  background: var(--bg-color, #f8fafc); 
+  border: 1px solid var(--border-color, #e2e8f0); 
   border-radius: 12px; 
   padding: 18px 22px; 
   margin-bottom: 12px; 
@@ -395,7 +399,7 @@ html, body {
 .seo-article details summary { 
   font-size: 16px !important; 
   font-weight: 700; 
-  color: var(--text-color); 
+  color: var(--text-color, #1e293b); 
   cursor: pointer; 
   list-style: none; 
   display: flex; 
@@ -413,7 +417,7 @@ html, body {
 .seo-article details[open] summary::after { content: "−"; }
 .seo-article details p { margin: 14px 0 0; font-size: 15px !important; line-height: 1.75; }
 
-.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color, #64748b); font-size: 14.5px; }
 
 /* MODAL */
 .modal-overlay { 
@@ -432,8 +436,8 @@ html, body {
 .modal-overlay.active { display: flex; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .modal { 
-  background: var(--card-bg); 
-  color: var(--text-color); 
+  background: var(--card-bg, #ffffff); 
+  color: var(--text-color, #1e293b); 
   border-radius: 20px; 
   max-width: 760px; 
   width: 100%; 
@@ -441,7 +445,7 @@ html, body {
   box-shadow: 0 30px 80px rgba(0,0,0,0.35); 
   animation: slideUp 0.25s ease; 
   overflow: hidden; 
-  border: 1px solid var(--border-color); 
+  border: 1px solid var(--border-color, #e2e8f0); 
 }
 .modal-header { 
   display: flex; 
@@ -485,18 +489,18 @@ html, body {
 .modal-body { padding: 22px; }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
-.field label { font-size: 11.5px; font-weight: 700; color: var(--text-color); text-transform: uppercase; letter-spacing: 0.5px; }
+.field label { font-size: 11.5px; font-weight: 700; color: var(--text-color, #1e293b); text-transform: uppercase; letter-spacing: 0.5px; }
 .field-input-wrap { position: relative; display: flex; align-items: center; }
-.field-input-wrap .pre, .field-input-wrap .suf { position: absolute; font-size: 13px; font-weight: 700; color: var(--subtext-color); pointer-events: none; }
+.field-input-wrap .pre, .field-input-wrap .suf { position: absolute; font-size: 13px; font-weight: 700; color: var(--subtext-color, #64748b); pointer-events: none; }
 .field-input-wrap .pre { left: 12px; }
 .field-input-wrap .suf { right: 12px; }
 .field input, .field select { 
   width: 100%; 
   padding: 11px 12px; 
   border-radius: 10px; 
-  border: 1.5px solid var(--border-color); 
-  background: var(--card-bg); 
-  color: var(--text-color); 
+  border: 1.5px solid var(--border-color, #e2e8f0); 
+  background: var(--card-bg, #ffffff); 
+  color: var(--text-color, #1e293b); 
   font-size: 14px; 
   font-weight: 600; 
   outline: none; 
@@ -508,44 +512,44 @@ html, body {
   border-color: var(--accent); 
   box-shadow: 0 0 0 3px rgba(25,57,138,0.12); 
 }
-.field .hint { font-size: 10.5px; color: var(--subtext-color); font-weight: 500; }
+.field .hint { font-size: 10.5px; color: var(--subtext-color, #64748b); font-weight: 500; }
 .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
 .result-card { padding: 14px; background: rgba(25,57,138,0.06); border: 1px solid rgba(25,57,138,0.18); border-radius: 12px; }
 .result-card.alt { background: rgba(59,130,246,0.06); border-color: rgba(59,130,246,0.18); }
 .result-card.alt .val { color: #2563eb; }
 .result-card.warn { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.18); }
 .result-card.warn .val { color: #dc2626; }
-.result-card .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 800; color: var(--subtext-color); }
+.result-card .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 800; color: var(--subtext-color, #64748b); }
 .result-card .val { font-size: 19px; font-weight: 800; color: var(--accent); margin-top: 4px; letter-spacing: -0.4px; line-height: 1.15; word-break: break-word; }
-.result-card .sub { font-size: 10.5px; color: var(--subtext-color); margin-top: 2px; font-weight: 600; }
-.chart-row { display: flex; gap: 18px; align-items: center; padding: 14px; background: var(--card-hover); border-radius: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+.result-card .sub { font-size: 10.5px; color: var(--subtext-color, #64748b); margin-top: 2px; font-weight: 600; }
+.chart-row { display: flex; gap: 18px; align-items: center; padding: 14px; background: var(--card-hover, #f1f5f9); border-radius: 14px; margin-bottom: 16px; flex-wrap: wrap; }
 .chart-row .legend { flex: 1; min-width: 160px; }
-.chart-row .legend .li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.chart-row .legend .li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; color: var(--text-color, #1e293b); margin-bottom: 8px; }
 .chart-row .legend .li .dot { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
-.chart-row .legend .li span { color: var(--subtext-color); font-weight: 600; margin-left: auto; }
-.sch-wrap { max-height: 260px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 16px; }
+.chart-row .legend .li span { color: var(--subtext-color, #64748b); font-weight: 600; margin-left: auto; }
+.sch-wrap { max-height: 260px; overflow-y: auto; border: 1px solid var(--border-color, #e2e8f0); border-radius: 12px; margin-bottom: 16px; }
 .sch-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.sch-wrap th, .sch-wrap td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border-color); }
-.sch-wrap th { background: var(--card-hover); color: var(--text-color); font-weight: 800; position: sticky; top: 0; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.4px; }
-.sch-wrap td { color: var(--subtext-color); font-weight: 600; }
-.sch-wrap td:first-child { text-align: left; color: var(--text-color); font-weight: 700; }
+.sch-wrap th, .sch-wrap td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border-color, #e2e8f0); }
+.sch-wrap th { background: var(--card-hover, #f1f5f9); color: var(--text-color, #1e293b); font-weight: 800; position: sticky; top: 0; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.4px; }
+.sch-wrap td { color: var(--subtext-color, #64748b); font-weight: 600; }
+.sch-wrap td:first-child { text-align: left; color: var(--text-color, #1e293b); font-weight: 700; }
 .sch-wrap tr:last-child td { border-bottom: none; }
-.section-title { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-color); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+.section-title { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-color, #1e293b); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
 .section-title::before { content: ""; width: 3px; height: 14px; border-radius: 2px; background: var(--accent); }
-.note { font-size: 11.5px; color: var(--subtext-color); line-height: 1.6; padding: 10px 12px; background: var(--card-hover); border-left: 3px solid var(--accent); border-radius: 6px; margin-top: 14px; }
+.note { font-size: 11.5px; color: var(--subtext-color, #64748b); line-height: 1.6; padding: 10px 12px; background: var(--card-hover, #f1f5f9); border-left: 3px solid var(--accent); border-radius: 6px; margin-top: 14px; }
 .btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
-.btn { padding: 11px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; transition: all 0.15s; }
+.btn { padding: 11px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1.5px solid var(--border-color, #e2e8f0); background: var(--card-bg, #ffffff); color: var(--text-color, #1e293b); cursor: pointer; transition: all 0.15s; }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 .btn.primary { background: linear-gradient(135deg,var(--accent),#2563eb); color: #fff; border-color: var(--accent); box-shadow: 0 6px 16px rgba(25,57,138,0.28); }
 .btn.primary:hover { color: #fff; }
 .tax-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.tax-box { padding: 16px; border-radius: 14px; border: 1.5px solid var(--border-color); }
+.tax-box { padding: 16px; border-radius: 14px; border: 1.5px solid var(--border-color, #e2e8f0); }
 .tax-box.winner { border-color: var(--accent); background: rgba(25,57,138,0.06); }
 .tax-box .tb-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .tax-box .tb-head h4 { font-size: 13px; font-weight: 800; margin: 0; }
 .tax-box .tb-head .badge { font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: linear-gradient(135deg,var(--accent),#2563eb); color: #fff; }
-.tax-box .tb-row { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; color: var(--subtext-color); font-weight: 600; }
-.tax-box .tb-row.total { border-top: 1px dashed var(--border-color); margin-top: 6px; padding-top: 8px; color: var(--text-color); font-weight: 800; font-size: 13px; }
+.tax-box .tb-row { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; color: var(--subtext-color, #64748b); font-weight: 600; }
+.tax-box .tb-row.total { border-top: 1px dashed var(--border-color, #e2e8f0); margin-top: 6px; padding-top: 8px; color: var(--text-color, #1e293b); font-weight: 800; font-size: 13px; }
 .tax-box .tb-row.total span:last-child { color: var(--accent); }
 
 @media (max-width: 768px) {
@@ -704,7 +708,7 @@ html, body {
 
   <!-- SEO ARTICLE (2000+ WORDS) -->
   <section class="seo-article">
-    <h2>The Definitive Indian Personal Finance &amp; Tax Planning Guide (2026 Edition)</h2>
+    <h2>The Complete Indian Personal Finance &amp; Tax Planning Guide (2026 Edition)</h2>
 
     <p>Managing personal finances in India requires navigating a sophisticated landscape of changing statutory tax slabs, compound investment vehicles, long-term credit amortization schedules, and evolving social security frameworks. Whether you are an entry-level professional receiving your first salary breakdown, a homeowner planning home loan prepayments, or an experienced investor balancing tax-efficient retirement accounts, precision is non-negotiable. <b>DocEasy Finance Tools</b> provides a suite of 17 dedicated, privacy-first, client-side web calculators designed to eliminate mathematical ambiguity from your financial decisions. Unlike portal lead-generators that harvest phone numbers to sell unsolicited financial products, our tools run completely on your client machine with zero server-side transmission.</p>
 
@@ -878,6 +882,7 @@ html, body {
 </div>
 
 <script src="assets/js/core/doceasy-core.js"></script>
+<script src="../assets/js/core/doceasy-core.js"></script>
 
 <script>
 /* ============ HELPERS ============ */
@@ -949,7 +954,7 @@ function loanTool(cfg){
         <div class="result-card"><div class="lbl">Total Payment</div><div class="val">${inr(r.total)}</div><div class="sub">principal + interest</div></div>
       </div>
       <div class="chart-row">${donutSVG(interestPct,'#19398a','#f59e0b')}
-        <div class="legend">${legendRow('#19398a','Principal',inr(r.P))}${legendRow('#f59e0b','Interest',inr(r.interest))}<div class="li" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-color);font-size:11.5px;color:var(--subtext-color);font-weight:700;">Interest is ${interestPct.toFixed(1)}% of total payment</div></div>
+        <div class="legend">${legendRow('#19398a','Principal',inr(r.P))}${legendRow('#f59e0b','Interest',inr(r.interest))}<div class="li" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-color, #e2e8f0);font-size:11.5px;color:var(--subtext-color, #64748b);font-weight:700;">Interest is ${interestPct.toFixed(1)}% of total payment</div></div>
       </div>`;
       if(r.extra>0){
         html+=`<div class="result-grid">
