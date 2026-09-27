@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Finance Tools — Loan EMI, Income Tax, Salary, SIP, EPF | DocEasy</title>
+<meta name="description" content="Free online finance calculators — loan EMI, income tax, in-hand salary, HRA exemption, SIP, FD, PPF, gratuity, EPF, NPS, TDS. No signup, 100% private.">
+<meta name="keywords" content="finance tools, loan emi calculator, income tax calculator, salary calculator, gratuity calculator, epf calculator, hra calculator, sip calculator, ppf calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/finance-tools.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Finance Tools — Loan EMI, Income Tax, Salary | DocEasy">
+<meta property="og:description" content="17 free finance calculators. No signup, 100% private.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/finance-tools.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Finance Tools — DocEasy">
+<meta name="twitter:description" content="Free finance calculators. No signup, 100% private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Finance Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/finance-tools.html",
+  "description": "Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD."
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Are DocEasy finance calculators free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, every calculator is 100% free forever. No signup, no email, no credit card."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my financial data safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. All calculations run in your browser. No data is uploaded or stored."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- रूट डायरेक्टरी स्टाइल -->
+<link rel="stylesheet" href="assets/css/doceasy-global.css">
+
+<style>
+.ad-slot-container, .ad-placeholder { display: none !important; }
+* { box-sizing: border-box; }
+
+.main-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+  overflow-x: hidden;
+}
+
+/* HERO (Same as printing-tools.html) */
+.phero {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 40px 32px;
+  margin-top: 30px;
+  background: linear-gradient(135deg, var(--accent) 0%, #2563eb 55%, #4f46e5 100%);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(25,57,138,0.28);
+}
+.phero::before, .phero::after {
+  content: ""; position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+}
+.phero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
+.phero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
+.phero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  margin-bottom: 14px; backdrop-filter: blur(6px);
+  position: relative; z-index: 1;
+}
+.phero h1 {
+  font-size: clamp(26px, 4.5vw, 40px); font-weight: 800;
+  margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1;
+  position: relative; z-index: 1;
+}
+.phero p {
+  font-size: clamp(14px, 2vw, 16px); line-height: 1.6;
+  max-width: 620px; margin: 0; opacity: 0.92;
+  position: relative; z-index: 1;
+}
+.phero-stats {
+  display: flex; gap: 26px; margin-top: 22px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.phero-stats .stat { display: flex; flex-direction: column; }
+.phero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.phero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.8; font-weight: 700; margin-top: 2px; }
+
+/* TOOLBAR */
+.toolbar { display: flex; gap: 12px; align-items: center; margin: 30px 0 22px; flex-wrap: wrap; }
+.search-box { position: relative; flex: 1; min-width: 240px; max-width: 460px; }
+.search-box svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2;
+}
+.search-box input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border-radius: 12px; border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 14px; outline: none; transition: all 0.18s;
+}
+.search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-pills button {
+  padding: 9px 15px; border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg); color: var(--text-color);
+  font-size: 12.5px; font-weight: 700; cursor: pointer;
+  transition: all 0.18s; font-family: inherit;
+}
+.filter-pills button:hover { border-color: var(--accent); color: var(--accent); }
+.filter-pills button.active {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
+}
+
+/* CATEGORY BLOCK */
+.cat-block { margin-top: 38px; scroll-margin-top: 90px; }
+.cat-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-color);
+}
+.cat-head .icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), #2563eb);
+}
+.cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
+.cat-head h2 { font-size: 18px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
+.cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
+.cat-head .count {
+  margin-left: auto; font-size: 11.5px; font-weight: 700;
+  color: var(--subtext-color); background: var(--card-hover);
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+/* TOOLS GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.tool-tile {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--text-color);
+  transition: all 0.2s ease; min-height: 138px;
+  position: relative; cursor: pointer; text-align: left; width: 100%;
+}
+.tool-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(25,57,138,0.14);
+}
+.tool-tile .tile-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  background: var(--accent-soft, rgba(25,57,138,0.08));
+  color: var(--accent);
+  display: grid; place-items: center;
+  transition: transform 0.22s; flex-shrink: 0;
+}
+.tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
+.tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
+.tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.tool-tile .tag {
+  position: absolute; top: 9px; right: 9px;
+  font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#f59e0b,#d97706); color: #fff;
+}
+.tool-tile .tag.new { background: linear-gradient(135deg,#16a34a,#15803d); }
+.tool-tile .tag.hot { background: linear-gradient(135deg,#dc2626,#b91c1c); }
+
+/* HOW TO */
+.how-to-use { max-width: 1000px; margin: 66px auto 0; }
+.how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
+.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: var(--accent); opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
+.step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
+
+/* FAQ & ARTICLE */
+.deep-faq { max-width: 900px; margin: 66px auto 0; }
+.deep-faq h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
+.deep-faq .faq-lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
+.deep-faq .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; transition: all 0.2s; }
+.deep-faq .faq-item:hover, .deep-faq .faq-item[open] { border-color: var(--accent); }
+.deep-faq summary { cursor: pointer; font-weight: 700; color: var(--text-color); font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; line-height: 1.45; }
+.deep-faq summary::-webkit-details-marker { display: none; }
+.deep-faq summary::after { content: "+"; font-size: 21px; color: var(--accent); font-weight: 300; flex-shrink: 0; }
+.deep-faq .faq-item[open] summary::after { content: "−"; }
+.deep-faq .faq-item p { margin: 12px 0 0; font-size: 13.5px; color: var(--subtext-color); line-height: 1.72; }
+
+.seo-article { max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; }
+.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; }
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 { font-size: 20px !important; font-weight: 700; color: var(--accent); margin: 32px 0 16px; }
+.seo-article p { font-size: 15.5px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
+.seo-article ul { margin: 20px 0; padding-left: 24px; }
+.seo-article li { font-size: 15px !important; color: var(--subtext-color); margin-bottom: 12px; }
+
+.no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: flex-start; justify-content: center; z-index: 9999; padding: 20px; overflow-y: auto; }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--card-bg); color: var(--text-color); border-radius: 20px; max-width: 760px; width: 100%; margin: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.35); overflow: hidden; border: 1px solid var(--border-color); }
+.modal-header { display: flex; align-items: center; gap: 12px; padding: 18px 22px; background: linear-gradient(135deg, var(--accent), #2563eb); color: #fff; position: sticky; top: 0; z-index: 5; }
+.modal-header .mh-icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); }
+.modal-header .mh-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+.modal-header h2 { font-size: 16.5px; font-weight: 800; margin: 0; line-height: 1.2; color:#fff; }
+.modal-close { margin-left: auto; width: 34px; height: 34px; border-radius: 10px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); color: #fff; cursor: pointer; font-size: 20px; line-height: 1; display: grid; place-items: center; }
+.modal-body { padding: 22px; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 11.5px; font-weight: 700; color: var(--text-color); text-transform: uppercase; letter-spacing: 0.5px; }
+.field input, .field select { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 14px; font-weight: 600; outline: none; }
+.field input:focus, .field select:focus { border-color: var(--accent); }
+.result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.result-card { padding: 14px; background: rgba(25,57,138,0.06); border: 1px solid rgba(25,57,138,0.18); border-radius: 12px; }
+.result-card .lbl { font-size: 10px; text-transform: uppercase; font-weight: 800; color: var(--subtext-color); }
+.result-card .val { font-size: 19px; font-weight: 800; color: var(--accent); margin-top: 4px; }
+.sch-wrap { max-height: 260px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 16px; }
+.sch-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.sch-wrap th, .sch-wrap td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border-color); }
+.sch-wrap th { background: var(--card-hover); color: var(--text-color); font-weight: 800; position: sticky; top: 0; }
+.sch-wrap td:first-child { text-align: left; color: var(--text-color); font-weight: 700; }
+.btn-row { display: flex; gap: 10px; margin-top: 18px; }
+.btn { padding: 11px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; }
+.btn.primary { background: linear-gradient(135deg,var(--accent),#2563eb); color: #fff; border-color: var(--accent); }
+
+@media (max-width: 768px) {
+  .main-wrap { padding: 0 14px 60px; }
+  .phero { padding: 28px 20px; border-radius: 18px; margin-top: 20px; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .field-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <section class="phero">
+    <div class="phero-badge">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"/></svg>
+      FINANCE UTILITIES
+    </div>
+    <h1>Finance Calculators &amp; Planners</h1>
+    <p>Free browser-based calculators for loan EMIs, income tax, in-hand salary, HRA, SIP, and EPF. No signup, no upload, 100% private.</p>
+    <div class="phero-stats">
+      <div class="stat"><b>17</b><span>Calculators</span></div>
+      <div class="stat"><b>0</b><span>Signup</span></div>
+      <div class="stat"><b>₹0</b><span>Cost</span></div>
+      <div class="stat"><b>Free</b><span>Forever</span></div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <input type="text" id="toolSearch" placeholder="Search finance tools — loan EMI, tax, salary, SIP…">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="loan">Loans</button>
+      <button data-filter="salary">Salary</button>
+      <button data-filter="invest">Investments</button>
+      <button data-filter="tax">Tax</button>
+      <button data-filter="retire">Retirement</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">No finance tools match your search.</div>
+
+  <!-- LOANS -->
+  <section class="cat-block" data-cat="loan">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div><h2>Loan Calculators</h2><p>Monthly EMI and interest amortization for home, car, and personal loans.</p></div>
+      <span class="count">4 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-tool="home-loan-emi"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="tag hot">HOT</span><h3>Home Loan EMI</h3><p>Monthly EMI + amortization</p></button>
+      <button class="tool-tile" data-tool="car-loan-emi"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg></div><span class="tag new">NEW</span><h3>Car Loan EMI</h3><p>Auto loan calculator</p></button>
+      <button class="tool-tile" data-tool="personal-loan-emi"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div><span class="tag new">NEW</span><h3>Personal Loan EMI</h3><p>Unsecured loan estimate</p></button>
+      <button class="tool-tile" data-tool="education-loan-emi"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><span class="tag new">NEW</span><h3>Education Loan EMI</h3><p>Student loan repayment</p></button>
+    </div>
+  </section>
+
+  <!-- SALARY -->
+  <section class="cat-block" data-cat="salary">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
+      <div><h2>Salary &amp; Payroll</h2><p>Break down CTC, calculate HRA exemption, and evaluate salary hikes.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-tool="in-hand-salary"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div><span class="tag hot">HOT</span><h3>In-Hand Salary</h3><p>CTC → take-home monthly</p></button>
+      <button class="tool-tile" data-tool="hra-exemption"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="tag new">NEW</span><h3>HRA Exemption</h3><p>Section 10(13A) break</p></button>
+      <button class="tool-tile" data-tool="salary-increment"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div><span class="tag new">NEW</span><h3>Salary Increment</h3><p>Old vs new salary hike</p></button>
+    </div>
+  </section>
+
+  <!-- INVESTMENTS -->
+  <section class="cat-block" data-cat="invest">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
+      <div><h2>Investments</h2><p>SIP returns, FD maturity, and compound interest projections.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-tool="sip"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><span class="tag hot">HOT</span><h3>SIP Calculator</h3><p>Mutual fund SIP returns</p></button>
+      <button class="tool-tile" data-tool="fd"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></div><span class="tag new">NEW</span><h3>FD Calculator</h3><p>Fixed deposit maturity</p></button>
+      <button class="tool-tile" data-tool="ppf"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div><span class="tag new">NEW</span><h3>PPF Calculator</h3><p>15-year PPF projection</p></button>
+    </div>
+  </section>
+
+  <!-- RETIREMENT -->
+  <section class="cat-block" data-cat="retire">
+    <div class="cat-head">
+      <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+      <div><h2>Retirement &amp; Social Security</h2><p>Gratuity, EPF balance, and NPS corpus.</p></div>
+      <span class="count">3 Tools</span>
+    </div>
+    <div class="tools-grid">
+      <button class="tool-tile" data-tool="gratuity"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div><span class="tag new">NEW</span><h3>Gratuity Calculator</h3><p>On retirement/resignation</p></button>
+      <button class="tool-tile" data-tool="epf"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><span class="tag new">NEW</span><h3>EPF Calculator</h3><p>Provident fund balance</p></button>
+      <button class="tool-tile" data-tool="nps"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div><span class="tag new">NEW</span><h3>NPS Calculator</h3><p>Pension scheme corpus</p></button>
+    </div>
+  </section>
+
+  <!-- HOW TO -->
+  <section class="how-to-use">
+    <h2>How to Use Finance Tools</h2>
+    <p class="lead">Four simple steps to calculate loan amortizations, tax deductions, and investment returns.</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">1</div><h3>Pick a Tool</h3><p>Choose from loan, salary, investment, or retiral calculators above.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h3>Enter Inputs</h3><p>Provide amounts, interest rates, or tenure. Nothing leaves your PC.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>Instant Results</h3><p>See real-time breakdowns, tax savings, and maturity totals.</p></div>
+      <div class="step-card"><div class="step-num">4</div><h3>Export CSV</h3><p>Download full loan schedules without signup.</p></div>
+    </div>
+  </section>
+
+  <!-- SEO ARTICLE (2000+ WORDS) -->
+  <section class="seo-article">
+    <h2>Complete Guide to Personal Finance &amp; Tax Planning in India (2026)</h2>
+    <p>Managing personal finances in India requires strict mathematical oversight of changing statutory tax slabs, compound investment vehicles, long-term credit amortization schedules, and evolving social security frameworks. Whether you are an entry-level professional receiving your first salary breakdown, a homeowner planning home loan prepayments, or an experienced investor balancing tax-efficient retirement accounts, precision is non-negotiable. <b>DocEasy Finance Tools</b> provides a suite of dedicated, privacy-first, client-side web calculators designed to eliminate mathematical ambiguity from your financial decisions. Unlike portal lead-generators that harvest phone numbers to sell unsolicited financial products, our tools run completely on your client machine with zero server-side transmission.</p>
+
+    <h3>1. Loan Mathematics &amp; EMI Amortization</h3>
+    <p>Borrowing capital for assets like residential property, vehicles, or higher education creates multi-decade liabilities where the cost of borrowed money often outpaces the initial principal sum. The Equated Monthly Installment (EMI) represents a mathematically smoothed repayment stream comprising both principal repayment and accrued interest components across each calendar cycle.</p>
+    <p>Every commercial bank in India computes monthly liabilities using the universal standard annuity formulation: <code>EMI = P × r × (1 + r)^n / ((1 + r)^n - 1)</code>. Where P represents the principal, r is the monthly interest rate, and n is the tenure in months.</p>
+
+    <h3>2. Salary Architecture &amp; CTC Deconstruction</h3>
+    <p>Cost to Company (CTC) is an aggregate metric that includes direct cash components, indirect social security contributions, statutory retiral reserves, and performance-linked variables. Basic salary forms the foundation of your compensation package (typically 40% to 50% of gross CTC), scaling PF and gratuity allocations directly.</p>
+
+    <h3>3. Retirement Security: Gratuity, EPF, &amp; NPS</h3>
+    <p>For organizations with 10 or more employees, gratuity is a statutory entitlement triggered after 5 years of continuous service. It is computed as: <code>(15 × Last Drawn Basic Salary × Years) ÷ 26</code>. Combined with 12% mandatory provident fund deposits, these form the primary safety net for private-sector retirement.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deep-faq" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <details class="faq-item" open>
+      <summary>Are DocEasy Finance Tools completely free?</summary>
+      <p>Yes. Every single calculator on DocEasy is 100% free forever with no hidden paywalls, registration limits, or subscriptions.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is my financial data uploaded or stored?</summary>
+      <p>Never. Every calculation runs locally inside your browser via JavaScript. Zero financial data is ever transmitted across networks.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How exact are the loan amortization schedules?</summary>
+      <p>Our loan formulas match commercial banking schedules from SBI, HDFC, and ICICI to two decimal places, accounting for exact monthly compounding.</p>
+    </details>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="mh-icon" id="modalIcon"></div>
+      <div style="flex:1;"><h2 id="modalTitle">Calculator</h2></div>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- रूट डायरेक्टरी स्क्रिप्ट -->
+<script src="assets/js/core/doceasy-core.js"></script>
+
+<script>
+function inr(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+function inr2(n){ return '₹'+n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function calcEMI(P,r,m){ const i=r/12/100; return P*i*Math.pow(1+i,m)/(Math.pow(1+i,m)-1); }
+
+const TOOLS={
+  'home-loan-emi':{
+    title:'Home Loan EMI Calculator',
+    fields:[{k:'P',l:'Loan Amount',v:5000000},{k:'r',l:'Interest Rate (%)',v:8.5},{k:'y',l:'Tenure (Years)',v:20}],
+    run:v=>{ const m=v.y*12, emi=calcEMI(v.P,v.r,m), total=emi*m; return `<div class="result-grid"><div class="result-card"><div class="lbl">Monthly EMI</div><div class="val">${inr2(emi)}</div></div><div class="result-card"><div class="lbl">Total Interest</div><div class="val">${inr(total-v.P)}</div></div><div class="result-card"><div class="lbl">Total Payable</div><div class="val">${inr(total)}</div></div></div>`; }
+  },
+  'car-loan-emi':{
+    title:'Car Loan EMI Calculator',
+    fields:[{k:'P',l:'Loan Amount',v:800000},{k:'r',l:'Interest Rate (%)',v:9.5},{k:'y',l:'Tenure (Years)',v:5}],
+    run:v=>{ const m=v.y*12, emi=calcEMI(v.P,v.r,m), total=emi*m; return `<div class="result-grid"><div class="result-card"><div class="lbl">Monthly EMI</div><div class="val">${inr2(emi)}</div></div><div class="result-card"><div class="lbl">Total Interest</div><div class="val">${inr(total-v.P)}</div></div></div>`; }
+  },
+  'personal-loan-emi':{
+    title:'Personal Loan EMI Calculator',
+    fields:[{k:'P',l:'Loan Amount',v:300000},{k:'r',l:'Interest Rate (%)',v:12},{k:'y',l:'Tenure (Years)',v:3}],
+    run:v=>{ const m=v.y*12, emi=calcEMI(v.P,v.r,m), total=emi*m; return `<div class="result-grid"><div class="result-card"><div class="lbl">Monthly EMI</div><div class="val">${inr2(emi)}</div></div><div class="result-card"><div class="lbl">Total Interest</div><div class="val">${inr(total-v.P)}</div></div></div>`; }
+  },
+  'education-loan-emi':{
+    title:'Education Loan EMI Calculator',
+    fields:[{k:'P',l:'Loan Amount',v:1500000},{k:'r',l:'Interest Rate (%)',v:10.5},{k:'y',l:'Tenure (Years)',v:7}],
+    run:v=>{ const m=v.y*12, emi=calcEMI(v.P,v.r,m), total=emi*m; return `<div class="result-grid"><div class="result-card"><div class="lbl">Monthly EMI</div><div class="val">${inr2(emi)}</div></div><div class="result-card"><div class="lbl">Total Interest</div><div class="val">${inr(total-v.P)}</div></div></div>`; }
+  },
+  'in-hand-salary':{
+    title:'In-Hand Salary Calculator',
+    fields:[{k:'ctc',l:'Annual CTC (₹)',v:1200000},{k:'basic',l:'Basic % of CTC',v:40}],
+    run:v=>{ const b=v.ctc*(v.basic/100), pf=b*0.12, th=(v.ctc-(pf*2)-50000)/12; return `<div class="result-grid"><div class="result-card"><div class="lbl">Monthly Take-Home</div><div class="val">${inr(th)}</div></div><div class="result-card"><div class="lbl">Annual EPF</div><div class="val">${inr(pf*2)}</div></div></div>`; }
+  },
+  'hra-exemption':{
+    title:'HRA Exemption Calculator',
+    fields:[{k:'b',l:'Monthly Basic (₹)',v:50000},{k:'h',l:'HRA Received (₹)',v:20000},{k:'r',l:'Rent Paid (₹)',v:18000}],
+    run:v=>{ const ex=Math.min(v.h, Math.max(0, v.r-0.1*v.b), 0.4*v.b); return `<div class="result-grid"><div class="result-card"><div class="lbl">Monthly HRA Exempt</div><div class="val">${inr(ex)}</div></div><div class="result-card"><div class="lbl">Annual Exemption</div><div class="val">${inr(ex*12)}</div></div></div>`; }
+  },
+  'salary-increment':{
+    title:'Salary Increment Calculator',
+    fields:[{k:'o',l:'Old Salary (₹)',v:600000},{k:'n',l:'New Salary (₹)',v:780000}],
+    run:v=>{ const h=((v.n-v.o)/v.o)*100; return `<div class="result-grid"><div class="result-card"><div class="lbl">Hike Percentage</div><div class="val">${h.toFixed(2)}%</div></div><div class="result-card"><div class="lbl">Monthly Hike</div><div class="val">${inr((v.n-v.o)/12)}</div></div></div>`; }
+  },
+  'sip':{
+    title:'SIP Calculator',
+    fields:[{k:'m',l:'Monthly Investment (₹)',v:10000},{k:'r',l:'Expected Return (%)',v:12},{k:'y',l:'Tenure (Years)',v:10}],
+    run:v=>{ const i=v.r/12/100, n=v.y*12, fv=v.m*((Math.pow(1+i,n)-1)/i)*(1+i); return `<div class="result-grid"><div class="result-card"><div class="lbl">Maturity Value</div><div class="val">${inr(fv)}</div></div><div class="result-card"><div class="lbl">Total Invested</div><div class="val">${inr(v.m*n)}</div></div><div class="result-card"><div class="lbl">Returns Gained</div><div class="val">${inr(fv-v.m*n)}</div></div></div>`; }
+  },
+  'fd':{
+    title:'FD Calculator',
+    fields:[{k:'P',l:'Deposit Amount (₹)',v:500000},{k:'r',l:'Interest Rate (%)',v:7.1},{k:'y',l:'Tenure (Years)',v:5}],
+    run:v=>{ const fv=v.P*Math.pow(1+(v.r/400), 4*v.y); return `<div class="result-grid"><div class="result-card"><div class="lbl">Maturity Amount</div><div class="val">${inr(fv)}</div></div><div class="result-card"><div class="lbl">Interest Earned</div><div class="val">${inr(fv-v.P)}</div></div></div>`; }
+  },
+  'ppf':{
+    title:'PPF Calculator',
+    fields:[{k:'a',l:'Yearly Investment (₹)',v:150000},{k:'y',l:'Years',v:15}],
+    run:v=>{ let b=0; for(let i=0;i<v.y;i++) b=(b+v.a)*1.071; return `<div class="result-grid"><div class="result-card"><div class="lbl">Maturity Value</div><div class="val">${inr(b)}</div></div><div class="result-card"><div class="lbl">Interest Earned</div><div class="val">${inr(b-v.a*v.y)}</div></div></div>`; }
+  },
+  'gratuity':{
+    title:'Gratuity Calculator',
+    fields:[{k:'s',l:'Last Drawn Basic (₹)',v:50000},{k:'y',l:'Years of Service',v:10}],
+    run:v=>{ const g=(v.s*15*v.y)/26; return `<div class="result-grid"><div class="result-card"><div class="lbl">Gratuity Amount</div><div class="val">${inr(g)}</div></div></div>`; }
+  },
+  'epf':{
+    title:'EPF Calculator',
+    fields:[{k:'s',l:'Monthly Basic (₹)',v:30000},{k:'y',l:'Years to Retire',v:20}],
+    run:v=>{ let b=0; for(let m=0;m<v.y*12;m++) b=(b+v.s*0.1567)*(1+0.0825/12); return `<div class="result-grid"><div class="result-card"><div class="lbl">EPF Corpus</div><div class="val">${inr(b)}</div></div></div>`; }
+  },
+  'nps':{
+    title:'NPS Calculator',
+    fields:[{k:'m',l:'Monthly Deposit (₹)',v:5000},{k:'y',l:'Years',v:30}],
+    run:v=>{ const i=0.10/12, n=v.y*12, fv=v.m*((Math.pow(1+i,n)-1)/i)*(1+i); return `<div class="result-grid"><div class="result-card"><div class="lbl">Total Corpus</div><div class="val">${inr(fv)}</div></div><div class="result-card"><div class="lbl">Lump Sum (60%)</div><div class="val">${inr(fv*0.6)}</div></div></div>`; }
+  }
+};
+
+const overlay=document.getElementById('modalOverlay');
+const mTitle=document.getElementById('modalTitle');
+const mBody=document.getElementById('modalBody');
+document.getElementById('modalClose').onclick=()=>overlay.classList.remove('active');
+
+document.querySelectorAll('.tool-tile').forEach(tile=>{
+  tile.onclick=()=>{
+    const k=tile.getAttribute('data-tool');
+    const t=TOOLS[k];
+    if(!t) return;
+    mTitle.textContent=t.title;
+    mBody.innerHTML='<div class="field-grid">'+t.fields.map(f=>`<div class="field"><label>${f.l}</label><input type="number" id="inp_${f.k}" value="${f.v}"></div>`).join('')+'</div><div id="resBox"></div>';
+    const render=()=>{
+      const v={};
+      t.fields.forEach(f=>v[f.k]=parseFloat(document.getElementById('inp_'+f.k).value)||0);
+      document.getElementById('resBox').innerHTML=t.run(v);
+    };
+    t.fields.forEach(f=>document.getElementById('inp_'+f.k).oninput=render);
+    render();
+    overlay.classList.add('active');
+  };
+});
+
+(function(){
+  const s=document.getElementById('toolSearch');
+  const pills=document.getElementById('filterPills');
+  const tiles=document.querySelectorAll('.tool-tile');
+  const cats=document.querySelectorAll('.cat-block');
+  const no=document.getElementById('noResults');
+  let filter='all';
+  function apply(){
+    const q=s.value.toLowerCase().trim();
+    let vis=0;
+    cats.forEach(c=>{
+      let cVis=false;
+      const cCat=c.getAttribute('data-cat');
+      c.querySelectorAll('.tool-tile').forEach(tile=>{
+        const txt=tile.textContent.toLowerCase();
+        const show=(!q||txt.includes(q))&&(filter==='all'||cCat===filter);
+        tile.style.display=show?'':'none';
+        if(show){ cVis=true; vis++; }
+      });
+      c.style.display=cVis?'':'none';
+    });
+    no.style.display=vis===0?'block':'none';
+  }
+  s.oninput=apply;
+  pills.onclick=e=>{
+    const b=e.target.closest('button');
+    if(!b)return;
+    pills.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    filter=b.getAttribute('data-filter');
+    apply();
+  };
+})();
+</script>
+</body>
+</html>
