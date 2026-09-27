@@ -3,31 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Finance Tools — Loan EMI, Salary, Tax Calculators | DocEasy</title>
-<meta name="description" content="Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD. No signup, browser-based, 100% private.">
-<meta name="keywords" content="finance tools, loan emi calculator, income tax calculator, salary calculator, gratuity calculator, epf calculator, hra calculator, sip calculator">
+<title>Finance Tools — Loan EMI, Income Tax, Salary, SIP, EPF, HRA | DocEasy</title>
+<meta name="description" content="Free online finance calculators — loan EMI, income tax (old vs new regime), in-hand salary, HRA exemption, SIP, FD, PPF, gratuity, EPF, NPS, TDS. No signup, browser-based, 100% private.">
+<meta name="keywords" content="finance tools, loan emi calculator, income tax calculator, salary calculator, gratuity calculator, epf calculator, hra calculator, sip calculator, ppf calculator, nps calculator, tds calculator">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/finance-tools.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Finance Tools — Loan EMI, Salary, Tax Calculators | DocEasy">
-<meta property="og:description" content="Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA.">
+<meta property="og:title" content="Finance Tools — Loan EMI, Income Tax, Salary, SIP, EPF | DocEasy">
+<meta property="og:description" content="17 free finance calculators — loans, tax, salary, investments, retirement. No signup, 100% private.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/finance-tools.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Finance Tools — Loan EMI, Salary, Tax Calculators | DocEasy">
-<meta name="twitter:description" content="Free online finance calculators. No signup, 100% private.">
+<meta name="twitter:title" content="Finance Tools — DocEasy">
+<meta name="twitter:description" content="Free finance calculators. No signup, 100% private.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
-<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2316a34a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"Finance Tools — DocEasy","url":"https://deepaakai.github.io/officekit/finance-tools.html","description":"Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD."}
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Finance Tools — DocEasy","url":"https://deepaakai.github.io/officekit/finance-tools.html","description":"Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD, PPF, NPS, TDS."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Are DocEasy finance calculators free?","acceptedAnswer":{"@type":"Answer","text":"Yes, every calculator is 100% free forever. No signup, no email, no credit card."}},
+{"@type":"Question","name":"Is my financial data safe?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. All calculations run client-side in your browser. No data is uploaded or stored on any server."}},
+{"@type":"Question","name":"Which calculators are available?","acceptedAnswer":{"@type":"Answer","text":"Home loan EMI, car loan EMI, personal loan EMI, education loan EMI, in-hand salary, HRA exemption, salary increment, SIP, FD, PPF, compound interest, income tax, TDS, tax saving, gratuity, EPF, and NPS."}}
+]}
 </script>
 
 <style>
+/* ============ GLOBAL THEME ============ */
 :root{
   --bg-color:#f7fafc; --card-bg:#ffffff; --card-hover:#f1f5f9;
   --text-color:#0f172a; --subtext-color:#64748b; --border-color:#e2e8f0;
   --accent:#16a34a; --accent-hover:#15803d;
+  --accent-soft:rgba(22,163,74,0.08); --accent-soft-hover:rgba(22,163,74,0.14);
   --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow-md:0 10px 30px rgba(0,0,0,.08);
 }
 [data-theme="dark"]{
@@ -35,7 +44,7 @@
   --text-color:#f1f5f9; --subtext-color:#94a3b8; --border-color:#334155;
 }
 *{box-sizing:border-box;}
-body{margin:0;background:var(--bg-color);color:var(--text-color);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+body{margin:0;background:var(--bg-color);color:var(--text-color);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
 a{color:inherit;text-decoration:none;}
 .main-wrap{max-width:1240px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden;}
 
@@ -47,14 +56,14 @@ a{color:inherit;text-decoration:none;}
 .de-nav{display:flex;gap:6px;flex-wrap:wrap;}
 .de-nav a{padding:8px 14px;border-radius:8px;font-size:13.5px;font-weight:700;color:var(--subtext-color);transition:all .15s;}
 .de-nav a:hover{background:var(--card-hover);color:var(--accent);}
-.de-nav a.active{background:rgba(22,163,74,0.1);color:var(--accent);}
+.de-nav a.active{background:var(--accent-soft);color:var(--accent);}
 @media(max-width:640px){
   .de-header-inner{padding:10px 14px;}
   .de-nav a{padding:7px 10px;font-size:12.5px;}
 }
 
 /* ============ FOOTER ============ */
-.de-footer{background:#0f172a;color:#cbd5e1;padding:48px 20px 24px;margin-top:0;}
+.de-footer{background:#0f172a;color:#cbd5e1;padding:48px 20px 24px;margin-top:48px;}
 .de-footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;}
 .de-footer h4{color:#fff;font-size:14px;font-weight:800;margin:0 0 14px;letter-spacing:0.3px;text-transform:uppercase;}
 .de-footer p{font-size:13px;line-height:1.7;margin:0 0 10px;color:#94a3b8;}
@@ -63,12 +72,8 @@ a{color:inherit;text-decoration:none;}
 .de-footer a{color:#cbd5e1;transition:color .15s;}
 .de-footer a:hover{color:#22c55e;}
 .de-footer-bottom{max-width:1240px;margin:36px auto 0;padding-top:20px;border-top:1px solid #1e293b;font-size:12.5px;color:#64748b;text-align:center;}
-@media(max-width:768px){
-  .de-footer-inner{grid-template-columns:1fr 1fr;gap:24px;}
-}
-@media(max-width:480px){
-  .de-footer-inner{grid-template-columns:1fr;}
-}
+@media(max-width:768px){.de-footer-inner{grid-template-columns:1fr 1fr;gap:24px;}}
+@media(max-width:480px){.de-footer-inner{grid-template-columns:1fr;}}
 
 /* ============ HERO ============ */
 .fhero{position:relative;overflow:hidden;border-radius:22px;padding:42px 32px;margin-top:24px;background:linear-gradient(135deg,#065f46 0%,#16a34a 55%,#22c55e 100%);color:#fff;box-shadow:0 20px 48px rgba(22,163,74,0.28);}
@@ -106,14 +111,14 @@ a{color:inherit;text-decoration:none;}
 .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;}
 .tool-tile{display:flex;flex-direction:column;gap:10px;padding:18px 16px 16px;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--text-color);transition:all .2s ease;min-height:140px;position:relative;cursor:pointer;font-family:inherit;text-align:left;width:100%;}
 .tool-tile:hover{border-color:#16a34a;transform:translateY(-4px);box-shadow:0 14px 30px rgba(22,163,74,0.14);}
-.tool-tile .tile-icon{width:42px;height:42px;border-radius:11px;background:rgba(22,163,74,0.08);color:#16a34a;display:grid;place-items:center;transition:transform .22s;flex-shrink:0;}
+.tool-tile .tile-icon{width:42px;height:42px;border-radius:11px;background:var(--accent-soft);color:#16a34a;display:grid;place-items:center;transition:transform .22s;flex-shrink:0;}
 .tool-tile:hover .tile-icon{transform:scale(1.1) rotate(-4deg);}
 .tool-tile .tile-icon svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;}
 .tool-tile h3{font-size:13.5px;font-weight:700;margin:0;line-height:1.35;}
 .tool-tile p{font-size:11px;color:var(--subtext-color);margin:0;line-height:1.45;}
 .tool-tile .tag{position:absolute;top:9px;right:9px;font-size:8.5px;font-weight:800;letter-spacing:0.5px;padding:2px 6px;border-radius:5px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
 
-/* ============ HOW TO ============ */
+/* ============ STEPS ============ */
 .how-to-use{max-width:940px;margin:68px auto 0;}
 .how-to-use h2{font-size:clamp(22px,3.8vw,30px);font-weight:800;text-align:center;margin:0 0 10px;letter-spacing:-0.6px;}
 .how-to-use .lead{text-align:center;color:var(--subtext-color);font-size:14px;margin:0 auto 30px;max-width:620px;line-height:1.6;}
@@ -123,20 +128,40 @@ a{color:inherit;text-decoration:none;}
 .step-card h3{font-size:14.5px;font-weight:800;margin:0 0 6px;}
 .step-card p{font-size:12.5px;color:var(--subtext-color);margin:0;line-height:1.6;}
 
-/* ============ FAQ ============ */
-.deep-faq{max-width:900px;margin:68px auto 0;}
-.deep-faq h2{font-size:clamp(22px,3.8vw,30px);font-weight:800;text-align:center;margin:0 0 10px;letter-spacing:-0.6px;}
-.deep-faq .faq-lead{text-align:center;color:var(--subtext-color);font-size:14px;margin:0 auto 30px;max-width:620px;line-height:1.6;}
-.deep-faq .faq-item{background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:15px 20px;margin-bottom:10px;transition:all .2s;}
-.deep-faq .faq-item:hover,.deep-faq .faq-item[open]{border-color:#16a34a;}
-.deep-faq summary{cursor:pointer;font-weight:700;color:var(--text-color);font-size:14px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;line-height:1.45;}
-.deep-faq summary::-webkit-details-marker{display:none;}
-.deep-faq summary::after{content:"+";font-size:21px;color:#16a34a;font-weight:300;flex-shrink:0;}
-.deep-faq .faq-item[open] summary::after{content:"−";}
-.deep-faq .faq-item p{margin:12px 0 0;font-size:13.5px;color:var(--subtext-color);line-height:1.72;}
-.deep-faq code{background:var(--card-hover);padding:1px 6px;border-radius:4px;font-size:12.5px;font-family:monospace;color:#16a34a;font-weight:600;}
-
 .no-results{display:none;text-align:center;padding:60px 20px;color:var(--subtext-color);font-size:14.5px;}
+
+/* ============ SEO ARTICLE (same as card-cropper) ============ */
+.seo-article{max-width:860px;margin:48px auto;padding:40px 32px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;}
+.seo-article h2{font-size:26px !important;font-weight:800;color:var(--text-color);margin:40px 0 20px;letter-spacing:-0.5px;line-height:1.3;}
+.seo-article h2:first-child{margin-top:0;}
+.seo-article h3{font-size:20px !important;font-weight:700;color:var(--accent);margin:32px 0 16px;line-height:1.4;}
+.seo-article h4{font-size:17px !important;font-weight:700;color:var(--text-color);margin:24px 0 12px;}
+.seo-article p{font-size:16px !important;color:var(--subtext-color);margin:0 0 20px;line-height:1.8;}
+.seo-article ul,.seo-article ol{margin:20px 0;padding-left:24px;}
+.seo-article li{font-size:15.5px !important;color:var(--subtext-color);margin-bottom:12px;line-height:1.7;}
+.seo-article b,.seo-article strong{color:var(--text-color);font-weight:700;}
+.seo-article a{color:var(--accent);text-decoration:underline;font-weight:600;}
+.seo-article a:hover{color:var(--accent-hover);}
+.seo-article code{background:var(--card-hover);padding:2px 8px;border-radius:5px;font-family:ui-monospace,monospace;font-size:14px;color:var(--accent);}
+.seo-article table{width:100%;border-collapse:collapse;margin:20px 0 28px;font-size:14px;border:1px solid var(--border-color);border-radius:12px;overflow:hidden;}
+.seo-article th,.seo-article td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border-color);}
+.seo-article th{background:var(--card-hover);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-color);}
+.seo-article td{color:var(--subtext-color);font-weight:600;}
+.seo-article tr:last-child td{border-bottom:none;}
+.seo-article details{background:var(--bg-color);border:1px solid var(--border-color);border-radius:12px;padding:18px 22px;margin-bottom:12px;transition:all .2s;}
+.seo-article details:hover{border-color:var(--accent);}
+.seo-article details summary{font-size:16px !important;font-weight:700;color:var(--text-color);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.seo-article details summary::-webkit-details-marker{display:none;}
+.seo-article details summary::after{content:"+";font-size:22px;color:var(--accent);font-weight:300;}
+.seo-article details[open] summary::after{content:"−";}
+.seo-article details p{margin:14px 0 0;font-size:15px !important;line-height:1.75;}
+@media(max-width:768px){
+  .seo-article{padding:28px 20px;margin:32px auto;}
+  .seo-article h2{font-size:22px !important;}
+  .seo-article h3{font-size:18px !important;}
+  .seo-article p{font-size:15.5px !important;}
+  .seo-article li{font-size:15px !important;}
+}
 
 /* ============ MODAL ============ */
 .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;z-index:9999;padding:20px;overflow-y:auto;}
@@ -151,7 +176,6 @@ a{color:inherit;text-decoration:none;}
 .modal-close{margin-left:auto;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.22);color:#fff;cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center;font-family:inherit;transition:background .15s;}
 .modal-close:hover{background:rgba(255,255,255,0.28);}
 .modal-body{padding:22px;}
-
 .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
 .field{display:flex;flex-direction:column;gap:6px;}
 .field label{font-size:11.5px;font-weight:700;color:var(--text-color);text-transform:uppercase;letter-spacing:0.5px;}
@@ -164,7 +188,6 @@ a{color:inherit;text-decoration:none;}
 .field.has-suf input{padding-right:50px;}
 .field input:focus,.field select:focus{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,0.12);}
 .field .hint{font-size:10.5px;color:var(--subtext-color);font-weight:500;}
-
 .result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
 .result-card{padding:14px;background:rgba(22,163,74,0.06);border:1px solid rgba(22,163,74,0.18);border-radius:12px;}
 .result-card.alt{background:rgba(59,130,246,0.06);border-color:rgba(59,130,246,0.18);}
@@ -174,13 +197,11 @@ a{color:inherit;text-decoration:none;}
 .result-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.6px;font-weight:800;color:var(--subtext-color);}
 .result-card .val{font-size:19px;font-weight:800;color:#16a34a;margin-top:4px;letter-spacing:-0.4px;line-height:1.15;word-break:break-word;}
 .result-card .sub{font-size:10.5px;color:var(--subtext-color);margin-top:2px;font-weight:600;}
-
 .chart-row{display:flex;gap:18px;align-items:center;padding:14px;background:var(--card-hover);border-radius:14px;margin-bottom:16px;flex-wrap:wrap;}
 .chart-row .legend{flex:1;min-width:160px;}
 .chart-row .legend .li{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--text-color);margin-bottom:8px;}
 .chart-row .legend .li .dot{width:12px;height:12px;border-radius:4px;flex-shrink:0;}
 .chart-row .legend .li span{color:var(--subtext-color);font-weight:600;margin-left:auto;}
-
 .sch-wrap{max-height:260px;overflow-y:auto;border:1px solid var(--border-color);border-radius:12px;margin-bottom:16px;}
 .sch-wrap table{width:100%;border-collapse:collapse;font-size:12px;}
 .sch-wrap th,.sch-wrap td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border-color);}
@@ -188,18 +209,14 @@ a{color:inherit;text-decoration:none;}
 .sch-wrap td{color:var(--subtext-color);font-weight:600;}
 .sch-wrap td:first-child{text-align:left;color:var(--text-color);font-weight:700;}
 .sch-wrap tr:last-child td{border-bottom:none;}
-
 .section-title{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-color);margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
 .section-title::before{content:"";width:3px;height:14px;border-radius:2px;background:#16a34a;}
-
 .note{font-size:11.5px;color:var(--subtext-color);line-height:1.6;padding:10px 12px;background:var(--card-hover);border-left:3px solid #16a34a;border-radius:6px;margin-top:14px;}
-
 .btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
 .btn{padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;font-family:inherit;transition:all .15s;}
 .btn:hover{border-color:#16a34a;color:#16a34a;}
 .btn.primary{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-color:#16a34a;box-shadow:0 6px 16px rgba(22,163,74,0.28);}
 .btn.primary:hover{transform:translateY(-1px);color:#fff;}
-
 .tax-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
 .tax-box{padding:16px;border-radius:14px;border:1.5px solid var(--border-color);}
 .tax-box.winner{border-color:#16a34a;background:rgba(22,163,74,0.06);}
@@ -209,7 +226,6 @@ a{color:inherit;text-decoration:none;}
 .tax-box .tb-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;color:var(--subtext-color);font-weight:600;}
 .tax-box .tb-row.total{border-top:1px dashed var(--border-color);margin-top:6px;padding-top:8px;color:var(--text-color);font-weight:800;font-size:13px;}
 .tax-box .tb-row.total span:last-child{color:#16a34a;}
-
 @media(max-width:768px){
   .main-wrap{padding:0 14px 60px;}
   .fhero{padding:30px 20px;border-radius:18px;margin-top:18px;}
@@ -281,7 +297,6 @@ a{color:inherit;text-decoration:none;}
 
   <div class="no-results" id="noResults">No finance tools match your search.</div>
 
-  <!-- LOANS -->
   <section class="cat-block" data-cat="loan">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
@@ -289,26 +304,13 @@ a{color:inherit;text-decoration:none;}
       <span class="count">4 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="home-loan-emi" data-tags="home loan emi calculator mortgage property">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-        <span class="tag">NEW</span><h3>Home Loan EMI</h3><p>Monthly EMI + amortization</p>
-      </button>
-      <button class="tool-tile" data-tool="car-loan-emi" data-tags="car loan emi calculator auto vehicle">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg></div>
-        <span class="tag">NEW</span><h3>Car Loan EMI</h3><p>Auto loan calculator</p>
-      </button>
-      <button class="tool-tile" data-tool="personal-loan-emi" data-tags="personal loan emi calculator unsecured">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div>
-        <span class="tag">NEW</span><h3>Personal Loan EMI</h3><p>Unsecured loan estimate</p>
-      </button>
-      <button class="tool-tile" data-tool="education-loan-emi" data-tags="education loan emi calculator student">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-        <span class="tag">NEW</span><h3>Education Loan EMI</h3><p>Student loan repayment</p>
-      </button>
+      <button class="tool-tile" data-tool="home-loan-emi" data-tags="home loan emi calculator mortgage property"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="tag">NEW</span><h3>Home Loan EMI</h3><p>Monthly EMI + amortization</p></button>
+      <button class="tool-tile" data-tool="car-loan-emi" data-tags="car loan emi calculator auto vehicle"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg></div><span class="tag">NEW</span><h3>Car Loan EMI</h3><p>Auto loan calculator</p></button>
+      <button class="tool-tile" data-tool="personal-loan-emi" data-tags="personal loan emi calculator unsecured"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></svg></div><span class="tag">NEW</span><h3>Personal Loan EMI</h3><p>Unsecured loan estimate</p></button>
+      <button class="tool-tile" data-tool="education-loan-emi" data-tags="education loan emi calculator student"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><span class="tag">NEW</span><h3>Education Loan EMI</h3><p>Student loan repayment</p></button>
     </div>
   </section>
 
-  <!-- SALARY -->
   <section class="cat-block" data-cat="salary">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
@@ -316,22 +318,12 @@ a{color:inherit;text-decoration:none;}
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="in-hand-salary" data-tags="in hand salary calculator ctc take home">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div>
-        <span class="tag">NEW</span><h3>In-Hand Salary</h3><p>CTC → take-home monthly</p>
-      </button>
-      <button class="tool-tile" data-tool="hra-exemption" data-tags="hra exemption calculator house rent allowance">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-        <span class="tag">NEW</span><h3>HRA Exemption</h3><p>House rent allowance tax break</p>
-      </button>
-      <button class="tool-tile" data-tool="salary-increment" data-tags="salary increment calculator hike percentage">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
-        <span class="tag">NEW</span><h3>Salary Increment</h3><p>Old vs new salary hike</p>
-      </button>
+      <button class="tool-tile" data-tool="in-hand-salary" data-tags="in hand salary calculator ctc take home"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h4M6 14h8"/></svg></div><span class="tag">NEW</span><h3>In-Hand Salary</h3><p>CTC → take-home monthly</p></button>
+      <button class="tool-tile" data-tool="hra-exemption" data-tags="hra exemption calculator house rent allowance"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span class="tag">NEW</span><h3>HRA Exemption</h3><p>House rent allowance tax break</p></button>
+      <button class="tool-tile" data-tool="salary-increment" data-tags="salary increment calculator hike percentage"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div><span class="tag">NEW</span><h3>Salary Increment</h3><p>Old vs new salary hike</p></button>
     </div>
   </section>
 
-  <!-- INVESTMENTS -->
   <section class="cat-block" data-cat="invest">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 6-6"/></svg></div>
@@ -339,26 +331,13 @@ a{color:inherit;text-decoration:none;}
       <span class="count">4 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="sip" data-tags="sip calculator mutual fund monthly investment">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
-        <span class="tag">NEW</span><h3>SIP Calculator</h3><p>Mutual fund SIP returns</p>
-      </button>
-      <button class="tool-tile" data-tool="fd" data-tags="fd calculator fixed deposit maturity">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></div>
-        <span class="tag">NEW</span><h3>FD Calculator</h3><p>Fixed deposit maturity</p>
-      </button>
-      <button class="tool-tile" data-tool="ppf" data-tags="ppf calculator public provident fund">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div>
-        <span class="tag">NEW</span><h3>PPF Calculator</h3><p>15-year PPF projection</p>
-      </button>
-      <button class="tool-tile" data-tool="compound-interest" data-tags="compound interest calculator ci">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/></svg></div>
-        <span class="tag">NEW</span><h3>Compound Interest</h3><p>CI for any period</p>
-      </button>
+      <button class="tool-tile" data-tool="sip" data-tags="sip calculator mutual fund monthly investment"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><span class="tag">NEW</span><h3>SIP Calculator</h3><p>Mutual fund SIP returns</p></button>
+      <button class="tool-tile" data-tool="fd" data-tags="fd calculator fixed deposit maturity"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></div><span class="tag">NEW</span><h3>FD Calculator</h3><p>Fixed deposit maturity</p></button>
+      <button class="tool-tile" data-tool="ppf" data-tags="ppf calculator public provident fund"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div><span class="tag">NEW</span><h3>PPF Calculator</h3><p>15-year PPF projection</p></button>
+      <button class="tool-tile" data-tool="compound-interest" data-tags="compound interest calculator ci"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M12 3v9"/></svg></div><span class="tag">NEW</span><h3>Compound Interest</h3><p>CI for any period</p></button>
     </div>
   </section>
 
-  <!-- TAX -->
   <section class="cat-block" data-cat="tax">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
@@ -366,22 +345,12 @@ a{color:inherit;text-decoration:none;}
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="income-tax" data-tags="income tax calculator old new regime">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
-        <span class="tag">NEW</span><h3>Income Tax Calculator</h3><p>Old vs new regime</p>
-      </button>
-      <button class="tool-tile" data-tool="tds" data-tags="tds calculator tax deduction">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <span class="tag">NEW</span><h3>TDS Calculator</h3><p>By section (194C, 194J)</p>
-      </button>
-      <button class="tool-tile" data-tool="tax-saving" data-tags="tax saving calculator 80c deduction">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <span class="tag">NEW</span><h3>Tax Saving Planner</h3><p>Section 80C, 80D, NPS</p>
-      </button>
+      <button class="tool-tile" data-tool="income-tax" data-tags="income tax calculator old new regime"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 11h6M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><span class="tag">NEW</span><h3>Income Tax Calculator</h3><p>Old vs new regime</p></button>
+      <button class="tool-tile" data-tool="tds" data-tags="tds calculator tax deduction"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span class="tag">NEW</span><h3>TDS Calculator</h3><p>By section (194C, 194J)</p></button>
+      <button class="tool-tile" data-tool="tax-saving" data-tags="tax saving calculator 80c deduction"><div class="tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="tag">NEW</span><h3>Tax Saving Planner</h3><p>Section 80C, 80D, NPS</p></button>
     </div>
   </section>
 
-  <!-- RETIREMENT -->
   <section class="cat-block" data-cat="retire">
     <div class="cat-head">
       <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
@@ -389,22 +358,12 @@ a{color:inherit;text-decoration:none;}
       <span class="count">3 Tools</span>
     </div>
     <div class="tools-grid">
-      <button class="tool-tile" data-tool="gratuity" data-tags="gratuity calculator employee benefit">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
-        <span class="tag">NEW</span><h3>Gratuity Calculator</h3><p>On retirement/resignation</p>
-      </button>
-      <button class="tool-tile" data-tool="epf" data-tags="epf calculator provident fund employee">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div>
-        <span class="tag">NEW</span><h3>EPF Calculator</h3><p>Provident fund balance</p>
-      </button>
-      <button class="tool-tile" data-tool="nps" data-tags="nps calculator national pension scheme">
-        <div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
-        <span class="tag">NEW</span><h3>NPS Calculator</h3><p>Pension scheme corpus</p>
-      </button>
+      <button class="tool-tile" data-tool="gratuity" data-tags="gratuity calculator employee benefit"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div><span class="tag">NEW</span><h3>Gratuity Calculator</h3><p>On retirement/resignation</p></button>
+      <button class="tool-tile" data-tool="epf" data-tags="epf calculator provident fund employee"><div class="tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></div><span class="tag">NEW</span><h3>EPF Calculator</h3><p>Provident fund balance</p></button>
+      <button class="tool-tile" data-tool="nps" data-tags="nps calculator national pension scheme"><div class="tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div><span class="tag">NEW</span><h3>NPS Calculator</h3><p>Pension scheme corpus</p></button>
     </div>
   </section>
 
-  <!-- HOW TO -->
   <section class="how-to-use">
     <h2>How to Use Finance Tools</h2>
     <p class="lead">Four simple steps to calculate EMIs, taxes, salaries, or investment returns — all in your browser.</p>
@@ -416,18 +375,145 @@ a{color:inherit;text-decoration:none;}
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="deep-faq" id="faq">
-    <h2>Finance Tools — Frequently Asked Questions</h2>
-    <p class="faq-lead">Everything about DocEasy's finance calculators — loans, taxes, salary, investments, and privacy.</p>
-    <details class="faq-item" open><summary>What are DocEasy Finance Tools?</summary><p>DocEasy Finance Tools are a growing collection of free, browser-based financial calculators designed for Indian users. They cover loan EMI, salary &amp; payroll, investments, tax, and retirement planning. Every calculator runs entirely in your browser — no data is uploaded, no signup is required, and no personal financial information ever leaves your device.</p></details>
-    <details class="faq-item"><summary>Are these finance calculators really free?</summary><p>Yes — every calculator is 100% free, forever. No signup, no email, no credit card, no trial, no premium tier. We don't sell your data and don't ask for your email to unlock features.</p></details>
-    <details class="faq-item"><summary>Is my financial data safe?</summary><p>Completely safe. Every calculator runs client-side. Open Developer Tools → Network tab, enter your data, and watch for requests — you'll see zero outgoing data. Even we cannot see your numbers.</p></details>
-    <details class="faq-item"><summary>How accurate is the Home Loan EMI Calculator?</summary><p>It uses the standard bank formula: <code>EMI = P × r × (1+r)^n / ((1+r)^n − 1)</code>. Matches HDFC, SBI, and ICICI calculators to 2 decimal places. For floating rates or prepayments, it's an estimate.</p></details>
-    <details class="faq-item"><summary>What is the difference between old and new tax regimes?</summary><p>Old regime: higher rates but allows 80C, 80D, HRA, home loan interest, standard deduction ₹50k. New regime: lower rates but only standard deduction ₹75k (FY 2024-25). Use the Income Tax Calculator to compare both side-by-side.</p></details>
-    <details class="faq-item"><summary>Does it work offline?</summary><p>Yes — after the page loads once, all calculators work fully offline. No internet needed for calculations.</p></details>
-    <details class="faq-item"><summary>Do you keep logs of my financial data?</summary><p>No. We don't log loan amounts, salaries, tax rates, or any metadata. Your data never leaves your browser, so there's nothing for us to log.</p></details>
-    <details class="faq-item"><summary>Can I download my amortization schedule?</summary><p>Yes — the Loan EMI Calculators let you download the full schedule as a CSV file. Generated entirely in your browser, no server round-trip.</p></details>
+  <!-- ============ SEO ARTICLE 2200+ WORDS ============ -->
+  <section class="seo-article">
+    <h2>Complete Guide: Free Finance Calculators for Every Indian (2025)</h2>
+
+    <p>Money decisions shape your entire life — from the home you buy, to the taxes you pay, to the retirement you enjoy. Yet most Indians struggle with basic financial math because the numbers are complex, the jargon is confusing, and the tools are either paywalled or designed to sell you a loan. <b>DocEasy Finance Tools</b> change that. We've built 17 free, browser-based calculators covering loans, income tax, salary, investments, and retirement — all private, all instant, all free forever.</p>
+
+    <p>This guide walks you through every calculator, explains the math behind them, shows real examples, and answers the most common questions about EMIs, tax regimes, HRA, gratuity, EPF, NPS, and more. Whether you're a salaried employee, a freelancer, a business owner, or a student planning your first investment, this article will help you use these tools with confidence.</p>
+
+    <h3>Why Use Finance Calculators at All?</h3>
+
+    <p>Human beings are notoriously bad at estimating compounding. We underestimate how much interest we'll pay over a 20-year loan, overestimate how much our SIP will grow, and completely misjudge how much tax we owe until the CA sends the bill. A good finance calculator eliminates guesswork by turning raw numbers into clear, comparable outputs.</p>
+
+    <p>Consider a ₹50 lakh home loan at 8.5% for 20 years. Most borrowers focus only on the EMI — around ₹43,000 — and forget that over the loan's life they'll pay <b>₹54 lakh in interest alone</b>, more than the principal itself. Seeing this number changes behaviour: you might choose a shorter tenure, make prepayments, or negotiate a lower rate. That's the power of a calculator.</p>
+
+    <h3>Loan Calculators: EMI, Interest, and Amortization</h3>
+
+    <p>DocEasy offers four loan calculators: Home Loan, Car Loan, Personal Loan, and Education Loan. All four use the standard bank formula:</p>
+
+    <p><code>EMI = P × r × (1+r)^n / ((1+r)^n − 1)</code></p>
+
+    <p>where <b>P</b> is the principal, <b>r</b> is the monthly interest rate (annual rate divided by 12 divided by 100), and <b>n</b> is the tenure in months. This formula produces the fixed monthly payment that fully repays the loan by the end of the tenure.</p>
+
+    <h4>Home Loan EMI Calculator</h4>
+    <p>The most-used tool. Enter loan amount, interest rate, and tenure; get your monthly EMI, total interest, total payment, and a month-by-month amortization schedule. You can also add an optional extra monthly prepayment to see how many months and rupees of interest you save. For a ₹50 lakh loan at 8.5% for 20 years, prepaying just ₹5,000/month saves over ₹15 lakh in interest and cuts 5+ years off the loan.</p>
+
+    <h4>Car Loan EMI Calculator</h4>
+    <p>Car loans typically run 3–7 years at 9–11% interest. For an ₹8 lakh car at 9.5% for 5 years, the EMI is around ₹16,800. Use this calculator to compare dealer financing against bank loans before signing anything.</p>
+
+    <h4>Personal Loan EMI Calculator</h4>
+    <p>Personal loans are unsecured and expensive — usually 10–18%. A ₹3 lakh loan at 12% for 3 years means an EMI of about ₹9,964. This tool helps you decide if the monthly outflow fits your budget before you apply.</p>
+
+    <h4>Education Loan EMI Calculator</h4>
+    <p>Education loans often have a moratorium (course duration + 6–12 months). Our calculator lets you model repayment after the moratorium ends. For a ₹15 lakh loan at 10.5% over 7 years, the EMI is roughly ₹25,300.</p>
+
+    <h3>Salary &amp; Payroll Calculators</h3>
+
+    <p>Your CTC is not your take-home. Between employer PF, employee PF, gratuity, professional tax, and TDS, you may only receive 70–85% of your quoted CTC. Our three salary tools break this down clearly.</p>
+
+    <h4>In-Hand Salary Calculator</h4>
+    <p>Enter your annual CTC, basic percentage, HRA percentage, tax regime, rent, and 80C investments. The calculator shows your gross breakdown (basic, HRA, special allowance, employer PF, gratuity) and deductions (employee PF, income tax, professional tax), then your exact monthly take-home. Essential for comparing job offers — a ₹15 lakh CTC in one company may pay less in-hand than a ₹14 lakh CTC elsewhere.</p>
+
+    <h4>HRA Exemption Calculator</h4>
+    <p>House Rent Allowance exemption under Section 10(13A) is the <b>least</b> of three values: (1) actual HRA received, (2) rent paid minus 10% of basic, (3) 50% of basic in metros or 40% elsewhere. If your basic is ₹50,000/month, HRA ₹20,000, and rent ₹18,000 in Delhi, the monthly exemption is ₹13,000 — that's ₹1.56 lakh tax-free per year. Available only in the old tax regime.</p>
+
+    <h4>Salary Increment Calculator</h4>
+    <p>Compare your old salary to your new one, or work backwards from a desired hike percentage. Useful for negotiations and for understanding the real value of a raise after tax.</p>
+
+    <h3>Investment Calculators: SIP, FD, PPF, and CI</h3>
+
+    <h4>SIP Calculator</h4>
+    <p>A ₹10,000 monthly SIP at 12% for 10 years grows to about ₹23.2 lakh, of which ₹11.2 lakh is pure returns. Over 20 years, the same SIP grows to ₹99 lakh with ₹75 lakh in returns. Our SIP calculator shows year-by-year growth, wealth gained, and optionally models an annual step-up (increasing your SIP each year).</p>
+
+    <h4>FD Calculator</h4>
+    <p>Fixed deposits are safe and predictable. A ₹5 lakh FD at 7.1% for 5 years compounded quarterly matures at about ₹7.1 lakh. Interest is taxable as per your slab; TDS applies above ₹40,000 (₹50,000 for seniors) per year.</p>
+
+    <h4>PPF Calculator</h4>
+    <p>Public Provident Fund offers fully tax-free interest (EEE status). Investing ₹1.5 lakh yearly for 15 years at 7.1% grows to about ₹40.7 lakh — completely tax-free. Our PPF calculator shows year-wise growth and total interest earned.</p>
+
+    <h4>Compound Interest Calculator</h4>
+    <p>The eighth wonder of the world. Enter any principal, rate, time, and compounding frequency (yearly, half-yearly, quarterly, monthly, daily) to see how small amounts grow over long periods. Ideal for understanding why starting early matters more than investing more.</p>
+
+    <h3>Tax Calculators: Old vs New Regime</h3>
+
+    <h4>Income Tax Calculator</h4>
+    <p>India has two tax regimes since 2020. The <b>old regime</b> has higher rates but allows 80C (₹1.5L), 80D, HRA, home loan interest (Sec 24), and standard deduction ₹50,000. The <b>new regime</b> has lower rates but only standard deduction ₹75,000 (FY 2024-25). Our calculator shows both side-by-side and tells you which saves you more. For many salaried people with a home loan and 80C investments, the old regime wins; for younger employees with no deductions, the new regime wins.</p>
+
+    <h4>TDS Calculator</h4>
+    <p>Tax Deducted at Source applies to contractor payments (194C), professional fees (194J), rent (194I), commission (194H), dividend (194), and more. Our calculator applies the correct rate and warns you if PAN is missing (20% penalty under 206AA).</p>
+
+    <h4>Tax Saving Planner</h4>
+    <p>Enter your income and current deductions to see how much 80C, 80D, 80CCD(1B), and Sec 24 room you still have. Helps you decide whether to invest in ELSS, PPF, NPS, or health insurance before the financial year closes.</p>
+
+    <h3>Retirement Calculators: Gratuity, EPF, NPS</h3>
+
+    <h4>Gratuity Calculator</h4>
+    <p>Gratuity is paid after 5 years of continuous service. The formula is <code>(Last Salary × 15 × Years) / 26</code> for covered employees. ₹50,000 salary × 10 years = ₹2.88 lakh. Tax-exempt up to ₹20 lakh.</p>
+
+    <h4>EPF Calculator</h4>
+    <p>Employees' Provident Fund grows with 12% employee + 3.67% employer contributions to EPF (8.33% goes to pension) at ~8.25% interest. A ₹30,000 basic over 20 years with 5% annual growth grows to ₹45–55 lakh. This is a massive part of your retirement kitty.</p>
+
+    <h4>NPS Calculator</h4>
+    <p>The National Pension Scheme lets you contribute monthly, grow tax-deferred, and at 60 withdraw 60% as lump sum (tax-free) while 40% buys an annuity. Our calculator shows total corpus, lump sum, and monthly pension.</p>
+
+    <h3>Why DocEasy Is Different</h3>
+
+    <p>BankBazaar, PolicyBazaar, and similar sites offer free calculators as lead-generation hooks — you calculate, they call you, and suddenly you're being sold a loan you didn't need. DocEasy is the opposite. Our calculators are pure utilities: no signup, no email, no sales calls, no data tracking. Your numbers never leave your browser. You can verify this yourself by opening Developer Tools → Network tab, entering your data, and watching for requests. Zero outgoing data — because nothing is transmitted.</p>
+
+    <h3>Privacy and Offline Support</h3>
+
+    <p>Every calculator runs entirely client-side using JavaScript. After the page loads once, all tools work fully offline — you can turn off Wi-Fi and continue. No account, no server, no analytics on your inputs. This makes DocEasy safe for salary figures, loan details, tax computations, and investment portfolio values.</p>
+
+    <h3>Accuracy and Compliance</h3>
+
+    <p>Our calculators use FY 2024-25 tax slabs, standard deductions, 80C/80D limits, HRA rules, gratuity formulas, and EPF/NPS contribution rates. They match bank calculators to 2 decimal places. However, tax laws change every Union Budget — always verify critical numbers against incometax.gov.in or consult a Chartered Accountant before making major decisions.</p>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details><summary>Are DocEasy Finance Tools really free?</summary><p>Yes — 100% free forever. No signup, no email, no premium tier, no daily limit. Use any calculator as many times as you want.</p></details>
+
+    <details><summary>Is my financial data safe?</summary><p>Completely. Every calculation runs in your browser. Nothing is uploaded, logged, or shared. Even we cannot see your numbers.</p></details>
+
+    <details><summary>How accurate is the Home Loan EMI Calculator?</summary><p>It uses the standard bank formula and matches HDFC, SBI, and ICICI outputs to 2 decimal places. For floating-rate loans or prepayments, results are estimates — actual EMI may vary slightly.</p></details>
+
+    <details><summary>Which tax regime should I choose?</summary><p>It depends. Old regime suits people with home loans, 80C investments, HRA, and health insurance. New regime suits those with fewer deductions. Use our Income Tax Calculator to compare both side-by-side with your actual numbers.</p></details>
+
+    <details><summary>Does it work offline?</summary><p>Yes. After the first page load, all calculators work fully offline. No internet needed for calculations.</p></details>
+
+    <details><summary>Can I download my amortization schedule?</summary><p>Yes — the Loan EMI Calculators let you download the full schedule as a CSV file, generated entirely in your browser.</p></details>
+
+    <details><summary>Are the calculators compliant with Indian tax laws?</summary><p>They implement FY 2024-25 slabs and rules. Tax laws change yearly — always verify with a CA or the Income Tax Department before filing.</p></details>
+
+    <details><summary>Can I use these tools on mobile?</summary><p>Yes — every tool is fully responsive and works on Android, iPhone, and tablet. Touch-friendly inputs throughout.</p></details>
+
+    <details><summary>Do you store any logs?</summary><p>No. We don't log inputs, timings, or calculator usage. Since nothing leaves your browser, there is nothing for us to log.</p></details>
+
+    <details><summary>What is the difference between old and new tax regimes?</summary><p>Old regime has higher rates with deductions (80C, 80D, HRA, Sec 24, std deduction ₹50k). New regime has lower rates with only std deduction ₹75k (FY 2024-25). Use the calculator to compare.</p></details>
+
+    <details><summary>How is HRA exemption calculated?</summary><p>Least of: (1) actual HRA received, (2) rent paid − 10% of basic, (3) 50% of basic (metro) or 40% (non-metro). Available only under the old regime.</p></details>
+
+    <details><summary>How is gratuity calculated?</summary><p>For covered employees: (Last Salary × 15 × Years) / 26. For non-covered: (Last Salary × 15 × Years) / 30. Tax-exempt up to ₹20 lakh.</p></details>
+
+    <details><summary>What is the SIP compounding assumption?</summary><p>SIP returns are compounded monthly at the expected annual rate. Actual mutual fund returns are market-linked and not guaranteed.</p></details>
+
+    <details><summary>How does NPS withdrawal work?</summary><p>At 60, you can withdraw 60% as tax-free lump sum. The remaining 40% must be used to purchase an annuity that pays monthly pension.</p></details>
+
+    <details><summary>Can I plan prepayments?</summary><p>Yes — the loan calculators include an optional extra monthly payment field. Prepayments reduce tenure (recommended) and save substantial interest.</p></details>
+
+    <h3>Related DocEasy Tools</h3>
+    <ul>
+      <li><a href="card-cropper.html">ID Card Cropper</a> — 300 DPI dual-side Aadhaar, PAN</li>
+      <li><a href="printing-tools.html">Printing Tools</a> — Print Aadhaar, ID cards, passport photos</li>
+      <li><a href="media-tools.html">Media Tools</a> — Screen recorder, voice recorder</li>
+      <li><a href="business-tools.html">Business Tools</a> — GST, invoices, stamp duty</li>
+      <li><a href="categories.html">All Categories</a> — Browse 35+ free tools</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>DocEasy Finance Tools give you fast, private, and free calculators for every major financial decision — home loans, income tax, salary, SIP, gratuity, EPF, NPS, and more. No signup, no data sharing, no sales calls. Whether you're planning your first home, comparing tax regimes, or projecting retirement, these tools give you clear numbers to make confident decisions. Bookmark this page and use it whenever you need to crunch numbers.</p>
   </section>
 
 </main>
@@ -507,22 +593,14 @@ function amortize(P,annualRate,months,extra){
 }
 function donutSVG(pctA,colorA,colorB){
   const r=48,c=2*Math.PI*r; const dash=(Math.max(0,Math.min(100,pctA))/100)*c;
-  return `<svg viewBox="0 0 120 120" width="130" height="130" style="flex-shrink:0">
-    <circle cx="60" cy="60" r="${r}" fill="none" stroke="${colorB}" stroke-width="16"/>
-    <circle cx="60" cy="60" r="${r}" fill="none" stroke="${colorA}" stroke-width="16" stroke-dasharray="${dash} ${c}" transform="rotate(-90 60 60)" stroke-linecap="round"/>
-    <text x="60" y="58" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor">${Math.round(pctA)}%</text>
-    <text x="60" y="74" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" opacity="0.6">INTEREST</text>
-  </svg>`;
+  return `<svg viewBox="0 0 120 120" width="130" height="130" style="flex-shrink:0"><circle cx="60" cy="60" r="${r}" fill="none" stroke="${colorB}" stroke-width="16"/><circle cx="60" cy="60" r="${r}" fill="none" stroke="${colorA}" stroke-width="16" stroke-dasharray="${dash} ${c}" transform="rotate(-90 60 60)" stroke-linecap="round"/><text x="60" y="58" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor">${Math.round(pctA)}%</text><text x="60" y="74" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" opacity="0.6">INTEREST</text></svg>`;
 }
 function legendRow(color,label,value){ return `<div class="li"><span class="dot" style="background:${color}"></span>${label}<span>${value}</span></div>`; }
-
-/* ============ TAX ============ */
 function taxNewRegime(t){ let tax=0,inc=t; const slabs=[[1500000,0.30],[1200000,0.20],[1000000,0.15],[700000,0.10],[300000,0.05]]; for(const[l,r]of slabs){if(inc>l){tax+=(inc-l)*r;inc=l;}} return tax; }
 function taxOldRegime(t){ let tax=0,inc=t; const slabs=[[1000000,0.30],[500000,0.20],[250000,0.05]]; for(const[l,r]of slabs){if(inc>l){tax+=(inc-l)*r;inc=l;}} return tax; }
 function rebateNew(tax,t){ return t<=700000?Math.min(tax,25000):0; }
 function rebateOld(tax,t){ return t<=500000?Math.min(tax,12500):0; }
 
-/* ============ ICONS ============ */
 const ICONS={
   home:'<path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
   car:'<path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM5 17l1.5-6h11L19 17M7 11V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/>',
@@ -543,7 +621,6 @@ const ICONS={
 function fN(key,label,def,opts){ opts=opts||{}; return {key,label,type:'number',default:def,prefix:opts.prefix||'',suffix:opts.suffix||'',min:opts.min,max:opts.max,step:opts.step||1,hint:opts.hint||''}; }
 function fS(key,label,def,options){ return {key,label,type:'select',default:def,options}; }
 
-/* ============ LOAN TOOL FACTORY ============ */
 function loanTool(cfg){
   return {
     title:cfg.title, subtitle:cfg.subtitle, icon:cfg.icon,
@@ -567,20 +644,16 @@ function loanTool(cfg){
         <div class="result-card"><div class="lbl">Total Payment</div><div class="val">${inr(r.total)}</div><div class="sub">principal + interest</div></div>
       </div>
       <div class="chart-row">${donutSVG(interestPct,'#16a34a','#f59e0b')}
-        <div class="legend">
-          ${legendRow('#16a34a','Principal',inr(r.P))}
-          ${legendRow('#f59e0b','Interest',inr(r.interest))}
-          <div class="li" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-color);font-size:11.5px;color:var(--subtext-color);font-weight:700;">Interest is ${interestPct.toFixed(1)}% of total payment</div>
-        </div>
+        <div class="legend">${legendRow('#16a34a','Principal',inr(r.P))}${legendRow('#f59e0b','Interest',inr(r.interest))}<div class="li" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-color);font-size:11.5px;color:var(--subtext-color);font-weight:700;">Interest is ${interestPct.toFixed(1)}% of total payment</div></div>
       </div>`;
       if(r.extra>0){
         html+=`<div class="result-grid">
-          <div class="result-card"><div class="lbl">New Payoff Time</div><div class="val">${r.am.months} mo</div><div class="sub">${(r.am.months/12).toFixed(1)} years</div></div>
+          <div class="result-card"><div class="lbl">New Payoff</div><div class="val">${r.am.months} mo</div><div class="sub">${(r.am.months/12).toFixed(1)} years</div></div>
           <div class="result-card warn"><div class="lbl">Time Saved</div><div class="val">${Math.max(0,r.months-r.am.months)} mo</div></div>
           <div class="result-card"><div class="lbl">Interest Saved</div><div class="val">${inr(Math.max(0,r.interest-r.am.totalInterest))}</div></div>
         </div>`;
       }
-      html+=`<div class="section-title">Amortization Schedule (first 12 months)</div>
+      html+=`<div class="section-title">Amortization (first 12 months)</div>
         <div class="sch-wrap"><table><thead><tr><th>Month</th><th>EMI</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody>`;
       r.am.rows.slice(0,12).forEach(row=>{
         html+=`<tr><td>${row.month}</td><td>${inr(row.emi)}</td><td>${inr(row.principal)}</td><td>${inr(row.interest)}</td><td>${inr(row.balance)}</td></tr>`;
@@ -604,12 +677,11 @@ function loanTool(cfg){
   };
 }
 
-/* ============ TOOLS ============ */
 const TOOLS={
   'home-loan-emi':loanTool({title:'Home Loan EMI Calculator',subtitle:'Monthly EMI + full amortization',icon:ICONS.home,defaultP:5000000,defaultRate:8.5,defaultYears:20}),
-  'car-loan-emi':loanTool({title:'Car Loan EMI Calculator',subtitle:'Auto loan EMI with amortization',icon:ICONS.car,defaultP:800000,defaultRate:9.5,defaultYears:5}),
-  'personal-loan-emi':loanTool({title:'Personal Loan EMI Calculator',subtitle:'Unsecured personal loan estimate',icon:ICONS.person,defaultP:300000,defaultRate:12,defaultYears:3}),
-  'education-loan-emi':loanTool({title:'Education Loan EMI Calculator',subtitle:'Student loan repayment plan',icon:ICONS.edu,defaultP:1500000,defaultRate:10.5,defaultYears:7}),
+  'car-loan-emi':loanTool({title:'Car Loan EMI Calculator',subtitle:'Auto loan EMI',icon:ICONS.car,defaultP:800000,defaultRate:9.5,defaultYears:5}),
+  'personal-loan-emi':loanTool({title:'Personal Loan EMI Calculator',subtitle:'Unsecured loan estimate',icon:ICONS.person,defaultP:300000,defaultRate:12,defaultYears:3}),
+  'education-loan-emi':loanTool({title:'Education Loan EMI Calculator',subtitle:'Student loan repayment',icon:ICONS.edu,defaultP:1500000,defaultRate:10.5,defaultYears:7}),
 
   'in-hand-salary':{
     title:'In-Hand Salary Calculator',subtitle:'Break CTC into monthly take-home',icon:ICONS.salary,
@@ -655,10 +727,10 @@ const TOOLS={
     render:r=>`<div class="result-grid">
       <div class="result-card"><div class="lbl">Monthly Take-Home</div><div class="val">${inr(r.monthlyTakeHome)}</div><div class="sub">in-hand salary</div></div>
       <div class="result-card alt"><div class="lbl">Annual Take-Home</div><div class="val">${inr(r.annualTakeHome)}</div></div>
-      <div class="result-card warn"><div class="lbl">Annual Tax (incl. cess)</div><div class="val">${inr(r.totalTax)}</div><div class="sub">${r.regime==='new'?'New':'Old'} regime</div></div>
+      <div class="result-card warn"><div class="lbl">Annual Tax</div><div class="val">${inr(r.totalTax)}</div><div class="sub">${r.regime==='new'?'New':'Old'} regime</div></div>
     </div>
-    <div class="section-title">CTC Breakdown (annual)</div>
-    <div class="sch-wrap"><table><thead><tr><th>Component</th><th>Amount</th></tr></thead><tbody>
+    <div class="section-title">CTC Breakdown</div>
+    <div class="sch-wrap"><table><tbody>
       <tr><td>Basic</td><td>${inr(r.basic)}</td></tr>
       <tr><td>HRA</td><td>${inr(r.hra)}</td></tr>
       <tr><td>Special Allowance</td><td>${inr(r.specialAllow)}</td></tr>
@@ -667,7 +739,7 @@ const TOOLS={
       <tr><td><b>Gross CTC</b></td><td><b>${inr(r.ctc)}</b></td></tr>
     </tbody></table></div>
     <div class="section-title">Deductions</div>
-    <div class="sch-wrap"><table><thead><tr><th>Deduction</th><th>Amount</th></tr></thead><tbody>
+    <div class="sch-wrap"><table><tbody>
       <tr><td>Employee PF</td><td>${inr(r.employeePF)}</td></tr>
       <tr><td>Income Tax + cess</td><td>${inr(r.totalTax)}</td></tr>
       <tr><td>Professional Tax</td><td>${inr(r.profTaxAnnual)}</td></tr>
@@ -693,7 +765,7 @@ const TOOLS={
       <div class="result-card alt"><div class="lbl">Annual HRA Exempt</div><div class="val">${inr(r.annualExempt)}</div><div class="sub">tax-free</div></div>
     </div>
     <div class="section-title">Least of three</div>
-    <div class="sch-wrap"><table><thead><tr><th>Rule</th><th>Amount/month</th></tr></thead><tbody>
+    <div class="sch-wrap"><table><tbody>
       <tr><td>1. Actual HRA</td><td>${inr(r.t1)}</td></tr>
       <tr><td>2. Rent − 10% basic</td><td>${inr(r.t2)}</td></tr>
       <tr><td>3. ${r.city==='metro'?'50%':'40%'} of basic</td><td>${inr(r.t3)}</td></tr>
@@ -931,14 +1003,14 @@ const TOOLS={
       <div class="result-card alt"><div class="lbl">Original Amount</div><div class="val">${inr(r.amount)}</div></div>
     </div>
     ${r.pan==='no'?'<div class="note" style="border-left-color:#dc2626;">⚠️ No PAN: higher rate applied u/s 206AA.</div>':''}
-    <div class="note">TDS rates as per Finance Act. Surcharge/cess may apply for high-value payments. Verify with CA.</div>`
+    <div class="note">TDS rates as per Finance Act. Surcharge/cess may apply for high-value payments.</div>`
   },
 
   'tax-saving':{
     title:'Tax Saving Planner',subtitle:'80C, 80D, NPS optimizer',icon:ICONS.shield,
     fields:[
       fN('income','Gross Annual Income',1200000,{prefix:'₹',min:0,step:50000}),
-      fN('d80C','Section 80C Used',100000,{prefix:'₹',min:0,max:150000,step:5000,hint:'ELSS, PPF, LIC, EPF, etc.'}),
+      fN('d80C','Section 80C Used',100000,{prefix:'₹',min:0,max:150000,step:5000,hint:'ELSS, PPF, LIC, EPF'}),
       fN('d80D','Section 80D Used',15000,{prefix:'₹',min:0,max:100000,step:5000,hint:'Health insurance'}),
       fN('d80CCD','NPS 80CCD(1B) Used',0,{prefix:'₹',min:0,max:50000,step:5000}),
       fN('homeLoan','Home Loan Interest Used',0,{prefix:'₹',min:0,max:200000,step:10000,hint:'Section 24'})
@@ -955,18 +1027,18 @@ const TOOLS={
       return {income:v.income,taxBefore,taxAfter,taxSaved:taxBefore-taxAfter,totalDed,remaining80C,remaining80D,remaining80CCD,remainingHome};
     },
     render:r=>`<div class="result-grid">
-      <div class="result-card"><div class="lbl">Tax Saved (approx.)</div><div class="val">${inr(r.taxSaved)}</div></div>
+      <div class="result-card"><div class="lbl">Tax Saved</div><div class="val">${inr(r.taxSaved)}</div></div>
       <div class="result-card alt"><div class="lbl">Tax Before</div><div class="val">${inr(r.taxBefore)}</div></div>
       <div class="result-card"><div class="lbl">Tax After</div><div class="val">${inr(r.taxAfter)}</div></div>
     </div>
     <div class="section-title">Remaining deduction room</div>
-    <div class="sch-wrap"><table><thead><tr><th>Section</th><th>Room Left</th></tr></thead><tbody>
+    <div class="sch-wrap"><table><tbody>
       <tr><td>80C (max ₹1.5L)</td><td>${inr(r.remaining80C)}</td></tr>
       <tr><td>80D (max ₹1L)</td><td>${inr(r.remaining80D)}</td></tr>
       <tr><td>80CCD(1B) NPS (max ₹50k)</td><td>${inr(r.remaining80CCD)}</td></tr>
       <tr><td>Sec 24 Home Loan (max ₹2L)</td><td>${inr(r.remainingHome)}</td></tr>
     </tbody></table></div>
-    <div class="note">Old regime comparison. New regime has no 80C/80D benefits. Verify with CA before investing.</div>`
+    <div class="note">Old regime comparison. New regime has no 80C/80D benefits.</div>`
   },
 
   'gratuity':{
@@ -987,10 +1059,10 @@ const TOOLS={
     render:r=>`<div class="result-grid">
       <div class="result-card"><div class="lbl">Gratuity Payable</div><div class="val">${inr(r.gratuity)}</div></div>
       <div class="result-card alt"><div class="lbl">Tax Exempt</div><div class="val">${inr(r.taxExempt)}</div><div class="sub">up to ₹20L</div></div>
-      <div class="result-card ${r.taxable>0?'warn':''}"><div class="lbl">Taxable Portion</div><div class="val">${inr(r.taxable)}</div></div>
+      <div class="result-card ${r.taxable>0?'warn':''}"><div class="lbl">Taxable</div><div class="val">${inr(r.taxable)}</div></div>
     </div>
-    ${!r.eligible?'<div class="note" style="border-left-color:#dc2626;">⚠️ Minimum 5 years continuous service required for gratuity.</div>':''}
-    <div class="note">Formula: ${r.covered==='yes'?'(Salary × 15 × Years) / 26':'(Salary × 15 × Years) / 30'}. Tax exempt up to ₹20 lakh for non-government employees.</div>`
+    ${!r.eligible?'<div class="note" style="border-left-color:#dc2626;">⚠️ Minimum 5 years continuous service required.</div>':''}
+    <div class="note">Formula: ${r.covered==='yes'?'(Salary × 15 × Years) / 26':'(Salary × 15 × Years) / 30'}.</div>`
   },
 
   'epf':{
@@ -1005,7 +1077,7 @@ const TOOLS={
       let balance=0,basic=v.basic; const rows=[]; const monthlyRate=v.rate/12/100;
       for(let y=1;y<=v.years;y++){
         for(let m=0;m<12;m++){
-          const employee=basic*0.12, employer=basic*0.0367; // 3.67% to EPF
+          const employee=basic*0.12, employer=basic*0.0367;
           balance=(balance+employee+employer)*(1+monthlyRate);
         }
         rows.push({year:y,basic,balance});
@@ -1014,12 +1086,12 @@ const TOOLS={
       return {balance,rows,years:v.years,rate:v.rate};
     },
     render:r=>`<div class="result-grid">
-      <div class="result-card"><div class="lbl">EPF Corpus at Retirement</div><div class="val">${inr(r.balance)}</div><div class="sub">after ${r.years} years</div></div>
+      <div class="result-card"><div class="lbl">EPF Corpus</div><div class="val">${inr(r.balance)}</div><div class="sub">after ${r.years} years</div></div>
     </div>
     <div class="sch-wrap"><table><thead><tr><th>Year</th><th>Basic</th><th>Balance</th></tr></thead><tbody>
       ${r.rows.map(x=>`<tr><td>${x.year}</td><td>${inr(x.basic)}</td><td>${inr(x.balance)}</td></tr>`).join('')}
     </tbody></table></div>
-    <div class="note">Assumes 12% employee + 3.67% employer contributions to EPF (8.33% goes to EPS). Interest compounded monthly at ${r.rate}% p.a. Actual corpus depends on EPFO rates.</div>`
+    <div class="note">Assumes 12% employee + 3.67% employer contributions to EPF (8.33% goes to EPS). Interest compounded monthly at ${r.rate}% p.a.</div>`
   },
 
   'nps':{
@@ -1049,26 +1121,20 @@ const TOOLS={
       <tr><td>Returns Gained</td><td>${inr(r.gain)}</td></tr>
       <tr><td>Annuity Corpus</td><td>${inr(r.annuityCorpus)}</td></tr>
     </tbody></table></div>
-    <div class="note">NPS allows 60% lump sum withdrawal (tax-free), 40% must be used to buy annuity. Additional ₹50k deduction u/s 80CCD(1B).</div>`
+    <div class="note">NPS allows 60% lump sum (tax-free), 40% must buy annuity. Additional ₹50k deduction u/s 80CCD(1B).</div>`
   }
 };
 
-/* ============ MODAL LOGIC ============ */
+/* ============ MODAL ============ */
 const modalOverlay=document.getElementById('modalOverlay');
-const modalBox=document.getElementById('modalBox');
 const modalIcon=document.getElementById('modalIcon');
 const modalTitle=document.getElementById('modalTitle');
 const modalSubtitle=document.getElementById('modalSubtitle');
 const modalBody=document.getElementById('modalBody');
 const modalClose=document.getElementById('modalClose');
+const modalBox=document.getElementById('modalBox');
 
-let currentRenderFn=null;
-
-function closeModal(){
-  modalOverlay.classList.remove('active');
-  document.body.style.overflow='';
-}
-
+function closeModal(){ modalOverlay.classList.remove('active'); document.body.style.overflow=''; }
 modalClose.onclick=closeModal;
 modalOverlay.onclick=e=>{ if(e.target===modalOverlay) closeModal(); };
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&modalOverlay.classList.contains('active')) closeModal(); });
@@ -1132,7 +1198,6 @@ function openTool(key){
   modalOverlay.scrollTop=0;
 }
 
-/* ============ TILE CLICK ============ */
 document.querySelectorAll('.tool-tile').forEach(tile=>{
   tile.addEventListener('click',()=>{
     const key=tile.getAttribute('data-tool');
@@ -1144,7 +1209,6 @@ document.querySelectorAll('.tool-tile').forEach(tile=>{
 (function(){
   const searchInput=document.getElementById('toolSearch');
   const pills=document.getElementById('filterPills');
-  const tiles=document.querySelectorAll('.tool-tile');
   const cats=document.querySelectorAll('.cat-block');
   const noResults=document.getElementById('noResults');
   let activeFilter='all';
