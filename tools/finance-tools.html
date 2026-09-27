@@ -19,79 +19,286 @@
 <meta name="twitter:description" content="Free finance calculators. No signup, 100% private.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"Finance Tools — DocEasy","url":"https://deepaakai.github.io/officekit/finance-tools.html","description":"Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD."}
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Finance Tools — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/finance-tools.html",
+  "description": "Free online finance calculators — loan EMI, income tax, salary, gratuity, EPF, HRA, SIP, FD."
+}
 </script>
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Are DocEasy finance calculators free?","acceptedAnswer":{"@type":"Answer","text":"Yes, every calculator is 100% free forever. No signup, no email, no credit card."}},
-{"@type":"Question","name":"Is my financial data safe?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. All calculations run in your browser. No data is uploaded or stored."}},
-{"@type":"Question","name":"Which calculators are available?","acceptedAnswer":{"@type":"Answer","text":"Home loan EMI, car loan EMI, personal loan EMI, education loan EMI, in-hand salary, HRA exemption, salary increment, SIP, FD, PPF, compound interest, income tax, TDS, tax saving, gratuity, EPF, and NPS."}}
-]}
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Are DocEasy finance calculators free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, every calculator is 100% free forever. No signup, no email, no credit card."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my financial data safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. All calculations run in your browser. No data is uploaded or stored."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which calculators are available?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Home loan EMI, car loan EMI, personal loan EMI, education loan EMI, in-hand salary, HRA exemption, salary increment, SIP, FD, PPF, compound interest, income tax, TDS, tax saving, gratuity, EPF, and NPS."
+      }
+    }
+  ]
+}
 </script>
 
 <link rel="stylesheet" href="assets/css/doceasy-global.css">
 
 <style>
-/* Page-specific styles — same as emitra-csc-tools.html */
-* { box-sizing: border-box; }
-.main-wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px 80px; overflow-x: hidden; }
+:root {
+  --accent: #19398a;
+  --accent-hover: #2563eb;
+  --accent-soft: rgba(25, 57, 138, 0.08);
+  --accent-soft-hover: rgba(25, 57, 138, 0.14);
+  --font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
 
-/* HERO — same blue as card-cropper / emitra */
+html, body {
+  font-family: var(--font-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* { 
+  box-sizing: border-box; 
+  font-family: inherit;
+}
+
+.main-wrap { 
+  max-width: 1240px; 
+  margin: 0 auto; 
+  padding: 0 20px 80px; 
+  overflow-x: hidden; 
+}
+
+/* HERO */
 .chero {
-  position: relative; overflow: hidden;
-  border-radius: 22px; padding: 42px 32px;
+  position: relative; 
+  overflow: hidden;
+  border-radius: 22px; 
+  padding: 42px 32px;
   margin-top: 34px;
   background: linear-gradient(135deg, #19398a 0%, #2563eb 55%, #4f46e5 100%);
   color: #fff;
   box-shadow: 0 20px 48px rgba(25,57,138,0.28);
 }
-.chero::before, .chero::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,0.10); }
+.chero::before, .chero::after { 
+  content: ""; 
+  position: absolute; 
+  border-radius: 50%; 
+  background: rgba(255,255,255,0.10); 
+}
 .chero::before { width: 280px; height: 280px; top: -110px; right: -80px; }
 .chero::after  { width: 200px; height: 200px; bottom: -90px; left: -60px; }
 .chero-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 12px; border-radius: 999px;
-  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28);
-  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
-  margin-bottom: 14px; position: relative; z-index: 1;
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px;
+  padding: 5px 12px; 
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18); 
+  border: 1px solid rgba(255,255,255,0.28);
+  font-size: 11px; 
+  font-weight: 700; 
+  letter-spacing: 0.4px;
+  margin-bottom: 14px; 
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  position: relative; 
+  z-index: 1;
 }
-.chero h1 { font-size: clamp(26px, 4.5vw, 42px); font-weight: 800; margin: 0 0 10px; letter-spacing: -1px; line-height: 1.1; position: relative; z-index: 1; }
-.chero p { font-size: clamp(14px, 2vw, 16.5px); line-height: 1.6; max-width: 680px; margin: 0; opacity: 0.92; position: relative; z-index: 1; }
-.chero-stats { display: flex; gap: 26px; margin-top: 24px; flex-wrap: wrap; position: relative; z-index: 1; }
+.chero h1 { 
+  font-size: clamp(26px, 4.5vw, 42px); 
+  font-weight: 800; 
+  margin: 0 0 10px; 
+  letter-spacing: -1px; 
+  line-height: 1.1; 
+  position: relative; 
+  z-index: 1; 
+}
+.chero p { 
+  font-size: clamp(14px, 2vw, 16.5px); 
+  line-height: 1.6; 
+  max-width: 680px; 
+  margin: 0; 
+  opacity: 0.92; 
+  position: relative; 
+  z-index: 1; 
+}
+.chero-stats { 
+  display: flex; 
+  gap: 26px; 
+  margin-top: 24px; 
+  flex-wrap: wrap; 
+  position: relative; 
+  z-index: 1; 
+}
 .chero-stats .stat { display: flex; flex-direction: column; }
 .chero-stats .stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
 .chero-stats .stat span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.85; font-weight: 700; margin-top: 2px; }
 
 /* TOOLBAR */
-.toolbar { display: flex; gap: 12px; align-items: center; margin: 34px 0 22px; flex-wrap: wrap; }
+.toolbar { 
+  display: flex; 
+  gap: 12px; 
+  align-items: center; 
+  margin: 34px 0 22px; 
+  flex-wrap: wrap; 
+}
 .search-box { position: relative; flex: 1; min-width: 240px; max-width: 500px; }
-.search-box svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; stroke: var(--subtext-color); fill: none; stroke-width: 2; }
-.search-box input { width: 100%; padding: 12px 14px 12px 42px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 14px; outline: none; transition: all 0.18s; font-family: inherit; }
-.search-box input:focus { border-color: #19398a; box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
+.search-box svg { 
+  position: absolute; 
+  left: 14px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  width: 17px; 
+  height: 17px; 
+  stroke: var(--subtext-color); 
+  fill: none; 
+  stroke-width: 2; 
+}
+.search-box input { 
+  width: 100%; 
+  padding: 12px 14px 12px 42px; 
+  border-radius: 12px; 
+  border: 1px solid var(--border-color); 
+  background: var(--card-bg); 
+  color: var(--text-color); 
+  font-size: 14px; 
+  outline: none; 
+  transition: all 0.18s; 
+}
+.search-box input:focus { 
+  border-color: var(--accent); 
+  box-shadow: 0 0 0 3px rgba(25,57,138,0.12); 
+}
 .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-.filter-pills button { padding: 9px 15px; border-radius: 999px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.18s; font-family: inherit; }
-.filter-pills button:hover { border-color: #19398a; color: #19398a; }
-.filter-pills button.active { background: #19398a; border-color: #19398a; color: #fff; box-shadow: 0 6px 16px rgba(25,57,138,0.28); }
+.filter-pills button { 
+  padding: 9px 15px; 
+  border-radius: 999px; 
+  border: 1px solid var(--border-color); 
+  background: var(--card-bg); 
+  color: var(--text-color); 
+  font-size: 12.5px; 
+  font-weight: 700; 
+  cursor: pointer; 
+  transition: all 0.18s; 
+}
+.filter-pills button:hover { border-color: var(--accent); color: var(--accent); }
+.filter-pills button.active { 
+  background: var(--accent); 
+  border-color: var(--accent); 
+  color: #fff; 
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28); 
+}
 
 /* CATEGORY */
 .cat-block { margin-top: 42px; scroll-margin-top: 90px; }
-.cat-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid var(--border-color); }
-.cat-head .icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; background: linear-gradient(135deg, #19398a, #2563eb); }
+.cat-head { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  margin-bottom: 18px; 
+  padding-bottom: 12px; 
+  border-bottom: 2px solid var(--border-color); 
+}
+.cat-head .icon { 
+  width: 42px; 
+  height: 42px; 
+  border-radius: 12px; 
+  display: grid; 
+  place-items: center; 
+  flex-shrink: 0; 
+  background: linear-gradient(135deg, var(--accent), #2563eb); 
+}
 .cat-head .icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 2; }
 .cat-head h2 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.4px; color: var(--text-color); }
 .cat-head p { font-size: 12.5px; color: var(--subtext-color); margin: 2px 0 0; }
-.cat-head .count { margin-left: auto; font-size: 11.5px; font-weight: 700; color: var(--subtext-color); background: var(--card-hover); padding: 5px 11px; border-radius: 999px; white-space: nowrap; }
+.cat-head .count { 
+  margin-left: auto; 
+  font-size: 11.5px; 
+  font-weight: 700; 
+  color: var(--subtext-color); 
+  background: var(--card-hover); 
+  padding: 5px 11px; 
+  border-radius: 999px; 
+  white-space: nowrap; 
+}
 
-.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
-.tool-tile { display: flex; flex-direction: column; gap: 10px; padding: 18px 16px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; color: var(--text-color); transition: all 0.2s ease; min-height: 140px; position: relative; cursor: pointer; font-family: inherit; text-align: left; width: 100%; }
-.tool-tile:hover { border-color: #19398a; transform: translateY(-4px); box-shadow: 0 14px 30px rgba(25,57,138,0.14); }
-.tool-tile .tile-icon { width: 42px; height: 42px; border-radius: 11px; background: rgba(25,57,138,0.08); color: #19398a; display: grid; place-items: center; transition: transform 0.22s; flex-shrink: 0; }
+.tools-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); 
+  gap: 12px; 
+}
+.tool-tile { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+  padding: 18px 16px 16px; 
+  background: var(--card-bg); 
+  border: 1px solid var(--border-color); 
+  border-radius: 14px; 
+  color: var(--text-color); 
+  transition: all 0.2s ease; 
+  min-height: 140px; 
+  position: relative; 
+  cursor: pointer; 
+  text-align: left; 
+  width: 100%; 
+}
+.tool-tile:hover { 
+  border-color: var(--accent); 
+  transform: translateY(-4px); 
+  box-shadow: 0 14px 30px rgba(25,57,138,0.14); 
+}
+.tool-tile .tile-icon { 
+  width: 42px; 
+  height: 42px; 
+  border-radius: 11px; 
+  background: var(--accent-soft); 
+  color: var(--accent); 
+  display: grid; 
+  place-items: center; 
+  transition: transform 0.22s; 
+  flex-shrink: 0; 
+}
 .tool-tile:hover .tile-icon { transform: scale(1.1) rotate(-4deg); }
 .tool-tile .tile-icon svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 2; }
 .tool-tile h3 { font-size: 13.5px; font-weight: 700; margin: 0; line-height: 1.35; }
 .tool-tile p { font-size: 11px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
-.tool-tile .tag { position: absolute; top: 9px; right: 9px; font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px; padding: 2px 6px; border-radius: 5px; background: linear-gradient(135deg,#16a34a,#15803d); color: #fff; }
+.tool-tile .tag { 
+  position: absolute; 
+  top: 9px; 
+  right: 9px; 
+  font-size: 8.5px; 
+  font-weight: 800; 
+  letter-spacing: 0.5px; 
+  padding: 2px 6px; 
+  border-radius: 5px; 
+  background: linear-gradient(135deg,#16a34a,#15803d); 
+  color: #fff; 
+}
 .tool-tile .tag.hot { background: linear-gradient(135deg,#dc2626,#b91c1c); }
 
 /* HOW TO */
@@ -99,45 +306,181 @@
 .how-to-use h2 { font-size: clamp(22px, 3.8vw, 30px); font-weight: 800; text-align: center; margin: 0 0 10px; letter-spacing: -0.6px; }
 .how-to-use .lead { text-align: center; color: var(--subtext-color); font-size: 14px; margin: 0 auto 30px; max-width: 620px; line-height: 1.6; }
 .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-.step-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px 18px; position: relative; }
-.step-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 900; color: #19398a; opacity: .15; line-height: 1; letter-spacing: -2px; }
+.step-card { 
+  background: var(--card-bg); 
+  border: 1px solid var(--border-color); 
+  border-radius: 14px; 
+  padding: 24px 18px; 
+  position: relative; 
+}
+.step-num { 
+  position: absolute; 
+  top: 14px; 
+  right: 16px; 
+  font-size: 32px; 
+  font-weight: 900; 
+  color: var(--accent); 
+  opacity: .15; 
+  line-height: 1; 
+  letter-spacing: -2px; 
+}
 .step-card h3 { font-size: 14.5px; font-weight: 800; margin: 0 0 6px; }
 .step-card p { font-size: 12.5px; color: var(--subtext-color); margin: 0; line-height: 1.6; }
 
-/* SEO ARTICLE — same as card-cropper/emitra */
-.seo-article { max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; }
-.seo-article h2 { font-size: 26px !important; font-weight: 800; color: var(--text-color); margin: 40px 0 20px; letter-spacing: -0.5px; line-height: 1.3; }
+/* SEO ARTICLE & FAQ */
+.seo-article { 
+  max-width: 860px; 
+  margin: 48px auto; 
+  padding: 40px 32px; 
+  line-height: 1.8; 
+  background: var(--card-bg); 
+  border: 1px solid var(--border-color); 
+  border-radius: 14px; 
+}
+.seo-article h2 { 
+  font-size: 26px !important; 
+  font-weight: 800; 
+  color: var(--text-color); 
+  margin: 40px 0 20px; 
+  letter-spacing: -0.5px; 
+  line-height: 1.3; 
+}
 .seo-article h2:first-child { margin-top: 0; }
-.seo-article h3 { font-size: 20px !important; font-weight: 700; color: #19398a; margin: 32px 0 16px; line-height: 1.4; }
-.seo-article h4 { font-size: 17px !important; font-weight: 700; color: var(--text-color); margin: 24px 0 12px; }
-.seo-article p { font-size: 16px !important; color: var(--subtext-color); margin: 0 0 20px; line-height: 1.8; }
+.seo-article h3 { 
+  font-size: 20px !important; 
+  font-weight: 700; 
+  color: var(--accent); 
+  margin: 32px 0 16px; 
+  line-height: 1.4; 
+}
+.seo-article h4 { 
+  font-size: 17px !important; 
+  font-weight: 700; 
+  color: var(--text-color); 
+  margin: 24px 0 12px; 
+}
+.seo-article p { 
+  font-size: 16px !important; 
+  color: var(--subtext-color); 
+  margin: 0 0 20px; 
+  line-height: 1.8; 
+}
 .seo-article ul, .seo-article ol { margin: 20px 0; padding-left: 24px; }
-.seo-article li { font-size: 15.5px !important; color: var(--subtext-color); margin-bottom: 12px; line-height: 1.7; }
+.seo-article li { 
+  font-size: 15.5px !important; 
+  color: var(--subtext-color); 
+  margin-bottom: 12px; 
+  line-height: 1.7; 
+}
 .seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
-.seo-article a { color: #19398a; text-decoration: underline; font-weight: 600; }
-.seo-article a:hover { color: #2563eb; }
-.seo-article code { background: var(--card-hover); padding: 2px 8px; border-radius: 5px; font-family: ui-monospace, monospace; font-size: 14px; color: #19398a; }
-.seo-article details { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; transition: all 0.2s; }
-.seo-article details:hover { border-color: #19398a; }
-.seo-article details summary { font-size: 16px !important; font-weight: 700; color: var(--text-color); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article a:hover { color: var(--accent-hover); }
+.seo-article code { 
+  background: var(--card-hover); 
+  padding: 2px 8px; 
+  border-radius: 5px; 
+  font-family: ui-monospace, monospace; 
+  font-size: 14px; 
+  color: var(--accent); 
+}
+.seo-article details { 
+  background: var(--bg-color); 
+  border: 1px solid var(--border-color); 
+  border-radius: 12px; 
+  padding: 18px 22px; 
+  margin-bottom: 12px; 
+  transition: all 0.2s; 
+}
+.seo-article details:hover, .seo-article details[open] { border-color: var(--accent); }
+.seo-article details summary { 
+  font-size: 16px !important; 
+  font-weight: 700; 
+  color: var(--text-color); 
+  cursor: pointer; 
+  list-style: none; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: 12px; 
+}
 .seo-article details summary::-webkit-details-marker { display: none; }
-.seo-article details summary::after { content: "+"; font-size: 22px; color: #19398a; font-weight: 300; }
+.seo-article details summary::after { 
+  content: "+"; 
+  font-size: 22px; 
+  color: var(--accent); 
+  font-weight: 300; 
+}
 .seo-article details[open] summary::after { content: "−"; }
 .seo-article details p { margin: 14px 0 0; font-size: 15px !important; line-height: 1.75; }
 
 .no-results { display: none; text-align: center; padding: 60px 20px; color: var(--subtext-color); font-size: 14.5px; }
 
-/* MODAL for calculators */
-.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: flex-start; justify-content: center; z-index: 9999; padding: 20px; overflow-y: auto; }
+/* MODAL */
+.modal-overlay { 
+  position: fixed; 
+  inset: 0; 
+  background: rgba(15,23,42,0.55); 
+  backdrop-filter: blur(6px); 
+  -webkit-backdrop-filter: blur(6px); 
+  display: none; 
+  align-items: flex-start; 
+  justify-content: center; 
+  z-index: 9999; 
+  padding: 20px; 
+  overflow-y: auto; 
+}
 .modal-overlay.active { display: flex; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.modal { background: var(--card-bg); color: var(--text-color); border-radius: 20px; max-width: 760px; width: 100%; margin: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.35); animation: slideUp 0.25s ease; overflow: hidden; border: 1px solid var(--border-color); }
-.modal-header { display: flex; align-items: center; gap: 12px; padding: 18px 22px; background: linear-gradient(135deg, #19398a, #2563eb); color: #fff; position: sticky; top: 0; z-index: 5; }
-.modal-header .mh-icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); }
+.modal { 
+  background: var(--card-bg); 
+  color: var(--text-color); 
+  border-radius: 20px; 
+  max-width: 760px; 
+  width: 100%; 
+  margin: auto; 
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35); 
+  animation: slideUp 0.25s ease; 
+  overflow: hidden; 
+  border: 1px solid var(--border-color); 
+}
+.modal-header { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  padding: 18px 22px; 
+  background: linear-gradient(135deg, var(--accent), #2563eb); 
+  color: #fff; 
+  position: sticky; 
+  top: 0; 
+  z-index: 5; 
+}
+.modal-header .mh-icon { 
+  width: 38px; 
+  height: 38px; 
+  border-radius: 10px; 
+  display: grid; 
+  place-items: center; 
+  flex-shrink: 0; 
+  background: rgba(255,255,255,0.16); 
+  border: 1px solid rgba(255,255,255,0.22); 
+}
 .modal-header .mh-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
 .modal-header h2 { font-size: 16.5px; font-weight: 800; margin: 0; line-height: 1.2; }
 .modal-header p { font-size: 11.5px; margin: 2px 0 0; opacity: 0.85; }
-.modal-close { margin-left: auto; width: 34px; height: 34px; border-radius: 10px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); color: #fff; cursor: pointer; font-size: 20px; line-height: 1; display: grid; place-items: center; font-family: inherit; }
+.modal-close { 
+  margin-left: auto; 
+  width: 34px; 
+  height: 34px; 
+  border-radius: 10px; 
+  background: rgba(255,255,255,0.16); 
+  border: 1px solid rgba(255,255,255,0.22); 
+  color: #fff; 
+  cursor: pointer; 
+  font-size: 20px; 
+  line-height: 1; 
+  display: grid; 
+  place-items: center; 
+}
 .modal-close:hover { background: rgba(255,255,255,0.28); }
 .modal-body { padding: 22px; }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
@@ -147,10 +490,24 @@
 .field-input-wrap .pre, .field-input-wrap .suf { position: absolute; font-size: 13px; font-weight: 700; color: var(--subtext-color); pointer-events: none; }
 .field-input-wrap .pre { left: 12px; }
 .field-input-wrap .suf { right: 12px; }
-.field input, .field select { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 14px; font-weight: 600; outline: none; font-family: inherit; transition: all 0.15s; }
+.field input, .field select { 
+  width: 100%; 
+  padding: 11px 12px; 
+  border-radius: 10px; 
+  border: 1.5px solid var(--border-color); 
+  background: var(--card-bg); 
+  color: var(--text-color); 
+  font-size: 14px; 
+  font-weight: 600; 
+  outline: none; 
+  transition: all 0.15s; 
+}
 .field.has-pre input { padding-left: 30px; }
 .field.has-suf input { padding-right: 50px; }
-.field input:focus, .field select:focus { border-color: #19398a; box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
+.field input:focus, .field select:focus { 
+  border-color: var(--accent); 
+  box-shadow: 0 0 0 3px rgba(25,57,138,0.12); 
+}
 .field .hint { font-size: 10.5px; color: var(--subtext-color); font-weight: 500; }
 .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
 .result-card { padding: 14px; background: rgba(25,57,138,0.06); border: 1px solid rgba(25,57,138,0.18); border-radius: 12px; }
@@ -159,7 +516,7 @@
 .result-card.warn { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.18); }
 .result-card.warn .val { color: #dc2626; }
 .result-card .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 800; color: var(--subtext-color); }
-.result-card .val { font-size: 19px; font-weight: 800; color: #19398a; margin-top: 4px; letter-spacing: -0.4px; line-height: 1.15; word-break: break-word; }
+.result-card .val { font-size: 19px; font-weight: 800; color: var(--accent); margin-top: 4px; letter-spacing: -0.4px; line-height: 1.15; word-break: break-word; }
 .result-card .sub { font-size: 10.5px; color: var(--subtext-color); margin-top: 2px; font-weight: 600; }
 .chart-row { display: flex; gap: 18px; align-items: center; padding: 14px; background: var(--card-hover); border-radius: 14px; margin-bottom: 16px; flex-wrap: wrap; }
 .chart-row .legend { flex: 1; min-width: 160px; }
@@ -174,22 +531,22 @@
 .sch-wrap td:first-child { text-align: left; color: var(--text-color); font-weight: 700; }
 .sch-wrap tr:last-child td { border-bottom: none; }
 .section-title { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-color); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
-.section-title::before { content: ""; width: 3px; height: 14px; border-radius: 2px; background: #19398a; }
-.note { font-size: 11.5px; color: var(--subtext-color); line-height: 1.6; padding: 10px 12px; background: var(--card-hover); border-left: 3px solid #19398a; border-radius: 6px; margin-top: 14px; }
+.section-title::before { content: ""; width: 3px; height: 14px; border-radius: 2px; background: var(--accent); }
+.note { font-size: 11.5px; color: var(--subtext-color); line-height: 1.6; padding: 10px 12px; background: var(--card-hover); border-left: 3px solid var(--accent); border-radius: 6px; margin-top: 14px; }
 .btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
-.btn { padding: 11px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; font-family: inherit; transition: all 0.15s; }
-.btn:hover { border-color: #19398a; color: #19398a; }
-.btn.primary { background: linear-gradient(135deg,#19398a,#2563eb); color: #fff; border-color: #19398a; box-shadow: 0 6px 16px rgba(25,57,138,0.28); }
+.btn { padding: 11px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color); cursor: pointer; transition: all 0.15s; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: linear-gradient(135deg,var(--accent),#2563eb); color: #fff; border-color: var(--accent); box-shadow: 0 6px 16px rgba(25,57,138,0.28); }
 .btn.primary:hover { color: #fff; }
 .tax-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .tax-box { padding: 16px; border-radius: 14px; border: 1.5px solid var(--border-color); }
-.tax-box.winner { border-color: #19398a; background: rgba(25,57,138,0.06); }
+.tax-box.winner { border-color: var(--accent); background: rgba(25,57,138,0.06); }
 .tax-box .tb-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .tax-box .tb-head h4 { font-size: 13px; font-weight: 800; margin: 0; }
-.tax-box .tb-head .badge { font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: linear-gradient(135deg,#19398a,#2563eb); color: #fff; }
+.tax-box .tb-head .badge { font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: linear-gradient(135deg,var(--accent),#2563eb); color: #fff; }
 .tax-box .tb-row { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; color: var(--subtext-color); font-weight: 600; }
 .tax-box .tb-row.total { border-top: 1px dashed var(--border-color); margin-top: 6px; padding-top: 8px; color: var(--text-color); font-weight: 800; font-size: 13px; }
-.tax-box .tb-row.total span:last-child { color: #19398a; }
+.tax-box .tb-row.total span:last-child { color: var(--accent); }
 
 @media (max-width: 768px) {
   .main-wrap { padding: 0 14px 60px; }
@@ -345,134 +702,160 @@
     </div>
   </section>
 
-  <!-- SEO ARTICLE -->
+  <!-- SEO ARTICLE (2000+ WORDS) -->
   <section class="seo-article">
-    <h2>Complete Guide: Free Finance Calculators for Every Indian (2025)</h2>
+    <h2>The Definitive Indian Personal Finance &amp; Tax Planning Guide (2026 Edition)</h2>
 
-    <p>Money decisions shape your entire life — from the home you buy, to the taxes you pay, to the retirement you enjoy. Yet most Indians struggle with basic financial math because the numbers are complex, the jargon is confusing, and the tools are either paywalled or designed to sell you a loan. <b>DocEasy Finance Tools</b> change that. We've built 17 free, browser-based calculators covering loans, income tax, salary, investments, and retirement — all private, all instant, all free forever.</p>
+    <p>Managing personal finances in India requires navigating a sophisticated landscape of changing statutory tax slabs, compound investment vehicles, long-term credit amortization schedules, and evolving social security frameworks. Whether you are an entry-level professional receiving your first salary breakdown, a homeowner planning home loan prepayments, or an experienced investor balancing tax-efficient retirement accounts, precision is non-negotiable. <b>DocEasy Finance Tools</b> provides a suite of 17 dedicated, privacy-first, client-side web calculators designed to eliminate mathematical ambiguity from your financial decisions. Unlike portal lead-generators that harvest phone numbers to sell unsolicited financial products, our tools run completely on your client machine with zero server-side transmission.</p>
 
-    <p>This guide walks you through every calculator, explains the math behind them, shows real examples, and answers the most common questions about EMIs, tax regimes, HRA, gratuity, EPF, NPS, and more. Whether you're a salaried employee, a freelancer, a business owner, or a student planning your first investment, this article will help you use these tools with confidence.</p>
+    <p>This master guide covers the technical mechanics, mathematical formulations, statutory limits, and practical strategies behind modern Indian personal finance: from loan amortization to CTC structuring, Old vs. New tax regime optimizations, wealth accumulation through compounding, and long-term retirement safety nets.</p>
 
-    <h3>Why Use Finance Calculators at All?</h3>
+    <h3>1. Loan Mathematics: Amortization, Equated Monthly Installments, &amp; Debt Optimization</h3>
 
-    <p>Human beings are notoriously bad at estimating compounding. We underestimate how much interest we'll pay over a 20-year loan, overestimate how much our SIP will grow, and completely misjudge how much tax we owe until the CA sends the bill. A good finance calculator eliminates guesswork by turning raw numbers into clear, comparable outputs.</p>
+    <p>Borrowing capital for assets like residential property, vehicles, or higher education creates multi-decade liabilities where the cost of borrowed money often outpaces the initial principal sum. The Equated Monthly Installment (EMI) represents a mathematically smoothed repayment stream comprising both principal repayment and accrued interest components across each calendar cycle.</p>
 
-    <p>Consider a ₹50 lakh home loan at 8.5% for 20 years. Most borrowers focus only on the EMI — around ₹43,000 — and forget that over the loan's life they'll pay <b>₹54 lakh in interest alone</b>, more than the principal itself. Seeing this number changes behaviour: you might choose a shorter tenure, make prepayments, or negotiate a lower rate. That's the power of a calculator.</p>
+    <p>Every commercial bank, Non-Banking Financial Company (NBFC), and housing finance company in India computes monthly liabilities using the universal standard annuity formulation:</p>
 
-    <h3>Loan Calculators: EMI, Interest, and Amortization</h3>
+    <p><code>EMI = P × r × (1 + r)^n / ((1 + r)^n - 1)</code></p>
 
-    <p>DocEasy offers four loan calculators: Home Loan, Car Loan, Personal Loan, and Education Loan. All four use the standard bank formula:</p>
+    <p>Where <b>P</b> represents the sanctioned loan principal, <b>r</b> is the fractional periodic interest rate (computed as Annual Nominal Percentage Rate ÷ 12 ÷ 100), and <b>n</b> denotes the tenure expressed strictly in monthly periods. Because interest accrues daily or monthly on the outstanding balance, the initial years of any loan tenure are heavily interest-weighted.</p>
 
-    <p><code>EMI = P × r × (1+r)^n / ((1+r)^n − 1)</code></p>
+    <h4>The Prepayment Leverage in Long-Tenure Mortgages</h4>
+    <p>Consider a ₹50,00,000 home loan borrowed at an annual floating rate of 8.50% over a 240-month (20-year) horizon. The standard monthly repayment obligation evaluates to ₹43,391. Across two decades, the cumulative interest payment totals approximately ₹54,13,879—meaning the borrower pays more in financing charges than the property loan itself. However, committing an extra principal prepayment of just ₹5,000 per month from the outset shortens the payoff period by 64 months (over 5 years) and saves more than ₹15,70,000 in nominal financing charges. Our loan tool models these adjustments instantly, allowing borrowers to evaluate amortization tables and download exact CSV schedules locally.</p>
 
-    <p>where <b>P</b> is the principal, <b>r</b> is the monthly interest rate (annual rate divided by 12 divided by 100), and <b>n</b> is the tenure in months. This formula produces the fixed monthly payment that fully repays the loan by the end of the tenure.</p>
+    <h4>Vehicle, Unsecured Personal, and Education Loans</h4>
+    <p>While home loans are secured against real property and enjoy lower interest rates, automobile and personal loans carry higher default risks. Personal loans typically range from 10.5% to 18% per annum, making tenure selection critical. Education loans incorporate a structured moratorium window (the course duration plus a standard 6 to 12-month grace window) where simple interest compounds before regular monthly amortizations begin.</p>
 
-    <h4>Home Loan EMI Calculator</h4>
-    <p>The most-used tool. Enter loan amount, interest rate, and tenure; get your monthly EMI, total interest, total payment, and a month-by-month amortization schedule. You can also add an optional extra monthly prepayment to see how many months and rupees of interest you save. For a ₹50 lakh loan at 8.5% for 20 years, prepaying just ₹5,000/month saves over ₹15 lakh in interest and cuts 5+ years off the loan.</p>
+    <h3>2. Salary Architecture: Unbundling Cost-to-Company (CTC) into Real Take-Home Pay</h3>
 
-    <h4>Car Loan EMI Calculator</h4>
-    <p>Car loans typically run 3–7 years at 9–11% interest. For an ₹8 lakh car at 9.5% for 5 years, the EMI is around ₹16,800. Use this calculator to compare dealer financing against bank loans before signing anything.</p>
+    <p>In the Indian corporate ecosystem, an employment offer letter rarely reflects the monthly bank deposit. Cost to Company (CTC) is an aggregate metric that includes direct cash components, indirect social security contributions, statutory retiral reserves, and performance-linked variables. Navigating this structure requires understanding statutory limits under the Employees' Provident Funds and Miscellaneous Provisions Act and the Payment of Gratuity Act.</p>
 
-    <h4>Personal Loan EMI Calculator</h4>
-    <p>Personal loans are unsecured and expensive — usually 10–18%. A ₹3 lakh loan at 12% for 3 years means an EMI of about ₹9,964. This tool helps you decide if the monthly outflow fits your budget before you apply.</p>
+    <h4>Deconstructing CTC Components</h4>
+    <ul>
+      <li><b>Basic Salary:</b> The foundational bedrock of your compensation package, commonly structured at 40% to 50% of the gross CTC. All mandatory contributions (PF, Gratuity) scale directly with this figure.</li>
+      <li><b>House Rent Allowance (HRA):</b> Typically 40% (for non-metro residents) or 50% (for residents of Delhi, Mumbai, Kolkata, or Chennai) of the basic salary.</li>
+      <li><b>Employer EPF Contribution:</b> 12% of the basic pay contributed by the employer directly to the Employees' Provident Fund Organisation (EPFO). While included in CTC, this money is never part of regular monthly liquidity.</li>
+      <li><b>Gratuity Provision:</b> Under statutory mandates, companies accrue 4.81% of basic salary annually (representing 15 days of wages per year of completed service).</li>
+      <li><b>Special Allowance / Flexible Benefits:</b> The balancing residual figure taxed fully at normal slab rates unless sheltered under specific reimbursements.</li>
+    </ul>
 
-    <h4>Education Loan EMI Calculator</h4>
-    <p>Education loans often have a moratorium (course duration + 6–12 months). Our calculator lets you model repayment after the moratorium ends. For a ₹15 lakh loan at 10.5% over 7 years, the EMI is roughly ₹25,300.</p>
+    <h4>Section 10(13A) House Rent Allowance Mechanics</h4>
+    <p>Salaried employees who reside in rented accommodations and opt for the Old Tax Regime can significantly reduce taxable income through HRA deductions under Rule 2A of the Income-tax Rules. The legally allowable deduction is computed as the strictly lowest of three values:</p>
+    <ol>
+      <li>The actual House Rent Allowance received from the employer during the fiscal year.</li>
+      <li>The actual rental outflow paid minus 10% of the annual basic salary.</li>
+      <li>50% of basic salary if residing in a designated metro city (Delhi, Mumbai, Kolkata, Chennai) or 40% for any other urban/rural location.</li>
+    </ol>
+    <p>For an employee drawing a basic pay of ₹60,000 monthly with an HRA allowance of ₹25,000, paying ₹22,000 in monthly rent in Bengaluru (non-metro: 40%), the formula evaluates: (1) ₹25,000; (2) ₹22,000 - ₹6,000 = ₹16,000; (3) 40% of ₹60,000 = ₹24,000. The exempt allowance is ₹16,000 per month (₹1,92,000 per year), reducing tax obligations substantially.</p>
 
-    <h3>Salary &amp; Payroll Calculators</h3>
+    <h3>3. Direct Taxation in India: The Old vs. New Tax Regime Matrix</h3>
 
-    <p>Your CTC is not your take-home. Between employer PF, employee PF, gratuity, professional tax, and TDS, you may only receive 70–85% of your quoted CTC. Our three salary tools break this down clearly.</p>
+    <p>The introduction of the concessional simplified regime under Section 115BAC fundamentally divided tax strategy in India. The regime debate centers around a structural tradeoff: lower baseline slab rates without deductions versus higher slab rates paired with comprehensive tax-saving allowances.</p>
 
-    <h4>In-Hand Salary Calculator</h4>
-    <p>Enter your annual CTC, basic percentage, HRA percentage, tax regime, rent, and 80C investments. The calculator shows your gross breakdown (basic, HRA, special allowance, employer PF, gratuity) and deductions (employee PF, income tax, professional tax), then your exact monthly take-home. Essential for comparing job offers — a ₹15 lakh CTC in one company may pay less in-hand than a ₹14 lakh CTC elsewhere.</p>
+    <h4>Key Differences: Slabs and Deductions</h4>
+    <p>Under the updated New Tax Regime, the standard deduction for salaried individuals stands enhanced to ₹75,000, with zero tax liability for taxable incomes up to ₹7,00,000 after Section 87A rebate. The tax slabs progress predictably in 3-lakh increments: 0-3L (Nil), 3-7L (5%), 7-10L (10%), 10-12L (15%), 12-15L (20%), and above 15L (30%), supplemented by a 4% Health &amp; Education Cess.</p>
 
-    <h4>HRA Exemption Calculator</h4>
-    <p>House Rent Allowance exemption under Section 10(13A) is the <b>least</b> of three values: (1) actual HRA received, (2) rent paid minus 10% of basic, (3) 50% of basic in metros or 40% elsewhere. If your basic is ₹50,000/month, HRA ₹20,000, and rent ₹18,000 in Delhi, the monthly exemption is ₹13,000 — that's ₹1.56 lakh tax-free per year. Available only in the old tax regime.</p>
+    <p>Conversely, the Old Regime permits individuals to subtract up to ₹1,50,000 under Section 80C (PPF, ELSS, EPF, principal repayment), ₹25,000 to ₹1,00,000 under Section 80D (health insurance for self and senior citizen parents), ₹50,000 under Section 80CCD(1B) for voluntary NPS tiers, up to ₹2,00,000 under Section 24(b) for home loan interest, and full HRA exemptions. Salaried individuals with significant home loans and high rental outflows frequently find the Old Regime financially superior, while early-career professionals benefit from the friction-free New Regime.</p>
 
-    <h4>Salary Increment Calculator</h4>
-    <p>Compare your old salary to your new one, or work backwards from a desired hike percentage. Useful for negotiations and for understanding the real value of a raise after tax.</p>
+    <h4>TDS Compliance and Section 206AA Implications</h4>
+    <p>Tax Deducted at Source (TDS) mandates withholding obligations on specified commercial transactions. Section 194C mandates 1% or 2% withholding on contractor obligations; Section 194J enforces 10% on professional fees (2% on specific technical fees); Section 194I mandates 10% on commercial property rents. Failure of the payee to furnish a valid Permanent Account Number (PAN) automatically triggers punitive withholding rates of 20% under Section 206AA.</p>
 
-    <h3>Investment Calculators: SIP, FD, PPF, and CI</h3>
+    <h3>4. Wealth Engineering: Systematic Investments, Fixed Deposits, and Compounding Horizons</h3>
 
-    <h4>SIP Calculator</h4>
-    <p>A ₹10,000 monthly SIP at 12% for 10 years grows to about ₹23.2 lakh, of which ₹11.2 lakh is pure returns. Over 20 years, the same SIP grows to ₹99 lakh with ₹75 lakh in returns. Our SIP calculator shows year-by-year growth, wealth gained, and optionally models an annual step-up (increasing your SIP each year).</p>
+    <p>Compounding transforms systematic savings into long-term financial independence. Albert Einstein famously described compounding as the eighth wonder of the world: those who understand it earn it, while those who do not pay it. Systematic Investment Plans (SIPs) in diversified equity funds mitigate market volatility through rupee cost averaging.</p>
 
-    <h4>FD Calculator</h4>
-    <p>Fixed deposits are safe and predictable. A ₹5 lakh FD at 7.1% for 5 years compounded quarterly matures at about ₹7.1 lakh. Interest is taxable as per your slab; TDS applies above ₹40,000 (₹50,000 for seniors) per year.</p>
+    <h4>The Mathematical Reality of SIP Compounding</h4>
+    <p>The terminal corpus of an annuity stream compounded periodically is modeled by:</p>
+    <p><code>FV = P × [ (1 + i)^n - 1 ] × (1 + i) ÷ i</code></p>
+    <p>Where <b>P</b> is the regular monthly contribution, <b>i</b> is the monthly interest rate, and <b>n</b> is the total number of deposits. Over a 10-year period, a monthly commitment of ₹15,000 at an assumed annualized return of 12% generates a portfolio value of approximately ₹34,85,000 (with ₹18,00,000 principal invested and ₹16,85,000 wealth gained). Over 25 years, however, the exact same ₹15,000 monthly commitment creates a corpus exceeding ₹2.84 Crores, where over ₹2.39 Crores represents pure compounding interest returns.</p>
 
-    <h4>PPF Calculator</h4>
-    <p>Public Provident Fund offers fully tax-free interest (EEE status). Investing ₹1.5 lakh yearly for 15 years at 7.1% grows to about ₹40.7 lakh — completely tax-free. Our PPF calculator shows year-wise growth and total interest earned.</p>
+    <h4>Fixed Deposits (FD) and Public Provident Fund (PPF)</h4>
+    <p>For capital preservation, bank Fixed Deposits offer quarterly compounded returns, though interest earned is taxed at marginal slab rates with TDS applied when annual interest exceeds ₹40,000 (₹50,000 for seniors). The Public Provident Fund (PPF) remains one of India's premier debt instruments, backed by sovereign guarantees and operating under the coveted Exempt-Exempt-Exempt (EEE) status: investments (up to ₹1.5L/year) are tax-deductible, interest accrued is non-taxable, and full maturity withdrawals after 15 years remain completely tax-free.</p>
 
-    <h4>Compound Interest Calculator</h4>
-    <p>The eighth wonder of the world. Enter any principal, rate, time, and compounding frequency (yearly, half-yearly, quarterly, monthly, daily) to see how small amounts grow over long periods. Ideal for understanding why starting early matters more than investing more.</p>
+    <h3>5. Retirement Security: Statutory Gratuity, EPF Corpus, &amp; NPS Annuities</h3>
 
-    <h3>Tax Calculators: Old vs New Regime</h3>
+    <p>Retirement planning requires building guaranteed capital pools that outlast post-employment lifespans without eroding against inflation.</p>
 
-    <h4>Income Tax Calculator</h4>
-    <p>India has two tax regimes since 2020. The <b>old regime</b> has higher rates but allows 80C (₹1.5L), 80D, HRA, home loan interest (Sec 24), and standard deduction ₹50,000. The <b>new regime</b> has lower rates but only standard deduction ₹75,000 (FY 2024-25). Our calculator shows both side-by-side and tells you which saves you more. For many salaried people with a home loan and 80C investments, the old regime wins; for younger employees with no deductions, the new regime wins.</p>
+    <h4>Gratuity Valuation under the 1972 Act</h4>
+    <p>For organizations with 10 or more employees, gratuity is a statutory entitlement triggered after 5 years of continuous service. For employees covered under the Act, the formula is:</p>
+    <p><code>Gratuity = (15 × Last Drawn Basic Salary &amp; DA × Tenure Years) ÷ 26</code></p>
+    <p>The month is standardized to 26 working days. A worker with 18 years of tenure and a final basic salary of ₹80,000 qualifies for ₹8,30,769 in gratuity. Under statutory limits, gratuity receipts up to ₹20,00,000 are completely exempt from direct taxation.</p>
 
-    <h4>TDS Calculator</h4>
-    <p>Tax Deducted at Source applies to contractor payments (194C), professional fees (194J), rent (194I), commission (194H), dividend (194), and more. Our calculator applies the correct rate and warns you if PAN is missing (20% penalty under 206AA).</p>
+    <h4>Employees' Provident Fund (EPF) Mechanics</h4>
+    <p>The standard provident fund architecture channels 12% of basic wages from both employee and employer. While the employee's entire 12% enters the EPF accumulation pool, the employer's 12% is bifurcated: 8.33% (capped at ₹15,000 basic wage limit, or ₹1,250 monthly) enters the Employees' Pension Scheme (EPS), and the remaining 3.67% joins the EPF pool. Compounded annually at government-notified rates (historically ~8.15% to 8.25%), an employee starting at age 25 with an initial basic salary of ₹35,000 and conservative 6% annual wage increments will retire at age 58 with an EPF corpus exceeding ₹1.45 Crores.</p>
 
-    <h4>Tax Saving Planner</h4>
-    <p>Enter your income and current deductions to see how much 80C, 80D, 80CCD(1B), and Sec 24 room you still have. Helps you decide whether to invest in ELSS, PPF, NPS, or health insurance before the financial year closes.</p>
+    <h4>National Pension System (NPS) Architecture</h4>
+    <p>Administered by PFRDA, the National Pension System offers low-cost institutional fund management across equity (E), corporate debt (C), and government securities (G). Upon reaching 60 years of age, investors can withdraw up to 60% of accumulated corpus as a tax-free lump sum. The mandatory remaining 40% balance must purchase a life annuity policy, providing regular pension payouts throughout retirement years.</p>
 
-    <h3>Retirement Calculators: Gratuity, EPF, NPS</h3>
+    <h3>6. Privacy, Security, &amp; The Zero-Knowledge Architecture</h3>
 
-    <h4>Gratuity Calculator</h4>
-    <p>Gratuity is paid after 5 years of continuous service. The formula is <code>(Last Salary × 15 × Years) / 26</code> for covered employees. ₹50,000 salary × 10 years = ₹2.88 lakh. Tax-exempt up to ₹20 lakh.</p>
+    <p>Financial calculations involve sensitive identity and asset disclosures: CTC numbers, loan liabilities, rental details, and investment assets. Most online financial portals act as customer acquisition funnels, capturing your phone number, email, and salary figures to sell as leads to third-party lending partners, insurance brokers, and telemarketers.</p>
 
-    <h4>EPF Calculator</h4>
-    <p>Employees' Provident Fund grows with 12% employee + 3.67% employer contributions to EPF (8.33% goes to pension) at ~8.25% interest. A ₹30,000 basic over 20 years with 5% annual growth grows to ₹45–55 lakh. This is a massive part of your retirement kitty.</p>
-
-    <h4>NPS Calculator</h4>
-    <p>The National Pension Scheme lets you contribute monthly, grow tax-deferred, and at 60 withdraw 60% as lump sum (tax-free) while 40% buys an annuity. Our calculator shows total corpus, lump sum, and monthly pension.</p>
-
-    <h3>Why DocEasy Is Different</h3>
-
-    <p>BankBazaar, PolicyBazaar, and similar sites offer free calculators as lead-generation hooks — you calculate, they call you, and suddenly you're being sold a loan you didn't need. DocEasy is the opposite. Our calculators are pure utilities: no signup, no email, no sales calls, no data tracking. Your numbers never leave your browser. You can verify this yourself by opening Developer Tools → Network tab, entering your data, and watching for requests. Zero outgoing data — because nothing is transmitted.</p>
-
-    <h3>Privacy and Offline Support</h3>
-
-    <p>Every calculator runs entirely client-side using JavaScript. After the page loads once, all tools work fully offline — you can turn off Wi-Fi and continue. No account, no server, no analytics on your inputs. This makes DocEasy safe for salary figures, loan details, tax computations, and investment portfolio values.</p>
-
-    <h3>Accuracy and Compliance</h3>
-
-    <p>Our calculators use FY 2024-25 tax slabs, standard deductions, 80C/80D limits, HRA rules, gratuity formulas, and EPF/NPS contribution rates. They match bank calculators to 2 decimal places. However, tax laws change every Union Budget — always verify critical numbers against incometax.gov.in or consult a Chartered Accountant before making major decisions.</p>
+    <p>DocEasy operates on a <b>Zero-Knowledge Architecture</b>. Every calculation is performed entirely within your browser using local JavaScript engines and client-side memory. No figures, variables, inputs, or generated results are ever transmitted across networks or written to external storage. You can disconnect your device from the internet, switch to airplane mode, and execute all 17 financial tools with complete functional independence and absolute privacy.</p>
 
     <h3>Frequently Asked Questions</h3>
 
-    <details><summary>Are DocEasy Finance Tools really free?</summary><p>Yes — 100% free forever. No signup, no email, no premium tier, no daily limit. Use any calculator as many times as you want.</p></details>
+    <details class="faq-item" open>
+      <summary>Are DocEasy Finance Tools completely free to use?</summary>
+      <p>Yes. Every single calculator on DocEasy is 100% free with no hidden charges, paywalls, trial limitations, or feature gating. You do not need to provide an email address, register an account, or enter payment details. You have unlimited access to every financial utility across all devices.</p>
+    </details>
 
-    <details><summary>Is my financial data safe?</summary><p>Completely. Every calculation runs in your browser. Nothing is uploaded, logged, or shared. Even we cannot see your numbers.</p></details>
+    <details class="faq-item">
+      <summary>Is my sensitive financial information stored or uploaded?</summary>
+      <p>Never. All calculations are executed locally on your client browser via JavaScript. No financial data, salary inputs, loan metrics, or personal variables are ever sent to a remote server, logged in databases, or shared with third parties. You can inspect the browser Network tab at any time to verify that zero outgoing requests occur during calculations.</p>
+    </details>
 
-    <details><summary>How accurate is the Home Loan EMI Calculator?</summary><p>It uses the standard bank formula and matches HDFC, SBI, and ICICI outputs to 2 decimal places. For floating-rate loans or prepayments, results are estimates.</p></details>
+    <details class="faq-item">
+      <summary>How exact are the loan amortization and EMI outputs?</summary>
+      <p>Our loan calculators utilize the standard reducing-balance amortization formula mandated by the Reserve Bank of India and used by premier banking institutions like SBI, HDFC, and ICICI. Outputs match commercial banking schedules to two decimal places, accounting for exact periodic compounding and payment amortizations.</p>
+    </details>
 
-    <details><summary>Which tax regime should I choose?</summary><p>It depends. Old regime suits people with home loans, 80C investments, HRA, and health insurance. New regime suits those with fewer deductions. Use our Income Tax Calculator to compare both side-by-side with your actual numbers.</p></details>
+    <details class="faq-item">
+      <summary>Which Indian tax regime is better for salaried professionals?</summary>
+      <p>The optimal regime depends on your total eligible deductions. Generally, if your cumulative deductions under Section 80C, 80D, Section 24(b) home loan interest, and Section 10(13A) HRA exceed approximately ₹3,75,000 to ₹4,25,000, the Old Tax Regime delivers lower tax liability. If your deductions fall below this threshold, the enhanced standard deduction and lower base rates of the New Tax Regime are typically more beneficial. Use our Income Tax Calculator to evaluate both side-by-side with your exact figures.</p>
+    </details>
 
-    <details><summary>Does it work offline?</summary><p>Yes. After the first page load, all calculators work fully offline. No internet needed for calculations.</p></details>
+    <details class="faq-item">
+      <summary>Can I download loan amortization schedules as spreadsheets?</summary>
+      <p>Yes. All loan calculators feature an instant client-side CSV export button. You can download your complete month-by-month repayment schedule—including principal split, interest split, and running balances—directly onto your computer or phone without uploading data anywhere.</p>
+    </details>
 
-    <details><summary>Can I download my amortization schedule?</summary><p>Yes — the Loan EMI Calculators let you download the full schedule as a CSV file, generated entirely in your browser.</p></details>
+    <details class="faq-item">
+      <summary>How is gratuity calculated for employees not covered under the Gratuity Act?</summary>
+      <p>For organizations or establishments not governed by the Payment of Gratuity Act of 1972, gratuity is computed on half a month's basic wages based on a 30-day working month rather than 26 days. The formula is: <code>(Last Drawn Basic Salary × 15 × Completed Years) ÷ 30</code>.</p>
+    </details>
 
-    <details><summary>Are the calculators compliant with Indian tax laws?</summary><p>They implement FY 2024-25 slabs and rules. Tax laws change yearly — always verify with a CA or the Income Tax Department before filing.</p></details>
+    <details class="faq-item">
+      <summary>Does DocEasy work when my device is completely offline?</summary>
+      <p>Yes. Once this web page completes its initial load, the HTML, CSS, and underlying JavaScript calculation routines are cached locally in your browser session. You can disconnect your internet or work in low-connectivity areas, and all 17 financial calculators will continue functioning normally.</p>
+    </details>
 
-    <details><summary>How is HRA exemption calculated?</summary><p>Least of: (1) actual HRA received, (2) rent paid − 10% of basic, (3) 50% of basic (metro) or 40% (non-metro). Only available in the old regime.</p></details>
+    <details class="faq-item">
+      <summary>What is the maximum tax-free withdrawal allowed from the National Pension System?</summary>
+      <p>Upon reaching the superannuation age of 60, subscribers may withdraw up to 60% of their total accumulated NPS corpus as a 100% tax-exempt lump sum. The remaining minimum 40% balance must be allocated toward purchasing an annuity policy from an authorized Life Insurance Provider, which pays regular monthly taxable pensions.</p>
+    </details>
 
-    <details><summary>How is gratuity calculated?</summary><p>For covered employees: (Last Salary × 15 × Years) / 26. For non-covered: (Last Salary × 15 × Years) / 30. Tax-exempt up to ₹20 lakh.</p></details>
+    <details class="faq-item">
+      <summary>Are compound interest calculations applicable for daily, monthly, and quarterly cycles?</summary>
+      <p>Yes. Our Compound Interest tool allows you to specify nominal interest rates, investment horizons, and custom compounding frequencies: annually, semi-annually, quarterly (standard for fixed deposits), monthly, or daily, matching exact commercial yields across debt instruments.</p>
+    </details>
 
-    <details><summary>How does NPS withdrawal work?</summary><p>At 60, you can withdraw 60% as tax-free lump sum. The remaining 40% must purchase an annuity that pays monthly pension.</p></details>
+    <details class="faq-item">
+      <summary>What penalty applies if a contractor or vendor does not supply a PAN card?</summary>
+      <p>Under Section 206AA of the Indian Income-tax Act, if a payee fails to furnish a valid Permanent Account Number to the deductor, TDS must be deducted at either the rate specified in the relevant Act provision, the rates in force, or a mandatory punitive flat rate of 20%, whichever is highest.</p>
+    </details>
 
     <h3>Related DocEasy Tools</h3>
     <ul>
-      <li><a href="card-cropper.html">ID Card Cropper</a> — 300 DPI Aadhaar, PAN</li>
-      <li><a href="tools/emitra-csc-tools.html">eMitra &amp; CSC Tools</a> — Service center utilities</li>
-      <li><a href="printing-tools.html">Printing Tools</a> — Aadhaar, ID cards, passport</li>
-      <li><a href="business-tools.html">Business Tools</a> — GST, invoices, stamp duty</li>
-      <li><a href="categories.html">All Categories</a> — Browse all tools</li>
+      <li><a href="tools/card-cropper.html">ID Card Cropper</a> — 300 DPI Aadhaar, PAN card cropping</li>
+      <li><a href="tools/emitra-csc-tools.html">eMitra &amp; CSC Tools</a> — Service center &amp; digital utilities</li>
+      <li><a href="printing-tools.html">Printing Tools</a> — Document print setup &amp; formatting</li>
+      <li><a href="business-tools.html">Business Tools</a> — Invoices, GST, and enterprise calculators</li>
+      <li><a href="categories.html">All Categories</a> — Complete directory of browser utilities</li>
     </ul>
 
     <h3>Conclusion</h3>
-    <p>DocEasy Finance Tools give you fast, private, and free calculators for every major financial decision — home loans, income tax, salary, SIP, gratuity, EPF, NPS, and more. No signup, no data sharing, no sales calls. Whether you're planning your first home, comparing tax regimes, or projecting retirement, these tools give you clear numbers to make confident decisions.</p>
+    <p>Financial clarity provides lasting freedom and peace of mind. By replacing guesswork with reliable mathematical modeling, DocEasy Finance Tools empowers you to optimize home loan tenures, make data-driven tax regime selections, verify employer take-home payroll structures, and forecast long-term wealth accumulation with confidence. Bookmark this page, explore the calculators above, and take control of your financial journey today.</p>
   </section>
 
 </main>
@@ -1047,7 +1430,7 @@ const TOOLS={
   }
 };
 
-/* ============ MODAL ============ */
+/* ============ MODAL CONTROLS ============ */
 const modalOverlay=document.getElementById('modalOverlay');
 const modalBox=document.getElementById('modalBox');
 const modalIcon=document.getElementById('modalIcon');
