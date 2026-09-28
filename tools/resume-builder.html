@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
 :root{--bg:#f1f5f9;--card:rgba(255,255,255,.85);--ink:#0f172a;--mut:#64748b;--pri:#4f46e5;--bd:#e2e8f0;--sh:0 8px 30px rgba(15,23,42,.08)}
+@media print{body.locked .wrap,body.locked .mo{display:none!important}body.locked:before{content:'Unlock PRO to print this template';display:block;padding:40px;font:20px sans-serif}}
 @media(prefers-color-scheme:dark){:root{--bg:#0b1120;--card:rgba(30,41,59,.85);--ink:#f1f5f9;--mut:#94a3b8;--bd:#334155}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .wrap{max-width:1400px;margin:auto;padding:20px}h1.t{font-size:28px;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 16px}
@@ -40,7 +41,7 @@ input:focus,textarea:focus{outline:2px solid var(--pri);border-color:transparent
 </style></head><body>
 <div class="wrap">
 <h1 class="t">Resume Builder</h1>
-<p class="sub">100% in your browser. Nothing is uploaded or stored on any server. Pick a template, fill in your details, and print to PDF.</p>
+<p class="sub">100% in your browser. Nothing is uploaded or stored on any server. Preview all 30 templates (8 free, 22 PRO). Pick one, fill in your details, and print to PDF.</p>
 <div class="gal" id="gal"></div>
 <div class="app">
 <div class="pan" id="form">
@@ -103,7 +104,27 @@ const T=[
 {n:'Academic Graduate',f:0,l:'formal',p:'#1b2a41',s:'#1b2a41',st:'#fff',bg:'#fff',a:'#324a5f',sh:'square',b:'•',font:'"Times New Roman",serif',dbl:1,tbl:1},
 {n:'Executive CIO',f:0,l:'banner',p:'#0b1f3a',s:'#0b1f3a',st:'#fff',bg:'#fff',a:'#c9a227',sh:'round',b:'■',font:'Cambria,Georgia,serif',band:1,full:1},
 {n:'Education Specialist',f:0,l:'banner',p:'#c2607f',s:'#fff',st:'#3a2a30',bg:'#fff',a:'#c2607f',sh:'oval',b:'✔',font:'Calibri,"Segoe UI",sans-serif',badge:1},
-{n:'Gulf / International',f:0,l:'formal',p:'#222',s:'#fff',st:'#111',bg:'#fff',a:'#444',sh:'none',b:'○',font:'"Times New Roman",serif',up:1,tbl:1}];
+{n:'Gulf / International',f:0,l:'formal',p:'#222',s:'#fff',st:'#111',bg:'#fff',a:'#444',sh:'none',b:'○',font:'"Times New Roman",serif',up:1,tbl:1},
+{n:'Forest Green',f:1,l:'side',p:'#1f5f3f',s:'#1f5f3f',st:'#fff',bg:'#f1f8f3',a:'#4caf78',sh:'circle',b:'✔',font:'Georgia,serif'},
+{n:'Slate Minimal',f:1,l:'banner',p:'#334155',s:'#f1f5f9',st:'#1e293b',bg:'#fff',a:'#64748b',sh:'square',b:'▪',font:'Arial,sans-serif'},
+{n:'Coral Timeline',f:1,l:'tl',p:'#3b2f2f',s:'#fff',st:'#3b2f2f',bg:'#fff',a:'#ef6c57',sh:'circle',b:'●',font:'"Segoe UI",Arial,sans-serif'},
+{n:'Classic Black',f:1,l:'formal',p:'#111',s:'#fff',st:'#111',bg:'#fff',a:'#333',sh:'none',b:'•',font:'"Times New Roman",serif',up:1},
+{n:'Mint Fresh',f:1,l:'side',p:'#0f766e',s:'#ccfbf1',st:'#134e4a',bg:'#f0fdfa',a:'#14b8a6',sh:'round',b:'◆',font:'"Segoe UI",Arial,sans-serif'},
+{n:'Royal Purple',f:0,l:'banner',p:'#5b21b6',s:'#ede9fe',st:'#3b0764',bg:'#fff',a:'#8b5cf6',sh:'circle',b:'●',font:'"Segoe UI",Arial,sans-serif'},
+{n:'Crimson Executive',f:0,l:'side',p:'#7f1d1d',s:'#7f1d1d',st:'#fff',bg:'#fff',a:'#dc2626',sh:'square',b:'■',font:'Cambria,Georgia,serif',decl:1},
+{n:'Ocean Teal',f:0,l:'tl',p:'#0e4f5c',s:'#fff',st:'#0e4f5c',bg:'#f6fcfd',a:'#0891b2',sh:'circle',b:'✓',font:'Verdana,sans-serif'},
+{n:'Charcoal Gold',f:0,l:'banner',p:'#1f2937',s:'#1f2937',st:'#fff',bg:'#fff',a:'#d4a017',sh:'square',b:'◆',font:'Georgia,serif',band:1,full:1},
+{n:'Sunset Orange',f:0,l:'side',p:'#c2410c',s:'#c2410c',st:'#fff',bg:'#fff7ed',a:'#fb923c',sh:'circle',b:'▸',font:'"Segoe UI",Arial,sans-serif'},
+{n:'Lavender Soft',f:0,l:'side',p:'#6d5a9c',s:'#e9e2f7',st:'#3d3357',bg:'#faf8ff',a:'#a78bda',sh:'oval',b:'◆',font:'Georgia,serif',quote:1},
+{n:'Emerald Corporate',f:0,l:'formal',p:'#065f46',s:'#fff',st:'#111',bg:'#fff',a:'#10b981',sh:'square',b:'▪',font:'Arial,sans-serif',dbl:1,tbl:1},
+{n:'Midnight Blue',f:0,l:'side',p:'#172554',s:'#172554',st:'#fff',bg:'#fff',a:'#3b82f6',sh:'circle',b:'☑',font:'Arial,sans-serif'},
+{n:'Rose Gold',f:0,l:'banner',p:'#b76e79',s:'#fff',st:'#4a2c2f',bg:'#fffafa',a:'#b76e79',sh:'circle',b:'✿',font:'Georgia,serif',badge:1},
+{n:'Steel Grey',f:0,l:'banner',p:'#475569',s:'#475569',st:'#fff',bg:'#f8fafc',a:'#94a3b8',sh:'square',b:'■',font:'"Segoe UI",Arial,sans-serif',band:1},
+{n:'Olive Classic',f:0,l:'formal',p:'#4d5a2a',s:'#fff',st:'#222',bg:'#fffef8',a:'#7a8a3c',sh:'square',b:'•',font:'"Times New Roman",serif',tbl:1},
+{n:'Sky Timeline',f:0,l:'tl',p:'#1d4ed8',s:'#fff',st:'#1e3a8a',bg:'#fff',a:'#38bdf8',sh:'round',b:'▸',font:'"Trebuchet MS",sans-serif'},
+{n:'Burgundy Elegant',f:0,l:'side',p:'#5c1a33',s:'#f5e6ea',st:'#5c1a33',bg:'#fff',a:'#a23b5a',sh:'oval',b:'•',font:'Georgia,serif',quote:1},
+{n:'Neon Tech',f:0,l:'banner',p:'#0f172a',s:'#0f172a',st:'#e2e8f0',bg:'#f8fafc',a:'#06b6d4',sh:'round',b:'▹',font:'Verdana,sans-serif',band:1,full:1},
+{n:'Monochrome Pro',f:0,l:'formal',p:'#000',s:'#fff',st:'#000',bg:'#fff',a:'#555',sh:'none',b:'○',font:'Arial,sans-serif',up:1,dbl:1}];
 const CSS=`@page{size:A4;margin:0}*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 html,body{width:794px;height:1123px;overflow:hidden}.pg{width:794px;height:1123px;overflow:hidden;position:relative;background:var(--bg);color:#222;font-size:12.5px;line-height:1.45;font-family:var(--f)}
 h1{font-size:34px;line-height:1.05;color:var(--p);text-transform:uppercase;letter-spacing:.5px}h2{font-size:15px;font-weight:600;color:var(--a);margin:4px 0 8px}
@@ -126,7 +147,7 @@ aside p,aside li{font-size:12px;word-break:break-word}main{padding:36px 34px}.si
 .fm .hc{text-align:center;padding-bottom:10px}.fm h1{font-size:28px}.fm h3{margin:12px 0 6px}.fm .dk h3{background:var(--p);color:#fff;padding:3px 8px;border:0}
 .up h3{text-transform:uppercase;border-bottom:1px solid #111;color:#111}table{width:100%;border-collapse:collapse;font-size:12px}td{padding:3px 6px;border:1px solid #ccc;vertical-align:top}
 .dc{margin-top:16px;font-size:11.5px}.sg{margin-top:26px;text-align:right}.sg span{display:inline-block;border-top:1px solid #333;padding-top:3px;min-width:170px;text-align:center}`;
-function R(i,d){
+function R(i,d,wm){
 const c=T[i],x=E,ph=d.photo?`<img src="${d.photo}" alt="">`:x((d.name||'?').trim()[0]||'?');
 const P=`<div class="ph ${c.sh}"${c.sh=='none'?' style="display:none"':''}>${ph}</div>`;
 const ul=s=>L(s).length?`<ul>${L(s).map(v=>`<li>${x(v)}</li>`).join('')}</ul>`:'';
@@ -155,16 +176,16 @@ body=`<div class="tl"><div class="hd">${P}<div><h1>${x(d.name)}</h1><h2>${x(d.ti
 body=`<div class="fm ${c.dbl?'dbl dk':''} ${c.up?'up':''}">${P}<div class="hc" style="${c.sh=='none'?'':'text-align:left;padding-right:130px'}"><h1>${x(c.up?'CV':d.name)}</h1>${c.up?`<h2>${x(d.name)}</h2>`:`<h2>${x(d.title)}</h2>`}</div>
 <div class="dk">${S('Personal Details',pers)}${S(c.up?'Objective':'Summary',`<p>${x(d.summary)}</p>`)}${S('Education',edu)}${S('Experience',exp)}${S('Skills',ul(d.skills))}${S('Strengths',ul(d.strengths))}${S('Certifications',ul(d.certs))}${S('Languages',ul(lang.map(l=>l[0]).join('\n')))}</div>${c.up?`<p style="margin-top:8px">Contact: ${con.map(x).join(' | ')}</p>`:''}${decl}</div>`;
 }
-return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>:root{--p:${c.p};--s:${c.s};--st:${c.st};--bg:${c.bg};--a:${c.a};--b:"${c.b}";--f:${c.font}}${CSS}</style></head><body><div class="pg">${body}</div></body></html>`;
+return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>:root{--p:${c.p};--s:${c.s};--st:${c.st};--bg:${c.bg};--a:${c.a};--b:"${c.b}";--f:${c.font}}${CSS}${wm?'.wm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 84px Arial;color:rgba(0,0,0,.1);transform:rotate(-32deg);pointer-events:none;z-index:9;white-space:nowrap}@media print{body{display:none!important}}':''}</style></head><body><div class="pg">${body}${wm?'<div class="wm">PRO PREVIEW</div>':''}</div></body></html>`;
 }
 /* ---------- UI ---------- */
 let cur=0,timer;const $=id=>document.getElementById(id);
 function gallery(){const g=$('gal');g.innerHTML='';T.forEach((t,i)=>{const locked=!t.f&&!pro();const el=document.createElement('div');el.className='tc'+(i==cur?' on':'');
-el.innerHTML=`<div class="pv"><iframe scrolling="no" title="${t.n}"></iframe>${locked?'<div class="lk"><span>🔒</span>PRO</div>':''}</div><div class="nm"><span>${i+1}. ${t.n}</span><span class="bd ${t.f?'fr':'pr'}">${t.f?'FREE':'PRO'}</span></div>`;
+el.innerHTML=`<div class="pv"><iframe scrolling="no" title="${t.n}"></iframe>${locked?'<div class="lk" style="inset:auto 6px 6px auto;width:auto;flex-direction:row;background:rgba(15,23,42,.8);padding:2px 9px;border-radius:99px;font-size:11px">🔒 PRO</div>':''}</div><div class="nm"><span>${i+1}. ${t.n}</span><span class="bd ${t.f?'fr':'pr'}">${t.f?'FREE':'PRO'}</span></div>`;
 const f=el.querySelector('iframe');f.srcdoc=R(i,D);const fit=()=>{f.style.transform=`scale(${el.querySelector('.pv').clientWidth/794})`};fit();addEventListener('resize',fit);
 el.onclick=()=>pick(i);g.appendChild(el)})}
-function pick(i){if(!T[i].f&&!pro()){$('mo').classList.add('show');return}cur=i;document.querySelectorAll('.tc').forEach((e,k)=>e.classList.toggle('on',k==i));draw()}
-function draw(){$('tn').textContent=T[cur].n;$('fr').srcdoc=R(cur,D);fitP()}
+function pick(i){cur=i;document.querySelectorAll('.tc').forEach((e,k)=>e.classList.toggle('on',k==i));draw();if(window.innerWidth<900)$('fw').scrollIntoView({behavior:'smooth'})}
+function draw(){const lk=!T[cur].f&&!pro();document.body.classList.toggle('locked',lk);$('tn').textContent=T[cur].n+(lk?' (PRO preview)':'');$('prt').textContent=lk?'🔒 Unlock to Download':'🖨 Print / Save PDF';$('fr').srcdoc=R(cur,D,lk);fitP()}
 function fitP(){$('fr').style.transform=`scale(${$('fw').clientWidth/794})`;$('fw').style.height=1123*$('fw').clientWidth/794+'px'}
 const later=()=>{clearTimeout(timer);timer=setTimeout(draw,120)};
 function list(id,key,fields){const box=$(id);box.innerHTML='';D[key].forEach((it,n)=>{const e=document.createElement('div');e.className='ent';
@@ -176,10 +197,10 @@ function forms(){document.querySelectorAll('[data-k]').forEach(i=>{i.value=D[i.d
 $('addExp').onclick=()=>{D.exp.push({role:'',org:'',dates:'',desc:''});list('exp','exp',XF)};
 $('addEdu').onclick=()=>{D.edu.push({deg:'',school:'',dates:''});list('edu','edu',EF)};
 $('photo').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{D.photo=r.result;draw()};r.readAsDataURL(f)};
-$('prt').onclick=()=>{const w=$('fr').contentWindow;w.focus();w.print()};
+$('prt').onclick=()=>{if(!T[cur].f&&!pro()){$('mo').classList.add('show');return}const w=$('fr').contentWindow;w.focus();w.print()};
 $('unl').onclick=()=>{$('mo').classList.add('show')};$('cls').onclick=()=>$('mo').classList.remove('show');
 $('mo').onclick=e=>{if(e.target.id=='mo')$('mo').classList.remove('show')};
 $('qr').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent('upi://pay?pa=deepaakai@dbs&pn=DocEasy&cu=INR');
-$('act').onclick=async()=>{const k=$('key').value.trim().toUpperCase(),m=$('km');if(await validKey(k)){try{localStorage.setItem(LS,k)}catch(e){}PRO=true;m.style.color='#16a34a';m.textContent='✅ PRO unlocked for lifetime!';gallery();setTimeout(()=>$('mo').classList.remove('show'),900)}else{m.style.color='#dc2626';m.textContent='❌ Invalid key. Format: DCEZ-RSM-XXXX-XXXX'}};
-addEventListener('resize',fitP);forms();draw();(async()=>{try{PRO=await validKey(localStorage.getItem(LS)||'')}catch(e){}gallery()})();
+$('act').onclick=async()=>{const k=$('key').value.trim().toUpperCase(),m=$('km');if(await validKey(k)){try{localStorage.setItem(LS,k)}catch(e){}PRO=true;draw();m.style.color='#16a34a';m.textContent='✅ PRO unlocked for lifetime!';gallery();setTimeout(()=>$('mo').classList.remove('show'),900)}else{m.style.color='#dc2626';m.textContent='❌ Invalid key. Format: DCEZ-RSM-XXXX-XXXX'}};
+addEventListener('resize',fitP);forms();draw();(async()=>{try{PRO=await validKey(localStorage.getItem(LS)||'')}catch(e){}gallery();draw()})();
 </script></body></html>
