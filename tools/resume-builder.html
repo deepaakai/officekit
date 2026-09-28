@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Resume Builder — 12 Professional Templates | DocEasy</title>
+<title>Resume Builder — 18 Professional Templates | DocEasy</title>
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +47,13 @@
   #modalHeader { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:var(--de-blue); color:#fff; position:sticky; top:0; }
   #modalHeader button { background:#fff; color:var(--de-blue); border:none; border-radius:6px; padding:8px 14px; font-weight:700; cursor:pointer; }
   #modalBody { padding:20px; overflow-x:auto; }
+  #unlockOverlay { display:none; position:fixed; inset:0; background:rgba(10,14,30,.72); z-index:1000; padding:20px; overflow-y:auto; }
+  #unlockOverlay.open { display:block; }
+  #unlockBox { max-width:420px; margin:60px auto; background:#fff; border-radius:12px; overflow:hidden; }
+  #unlockHeader { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:#b8860b; color:#fff; }
+  #unlockHeader button { background:none; border:none; color:#fff; font-size:16px; cursor:pointer; }
+  #unlockBody { padding:18px; font-size:13.5px; }
+  #unlockBody code { background:#f0f2fa; padding:2px 6px; border-radius:4px; }
   /* ---- Resume render (shared skeleton, per-template theme via CSS vars) ---- */
   .resume-page { width:794px; min-height:1123px; background:#fff; margin:0 auto; padding:46px 50px;
     font-family: var(--body-font, 'Work Sans', sans-serif); color:#222; font-size:13.5px; line-height:1.5; }
@@ -93,6 +100,29 @@
   .layout-declaration-cv .r-list-plain { list-style:none; padding-left:0; }
   .layout-declaration-cv .r-list-plain li::before { content:'➢  '; }
   .layout-declaration-cv table.r-profile-table td { padding:2px 8px 2px 0; vertical-align:top; }
+  /* New elements for the reference-design batch */
+  .r-title-badge { display:inline-block; background:var(--accent,#19398a); color:#fff; padding:5px 16px; border-radius:4px;
+    font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:10px; }
+  .r-icon { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%;
+    background:var(--accent,#19398a); color:#fff; font-size:11px; margin-right:7px; vertical-align:middle; }
+  .r-photo.top-rect { width:100%; height:150px; object-fit:cover; border-radius:6px; margin-bottom:12px; }
+  .r-quote-signature { margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,.25); font-style:italic;
+    font-family:'Dancing Script',cursive; font-size:17px; }
+  /* Layout: date-table (date-left / role-right rows, corporate reference style) */
+  .layout-date-table .resume-page { padding:44px 50px; }
+  .layout-date-table .r-header { border-bottom:2px solid var(--accent,#19398a); padding-bottom:14px; margin-bottom:14px;
+    display:flex; justify-content:space-between; align-items:flex-end; }
+  .layout-date-table .r-exp-row { display:flex; gap:18px; margin-bottom:14px; }
+  .layout-date-table .r-exp-date { width:130px; flex-shrink:0; font-size:12px; color:#667; font-weight:700; }
+  .layout-date-table .r-exp-content { flex:1; }
+  .layout-date-table .r-exp-role { font-weight:700; font-size:13.5px; }
+  .layout-date-table .r-exp-company { font-size:12px; color:#556; margin-bottom:3px; }
+  /* Layout: formal-gov (plain formal CV, two-column personal-details table) */
+  .layout-formal-gov .resume-page { padding:46px 56px; font-family:'Times New Roman', Times, serif; }
+  .layout-formal-gov .r-cv-title { text-align:center; font-size:22px; font-weight:700; margin-bottom:14px; letter-spacing:1px; }
+  .layout-formal-gov .r-section-title { text-decoration:underline; background:none; border:none; padding:0; margin:16px 0 6px;
+    text-transform:uppercase; font-size:13px; }
+  .layout-formal-gov table.r-personal-table td { padding:2px 14px 2px 0; vertical-align:top; font-size:13px; }
   .print-only { display:none; }
   @media print {
     body * { visibility:hidden; }
@@ -161,17 +191,17 @@ Customer Service Rep | AEGIS BPO, Gurgaon | 2022–2023 | Handled 80+ daily call
     <label>Languages (e.g. English - 5)</label>
     <input type="text" id="f_languages" value="Hindi - 5, English - 4">
 
-    <button class="btn gold block" id="btnUnlockPro">🔑 Unlock all 8 PRO templates — $2.99 / ₹100</button>
-    <p style="font-size:11px;color:#889;">Demo gate only — not yet wired to real payment verification (see note in code comments).</p>
+    <button class="btn gold block" id="btnUnlockPro">🔑 Unlock all 13 PRO templates — $2.99 / ₹100</button>
+    <p id="proStatusLine" style="font-size:11px;color:#889;"></p>
   </div>
 
   <!-- ============ RIGHT: GALLERY ============ -->
   <div class="panel">
     <h2>Choose a Template</h2>
     <div class="tabs">
-      <div class="tab active" data-filter="all">All (12)</div>
-      <div class="tab" data-filter="free">Free (4)</div>
-      <div class="tab" data-filter="pro">PRO (8)</div>
+      <div class="tab active" data-filter="all">All (18)</div>
+      <div class="tab" data-filter="free">Free (5)</div>
+      <div class="tab" data-filter="pro">PRO (13)</div>
     </div>
     <div class="gallery" id="galleryGrid"></div>
     <p style="font-size:12px;color:#889;margin-top:14px;">More PRO templates arriving in the next batch — this engine now makes each new one a one-line addition instead of a full rebuild.</p>
@@ -190,6 +220,24 @@ Customer Service Rep | AEGIS BPO, Gurgaon | 2022–2023 | Handled 80+ daily call
       </div>
     </div>
     <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ============ UNLOCK MODAL ============ -->
+<div id="unlockOverlay">
+  <div id="unlockBox">
+    <div id="unlockHeader"><strong>🔒 Unlock all PRO templates</strong><button id="btnCloseUnlock">✕</button></div>
+    <div id="unlockBody">
+      <p>One-time payment, lifetime access on this browser.</p>
+      <p><b>India (UPI):</b> <code>deepaakai@dbs</code> — scan with any UPI app.</p>
+      <p><a href="https://www.paypal.me/DPaswan198/2.99" target="_blank" rel="noopener">International: Pay $2.99 via PayPal →</a></p>
+      <p style="font-size:12px;color:#778;">After paying, send your payment screenshot to support to receive your license key.</p>
+      <hr style="border:none;border-top:1px solid #e2e6f2;margin:14px 0;">
+      <label>Already have a license key?</label>
+      <input type="text" id="licenseKeyInput" placeholder="DEASY-XXXX-XXXX-XXXX" style="text-transform:uppercase;">
+      <button class="btn block" id="btnActivateKey">Activate</button>
+      <p id="activateMsg" style="font-size:12.5px;"></p>
+    </div>
   </div>
 </div>
 
@@ -288,7 +336,42 @@ const TEMPLATES = [
   { id:'luxury-gold', name:'Luxury Gold', tier:'pro', layout:'classic',
     headFont:"'Playfair Display', serif", bodyFont:"'Lora', serif",
     accent:'#111', accentSoft:'#e8cf8a', nameCase:'none', photoShape:'circle' },
+
+  /* ---- Batch 2: modeled on the reference CVs the user sent ---- */
+  { id:'clinical-professional', name:'Clinical Professional', tier:'pro', layout:'sidebar-left',
+    headFont:"'Montserrat', sans-serif", bodyFont:"'Inter', sans-serif",
+    accent:'#1d3f5f', accentSoft:'#d8e6f0', nameCase:'uppercase', photoShape:'top-rect',
+    titleBadge:true, sectionIcons:true },
+
+  { id:'blush-botanical', name:'Blush Botanical', tier:'pro', layout:'sidebar-left',
+    headFont:"'Dancing Script', cursive", bodyFont:"'Work Sans', sans-serif",
+    accent:'#b98a72', accentSoft:'#f3e3da', nameCase:'none', photoShape:'circle',
+    nameSize:'40px', quoteSignature:true },
+
+  { id:'corporate-reference', name:'Corporate Reference', tier:'pro', layout:'date-table',
+    headFont:"'Montserrat', sans-serif", bodyFont:"'Inter', sans-serif",
+    accent:'#1a1a1a', accentSoft:'#e5e5e5', nameCase:'uppercase', photoShape:'none' },
+
+  { id:'executive-elite', name:'Executive Elite', tier:'pro', layout:'sidebar-left',
+    headFont:"'Playfair Display', serif", bodyFont:"'Inter', sans-serif",
+    accent:'#0a1a2f', accentSoft:'#c9a227', nameCase:'none', photoShape:'circle' },
+
+  { id:'icon-grid-professional', name:'Icon Grid Professional', tier:'pro', layout:'sidebar-left',
+    headFont:"'Poppins', sans-serif", bodyFont:"'Inter', sans-serif",
+    accent:'#1e3a5f', accentSoft:'#dde8f5', nameCase:'none', photoShape:'circle', sectionIcons:true },
+
+  { id:'formal-gov-cv', name:'Formal Government CV', tier:'free', layout:'formal-gov',
+    headFont:"'Times New Roman', Times, serif", bodyFont:"'Times New Roman', Times, serif",
+    accent:'#000', accentSoft:'#ddd', nameCase:'none', photoShape:'none' },
 ];
+
+const SECTION_ICONS = { Summary:'👤', Experience:'💼', Education:'🎓', Skills:'🛠', Strengths:'⭐', Certifications:'📜', Languages:'🌐' };
+function sectionTitleHTML(label, tmpl) {
+  if (tmpl.sectionIcons && SECTION_ICONS[label]) {
+    return `<span class="r-icon">${SECTION_ICONS[label]}</span>${label}`;
+  }
+  return label;
+}
 
 /* ---------------- Resume data collection ---------------- */
 
@@ -341,11 +424,14 @@ function escapeHTML(s) {
 function renderHeader(data, tmpl) {
   const photoHTML = data.photo && tmpl.photoShape !== 'none'
     ? `<img class="r-photo ${tmpl.photoShape}" src="${data.photo}" alt="">` : '';
+  const titleHTML = tmpl.titleBadge
+    ? `<div><span class="r-title-badge">${escapeHTML(data.title)}</span></div>`
+    : `<div class="r-title">${escapeHTML(data.title)}</div>`;
   return `
     <div class="r-header">
       ${photoHTML}
       <div class="r-name" style="${tmpl.nameSize ? `font-size:${tmpl.nameSize}` : ''}">${escapeHTML(data.name)}</div>
-      <div class="r-title">${escapeHTML(data.title)}</div>
+      ${titleHTML}
       <div class="r-contact">${[data.phone, data.email, data.location, data.linkedin].filter(Boolean).map(escapeHTML).join(' &nbsp;•&nbsp; ')}</div>
     </div>`;
 }
@@ -372,13 +458,73 @@ function renderBody(data, tmpl) {
   const strengthsHTML = data.strengths.length ? `<ul class="r-list-plain">${data.strengths.map((c) => `<li>${escapeHTML(c)}</li>`).join('')}</ul>` : '';
 
   return `
-    ${data.summary ? `<div class="r-section-title">Summary</div><p>${escapeHTML(data.summary)}</p>` : ''}
+    ${data.summary ? `<div class="r-section-title">${sectionTitleHTML('Summary', tmpl)}</div><p>${escapeHTML(data.summary)}</p>` : ''}
+    ${expHTML ? `<div class="r-section-title">${sectionTitleHTML('Experience', tmpl)}</div>${expHTML}` : ''}
+    ${eduHTML ? `<div class="r-section-title">${sectionTitleHTML('Education', tmpl)}</div>${eduHTML}` : ''}
+    ${skillsHTML ? `<div class="r-section-title">${sectionTitleHTML('Skills', tmpl)}</div><div>${skillsHTML}</div>` : ''}
+    ${strengthsHTML ? `<div class="r-section-title">${sectionTitleHTML('Strengths', tmpl)}</div>${strengthsHTML}` : ''}
+    ${certsHTML ? `<div class="r-section-title">${sectionTitleHTML('Certifications', tmpl)}</div>${certsHTML}` : ''}
+    ${langHTML ? `<div class="r-section-title">${sectionTitleHTML('Languages', tmpl)}</div><div>${langHTML}</div>` : ''}
+  `;
+}
+
+/** Corporate reference CV: date-left / role-right rows, no photo, monochrome. */
+function renderDateTable(data, tmpl) {
+  const expHTML = data.experience.map((p) => `
+    <div class="r-exp-row">
+      <div class="r-exp-date">${escapeHTML(p[2] || '')}</div>
+      <div class="r-exp-content">
+        <div class="r-exp-role">${escapeHTML(p[0] || '')}</div>
+        <div class="r-exp-company">${escapeHTML(p[1] || '')}</div>
+        ${p[3] ? `<div class="r-item-sub">${escapeHTML(p[3])}</div>` : ''}
+      </div>
+    </div>`).join('');
+  const skillsHTML = data.skills.map((s) => `<span class="pill">${escapeHTML(s)}</span>`).join('');
+
+  return `
+    <div class="r-header">
+      <div>
+        <div class="r-name">${escapeHTML(data.name)}</div>
+        <div class="r-title">${escapeHTML(data.title)}</div>
+      </div>
+      <div class="r-contact" style="text-align:right;">${[data.phone, data.email].filter(Boolean).map(escapeHTML).join('<br>')}</div>
+    </div>
+    ${data.summary ? `<div class="r-section-title">About Me</div><p>${escapeHTML(data.summary)}</p>` : ''}
     ${expHTML ? `<div class="r-section-title">Experience</div>${expHTML}` : ''}
-    ${eduHTML ? `<div class="r-section-title">Education</div>${eduHTML}` : ''}
     ${skillsHTML ? `<div class="r-section-title">Skills</div><div>${skillsHTML}</div>` : ''}
-    ${strengthsHTML ? `<div class="r-section-title">Strengths</div>${strengthsHTML}` : ''}
-    ${certsHTML ? `<div class="r-section-title">Certifications</div>${certsHTML}` : ''}
-    ${langHTML ? `<div class="r-section-title">Languages</div><div>${langHTML}</div>` : ''}
+  `;
+}
+
+/** Plain formal CV: two-column personal-details table, underlined headers, no color. */
+function renderFormalGov(data, tmpl) {
+  const personalRows = [
+    ['Name', data.name], ['Nationality', data.nationality],
+    ['Email', data.email], ['Mobile', data.phone],
+    ['Address', data.location], ['Date of Birth', data.dob],
+  ].filter(([, v]) => v);
+  const half = Math.ceil(personalRows.length / 2);
+  const col1 = personalRows.slice(0, half);
+  const col2 = personalRows.slice(half);
+  const rowsHTML = col1.map((row, i) => `<tr>
+      <td><b>${row[0]}:</b> ${escapeHTML(row[1])}</td>
+      <td>${col2[i] ? `<b>${col2[i][0]}:</b> ${escapeHTML(col2[i][1])}` : ''}</td>
+    </tr>`).join('');
+
+  const eduHTML = data.education.map((p) => `<li>${escapeHTML(p.join(' — '))}</li>`).join('');
+  const expHTML = data.experience.map((p) => `<li>${escapeHTML(p.filter(Boolean).join(' — '))}</li>`).join('');
+  const skillsHTML = data.skills.map((s) => `<li>${escapeHTML(s)}</li>`).join('');
+  const langHTML = data.languages.map((s) => `<li>${escapeHTML(s)}</li>`).join('');
+
+  return `
+    <div class="r-cv-title">CV</div>
+    <p style="text-align:center;font-weight:700;">${escapeHTML(data.name)}</p>
+    <div class="r-section-title">Personal Details</div>
+    <table class="r-personal-table">${rowsHTML}</table>
+    ${data.summary ? `<div class="r-section-title">Objective</div><p>${escapeHTML(data.summary)}</p>` : ''}
+    ${eduHTML ? `<div class="r-section-title">Educational Qualifications</div><ul class="r-list-plain">${eduHTML}</ul>` : ''}
+    ${expHTML ? `<div class="r-section-title">Experience</div><ul class="r-list-plain">${expHTML}</ul>` : ''}
+    ${skillsHTML ? `<div class="r-section-title">Skills</div><ul class="r-list-plain">${skillsHTML}</ul>` : ''}
+    ${langHTML ? `<div class="r-section-title">Languages</div><ul class="r-list-plain">${langHTML}</ul>` : ''}
   `;
 }
 
@@ -419,17 +565,26 @@ function renderTemplate(tmpl, data) {
     return `<div class="layout-declaration-cv"><div class="resume-page" style="${vars}">${renderDeclarationCV(data)}</div></div>`;
   }
   if (tmpl.layout === 'sidebar-left') {
+    const quoteHTML = tmpl.quoteSignature
+      ? `<div class="r-quote-signature">"Believe in yourself and you will be unstoppable."<br>— ${escapeHTML(data.name)}</div>` : '';
     return `<div class="layout-sidebar-left"><div class="resume-page" style="${vars}">
       <div class="r-sidebar">${renderHeader(data, tmpl)}
-        <div class="r-section-title">Skills</div><div>${data.skills.map((s)=>`<span class="pill" style="background:rgba(255,255,255,.15);color:#fff;">${escapeHTML(s)}</span>`).join('')}</div>
-        <div class="r-section-title">Languages</div><div>${data.languages.map((s)=>`<span class="pill" style="background:rgba(255,255,255,.15);color:#fff;">${escapeHTML(s)}</span>`).join('')}</div>
+        <div class="r-section-title">${sectionTitleHTML('Skills', tmpl)}</div><div>${data.skills.map((s)=>`<span class="pill" style="background:rgba(255,255,255,.15);color:#fff;">${escapeHTML(s)}</span>`).join('')}</div>
+        <div class="r-section-title">${sectionTitleHTML('Languages', tmpl)}</div><div>${data.languages.map((s)=>`<span class="pill" style="background:rgba(255,255,255,.15);color:#fff;">${escapeHTML(s)}</span>`).join('')}</div>
+        ${quoteHTML}
       </div>
       <div class="r-main">
-        ${data.summary ? `<div class="r-section-title">Summary</div><p>${escapeHTML(data.summary)}</p>` : ''}
-        ${data.experience.length ? `<div class="r-section-title">Experience</div>${data.experience.map((p)=>`<div class="r-item"><div class="r-item-head"><span>${escapeHTML(p[0]||'')} — ${escapeHTML(p[1]||'')}</span><span>${escapeHTML(p[2]||'')}</span></div><div class="r-item-sub">${escapeHTML(p[3]||'')}</div></div>`).join('')}` : ''}
-        ${data.education.length ? `<div class="r-section-title">Education</div>${data.education.map((p)=>`<div class="r-item"><div class="r-item-head"><span>${escapeHTML(p[0]||'')} — ${escapeHTML(p[1]||'')}</span><span>${escapeHTML(p[2]||'')}</span></div></div>`).join('')}` : ''}
+        ${data.summary ? `<div class="r-section-title">${sectionTitleHTML('Summary', tmpl)}</div><p>${escapeHTML(data.summary)}</p>` : ''}
+        ${data.experience.length ? `<div class="r-section-title">${sectionTitleHTML('Experience', tmpl)}</div>${data.experience.map((p)=>`<div class="r-item"><div class="r-item-head"><span>${escapeHTML(p[0]||'')} — ${escapeHTML(p[1]||'')}</span><span>${escapeHTML(p[2]||'')}</span></div><div class="r-item-sub">${escapeHTML(p[3]||'')}</div></div>`).join('')}` : ''}
+        ${data.education.length ? `<div class="r-section-title">${sectionTitleHTML('Education', tmpl)}</div>${data.education.map((p)=>`<div class="r-item"><div class="r-item-head"><span>${escapeHTML(p[0]||'')} — ${escapeHTML(p[1]||'')}</span><span>${escapeHTML(p[2]||'')}</span></div></div>`).join('')}` : ''}
       </div>
     </div></div>`;
+  }
+  if (tmpl.layout === 'date-table') {
+    return `<div class="layout-date-table"><div class="resume-page" style="${vars}">${renderDateTable(data, tmpl)}</div></div>`;
+  }
+  if (tmpl.layout === 'formal-gov') {
+    return `<div class="layout-formal-gov"><div class="resume-page" style="${vars}">${renderFormalGov(data, tmpl)}</div></div>`;
   }
   if (tmpl.layout === 'sidebar-right') {
     return `<div class="layout-sidebar-right"><div class="resume-page" style="${vars}">
@@ -469,8 +624,45 @@ function renderTemplate(tmpl, data) {
 
 /* ---------------- Gallery + modal wiring ---------------- */
 
+/*
+ * ── License key scheme (real, not a mockup) ────────────────────────────
+ * This is a static site with no backend, so "real" here means: a
+ * deterministic checksum any admin-side generator can compute, which this
+ * page verifies without needing to call a server. It is NOT cryptographically
+ * unbreakable — anyone who reads this JS can find SALT and reimplement
+ * checksum() to mint their own keys. That's an inherent limit of licensing
+ * purely in client-side JS on a static site; a real backend check is the
+ * only way to close that gap. This scheme stops casual/copy-paste sharing
+ * (a key from someone's payment screenshot won't just be "1234"), which is
+ * proportionate to what a $2.99 one-time unlock needs.
+ *
+ * Format: DEASY-XXXX-YYYY-CCCC
+ *   XXXX, YYYY = any 4-char alphanumeric admin picks when generating a key
+ *   CCCC       = checksum(XXXX+YYYY, SALT) — must match on verification
+ *
+ * The admin-side key generator (separate page, coming next) uses this
+ * exact same checksum() function so every key it produces validates here.
+ */
+const LICENSE_SALT = 'DOCEASY2026';
+function checksum(payload, salt) {
+  const combined = payload + salt;
+  let hash = 0;
+  for (let i = 0; i < combined.length; i++) hash = (hash * 31 + combined.charCodeAt(i)) >>> 0;
+  return hash.toString(36).toUpperCase().padStart(4, '0').slice(-4);
+}
+function isValidLicenseKey(key) {
+  const parts = (key || '').trim().toUpperCase().split('-');
+  if (parts.length !== 4 || parts[0] !== 'DEASY') return false;
+  const [, p1, p2, cs] = parts;
+  if (p1.length !== 4 || p2.length !== 4) return false;
+  return checksum(p1 + p2, LICENSE_SALT) === cs;
+}
+
 const PRO_UNLOCKED_KEY = 'doceasy_resume_pro_unlocked';
 function isProUnlocked() { return localStorage.getItem(PRO_UNLOCKED_KEY) === 'true'; }
+function updateProStatusLine() {
+  $('proStatusLine').textContent = isProUnlocked() ? '✅ PRO templates unlocked on this browser.' : 'Not unlocked yet on this browser.';
+}
 
 function buildGallery(filter) {
   const grid = $('galleryGrid');
@@ -492,8 +684,8 @@ let activeTemplate = TEMPLATES[0];
 
 function openModal(tmpl) {
   if (tmpl.tier === 'pro' && !isProUnlocked()) {
-    if (!confirm(`"${tmpl.name}" is a PRO template. Unlock all 8 PRO templates for $2.99 / ₹100?\n\n(Demo only — click OK to simulate unlock for preview purposes.)`)) return;
-    localStorage.setItem(PRO_UNLOCKED_KEY, 'true');
+    $('unlockOverlay').classList.add('open');
+    return;
   }
   activeTemplate = tmpl;
   $('modalTitle').textContent = tmpl.name + (tmpl.tier === 'pro' ? ' (PRO)' : ' (Free)');
@@ -525,9 +717,25 @@ document.querySelectorAll('.tab').forEach((tab) => {
   });
 });
 
-$('btnUnlockPro').addEventListener('click', () => {
-  alert('This is a UI demo only — real payment/license verification is not wired in yet. Send your actual key-validation logic and it can be connected properly.');
+$('btnUnlockPro').addEventListener('click', () => { $('unlockOverlay').classList.add('open'); });
+$('btnCloseUnlock').addEventListener('click', () => { $('unlockOverlay').classList.remove('open'); });
+$('unlockOverlay').addEventListener('click', (e) => { if (e.target.id === 'unlockOverlay') $('unlockOverlay').classList.remove('open'); });
+
+$('btnActivateKey').addEventListener('click', () => {
+  const key = $('licenseKeyInput').value;
+  if (isValidLicenseKey(key)) {
+    localStorage.setItem(PRO_UNLOCKED_KEY, 'true');
+    $('activateMsg').style.color = '#1c7a3d';
+    $('activateMsg').textContent = '✅ Key accepted — PRO templates unlocked on this browser.';
+    updateProStatusLine();
+    setTimeout(() => { $('unlockOverlay').classList.remove('open'); buildGallery(currentFilter); }, 900);
+  } else {
+    $('activateMsg').style.color = '#b3261e';
+    $('activateMsg').textContent = '❌ That key isn\'t valid. Double-check for typos, or complete payment to receive a real key.';
+  }
 });
+
+updateProStatusLine();
 
 // Live-update thumbnails/preview as the form changes (debounced).
 let debounceTimer = null;
