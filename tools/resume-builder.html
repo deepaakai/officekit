@@ -77,11 +77,13 @@ input:focus,textarea:focus{outline:2px solid var(--pri);border-color:transparent
 <script>
 /* ---------- license ---------- */
 const LS='dcez_rsm_pro';
-const ck=s=>{let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))%1679616;return h.toString(36).toUpperCase().padStart(4,'0')};
-// Admin helper: run generateKey('AB12') in console -> DCEZ-RSM-AB12-<checksum>
-window.generateKey=a=>{a=a.toUpperCase();return`DCEZ-RSM-${a}-${ck(a+'RSM')}`};
-const validKey=k=>{const m=/^DCEZ-RSM-([A-Z0-9]{4})-([A-Z0-9]{4})$/.exec(k);return !!m&&m[2]===ck(m[1]+'RSM')};
-const pro=()=>{try{return validKey(localStorage.getItem(LS)||'')}catch(e){return false}};
+// Admin tool (admin-keys.html) se generate hue SHA-256 hashes yahan paste karein:
+const VALID_KEY_HASHES=[
+"af15ce7d8c73a4a37c4def6a83dcf365e45bd1f001cd2a04001a2b1cf48b4695"
+];
+const sha=async s=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s.trim().toUpperCase())))).map(b=>b.toString(16).padStart(2,'0')).join('');
+const validKey=async k=>/^DCEZ-RSM-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(k.trim().toUpperCase())&&VALID_KEY_HASHES.includes(await sha(k));
+let PRO=false;const pro=()=>PRO;
 /* ---------- data ---------- */
 const E=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const L=s=>String(s||'').split('\n').map(x=>x.trim()).filter(Boolean);
@@ -178,6 +180,6 @@ $('prt').onclick=()=>{const w=$('fr').contentWindow;w.focus();w.print()};
 $('unl').onclick=()=>{$('mo').classList.add('show')};$('cls').onclick=()=>$('mo').classList.remove('show');
 $('mo').onclick=e=>{if(e.target.id=='mo')$('mo').classList.remove('show')};
 $('qr').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent('upi://pay?pa=deepaakai@dbs&pn=DocEasy&cu=INR');
-$('act').onclick=()=>{const k=$('key').value.trim().toUpperCase(),m=$('km');if(validKey(k)){try{localStorage.setItem(LS,k)}catch(e){}m.style.color='#16a34a';m.textContent='✅ PRO unlocked for lifetime!';gallery();setTimeout(()=>$('mo').classList.remove('show'),900)}else{m.style.color='#dc2626';m.textContent='❌ Invalid key. Format: DCEZ-RSM-XXXX-XXXX'}};
-addEventListener('resize',fitP);forms();gallery();draw();
+$('act').onclick=async()=>{const k=$('key').value.trim().toUpperCase(),m=$('km');if(await validKey(k)){try{localStorage.setItem(LS,k)}catch(e){}PRO=true;m.style.color='#16a34a';m.textContent='✅ PRO unlocked for lifetime!';gallery();setTimeout(()=>$('mo').classList.remove('show'),900)}else{m.style.color='#dc2626';m.textContent='❌ Invalid key. Format: DCEZ-RSM-XXXX-XXXX'}};
+addEventListener('resize',fitP);forms();draw();(async()=>{try{PRO=await validKey(localStorage.getItem(LS)||'')}catch(e){}gallery()})();
 </script></body></html>
