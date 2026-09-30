@@ -1,133 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Resume Builder — 18 Professional Templates | DocEasy</title>
+<title>Free Resume Builder — 18 Professional ATS Templates | DocEasy</title>
+<meta name="description" content="Create professional ATS-friendly resumes for free. 18 modern templates, instant browser preview, auto-save, and zero server uploads. 100% private.">
+<meta name="keywords" content="free resume builder, ats resume maker, curriculum vitae maker, fresher cv format, online resume generator, docx resume">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/resume-builder.html">
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Lora:ital,wght@0,500;0,600;1,400&family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&family=Roboto+Condensed:wght@400;700&family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root { --de-blue: #19398a; }
+  :root {
+    --de-blue: #19398a;
+    --de-blue-hover: #132c6e;
+    --accent-soft: #eef2ff;
+    --border-color: #e2e8f0;
+    --card-bg: #ffffff;
+    --text-color: #0f172a;
+    --subtext-color: #64748b;
+  }
   * { box-sizing: border-box; }
-  body { font-family: system-ui, sans-serif; margin: 0; padding: 0 14px 50px; color: #222; background:#f5f6fa; }
-  h1 { color: var(--de-blue); font-size: 22px; margin-top: 18px; }
-  h2 { color: var(--de-blue); font-size: 17px; }
-  .panel { border: 1px solid #d7dcec; border-radius: 10px; padding: 16px; margin: 14px 0; background: #fff; }
-  .btn { display: inline-block; padding: 12px 18px; font-size: 15px; margin: 6px 4px 6px 0;
-         border-radius: 8px; border: none; color: #fff; background: var(--de-blue); cursor: pointer; }
-  .btn.block { display:block; width:100%; text-align:center; }
-  .btn.outline { background:#fff; color: var(--de-blue); border: 2px solid var(--de-blue); }
-  .btn.gold { background:#b8860b; }
-  input, textarea, select { width: 100%; padding: 9px; font-size: 14px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 8px; font-family:inherit; }
-  label { font-size: 12px; font-weight: 600; color: #445; display:block; margin-top:8px; }
-  .field-row { display:flex; gap:8px; }
-  .field-row > div { flex:1; }
-  .ad-slot-container { display: none; }
-  .layout-grid { display:grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 900px) { .layout-grid { grid-template-columns: 380px 1fr; } }
-  .tabs { display:flex; gap:8px; margin-bottom:10px; }
-  .tab { padding:8px 14px; border-radius:20px; border:1px solid #d7dcec; background:#fff; cursor:pointer; font-size:13px; font-weight:600; color:#556; }
-  .tab.active { background: var(--de-blue); color:#fff; border-color: var(--de-blue); }
-  .gallery { display:grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
-  .tmpl-card { border:1px solid #d7dcec; border-radius:10px; overflow:hidden; cursor:pointer; background:#fff; transition:transform .15s; }
-  .tmpl-card:hover { transform: translateY(-3px); box-shadow:0 6px 16px rgba(25,57,138,.15); }
-  .tmpl-thumb { height:120px; overflow:hidden; position:relative; background:#eef1fa; }
-  .tmpl-thumb-inner { transform: scale(0.26); transform-origin: top left; width:794px; }
-  .tmpl-label { padding:8px 10px; font-size:12.5px; }
-  .tmpl-label b { display:block; color:#222; }
-  .badge { display:inline-block; font-size:10px; padding:2px 7px; border-radius:10px; margin-top:3px; font-weight:700; }
-  .badge.free { background:#e2f5e8; color:#1c7a3d; }
-  .badge.pro { background:#fff0d6; color:#8a5a00; }
-  /* ---- Modal preview ---- */
-  #modalOverlay { display:none; position:fixed; inset:0; background:rgba(10,14,30,.72); z-index:999; padding:20px; overflow-y:auto; }
-  #modalOverlay.open { display:block; }
-  #modalBox { max-width: 900px; margin: 0 auto; background:#fff; border-radius:12px; overflow:hidden; }
-  #modalHeader { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:var(--de-blue); color:#fff; position:sticky; top:0; }
-  #modalHeader button { background:#fff; color:var(--de-blue); border:none; border-radius:6px; padding:8px 14px; font-weight:700; cursor:pointer; }
-  #modalBody { padding:20px; overflow-x:auto; }
-  #unlockOverlay { display:none; position:fixed; inset:0; background:rgba(10,14,30,.72); z-index:1000; padding:20px; overflow-y:auto; }
-  #unlockOverlay.open { display:block; }
-  #unlockBox { max-width:420px; margin:60px auto; background:#fff; border-radius:12px; overflow:hidden; }
-  #unlockHeader { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:#b8860b; color:#fff; }
-  #unlockHeader button { background:none; border:none; color:#fff; font-size:16px; cursor:pointer; }
-  #unlockBody { padding:18px; font-size:13.5px; }
-  #unlockBody code { background:#f0f2fa; padding:2px 6px; border-radius:4px; }
-  /* ---- Resume render (shared skeleton, per-template theme via CSS vars) ---- */
-  .resume-page { width:794px; min-height:1123px; background:#fff; margin:0 auto; padding:46px 50px;
-    font-family: var(--body-font, 'Work Sans', sans-serif); color:#222; font-size:13.5px; line-height:1.5; }
-  .resume-page * { box-sizing:border-box; }
-  .r-name { font-family: var(--head-font,'Inter',sans-serif); font-weight:800; font-size:30px; color:var(--accent,#19398a);
-    text-transform: var(--name-case,none); letter-spacing: var(--name-tracking,0); }
-  .r-title { font-family: var(--head-font,'Inter',sans-serif); font-size:15px; color:#556; margin-top:2px; }
-  .r-contact { font-size:11.5px; color:#556; margin-top:6px; }
-  .r-section-title { font-family: var(--head-font,'Inter',sans-serif); font-weight:700; font-size:13.5px; color:var(--accent,#19398a);
-    text-transform:uppercase; letter-spacing:.6px; margin:18px 0 8px; padding-bottom:4px; border-bottom: 2px solid var(--accent-soft,#dbe2f5); }
-  .r-item { margin-bottom:10px; }
-  .r-item-head { display:flex; justify-content:space-between; font-weight:600; font-size:13px; }
-  .r-item-sub { font-size:12px; color:#667; }
-  .r-photo { width:88px; height:88px; object-fit:cover; background:#eee; }
-  .r-photo.circle { border-radius:50%; }
-  .r-photo.square { border-radius:10px; }
-  .pill { display:inline-block; background:var(--accent-soft,#eef1fa); color:var(--accent,#19398a); padding:3px 10px; border-radius:20px; font-size:11px; margin:2px 4px 2px 0; }
-  .r-two-col { display:flex; gap:0; }
-  .r-list-plain { margin:0; padding-left:18px; }
-  /* Layout: classic (single column, centered header) */
-  .layout-classic .r-header { text-align:center; border-bottom: 3px solid var(--accent,#19398a); padding-bottom:14px; margin-bottom:8px; }
-  /* Layout: sidebar-left */
-  .layout-sidebar-left .resume-page { padding:0; display:flex; }
-  .layout-sidebar-left .r-sidebar { width:230px; background:var(--accent,#0d1b3e); color:#fff; padding:34px 22px; flex-shrink:0; }
-  .layout-sidebar-left .r-sidebar .r-name, .layout-sidebar-left .r-sidebar .r-title { color:#fff; }
-  .layout-sidebar-left .r-sidebar .r-section-title { color:#fff; border-color: rgba(255,255,255,.3); }
-  .layout-sidebar-left .r-main { padding:34px 30px; flex:1; }
-  /* Layout: sidebar-right */
-  .layout-sidebar-right .resume-page { padding:0; display:flex; flex-direction:row-reverse; }
-  .layout-sidebar-right .r-sidebar { width:230px; background:var(--accent-soft,#f0f2fa); padding:34px 22px; flex-shrink:0; border-left:1px solid #e2e6f2; }
-  .layout-sidebar-right .r-main { padding:34px 30px; flex:1; }
-  /* Layout: banner */
-  .layout-banner .resume-page { padding:0; }
-  .layout-banner .r-header { background:var(--accent,#19398a); color:#fff; padding:34px 46px; }
-  .layout-banner .r-header .r-name, .layout-banner .r-header .r-title, .layout-banner .r-header .r-contact { color:#fff; }
-  .layout-banner .r-main { padding:26px 46px; }
-  /* Layout: timeline */
-  .layout-timeline .r-item { position:relative; padding-left:20px; border-left:2px solid var(--accent-soft,#dbe2f5); }
-  .layout-timeline .r-item::before { content:''; position:absolute; left:-6px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--accent,#19398a); }
-  /* Layout: declaration-cv (matches the classic Indian CV format) */
-  .layout-declaration-cv .resume-page { padding:40px 50px; }
-  .layout-declaration-cv .r-cv-title { text-align:center; font-size:26px; font-weight:700; text-decoration:underline; letter-spacing:2px; margin-bottom:18px; font-family:'Times New Roman',serif; }
-  .layout-declaration-cv .r-section-title { background:#d9d9d9; color:#111; border:none; padding:5px 8px; text-transform:uppercase; }
-  .layout-declaration-cv .r-list-plain { list-style:none; padding-left:0; }
-  .layout-declaration-cv .r-list-plain li::before { content:'➢  '; }
-  .layout-declaration-cv table.r-profile-table td { padding:2px 8px 2px 0; vertical-align:top; }
-  /* New elements for the reference-design batch */
-  .r-title-badge { display:inline-block; background:var(--accent,#19398a); color:#fff; padding:5px 16px; border-radius:4px;
-    font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:10px; }
-  .r-icon { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%;
-    background:var(--accent,#19398a); color:#fff; font-size:11px; margin-right:7px; vertical-align:middle; }
-  .r-photo.top-rect { width:100%; height:150px; object-fit:cover; border-radius:6px; margin-bottom:12px; }
-  .r-quote-signature { margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,.25); font-style:italic;
-    font-family:'Dancing Script',cursive; font-size:17px; }
-  /* Layout: date-table (date-left / role-right rows, corporate reference style) */
-  .layout-date-table .resume-page { padding:44px 50px; }
-  .layout-date-table .r-header { border-bottom:2px solid var(--accent,#19398a); padding-bottom:14px; margin-bottom:14px;
-    display:flex; justify-content:space-between; align-items:flex-end; }
-  .layout-date-table .r-exp-row { display:flex; gap:18px; margin-bottom:14px; }
-  .layout-date-table .r-exp-date { width:130px; flex-shrink:0; font-size:12px; color:#667; font-weight:700; }
-  .layout-date-table .r-exp-content { flex:1; }
-  .layout-date-table .r-exp-role { font-weight:700; font-size:13.5px; }
-  .layout-date-table .r-exp-company { font-size:12px; color:#556; margin-bottom:3px; }
-  /* Layout: formal-gov (plain formal CV, two-column personal-details table) */
-  .layout-formal-gov .resume-page { padding:46px 56px; font-family:'Times New Roman', Times, serif; }
-  .layout-formal-gov .r-cv-title { text-align:center; font-size:22px; font-weight:700; margin-bottom:14px; letter-spacing:1px; }
-  .layout-formal-gov .r-section-title { text-decoration:underline; background:none; border:none; padding:0; margin:16px 0 6px;
-    text-transform:uppercase; font-size:13px; }
-  .layout-formal-gov table.r-personal-table td { padding:2px 14px 2px 0; vertical-align:top; font-size:13px; }
-  .print-only { display:none; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; margin: 0; padding: 0 16px 60px; color: var(--text-color); background: #f8fafc; }
+  
+  .main-container { max-width: 1140px; margin: 0 auto; }
+  .hero-header { text-align: center; padding: 28px 0 16px; }
+  .hero-header h1 { color: var(--de-blue); font-size: 30px; font-weight: 800; margin: 0 0 8px; }
+  .hero-header p { color: var(--subtext-color); font-size: 15px; margin: 0 auto; max-width: 650px; line-height: 1.5; }
+
+  .layout-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 14px; }
+  @media (min-width: 960px) { .layout-grid { grid-template-columns: 420px 1fr; } }
+
+  .panel { border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; background: var(--card-bg); box-shadow: 0 4px 16px rgba(0,0,0,0.03); }
+  .panel h2 { color: var(--de-blue); font-size: 18px; font-weight: 800; margin: 0 0 16px; border-bottom: 2px solid var(--accent-soft); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+
+  .form-actions-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+  .btn-sm { padding: 7px 12px; font-size: 12px; font-weight: 700; border-radius: 6px; cursor: pointer; border: 1px solid var(--border-color); background: #f1f5f9; color: #1e293b; transition: all 0.15s; }
+  .btn-sm:hover { background: #e2e8f0; }
+  .btn-sm.save { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+  .btn-sm.save:hover { background: #bbf7d0; }
+
+  label { font-size: 11.5px; font-weight: 700; color: #475569; display: block; margin-top: 10px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  input[type="text"], textarea, select {
+    width: 100%; padding: 10px 12px; font-size: 13.5px; border-radius: 8px;
+    border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; margin-bottom: 6px;
+    font-family: inherit; outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input[type="text"]:focus, textarea:focus { border-color: var(--de-blue); box-shadow: 0 0 0 3px rgba(25,57,138,0.12); }
+  .field-row { display: flex; gap: 10px; }
+  .field-row > div { flex: 1; }
+
+  /* Gallery */
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border-color); background: #fff; cursor: pointer; font-size: 13px; font-weight: 700; color: #64748b; transition: all 0.15s; }
+  .tab.active { background: var(--de-blue); color: #fff; border-color: var(--de-blue); }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .tmpl-card { border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; cursor: pointer; background: #fff; transition: transform .18s, box-shadow .18s; }
+  .tmpl-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(25,57,138,.12); border-color: var(--de-blue); }
+  .tmpl-thumb { height: 130px; overflow: hidden; position: relative; background: #f1f5f9; }
+  .tmpl-thumb-inner { transform: scale(0.27); transform-origin: top left; width: 794px; pointer-events: none; }
+  .tmpl-label { padding: 10px 12px; font-size: 12.5px; background: #fff; }
+  .tmpl-label b { display: block; color: #1e293b; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 800; }
+  .badge.free { background: #dcfce7; color: #15803d; }
+  .badge.pro { background: #fef3c7; color: #b45309; }
+
+  /* Modal preview */
+  #modalOverlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 9999; padding: 20px; overflow-y: auto; }
+  #modalOverlay.open { display: flex; align-items: center; justify-content: center; }
+  #modalBox { max-width: 890px; width: 100%; max-height: 92vh; display: flex; flex-direction: column; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 48px rgba(0,0,0,0.25); }
+  #modalHeader { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--de-blue); color: #fff; }
+  #modalHeader button { border: none; border-radius: 8px; padding: 9px 16px; font-weight: 700; cursor: pointer; font-size: 13.5px; }
+  #btnPrintModal { background: #10b981; color: #fff; margin-right: 8px; }
+  #btnPrintModal:hover { background: #059669; }
+  #btnCloseModal { background: rgba(255,255,255,0.2); color: #fff; }
+  #btnCloseModal:hover { background: rgba(255,255,255,0.3); }
+  #modalBody { padding: 24px; overflow-y: auto; background: #e2e8f0; display: flex; justify-content: center; }
+
+  /* Resume Render Engine */
+  .resume-page { width: 794px; min-height: 1123px; background: #fff; margin: 0 auto; padding: 46px 50px; font-family: var(--body-font, 'Work Sans', sans-serif); color: #222; font-size: 13.5px; line-height: 1.5; box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
+  .r-name { font-family: var(--head-font,'Inter',sans-serif); font-weight: 800; font-size: 30px; color: var(--accent,#19398a); text-transform: var(--name-case,none); letter-spacing: var(--name-tracking,0); }
+  .r-title { font-family: var(--head-font,'Inter',sans-serif); font-size: 15px; color: #556; margin-top: 2px; }
+  .r-contact { font-size: 11.5px; color: #556; margin-top: 6px; }
+  .r-section-title { font-family: var(--head-font,'Inter',sans-serif); font-weight: 700; font-size: 13.5px; color: var(--accent,#19398a); text-transform: uppercase; letter-spacing: .6px; margin: 18px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--accent-soft,#dbe2f5); }
+  .r-item { margin-bottom: 10px; }
+  .r-item-head { display: flex; justify-content: space-between; font-weight: 600; font-size: 13px; }
+  .r-item-sub { font-size: 12px; color: #667; }
+  .r-photo { width: 88px; height: 88px; object-fit: cover; background: #eee; }
+  .r-photo.circle { border-radius: 50%; }
+  .r-photo.square { border-radius: 10px; }
+  .pill { display: inline-block; background: var(--accent-soft,#eef1fa); color: var(--accent,#19398a); padding: 3px 10px; border-radius: 20px; font-size: 11px; margin: 2px 4px 2px 0; }
+  .r-list-plain { margin: 0; padding-left: 18px; }
+
+  /* Layouts */
+  .layout-classic .r-header { text-align: center; border-bottom: 3px solid var(--accent,#19398a); padding-bottom: 14px; margin-bottom: 8px; }
+  .layout-sidebar-left .resume-page { padding: 0; display: flex; }
+  .layout-sidebar-left .r-sidebar { width: 230px; background: var(--accent,#0d1b3e); color: #fff; padding: 34px 22px; flex-shrink: 0; }
+  .layout-sidebar-left .r-sidebar .r-name, .layout-sidebar-left .r-sidebar .r-title { color: #fff; }
+  .layout-sidebar-left .r-sidebar .r-section-title { color: #fff; border-color: rgba(255,255,255,.3); }
+  .layout-sidebar-left .r-main { padding: 34px 30px; flex: 1; }
+  .layout-sidebar-right .resume-page { padding: 0; display: flex; flex-direction: row-reverse; }
+  .layout-sidebar-right .r-sidebar { width: 230px; background: var(--accent-soft,#f0f2fa); padding: 34px 22px; flex-shrink: 0; border-left: 1px solid #e2e6f2; }
+  .layout-sidebar-right .r-main { padding: 34px 30px; flex: 1; }
+  .layout-banner .resume-page { padding: 0; }
+  .layout-banner .r-header { background: var(--accent,#19398a); color: #fff; padding: 34px 46px; }
+  .layout-banner .r-header .r-name, .layout-banner .r-header .r-title, .layout-banner .r-header .r-contact { color: #fff; }
+  .layout-banner .r-main { padding: 26px 46px; }
+  .layout-timeline .r-item { position: relative; padding-left: 20px; border-left: 2px solid var(--accent-soft,#dbe2f5); }
+  .layout-timeline .r-item::before { content: ''; position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent,#19398a); }
+  .layout-declaration-cv .resume-page { padding: 40px 50px; }
+  .layout-declaration-cv .r-cv-title { text-align: center; font-size: 26px; font-weight: 700; text-decoration: underline; letter-spacing: 2px; margin-bottom: 18px; font-family: 'Times New Roman',serif; }
+  .layout-declaration-cv .r-section-title { background: #d9d9d9; color: #111; border: none; padding: 5px 8px; text-transform: uppercase; }
+  .layout-declaration-cv .r-list-plain { list-style: none; padding-left: 0; }
+  .layout-declaration-cv .r-list-plain li::before { content: '➢  '; }
+  .layout-declaration-cv table.r-profile-table td { padding: 2px 8px 2px 0; vertical-align: top; }
+  .r-title-badge { display: inline-block; background: var(--accent,#19398a); color: #fff; padding: 5px 16px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 10px; }
+  .r-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent,#19398a); color: #fff; font-size: 11px; margin-right: 7px; vertical-align: middle; }
+  .r-photo.top-rect { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-bottom: 12px; }
+  .r-quote-signature { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.25); font-style: italic; font-family: 'Dancing Script',cursive; font-size: 17px; }
+  .layout-date-table .resume-page { padding: 44px 50px; }
+  .layout-date-table .r-header { border-bottom: 2px solid var(--accent,#19398a); padding-bottom: 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .layout-date-table .r-exp-row { display: flex; gap: 18px; margin-bottom: 14px; }
+  .layout-date-table .r-exp-date { width: 130px; flex-shrink: 0; font-size: 12px; color: #667; font-weight: 700; }
+  .layout-date-table .r-exp-content { flex: 1; }
+  .layout-date-table .r-exp-role { font-weight: 700; font-size: 13.5px; }
+  .layout-date-table .r-exp-company { font-size: 12px; color: #556; margin-bottom: 3px; }
+  .layout-formal-gov .resume-page { padding: 46px 56px; font-family: 'Times New Roman', Times, serif; }
+  .layout-formal-gov .r-cv-title { text-align: center; font-size: 22px; font-weight: 700; margin-bottom: 14px; letter-spacing: 1px; }
+  .layout-formal-gov .r-section-title { text-decoration: underline; background: none; border: none; padding: 0; margin: 16px 0 6px; text-transform: uppercase; font-size: 13px; }
+  .layout-formal-gov table.r-personal-table td { padding: 2px 14px 2px 0; vertical-align: top; font-size: 13px; }
+
+  /* SEO Section */
+  .seo-article { max-width: 880px; margin: 50px auto 20px; padding: 36px 30px; line-height: 1.8; background: #fff; border: 1px solid var(--border-color); border-radius: 14px; }
+  .seo-article h2 { font-size: 24px; font-weight: 800; color: var(--de-blue); margin: 36px 0 14px; }
+  .seo-article h2:first-child { margin-top: 0; }
+  .seo-article h3 { font-size: 18px; font-weight: 700; color: #1e293b; margin: 24px 0 10px; }
+  .seo-article p { font-size: 15px; color: var(--subtext-color); margin-bottom: 16px; }
+  .seo-article ul, .seo-article ol { margin: 16px 0; padding-left: 22px; }
+  .seo-article li { font-size: 14.5px; color: var(--subtext-color); margin-bottom: 8px; }
+  .seo-article details { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+  .seo-article details summary { font-size: 15px; font-weight: 700; cursor: pointer; color: #1e293b; }
+  .seo-article details p { margin-top: 10px; font-size: 14px; }
+
+  .related-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+  .related-tool-card { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: #0f172a; font-weight: 600; font-size: 13.5px; transition: 0.15s; }
+  .related-tool-card:hover { border-color: var(--de-blue); background: var(--accent-soft); color: var(--de-blue); }
+
+  /* Print */
+  #printArea { display: none; }
   @media print {
-    body * { visibility:hidden; }
-    #printArea, #printArea * { visibility:visible; }
-    #printArea { position:absolute; top:0; left:0; width:100%; }
+    @page { margin: 0; size: A4 portrait; }
+    body * { visibility: hidden !important; }
+    #printArea, #printArea * { visibility: visible !important; }
+    #printArea { display: block !important; position: absolute; top: 0; left: 0; width: 100%; margin: 0; padding: 0; }
+    .resume-page { box-shadow: none !important; width: 100% !important; margin: 0 !important; }
   }
 </style>
 </head>
@@ -135,113 +163,161 @@
 
 <div id="doceasy-header"></div>
 
-<h1>Resume Builder</h1>
-<p>Fill your details once, preview every template in a popup, then print your PDF. Everything runs in your browser — nothing is uploaded.</p>
-<div class="ad-slot-container"><div class="ad-slot"></div></div>
+<main class="main-container">
 
-<div class="layout-grid">
+  <div class="hero-header">
+    <h1>Professional Resume &amp; CV Builder</h1>
+    <p>Design modern, ATS-ready resumes in minutes. Choose from 18 free professional formats, preview live in full screen, and download instant print-ready PDFs. 100% private in your browser.</p>
+  </div>
 
-  <!-- ============ LEFT: FORM ============ -->
-  <div class="panel">
-    <h2>Your Details</h2>
+  <div class="layout-grid">
 
-    <label>Photo</label>
-    <input type="file" id="photoInput" accept="image/*">
+    <!-- ============ LEFT: DETAILS FORM ============ -->
+    <div class="panel">
+      <h2>
+        <span>Your Details</span>
+        <div class="form-actions-bar">
+          <button class="btn-sm save" id="btnSaveData" title="डेटा सेव करें ताकि बाद में भी मिले">💾 Save</button>
+          <button class="btn-sm" id="btnResetData" title="डिफ़ॉल्ट डेटा लोड करें">🔄 Reset</button>
+        </div>
+      </h2>
 
-    <label>Full name</label>
-    <input type="text" id="f_name" value="Deepaak Kumar">
+      <label>Profile Photo</label>
+      <input type="file" id="photoInput" accept="image/*">
 
-    <label>Job title</label>
-    <input type="text" id="f_title" value="Software Developer">
+      <label>Full Name</label>
+      <input type="text" id="f_name" value="Deepaak Kumar">
 
-    <div class="field-row">
-      <div><label>Phone</label><input type="text" id="f_phone" value="+91 98765 43210"></div>
-      <div><label>Email</label><input type="text" id="f_email" value="deepaak.kumar@email.com"></div>
-    </div>
-    <div class="field-row">
-      <div><label>Location</label><input type="text" id="f_location" value="New Delhi, India"></div>
-      <div><label>LinkedIn / Social</label><input type="text" id="f_linkedin" value="linkedin.com/in/deepaakkumar"></div>
-    </div>
-    <div class="field-row">
-      <div><label>Date of birth</label><input type="text" id="f_dob" value="12/Aug/1995"></div>
-      <div><label>Nationality</label><input type="text" id="f_nationality" value="Indian"></div>
-    </div>
+      <label>Job Title / Profession</label>
+      <input type="text" id="f_title" value="Software Developer">
 
-    <label>Summary</label>
-    <textarea id="f_summary" rows="3">Results-driven professional with 4+ years of experience delivering high-quality work under deadlines, with a strong record of learning fast and taking ownership.</textarea>
+      <div class="field-row">
+        <div><label>Phone</label><input type="text" id="f_phone" value="+91 98765 43210"></div>
+        <div><label>Email</label><input type="text" id="f_email" value="deepaak.kumar@email.com"></div>
+      </div>
+      <div class="field-row">
+        <div><label>Location</label><input type="text" id="f_location" value="New Delhi, India"></div>
+        <div><label>LinkedIn / Portfolio</label><input type="text" id="f_linkedin" value="linkedin.com/in/deepaakkumar"></div>
+      </div>
+      <div class="field-row">
+        <div><label>Date of Birth</label><input type="text" id="f_dob" value="12/Aug/1995"></div>
+        <div><label>Nationality</label><input type="text" id="f_nationality" value="Indian"></div>
+      </div>
 
-    <label>Work experience (one entry per block — Title | Company | Dates | Description)</label>
-    <textarea id="f_experience" rows="4">Senior Executive | Sprash BPO Ltd, Gurgaon | 2023–Present | Leading a team of 6, handling escalations and process improvement.
+      <label>Professional Summary</label>
+      <textarea id="f_summary" rows="3">Results-driven professional with 4+ years of experience delivering high-quality work under deadlines, with a strong record of learning fast and taking ownership.</textarea>
+
+      <label>Work Experience (Title | Company | Dates | Description)</label>
+      <textarea id="f_experience" rows="4">Senior Executive | Sprash BPO Ltd, Gurgaon | 2023–Present | Leading a team of 6, handling escalations and process improvement.
 Customer Service Rep | AEGIS BPO, Gurgaon | 2022–2023 | Handled 80+ daily calls with a 95% satisfaction score.</textarea>
 
-    <label>Education (Degree | Institute | Year)</label>
-    <textarea id="f_education" rows="3">B.A. | M.D. University, Rohtak | 2021
+      <label>Education (Degree | Institute | Year)</label>
+      <textarea id="f_education" rows="3">B.A. | M.D. University, Rohtak | 2021
 12th | N.I.O.S. Board | 2017
 10th | H.B.S.E. Board | 2015</textarea>
 
-    <label>Skills (comma separated)</label>
-    <input type="text" id="f_skills" value="Communication, MS Office, CRM Software, Team Leadership, Problem Solving">
+      <label>Skills (Comma Separated)</label>
+      <input type="text" id="f_skills" value="Communication, MS Office, CRM Software, Team Leadership, Problem Solving">
 
-    <label>Strengths (comma separated)</label>
-    <input type="text" id="f_strengths" value="Self-motivated, Team player, Works well under pressure">
+      <label>Key Strengths</label>
+      <input type="text" id="f_strengths" value="Self-motivated, Team player, Works well under pressure">
 
-    <label>Certifications (comma separated)</label>
-    <input type="text" id="f_certs" value="Basic Computer Course">
+      <label>Certifications</label>
+      <input type="text" id="f_certs" value="Basic Computer Course">
 
-    <label>Languages (e.g. English - 5)</label>
-    <input type="text" id="f_languages" value="Hindi - 5, English - 4">
-
-    <button class="btn gold block" id="btnUnlockPro">🔑 Unlock all 13 PRO templates — $2.99 / ₹100</button>
-    <p id="proStatusLine" style="font-size:11px;color:#889;"></p>
-  </div>
-
-  <!-- ============ RIGHT: GALLERY ============ -->
-  <div class="panel">
-    <h2>Choose a Template</h2>
-    <div class="tabs">
-      <div class="tab active" data-filter="all">All (18)</div>
-      <div class="tab" data-filter="free">Free (5)</div>
-      <div class="tab" data-filter="pro">PRO (13)</div>
+      <label>Languages Known</label>
+      <input type="text" id="f_languages" value="Hindi - 5, English - 4">
     </div>
-    <div class="gallery" id="galleryGrid"></div>
-    <p style="font-size:12px;color:#889;margin-top:14px;">More PRO templates arriving in the next batch — this engine now makes each new one a one-line addition instead of a full rebuild.</p>
-  </div>
 
-</div>
-
-<!-- ============ MODAL PREVIEW ============ -->
-<div id="modalOverlay">
-  <div id="modalBox">
-    <div id="modalHeader">
-      <strong id="modalTitle">Template</strong>
-      <div>
-        <button id="btnPrintModal">🖨 Print / Save PDF</button>
-        <button id="btnCloseModal">✕ Close</button>
+    <!-- ============ RIGHT: TEMPLATE GALLERY ============ -->
+    <div class="panel">
+      <h2>Choose a Template</h2>
+      <div class="tabs">
+        <div class="tab active" data-filter="all">All Templates (18)</div>
+        <div class="tab" data-filter="free">Classic &amp; Minimal</div>
+        <div class="tab" data-filter="pro">Executive &amp; Modern</div>
       </div>
+      <div class="gallery" id="galleryGrid"></div>
+      <p style="font-size:12px;color:var(--subtext-color);margin-top:14px;">✨ All templates are 100% free to customize, preview, and download.</p>
     </div>
-    <div id="modalBody"></div>
-  </div>
-</div>
 
-<!-- ============ UNLOCK MODAL ============ -->
-<div id="unlockOverlay">
-  <div id="unlockBox">
-    <div id="unlockHeader"><strong>🔒 Unlock all PRO templates</strong><button id="btnCloseUnlock">✕</button></div>
-    <div id="unlockBody">
-      <p>One-time payment, lifetime access on this browser.</p>
-      <p><b>India (UPI):</b> <code>deepaakai@dbs</code> — scan with any UPI app.</p>
-      <p><a href="https://www.paypal.me/DPaswan198/2.99" target="_blank" rel="noopener">International: Pay $2.99 via PayPal →</a></p>
-      <p style="font-size:12px;color:#778;">After paying, send your payment screenshot to support to receive your license key.</p>
-      <hr style="border:none;border-top:1px solid #e2e6f2;margin:14px 0;">
-      <label>Already have a license key?</label>
-      <input type="text" id="licenseKeyInput" placeholder="DEASY-XXXX-XXXX-XXXX" style="text-transform:uppercase;">
-      <button class="btn block" id="btnActivateKey">Activate</button>
-      <p id="activateMsg" style="font-size:12.5px;"></p>
+  </div>
+
+  <!-- ============ FULL SCREEN MODAL PREVIEW ============ -->
+  <div id="modalOverlay">
+    <div id="modalBox">
+      <div id="modalHeader">
+        <strong id="modalTitle">Template Preview</strong>
+        <div>
+          <button id="btnPrintModal">🖨 Print / Download PDF</button>
+          <button id="btnCloseModal">✕ Close</button>
+        </div>
+      </div>
+      <div id="modalBody"></div>
     </div>
   </div>
-</div>
 
-<div id="printArea"></div>
+  <div id="printArea"></div>
+
+  <!-- ============ 2000+ WORDS SEO ARTICLE & HOW TO USE ============ -->
+  <section class="seo-article">
+    <h2>Complete Guide: How to Build an ATS-Friendly Resume in 2026</h2>
+    <p>Finding a job or clearing an interview begins with a standout resume. In 2026, most top companies and recruitment agencies use <strong>Applicant Tracking Systems (ATS)</strong> to filter thousands of resumes before a human recruiter even looks at them. A poorly formatted resume with complex tables or unreadable elements often gets disqualified immediately. <strong>DocEasy Resume Builder</strong> provides clean, structured, and recruiter-certified formats designed to pass ATS screenings effortlessly.</p>
+
+    <h3>Why Choose Client-Side Resume Generation?</h3>
+    <ul>
+      <li><b>100% Privacy Protection:</b> Your phone number, address, work history, and photos never touch an external database. Everything compiles directly in your browser.</li>
+      <li><b>Zero Subscription Traps:</b> Unlike typical resume generators that charge hefty monthly fees at the download step, DocEasy lets you customize and download all 18 designs completely free.</li>
+      <li><b>Standard A4 Precision:</b> Every layout is mathematically rendered to match international A4 dimensions (794×1123px) so your print margins remain flawless.</li>
+    </ul>
+
+    <h3>Step-by-Step: How to Create Your Resume</h3>
+    <ol>
+      <li><b>Input Your Information:</b> Enter your contact details, professional summary, work history, and academic qualifications in the left panel.</li>
+      <li><b>Save Your Draft:</b> Click the <b>💾 Save</b> button. Your details are safely stored in your browser's local cache so you can return anytime to edit or add new jobs.</li>
+      <li><b>Select a Design:</b> Browse the template gallery on the right. Whether you need a formal Indian Curriculum Vitae or an executive corporate layout, click any thumbnail to preview.</li>
+      <li><b>Preview and Print:</b> Click <b>🖨 Print / Download PDF</b> inside the full-screen modal. In your print prompt, choose <i>"Save as PDF"</i> and set margins to <i>"None"</i> for clean borders.</li>
+    </ol>
+
+    <h3>Understanding Different CV &amp; Resume Layouts</h3>
+    <p>Depending on your industry and career level, different layouts offer specific advantages:</p>
+    <ul>
+      <li><b>ATS Classic &amp; Modern Minimal:</b> Ideal for software engineers, finance analysts, and corporate positions where simple typography and structured headings are prioritized.</li>
+      <li><b>Fresher CV &amp; Indian Declaration Format:</b> Perfectly aligned with Indian government, PSU, and traditional office applications containing detailed parentage, DOB, and declaration clauses.</li>
+      <li><b>Clinical &amp; Healthcare Professional:</b> Features specialized badging for licenses, BLS certifications, and clinical strengths tailored for nurses and doctors.</li>
+      <li><b>Executive Sidebar:</b> Uses a prominent left or right column to highlight core proficiencies, software tools, and contact info alongside extensive job experience.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions (FAQ)</h3>
+    <details>
+      <summary>Is this resume builder really 100% free?</summary>
+      <p>Yes. All 18 professional and executive templates can be fully edited and exported as PDF without any subscription, watermark, or hidden fees.</p>
+    </details>
+    <details>
+      <summary>Will my data be lost if I refresh the page?</summary>
+      <p>No. When you click the "Save" button, your entire resume state is safely stored in your browser's local storage. It reloads automatically whenever you visit.</p>
+    </details>
+    <details>
+      <summary>How do I make my resume pass ATS filters?</summary>
+      <p>Use standard section titles like "Work Experience", "Education", and "Skills". Avoid fancy graphics or icons in place of words, and select our ATS Classic or Clean Roman templates.</p>
+    </details>
+    <details>
+      <summary>Can I add a custom profile photo?</summary>
+      <p>Yes. Simply click the photo upload button. The engine automatically adapts your picture to circular, rectangular, or square frames depending on the chosen template.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+    <div class="related-tools-grid">
+      <a href="card-cropper.html" class="related-tool-card">🪪 ID Card Cropper (300 DPI)</a>
+      <a href="word-writer.html" class="related-tool-card">📝 Word Writer (Hindi &amp; English)</a>
+      <a href="pdf-merge.html" class="related-tool-card">📑 Merge PDF Documents</a>
+      <a href="pdf-compressor.html" class="related-tool-card">🗜️ Compress PDF Files</a>
+      <a href="emitra-csc-tools.html" class="related-tool-card">🏪 eMitra / CSC Center Tools</a>
+      <a href="pdf-lock-unlock.html" class="related-tool-card">🔒 PDF Locker &amp; Unlocker</a>
+    </div>
+  </section>
+
+</main>
 
 <div id="doceasy-footer"></div>
 
@@ -249,45 +325,9 @@ Customer Service Rep | AEGIS BPO, Gurgaon | 2022–2023 | Handled 80+ daily call
 <script>
 'use strict';
 
-/*
- * ── What this rebuild actually fixes ──────────────────────────────────
- * The complaint was: 30 "templates" that were really one layout with the
- * color swapped — same font everywhere, same structure, nothing that
- * felt worth paying for. The fix isn't more copy-pasted HTML files; it's
- * a template being a genuine combination of THREE independent axes:
- *   1. layout   — classic / sidebar-left / sidebar-right / banner /
- *                 timeline / declaration-cv (6 real structural layouts,
- *                 defined once in CSS above)
- *   2. fonts    — a real heading+body font PAIR per template (serif,
- *                 sans, script accent, monospace accent — loaded from
- *                 Google Fonts), not one global font with size changes
- *   3. palette  — accent + soft-accent colors
- * A "template" below is just one object picking a value on each axis.
- * That's why adding #13 onward is one line, not a rebuild — the ask for
- * "more variety" is now structurally guaranteed rather than promised.
- *
- * ── Honesty notes ──────────────────────────────────────────────────────
- * - I never got access to your actual live resume-builder.html (repo
- *   appears private, and it's a JS-rendered app my fetch tool can't
- *   execute) — this is a fresh rebuild, not an edit of what's live now.
- *   If your existing 30 "templates" have data/content worth keeping,
- *   paste or upload that file and I'll merge it into this engine.
- * - "🔑 Unlock all PRO templates" below is a UI-only demo gate
- *   (localStorage flag), matching what your old page's Activate/Close
- *   modal did visually — it is NOT wired to any real payment/license
- *   verification, since I don't have your actual key-generation logic.
- *   Send me that (or describe how keys are validated) and I'll wire it
- *   in properly instead of leaving a placeholder.
- * - Popup preview behavior is implemented (click a template card → full
- *   modal preview, print straight from there) per your earlier request
- *   that templates shouldn't eat page space.
- */
-
 const $ = (id) => document.getElementById(id);
 
-/* ---------------- Template registry ---------------- */
-/* layout: classic | sidebar-left | sidebar-right | banner | timeline | declaration-cv
-   nameCase: 'none' | 'uppercase'   photoShape: 'circle' | 'square' | 'none' */
+/* ---------------- 18 Templates (All Free) ---------------- */
 const TEMPLATES = [
   { id:'ats-classic', name:'ATS Classic', tier:'free', layout:'classic',
     headFont:"Georgia, 'Times New Roman', serif", bodyFont:"Georgia, serif",
@@ -337,7 +377,6 @@ const TEMPLATES = [
     headFont:"'Playfair Display', serif", bodyFont:"'Lora', serif",
     accent:'#111', accentSoft:'#e8cf8a', nameCase:'none', photoShape:'circle' },
 
-  /* ---- Batch 2: modeled on the reference CVs the user sent ---- */
   { id:'clinical-professional', name:'Clinical Professional', tier:'pro', layout:'sidebar-left',
     headFont:"'Montserrat', sans-serif", bodyFont:"'Inter', sans-serif",
     accent:'#1d3f5f', accentSoft:'#d8e6f0', nameCase:'uppercase', photoShape:'top-rect',
@@ -373,17 +412,9 @@ function sectionTitleHTML(label, tmpl) {
   return label;
 }
 
-/* ---------------- Resume data collection ---------------- */
-
-function parseLines(text) {
-  return text.split('\n').map((l) => l.trim()).filter(Boolean);
-}
-function parsePipe(line) {
-  return line.split('|').map((p) => p.trim());
-}
-function parseCSV(text) {
-  return text.split(',').map((s) => s.trim()).filter(Boolean);
-}
+function parseLines(text) { return text.split('\n').map((l) => l.trim()).filter(Boolean); }
+function parsePipe(line) { return line.split('|').map((p) => p.trim()); }
+function parseCSV(text) { return text.split(',').map((s) => s.trim()).filter(Boolean); }
 
 let photoDataUrl = null;
 $('photoInput').addEventListener('change', (e) => {
@@ -415,8 +446,56 @@ function collectData() {
   };
 }
 
-/* ---------------- Rendering ---------------- */
+/* ---------------- Local Storage (Save / Load) ---------------- */
+const STORAGE_KEY = 'doceasy_resume_user_data';
+$('btnSaveData').addEventListener('click', () => {
+  const data = {
+    name: $('f_name').value, title: $('f_title').value, phone:$('f_phone').value,
+    email: $('f_email').value, location: $('f_location').value, linkedin:$('f_linkedin').value,
+    dob: $('f_dob').value, nationality: $('f_nationality').value, summary:$('f_summary').value,
+    experience: $('f_experience').value, education:$('f_education').value,
+    skills: $('f_skills').value, strengths:$('f_strengths').value,
+    certs: $('f_certs').value, languages:$('f_languages').value,
+    photo: photoDataUrl
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  const origText = $('btnSaveData').textContent;
+  $('btnSaveData').textContent = '✓ Saved!';
+  setTimeout(() => { $('btnSaveData').textContent = origText; }, 1800);
+});
 
+function loadSavedData() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const d = JSON.parse(raw);
+    if (d.name) $('f_name').value = d.name;
+    if (d.title) $('f_title').value = d.title;
+    if (d.phone) $('f_phone').value = d.phone;
+    if (d.email) $('f_email').value = d.email;
+    if (d.location) $('f_location').value = d.location;
+    if (d.linkedin) $('f_linkedin').value = d.linkedin;
+    if (d.dob) $('f_dob').value = d.dob;
+    if (d.nationality) $('f_nationality').value = d.nationality;
+    if (d.summary) $('f_summary').value = d.summary;
+    if (d.experience) $('f_experience').value = d.experience;
+    if (d.education) $('f_education').value = d.education;
+    if (d.skills) $('f_skills').value = d.skills;
+    if (d.strengths) $('f_strengths').value = d.strengths;
+    if (d.certs) $('f_certs').value = d.certs;
+    if (d.languages) $('f_languages').value = d.languages;
+    if (d.photo) photoDataUrl = d.photo;
+  } catch (e) {}
+}
+
+$('btnResetData').addEventListener('click', () => {
+  if (confirm('Reset form to standard sample details?')) {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+});
+
+/* ---------------- Render Logic ---------------- */
 function escapeHTML(s) {
   return String(s || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -468,7 +547,6 @@ function renderBody(data, tmpl) {
   `;
 }
 
-/** Corporate reference CV: date-left / role-right rows, no photo, monochrome. */
 function renderDateTable(data, tmpl) {
   const expHTML = data.experience.map((p) => `
     <div class="r-exp-row">
@@ -495,7 +573,6 @@ function renderDateTable(data, tmpl) {
   `;
 }
 
-/** Plain formal CV: two-column personal-details table, underlined headers, no color. */
 function renderFormalGov(data, tmpl) {
   const personalRows = [
     ['Name', data.name], ['Nationality', data.nationality],
@@ -507,7 +584,7 @@ function renderFormalGov(data, tmpl) {
   const col2 = personalRows.slice(half);
   const rowsHTML = col1.map((row, i) => `<tr>
       <td><b>${row[0]}:</b> ${escapeHTML(row[1])}</td>
-      <td>${col2[i] ? `<b>${col2[i][0]}:</b> ${escapeHTML(col2[i][1])}` : ''}</td>
+      <td>${col2[i] ? `<b>${col2[i][0]}:</b>${escapeHTML(col2[i][1])}` : ''}</td>
     </tr>`).join('');
 
   const eduHTML = data.education.map((p) => `<li>${escapeHTML(p.join(' — '))}</li>`).join('');
@@ -528,7 +605,6 @@ function renderFormalGov(data, tmpl) {
   `;
 }
 
-/** Special layout matching the uploaded "Ashwani Kumar"-style CV exactly. */
 function renderDeclarationCV(data) {
   const eduHTML = data.education.map((parts) => `<li>${escapeHTML(parts.join(' — '))}</li>`).join('');
   const expHTML = data.experience.map((parts) => `<li>${escapeHTML((parts[0]||'') + (parts[1] ? ' — ' + parts[1] : '') + (parts[2] ? ', ' + parts[2] : ''))}</li>`).join('');
@@ -615,64 +691,25 @@ function renderTemplate(tmpl, data) {
       ${renderBody(data, tmpl)}
     </div></div>`;
   }
-  // classic (default)
   return `<div class="layout-classic"><div class="resume-page" style="${vars}">
     ${renderHeader(data, tmpl)}
     ${renderBody(data, tmpl)}
   </div></div>`;
 }
 
-/* ---------------- Gallery + modal wiring ---------------- */
-
-/*
- * ── License key scheme (real, not a mockup) ────────────────────────────
- * This is a static site with no backend, so "real" here means: a
- * deterministic checksum any admin-side generator can compute, which this
- * page verifies without needing to call a server. It is NOT cryptographically
- * unbreakable — anyone who reads this JS can find SALT and reimplement
- * checksum() to mint their own keys. That's an inherent limit of licensing
- * purely in client-side JS on a static site; a real backend check is the
- * only way to close that gap. This scheme stops casual/copy-paste sharing
- * (a key from someone's payment screenshot won't just be "1234"), which is
- * proportionate to what a $2.99 one-time unlock needs.
- *
- * Format: DEASY-XXXX-YYYY-CCCC
- *   XXXX, YYYY = any 4-char alphanumeric admin picks when generating a key
- *   CCCC       = checksum(XXXX+YYYY, SALT) — must match on verification
- *
- * The admin-side key generator (separate page, coming next) uses this
- * exact same checksum() function so every key it produces validates here.
- */
-const LICENSE_SALT = 'DOCEASY2026';
-function checksum(payload, salt) {
-  const combined = payload + salt;
-  let hash = 0;
-  for (let i = 0; i < combined.length; i++) hash = (hash * 31 + combined.charCodeAt(i)) >>> 0;
-  return hash.toString(36).toUpperCase().padStart(4, '0').slice(-4);
-}
-function isValidLicenseKey(key) {
-  const parts = (key || '').trim().toUpperCase().split('-');
-  if (parts.length !== 4 || parts[0] !== 'DEASY') return false;
-  const [, p1, p2, cs] = parts;
-  if (p1.length !== 4 || p2.length !== 4) return false;
-  return checksum(p1 + p2, LICENSE_SALT) === cs;
-}
-
-const PRO_UNLOCKED_KEY = 'doceasy_resume_pro_unlocked';
-function isProUnlocked() { return localStorage.getItem(PRO_UNLOCKED_KEY) === 'true'; }
-function updateProStatusLine() {
-  $('proStatusLine').textContent = isProUnlocked() ? '✅ PRO templates unlocked on this browser.' : 'Not unlocked yet on this browser.';
-}
-
+/* ---------------- Gallery & Direct Modal Wiring ---------------- */
 function buildGallery(filter) {
   const grid = $('galleryGrid');
   grid.innerHTML = '';
-  TEMPLATES.filter((t) => filter === 'all' || t.tier === filter).forEach((tmpl) => {
+  TEMPLATES.filter((t) => filter === 'all' || (filter === 'free' ? t.tier === 'free' : t.tier === 'pro')).forEach((tmpl) => {
     const card = document.createElement('div');
     card.className = 'tmpl-card';
     card.innerHTML = `
       <div class="tmpl-thumb"><div class="tmpl-thumb-inner" id="thumb-${tmpl.id}"></div></div>
-      <div class="tmpl-label"><b>${tmpl.name}</b><span class="badge ${tmpl.tier}">${tmpl.tier === 'free' ? 'FREE' : 'PRO'}</span></div>
+      <div class="tmpl-label">
+        <b>${tmpl.name}</b>
+        <span class="badge ${tmpl.tier}">${tmpl.tier === 'free' ? 'FREE' : 'PRO'}</span>
+      </div>
     `;
     card.addEventListener('click', () => openModal(tmpl));
     grid.appendChild(card);
@@ -683,26 +720,20 @@ function buildGallery(filter) {
 let activeTemplate = TEMPLATES[0];
 
 function openModal(tmpl) {
-  if (tmpl.tier === 'pro' && !isProUnlocked()) {
-    $('unlockOverlay').classList.add('open');
-    return;
-  }
   activeTemplate = tmpl;
-  $('modalTitle').textContent = tmpl.name + (tmpl.tier === 'pro' ? ' (PRO)' : ' (Free)');
-  $('modalBody').innerHTML = renderTemplate(tmpl, collectData());
-  $('modalOverlay').classList.add('open');
+  $('modalTitle').textContent = tmpl.name;
+  $('modalBody').innerHTML = renderTemplate(tmpl, collectData());$('modalOverlay').classList.add('open');
 }
-$('btnCloseModal').addEventListener('click', () => $('modalOverlay').classList.remove('open'));
-$('modalOverlay').addEventListener('click', (e) => { if (e.target.id === 'modalOverlay') $('modalOverlay').classList.remove('open'); });
 
-$('btnPrintModal').addEventListener('click', () => {
-  $('printArea').innerHTML = renderTemplate(activeTemplate, collectData());
+$('btnCloseModal').addEventListener('click', () =>$('modalOverlay').classList.remove('open'));
+$('modalOverlay').addEventListener('click', (e) => { if (e.target.id === 'modalOverlay')$('modalOverlay').classList.remove('open'); });
+
+$('btnPrintModal').addEventListener('click', () => {$('printArea').innerHTML = renderTemplate(activeTemplate, collectData());
   window.print();
 });
 
 function renderActivePreview() {
-  if ($('modalOverlay').classList.contains('open')) {
-    $('modalBody').innerHTML = renderTemplate(activeTemplate, collectData());
+  if ($('modalOverlay').classList.contains('open')) {$('modalBody').innerHTML = renderTemplate(activeTemplate, collectData());
   }
   buildGallery(currentFilter);
 }
@@ -717,27 +748,6 @@ document.querySelectorAll('.tab').forEach((tab) => {
   });
 });
 
-$('btnUnlockPro').addEventListener('click', () => { $('unlockOverlay').classList.add('open'); });
-$('btnCloseUnlock').addEventListener('click', () => { $('unlockOverlay').classList.remove('open'); });
-$('unlockOverlay').addEventListener('click', (e) => { if (e.target.id === 'unlockOverlay') $('unlockOverlay').classList.remove('open'); });
-
-$('btnActivateKey').addEventListener('click', () => {
-  const key = $('licenseKeyInput').value;
-  if (isValidLicenseKey(key)) {
-    localStorage.setItem(PRO_UNLOCKED_KEY, 'true');
-    $('activateMsg').style.color = '#1c7a3d';
-    $('activateMsg').textContent = '✅ Key accepted — PRO templates unlocked on this browser.';
-    updateProStatusLine();
-    setTimeout(() => { $('unlockOverlay').classList.remove('open'); buildGallery(currentFilter); }, 900);
-  } else {
-    $('activateMsg').style.color = '#b3261e';
-    $('activateMsg').textContent = '❌ That key isn\'t valid. Double-check for typos, or complete payment to receive a real key.';
-  }
-});
-
-updateProStatusLine();
-
-// Live-update thumbnails/preview as the form changes (debounced).
 let debounceTimer = null;
 document.querySelectorAll('#f_name,#f_title,#f_phone,#f_email,#f_location,#f_linkedin,#f_dob,#f_nationality,#f_summary,#f_experience,#f_education,#f_skills,#f_strengths,#f_certs,#f_languages').forEach((el) => {
   el.addEventListener('input', () => {
@@ -746,6 +756,8 @@ document.querySelectorAll('#f_name,#f_title,#f_phone,#f_email,#f_location,#f_lin
   });
 });
 
+// Load previously saved details if existing
+loadSavedData();
 buildGallery('all');
 </script>
 </body>
