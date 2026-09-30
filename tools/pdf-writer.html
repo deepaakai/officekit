@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Word Writer — Hindi, English & Hinglish Typing with DOCX/PDF Export | DocEasy</title>
-<meta name="description" content="Free online Word writer with Hindi, English, and Hinglish typing. Built-in Hindi keyboard, 13 fonts, header/footer, and Word/PDF export. 100% browser-based.">
-<meta name="keywords" content="word writer, hindi typing, hinglish typing, hindi keyboard, devanagari font, docx writer, online word editor">
+<meta name="description" content="Free online Word writer with Hindi, English, and Hinglish typing. Built-in Hindi keyboard, 14+ fonts, header/footer, and Word/PDF export. 100% browser-based.">
+<meta name="keywords" content="word writer, hindi typing, hinglish typing, hindi keyboard, devanagari font, mangal font, docx writer, online word editor">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/word-writer.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Word Writer — Hindi, English, Hinglish | DocEasy">
-<meta property="og:description" content="Write in Hindi, English or Hinglish with 13 fonts, header/footer, and Word/PDF export.">
+<meta property="og:description" content="Write in Hindi, English or Hinglish with 14+ fonts, header/footer, and Word/PDF export.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/word-writer.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/word-writer-demo.jpg">
 <meta property="og:site_name" content="DocEasy">
@@ -93,6 +93,18 @@
 .tb-btn.active { background: var(--accent, #19398a); color: #ffffff !important; }
 .tb-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
+/* Custom Font Picker Trigger */
+.font-picker-trigger {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 10px;
+  background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px;
+  font-size: 13px; font-weight: 600; color: var(--text-color, #1e293b);
+  cursor: pointer; transition: all 0.14s;
+  max-width: 170px;
+}
+.font-picker-trigger:hover { border-color: var(--accent, #19398a); background: #f8fafc; }
+.font-picker-trigger span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 .tb-select {
   height: 32px; padding: 0 8px;
   background: transparent; border: none; outline: none;
@@ -155,7 +167,7 @@
   position: relative;
 }
 .editor {
-  min-height: 520px; padding: 40px 48px;
+  min-height: 540px; padding: 40px 48px;
   font-family: 'Noto Sans Devanagari', 'Calibri', Arial, sans-serif;
   font-size: 12pt; line-height: 1.8; color: var(--text-color, #0f172a);
   outline: none; background: var(--card-bg, #ffffff);
@@ -212,6 +224,43 @@
 .btn-ghost { background: var(--card-bg, #ffffff); color: var(--text-color, #1e293b); border-color: var(--border-color, #e2e8f0); }
 .btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
+/* ============ BEAUTIFUL FONT PICKER MODAL ============ */
+.font-modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+  z-index: 99998; align-items: center; justify-content: center; padding: 16px;
+}
+.font-modal-overlay.open { display: flex; }
+.font-modal-sheet {
+  background: #ffffff; border-radius: 20px; max-width: 460px; width: 100%;
+  max-height: 85vh; overflow-y: auto; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: slideUp 0.2s ease-out;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.font-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0;
+}
+.font-modal-header h3 { font-size: 16px; font-weight: 800; color: #0f172a; margin: 0; }
+.font-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b; }
+.font-group-title {
+  font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--accent, #19398a);
+  letter-spacing: 0.8px; margin: 14px 4px 6px;
+}
+.font-option-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-radius: 10px; cursor: pointer; transition: 0.15s;
+  border: 1px solid transparent; margin-bottom: 4px;
+}
+.font-option-item:hover { background: #f1f5f9; }
+.font-option-item.selected {
+  background: #eef2ff; border-color: var(--accent, #19398a); color: var(--accent, #19398a); font-weight: 700;
+}
+.font-option-preview { font-size: 14.5px; }
+
 /* ============ MODAL FOR AD CLAIM (REMOVE WATERMARK) ============ */
 .modal-overlay {
   display: none; position: fixed; inset: 0;
@@ -243,36 +292,15 @@
   border: none; font-size: 22px; cursor: pointer; color: #94a3b8;
 }
 
-/* ============ ARTICLE IMAGE BOX ============ */
+/* ============ SEO ARTICLE & IMAGE ============ */
 .article-image-box {
-  margin: 28px auto 36px;
-  max-width: 760px;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid var(--border-color, #e5e7eb);
-  background: #ffffff;
-  text-align: center;
+  margin: 28px auto 36px; max-width: 760px; border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--border-color, #e5e7eb); background: #ffffff; text-align: center;
   box-shadow: 0 4px 16px rgba(0,0,0,0.04);
 }
-.article-image-box img {
-  width: 100%;
-  max-height: 380px;
-  object-fit: contain;
-  padding: 16px;
-  display: block;
-  margin: 0 auto;
-}
-.article-image-caption {
-  padding: 12px 18px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--subtext-color, #64748b);
-  background: #f8fafc;
-  border-top: 1px solid var(--border-color, #e5e7eb);
-  line-height: 1.5;
-}
+.article-image-box img { width: 100%; max-height: 380px; object-fit: contain; padding: 16px; display: block; margin: 0 auto; }
+.article-image-caption { padding: 12px 18px; font-size: 13px; font-weight: 600; color: var(--subtext-color, #64748b); background: #f8fafc; border-top: 1px solid var(--border-color, #e5e7eb); line-height: 1.5; }
 
-/* ============ SEO ARTICLE ============ */
 .seo-article {
   max-width: 860px; margin: 48px auto; padding: 40px 32px; line-height: 1.8;
   background: var(--card-bg, #ffffff); border: 1px solid var(--border-color, #e5e7eb); border-radius: 14px;
@@ -282,10 +310,7 @@
 .seo-article p { font-size: 15.5px !important; color: var(--subtext-color, #4b5563); margin: 0 0 18px; line-height: 1.75; }
 .seo-article ul, .seo-article ol { margin: 18px 0; padding-left: 24px; }
 .seo-article li { font-size: 15px !important; color: var(--subtext-color, #4b5563); margin-bottom: 10px; }
-.seo-article details {
-  background: #f8fafc; border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 10px; padding: 14px 18px; margin-bottom: 10px;
-}
+.seo-article details { background: #f8fafc; border: 1px solid var(--border-color, #e5e7eb); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
 .seo-article details summary { font-size: 15px !important; font-weight: 700; cursor: pointer; color: #1e293b; }
 .seo-article details p { margin-top: 10px; font-size: 14.5px !important; }
 .table-wrap { width: 100%; overflow-x: auto; margin: 20px 0; border: 1px solid #e2e8f0; border-radius: 8px; }
@@ -293,25 +318,90 @@
 .table-wrap th, .table-wrap td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
 .table-wrap th { background: #f1f5f9; color: #0f172a; font-weight: 700; }
 
-/* ============ PRINT STYLES ============ */
+/* ============ 100% STRICT PRINT FIX ============ */
 .print-header, .print-footer { display: none; }
 @media print {
-  body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
-  .toolbar, .template-bar, .hf-row, .hk-wrap, .status-bar, .seo-article, 
-  .related-tools-section, #doceasy-header, #doceasy-footer, .hero-box, .modal-overlay {
-    display: none !important;
+  @page {
+    margin: 1.5cm 1.2cm;
+    size: A4 portrait;
   }
-  .main-wrap { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
-  .editor-wrap { border: none !important; box-shadow: none !important; }
-  .editor { padding: 15mm 20mm !important; min-height: auto !important; }
-  .print-header { display: block !important; text-align: center; font-size: 10pt; color: #666; border-bottom: 1px solid #ddd; margin-bottom: 15px; padding-bottom: 6px; }
-  .print-footer { display: block !important; text-align: center; font-size: 10pt; color: #666; border-top: 1px solid #ddd; margin-top: 15px; padding-top: 6px; }
+  /* पूरी वेबसाइट का नेविगेशन, मेन्यू, फुटर, टूलबार पूरी तरह ब्लॉक */
+  header, footer, nav,
+  .site-header, .site-footer, .footer-container, .footer-bottom-bar, .pill-nav, .top-nav,
+  #doceasy-header, #doceasy-footer,
+  .toolbar, .template-bar, .hf-row, .hk-wrap, .status-bar,
+  .hero-box, .seo-article, .modal-overlay, .font-modal-overlay,
+  .related-tools-section, button {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
   
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .main-wrap {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .editor-wrap {
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .editor {
+    min-height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    color: #000000 !important;
+    font-size: 12pt !important;
+  }
+
+  /* हेडर / फुटर केवल अगर यूजर ने एक्टिव किया हो तभी आएगा */
+  .print-header {
+    display: block !important;
+    text-align: center;
+    font-size: 9pt;
+    color: #475569;
+    border-bottom: 1px solid #cbd5e1;
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+  }
+  .print-footer {
+    display: block !important;
+    text-align: center;
+    font-size: 9pt;
+    color: #475569;
+    border-top: 1px solid #cbd5e1;
+    margin-top: 16px;
+    padding-top: 4px;
+  }
+
   body.has-watermark::after {
-    content: "DocEasy.org"; position: fixed; top: 50%; left: 50%;
+    content: "DocEasy.org";
+    position: fixed;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%) rotate(-35deg);
-    font-size: 68pt; font-weight: 900; color: rgba(25, 57, 138, 0.06);
-    pointer-events: none; z-index: 9999;
+    font-size: 64pt;
+    font-weight: 900;
+    color: rgba(25, 57, 138, 0.05);
+    pointer-events: none;
+    z-index: 99999;
   }
 }
 </style>
@@ -325,7 +415,7 @@
   <div class="hero-box" style="text-align:center; padding: 32px 0 16px;">
     <h1 style="font-size:32px; font-weight:800; margin:0 0 8px;">Word Writer</h1>
     <p style="color:var(--subtext-color,#6b7280); font-size:15px; margin:0 auto; max-width:620px;">
-      Write in Hindi, English, or Hinglish with 13 fonts, optional header/footer, and instant Word (.docx) & PDF export. 100% private, browser-based.
+      Write in Hindi, English, or Hinglish with 14+ fonts, optional header/footer, and instant Word (.docx) & PDF export. 100% private, browser-based.
     </p>
   </div>
 
@@ -343,23 +433,11 @@
   <!-- Modern Compact Toolbar -->
   <div class="toolbar" id="toolbar">
     <div class="tb-group">
-      <!-- Font Family with Script Recognition -->
-      <select class="tb-select" id="fontFamily" title="Font family">
-        <optgroup label="Devanagari (हिन्दी)">
-          <option value="'Noto Sans Devanagari', sans-serif" selected>Noto Sans Devanagari</option>
-          <option value="'Noto Serif Devanagari', serif">Noto Serif Devanagari</option>
-          <option value="'Baloo Bhai 2', cursive">Baloo Bhai 2</option>
-          <option value="'Hind', sans-serif">Hind</option>
-        </optgroup>
-        <optgroup label="Roman (English)">
-          <option value="Calibri, sans-serif">Calibri</option>
-          <option value="Arial, sans-serif">Arial</option>
-          <option value="'Times New Roman', serif">Times New Roman</option>
-          <option value="Georgia, serif">Georgia</option>
-          <option value="'Lora', serif">Lora</option>
-          <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
-        </optgroup>
-      </select>
+      <!-- Modern Font Picker Button -->
+      <button class="font-picker-trigger" id="openFontModal" type="button" title="फ़ॉन्ट बदलें">
+        <span id="currentFontLabel">Noto Sans Dev...</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
 
       <select class="tb-select" id="fontSize" title="Font size">
         <option value="1">10pt</option>
@@ -463,7 +541,7 @@
   <!-- ============ COMPLETE 2000+ WORDS SEO ARTICLE ============ -->
   <section class="seo-article">
     <h2>Complete Guide: Type in Hindi, English and Hinglish with Word Writer (2026)</h2>
-    <p>Writing a document used to require installing Microsoft Word on a computer — and typing in Hindi required an external keyboard, a transliteration tool, or hours of practice with a Devanagari layout. Today, both problems are solved. <strong>DocEasy Word Writer</strong> lets you write in <b>Hindi, English, or Hinglish</b> with 13 fonts and a built-in Hindi keyboard, right in your browser. When you are done, export as Word (.docx) or PDF — no signup, no upload, 100% private.</p>
+    <p>Writing a document used to require installing Microsoft Word on a computer — and typing in Hindi required an external keyboard, a transliteration tool, or hours of practice with a Devanagari layout. Today, both problems are solved. <strong>DocEasy Word Writer</strong> lets you write in <b>Hindi, English, or Hinglish</b> with 14+ fonts and a built-in Hindi keyboard, right in your browser. When you are done, export as Word (.docx) or PDF — no signup, no upload, 100% private.</p>
     <p>This complete guide covers every feature: how to write in the language you want, how the Hindi keyboard functions, which fonts to use, and best practices for creating clean documents.</p>
 
     <!-- DEMO IMAGE SECTION (From assets/images/word-writer-demo.jpg) -->
@@ -486,8 +564,8 @@
     <h3>2. Writing in Any Language — Roman & Devanagari Integration</h3>
     <p>The editor supports seamless switching between Roman (English) script and Devanagari (Hindi) script. You can type English letters, Devanagari characters, or a mix of both in the exact same line.</p>
     <ul>
-      <li><b>Roman (English) Mode:</b> Select fonts like Calibri, Arial, Times New Roman, or Lora. The editor types standard alphanumeric text with high precision.</li>
-      <li><b>Devanagari (Hindi) Mode:</b> Select Noto Sans Devanagari, Hind, or Baloo Bhai 2. Click the orange <b>हिन्दी</b> button in the toolbar to access full virtual vowels and consonants.</li>
+      <li><b>Roman (English & British Serif) Mode:</b> Select fonts like Baskerville, Garamond, Times New Roman, Calibri, Arial, or Lora. The editor types standard alphanumeric text with high precision.</li>
+      <li><b>Devanagari (Hindi & Mangal) Mode:</b> Select Mangal (System), Noto Sans Devanagari, Hind, or Baloo Bhai 2. Click the orange <b>हिन्दी</b> button in the toolbar to access full virtual vowels and consonants.</li>
       <li><b>Hinglish (Phonetic Auto-Conversion):</b> Type phonetically in English letters (e.g., <code>namaste</code>, <code>bharat</code>, <code>mera</code>). The engine automatically replaces recognized words with their Devanagari counterpart.</li>
     </ul>
 
@@ -513,10 +591,10 @@
     <h3>5. Fonts — The Right Font for Each Language</h3>
     <p>Choose modern, readable Hindi and English fonts directly from the toolbar:</p>
     <ul>
+      <li><b>Mangal (सरकारी फ़ॉन्ट)</b> — Standard Indian official font used in SSC, CPCT, and courts.</li>
       <li><b>Noto Sans Devanagari</b> — Google's clean, modern Hindi font, easiest to read.</li>
-      <li><b>Noto Serif Devanagari</b> — Serif variant, ideal for formal and legal papers.</li>
+      <li><b>Baskerville & Garamond</b> — Classic British Serif fonts, perfect for legal papers and royal prints.</li>
       <li><b>Baloo Bhai 2</b> — Bold and stylized, perfect for banners and titles.</li>
-      <li><b>Hind</b> — Compact and professional Indian Type Foundry font.</li>
       <li><b>Calibri & Arial</b> — Standard universal fonts for office documents.</li>
     </ul>
 
@@ -546,6 +624,72 @@
 </main>
 
 <div id="doceasy-footer"></div>
+
+<!-- ============ POPUP MODAL FOR FONTS ============ -->
+<div class="font-modal-overlay" id="fontModal">
+  <div class="font-modal-sheet">
+    <div class="font-modal-header">
+      <h3>Select Document Font (फ़ॉन्ट चुनें)</h3>
+      <button class="font-modal-close" id="closeFontModal">×</button>
+    </div>
+
+    <div class="font-group-title">Devanagari (हिन्दी / सरकारी फ़ॉन्ट्स)</div>
+    <div class="font-option-item selected" data-font="'Noto Sans Devanagari', sans-serif" data-label="Noto Sans Devanagari">
+      <span class="font-option-preview" style="font-family:'Noto Sans Devanagari', sans-serif;">Noto Sans Devanagari (आधुनिक)</span>
+      <span>✓</span>
+    </div>
+    <div class="font-option-item" data-font="'Mangal', 'Nirmala UI', sans-serif" data-label="Mangal (मंगल)">
+      <span class="font-option-preview" style="font-family:'Mangal', 'Nirmala UI', sans-serif;">Mangal / मंगल (सरकारी/SSC)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="'Noto Serif Devanagari', serif" data-label="Noto Serif Devanagari">
+      <span class="font-option-preview" style="font-family:'Noto Serif Devanagari', serif;">Noto Serif Devanagari (क्लासिक)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="'Baloo Bhai 2', cursive" data-label="Baloo Bhai 2">
+      <span class="font-option-preview" style="font-family:'Baloo Bhai 2', cursive;">Baloo Bhai 2 (हेडिंग/बोल्ड)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="'Hind', sans-serif" data-label="Hind">
+      <span class="font-option-preview" style="font-family:'Hind', sans-serif;">Hind (सुव्यवस्थित)</span>
+      <span></span>
+    </div>
+
+    <div class="font-group-title">British & Classic English (अंग्रेज़ी)</div>
+    <div class="font-option-item" data-font="'Baskerville', 'Libre Baskerville', serif" data-label="Baskerville (British)">
+      <span class="font-option-preview" style="font-family:'Baskerville', 'Libre Baskerville', serif;">Baskerville (Classic British)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="'Garamond', serif" data-label="Garamond">
+      <span class="font-option-preview" style="font-family:'Garamond', serif;">Garamond (Royal Serif)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="'Times New Roman', serif" data-label="Times New Roman">
+      <span class="font-option-preview" style="font-family:'Times New Roman', serif;">Times New Roman (फॉर्मल)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="Calibri, sans-serif" data-label="Calibri">
+      <span class="font-option-preview" style="font-family:Calibri, sans-serif;">Calibri (ऑफिस स्टैंडर्ड)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="Arial, sans-serif" data-label="Arial">
+      <span class="font-option-preview" style="font-family:Arial, sans-serif;">Arial (क्लीन)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="Georgia, serif" data-label="Georgia">
+      <span class="font-option-preview" style="font-family:Georgia, serif;">Georgia (एलिगेंट)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="'Lora', serif" data-label="Lora">
+      <span class="font-option-preview" style="font-family:'Lora', serif;">Lora (बुक/स्टोरी)</span>
+      <span></span>
+    </div>
+    <div class="font-option-item" data-font="'JetBrains Mono', monospace" data-label="JetBrains Mono">
+      <span class="font-option-preview" style="font-family:'JetBrains Mono', monospace;">JetBrains Mono (कोड/टाइपराइटर)</span>
+      <span></span>
+    </div>
+  </div>
+</div>
 
 <!-- ============ AD / CLAIM WATERMARK MODAL ============ -->
 <div class="modal-overlay" id="adModal">
@@ -595,20 +739,58 @@
     });
   });
 
-  // Native Font Execution with Script Switching
-  const fontFamilySelect = document.getElementById('fontFamily');
-  fontFamilySelect.addEventListener('change', function () {
-    editor.focus();
+  /* ===== BEAUTIFUL FONT MODAL LOGIC ===== */
+  const openFontModal = document.getElementById('openFontModal');
+  const fontModal = document.getElementById('fontModal');
+  const closeFontModal = document.getElementById('closeFontModal');
+  const fontItems = document.querySelectorAll('.font-option-item');
+  const currentFontLabel = document.getElementById('currentFontLabel');
+
+  openFontModal.addEventListener('click', (e) => {
+    e.preventDefault();
+    saveSelection();
+    fontModal.classList.add('open');
+  });
+
+  closeFontModal.addEventListener('click', () => {
+    fontModal.classList.remove('open');
     restoreSelection();
-    document.execCommand('styleWithCSS', false, true);
-    document.execCommand('fontName', false, this.value);
-    
-    // Auto-suggest keyboard if Devanagari is picked
-    const isDevanagari = this.value.includes('Devanagari') || this.value.includes('Baloo') || this.value.includes('Hind');
-    if (isDevanagari) {
-      document.getElementById('hkWrap').classList.add('show');
-      document.getElementById('hindiKeyboardBtn').classList.add('active');
+  });
+
+  fontModal.addEventListener('click', (e) => {
+    if (e.target === fontModal) {
+      fontModal.classList.remove('open');
+      restoreSelection();
     }
+  });
+
+  fontItems.forEach(item => {
+    item.addEventListener('click', function () {
+      const selectedFont = this.dataset.font;
+      const label = this.dataset.label;
+
+      fontItems.forEach(i => {
+        i.classList.remove('selected');
+        i.querySelector('span:last-child').textContent = '';
+      });
+      this.classList.add('selected');
+      this.querySelector('span:last-child').textContent = '✓';
+
+      currentFontLabel.textContent = label;
+      fontModal.classList.remove('open');
+
+      editor.focus();
+      restoreSelection();
+      document.execCommand('styleWithCSS', false, true);
+      document.execCommand('fontName', false, selectedFont);
+
+      // Auto-open Hindi keyboard if Indian font selected
+      const isIndianFont = selectedFont.includes('Devanagari') || selectedFont.includes('Baloo') || selectedFont.includes('Hind') || selectedFont.includes('Mangal');
+      if (isIndianFont) {
+        document.getElementById('hkWrap').classList.add('show');
+        document.getElementById('hindiKeyboardBtn').classList.add('active');
+      }
+    });
   });
 
   document.getElementById('fontSize').addEventListener('change', function () {
