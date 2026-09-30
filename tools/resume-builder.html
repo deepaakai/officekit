@@ -7,7 +7,7 @@
 <meta name="description" content="Create recruiter-tested resumes for free. 25 unique industry layouts, real-time live preview, auto-save drafts, and clean A4 PDF export. 100% private, no signup.">
 <meta name="keywords" content="free resume builder, ats resume maker, curriculum vitae maker, cv generator, bio data format, online resume maker">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/resume-builder.html">
+<link rel="canonical" href="https://doceasy.org/tools/resume-builder.html">
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,14 +31,14 @@
     background: #f1f5f9; 
   }
 
-  /* HEADER OVERLAP FIX */
+  /* HEADER OVERLAP FIX - EXACT CROPPPER LIKE SPACING */
   .main-container { 
     max-width: 1440px; 
     margin: 0 auto; 
-    padding-top: 54px; 
+    padding-top: 85px; 
   }
   
-  .hero-header { text-align: center; padding: 14px 0 20px; }
+  .hero-header { text-align: center; padding: 10px 0 20px; }
   .hero-header h1 { color: var(--de-blue); font-size: 28px; font-weight: 800; margin: 0 0 6px; }
   .hero-header p { color: var(--subtext-color); font-size: 14.5px; margin: 0 auto; max-width: 700px; line-height: 1.5; }
 
@@ -63,6 +63,16 @@
   .btn-history:hover { background: #fde68a; }
   .btn-reset { background: #f8fafc; color: #475569; border-color: var(--border-color); }
   .btn-reset:hover { background: #e2e8f0; }
+
+  /* WATERMARK TOGGLE BUTTON */
+  .wm-btn {
+    height: 38px; padding: 0 14px; font-size: 12.5px; font-weight: 700;
+    border-radius: 9px; border: none; background: #f59e0b; color: #fff; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px; transition: 0.16s;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  }
+  .wm-btn:hover { background: #d97706; transform: translateY(-1px); }
+  .wm-btn.removed { background: #10b981; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
 
   /* SPLIT WORKSPACE */
   .workspace-grid {
@@ -116,7 +126,25 @@
     width: 794px; min-height: 1123px; background: #ffffff; color: #1e293b;
     padding: 44px 50px; font-size: 13px; line-height: 1.55; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     transform-origin: top center;
+    position: relative;
   }
+
+  /* WATERMARK EMBED */
+  body.has-watermark .resume-page::before {
+    content: "doceasy.org";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg);
+    font-size: 72pt;
+    font-weight: 900;
+    color: rgba(25, 57, 138, 0.06);
+    pointer-events: none;
+    z-index: 10;
+    white-space: nowrap;
+    text-transform: lowercase;
+  }
+
   .r-name { font-weight: 800; font-size: 26px; line-height: 1.2; }
   .r-title { font-size: 14px; margin-top: 2px; font-weight: 600; }
   .r-contact { font-size: 11.5px; margin-top: 6px; }
@@ -130,13 +158,11 @@
   .pill { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 600; margin: 2px 3px 2px 0; }
   .r-list-plain { margin: 0; padding-left: 18px; }
 
-  /* ============ 25 DISTINCT RESUME STRUCTURES ============ */
-  /* 1. ATS Minimal Classic */
+  /* 25 DISTINCT RESUME STRUCTURES */
   .layout-ats-minimal { font-family: 'Inter', sans-serif; }
   .layout-ats-minimal .r-header { border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 14px; text-align: center; }
   .layout-ats-minimal .r-section-title { border-bottom: 1px solid #cbd5e1; color: #0f172a; }
 
-  /* 2. Clinical Medical Professional (Nurse/Doctor Style) */
   .layout-clinical-med { font-family: 'Montserrat', sans-serif; padding: 0 !important; display: flex; }
   .layout-clinical-med .r-sidebar { width: 230px; background: #1e3a5f; color: #fff; padding: 34px 20px; flex-shrink: 0; }
   .layout-clinical-med .r-sidebar .r-name, .layout-clinical-med .r-sidebar .r-title { color: #fff; }
@@ -144,17 +170,14 @@
   .layout-clinical-med .r-main { padding: 34px 30px; flex: 1; }
   .layout-clinical-med .r-main .r-section-title { color: #1e3a5f; border-bottom: 2px solid #dbeafe; }
 
-  /* 3. Executive CIO/CTO (Modern Grid Blocks) */
   .layout-executive-cio { font-family: 'Inter', sans-serif; padding: 40px 46px; }
   .layout-executive-cio .r-header { display: flex; justify-content: space-between; border-bottom: 3px solid #111827; padding-bottom: 14px; margin-bottom: 16px; }
   .layout-executive-cio .r-section-title { color: #111827; border-left: 4px solid #111827; padding-left: 8px; margin: 16px 0 10px; }
 
-  /* 4. Fresh Graduate / Academic */
   .layout-fresh-grad { font-family: 'Poppins', sans-serif; padding: 40px 46px; }
   .layout-fresh-grad .r-header { text-align: center; background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; margin-bottom: 16px; }
   .layout-fresh-grad .r-section-title { color: #2563eb; border-bottom: 2px dashed #bfdbfe; }
 
-  /* 5. Creative Blush Botanical */
   .layout-blush-botanical { font-family: 'Work Sans', sans-serif; padding: 0 !important; display: flex; }
   .layout-blush-botanical .r-sidebar { width: 220px; background: #b98a72; color: #fff; padding: 36px 20px; flex-shrink: 0; }
   .layout-blush-botanical .r-sidebar .r-name { font-family: 'Dancing Script', cursive; font-size: 34px; color: #fff; }
@@ -162,23 +185,19 @@
   .layout-blush-botanical .r-main { padding: 36px 30px; flex: 1; }
   .layout-blush-botanical .r-main .r-section-title { color: #b98a72; border-bottom: 2px solid #f3e3da; }
 
-  /* 6. Indian Official Curriculum Vitae */
   .layout-indian-gov { font-family: 'Times New Roman', Times, serif; padding: 44px 50px; }
   .layout-indian-gov .r-cv-title { text-align: center; font-size: 24px; font-weight: 800; text-decoration: underline; margin-bottom: 14px; }
   .layout-indian-gov .r-section-title { background: #e2e8f0; color: #000; padding: 4px 8px; border: none; font-size: 12px; }
   .layout-indian-gov table.r-profile-table td { padding: 2px 10px 2px 0; font-size: 12.5px; }
 
-  /* 7. Hospitality & Service Professional */
   .layout-hospitality { font-family: 'Inter', sans-serif; padding: 38px 46px; border: 1px solid #e2e8f0; }
   .layout-hospitality .r-header { border-bottom: 2px solid #b45309; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-hospitality .r-section-title { color: #b45309; border-bottom: 1px solid #fde68a; }
 
-  /* 8. Modern Minimalist (Playfair Serif) */
   .layout-playfair-minimal { font-family: 'Playfair Display', serif; padding: 48px 52px; }
   .layout-playfair-minimal .r-header { text-align: center; margin-bottom: 20px; }
   .layout-playfair-minimal .r-section-title { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 2px; color: #334155; border-bottom: 1px solid #94a3b8; }
 
-  /* 9. Dark Navy Sidebar Executive */
   .layout-navy-sidebar { padding: 0 !important; display: flex; font-family: 'Inter', sans-serif; }
   .layout-navy-sidebar .r-sidebar { width: 240px; background: #0b192c; color: #fff; padding: 36px 20px; flex-shrink: 0; }
   .layout-navy-sidebar .r-sidebar .r-name, .layout-navy-sidebar .r-sidebar .r-title { color: #fff; }
@@ -186,12 +205,10 @@
   .layout-navy-sidebar .r-main { padding: 36px 32px; flex: 1; }
   .layout-navy-sidebar .r-main .r-section-title { color: #0b192c; border-bottom: 2px solid #e2e8f0; }
 
-  /* 10. Emerald Tech (Developer Style) */
   .layout-emerald-tech { font-family: 'Space Mono', monospace; padding: 40px 48px; background: #fafafa; }
   .layout-emerald-tech .r-header { border-bottom: 2px solid #059669; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-emerald-tech .r-section-title { color: #059669; border-bottom: 1px dashed #6ee7b7; font-family: 'Inter', sans-serif; }
 
-  /* 11. Split Top Banner */
   .layout-top-banner { padding: 0 !important; font-family: 'Montserrat', sans-serif; }
   .layout-top-banner .r-header { background: #1e3a8a; color: #fff; padding: 32px 46px; }
   .layout-top-banner .r-header .r-name, .layout-top-banner .r-header .r-title { color: #fff; }
@@ -199,78 +216,64 @@
   .layout-top-banner .r-main { padding: 28px 46px; }
   .layout-top-banner .r-section-title { color: #1e3a8a; border-bottom: 2px solid #dbeafe; }
 
-  /* 12. Timeline Milestones */
   .layout-timeline-flow { font-family: 'Inter', sans-serif; padding: 42px 48px; }
   .layout-timeline-flow .r-header { border-bottom: 2px solid #0e7c7b; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-timeline-flow .r-item { position: relative; padding-left: 20px; border-left: 2px solid #ccfbf1; }
   .layout-timeline-flow .r-item::before { content:''; position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #0e7c7b; }
   .layout-timeline-flow .r-section-title { color: #0e7c7b; border-bottom: 1px solid #99f6e4; }
 
-  /* 13. Retail & Sales Executive */
   .layout-retail-sales { font-family: 'Poppins', sans-serif; padding: 40px 46px; }
   .layout-retail-sales .r-header { border-left: 5px solid #dc2626; padding-left: 14px; margin-bottom: 18px; }
   .layout-retail-sales .r-section-title { color: #dc2626; border-bottom: 1px solid #fecaca; }
 
-  /* 14. Legal & Judiciary Formal */
   .layout-legal-court { font-family: 'Times New Roman', Times, serif; padding: 46px 52px; line-height: 1.6; }
   .layout-legal-court .r-header { text-align: center; border-bottom: 1px solid #000; padding-bottom: 14px; margin-bottom: 14px; }
   .layout-legal-court .r-section-title { text-decoration: underline; font-weight: bold; font-size: 13px; margin: 18px 0 6px; }
 
-  /* 15. Finance Audit Matrix */
   .layout-finance-audit { font-family: 'Work Sans', sans-serif; padding: 42px 46px; }
   .layout-finance-audit .r-header { display: flex; justify-content: space-between; border-bottom: 2px solid #334155; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-finance-audit .r-section-title { background: #f1f5f9; border-left: 4px solid #475569; padding: 4px 8px; color: #1e293b; }
 
-  /* 16. Creative Graphic Designer */
   .layout-designer-portfolio { padding: 0 !important; display: flex; font-family: 'Montserrat', sans-serif; }
   .layout-designer-portfolio .r-sidebar { width: 230px; background: #6366f1; color: #fff; padding: 34px 20px; flex-shrink: 0; }
   .layout-designer-portfolio .r-sidebar .r-section-title { color: #e0e7ff; border-bottom: 1px solid rgba(255,255,255,0.3); }
   .layout-designer-portfolio .r-main { padding: 34px 30px; flex: 1; }
   .layout-designer-portfolio .r-main .r-section-title { color: #6366f1; border-bottom: 2px solid #e0e7ff; }
 
-  /* 17. Cyber Cafe Simple Bio-Data */
   .layout-simple-biodata { font-family: 'Inter', sans-serif; padding: 40px 48px; border: 2px solid #cbd5e1; }
   .layout-simple-biodata .r-cv-title { text-align: center; font-size: 22px; font-weight: 800; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 14px; }
   .layout-simple-biodata .r-section-title { color: #000; font-weight: 800; border-bottom: 1px solid #cbd5e1; }
 
-  /* 18. Compact 1-Page ATS */
   .layout-compact-ats { font-family: 'Roboto Condensed', sans-serif; padding: 36px 42px; font-size: 12px; line-height: 1.45; }
   .layout-compact-ats .r-header { border-bottom: 2px solid #334155; padding-bottom: 8px; margin-bottom: 12px; }
   .layout-compact-ats .r-section-title { font-size: 12px; margin: 12px 0 6px; color: #0f172a; border-bottom: 1px solid #94a3b8; }
 
-  /* 19. Baskerville British Academic */
   .layout-baskerville-uk { font-family: 'Merriweather', serif; padding: 48px 52px; }
   .layout-baskerville-uk .r-header { text-align: center; border-bottom: 1px double #475569; padding-bottom: 14px; margin-bottom: 16px; }
   .layout-baskerville-uk .r-section-title { font-size: 12px; letter-spacing: 1px; color: #1e293b; border-bottom: 1px solid #cbd5e1; }
 
-  /* 20. Startup Growth Specialist */
   .layout-startup-growth { font-family: 'Poppins', sans-serif; padding: 42px 48px; }
   .layout-startup-growth .r-header { border-left: 6px solid #8b5cf6; padding-left: 14px; margin-bottom: 18px; }
   .layout-startup-growth .r-section-title { color: #8b5cf6; border-bottom: 2px solid #ede9fe; }
 
-  /* 21. Operations & Logistics Manager */
   .layout-operations-box { font-family: 'Work Sans', sans-serif; padding: 40px 46px; }
   .layout-operations-box .r-header { background: #f8fafc; border: 1px solid #cbd5e1; padding: 18px; border-radius: 8px; margin-bottom: 16px; }
   .layout-operations-box .r-section-title { color: #0284c7; border-bottom: 2px solid #e0f2fe; }
 
-  /* 22. Teacher & Educator Formal */
   .layout-educator-formal { font-family: 'Lora', serif; padding: 44px 50px; }
   .layout-educator-formal .r-header { text-align: center; border-bottom: 2px solid #059669; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-educator-formal .r-section-title { color: #059669; border-bottom: 1px solid #a7f3d0; }
 
-  /* 23. Engineering & Tech Specialist */
   .layout-engineer-tech { font-family: 'Inter', sans-serif; padding: 42px 48px; }
   .layout-engineer-tech .r-header { border-bottom: 3px solid #d97706; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-engineer-tech .r-section-title { color: #d97706; border-bottom: 2px solid #fef3c7; }
 
-  /* 24. Consultant Chrono Date-Table */
   .layout-consultant-date { font-family: 'Lora', serif; padding: 44px 48px; }
   .layout-consultant-date .r-header { display: flex; justify-content: space-between; border-bottom: 2px solid #1e293b; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-consultant-date .r-exp-row { display: flex; gap: 18px; margin-bottom: 12px; }
   .layout-consultant-date .r-exp-date { width: 130px; flex-shrink: 0; font-size: 11.5px; font-weight: 700; color: #64748b; }
   .layout-consultant-date .r-exp-content { flex: 1; }
 
-  /* 25. Europass International Grid */
   .layout-europass-grid { font-family: 'Inter', sans-serif; padding: 40px 48px; }
   .layout-europass-grid .r-header { border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 16px; }
   .layout-europass-grid .r-section-title { color: #0284c7; border-bottom: 1px solid #bae6fd; }
@@ -321,6 +324,37 @@
   .history-meta span { font-size: 11px; color: #64748b; }
   .history-btns { display: flex; gap: 6px; }
 
+  /* 15-SECOND AD / WATERMARK REMOVAL MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px);
+    z-index: 99999; align-items: center; justify-content: center; padding: 16px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-card {
+    background: #ffffff; border-radius: 18px; max-width: 440px; width: 100%;
+    padding: 24px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center; position: relative;
+  }
+  .modal-card h3 { font-size: 20px; font-weight: 800; color: #0f172a; margin: 0 0 6px; }
+  .modal-card p { font-size: 13.5px; color: #64748b; line-height: 1.5; margin: 0 0 16px; }
+  .ad-box-mock {
+    background: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 12px;
+    height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin-bottom: 18px; padding: 12px;
+  }
+  .ad-timer-text { font-size: 15px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+  .claim-btn {
+    background: #10b981; color: #fff; border: none; padding: 12px 24px;
+    font-size: 14px; font-weight: 800; border-radius: 10px; cursor: pointer;
+    width: 100%; transition: 0.16s; display: none;
+  }
+  .claim-btn:hover { background: #059669; }
+  .close-modal-btn {
+    position: absolute; top: 14px; right: 16px; background: transparent;
+    border: none; font-size: 22px; cursor: pointer; color: #94a3b8;
+  }
+
   /* SEO ARTICLE (2000+ WORDS COMPLIANT) */
   .seo-article { max-width: 980px; margin: 50px auto 20px; padding: 40px 34px; line-height: 1.8; background: #fff; border: 1px solid var(--border-color); border-radius: 14px; }
   .seo-article h2 { font-size: 24px; font-weight: 800; color: var(--de-blue); margin: 38px 0 14px; }
@@ -335,18 +369,126 @@
   .related-tool-card { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: #0f172a; font-weight: 600; font-size: 13.5px; transition: 0.15s; }
   .related-tool-card:hover { border-color: var(--de-blue); background: var(--accent-soft); color: var(--de-blue); }
 
-  /* PRINT STYLES */
+  /* ============ MOBILE RESPONSIVE FIX (NO BREAKING) ============ */
+  @media (max-width: 900px) {
+    .main-container {
+      padding-top: 92px !important; /* Exact spacing below global header */
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+      width: 100% !important;
+      overflow-x: hidden !important;
+    }
+    
+    .control-action-bar {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+    }
+    
+    .action-group-left, .action-group-right {
+      display: flex !important;
+      width: 100% !important;
+      justify-content: space-between !important;
+    }
+    
+    .btn-template-trigger {
+      width: 100% !important;
+      text-align: center !important;
+      justify-content: center !important;
+    }
+
+    .preview-panel {
+      width: 100% !important;
+      padding: 10px 4px !important;
+      overflow: hidden !important;
+    }
+    
+    .preview-viewport {
+      width: 100% !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      display: block !important;
+      text-align: center !important;
+    }
+
+    .resume-page {
+      transform: scale(0.44) !important;
+      transform-origin: top center !important;
+      margin: 0 auto -620px auto !important;
+    }
+
+    .seo-article {
+      width: 100% !important;
+      margin: 30px auto !important;
+      padding: 20px 16px !important;
+    }
+  }
+
+  /* ============ 1-PAGE STRICT PRINT FIX (NO 5 EXTRA PAGES) ============ */
   #printArea { display: none; }
   @media print {
-    @page { margin: 0; size: A4 portrait; }
-    body * { visibility: hidden !important; }
-    #printArea, #printArea * { visibility: visible !important; }
-    #printArea { display: block !important; position: absolute; top: 0; left: 0; width: 100%; margin: 0; padding: 0; }
-    .resume-page { box-shadow: none !important; width: 100% !important; margin: 0 !important; }
+    @page {
+      margin: 0 !important;
+      size: A4 portrait !important;
+    }
+    
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #ffffff !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    body * {
+      visibility: hidden !important;
+    }
+
+    #printArea, #printArea * {
+      visibility: visible !important;
+    }
+
+    #printArea {
+      display: block !important;
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .resume-page {
+      box-shadow: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: auto !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 12mm 15mm !important;
+      page-break-after: avoid !important;
+      page-break-inside: avoid !important;
+      transform: none !important;
+    }
+
+    body.has-watermark #printArea .resume-page::before {
+      content: "doceasy.org" !important;
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) rotate(-35deg) !important;
+      font-size: 72pt !important;
+      font-weight: 900 !important;
+      color: rgba(25, 57, 138, 0.06) !important;
+      pointer-events: none !important;
+      z-index: 1000 !important;
+      white-space: nowrap !important;
+      text-transform: lowercase !important;
+    }
   }
 </style>
 </head>
-<body>
+<body class="has-watermark">
 
 <div id="doceasy-header"></div>
 
@@ -360,9 +502,12 @@
   <!-- CONTROL ACTION BAR -->
   <div class="control-action-bar">
     <div class="action-group-left">
-      <button class="btn-action btn-template-trigger" id="btnOpenTemplates">🎨 Change Template (<span id="activeTmplName">ATS Minimal Classic</span>)</button>
+      <button class="btn-action btn-template-trigger" id="btnOpenTemplates">🎨 Change Template (<span id="activeTmplName">1/25</span>)</button>
     </div>
     <div class="action-group-right">
+      <button class="wm-btn" id="wmToggleBtn" type="button" title="वॉटरमार्क हटाने के लिए क्लिक करें">
+        🔒 Remove Watermark
+      </button>
       <button class="btn-action btn-save" id="btnSaveData">💾 Save</button>
       <button class="btn-action btn-history" id="btnOpenHistory">🕒 History</button>
       <button class="btn-action btn-reset" id="btnResetData">🔄 Reset</button>
@@ -485,6 +630,22 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
   </section>
 
 </main>
+
+<!-- ============ 15-SECOND REWARD MODAL (REMOVE WATERMARK) ============ -->
+<div class="modal-overlay" id="adModal">
+  <div class="modal-card">
+    <button class="close-modal-btn" id="closeAdModal">×</button>
+    <h3>Remove Watermark for Free</h3>
+    <p>Support DocEasy by viewing a short sponsored message. Watermark will be permanently removed for your session.</p>
+    
+    <div class="ad-box-mock">
+      <div class="ad-timer-text" id="timerText">Please wait <b>15</b> seconds...</div>
+      <div style="font-size:12px;color:#94a3b8;margin-top:8px;">[Sponsored Video & Ad Space]</div>
+    </div>
+
+    <button class="claim-btn" id="claimBtn">✅ Claim Watermark-Free Export</button>
+  </div>
+</div>
 
 <!-- ============ TEMPLATE PICKER MODAL ============ -->
 <div id="templatePickerOverlay">
@@ -733,7 +894,7 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
     }
     var label = $('activeTmplName');
     if (label) {
-      label.textContent = activeTemplate.name;
+      label.textContent = window.innerWidth < 768 ? (TEMPLATES.indexOf(activeTemplate)+1 + '/25') : activeTemplate.name;
     }
   }
 
@@ -759,6 +920,62 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
         renderLivePreview();
       };
       reader.readAsDataURL(file);
+    });
+  }
+
+  /* ---------------- Watermark 15s Timer Logic ---------------- */
+  var wmBtn = $('wmToggleBtn');
+  var adModal = $('adModal');
+  var closeAdModal = $('closeAdModal');
+  var timerText = $('timerText');
+  var claimBtn = $('claimBtn');
+  var adInterval = null;
+
+  if (wmBtn) {
+    wmBtn.addEventListener('click', function() {
+      if (document.body.classList.contains('has-watermark')) {
+        adModal.classList.add('open');
+        startAdTimer();
+      } else {
+        document.body.classList.add('has-watermark');
+        wmBtn.className = 'wm-btn';
+        wmBtn.innerHTML = '🔒 Remove Watermark';
+      }
+    });
+  }
+
+  if (closeAdModal) {
+    closeAdModal.addEventListener('click', function() {
+      clearInterval(adInterval);
+      adModal.classList.remove('open');
+    });
+  }
+
+  function startAdTimer() {
+    var timeLeft = 15;
+    claimBtn.style.display = 'none';
+    timerText.style.display = 'block';
+    timerText.innerHTML = 'Please wait <b>' + timeLeft + '</b> seconds...';
+
+    clearInterval(adInterval);
+    adInterval = setInterval(function() {
+      timeLeft--;
+      if (timeLeft > 0) {
+        timerText.innerHTML = 'Please wait <b>' + timeLeft + '</b> seconds...';
+      } else {
+        clearInterval(adInterval);
+        timerText.style.display = 'none';
+        claimBtn.style.display = 'block';
+      }
+    }, 1000);
+  }
+
+  if (claimBtn) {
+    claimBtn.addEventListener('click', function() {
+      document.body.classList.remove('has-watermark');
+      wmBtn.className = 'wm-btn removed';
+      wmBtn.innerHTML = '✨ Watermark Removed';
+      adModal.classList.remove('open');
     });
   }
 
@@ -967,7 +1184,7 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
     });
   }
 
-  // Initial render
+  // First boot render
   renderLivePreview();
 })();
 </script>
