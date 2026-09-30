@@ -31,29 +31,29 @@
     background: #f1f5f9; 
   }
 
-  /* CARD CROPPER ALIGNED WRAPPER */
+  /* CARD CROPPER EXACT TOP MARGIN FIX */
   .main-wrap { 
     max-width: 1400px; 
     margin: 0 auto; 
-    padding: 0 12px 80px;
+    padding-top: 15px;
   }
 
-  .hero-box { text-align: center; padding: 24px 0 16px; }
+  .hero-box { text-align: center; padding: 10px 0 16px; }
   .hero-title { color: var(--de-blue); font-size: 28px; font-weight: 800; margin: 0 0 6px; }
   .hero-sub { color: var(--subtext-color); font-size: 14.5px; margin: 0 auto; max-width: 700px; line-height: 1.5; }
 
   /* CONTROLS BAR */
   .control-action-bar {
-    display: flex; justify-content: space-between; align-items: center; gap: 12px;
-    background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px 18px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px 14px;
     border-radius: 12px; margin-bottom: 20px; box-shadow: var(--shadow-sm, 0 2px 10px rgba(0,0,0,0.03)); flex-wrap: wrap;
   }
   .action-group-left, .action-group-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   
   .btn-action {
-    display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px;
-    font-size: 13.5px; font-weight: 700; border-radius: 8px; cursor: pointer; border: 1px solid transparent;
-    transition: all 0.15s ease;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px;
+    font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; border: 1px solid transparent;
+    transition: all 0.15s ease; white-space: nowrap;
   }
   .btn-template-trigger { background: var(--de-blue); color: #fff; box-shadow: 0 4px 14px rgba(25,57,138,0.22); }
   .btn-template-trigger:hover { background: var(--de-blue-hover); transform: translateY(-1px); }
@@ -64,12 +64,11 @@
   .btn-reset { background: #f8fafc; color: #475569; border-color: var(--border-color); }
   .btn-reset:hover { background: #e2e8f0; }
 
-  /* WATERMARK TOGGLE BUTTON */
   .wm-btn {
-    height: 38px; padding: 0 14px; font-size: 12.5px; font-weight: 700;
+    height: 35px; padding: 0 12px; font-size: 12.5px; font-weight: 700;
     border-radius: 8px; border: none; background: #f59e0b; color: #fff; cursor: pointer;
     display: inline-flex; align-items: center; gap: 6px; transition: 0.16s;
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3); white-space: nowrap;
   }
   .wm-btn:hover { background: #d97706; transform: translateY(-1px); }
   .wm-btn.removed { background: #10b981; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
@@ -125,24 +124,14 @@
   .resume-page {
     width: 794px; min-height: 1123px; background: #ffffff; color: #1e293b;
     padding: 44px 50px; font-size: 13px; line-height: 1.55; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    transform-origin: top center;
-    position: relative;
+    transform-origin: top center; position: relative;
   }
 
-  /* WATERMARK EMBED */
   body.has-watermark .resume-page::before {
-    content: "doceasy.org";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-35deg);
-    font-size: 72pt;
-    font-weight: 900;
-    color: rgba(25, 57, 138, 0.06);
-    pointer-events: none;
-    z-index: 10;
-    white-space: nowrap;
-    text-transform: lowercase;
+    content: "doceasy.org"; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg); font-size: 72pt; font-weight: 900;
+    color: rgba(25, 57, 138, 0.06); pointer-events: none; z-index: 10;
+    white-space: nowrap; text-transform: lowercase;
   }
 
   .r-name { font-weight: 800; font-size: 26px; line-height: 1.2; }
@@ -369,29 +358,43 @@
   .related-tool-card { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: #0f172a; font-weight: 600; font-size: 13.5px; transition: 0.15s; }
   .related-tool-card:hover { border-color: var(--de-blue); background: var(--accent-soft); color: var(--de-blue); }
 
-  /* ============ EXACT MOBILE × DESKTOP FIX (LIKE CARD CROPPER) ============ */
+  /* ============ EXACT MOBILE × DESKTOP FIX (NO OVERLAP / NO BUTTON BREAK) ============ */
   @media (max-width: 900px) {
     .main-wrap {
-      padding: 0 8px 60px !important;
+      padding: 0 10px 60px !important;
       width: 100% !important;
       overflow-x: hidden !important;
+    }
+
+    .hero-box {
+      padding: 10px 0 14px !important;
     }
     
     .control-action-bar {
       flex-direction: column !important;
       align-items: stretch !important;
-      gap: 10px !important;
+      gap: 8px !important;
+      padding: 10px !important;
     }
     
     .action-group-left, .action-group-right {
       display: flex !important;
       width: 100% !important;
+      gap: 6px !important;
       justify-content: space-between !important;
     }
     
     .btn-template-trigger {
       width: 100% !important;
       text-align: center !important;
+      justify-content: center !important;
+      padding: 8px 10px !important;
+    }
+
+    .btn-action, .wm-btn {
+      flex: 1 !important;
+      padding: 7px 6px !important;
+      font-size: 12px !important;
       justify-content: center !important;
     }
 
@@ -418,14 +421,14 @@
     .seo-article {
       width: 100% !important;
       margin: 32px auto !important;
-      padding: 28px 20px !important;
+      padding: 24px 16px !important;
     }
-    .seo-article h2 { font-size: 22px !important; }
-    .seo-article h3 { font-size: 18px !important; }
-    .seo-article p { font-size: 15.5px !important; }
+    .seo-article h2 { font-size: 20px !important; }
+    .seo-article h3 { font-size: 16.5px !important; }
+    .seo-article p { font-size: 14.5px !important; }
   }
 
-  /* ============ 1-PAGE STRICT PRINT FIX ============ */
+  /* ============ 1-PAGE STRICT PRINT FIX (AVOIDS 5 EXTRA PAGES) ============ */
   #printArea { display: none; }
   @media print {
     @page {
@@ -437,37 +440,42 @@
       margin: 0 !important;
       padding: 0 !important;
       background: #ffffff !important;
-      height: auto !important;
-      overflow: visible !important;
+      height: 100% !important;
+      max-height: 100% !important;
+      overflow: hidden !important;
     }
 
     body * {
+      display: none !important;
       visibility: hidden !important;
     }
 
     #printArea, #printArea * {
+      display: block !important;
       visibility: visible !important;
     }
 
     #printArea {
-      display: block !important;
-      position: absolute !important;
+      position: fixed !important;
       left: 0 !important;
       top: 0 !important;
       width: 100% !important;
+      height: 100% !important;
       margin: 0 !important;
       padding: 0 !important;
+      overflow: hidden !important;
     }
 
     .resume-page {
       box-shadow: none !important;
       width: 100% !important;
       max-width: 100% !important;
-      min-height: auto !important;
-      height: auto !important;
+      min-height: 100% !important;
+      height: 100% !important;
       margin: 0 !important;
-      padding: 12mm 15mm !important;
+      padding: 10mm 14mm !important;
       page-break-after: avoid !important;
+      page-break-before: avoid !important;
       page-break-inside: avoid !important;
       transform: none !important;
     }
@@ -506,8 +514,8 @@
       <button class="btn-action btn-template-trigger" id="btnOpenTemplates">🎨 Change Template (<span id="activeTmplName">1/25</span>)</button>
     </div>
     <div class="action-group-right">
-      <button class="wm-btn" id="wmToggleBtn" type="button" title="वॉटरमार्क हटाने के लिए क्लिक करें">
-        🔒 Remove Watermark
+      <button class="wm-btn" id="wmToggleBtn" type="button" title="Remove Watermark">
+        🔒 Watermark
       </button>
       <button class="btn-action btn-save" id="btnSaveData">💾 Save</button>
       <button class="btn-action btn-history" id="btnOpenHistory">🕒 History</button>
@@ -899,7 +907,6 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
     }
   }
 
-  // Live input listening
   var debounceTimer = null;
   var inputSelector = '#f_name,#f_title,#f_phone,#f_email,#f_location,#f_linkedin,#f_dob,#f_nationality,#f_summary,#f_experience,#f_education,#f_skills,#f_strengths,#f_certs,#f_languages';
   document.querySelectorAll(inputSelector).forEach(function(el) {
@@ -909,7 +916,6 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
     });
   });
 
-  // Photo listener
   var photoInp = $('photoInput');
   if (photoInp) {
     photoInp.addEventListener('change', function(e) {
@@ -940,7 +946,7 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
       } else {
         document.body.classList.add('has-watermark');
         wmBtn.className = 'wm-btn';
-        wmBtn.innerHTML = '🔒 Remove Watermark';
+        wmBtn.innerHTML = '🔒 Watermark';
       }
     });
   }
@@ -975,7 +981,7 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
     claimBtn.addEventListener('click', function() {
       document.body.classList.remove('has-watermark');
       wmBtn.className = 'wm-btn removed';
-      wmBtn.innerHTML = '✨ Watermark Removed';
+      wmBtn.innerHTML = '✨ Free';
       adModal.classList.remove('open');
     });
   }
@@ -1185,7 +1191,6 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
     });
   }
 
-  // First boot render
   renderLivePreview();
 })();
 </script>
