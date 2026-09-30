@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Webcam Test — Check Camera, Resolution & FPS Online | DocEasy</title>
+<meta name="description" content="Free online webcam tester. Check your camera resolution, frame rate, aspect ratio, and take snapshots instantly. Works on desktop and mobile — 100% browser-based, no upload, no signup.">
+<meta name="keywords" content="webcam test, camera test, online webcam tester, check webcam, camera resolution test, webcam fps test, test camera online">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-webcam-test.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Webcam Test — Check Camera, Resolution & FPS | DocEasy">
+<meta property="og:description" content="Test your webcam instantly. Check resolution, FPS, and take snapshots. No signup, 100% private.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-webcam-test.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Webcam Test — DocEasy">
+<meta name="twitter:description" content="Free online webcam tester. No signup, 100% private.">
+<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Webcam Test — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/media-webcam-test.html",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free browser-based webcam tester. Check resolution, FPS, aspect ratio, and take snapshots."
+}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<style>
+/* Hide ad slots until AdSense approval */
+.ad-slot-container,
+.ad-placeholder {
+  display: none !important;
+}
+
+/* ============ Tool-specific styles ============ */
+.cam-wrap {
+  max-width: 780px;
+  margin: 26px auto 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.cam-preview {
+  position: relative;
+  background: #0f172a;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+.cam-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.cam-preview video.active { display: block; }
+.cam-preview .placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+}
+.cam-preview .placeholder svg {
+  width: 52px;
+  height: 52px;
+  stroke: #64748b;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cam-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border-top: 1px solid var(--border-color);
+  background: var(--card-hover);
+  justify-content: center;
+}
+.cam-btn {
+  padding: 10px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  background: var(--card-bg);
+  color: var(--text-color);
+  white-space: nowrap;
+}
+.cam-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.cam-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.cam-btn:disabled:hover {
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+.cam-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
+}
+.cam-btn.primary:hover {
+  background: var(--accent);
+  color: #ffffff;
+  filter: brightness(1.08);
+}
+.cam-btn.danger {
+  background: #dc2626;
+  border-color: #b91c1c;
+  color: #ffffff;
+}
+.cam-btn.danger:hover {
+  background: #b91c1c;
+  color: #ffffff;
+}
+.cam-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.error-box {
+  display: none;
+  max-width: 780px;
+  margin: 14px auto 0;
+  padding: 12px 16px;
+  background: rgba(220,38,38,0.08);
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  color: #b91c1c;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+[data-theme="dark"] .error-box {
+  background: rgba(220,38,38,0.14);
+  color: #fca5a5;
+}
+.error-box.active { display: block; }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  max-width: 780px;
+  margin: 20px auto 0;
+}
+.info-card {
+  padding: 14px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+.info-card .lbl {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 800;
+  color: var(--subtext-color);
+}
+.info-card .val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-top: 4px;
+  letter-spacing: -0.3px;
+  word-break: break-word;
+}
+.info-card .sub {
+  font-size: 11px;
+  color: var(--subtext-color);
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.snapshot-wrap {
+  max-width: 780px;
+  margin: 18px auto 0;
+  padding: 16px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-align: center;
+}
+.snapshot-wrap img {
+  max-width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  display: block;
+  margin: 0 auto;
+}
+.snapshot-wrap .empty {
+  color: var(--subtext-color);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 20px 10px;
+}
+
+@media (max-width: 768px) {
+  .cam-controls { padding: 12px; gap: 8px; }
+  .cam-btn { padding: 9px 14px; font-size: 12.5px; }
+  .info-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .cam-btn { padding: 8px 12px; font-size: 12px; gap: 6px; }
+  .cam-btn svg { width: 14px; height: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Webcam Test</h1>
+    <p class="hero-sub">Check your webcam resolution, frame rate, and aspect ratio in seconds. Take instant snapshots and verify your camera before any meeting, exam, or recording — 100% browser-based, no upload, no signup.</p>
+  </div>
+
+  <div class="hd-banner">
+    <div class="hd-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 7l-7 5 7 5V7z"/>
+        <rect x="1" y="5" width="15" height="14" rx="2"/>
+      </svg>
+    </div>
+    <div class="hd-text">
+      <b>Instant Camera Check — No Install Needed</b>
+      <small>Verify resolution, FPS, aspect ratio, and active device. Works on laptops, desktops, tablets, and phones. Your video never leaves your device.</small>
+    </div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="cam-wrap">
+    <div class="cam-preview" id="camPreview">
+      <div class="placeholder" id="camPlaceholder">
+        <svg viewBox="0 0 24 24">
+          <path d="M23 7l-7 5 7 5V7z"/>
+          <rect x="1" y="5" width="15" height="14" rx="2"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        </svg>
+        <span>Camera preview will appear here</span>
+      </div>
+      <video id="camVideo" autoplay playsinline muted></video>
+    </div>
+    <div class="cam-controls">
+      <button class="cam-btn primary" id="btnStart" type="button">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Start Camera
+      </button>
+      <button class="cam-btn" id="btnSwitch" type="button" disabled>
+        <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+        Switch Camera
+      </button>
+      <button class="cam-btn" id="btnSnapshot" type="button" disabled>
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+        Take Snapshot
+      </button>
+      <button class="cam-btn danger" id="btnStop" type="button" disabled>
+        <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>
+        Stop Camera
+      </button>
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="lbl">Resolution</div>
+      <div class="val" id="infoRes">—</div>
+      <div class="sub">width × height</div>
+    </div>
+    <div class="info-card">
+      <div class="lbl">Frame Rate</div>
+      <div class="val" id="infoFps">—</div>
+      <div class="sub">frames per second</div>
+    </div>
+    <div class="info-card">
+      <div class="lbl">Aspect Ratio</div>
+      <div class="val" id="infoAspect">—</div>
+      <div class="sub">video ratio</div>
+    </div>
+    <div class="info-card">
+      <div class="lbl">Active Camera</div>
+      <div class="val" id="infoDevice" style="font-size:13px;">—</div>
+      <div class="sub">device label</div>
+    </div>
+  </div>
+
+  <div class="snapshot-wrap" id="snapshotWrap">
+    <div class="empty" id="snapEmpty">No snapshot taken yet. Click "Take Snapshot" to capture the current frame.</div>
+    <img id="snapImg" alt="Webcam snapshot preview" style="display:none;">
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <!-- ============ SEO ARTICLE ============ -->
+  <section class="seo-article">
+
+    <h2>Complete Guide: How to Test Your Webcam Online (2026)</h2>
+
+    <p>Your webcam is one of the most-used components of your computer, yet most people never verify whether it's actually working until the moment it fails — usually five minutes before an important video call, online exam, or job interview. The DocEasy <b>Webcam Test</b> tool gives you a fast, private, browser-based way to check your camera's resolution, frame rate, aspect ratio, and active device, and to capture a snapshot of your video feed — all without installing any software or uploading a single frame.</p>
+
+    <h3>What is a Webcam Test?</h3>
+
+    <p>A webcam test is a quick diagnostic that verifies your camera is connected, permissions are granted, and the video feed is being captured correctly by your browser. It reveals critical technical details such as the actual pixel resolution your camera is delivering, how many frames per second it can stream, and which physical device is currently active. This information matters because webcams often negotiate different settings depending on the browser, operating system, and the specific application requesting the camera.</p>
+
+    <p>Modern browsers like Chrome, Edge, Firefox, and Safari use the <code>MediaDevices.getUserMedia()</code> API to access cameras. This API allows web pages to request video and audio streams directly from the user's device. The DocEasy Webcam Test builds on this standard API and exposes the full capability report from your browser — no third-party plugins, no ActiveX controls, no Java applets.</p>
+
+    <h3>Why Test Your Webcam?</h3>
+
+    <p>There are many situations where a webcam test is essential:</p>
+
+    <ul>
+      <li><b>Before job interviews:</b> Platforms like Zoom, Google Meet, Microsoft Teams, and HireVue all rely on the camera working perfectly. A last-minute failure can cost you the interview.</li>
+      <li><b>Before online exams:</b> Proctored exams (SSC, UPSC, NTA, IELTS, GRE) require an active camera with specific minimum resolution. Test beforehand to avoid disqualification.</li>
+      <li><b>Before recording videos:</b> If you record YouTube videos, podcasts, or course content, you need to know your camera's true resolution and frame rate.</li>
+      <li><b>Before client meetings:</b> Professional calls demand clear video. Check lighting, focus, and framing in advance.</li>
+      <li><b>Troubleshooting camera problems:</b> If the camera isn't working in Zoom or Meet, this tool isolates whether the problem is the camera, the browser, or the application.</li>
+      <li><b>Verifying a new webcam:</b> After buying a new webcam, confirm it delivers the advertised resolution.</li>
+      <li><b>Checking permissions:</b> Browsers remember camera permissions per site. This tool confirms whether your browser is currently allowed to access the camera.</li>
+    </ul>
+
+    <h3>What Information Does the Test Show?</h3>
+
+    <p>The tool reports four key metrics:</p>
+
+    <h4>1. Resolution (Width × Height)</h4>
+    <p>This is the actual pixel dimensions your camera is streaming. Most modern laptops deliver 1280×720 (720p), while external webcams often deliver 1920×1080 (1080p) or higher. The resolution shown here is what the browser negotiated — it may be lower than your camera's maximum if the browser or system is limiting it.</p>
+
+    <h4>2. Frame Rate (FPS)</h4>
+    <p>Frames per second measures how smoothly your video plays. A webcam delivering 30 FPS gives smooth motion; 60 FPS is smoother but uses more bandwidth. Most video conferencing apps request 30 FPS. If your reported FPS is below 15, your video will look choppy during calls.</p>
+
+    <h4>3. Aspect Ratio</h4>
+    <p>This is the ratio of width to height in your video. The standard for modern webcams is 16:9 (widescreen). Older cameras may use 4:3. Video conferencing apps expect 16:9 — a mismatched aspect ratio can crop your face or add black bars.</p>
+
+    <h4>4. Active Camera (Device Label)</h4>
+    <p>This shows which physical camera is currently streaming. If you have both a built-in laptop camera and an external USB webcam, this tells you which one is active. Useful when switching between front and rear cameras on a phone or tablet.</p>
+
+    <h3>How to Use This Webcam Test</h3>
+
+    <ol>
+      <li><b>Step 1 — Click "Start Camera":</b> Your browser will ask for permission to access the camera. Click "Allow". If you previously blocked access, you'll need to reset the permission in your browser settings.</li>
+      <li><b>Step 2 — Watch the preview:</b> Once granted, your live video feed appears in the preview window. The four info cards below will populate with resolution, FPS, aspect ratio, and device name.</li>
+      <li><b>Step 3 — Switch camera (optional):</b> On phones or tablets with front and rear cameras, click "Switch Camera" to toggle between them. On laptops with multiple external webcams, this cycles through available devices.</li>
+      <li><b>Step 4 — Take a snapshot:</b> Click "Take Snapshot" to capture the current frame. The image appears below. Right-click and "Save image as" to download it, or use it to check framing, lighting, and focus.</li>
+      <li><b>Step 5 — Stop when done:</b> Click "Stop Camera" to release the camera and turn off the indicator light. This is important for privacy — you should always stop the camera when you're finished.</li>
+    </ol>
+
+    <h3>How It Works (Under the Hood)</h3>
+
+    <p>When you click "Start Camera", the tool calls <code>navigator.mediaDevices.getUserMedia()</code> with video constraints that request the ideal resolution of 1280×720 and the default facing mode. The browser then:</p>
+
+    <ol>
+      <li>Checks if the page has camera permission.</li>
+      <li>Prompts you if permission hasn't been granted before.</li>
+      <li>Selects the best-matching physical camera.</li>
+      <li>Negotiates resolution and frame rate based on the camera's capabilities.</li>
+      <li>Returns a <code>MediaStream</code> object to the page.</li>
+    </ol>
+
+    <p>The page then attaches the stream to a <code>&lt;video&gt;</code> element and reads the track's settings via <code>track.getSettings()</code>. These settings contain the actual width, height, frame rate, and device label — the values you see in the four info cards. The snapshot feature uses the HTML5 canvas API: the current video frame is drawn onto an offscreen canvas and exported as a PNG data URL.</p>
+
+    <h3>Why Use DocEasy Instead of Other Webcam Tests?</h3>
+
+    <ul>
+      <li><b>100% Private:</b> Your video frames never leave your browser. Nothing is uploaded, nothing is logged, nothing is stored on any server.</li>
+      <li><b>No Signup:</b> No account, no email, no password. Just open and test.</li>
+      <li><b>Works Everywhere:</b> Desktop, laptop, tablet, phone — any modern browser supports it.</li>
+      <li><b>Offline Capable:</b> After the page loads once, you can disconnect from the internet and the test still works.</li>
+      <li><b>Clean Interface:</b> No ads cluttering the interface, no pop-ups, no forced downloads.</li>
+      <li><b>Mobile Friendly:</b> Fully responsive layout that works on small screens and supports front/rear camera switching.</li>
+    </ul>
+
+    <h3>Common Webcam Problems and How to Fix Them</h3>
+
+    <h4>Problem 1: "Permission Denied" Error</h4>
+    <p>Your browser is blocking camera access for this site. Click the lock icon in the address bar, find "Camera", and set it to "Allow". Then reload the page. On iOS Safari, go to Settings → Safari → Camera and allow access.</p>
+
+    <h4>Problem 2: Black or Frozen Preview</h4>
+    <p>Another application may already be using the camera (Zoom, Teams, OBS, etc.). Close any other app that might be holding the camera, then click Stop and Start again. On Windows, check Settings → Privacy → Camera to ensure app access is allowed.</p>
+
+    <h4>Problem 3: Very Low FPS</h4>
+    <p>Your system may be under heavy load, or your USB webcam may be connected to a slow USB port. Try disconnecting other USB devices, moving the webcam to a USB 3.0 port, and closing background applications. Also check that your lighting is adequate — some webcams reduce frame rate in low light.</p>
+
+    <h4>Problem 4: Wrong Camera Selected</h4>
+    <p>If your laptop has both an integrated camera and an external one, the browser may pick the wrong one. Use the "Switch Camera" button to cycle through available devices. If the external webcam doesn't appear, check that it's properly plugged in and recognised by the operating system.</p>
+
+    <h4>Problem 5: Blurry Video</h4>
+    <p>Clean the camera lens with a soft microfibre cloth. Ensure adequate lighting on your face — front-facing light is best. Avoid backlighting from windows. If the image is still blurry, your camera may have a fixed focus; move closer to the lens (about 50–70 cm).</p>
+
+    <h3>Tips for a Great Webcam Setup</h3>
+
+    <ul>
+      <li><b>Lighting:</b> Face a window or use a ring light. Never sit with a bright window behind you — you'll be silhouetted.</li>
+      <li><b>Camera height:</b> Position the camera at eye level. A camera pointing up your nose looks unflattering; a camera pointing down looks distant.</li>
+      <li><b>Background:</b> Use a clean, uncluttered background. A plain wall or bookshelf works better than a messy room.</li>
+      <li><b>Distance:</b> Sit about 50–80 cm from the camera. Too close distorts your face; too far makes you look small.</li>
+      <li><b>Stable internet:</b> Webcam quality depends on upload bandwidth. For 1080p video calls, you need at least 3 Mbps upload.</li>
+      <li><b>Close other apps:</b> Background apps that use the camera (or GPU) can reduce your FPS. Close them before important calls.</li>
+      <li><b>Test before every meeting:</b> Join the meeting 5 minutes early and run a quick self-preview — many platforms have this built in.</li>
+    </ul>
+
+    <h3>Browser Compatibility</h3>
+
+    <p>This tool works in all modern browsers that support the MediaDevices API:</p>
+
+    <ul>
+      <li><b>Google Chrome</b> — Full support, best performance</li>
+      <li><b>Microsoft Edge</b> — Full support (Chromium-based)</li>
+      <li><b>Mozilla Firefox</b> — Full support</li>
+      <li><b>Safari (macOS)</b> — Full support from Safari 11+</li>
+      <li><b>Safari (iOS)</b> — Full support from iOS 11+</li>
+      <li><b>Opera</b> — Full support</li>
+      <li><b>Brave</b> — Full support (requires enabling camera in Brave Shields)</li>
+    </ul>
+
+    <p>Older browsers (Internet Explorer, legacy Edge) do not support this API. If you're still using them, upgrade to any modern browser.</p>
+
+    <h3>Privacy and Security</h3>
+
+    <p>Webcams are inherently sensitive. DocEasy takes privacy seriously:</p>
+
+    <ul>
+      <li><b>No uploads:</b> All video is processed locally in your browser. No frames, no images, no metadata are ever transmitted.</li>
+      <li><b>No storage:</b> The tool doesn't save snapshots to any server. Your snapshots exist only in your browser's memory until you close the page.</li>
+      <li><b>No tracking:</b> We don't log when you start the camera, which device you use, or what you view.</li>
+      <li><b>No account:</b> Use the tool completely anonymously — no signup, no email, no login.</li>
+      <li><b>Offline mode:</b> After the page loads, disconnect from Wi-Fi. The tool continues working entirely from browser memory.</li>
+      <li><b>You control the camera:</b> The tool only accesses the camera when you click "Start Camera". It stops immediately when you click "Stop Camera" or close the page.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
+      <summary>Is this webcam test really free?</summary>
+      <p>Yes. 100% free forever. No signup, no email, no credit card, no premium tier.</p>
+    </details>
+
+    <details>
+      <summary>Is my video recorded or uploaded?</summary>
+      <p>No. All video processing happens entirely in your browser. Nothing is uploaded, stored, or shared. Your camera feed never leaves your device.</p>
+    </details>
+
+    <details>
+      <summary>Why does my browser ask for camera permission?</summary>
+      <p>The browser requires explicit user permission before any website can access the camera. This is a security feature — it prevents malicious pages from spying on you. Only grant permission to sites you trust.</p>
+    </details>
+
+    <details>
+      <summary>Can I test an external USB webcam?</summary>
+      <p>Yes. If your external webcam is properly connected and recognised by the operating system, the browser will list it as an available device. Use "Switch Camera" to cycle to it.</p>
+    </details>
+
+    <details>
+      <summary>Does it work on mobile phones?</summary>
+      <p>Yes. On phones and tablets, the tool supports switching between front and rear cameras using the "Switch Camera" button.</p>
+    </details>
+
+    <details>
+      <summary>Why is my resolution lower than my camera's spec?</summary>
+      <p>Browsers often request a default ideal resolution (typically 720p) to conserve bandwidth. Your camera may support 1080p or 4K, but the browser negotiates a lower setting unless the page explicitly requests higher. This test uses ideal constraints to get the best available quality.</p>
+    </details>
+
+    <details>
+      <summary>What does "frame rate" mean?</summary>
+      <p>Frames per second (FPS) is how many video frames your camera delivers each second. 30 FPS is standard for video calls. 60 FPS is smoother. Below 15 FPS, video looks choppy.</p>
+    </details>
+
+    <details>
+      <summary>Why is my video blurry or dark?</summary>
+      <p>Common causes: dirty lens, poor lighting, backlighting, or camera not in focus. Clean the lens, face a light source, and sit at a moderate distance.</p>
+    </details>
+
+    <details>
+      <summary>Can I download the snapshot?</summary>
+      <p>Yes. After taking a snapshot, right-click the image and choose "Save image as". It saves as a PNG file.</p>
+    </details>
+
+    <details>
+      <summary>Does the tool work offline?</summary>
+      <p>Yes. After the page loads once, disconnect from the internet. All processing continues to work locally.</p>
+    </details>
+
+    <details>
+      <summary>Can I use this to test my microphone too?</summary>
+      <p>This tool is for video only. For microphone testing, use our dedicated <a href="media-mic-test.html">Mic Test</a> tool.</p>
+    </details>
+
+    <details>
+      <summary>What if the camera doesn't start?</summary>
+      <p>Check: (1) Another app isn't using the camera. (2) Browser permission is granted. (3) Camera drivers are installed. (4) You're using a modern browser. Try restarting the browser and clicking Start again.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <p>If you found this webcam test useful, you may also like:</p>
+
+    <ul>
+      <li><a href="media-mic-test.html">Mic Test</a> — Check your microphone input levels</li>
+      <li><a href="media-webcam-recorder.html">Webcam Recorder</a> — Record videos from your camera</li>
+      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Capture your screen with audio</li>
+      <li><a href="media-voice-recorder.html">Voice Recorder</a> — Record high-quality audio</li>
+      <li><a href="media-text-to-speech.html">Text to Speech</a> — Convert text into speech</li>
+      <li><a href="media-editor.html">Media Editor</a> — Edit and trim your recordings</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>Whether you're preparing for a job interview, an online exam, a client presentation, or just want to verify that your webcam is working, DocEasy's Webcam Test gives you a fast, private, and accurate way to check your camera. See the exact resolution, frame rate, aspect ratio, and device name — and take snapshots to verify framing and lighting. All in your browser. All completely private.</p>
+
+    <p>Click "Start Camera" above and test your webcam now.</p>
+
+  </section>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  const video = document.getElementById("camVideo");
+  const placeholder = document.getElementById("camPlaceholder");
+  const btnStart = document.getElementById("btnStart");
+  const btnStop = document.getElementById("btnStop");
+  const btnSwitch = document.getElementById("btnSwitch");
+  const btnSnapshot = document.getElementById("btnSnapshot");
+  const errorBox = document.getElementById("errorBox");
+  const infoRes = document.getElementById("infoRes");
+  const infoFps = document.getElementById("infoFps");
+  const infoAspect = document.getElementById("infoAspect");
+  const infoDevice = document.getElementById("infoDevice");
+  const snapImg = document.getElementById("snapImg");
+  const snapEmpty = document.getElementById("snapEmpty");
+
+  let stream = null;
+  let currentFacing = "user";
+
+  function showError(msg) {
+    errorBox.textContent = msg;
+    errorBox.classList.add("active");
+  }
+  function hideError() {
+    errorBox.classList.remove("active");
+  }
+
+  function updateInfo() {
+    if (!stream) return;
+    const track = stream.getVideoTracks()[0];
+    if (!track) return;
+    const settings = track.getSettings ? track.getSettings() : {};
+    const w = settings.width || video.videoWidth;
+    const h = settings.height || video.videoHeight;
+    const fps = settings.frameRate ? Math.round(settings.frameRate) : null;
+
+    infoRes.textContent = w && h ? (w + " × " + h) : "—";
+    infoFps.textContent = fps ? (fps + " fps") : "—";
+
+    if (w && h) {
+      const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+      const g = gcd(w, h);
+      infoAspect.textContent = (w / g) + ":" + (h / g);
+    } else {
+      infoAspect.textContent = "—";
+    }
+
+    infoDevice.textContent = track.label || "Default Camera";
+  }
+
+  async function startCamera(facing) {
+    hideError();
+    if (stream) {
+      stream.getTracks().forEach(function (t) { t.stop(); });
+      stream = null;
+    }
+    try {
+      const constraints = {
+        video: {
+          facingMode: facing || "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false
+      };
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+      video.srcObject = stream;
+      video.classList.add("active");
+      placeholder.style.display = "none";
+      btnStart.disabled = true;
+      btnStop.disabled = false;
+      btnSwitch.disabled = false;
+      btnSnapshot.disabled = false;
+
+      video.onloadedmetadata = function () {
+        updateInfo();
+      };
+      setTimeout(updateInfo, 300);
+
+      const track = stream.getVideoTracks()[0];
+      if (track) {
+        track.onended = function () { stopCamera(); };
+      }
+    } catch (err) {
+      showError("Could not access camera: " + (err.message || "Permission denied. Please allow camera access in your browser settings."));
+      stopCamera();
+    }
+  }
+
+  function stopCamera() {
+    if (stream) {
+      stream.getTracks().forEach(function (t) { t.stop(); });
+      stream = null;
+    }
+    video.srcObject = null;
+    video.classList.remove("active");
+    placeholder.style.display = "flex";
+    btnStart.disabled = false;
+    btnStop.disabled = true;
+    btnSwitch.disabled = true;
+    btnSnapshot.disabled = true;
+    infoRes.textContent = "—";
+    infoFps.textContent = "—";
+    infoAspect.textContent = "—";
+    infoDevice.textContent = "—";
+  }
+
+  async function switchCamera() {
+    currentFacing = currentFacing === "user" ? "environment" : "user";
+    await startCamera(currentFacing);
+  }
+
+  function takeSnapshot() {
+    if (!stream) return;
+    const w = video.videoWidth;
+    const h = video.videoHeight;
+    if (!w || !h) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, w, h);
+    snapImg.src = canvas.toDataURL("image/png");
+    snapImg.style.display = "block";
+    snapEmpty.style.display = "none";
+  }
+
+  btnStart.addEventListener("click", function () { startCamera(currentFacing); });
+  btnStop.addEventListener("click", stopCamera);
+  btnSwitch.addEventListener("click", switchCamera);
+  btnSnapshot.addEventListener("click", takeSnapshot);
+
+  window.addEventListener("beforeunload", function () {
+    if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
+  });
+})();
+</script>
+</body>
+</html>
