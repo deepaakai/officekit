@@ -3,24 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>2 in 1 ID Maker — Aadhaar, PAN Front & Back on One Page | DocEasy</title>
-<meta name="description" content="Aadhaar, PAN, Voter ID ka front aur back ek hi page par. Free 2 in 1 ID Maker — ek A4 page par dono side, print-ready PDF. No upload, no signup, 100% private.">
-<meta name="keywords" content="2 in 1 id maker, aadhaar front back one page, aadhaar 2 in 1, pan card 2 in 1 page, id card ek page par, aadhaar one page pdf, front back 1 page">
+<title>2 in 1 ID Maker — Auto-Crop Aadhaar, PAN Front & Back | DocEasy</title>
+<meta name="description" content="Aadhaar, PAN, Voter ID ka front aur back auto-crop karke ek hi page par. Auto-detect card corners, perspective fix, print-ready PDF. 100% browser-based, no upload, no signup.">
+<meta name="keywords" content="2 in 1 id maker, aadhaar auto crop, aadhaar front back one page, pan card 2 in 1 page, auto crop id card">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
-
 <meta property="og:type" content="website">
-<meta property="og:title" content="2 in 1 ID Maker — Aadhaar, PAN ek page par | DocEasy">
-<meta property="og:description" content="Aadhaar, PAN, Voter ID ka front aur back ek hi page par. Free, private, no signup.">
+<meta property="og:title" content="2 in 1 ID Maker — Auto-Crop Aadhaar, PAN | DocEasy">
+<meta property="og:description" content="Aadhaar, PAN front aur back auto-crop karke ek hi page par.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
-
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="2 in 1 ID Maker — DocEasy">
-<meta name="twitter:description" content="Aadhaar, PAN front & back ek page par. 100% browser-based.">
+<meta name="twitter:description" content="Aadhaar, PAN front & back ek page par with auto-crop.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
-
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
 <script type="application/ld+json">
@@ -32,7 +29,7 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any (Web)",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Aadhaar, PAN, Voter ID ka front aur back ek hi A4 page par. Free, browser-based, 100% private."
+  "description": "Aadhaar, PAN front aur back auto-crop karke ek hi A4 page par."
 }
 </script>
 
@@ -41,233 +38,97 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Kya ye 2 in 1 ID Maker bilkul free hai?","acceptedAnswer":{"@type":"Answer","text":"Haan — 100% free forever. No signup, no email, no watermark, no daily limit."}},
-    {"@type":"Question","name":"Kya meri ID card photos kisi server par upload hoti hain?","acceptedAnswer":{"@type":"Answer","text":"Kabhi nahi. Sab merging locally aapke browser mein hoti hai using Canvas aur pdf-lib. Aapki images kabhi device se bahar nahi jaati."}},
-    {"@type":"Question","name":"Kaunse file formats supported hain?","acceptedAnswer":{"@type":"Answer","text":"JPG, JPEG, PNG, WEBP, HEIC aur koi bhi image format jo browser khol sakta hai."}},
-    {"@type":"Question","name":"Kaunsa size PDF produce hota hai?","acceptedAnswer":{"@type":"Answer","text":"Standard A4 size — 210 x 297 mm (portrait) ya 297 x 210 mm (landscape) at 300 DPI."}},
-    {"@type":"Question","name":"Kya ye mobile phones par kaam karta hai?","acceptedAnswer":{"@type":"Answer","text":"Haan. Tool fully responsive hai aur Android, iPhone, aur tablets par kaam karta hai."}},
-    {"@type":"Question","name":"Kya bina internet ke merge kar sakte hain?","acceptedAnswer":{"@type":"Answer","text":"Haan. Page ek baar load hone ke baad, aap internet disconnect karke bhi merge kar sakte hain."}},
-    {"@type":"Question","name":"Kya card size choose kar sakte hain?","acceptedAnswer":{"@type":"Answer","text":"Haan — Actual Size (85.6 x 54 mm) ya Large (100 x 63 mm)."}},
-    {"@type":"Question","name":"Kya output normal printer par kaam karega?","acceptedAnswer":{"@type":"Answer","text":"Haan. PDF kisi bhi inkjet ya laser printer par A4 paper ke saath perfectly print hota hai."}}
+    {"@type":"Question","name":"Kya ye 2 in 1 ID Maker free hai?","acceptedAnswer":{"@type":"Answer","text":"Haan — 100% free forever. No signup, no email, no watermark, no daily limit."}},
+    {"@type":"Question","name":"Auto-crop kaise kaam karta hai?","acceptedAnswer":{"@type":"Answer","text":"OpenCV.js se card ke 4 corners detect hote hain, edge detection chalti hai, perspective correct hoti hai, aur exact CR80 size mein crop hoti hai."}},
+    {"@type":"Question","name":"Meri photos upload hoti hain?","acceptedAnswer":{"@type":"Answer","text":"Kabhi nahi. Sab processing aapke browser mein hoti hai. Photos device se bahar nahi jaati."}}
   ]
 }
 </script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
-
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="window._cvReady = true"></script>
 
 <style>
 .ad-slot-container, .ad-placeholder { display: none !important; }
+.merge-container { max-width: 980px; margin: 26px auto 0; }
 
-.merge-container {
-  max-width: 980px;
-  margin: 26px auto 0;
-}
-
-.upload-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 22px;
-}
+.upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
 .upload-slot {
-  position: relative;
-  background: var(--card-bg);
-  border: 2px dashed var(--border-color);
-  border-radius: 14px;
-  padding: 22px 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  position: relative; background: var(--card-bg);
+  border: 2px dashed var(--border-color); border-radius: 14px;
+  padding: 22px 16px; text-align: center; cursor: pointer;
+  transition: all 0.2s; min-height: 220px;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 10px; overflow: hidden;
 }
-.upload-slot:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-.upload-slot.has-image {
-  border-style: solid;
-  border-color: var(--accent);
-  background: var(--card-bg);
-  padding: 8px;
-}
-.upload-slot input[type="file"] {
-  display: none;
-}
-.upload-slot .slot-label {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--subtext-color);
-  margin-bottom: 4px;
-}
-.upload-slot .slot-title {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--text-color);
-  margin: 0;
-}
-.upload-slot .slot-hint {
-  font-size: 11.5px;
-  color: var(--subtext-color);
-  margin: 0;
-}
-.upload-slot svg.slot-icon {
-  width: 42px; height: 42px;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.upload-slot img.preview {
-  max-width: 100%;
-  max-height: 240px;
-  border-radius: 8px;
-  object-fit: contain;
-  display: block;
-}
+.upload-slot:hover { border-color: var(--accent); background: var(--accent-soft); }
+.upload-slot.has-image { border-style: solid; border-color: var(--accent); padding: 0; cursor: default; }
+.upload-slot input[type="file"] { display: none; }
+.upload-slot .slot-label { font-size: 11px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--subtext-color); margin-bottom: 4px; }
+.upload-slot .slot-title { font-size: 15px; font-weight: 800; color: var(--text-color); margin: 0; }
+.upload-slot .slot-hint { font-size: 11.5px; color: var(--subtext-color); margin: 0; }
+.upload-slot svg.slot-icon { width: 42px; height: 42px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.upload-slot .slot-canvas { display: block; width: 100%; height: auto; border-radius: 12px; background: #fff; }
 .upload-slot .change-btn {
-  position: absolute;
-  top: 8px; right: 8px;
-  background: rgba(220,38,38,0.92);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(220,38,38,0.92); color: #fff; border: none;
+  border-radius: 6px; padding: 5px 11px; font-size: 11px;
+  font-weight: 700; cursor: pointer; font-family: inherit; z-index: 5;
 }
-.upload-slot .change-btn:hover { background: #b91c1c; }
+.upload-slot .status-badge {
+  position: absolute; top: 8px; left: 8px;
+  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
+  border-radius: 6px; padding: 4px 10px; font-size: 10px;
+  font-weight: 800; letter-spacing: 0.4px; z-index: 5;
+}
+.upload-slot .status-badge.fail { background: linear-gradient(135deg,#f59e0b,#d97706); }
 
-.options-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 18px 20px;
-  margin-bottom: 22px;
+.processing-overlay {
+  position: absolute; inset: 0; background: rgba(15,23,42,0.75);
+  backdrop-filter: blur(3px); display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; z-index: 10; color: #fff; font-size: 13px; font-weight: 700;
 }
-.options-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.processing-overlay.active { display: flex; }
+.processing-overlay .spinner {
+  width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.25);
+  border-top-color: #fff; border-radius: 50%; animation: spin 0.9s linear infinite;
 }
-.option-group h4 {
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--subtext-color);
-  margin: 0 0 10px;
-}
-.option-group label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text-color);
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.options-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; }
+.options-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.option-group h4 { font-size: 11.5px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 10px; }
+.option-group label { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--text-color); padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
 .option-group label:hover { background: var(--card-hover); }
-.option-group input[type="radio"],
-.option-group input[type="checkbox"] {
-  accent-color: var(--accent);
-  width: 16px; height: 16px;
-  cursor: pointer;
-}
+.option-group input[type="radio"], .option-group input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
 
-.preview-section {
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 22px;
-  text-align: center;
-}
-.preview-section h4 {
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--subtext-color);
-  margin: 0 0 12px;
-}
-.preview-canvas {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.15);
-  background: #fff;
-  display: none;
-}
-.preview-empty {
-  padding: 40px 20px;
-  color: var(--subtext-color);
-  font-size: 13.5px;
-  font-weight: 600;
-}
+.preview-section { background: var(--card-hover); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; margin-bottom: 22px; text-align: center; }
+.preview-section h4 { font-size: 11.5px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 12px; }
+.preview-canvas { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 18px rgba(0,0,0,0.15); background: #fff; display: none; }
+.preview-empty { padding: 40px 20px; color: var(--subtext-color); font-size: 13.5px; font-weight: 600; }
 
-.action-bar {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 20px;
-}
+.action-bar { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
 .action-btn {
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 13.5px;
-  font-weight: 800;
-  border: 1.5px solid transparent;
-  cursor: pointer;
-  font-family: inherit;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.18s;
+  padding: 12px 24px; border-radius: 10px; font-size: 13.5px; font-weight: 800;
+  border: 1.5px solid transparent; cursor: pointer; font-family: inherit;
+  display: inline-flex; align-items: center; gap: 8px; transition: all 0.18s;
 }
-.action-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.action-btn.primary {
-  background: linear-gradient(135deg, var(--accent), #2563eb);
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(25,57,138,0.35);
-}
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.action-btn.primary { background: linear-gradient(135deg, var(--accent), #2563eb); color: #fff; box-shadow: 0 6px 18px rgba(25,57,138,0.35); }
 .action-btn.primary:hover:not(:disabled) { transform: translateY(-2px); }
-.action-btn.secondary {
-  background: var(--card-bg);
-  color: var(--text-color);
-  border-color: var(--border-color);
-}
+.action-btn.green { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
+.action-btn.green:hover:not(:disabled) { transform: translateY(-2px); }
+.action-btn.secondary { background: var(--card-bg); color: var(--text-color); border-color: var(--border-color); }
 .action-btn.secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-.action-btn svg {
-  width: 16px; height: 16px;
-  stroke: currentColor; fill: none;
-  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-}
+.action-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (max-width: 640px) {
   .upload-grid { grid-template-columns: 1fr; }
   .options-row { grid-template-columns: 1fr; gap: 12px; }
   .action-btn { flex: 1; min-width: 140px; justify-content: center; }
 }
-
 @media print {
   body * { visibility: hidden; }
   #print-canvas-area, #print-canvas-area * { visibility: visible; }
@@ -282,21 +143,21 @@
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">2 in 1 ID Maker</h1>
-    <p class="hero-sub">Aadhaar, PAN, Voter ID, ya kisi bhi ID card ka front aur back ek hi A4 page par. Print-ready PDF seconds mein — 100% browser-based, no upload, no signup.</p>
+    <h1 class="hero-title">2 in 1 ID Maker — Auto-Crop</h1>
+    <p class="hero-sub">Aadhaar, PAN, Voter ID ka front aur back <b>auto-crop</b> karke ek hi A4 page par. Photo tirchhi ho ya background ho — tool khud card detect karke crop kar lega. 100% browser-based.</p>
   </div>
 
   <div class="hd-banner">
     <div class="hd-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;display:block;">
-        <rect x="3" y="5" width="18" height="14" rx="2"/>
-        <circle cx="9" cy="11" r="2"/>
-        <path d="M13 10h5M13 14h5M6 16h12"/>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2 L2 7 L12 12 L22 7 Z"/>
+        <path d="M2 17 L12 22 L22 17"/>
+        <path d="M2 12 L12 17 L22 12"/>
       </svg>
     </div>
     <div class="hd-text">
-      <b>Ek Page. Dono Side. Print-Ready.</b>
-      <small>Aadhaar, PAN, Voter ID — front aur back dono ek A4 page par. Side-by-side ya upar-neeche layout choose karein. KYC, bank forms, aur exam applications ke liye perfect.</small>
+      <b>Auto-Crop with AI — Card Detect &amp; Perspective Fix</b>
+      <small>Aadhaar card photo tirchhi ho ya background ho, tool khud card ke corners detect karke crop kar dega. Print-ready output at exact 8.6 × 5.4 cm.</small>
     </div>
   </div>
 
@@ -305,65 +166,74 @@
   <div class="merge-container">
 
     <div class="upload-grid">
-      <div class="upload-slot" id="slot-front" onclick="document.getElementById('file-front').click()">
+      <div class="upload-slot" id="slot-front">
         <input type="file" id="file-front" accept="image/*">
+        <div class="processing-overlay" id="proc-front">
+          <div class="spinner"></div>
+          <span>Auto-cropping...</span>
+        </div>
         <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         <div class="slot-label">Step 1</div>
-        <p class="slot-title">Front Side (सामने का भाग)</p>
-        <p class="slot-hint">Click karein ya drag &amp; drop karein</p>
+        <p class="slot-title">Front Side</p>
+        <p class="slot-hint">Photo upload karein — auto-crop ho jaayega</p>
       </div>
 
-      <div class="upload-slot" id="slot-back" onclick="document.getElementById('file-back').click()">
+      <div class="upload-slot" id="slot-back">
         <input type="file" id="file-back" accept="image/*">
+        <div class="processing-overlay" id="proc-back">
+          <div class="spinner"></div>
+          <span>Auto-cropping...</span>
+        </div>
         <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         <div class="slot-label">Step 2</div>
-        <p class="slot-title">Back Side (पीछे का भाग)</p>
-        <p class="slot-hint">Click karein ya drag &amp; drop karein</p>
+        <p class="slot-title">Back Side</p>
+        <p class="slot-hint">Photo upload karein — auto-crop ho jaayega</p>
       </div>
     </div>
 
     <div class="options-card">
       <div class="options-row">
         <div class="option-group">
-          <h4>Layout / तरीका</h4>
-          <label><input type="radio" name="layout" value="side" checked> Side by Side (left-right, A4 Landscape)</label>
-          <label><input type="radio" name="layout" value="stack"> Stacked (upar-neeche, A4 Portrait)</label>
+          <h4>Layout</h4>
+          <label><input type="radio" name="layout" value="side" checked> Side by Side (A4 Landscape)</label>
+          <label><input type="radio" name="layout" value="stack"> Stacked (A4 Portrait)</label>
         </div>
         <div class="option-group">
-          <h4>Card Size / आकार</h4>
-          <label><input type="radio" name="size" value="actual" checked> Actual Size (85.6 × 54 mm) — original</label>
-          <label><input type="radio" name="size" value="large"> Large (100 × 63 mm) — thoda bada</label>
+          <h4>Card Size</h4>
+          <label><input type="radio" name="size" value="actual" checked> Actual Size (85.6 × 54 mm)</label>
+          <label><input type="radio" name="size" value="large"> Large (100 × 63 mm)</label>
         </div>
       </div>
       <div class="options-row" style="margin-top: 18px; grid-template-columns: 1fr;">
         <div class="option-group">
-          <h4>Watermark / वॉटरमार्क (optional)</h4>
-          <label><input type="checkbox" id="watermark-toggle"> Add small "DocEasy.org" watermark (bottom-right corner)</label>
-          <p style="font-size: 11.5px; color: var(--subtext-color); margin: 4px 0 0 28px;">
-            OFF रखें अगर bank या government submission के लिए use कर रहे हैं
-          </p>
+          <h4>Watermark (optional)</h4>
+          <label><input type="checkbox" id="watermark-toggle"> Add small "DocEasy.org" watermark (bottom-right)</label>
         </div>
       </div>
     </div>
 
     <div class="preview-section">
-      <h4>Live Preview / पूर्वावलोकन</h4>
+      <h4>Live Preview</h4>
       <div class="preview-empty" id="previewEmpty">Dono sides upload karein — preview yahan dikhega</div>
       <canvas id="previewCanvas" class="preview-canvas"></canvas>
     </div>
 
     <div class="action-bar">
+      <button class="action-btn green" id="btn-auto-crop" disabled>
+        <svg viewBox="0 0 24 24"><path d="M6 2 L2 6 L6 10"/><path d="M18 22 L22 18 L18 14"/></svg>
+        Re-Auto-Crop
+      </button>
       <button class="action-btn primary" id="btn-download-pdf" disabled>
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download as PDF
+        Download PDF
       </button>
       <button class="action-btn secondary" id="btn-download-jpg" disabled>
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg>
-        Download as JPG
+        Download JPG
       </button>
       <button class="action-btn secondary" id="btn-print" disabled>
         <svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Print Now
+        Print
       </button>
       <button class="action-btn secondary" id="btn-reset">
         <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -373,233 +243,62 @@
 
   </div>
 
+  <canvas id="temp-canvas" style="display:none;"></canvas>
+
   <div class="ad-slot-container">Advertisement</div>
 
   <section class="seo-article">
+    <h2>2 in 1 ID Maker with Auto-Crop — Aadhaar, PAN Front aur Back ek hi Page par (2026)</h2>
 
-    <h2>2 in 1 ID Maker — Aadhaar, PAN Front aur Back ek hi Page par (2026 Guide)</h2>
+    <p>Har Indian institution — banks, government portals, exam authorities, landlords, employers — aapke ID card ki copy maangti hai. Aur lagbhag sab ek hi page par chahte hain. DocEasy ka <b>2 in 1 ID Maker with Auto-Crop</b> aapke front aur back photos ko automatically crop karke, ek clean, print-ready A4 page par merge kar deta hai — seconds mein, puri tarah browser ke andar.</p>
 
-    <p>Har Indian institution — banks, government portals, exam authorities, landlords, employers — aapke ID card ki copy maangti hai. Aur lagbhag sab ek hi page par chahte hain. Lekin jab aap Aadhaar ya PAN card ka front aur back photograph karte hain, wo do alag images ban jaati hain, aur printing mein do pages lag jaate hain. DocEasy ka <b>2 in 1 ID Maker</b> isi problem ko solve karta hai — aapke front aur back photos ko ek clean, print-ready A4 page par merge kar deta hai, seconds mein, puri tarah browser ke andar.</p>
+    <h3>Auto-Crop Kya Hai — Aur Kyun Zaroori Hai</h3>
+    <p>Jab aap phone se Aadhaar card ki photo lete hain, to usually card table par rakha hota hai, aur photo mein bahut background bhi aa jaata hai. Agar aap isi photo ko merge kar dein, to output mein card chhota aur background zyada dikhega. Auto-Crop is problem ko solve karta hai — tool khud card ke 4 corners detect karta hai, background hataata hai, aur perspective correct karke exact CR80 size mein crop karta hai.</p>
 
-    <h3>Ye Tool Kyun Zaroori Hai</h3>
-
-    <p>Socho ki jab aap bank ya government office mein do-page KYC documents jama karte hain, to kya hota hai. Doosra page transit mein kho jaata hai. Do pages galat order mein staple ho jaate hain. Clerk ko samajh nahi aata kaunsa back-side kis front-side ka hai. Ye sab friction, delays, aur rejection paida karta hai.</p>
-
-    <p>Dono sides ko ek page par combine karke aap:</p>
-
-    <ul>
-      <li>Pages alag hone ya mis-match hone ka risk khatam kar dete hain</li>
-      <li>Paper usage 50% kam kar dete hain</li>
-      <li>Receiving clerk ke liye document process karna aasan bana dete hain</li>
-      <li>90% Indian portals aur offices ke exact format se match karte hain</li>
-      <li>Time bachate hain — koi cutting, pasting, ya manual cropping nahi</li>
-    </ul>
-
-    <h3>Kis-Kis ID Card ko Merge Kar Sakte Hain?</h3>
-
-    <p>Ye tool kisi bhi ID card ke saath kaam karta hai jo standard CR80 size (85.6 × 54 mm) mein hai — wahi size jo credit card ka hota hai. Isme shamil hain:</p>
-
-    <ul>
-      <li><b>Aadhaar Card</b> — UIDAI dwara jari</li>
-      <li><b>PAN Card</b> — Income Tax Department dwara jari</li>
-      <li><b>Voter ID</b> — Election Commission dwara jari</li>
-      <li><b>Driving Licence</b> — state RTOs dwara jari</li>
-      <li><b>Shram Card / Labour Card</b></li>
-      <li><b>Ration Card</b> (card format)</li>
-      <li><b>Ayushman Bharat Card</b></li>
-      <li><b>Health Insurance Cards</b></li>
-      <li><b>Bank-issued ID cards</b></li>
-      <li><b>Employee / Student ID cards</b></li>
-    </ul>
-
-    <p>Agar aap apne card ka front aur back photograph kar sakte hain, to ye tool unhe beautifully merge kar dega.</p>
-
-    <h3>Do Layout Options — Kab Kya Use Karein</h3>
-
-    <h4>Side by Side (A4 Landscape)</h4>
-    <p>Do cards left aur right mein A4 landscape sheet par rakhe jaate hain. Ye sabse common layout hai KYC submissions, bank account openings, aur government forms ke liye kyunki isme dono sides clearly visible rehti hain aur compare karna aasan hota hai. Aadhaar, PAN, aur Voter ID submissions ke liye recommended.</p>
-
-    <h4>Stacked Vertical (A4 Portrait)</h4>
-    <p>Do cards ek doosre ke upar A4 portrait sheet par rakhe jaate hain. Ye layout tab preferred hai jab receiving office document ko portrait orientation mein chahti hai — jaise kuch insurance claims, passport applications, aur legal filings. Driving Licence submissions aur un documents ke liye recommended jahan portrait paper mandatory ho.</p>
-
-    <h3>Step-by-Step Instructions</h3>
-
+    <h3>Kaise Kaam Karta Hai — Technical Detail</h3>
+    <p>Ye tool <b>OpenCV.js</b> use karta hai — Google ki computer vision library, jo JavaScript mein compiled hai. Photo upload karte hi ye steps chalte hain:</p>
     <ol>
-      <li><b>Step 1 — Front Side Upload karein:</b> Left slot par click karein aur apni front-side photo choose karein (JPG, PNG, ya koi bhi standard image format). Image turant browser mein load ho jaayegi.</li>
-      <li><b>Step 2 — Back Side Upload karein:</b> Right slot par click karein aur back-side photo choose karein. Dono images ab preview mein dikhengi.</li>
-      <li><b>Step 3 — Layout Choose karein:</b> "Side by Side" chunein A4 landscape output ke liye, ya "Stacked Vertical" A4 portrait output ke liye.</li>
-      <li><b>Step 4 — Card Size Choose karein:</b> "Actual Size" standard CR80 cards (85.6 × 54 mm) ke liye, ya "Large" agar thoda bada card chahiye easy reading ke liye.</li>
-      <li><b>Step 5 — Watermark (optional):</b> Agar aap chaahte hain ki "DocEasy.org" ka chhota watermark bottom-right corner par aaye, to checkbox tick karein. Bank ya government submission ke liye OFF rakhein.</li>
-      <li><b>Step 6 — Preview Check karein:</b> Live preview exactly dikhata hai merged page kaisa lagega. Dono cards visible, straight, aur legible hone chahiye.</li>
-      <li><b>Step 7 — Download ya Print karein:</b> "Download as PDF" par click karein highest quality ke liye (300 DPI), "Download as JPG" shareable image ke liye, ya "Print Now" direct print ke liye.</li>
+      <li><b>Grayscale conversion</b> — image ko black-and-white mein convert</li>
+      <li><b>Gaussian blur</b> — noise hataata hai</li>
+      <li><b>Canny edge detection</b> — card ki boundaries find karta hai</li>
+      <li><b>Contour detection</b> — sabse bada rectangle dhundta hai (yahi card hai)</li>
+      <li><b>Perspective transform</b> — tirchhe corners ko straight karta hai</li>
+      <li><b>Warp + Crop</b> — final card image banata hai</li>
     </ol>
-
-    <h3>Merging Kaise Hoti Hai — Andar Ki Baat</h3>
-
-    <p>Jab aap dono images upload karte hain, tool puri tarah aapke browser ke andar chalta hai — HTML5 Canvas aur pdf-lib use karke. Yahan step-by-step kya hota hai:</p>
-
-    <ol>
-      <li>Dono images browser memory mein load hoti hain.</li>
-      <li>Ek high-resolution canvas banaya jaata hai exactly A4 dimensions par (3508 × 2480 px landscape ke liye, 2480 × 3508 px portrait ke liye — 300 DPI par).</li>
-      <li>Dono images canvas par correct card size par draw ki jaati hain, beech mein comfortable gap ke saath.</li>
-      <li>Agar watermark ON hai, to "DocEasy.org" chhota text bottom-right corner par draw hota hai.</li>
-      <li>PDF export ke liye, canvas ko pdf-lib use karke correctly-sized A4 PDF page mein embed kiya jaata hai.</li>
-      <li>JPG export ke liye, canvas high-quality JPEG ke roop mein export hota hai.</li>
-    </ol>
-
-    <p>Kisi bhi point par koi image server par upload nahi hoti. Sab kuch local hai. Aap khud verify kar sakte hain — Developer Tools kholkar Network tab dekhein, zero outgoing requests carry your images.</p>
-
-    <h3>300 DPI Output Kyun Zaroori Hai</h3>
-
-    <p>Zyadatar KYC offices aur government portals 200–300 DPI par ID card copies maangte hain. Kam DPI (72 ya 96) par, card ka text blurry ho jaata hai, QR codes scan hona band ho jaate hain, aur chhoti details (jaise Aadhaar ke last few digits) smudge ho jaati hain. DocEasy ka 2 in 1 ID Maker true 300 DPI par output render karta hai, ensuring ki har detail razor-sharp rahe jab kisi bhi inkjet ya laser printer par print ho.</p>
-
-    <h3>Watermark — Kyun aur Kab Use Karein</h3>
-
-    <p>Watermark ek chhota optional feature hai jo aapki output file par "DocEasy.org" ka text bottom-right corner mein add karta hai. Iske fayde:</p>
-
-    <ul>
-      <li><b>Brand recall:</b> Jab aap file kisi aur ko bhejte hain, unhe pata chalta hai kaunse tool se banaya.</li>
-      <li><b>Free promotion:</b> Har PDF ke saath aapka naam viral hota hai.</li>
-      <li><b>Credibility:</b> Kuch users professional-looking output pasand karte hain.</li>
-    </ul>
-
-    <p><b>Kab OFF rakhein:</b> Bank KYC, government portals, exam applications, passport submissions, aur koi bhi official document jahan extra text allowed nahi hai. Default setting OFF hai — aap khud chunein.</p>
-
-    <h3>Best Results Ke Liye Tips</h3>
-
-    <ul>
-      <li><b>Scanner use karein agar possible ho:</b> Flatbed scanner 300 DPI par sabse clean images deta hai. Phone photos bhi achhi kaam karti hain agar bright, even lighting mein li gayi hon.</li>
-      <li><b>Shadows aur glare se bachein:</b> Card ko matte dark surface par daylight mein photograph karein. Camera flash se bachein — isse hot spots bante hain jo printed text chhupa dete hain.</li>
-      <li><b>Card flat rakhein:</b> Benta ya curved card text ko distort karta hai. Photograph se pehle kisi book ke neeche thodi der flatten karein.</li>
-      <li><b>Background crop kar dein:</b> Pehle hamare <a href="card-cropper.html">ID Card Cropper</a> se background hata dein taaki sirf card dikhe.</li>
-      <li><b>Merging se pehle dono sides check karein:</b> 200% zoom karke verify karein card number, photo, aur QR code readable hain.</li>
-      <li><b>Sahi layout chunein:</b> Side-by-side safer default hai. Sirf tab stacked use karein jab receiving office explicitly portrait orientation maange.</li>
-      <li><b>Plain A4 paper par print karein:</b> Regular 75–90 GSM paper perfectly kaam karta hai. Photo paper ya special cardstock ki zaroorat nahi.</li>
-    </ul>
-
-    <h3>Common Use Cases</h3>
-
-    <ul>
-      <li><b>Bank account opening:</b> Aadhaar ya PAN front + back ek page par KYC ke liye.</li>
-      <li><b>Government exam applications:</b> SSC, UPSC, NEET, JEE, IBPS ID proofs single pages par maangte hain.</li>
-      <li><b>Tax filing:</b> ITR submission ke liye clean single-page ID copies.</li>
-      <li><b>Passport applications:</b> Passport Seva portal specific ID proof layouts maangta hai.</li>
-      <li><b>Driving licence renewal:</b> Sarathi Parivahan single-page ID uploads maangta hai.</li>
-      <li><b>Insurance claims:</b> Insurers faster processing ke liye single-page ID copies prefer karte hain.</li>
-      <li><b>Rental agreements:</b> Landlords tenant ID proof ek sheet par maangte hain.</li>
-      <li><b>Job onboarding:</b> Employers single-page ID scans maangte hain.</li>
-      <li><b>School admissions:</b> Schools student aur parent ID proofs ek page par maangte hain.</li>
-      <li><b>eMitra / CSC submissions:</b> Citizen service centres documents faster process karte hain jab dono sides ek page par hon.</li>
-    </ul>
+    <p>Ye sab 2-3 seconds mein hota hai, aapke device par, bina kisi server ke.</p>
 
     <h3>Frequently Asked Questions</h3>
-
     <details>
-      <summary>Kya ye 2 in 1 ID Maker bilkul free hai?</summary>
-      <p>Haan — 100% free forever. No signup, no email, no watermark, no daily limit. Jitni baar chahiye use karein.</p>
+      <summary>Kya ye 2 in 1 ID Maker free hai?</summary>
+      <p>Haan — 100% free forever. No signup, no email, no watermark, no daily limit.</p>
     </details>
-
     <details>
-      <summary>Kya meri ID card photos kisi server par upload hoti hain?</summary>
-      <p>Kabhi nahi. Sab merging locally aapke browser mein hoti hai using Canvas aur pdf-lib. Aapki images kabhi device se bahar nahi jaati. Aap khud verify kar sakte hain Developer Tools → Network tab se.</p>
+      <summary>Auto-crop kaise kaam karta hai?</summary>
+      <p>OpenCV.js se card ke 4 corners detect hote hain, edge detection chalti hai, perspective correct hoti hai, aur exact CR80 size mein crop hoti hai.</p>
     </details>
-
     <details>
-      <summary>Kaunse file formats supported hain?</summary>
-      <p>Ye tool koi bhi image format accept karta hai jo aapka browser khol sakta hai: JPG, JPEG, PNG, WEBP, HEIC (Safari), aur more. Best results ke liye JPG ya PNG use karein.</p>
+      <summary>Meri photos upload hoti hain?</summary>
+      <p>Kabhi nahi. Sab processing aapke browser mein hoti hai. Photos device se bahar nahi jaati.</p>
     </details>
-
     <details>
-      <summary>Kya main do se zyada images merge kar sakta/sakti hoon?</summary>
-      <p>Current version exactly do images support karta hai (front + back). Do se zyada combine karne ke liye, hamare <a href="pdf-merge.html">Merge PDF</a> tool se images ko PDF mein convert karke merge karein.</p>
+      <summary>Agar auto-crop fail ho jaye to?</summary>
+      <p>Tool original photo use kar leta hai aur amber "Manual adjust" badge dikhata hai. Aap phir original photo manually crop karke re-upload kar sakte hain.</p>
     </details>
-
     <details>
       <summary>Kaunsa size PDF produce hota hai?</summary>
-      <p>Standard A4 size — 210 × 297 mm (portrait) ya 297 × 210 mm (landscape) at 300 DPI. Indian banks, government portals, aur exam authorities universally accept karte hain.</p>
-    </details>
-
-    <details>
-      <summary>Kya main card size choose kar sakta/sakti hoon?</summary>
-      <p>Haan — "Actual Size" standard CR80 (85.6 × 54 mm) deta hai, aur "Large" 100 × 63 mm deta hai for easier reading.</p>
-    </details>
-
-    <details>
-      <summary>Watermark kya hai aur kab use karein?</summary>
-      <p>Watermark ek chhota optional text hai jo "DocEasy.org" bottom-right corner mein add karta hai. Ye default OFF hai. Bank ya government submissions ke liye OFF rakhein. Casual sharing ke liye ON kar sakte hain.</p>
-    </details>
-
-    <details>
-      <summary>Kya watermark hata sakte hain?</summary>
-      <p>Bilkul. Watermark checkbox default OFF hai. Aap chahein to tick karein, warna bilkul clean output milega — koi branding nahi.</p>
-    </details>
-
-    <details>
-      <summary>Kya output normal printer par kaam karega?</summary>
-      <p>Haan. PDF kisi bhi inkjet ya laser printer par A4 paper ke saath perfectly print hota hai. Koi special settings nahi chahiye.</p>
-    </details>
-
-    <details>
-      <summary>Kya bina internet ke merge kar sakte hain?</summary>
-      <p>Haan. Page ek baar load hone ke baad, aap internet disconnect karke bhi merge kar sakte hain. Sab locally chalta hai.</p>
-    </details>
-
-    <details>
-      <summary>Kya ye mobile phones par kaam karta hai?</summary>
-      <p>Haan. Tool fully responsive hai aur Android phones, iPhones, aur tablets par kaam karta hai. Apne phone gallery se photos upload karein aur merged PDF instantly download karein.</p>
-    </details>
-
-    <details>
-      <summary>Merge karne ke baad cards readable hain ye kaise ensure karein?</summary>
-      <p>Pehle hamare <a href="card-cropper.html">ID Card Cropper</a> se har side ko precisely crop karein 300 DPI par. Phir clean crops ko merge karein for sharpest output.</p>
-    </details>
-
-    <details>
-      <summary>Kya cards rotate kar sakte hain agar sideways hain?</summary>
-      <p>Current version mein rotation nahi hai. Source photos ko upload se pehle kisi photo editor se rotate karein, ya ID Card Cropper use karein jo rotation include karta hai.</p>
-    </details>
-
-    <details>
-      <summary>Kya mera ID card different size ka hai to kya hoga?</summary>
-      <p>Zyadatar Indian ID cards CR80 standard (85.6 × 54 mm) follow karte hain. Agar aapka different hai, to "Large" option use karein ya upload se pehle manually crop karein.</p>
-    </details>
-
-    <details>
-      <summary>Kya file size limit hai?</summary>
-      <p>Koi hard limit nahi. Sirf constraint aapke device ki RAM hai. Har image 20 MB tak comfortably handle ho jaati hai on any modern phone or computer.</p>
-    </details>
-
-    <details>
-      <summary>Kya merged output download ke baad edit kar sakte hain?</summary>
-      <p>Haan. Output standard PDF ya JPG file hai — aap ise kisi bhi editor mein khol kar further changes kar sakte hain.</p>
+      <p>Standard A4 size — 210 × 297 mm (portrait) ya 297 × 210 mm (landscape) at 300 DPI.</p>
     </details>
 
     <h3>Related DocEasy Tools</h3>
-
-    <p>Ek baar ID cards merge ho jaane ke baad, ye tools aapka kaam complete karenge:</p>
-
     <ul>
-      <li><a href="card-cropper.html">ID Card Cropper</a> — Aadhaar, PAN, Voter ID ko 300 DPI par crop karein merging se pehle.</li>
-      <li><a href="passport-maker.html">Passport Photo Maker</a> — 35×45 mm passport photos A4 sheets par banayein.</li>
-      <li><a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature Resizer</a> — 213×213 aur 400×200 for UTI/NSDL submissions.</li>
-      <li><a href="signature-resize.html">Signature Resize</a> — Signatures ko exact pixel ya KB size mein resize karein exam forms ke liye.</li>
-      <li><a href="pdf-merge.html">Merge PDF</a> — Multiple PDFs ko ek file mein combine karein.</li>
-      <li><a href="pdf-compressor.html">Compress PDF</a> — Merged PDF size kam karein email ya upload ke liye.</li>
-      <li><a href="jpg-to-pdf.html">JPG to PDF</a> — Images ko PDF mein convert karein merging se pehle.</li>
-      <li><a href="../printing-tools.html">Printing Tools</a> — Sab print-related utilities ek jagah.</li>
+      <li><a href="card-cropper.html">ID Card Cropper</a> — Manual 300 DPI cropping</li>
+      <li><a href="passport-maker.html">Passport Photo Maker</a> — 35×45 mm photos</li>
+      <li><a href="pan-photo-signature-resizer.html">PAN Photo & Signature</a> — 213×213 & 400×200</li>
+      <li><a href="signature-resize.html">Signature Resize</a> — Exact pixel / KB size</li>
+      <li><a href="pdf-merge.html">Merge PDF</a> — Combine multiple PDFs</li>
+      <li><a href="jpg-to-pdf.html">JPG to PDF</a> — Images to PDF</li>
     </ul>
-
-    <h3>Conclusion</h3>
-
-    <p>Chahe aap bank mein KYC documents jama kar rahe hon, government exam ke liye apply kar rahe hon, tax file kar rahe hon, ya koi bhi official process complete kar rahe hon, DocEasy ka 2 in 1 ID Maker aapko sabse fast tarika deta hai Aadhaar, PAN, ya kisi bhi ID card ka front aur back ek hi print-ready A4 page par combine karne ka. No signup, no upload, no watermark — bas fast, private, honest document handling jo puri tarah browser mein chalti hai.</p>
-
-    <p>Upar apne front aur back photos upload karein, apna layout choose karein, aur merged page seconds mein download karein.</p>
-
   </section>
-
-  <div class="ad-slot-container">Advertisement</div>
-
-  <div id="print-canvas-area" style="display:none;"></div>
 
 </main>
 
@@ -613,23 +312,22 @@
 
   const DPI = 300;
   const MM_TO_PX = DPI / 25.4;
-
   const A4_LAND_W = Math.round(297 * MM_TO_PX);
   const A4_LAND_H = Math.round(210 * MM_TO_PX);
   const A4_PORT_W = Math.round(210 * MM_TO_PX);
   const A4_PORT_H = Math.round(297 * MM_TO_PX);
-
   const SIZES = {
     actual: { w: Math.round(85.6 * MM_TO_PX), h: Math.round(53.98 * MM_TO_PX) },
     large:  { w: Math.round(100 * MM_TO_PX),  h: Math.round(63 * MM_TO_PX) }
   };
-
   const GAP = 200;
 
   const slotFront = document.getElementById('slot-front');
   const slotBack  = document.getElementById('slot-back');
   const fileFront = document.getElementById('file-front');
   const fileBack  = document.getElementById('file-back');
+  const procFront = document.getElementById('proc-front');
+  const procBack  = document.getElementById('proc-back');
   const canvas = document.getElementById('previewCanvas');
   const ctx = canvas.getContext('2d');
   const previewEmpty = document.getElementById('previewEmpty');
@@ -637,11 +335,15 @@
   const btnJpg = document.getElementById('btn-download-jpg');
   const btnPrint = document.getElementById('btn-print');
   const btnReset = document.getElementById('btn-reset');
+  const btnAutoCrop = document.getElementById('btn-auto-crop');
   const wmToggle = document.getElementById('watermark-toggle');
 
-  let imgFront = null;
-  let imgBack  = null;
+  let imgFront = null;       // Canvas for front (cropped or original)
+  let imgBack  = null;       // Canvas for back
+  let origFront = null;      // Original uploaded image (for re-crop)
+  let origBack  = null;
 
+  // ---------- Load image into Image object ----------
   function loadImage(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -656,25 +358,137 @@
     });
   }
 
-  function setSlotPreview(slot, img) {
-    const existing = slot.querySelector('img.preview');
-    if (existing) existing.remove();
-    const existingBtn = slot.querySelector('.change-btn');
-    if (existingBtn) existingBtn.remove();
-    const existingSvg = slot.querySelector('svg.slot-icon');
-    if (existingSvg) existingSvg.style.display = 'none';
-    const existingLabel = slot.querySelector('.slot-label');
-    if (existingLabel) existingLabel.style.display = 'none';
-    const existingTitle = slot.querySelector('.slot-title');
-    if (existingTitle) existingTitle.style.display = 'none';
-    const existingHint = slot.querySelector('.slot-hint');
-    if (existingHint) existingHint.style.display = 'none';
+  // ---------- Auto-crop using OpenCV ----------
+  async function autoCropCard(imgElement) {
+    if (!window._cvReady || typeof cv === 'undefined') {
+      console.warn('OpenCV not ready');
+      return null;
+    }
 
-    const pImg = document.createElement('img');
-    pImg.className = 'preview';
-    pImg.src = img.src;
-    slot.appendChild(pImg);
+    try {
+      const src = cv.imread(imgElement);
+      const gray = new cv.Mat();
+      const blurred = new cv.Mat();
+      const edges = new cv.Mat();
+      const contours = new cv.MatVector();
+      const hierarchy = new cv.Mat();
 
+      cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+      cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
+      cv.Canny(blurred, edges, 75, 200);
+      cv.findContours(edges, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+
+      let maxArea = 0;
+      let bestApprox = null;
+
+      for (let i = 0; i < contours.size(); i++) {
+        const cnt = contours.get(i);
+        const area = cv.contourArea(cnt);
+        if (area > maxArea && area > (src.rows * src.cols * 0.1)) {
+          const peri = cv.arcLength(cnt, true);
+          const approx = new cv.Mat();
+          cv.approxPolyDP(cnt, approx, 0.02 * peri, true);
+          if (approx.rows === 4) {
+            maxArea = area;
+            if (bestApprox) bestApprox.delete();
+            bestApprox = approx;
+          } else {
+            approx.delete();
+          }
+        }
+        cnt.delete();
+      }
+
+      if (!bestApprox) {
+        src.delete(); gray.delete(); blurred.delete(); edges.delete();
+        contours.delete(); hierarchy.delete();
+        return null;
+      }
+
+      // Extract 4 corners from bestApprox
+      const pts = [];
+      for (let i = 0; i < 4; i++) {
+        pts.push([bestApprox.data32S[i * 2], bestApprox.data32S[i * 2 + 1]]);
+      }
+
+      // Sort: TL, TR, BR, BL
+      pts.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+      const tl = pts[0], br = pts[3];
+      const remaining = [pts[1], pts[2]];
+      remaining.sort((a, b) => (b[0] - b[1]) - (a[0] - a[1]));
+      const tr = remaining[0], bl = remaining[1];
+
+      // Target size (CR80 aspect ratio at high res)
+      const tw = 1012, th = 638;
+
+      const srcTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
+        tl[0], tl[1],
+        tr[0], tr[1],
+        br[0], br[1],
+        bl[0], bl[1]
+      ]);
+      const dstTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
+        0, 0, tw, 0, tw, th, 0, th
+      ]);
+      const M = cv.getPerspectiveTransform(srcTri, dstTri);
+      const warped = new cv.Mat();
+      cv.warpPerspective(src, warped, M, new cv.Size(tw, th), cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
+
+      // Convert to canvas
+      const outCanvas = document.createElement('canvas');
+      outCanvas.width = tw;
+      outCanvas.height = th;
+      cv.imshow(outCanvas, warped);
+
+      // Cleanup
+      src.delete(); gray.delete(); blurred.delete(); edges.delete();
+      contours.delete(); hierarchy.delete();
+      srcTri.delete(); dstTri.delete(); M.delete(); warped.delete();
+      bestApprox.delete();
+
+      return outCanvas;
+    } catch (e) {
+      console.error('Auto-crop error:', e);
+      return null;
+    }
+  }
+
+  // ---------- Simple fallback canvas from image ----------
+  function imgToCanvas(img) {
+    const c = document.createElement('canvas');
+    c.width = img.naturalWidth;
+    c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    return c;
+  }
+
+  // ---------- Update slot with cropped preview ----------
+  function setSlotImage(slot, canvasEl, success) {
+    // Remove old preview
+    const oldCanvas = slot.querySelector('.slot-canvas');
+    if (oldCanvas) oldCanvas.remove();
+    const oldBadge = slot.querySelector('.status-badge');
+    if (oldBadge) oldBadge.remove();
+    const oldBtn = slot.querySelector('.change-btn');
+    if (oldBtn) oldBtn.remove();
+
+    // Hide initial content
+    ['svg.slot-icon', '.slot-label', '.slot-title', '.slot-hint'].forEach(sel => {
+      const el = slot.querySelector(sel);
+      if (el) el.style.display = 'none';
+    });
+
+    // Show canvas
+    canvasEl.className = 'slot-canvas';
+    slot.appendChild(canvasEl);
+
+    // Status badge
+    const badge = document.createElement('span');
+    badge.className = 'status-badge' + (success ? '' : ' fail');
+    badge.textContent = success ? '✓ AUTO-CROPPED' : '⚠ MANUAL';
+    slot.appendChild(badge);
+
+    // Change button
     const btn = document.createElement('button');
     btn.className = 'change-btn';
     btn.textContent = 'Change';
@@ -686,41 +500,128 @@
       input.click();
     };
     slot.appendChild(btn);
+
     slot.classList.add('has-image');
   }
 
   function resetSlot(slot) {
     slot.classList.remove('has-image');
-    const pImg = slot.querySelector('img.preview');
-    if (pImg) pImg.remove();
-    const btn = slot.querySelector('.change-btn');
-    if (btn) btn.remove();
-    const svg = slot.querySelector('svg.slot-icon');
-    if (svg) svg.style.display = '';
-    const label = slot.querySelector('.slot-label');
-    if (label) label.style.display = '';
-    const title = slot.querySelector('.slot-title');
-    if (title) title.style.display = '';
-    const hint = slot.querySelector('.slot-hint');
-    if (hint) hint.style.display = '';
+    ['.slot-canvas', '.change-btn', '.status-badge'].forEach(sel => {
+      const el = slot.querySelector(sel);
+      if (el) el.remove();
+    });
+    ['svg.slot-icon', '.slot-label', '.slot-title', '.slot-hint'].forEach(sel => {
+      const el = slot.querySelector(sel);
+      if (el) el.style.display = '';
+    });
   }
 
-  function getLayout() {
-    return document.querySelector('input[name="layout"]:checked').value;
-  }
-  function getSize() {
-    return document.querySelector('input[name="size"]:checked').value;
+  // ---------- Handle uploads ----------
+  async function handleUpload(side, file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const slot = side === 'front' ? slotFront : slotBack;
+    const proc = side === 'front' ? procFront : procBack;
+
+    proc.classList.add('active');
+
+    try {
+      const img = await loadImage(file);
+
+      // Save original for re-crop
+      if (side === 'front') origFront = img;
+      else origBack = img;
+
+      // Try auto-crop
+      let cropped = null;
+      if (window._cvReady && typeof cv !== 'undefined') {
+        cropped = await autoCropCard(img);
+      }
+
+      // Fallback to original
+      const finalCanvas = cropped || imgToCanvas(img);
+      const wasCropped = !!cropped;
+
+      if (side === 'front') imgFront = finalCanvas;
+      else imgBack = finalCanvas;
+
+      setSlotImage(slot, finalCanvas, wasCropped);
+      renderPreview();
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Photo load nahi ho payi. Dobara try karein.');
+    } finally {
+      proc.classList.remove('active');
+    }
   }
 
-  function drawWatermark(c, canvasW, canvasH) {
+  fileFront.addEventListener('change', (e) => {
+    if (e.target.files[0]) handleUpload('front', e.target.files[0]);
+  });
+  fileBack.addEventListener('change', (e) => {
+    if (e.target.files[0]) handleUpload('back', e.target.files[0]);
+  });
+
+  // Make upload slots clickable
+  slotFront.addEventListener('click', () => {
+    if (!slotFront.classList.contains('has-image')) fileFront.click();
+  });
+  slotBack.addEventListener('click', () => {
+    if (!slotBack.classList.contains('has-image')) fileBack.click();
+  });
+
+  // ---------- Re-auto-crop button ----------
+  btnAutoCrop.addEventListener('click', async () => {
+    if (!origFront && !origBack) return;
+    btnAutoCrop.disabled = true;
+    btnAutoCrop.textContent = 'Processing...';
+
+    if (origFront) {
+      procFront.classList.add('active');
+      let cropped = window._cvReady ? await autoCropCard(origFront) : null;
+      imgFront = cropped || imgToCanvas(origFront);
+      setSlotImage(slotFront, imgFront, !!cropped);
+      procFront.classList.remove('active');
+    }
+    if (origBack) {
+      procBack.classList.add('active');
+      let cropped = window._cvReady ? await autoCropCard(origBack) : null;
+      imgBack = cropped || imgToCanvas(origBack);
+      setSlotImage(slotBack, imgBack, !!cropped);
+      procBack.classList.remove('active');
+    }
+
+    renderPreview();
+    btnAutoCrop.disabled = false;
+    btnAutoCrop.textContent = 'Re-Auto-Crop';
+  });
+
+  // ---------- Layout / size ----------
+  function getLayout() { return document.querySelector('input[name="layout"]:checked').value; }
+  function getSize()   { return document.querySelector('input[name="size"]:checked').value; }
+
+  function drawWatermark(c, w, h) {
     if (!wmToggle || !wmToggle.checked) return;
     c.save();
     c.font = '600 28px Arial, sans-serif';
     c.fillStyle = 'rgba(25, 57, 138, 0.55)';
     c.textAlign = 'right';
-    c.textBaseline = 'alphabetic';
-    c.fillText('DocEasy.org', canvasW - 40, canvasH - 30);
+    c.fillText('DocEasy.org', w - 40, h - 30);
     c.restore();
+  }
+
+  function drawImageContain(c, img, x, y, w, h) {
+    const iR = img.width / img.height;
+    const bR = w / h;
+    let dW, dH, dX, dY;
+    if (iR > bR) { dW = w; dH = w / iR; dX = x; dY = y + (h - dH) / 2; }
+    else { dH = h; dW = h * iR; dX = x + (w - dW) / 2; dY = y; }
+    c.drawImage(img, dX, dY, dW, dH);
+  }
+
+  function drawBorder(c, x, y, w, h) {
+    c.strokeStyle = '#e5e7eb';
+    c.lineWidth = 2;
+    c.strokeRect(x, y, w, h);
   }
 
   function renderPreview() {
@@ -730,111 +631,60 @@
       btnPdf.disabled = true;
       btnJpg.disabled = true;
       btnPrint.disabled = true;
+      btnAutoCrop.disabled = !origFront && !origBack;
       return;
     }
 
     const layout = getLayout();
     const size = SIZES[getSize()];
+    let cw, ch;
+    if (layout === 'side') { cw = A4_LAND_W; ch = A4_LAND_H; }
+    else { cw = A4_PORT_W; ch = A4_PORT_H; }
 
-    let canvasW, canvasH;
-    if (layout === 'side') {
-      canvasW = A4_LAND_W;
-      canvasH = A4_LAND_H;
-    } else {
-      canvasW = A4_PORT_W;
-      canvasH = A4_PORT_H;
-    }
-
-    canvas.width = canvasW;
-    canvas.height = canvasH;
-
+    canvas.width = cw;
+    canvas.height = ch;
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvasW, canvasH);
+    ctx.fillRect(0, 0, cw, ch);
 
     let fx, fy, bx, by;
     if (layout === 'side') {
       const totalW = size.w * 2 + GAP;
-      const startX = (canvasW - totalW) / 2;
-      const y = (canvasH - size.h) / 2;
-      fx = startX;
-      bx = startX + size.w + GAP;
+      const startX = (cw - totalW) / 2;
+      const y = (ch - size.h) / 2;
+      fx = startX; bx = startX + size.w + GAP;
       fy = by = y;
     } else {
       const totalH = size.h * 2 + GAP;
-      const startY = (canvasH - totalH) / 2;
-      const x = (canvasW - size.w) / 2;
+      const startY = (ch - totalH) / 2;
+      const x = (cw - size.w) / 2;
       fx = bx = x;
-      fy = startY;
-      by = startY + size.h + GAP;
+      fy = startY; by = startY + size.h + GAP;
     }
 
     drawImageContain(ctx, imgFront, fx, fy, size.w, size.h);
     drawBorder(ctx, fx, fy, size.w, size.h);
-
     drawImageContain(ctx, imgBack, bx, by, size.w, size.h);
     drawBorder(ctx, bx, by, size.w, size.h);
-
-    drawWatermark(ctx, canvasW, canvasH);
+    drawWatermark(ctx, cw, ch);
 
     canvas.style.display = 'block';
     previewEmpty.style.display = 'none';
-
     btnPdf.disabled = false;
     btnJpg.disabled = false;
     btnPrint.disabled = false;
+    btnAutoCrop.disabled = !origFront && !origBack;
   }
-
-  function drawImageContain(c, img, x, y, w, h) {
-    const imgRatio = img.width / img.height;
-    const boxRatio = w / h;
-    let drawW, drawH, drawX, drawY;
-    if (imgRatio > boxRatio) {
-      drawW = w;
-      drawH = w / imgRatio;
-      drawX = x;
-      drawY = y + (h - drawH) / 2;
-    } else {
-      drawH = h;
-      drawW = h * imgRatio;
-      drawX = x + (w - drawW) / 2;
-      drawY = y;
-    }
-    c.drawImage(img, drawX, drawY, drawW, drawH);
-  }
-
-  function drawBorder(c, x, y, w, h) {
-    c.strokeStyle = '#e5e7eb';
-    c.lineWidth = 2;
-    c.strokeRect(x, y, w, h);
-  }
-
-  fileFront.addEventListener('change', async (e) => {
-    if (e.target.files && e.target.files[0]) {
-      imgFront = await loadImage(e.target.files[0]);
-      setSlotPreview(slotFront, imgFront);
-      renderPreview();
-    }
-  });
-
-  fileBack.addEventListener('change', async (e) => {
-    if (e.target.files && e.target.files[0]) {
-      imgBack = await loadImage(e.target.files[0]);
-      setSlotPreview(slotBack, imgBack);
-      renderPreview();
-    }
-  });
 
   document.querySelectorAll('input[name="layout"], input[name="size"]').forEach(r => {
     r.addEventListener('change', renderPreview);
   });
+  if (wmToggle) wmToggle.addEventListener('change', renderPreview);
 
-  if (wmToggle) {
-    wmToggle.addEventListener('change', renderPreview);
-  }
-
+  // ---------- Download PDF ----------
   btnPdf.addEventListener('click', async () => {
     if (!imgFront || !imgBack) return;
     btnPdf.disabled = true;
+    const originalText = btnPdf.innerHTML;
     btnPdf.textContent = 'Generating...';
 
     try {
@@ -872,13 +722,10 @@
       drawImageContain(fctx, imgBack, bx, by, size.w, size.h);
       drawWatermark(fctx, fullCanvas.width, fullCanvas.height);
 
-      const pngData = fullCanvas.toDataURL('image/png');
-      const pngImage = await pdfDoc.embedPng(pngData);
-      page.drawImage(pngImage, {
-        x: 0, y: 0,
-        width: pdfW * 2.8346,
-        height: pdfH * 2.8346
-      });
+      const pngBlob = await new Promise(resolve => fullCanvas.toBlob(resolve, 'image/png'));
+      const pngBuffer = await pngBlob.arrayBuffer();
+      const pngImage = await pdfDoc.embedPng(pngBuffer);
+      page.drawImage(pngImage, { x: 0, y: 0, width: pdfW * 2.8346, height: pdfH * 2.8346 });
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
@@ -889,16 +736,16 @@
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
-      alert('Error generating PDF: ' + err.message);
+      alert('PDF error: ' + err.message);
     } finally {
       btnPdf.disabled = false;
-      btnPdf.innerHTML = '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download as PDF';
+      btnPdf.innerHTML = originalText;
     }
   });
 
   btnJpg.addEventListener('click', () => {
     if (!imgFront || !imgBack) return;
-    canvas.toBlob((blob) => {
+    canvas.toBlob(blob => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -911,7 +758,13 @@
   btnPrint.addEventListener('click', () => {
     if (!imgFront || !imgBack) return;
     const layout = getLayout();
-    const printArea = document.getElementById('print-canvas-area');
+    let printArea = document.getElementById('print-canvas-area');
+    if (!printArea) {
+      printArea = document.createElement('div');
+      printArea.id = 'print-canvas-area';
+      printArea.style.display = 'none';
+      document.body.appendChild(printArea);
+    }
     printArea.innerHTML = '';
     const img = document.createElement('img');
     img.src = canvas.toDataURL('image/png');
@@ -929,6 +782,8 @@
   btnReset.addEventListener('click', () => {
     imgFront = null;
     imgBack = null;
+    origFront = null;
+    origBack = null;
     fileFront.value = '';
     fileBack.value = '';
     resetSlot(slotFront);
@@ -939,31 +794,7 @@
     btnPdf.disabled = true;
     btnJpg.disabled = true;
     btnPrint.disabled = true;
-  });
-
-  [slotFront, slotBack].forEach((slot, i) => {
-    slot.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      slot.style.borderColor = 'var(--accent)';
-    });
-    slot.addEventListener('dragleave', () => {
-      slot.style.borderColor = '';
-    });
-    slot.addEventListener('drop', async (e) => {
-      e.preventDefault();
-      slot.style.borderColor = '';
-      const file = e.dataTransfer.files[0];
-      if (!file || !file.type.startsWith('image/')) return;
-      const img = await loadImage(file);
-      if (i === 0) {
-        imgFront = img;
-        setSlotPreview(slotFront, img);
-      } else {
-        imgBack = img;
-        setSlotPreview(slotBack, img);
-      }
-      renderPreview();
-    });
+    btnAutoCrop.disabled = true;
   });
 
 })();
