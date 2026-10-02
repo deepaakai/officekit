@@ -55,11 +55,13 @@
         { href: 'card-cropper.html',      label: 'ID Card Cropper' },
         { href: 'emitra-csc-tools.html',  label: 'eMitra / CSC Tools' }
       ],
+      /* ---------- Company / Legal / Feedback column ---------- */
       legal: [
-        { href: 'about.html',   label: 'About',   root: true },
-        { href: 'contact.html', label: 'Contact', root: true },
-        { href: 'privacy.html', label: 'Privacy', root: true },
-        { href: 'terms.html',   label: 'Terms',   root: true }
+        { href: 'about.html',    label: 'About',                    root: true },
+        { href: 'contact.html',  label: 'Contact',                  root: true },
+        { href: 'privacy.html',  label: 'Privacy Policy',           root: true },
+        { href: 'terms.html',    label: 'Terms & Conditions',       root: true },
+        { href: 'feedback.html', label: 'Report Error / Feedback',  root: true }
       ]
     }
   };
@@ -167,7 +169,7 @@
           '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
         '</span>' +
         '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
-          '40+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
+          '45+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
         '</p>' +
         '<button type="button" class="footer-support-btn" onclick="docEasyOpenSupport()">' +
           '<span>☕</span> Support DocEasy' +
