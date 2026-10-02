@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Noise Remover — Remove Background Noise from Audio &amp; Video | DocEasy</title>
+<meta name="description" content="Remove background noise from audio or video files online. Free browser-based noise reduction — no upload, no signup, 100% private.">
+<meta name="keywords" content="noise remover, audio denoiser, video noise remover, remove background noise, clean audio online">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/noise-remover.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Noise Remover — Audio &amp; Video | DocEasy">
+<meta property="og:description" content="Remove background noise from audio or video. Free, private, no signup.">
+<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/noise-remover.html">
+<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Noise Remover — DocEasy",
+  "url": "https://deepaakai.github.io/officekit/tools/noise-remover.html",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<style>
+.ad-slot-container, .ad-placeholder { display: none !important; }
+.nr-container { max-width: 900px; margin: 26px auto 0; }
+
+.upload-box {
+  background: var(--card-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: 14px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 22px;
+}
+.upload-box:hover, .upload-box.drag { border-color: var(--accent); background: var(--accent-soft); }
+.upload-box svg { width: 48px; height: 48px; stroke: var(--accent); fill: none; stroke-width: 1.8; margin-bottom: 12px; }
+.upload-box h3 { font-size: 17px; font-weight: 800; margin: 0 0 6px; color: var(--text-color); }
+.upload-box p { font-size: 13px; color: var(--subtext-color); margin: 0; }
+.upload-box input[type="file"] { display: none; }
+
+.workspace { display: none; }
+.workspace.active { display: block; }
+
+.video-preview {
+  background: #0f172a;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  display: none;
+}
+.video-preview.active { display: block; }
+.video-preview video { width: 100%; display: block; max-height: 360px; background: #000; }
+
+.wave-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 22px;
+}
+.wave-title {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--subtext-color);
+  margin: 0 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wave-title span { font-weight: 600; text-transform: none; letter-spacing: 0; font-size: 11px; }
+.wave-canvas {
+  width: 100%;
+  height: 100px;
+  display: block;
+  border-radius: 8px;
+  background: var(--card-hover);
+  margin-bottom: 14px;
+}
+.wave-canvas.processed { background: rgba(22,163,74,0.08); }
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 22px; }
+.btn {
+  padding: 11px 22px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent), #2563eb);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
+}
+.btn.primary:hover { color: #fff; transform: translateY(-1px); }
+.btn.green {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #fff;
+  border-color: #16a34a;
+}
+.btn.green:hover { color: #fff; transform: translateY(-1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.strength-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 22px;
+}
+.strength-box h4 {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--subtext-color);
+  margin: 0 0 12px;
+}
+.strength-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.strength-pills button {
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.strength-pills button:hover { border-color: var(--accent); }
+.strength-pills button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.strength-hint { font-size: 12px; color: var(--subtext-color); margin: 10px 0 0; line-height: 1.5; }
+
+.processing-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.78);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  flex-direction: column;
+  gap: 14px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+}
+.processing-overlay.active { display: flex; }
+.processing-overlay .spinner {
+  width: 42px; height: 42px;
+  border: 3px solid rgba(255,255,255,0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.info-note {
+  background: rgba(25,57,138,0.06);
+  border-left: 4px solid var(--accent);
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 22px;
+  font-size: 13px;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+.info-note b { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .controls { flex-direction: column; }
+  .controls .btn { width: 100%; justify-content: center; }
+  .wave-canvas { height: 80px; }
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Noise Remover</h1>
+    <p class="hero-sub">Remove background noise from audio or video files — AC hum, fan noise, hiss, and rumble. 100% browser-based, no upload, no signup. Your files never leave your device.</p>
+  </div>
+
+  <div class="hd-banner">
+    <div class="hd-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+        <path d="M12 19v4M8 23h8"/>
+      </svg>
+    </div>
+    <div class="hd-text">
+      <b>Works with Audio AND Video Files</b>
+      <small>Upload MP3, WAV, M4A, MP4, WEBM — extract and clean the audio track. Nothing is uploaded. Everything runs in your browser.</small>
+    </div>
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <div class="nr-container">
+
+    <div class="upload-box" id="uploadBox">
+      <input type="file" id="audioInput" accept="audio/*,video/*">
+      <svg viewBox="0 0 24 24">
+        <path d="M9 18V5l12-2v13"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
+      </svg>
+      <h3>Drop an audio or video file here</h3>
+      <p>MP3, WAV, M4A, OGG, MP4, WEBM — processed entirely in your browser</p>
+    </div>
+
+    <div class="workspace" id="workspace">
+
+      <div class="info-note">
+        <b>How it works:</b> Upload audio or video → choose strength → click "Remove Noise" → listen and download cleaned audio. For videos, download the clean audio track (WAV). Original file stays untouched.
+      </div>
+
+      <div class="video-preview" id="videoPreview">
+        <video id="videoEl" controls playsinline></video>
+      </div>
+
+      <div class="wave-card">
+        <div class="wave-title">Original Audio <span id="origInfo">—</span></div>
+        <canvas class="wave-canvas" id="origWave"></canvas>
+        <div class="controls" style="margin-bottom:0;">
+          <button class="btn" id="playOrig">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Play Original
+          </button>
+          <button class="btn" id="stopOrig">
+            <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/></svg>
+            Stop
+          </button>
+        </div>
+      </div>
+
+      <div class="strength-box">
+        <h4>Reduction Strength</h4>
+        <div class="strength-pills" id="strengthPills">
+          <button data-s="light">Light</button>
+          <button data-s="medium" class="on">Medium</button>
+          <button data-s="strong">Strong</button>
+          <button data-s="extreme">Extreme</button>
+        </div>
+        <p class="strength-hint" id="strengthHint">Balanced — removes most background noise while keeping voice natural.</p>
+      </div>
+
+      <div class="controls">
+        <button class="btn primary" id="btnProcess">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+          Remove Noise
+        </button>
+        <button class="btn" id="btnReset">
+          <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Change File
+        </button>
+      </div>
+
+      <div class="wave-card" id="processedCard" style="display:none;">
+        <div class="wave-title">Processed Audio <span id="procInfo">—</span></div>
+        <canvas class="wave-canvas processed" id="procWave"></canvas>
+        <div class="controls" style="margin-bottom:0;">
+          <button class="btn green" id="playProc">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Play Processed
+          </button>
+          <button class="btn" id="stopProc">
+            <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/></svg>
+            Stop
+          </button>
+          <button class="btn primary" id="downloadProc">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Clean Audio
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="ad-slot-container">Advertisement</div>
+
+  <section class="seo-article">
+    <h2>Remove Background Noise from Audio &amp; Video — Free Online (2026)</h2>
+
+    <p>Recording a podcast, lecture, interview, or video? Background noise from fans, AC units, traffic, or electrical hum can ruin an otherwise great recording. DocEasy's <b>Noise Remover</b> cleans up your audio entirely inside your browser — no upload, no signup, no limits, and no watermarks. Supports both audio files (MP3, WAV, M4A) and video files (MP4, WEBM).</p>
+
+    <h3>What This Tool Removes</h3>
+    <ul>
+      <li><b>Low-frequency rumble</b> — AC units, traffic, table vibrations, mic handling.</li>
+      <li><b>Electrical hum</b> — 50 Hz and 60 Hz hum from power lines.</li>
+      <li><b>High-frequency hiss</b> — tape hiss, cheap mic noise, digital artifacts.</li>
+      <li><b>Steady background drone</b> — fans, refrigerators, distant traffic.</li>
+    </ul>
+
+    <h3>How to Use — Audio Files</h3>
+    <ol>
+      <li><b>Upload:</b> Click or drag-drop MP3, WAV, M4A, OGG, or WEBM.</li>
+      <li><b>Choose strength:</b> Light, Medium, Strong, or Extreme.</li>
+      <li><b>Click "Remove Noise":</b> Processing takes a few seconds.</li>
+      <li><b>Compare:</b> Play original and processed versions.</li>
+      <li><b>Download:</b> Save cleaned audio as WAV.</li>
+    </ol>
+
+    <h3>How to Use — Video Files</h3>
+    <ol>
+      <li><b>Upload:</b> Click or drag-drop MP4, WEBM, or MOV.</li>
+      <li><b>Preview video:</b> Video plays in the preview player.</li>
+      <li><b>Choose strength</b> and click <b>"Remove Noise"</b>.</li>
+      <li><b>Download Clean Audio:</b> Save the cleaned audio track as WAV.</li>
+      <li><b>Re-mux (optional):</b> Use CapCut or FFmpeg to attach the clean audio back to the video.</li>
+    </ol>
+
+    <h3>Which Strength to Choose</h3>
+    <ul>
+      <li><b>Light:</b> Subtle noise reduction — best when audio quality is already decent.</li>
+      <li><b>Medium:</b> Balanced — the recommended default for most recordings.</li>
+      <li><b>Strong:</b> Aggressive — useful for very noisy recordings or old tapes.</li>
+      <li><b>Extreme:</b> Maximum filtering — may slightly affect voice quality.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <details>
+      <summary>Is this noise remover free?</summary>
+      <p>Yes, 100% free. No signup, no email, no daily limit. Files are processed entirely in your browser.</p>
+    </details>
+    <details>
+      <summary>Does it work with video files?</summary>
+      <p>Yes. Upload MP4, WEBM, or MOV — the tool extracts the audio track, cleans it, and gives you a cleaned WAV file you can attach back to your video.</p>
+    </details>
+    <details>
+      <summary>Are my files uploaded to any server?</summary>
+      <p>Never. All processing uses the Web Audio API inside your browser. Your files never leave your device.</p>
+    </details>
+    <details>
+      <summary>Which audio formats are supported?</summary>
+      <p>MP3, WAV, M4A, AAC, OGG, WEBM, MP4, and any format your browser can decode. Output is always WAV for maximum compatibility.</p>
+    </details>
+    <details>
+      <summary>Does it work offline?</summary>
+      <p>Yes. After the page loads once, disconnect from the internet and the tool still works.</p>
+    </details>
+    <details>
+      <summary>Can it remove background music from a video?</summary>
+      <p>Not currently. Music is treated as part of the audio signal. Vocal isolation would require AI-based source separation.</p>
+    </details>
+    <details>
+      <summary>How do I attach the clean audio back to the video?</summary>
+      <p>Use CapCut (free) — import video, delete original audio, add clean WAV file. Or use FFmpeg command line.</p>
+    </details>
+    <details>
+      <summary>Will it affect my voice quality?</summary>
+      <p>Medium and Light modes preserve voice quality. Strong and Extreme may cause slight artifacts — use only when necessary.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+    <ul>
+      <li><a href="media-voice-recorder.html">Voice Recorder</a> — Record audio in your browser</li>
+      <li><a href="media-editor.html">Media Editor</a> — Trim, convert, and extract audio</li>
+      <li><a href="media-text-to-speech.html">Text to Speech</a> — Generate voiceovers</li>
+      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Capture screen with audio</li>
+      <li><a href="media-mic-test.html">Mic Test</a> — Check your microphone</li>
+    </ul>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<div class="processing-overlay" id="processingOverlay">
+  <div class="spinner"></div>
+  <span id="procText">Processing audio…</span>
+</div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  const uploadBox = document.getElementById('uploadBox');
+  const audioInput = document.getElementById('audioInput');
+  const workspace = document.getElementById('workspace');
+  const videoPreview = document.getElementById('videoPreview');
+  const videoEl = document.getElementById('videoEl');
+  const origWave = document.getElementById('origWave');
+  const procWave = document.getElementById('procWave');
+  const origInfo = document.getElementById('origInfo');
+  const procInfo = document.getElementById('procInfo');
+  const processedCard = document.getElementById('processedCard');
+  const overlay = document.getElementById('processingOverlay');
+  const procText = document.getElementById('procText');
+
+  let audioCtx = null;
+  let originalBuffer = null;
+  let processedBuffer = null;
+  let originalFileName = '';
+  let currentStrength = 'medium';
+  let activeSource = null;
+  let isVideo = false;
+
+  const STRENGTHS = {
+    light:   { hp: 60,  lp: 15000, notchQ: 8,  comp: 2, label: 'Light — subtle reduction, keeps voice natural.' },
+    medium:  { hp: 85,  lp: 12000, notchQ: 12, comp: 4, label: 'Balanced — removes most background noise while keeping voice natural.' },
+    strong:  { hp: 110, lp: 9000,  notchQ: 18, comp: 6, label: 'Aggressive — for very noisy recordings. Slight voice change possible.' },
+    extreme: { hp: 140, lp: 7500,  notchQ: 25, comp: 8, label: 'Maximum — may affect voice quality. Use only if necessary.' }
+  };
+
+  // ---------- Upload ----------
+  uploadBox.addEventListener('click', () => audioInput.click());
+  uploadBox.addEventListener('dragover', e => { e.preventDefault(); uploadBox.classList.add('drag'); });
+  uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('drag'));
+  uploadBox.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadBox.classList.remove('drag');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  audioInput.addEventListener('change', e => {
+    if (e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  async function handleFile(file) {
+    isVideo = file.type.startsWith('video/');
+    const isAudio = file.type.startsWith('audio/');
+    if (!isAudio && !isVideo && !file.name.match(/\.(mp3|wav|m4a|aac|ogg|webm|flac|mp4|mov)$/i)) {
+      alert('Please choose an audio or video file (MP3, WAV, MP4, WEBM).');
+      return;
+    }
+    originalFileName = file.name.replace(/\.[^.]+$/, '') || 'audio';
+    showOverlay('Loading ' + (isVideo ? 'video' : 'audio') + '…');
+
+    try {
+      if (isVideo) {
+        const url = URL.createObjectURL(file);
+        videoEl.src = url;
+        videoEl.load();
+        videoPreview.classList.add('active');
+      } else {
+        videoPreview.classList.remove('active');
+        videoEl.removeAttribute('src');
+      }
+
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const buf = await file.arrayBuffer();
+      originalBuffer = await audioCtx.decodeAudioData(buf);
+      processedBuffer = null;
+      processedCard.style.display = 'none';
+      workspace.classList.add('active');
+      uploadBox.style.display = 'none';
+
+      drawWaveform(origWave, originalBuffer, '#2563eb');
+      const dur = originalBuffer.duration.toFixed(1);
+      origInfo.textContent = `${dur}s · ${originalBuffer.numberOfChannels}ch · ${originalBuffer.sampleRate} Hz`;
+    } catch (err) {
+      console.error(err);
+      alert('Could not decode this file. Try a different format.');
+    } finally {
+      hideOverlay();
+    }
+  }
+
+  // ---------- Waveform ----------
+  function drawWaveform(canvas, buffer, color) {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width) { setTimeout(() => drawWaveform(canvas, buffer, color), 50); return; }
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const w = rect.width, h = rect.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const data = buffer.getChannelData(0);
+    const step = Math.ceil(data.length / w);
+    const amp = h / 2;
+
+    ctx.fillStyle = color;
+    for (let i = 0; i < w; i++) {
+      let min = 1, max = -1;
+      for (let j = 0; j < step; j++) {
+        const v = data[i * step + j] || 0;
+        if (v < min) min = v;
+        if (v > max) max = v;
+      }
+      const y1 = (1 + min) * amp;
+      const y2 = (1 + max) * amp;
+      ctx.fillRect(i, y1, 1, Math.max(1, y2 - y1));
+    }
+  }
+
+  // ---------- Strength selector ----------
+  document.querySelectorAll('#strengthPills button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#strengthPills button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      currentStrength = b.getAttribute('data-s');
+      document.getElementById('strengthHint').textContent = STRENGTHS[currentStrength].label;
+    });
+  });
+
+  // ---------- Process ----------
+  document.getElementById('btnProcess').addEventListener('click', async () => {
+    if (!originalBuffer) return;
+    showOverlay('Removing noise…');
+    try {
+      await new Promise(r => setTimeout(r, 60));
+      processedBuffer = await removeNoise(originalBuffer, STRENGTHS[currentStrength]);
+
+      processedCard.style.display = 'block';
+      drawWaveform(procWave, processedBuffer, '#16a34a');
+      const dur = processedBuffer.duration.toFixed(1);
+      procInfo.textContent = `${dur}s · WAV output`;
+      processedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      console.error(err);
+      alert('Processing failed: ' + err.message);
+    } finally {
+      hideOverlay();
+    }
+  });
+
+  async function removeNoise(buffer, opts) {
+    const sampleRate = buffer.sampleRate;
+    const len = buffer.length;
+    const numCh = Math.min(2, buffer.numberOfChannels);
+
+    // ---------- Step 1: Render through filter chain via OfflineAudioContext ----------
+    const offline = new OfflineAudioContext(numCh, len, sampleRate);
+
+    const src = offline.createBufferSource();
+    src.buffer = buffer;
+
+    const hp = offline.createBiquadFilter();
+    hp.type = 'highpass';
+    hp.frequency.value = opts.hp;
+    hp.Q.value = 0.7;
+
+    const notch50 = offline.createBiquadFilter();
+    notch50.type = 'notch';
+    notch50.frequency.value = 50;
+    notch50.Q.value = opts.notchQ;
+
+    const notch60 = offline.createBiquadFilter();
+    notch60.type = 'notch';
+    notch60.frequency.value = 60;
+    notch60.Q.value = opts.notchQ;
+
+    const notch100 = offline.createBiquadFilter();
+    notch100.type = 'notch';
+    notch100.frequency.value = 100;
+    notch100.Q.value = opts.notchQ;
+
+    const lp = offline.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = opts.lp;
+    lp.Q.value = 0.7;
+
+    const comp = offline.createDynamicsCompressor();
+    comp.threshold.value = -24;
+    comp.knee.value = 12;
+    comp.ratio.value = opts.comp;
+    comp.attack.value = 0.003;
+    comp.release.value = 0.25;
+
+    const gain = offline.createGain();
+    gain.gain.value = 1;
+
+    src.connect(hp);
+    hp.connect(notch50);
+    notch50.connect(notch60);
+    notch60.connect(notch100);
+    notch100.connect(lp);
+    lp.connect(comp);
+    comp.connect(gain);
+    gain.connect(offline.destination);
+
+    src.start(0);
+    const filtered = await offline.startRendering();
+
+    // ---------- Step 2: Apply noise gate (silence reduction) via gain envelope ----------
+    // We do it manually on the rendered buffer.
+    const out = audioCtx.createBuffer(numCh, filtered.length, sampleRate);
+    for (let ch = 0; ch < numCh; ch++) {
+      const inData = filtered.getChannelData(ch);
+      const outData = out.getChannelData(ch);
+      outData.set(inData);
+    }
+
+    // Simple soft noise gate: measure envelope, attenuate low RMS regions
+    const winSize = Math.floor(sampleRate * 0.02); // 20ms
+    const totalWins = Math.floor(len / winSize);
+    const gainCurve = new Float32Array(totalWins);
+    const monoData = filtered.getChannelData(0);
+
+    for (let w = 0; w < totalWins; w++) {
+      let sum = 0;
+      const start = w * winSize;
+      const end = start + winSize;
+      for (let i = start; i < end; i++) sum += monoData[i] * monoData[i];
+      const rms = Math.sqrt(sum / winSize);
+      // Soft gate: if RMS very low, reduce gain
+      const threshold = 0.005; // low
+      const target = rms < threshold ? 0.15 : 1.0;
+      gainCurve[w] = target;
+    }
+
+    // Smooth the gain curve to avoid clicks
+    const smoothWins = 5;
+    const smoothCurve = new Float32Array(totalWins);
+    for (let w = 0; w < totalWins; w++) {
+      let s = 0, c = 0;
+      for (let k = -smoothWins; k <= smoothWins; k++) {
+        const idx = w + k;
+        if (idx >= 0 && idx < totalWins) { s += gainCurve[idx]; c++; }
+      }
+      smoothCurve[w] = s / c;
+    }
+
+    // Apply gain
+    for (let ch = 0; ch < numCh; ch++) {
+      const data = out.getChannelData(ch);
+      for (let w = 0; w < totalWins; w++) {
+        const g = smoothCurve[w];
+        const start = w * winSize;
+        const end = start + winSize;
+        for (let i = start; i < end && i < len; i++) data[i] *= g;
+      }
+    }
+
+    return out;
+  }
+
+  // ---------- Playback ----------
+  function stopActive() {
+    if (activeSource) {
+      try { activeSource.stop(); } catch (e) {}
+      activeSource = null;
+    }
+  }
+
+  function playBuffer(buffer, videoEl) {
+    stopActive();
+    if (!buffer) return;
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const src = audioCtx.createBufferSource();
+    src.buffer = buffer;
+    src.connect(audioCtx.destination);
+    src.start(0);
+    activeSource = src;
+    src.onended = () => { if (activeSource === src) activeSource = null; };
+
+    // Sync video playback if video exists
+    if (videoEl && videoEl.src) {
+      videoEl.currentTime = 0;
+      videoEl.play().catch(() => {});
+      // Mute video's own audio so only cleaned audio plays
+      videoEl.muted = true;
+      const stopVideo = () => { videoEl.pause(); videoEl.removeEventListener('ended', stopVideo); };
+      videoEl.addEventListener('ended', stopVideo);
+    }
+  }
+
+  document.getElementById('playOrig').addEventListener('click', () => playBuffer(originalBuffer, videoEl));
+  document.getElementById('playProc').addEventListener('click', () => playBuffer(processedBuffer, videoEl));
+  document.getElementById('stopOrig').addEventListener('click', () => { stopActive(); videoEl.pause(); });
+  document.getElementById('stopProc').addEventListener('click', () => { stopActive(); videoEl.pause(); });
+
+  // ---------- Download ----------
+  document.getElementById('downloadProc').addEventListener('click', () => {
+    if (!processedBuffer) return;
+    const wav = bufferToWav(processedBuffer);
+    const blob = new Blob([wav], { type: 'audio/wav' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'DocEasy-NoiseRemoved-' + originalFileName + '.wav';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  });
+
+  function bufferToWav(buffer) {
+    const numCh = buffer.numberOfChannels;
+    const sampleRate = buffer.sampleRate;
+    const len = buffer.length;
+    const bytesPerSample = 2;
+    const blockAlign = numCh * bytesPerSample;
+    const dataSize = len * blockAlign;
+    const bufferSize = 44 + dataSize;
+
+    const ab = new ArrayBuffer(bufferSize);
+    const view = new DataView(ab);
+
+    const writeStr = (off, s) => { for (let i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i)); };
+
+    writeStr(0, 'RIFF');
+    view.setUint32(4, bufferSize - 8, true);
+    writeStr(8, 'WAVE');
+    writeStr(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, numCh, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * blockAlign, true);
+    view.setUint16(32, blockAlign, true);
+    view.setUint16(34, 16, true);
+    writeStr(36, 'data');
+    view.setUint32(40, dataSize, true);
+
+    const channels = [];
+    for (let ch = 0; ch < numCh; ch++) channels.push(buffer.getChannelData(ch));
+
+    let off = 44;
+    for (let i = 0; i < len; i++) {
+      for (let ch = 0; ch < numCh; ch++) {
+        let s = channels[ch][i];
+        s = Math.max(-1, Math.min(1, s));
+        view.setInt16(off, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+        off += 2;
+      }
+    }
+    return ab;
+  }
+
+  // ---------- Reset ----------
+  document.getElementById('btnReset').addEventListener('click', () => {
+    stopActive();
+    if (videoEl) { videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); }
+    originalBuffer = null;
+    processedBuffer = null;
+    workspace.classList.remove('active');
+    videoPreview.classList.remove('active');
+    uploadBox.style.display = '';
+    audioInput.value = '';
+    processedCard.style.display = 'none';
+  });
+
+  // ---------- Overlay ----------
+  function showOverlay(msg) {
+    procText.textContent = msg;
+    overlay.classList.add('active');
+  }
+  function hideOverlay() { overlay.classList.remove('active'); }
+
+})();
+</script>
+</body>
+            </html>
