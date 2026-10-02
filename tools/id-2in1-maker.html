@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>2 in 1 ID Maker — Auto-Crop Aadhaar, PAN Front & Back | DocEasy</title>
-<meta name="description" content="Aadhaar, PAN, Voter ID ka front aur back auto-crop karke ek hi page par. Auto-detect card corners, perspective fix, print-ready PDF. 100% browser-based, no upload, no signup.">
-<meta name="keywords" content="2 in 1 id maker, aadhaar auto crop, aadhaar front back one page, pan card 2 in 1 page, auto crop id card">
+<title>2 in 1 ID Maker — Auto-Crop, 4-Corner Adjust &amp; Scan Filters | DocEasy</title>
+<meta name="description" content="Aadhaar, PAN, Voter ID ka front aur back auto-crop karke ek hi page par. 4-corner manual crop, hamesha horizontal card, brightness/contrast aur scan filters (Auto, B&W, Whiteboard). 100% browser-based, no upload, no signup.">
+<meta name="keywords" content="2 in 1 id maker, aadhaar auto crop, aadhaar front back one page, pan card 2 in 1 page, auto crop id card, id card scanner, adobe scan alternative">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="2 in 1 ID Maker — Auto-Crop Aadhaar, PAN | DocEasy">
-<meta property="og:description" content="Aadhaar, PAN front aur back auto-crop karke ek hi page par.">
+<meta property="og:title" content="2 in 1 ID Maker — Scan-Style Auto-Crop | DocEasy">
+<meta property="og:description" content="Aadhaar, PAN front aur back auto-crop, 4-corner adjust aur scan filters ke saath ek hi page par.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="2 in 1 ID Maker — DocEasy">
-<meta name="twitter:description" content="Aadhaar, PAN front & back ek page par with auto-crop.">
+<meta name="twitter:description" content="Aadhaar, PAN front &amp; back ek page par with scan-style auto-crop.">
 <meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
@@ -29,7 +29,7 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any (Web)",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Aadhaar, PAN front aur back auto-crop karke ek hi A4 page par."
+  "description": "Aadhaar, PAN front aur back auto-crop karke ek hi A4 page par, 4-corner adjust aur scan filters ke saath."
 }
 </script>
 
@@ -38,8 +38,9 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Kya ye 2 in 1 ID Maker free hai?","acceptedAnswer":{"@type":"Answer","text":"Haan — 100% free forever. No signup, no email, no watermark, no daily limit."}},
-    {"@type":"Question","name":"Auto-crop kaise kaam karta hai?","acceptedAnswer":{"@type":"Answer","text":"OpenCV.js se card ke 4 corners detect hote hain, edge detection chalti hai, perspective correct hoti hai, aur exact CR80 size mein crop hoti hai."}},
+    {"@type":"Question","name":"Kya ye 2 in 1 ID Maker free hai?","acceptedAnswer":{"@type":"Answer","text":"Haan — 100% free. No signup, no email, no daily limit. Watermark optional hai aur default par band rehta hai."}},
+    {"@type":"Question","name":"Auto-crop kaise kaam karta hai?","acceptedAnswer":{"@type":"Answer","text":"OpenCV.js se card ke 4 corners detect hote hain, perspective correct hoti hai, aur card hamesha horizontal (landscape) CR80 size mein crop hota hai."}},
+    {"@type":"Question","name":"Agar auto-crop galat ho to?","acceptedAnswer":{"@type":"Answer","text":"Corners button dabayein aur chaaron blue circles ko card ke kono par drag karein. Mobile par zoom loupe bhi dikhta hai."}},
     {"@type":"Question","name":"Meri photos upload hoti hain?","acceptedAnswer":{"@type":"Answer","text":"Kabhi nahi. Sab processing aapke browser mein hoti hai. Photos device se bahar nahi jaati."}}
   ]
 }
@@ -47,76 +48,109 @@
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="window._cvReady = true"></script>
+<script async src="https://docs.opencv.org/4.8.0/opencv.js" onerror="window._cvFail=true"></script>
 
 <style>
 .ad-slot-container, .ad-placeholder { display: none !important; }
 .merge-container { max-width: 980px; margin: 26px auto 0; }
+.merge-container [hidden], .editor-backdrop[hidden] { display: none !important; }
 
+.engine-chip {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
+  font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
+  background: var(--card-hover); border: 1px solid var(--border-color); color: var(--subtext-color);
+}
+.engine-chip i { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; display: inline-block; }
+.engine-chip.ready i { background: #16a34a; }
+.engine-chip.fail i { background: #dc2626; }
+
+/* ---------- Upload slots ---------- */
 .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
 .upload-slot {
   position: relative; background: var(--card-bg);
   border: 2px dashed var(--border-color); border-radius: 14px;
-  padding: 22px 16px; text-align: center; cursor: pointer;
-  transition: all 0.2s; min-height: 220px;
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: center; gap: 10px; overflow: hidden;
+  text-align: center; cursor: pointer; transition: border-color .2s, background .2s;
+  min-height: 220px; display: flex; flex-direction: column; align-items: stretch;
+  justify-content: center; overflow: hidden;
 }
-.upload-slot:hover { border-color: var(--accent); background: var(--accent-soft); }
-.upload-slot.has-image { border-style: solid; border-color: var(--accent); padding: 0; cursor: default; }
+.upload-slot:hover, .upload-slot.drag { border-color: var(--accent); background: var(--accent-soft); }
+.upload-slot.has-image { border-style: solid; border-color: var(--accent); cursor: default; justify-content: flex-start; }
 .upload-slot input[type="file"] { display: none; }
-.upload-slot .slot-label { font-size: 11px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--subtext-color); margin-bottom: 4px; }
-.upload-slot .slot-title { font-size: 15px; font-weight: 800; color: var(--text-color); margin: 0; }
-.upload-slot .slot-hint { font-size: 11.5px; color: var(--subtext-color); margin: 0; }
-.upload-slot svg.slot-icon { width: 42px; height: 42px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.upload-slot .slot-canvas { display: block; width: 100%; height: auto; border-radius: 12px; background: #fff; }
-.upload-slot .change-btn {
-  position: absolute; top: 8px; right: 8px;
-  background: rgba(220,38,38,0.92); color: #fff; border: none;
-  border-radius: 6px; padding: 5px 11px; font-size: 11px;
-  font-weight: 700; cursor: pointer; font-family: inherit; z-index: 5;
+.slot-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 22px 16px; flex: 1; }
+.slot-empty .slot-label { font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--subtext-color); margin-bottom: 4px; }
+.slot-empty .slot-title { font-size: 15px; font-weight: 800; color: var(--text-color); margin: 0; }
+.slot-empty .slot-hint { font-size: 11.5px; color: var(--subtext-color); margin: 0; }
+.slot-empty svg.slot-icon { width: 42px; height: 42px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.slot-filled { display: flex; flex-direction: column; width: 100%; position: relative; }
+.slot-canvas { display: block; width: 100%; height: auto; background: #fff; }
+.status-badge {
+  position: absolute; top: 8px; left: 8px; color: #fff; border-radius: 6px;
+  padding: 4px 10px; font-size: 10px; font-weight: 800; letter-spacing: .4px;
+  background: linear-gradient(135deg,#16a34a,#15803d);
 }
-.upload-slot .status-badge {
-  position: absolute; top: 8px; left: 8px;
-  background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
-  border-radius: 6px; padding: 4px 10px; font-size: 10px;
-  font-weight: 800; letter-spacing: 0.4px; z-index: 5;
+.status-badge.manual { background: linear-gradient(135deg,#2563eb,#19398a); }
+.status-badge.fail { background: linear-gradient(135deg,#f59e0b,#d97706); }
+.slot-tools { display: flex; gap: 6px; padding: 8px; justify-content: center; flex-wrap: wrap; border-top: 1px solid var(--border-color); }
+.slot-tools button {
+  flex: 1; min-width: 86px; padding: 8px 8px; font-size: 12px; font-weight: 700; font-family: inherit;
+  background: var(--card-bg); color: var(--text-color); border: 1.5px solid var(--border-color);
+  border-radius: 8px; cursor: pointer; transition: border-color .15s, color .15s;
 }
-.upload-slot .status-badge.fail { background: linear-gradient(135deg,#f59e0b,#d97706); }
+.slot-tools button:hover { border-color: var(--accent); color: var(--accent); }
+.slot-tools button.danger:hover { border-color: #dc2626; color: #dc2626; }
 
 .processing-overlay {
-  position: absolute; inset: 0; background: rgba(15,23,42,0.75);
-  backdrop-filter: blur(3px); display: none;
-  flex-direction: column; align-items: center; justify-content: center;
-  gap: 12px; z-index: 10; color: #fff; font-size: 13px; font-weight: 700;
+  position: absolute; inset: 0; background: rgba(15,23,42,.78); backdrop-filter: blur(3px);
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; z-index: 10; color: #fff; font-size: 13px; font-weight: 700; padding: 16px; text-align: center;
 }
 .processing-overlay.active { display: flex; }
-.processing-overlay .spinner {
-  width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.25);
-  border-top-color: #fff; border-radius: 50%; animation: spin 0.9s linear infinite;
-}
+.processing-overlay .spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,.25); border-top-color: #fff; border-radius: 50%; animation: spin .9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.options-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; }
+/* ---------- Option cards ---------- */
+.options-card, .enhance-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; }
 .options-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.option-group h4 { font-size: 11.5px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 10px; }
-.option-group label { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--text-color); padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+.option-group h4, .enhance-card h4 { font-size: 11.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 10px; }
+.option-group label { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--text-color); padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: background .15s; }
 .option-group label:hover { background: var(--card-hover); }
 .option-group input[type="radio"], .option-group input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
 
+.enh-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.enh-head h4 { margin: 0; }
+.seg { display: inline-flex; border: 1.5px solid var(--border-color); border-radius: 9px; overflow: hidden; }
+.seg button { padding: 6px 14px; font-size: 12px; font-weight: 700; font-family: inherit; border: 0; background: var(--card-bg); color: var(--subtext-color); cursor: pointer; }
+.seg button + button { border-left: 1.5px solid var(--border-color); }
+.seg button.on { background: var(--accent); color: #fff; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.chip {
+  padding: 8px 14px; font-size: 12.5px; font-weight: 700; font-family: inherit; cursor: pointer;
+  border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--card-bg); color: var(--text-color);
+}
+.chip:hover { border-color: var(--accent); }
+.chip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.slider-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.slider-grid label { display: block; font-size: 12.5px; font-weight: 700; color: var(--text-color); }
+.slider-grid label span { float: right; color: var(--subtext-color); font-variant-numeric: tabular-nums; }
+.slider-grid input[type="range"] { width: 100%; margin: 8px 0 0; accent-color: var(--accent); }
+.enh-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.enh-foot small { color: var(--subtext-color); font-size: 11.5px; }
+.link-btn { background: none; border: 0; color: var(--accent); font-weight: 700; font-size: 12.5px; cursor: pointer; font-family: inherit; padding: 4px 0; }
+
+/* ---------- Preview + actions ---------- */
 .preview-section { background: var(--card-hover); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; margin-bottom: 22px; text-align: center; }
-.preview-section h4 { font-size: 11.5px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 12px; }
-.preview-canvas { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 18px rgba(0,0,0,0.15); background: #fff; display: none; }
+.preview-section h4 { font-size: 11.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 12px; }
+.preview-canvas { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 18px rgba(0,0,0,.15); background: #fff; display: none; }
 .preview-empty { padding: 40px 20px; color: var(--subtext-color); font-size: 13.5px; font-weight: 600; }
 
 .action-bar { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
 .action-btn {
   padding: 12px 24px; border-radius: 10px; font-size: 13.5px; font-weight: 800;
   border: 1.5px solid transparent; cursor: pointer; font-family: inherit;
-  display: inline-flex; align-items: center; gap: 8px; transition: all 0.18s;
+  display: inline-flex; align-items: center; gap: 8px; transition: transform .18s, border-color .18s, color .18s;
 }
-.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.action-btn.primary { background: linear-gradient(135deg, var(--accent), #2563eb); color: #fff; box-shadow: 0 6px 18px rgba(25,57,138,0.35); }
+.action-btn:disabled { opacity: .5; cursor: not-allowed; }
+.action-btn.primary { background: linear-gradient(135deg, var(--accent), #2563eb); color: #fff; box-shadow: 0 6px 18px rgba(25,57,138,.35); }
 .action-btn.primary:hover:not(:disabled) { transform: translateY(-2px); }
 .action-btn.green { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
 .action-btn.green:hover:not(:disabled) { transform: translateY(-2px); }
@@ -124,10 +158,36 @@
 .action-btn.secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .action-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+/* ---------- Corner editor ---------- */
+.editor-backdrop {
+  position: fixed; inset: 0; z-index: 9999; background: rgba(8,12,24,.86);
+  display: flex; align-items: center; justify-content: center; padding: 12px;
+}
+.editor-box {
+  background: var(--card-bg); color: var(--text-color); border-radius: 16px; width: min(960px, 100%);
+  max-height: 100%; display: flex; flex-direction: column; overflow: hidden;
+}
+.editor-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px 4px; }
+.editor-head b { font-size: 15px; }
+.editor-x { background: none; border: 0; font-size: 22px; line-height: 1; cursor: pointer; color: var(--subtext-color); padding: 4px 8px; }
+.editor-note { margin: 0; padding: 0 18px 10px; font-size: 12.5px; color: var(--subtext-color); }
+.editor-stage { position: relative; display: flex; justify-content: center; align-items: center; background: #0b1020; padding: 8px; min-height: 0; }
+#edCanvas { max-width: 100%; max-height: 62vh; width: auto; height: auto; touch-action: none; cursor: crosshair; display: block; }
+#edLoupe {
+  position: absolute; top: 14px; left: 14px; width: 120px; height: 120px; border-radius: 50%;
+  border: 3px solid #fff; box-shadow: 0 4px 16px rgba(0,0,0,.5); pointer-events: none; display: none; background: #000;
+}
+.editor-actions { display: flex; gap: 8px; padding: 12px 18px 16px; flex-wrap: wrap; justify-content: flex-end; }
+.editor-actions .action-btn { padding: 10px 16px; font-size: 13px; }
+.editor-actions .spacer { flex: 1; }
+
 @media (max-width: 640px) {
   .upload-grid { grid-template-columns: 1fr; }
   .options-row { grid-template-columns: 1fr; gap: 12px; }
+  .slider-grid { grid-template-columns: 1fr; gap: 14px; }
   .action-btn { flex: 1; min-width: 140px; justify-content: center; }
+  .editor-actions .spacer { display: none; }
+  .editor-actions .action-btn { flex: 1; min-width: 120px; }
 }
 @media print {
   body * { visibility: hidden; }
@@ -135,6 +195,7 @@
   #print-canvas-area { position: absolute; top: 0; left: 0; }
 }
 </style>
+<style id="pageStyle"></style>
 </head>
 <body>
 
@@ -143,8 +204,9 @@
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">2 in 1 ID Maker — Auto-Crop</h1>
-    <p class="hero-sub">Aadhaar, PAN, Voter ID ka front aur back <b>auto-crop</b> karke ek hi A4 page par. Photo tirchhi ho ya background ho — tool khud card detect karke crop kar lega. 100% browser-based.</p>
+    <h1 class="hero-title">2 in 1 ID Maker — Scan-Style Auto-Crop</h1>
+    <p class="hero-sub">Aadhaar, PAN, Voter ID ka front aur back <b>auto-crop</b> karke ek hi A4 page par. Card hamesha <b>horizontal</b> aayega, 4 corners khud adjust kar sakte hain, aur scan filters se contrast &amp; background clean ho jaata hai. 100% browser-based.</p>
+    <span class="engine-chip" id="engineChip"><i></i><span id="engineText">Auto-detect engine load ho raha hai…</span></span>
   </div>
 
   <div class="hd-banner">
@@ -156,8 +218,8 @@
       </svg>
     </div>
     <div class="hd-text">
-      <b>Auto-Crop with AI — Card Detect &amp; Perspective Fix</b>
-      <small>Aadhaar card photo tirchhi ho ya background ho, tool khud card ke corners detect karke crop kar dega. Print-ready output at exact 8.6 × 5.4 cm.</small>
+      <b>Auto-Crop + 4 Corner Adjust + Scan Filters</b>
+      <small>Photo tirchhi ho ya background ho — card khud detect hoga. Galat crop ho to chaaron corners drag karke theek karein. Output exact 85.6 × 54 mm, hamesha landscape.</small>
     </div>
   </div>
 
@@ -168,26 +230,70 @@
     <div class="upload-grid">
       <div class="upload-slot" id="slot-front">
         <input type="file" id="file-front" accept="image/*">
-        <div class="processing-overlay" id="proc-front">
-          <div class="spinner"></div>
-          <span>Auto-cropping...</span>
+        <div class="processing-overlay"><div class="spinner"></div><span class="proc-text">Processing…</span></div>
+        <div class="slot-empty">
+          <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <div class="slot-label">Step 1</div>
+          <p class="slot-title">Front Side</p>
+          <p class="slot-hint">Photo upload ya drag-drop karein — auto-crop ho jaayega</p>
         </div>
-        <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <div class="slot-label">Step 1</div>
-        <p class="slot-title">Front Side</p>
-        <p class="slot-hint">Photo upload karein — auto-crop ho jaayega</p>
+        <div class="slot-filled" hidden>
+          <canvas class="slot-canvas"></canvas>
+          <span class="status-badge"></span>
+          <div class="slot-tools">
+            <button type="button" data-act="corners">Corners adjust</button>
+            <button type="button" data-act="flip">Ulta? 180° flip</button>
+            <button type="button" data-act="change" class="danger">Change</button>
+          </div>
+        </div>
       </div>
 
       <div class="upload-slot" id="slot-back">
         <input type="file" id="file-back" accept="image/*">
-        <div class="processing-overlay" id="proc-back">
-          <div class="spinner"></div>
-          <span>Auto-cropping...</span>
+        <div class="processing-overlay"><div class="spinner"></div><span class="proc-text">Processing…</span></div>
+        <div class="slot-empty">
+          <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <div class="slot-label">Step 2</div>
+          <p class="slot-title">Back Side</p>
+          <p class="slot-hint">Photo upload ya drag-drop karein — auto-crop ho jaayega</p>
         </div>
-        <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <div class="slot-label">Step 2</div>
-        <p class="slot-title">Back Side</p>
-        <p class="slot-hint">Photo upload karein — auto-crop ho jaayega</p>
+        <div class="slot-filled" hidden>
+          <canvas class="slot-canvas"></canvas>
+          <span class="status-badge"></span>
+          <div class="slot-tools">
+            <button type="button" data-act="corners">Corners adjust</button>
+            <button type="button" data-act="flip">Ulta? 180° flip</button>
+            <button type="button" data-act="change" class="danger">Change</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="enhance-card">
+      <div class="enh-head">
+        <h4>Scan Filters &amp; Adjust</h4>
+        <div class="seg" id="enhTarget" role="group" aria-label="Apply to">
+          <button type="button" data-t="both" class="on">Dono</button>
+          <button type="button" data-t="front">Front</button>
+          <button type="button" data-t="back">Back</button>
+        </div>
+      </div>
+      <div class="filter-row" id="filterRow">
+        <button type="button" class="chip" data-f="original">Original</button>
+        <button type="button" class="chip on" data-f="auto">Auto</button>
+        <button type="button" class="chip" data-f="magic">Magic Color</button>
+        <button type="button" class="chip" data-f="gray">Grayscale</button>
+        <button type="button" class="chip" data-f="bw">B&amp;W Doc</button>
+        <button type="button" class="chip" data-f="white">Whiteboard</button>
+      </div>
+      <div class="slider-grid">
+        <label>Brightness <span id="v-bright">0</span><input type="range" id="r-bright" min="-100" max="100" value="0"></label>
+        <label>Contrast <span id="v-contrast">0</span><input type="range" id="r-contrast" min="-100" max="100" value="0"></label>
+        <label>Sharpness <span id="v-sharp">0</span><input type="range" id="r-sharp" min="0" max="100" value="0"></label>
+      </div>
+      <div class="enh-foot">
+        <small>Contrast kam karna ho to slider left le jaayein. B&amp;W Doc aur Whiteboard text-wale documents ke liye best hain.</small>
+        <button type="button" class="link-btn" id="enhReset">Reset adjust</button>
       </div>
     </div>
 
@@ -204,7 +310,11 @@
           <label><input type="radio" name="size" value="large"> Large (100 × 63 mm)</label>
         </div>
       </div>
-      <div class="options-row" style="margin-top: 18px; grid-template-columns: 1fr;">
+      <div class="options-row" style="margin-top: 18px;">
+        <div class="option-group">
+          <h4>Page</h4>
+          <label><input type="checkbox" id="border-toggle" checked> Card ke around cut-line border</label>
+        </div>
         <div class="option-group">
           <h4>Watermark (optional)</h4>
           <label><input type="checkbox" id="watermark-toggle"> Add small "DocEasy.org" watermark (bottom-right)</label>
@@ -221,7 +331,7 @@
     <div class="action-bar">
       <button class="action-btn green" id="btn-auto-crop" disabled>
         <svg viewBox="0 0 24 24"><path d="M6 2 L2 6 L6 10"/><path d="M18 22 L22 18 L18 14"/></svg>
-        Re-Auto-Crop
+        Re-detect Corners
       </button>
       <button class="action-btn primary" id="btn-download-pdf" disabled>
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -243,46 +353,84 @@
 
   </div>
 
-  <canvas id="temp-canvas" style="display:none;"></canvas>
+  <!-- Corner editor -->
+  <div class="editor-backdrop" id="editor" hidden role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+    <div class="editor-box">
+      <div class="editor-head">
+        <b id="editorTitle">Corners adjust karein</b>
+        <button type="button" class="editor-x" id="ed-close" aria-label="Close">&times;</button>
+      </div>
+      <p class="editor-note" id="editorNote"></p>
+      <div class="editor-stage">
+        <canvas id="edCanvas"></canvas>
+        <canvas id="edLoupe" width="140" height="140"></canvas>
+      </div>
+      <div class="editor-actions">
+        <button type="button" class="action-btn secondary" id="ed-auto">Auto-detect</button>
+        <button type="button" class="action-btn secondary" id="ed-full">Poori photo</button>
+        <span class="spacer"></span>
+        <button type="button" class="action-btn secondary" id="ed-cancel">Cancel</button>
+        <button type="button" class="action-btn primary" id="ed-apply">Crop karein</button>
+      </div>
+    </div>
+  </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
   <section class="seo-article">
-    <h2>2 in 1 ID Maker with Auto-Crop — Aadhaar, PAN Front aur Back ek hi Page par (2026)</h2>
+    <h2>2 in 1 ID Maker with Scan-Style Auto-Crop — Aadhaar, PAN Front aur Back ek hi Page par (2026)</h2>
 
-    <p>Har Indian institution — banks, government portals, exam authorities, landlords, employers — aapke ID card ki copy maangti hai. Aur lagbhag sab ek hi page par chahte hain. DocEasy ka <b>2 in 1 ID Maker with Auto-Crop</b> aapke front aur back photos ko automatically crop karke, ek clean, print-ready A4 page par merge kar deta hai — seconds mein, puri tarah browser ke andar.</p>
+    <p>Har Indian institution — banks, government portals, exam authorities, landlords, employers — aapke ID card ki copy maangti hai. Aur lagbhag sab ek hi page par chahte hain. DocEasy ka <b>2 in 1 ID Maker</b> aapke front aur back photos ko automatically crop karke, ek clean, print-ready A4 page par merge kar deta hai — seconds mein, puri tarah browser ke andar.</p>
+
+    <h3>Is Tool Mein Kya Kya Hai</h3>
+    <ul>
+      <li><b>Auto-crop</b> — card ke 4 corners khud detect hote hain aur perspective seedha ho jaata hai.</li>
+      <li><b>4-corner manual crop</b> — auto-crop galat ho to chaaron corners drag karke theek karein. Zoom loupe se corner exact pakad sakte hain.</li>
+      <li><b>Hamesha horizontal card</b> — photo vertical ho ya tirchhi, card output landscape mein hi banega. Ulta dikhe to ek tap mein 180° flip.</li>
+      <li><b>Scan filters</b> — Auto, Magic Color, Grayscale, B&amp;W Doc aur Whiteboard.</li>
+      <li><b>Brightness, Contrast, Sharpness</b> — contrast kam ya zyada karein, front aur back ko alag ya ek saath.</li>
+      <li><b>Print-ready</b> — A4 landscape ya portrait, 300 DPI, PDF / JPG / direct print.</li>
+    </ul>
 
     <h3>Auto-Crop Kya Hai — Aur Kyun Zaroori Hai</h3>
     <p>Jab aap phone se Aadhaar card ki photo lete hain, to usually card table par rakha hota hai, aur photo mein bahut background bhi aa jaata hai. Agar aap isi photo ko merge kar dein, to output mein card chhota aur background zyada dikhega. Auto-Crop is problem ko solve karta hai — tool khud card ke 4 corners detect karta hai, background hataata hai, aur perspective correct karke exact CR80 size mein crop karta hai.</p>
 
     <h3>Kaise Kaam Karta Hai — Technical Detail</h3>
-    <p>Ye tool <b>OpenCV.js</b> use karta hai — Google ki computer vision library, jo JavaScript mein compiled hai. Photo upload karte hi ye steps chalte hain:</p>
+    <p>Ye tool <b>OpenCV.js</b> se card detect karta hai — computer vision library jo JavaScript mein compiled hai. Photo upload karte hi ye steps chalte hain:</p>
     <ol>
-      <li><b>Grayscale conversion</b> — image ko black-and-white mein convert</li>
-      <li><b>Gaussian blur</b> — noise hataata hai</li>
-      <li><b>Canny edge detection</b> — card ki boundaries find karta hai</li>
-      <li><b>Contour detection</b> — sabse bada rectangle dhundta hai (yahi card hai)</li>
+      <li><b>Grayscale + Gaussian blur</b> — noise hataata hai</li>
+      <li><b>Edge aur threshold detection</b> — card ki boundaries find karta hai</li>
+      <li><b>Contour detection</b> — sabse sahi 4-kone wala shape (yahi card hai) chunta hai</li>
       <li><b>Perspective transform</b> — tirchhe corners ko straight karta hai</li>
-      <li><b>Warp + Crop</b> — final card image banata hai</li>
+      <li><b>Landscape orientation</b> — card ko horizontal karke 85.6 × 54 mm ratio mein crop karta hai</li>
+      <li><b>Scan filter</b> — levels, contrast aur background cleanup apply hota hai</li>
     </ol>
-    <p>Ye sab 2-3 seconds mein hota hai, aapke device par, bina kisi server ke.</p>
+    <p>Ye sab aapke device par hota hai, bina kisi server ke.</p>
 
     <h3>Frequently Asked Questions</h3>
     <details>
       <summary>Kya ye 2 in 1 ID Maker free hai?</summary>
-      <p>Haan — 100% free forever. No signup, no email, no watermark, no daily limit.</p>
+      <p>Haan — 100% free. No signup, no email, no daily limit. "DocEasy.org" watermark optional hai aur default par band rehta hai.</p>
     </details>
     <details>
       <summary>Auto-crop kaise kaam karta hai?</summary>
-      <p>OpenCV.js se card ke 4 corners detect hote hain, edge detection chalti hai, perspective correct hoti hai, aur exact CR80 size mein crop hoti hai.</p>
+      <p>OpenCV.js se card ke 4 corners detect hote hain, perspective correct hoti hai, aur card hamesha horizontal CR80 size mein crop hota hai.</p>
+    </details>
+    <details>
+      <summary>Agar auto-crop galat ho ya fail ho jaye to?</summary>
+      <p>Tool corner editor khol deta hai (ya aap "Corners adjust" dabayein). Chaaron blue circles ko card ke kono par drag karein aur "Crop karein" dabayein. Mobile par drag karte waqt zoom loupe dikhta hai.</p>
+    </details>
+    <details>
+      <summary>Card ulta dikh raha hai, kya karein?</summary>
+      <p>Us side ke neeche "Ulta? 180° flip" button dabayein.</p>
+    </details>
+    <details>
+      <summary>Contrast kam ya zyada kaise karein?</summary>
+      <p>"Scan Filters &amp; Adjust" mein Contrast slider use karein. Dono sides ko ek saath ya sirf Front / Back ko alag adjust kar sakte hain.</p>
     </details>
     <details>
       <summary>Meri photos upload hoti hain?</summary>
       <p>Kabhi nahi. Sab processing aapke browser mein hoti hai. Photos device se bahar nahi jaati.</p>
-    </details>
-    <details>
-      <summary>Agar auto-crop fail ho jaye to?</summary>
-      <p>Tool original photo use kar leta hai aur amber "Manual adjust" badge dikhata hai. Aap phir original photo manually crop karke re-upload kar sakte hain.</p>
     </details>
     <details>
       <summary>Kaunsa size PDF produce hota hai?</summary>
@@ -293,7 +441,7 @@
     <ul>
       <li><a href="card-cropper.html">ID Card Cropper</a> — Manual 300 DPI cropping</li>
       <li><a href="passport-maker.html">Passport Photo Maker</a> — 35×45 mm photos</li>
-      <li><a href="pan-photo-signature-resizer.html">PAN Photo & Signature</a> — 213×213 & 400×200</li>
+      <li><a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature</a> — 213×213 &amp; 400×200</li>
       <li><a href="signature-resize.html">Signature Resize</a> — Exact pixel / KB size</li>
       <li><a href="pdf-merge.html">Merge PDF</a> — Combine multiple PDFs</li>
       <li><a href="jpg-to-pdf.html">JPG to PDF</a> — Images to PDF</li>
@@ -310,493 +458,940 @@
 (function () {
   'use strict';
 
+  /* =====================================================
+     Constants
+  ===================================================== */
   const DPI = 300;
-  const MM_TO_PX = DPI / 25.4;
-  const A4_LAND_W = Math.round(297 * MM_TO_PX);
-  const A4_LAND_H = Math.round(210 * MM_TO_PX);
-  const A4_PORT_W = Math.round(210 * MM_TO_PX);
-  const A4_PORT_H = Math.round(297 * MM_TO_PX);
+  const MM = DPI / 25.4;
+  const A4_L = { w: Math.round(297 * MM), h: Math.round(210 * MM) };
+  const A4_P = { w: Math.round(210 * MM), h: Math.round(297 * MM) };
   const SIZES = {
-    actual: { w: Math.round(85.6 * MM_TO_PX), h: Math.round(53.98 * MM_TO_PX) },
-    large:  { w: Math.round(100 * MM_TO_PX),  h: Math.round(63 * MM_TO_PX) }
+    actual: { w: Math.round(85.6 * MM), h: Math.round(53.98 * MM) },
+    large:  { w: Math.round(100 * MM),  h: Math.round(63 * MM) }
   };
   const GAP = 200;
+  const CARD_W = 1200, CARD_H = 756;   // warped card, always landscape (CR80 ratio)
+  const WORK_MAX = 2800;               // longest side of the working copy of each photo
+  const SIDES = ['front', 'back'];
+  const DEFAULT_ENH = () => ({ filter: 'auto', bright: 0, contrast: 0, sharp: 0 });
 
-  const slotFront = document.getElementById('slot-front');
-  const slotBack  = document.getElementById('slot-back');
-  const fileFront = document.getElementById('file-front');
-  const fileBack  = document.getElementById('file-back');
-  const procFront = document.getElementById('proc-front');
-  const procBack  = document.getElementById('proc-back');
-  const canvas = document.getElementById('previewCanvas');
-  const ctx = canvas.getContext('2d');
-  const previewEmpty = document.getElementById('previewEmpty');
-  const btnPdf = document.getElementById('btn-download-pdf');
-  const btnJpg = document.getElementById('btn-download-jpg');
-  const btnPrint = document.getElementById('btn-print');
-  const btnReset = document.getElementById('btn-reset');
-  const btnAutoCrop = document.getElementById('btn-auto-crop');
-  const wmToggle = document.getElementById('watermark-toggle');
+  const $ = id => document.getElementById(id);
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const nextFrame = () => new Promise(r => requestAnimationFrame(() => setTimeout(r, 0)));
+  const clamp = (v, a, b) => v < a ? a : (v > b ? b : v);
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
-  let imgFront = null;       // Canvas for front (cropped or original)
-  let imgBack  = null;       // Canvas for back
-  let origFront = null;      // Original uploaded image (for re-crop)
-  let origBack  = null;
+  /* =====================================================
+     State
+  ===================================================== */
+  const mkSide = () => ({
+    work: null,       // working canvas of the uploaded photo
+    corners: null,    // 4 points in work-canvas coords
+    flip: false,      // 180° flip of the card
+    mode: 'none',     // auto | manual | fail
+    base: null,       // warped landscape card (before filters)
+    bg: null,         // cached background estimate for B&W / Whiteboard
+    out: null,        // card after filters
+    enh: DEFAULT_ENH()
+  });
+  const S = { front: mkSide(), back: mkSide() };
 
-  // ---------- Load image into Image object ----------
+  const UI = {};
+  SIDES.forEach(sd => {
+    const slot = $('slot-' + sd);
+    UI[sd] = {
+      slot,
+      file: slot.querySelector('input[type="file"]'),
+      proc: slot.querySelector('.processing-overlay'),
+      procText: slot.querySelector('.proc-text'),
+      empty: slot.querySelector('.slot-empty'),
+      filled: slot.querySelector('.slot-filled'),
+      canvas: slot.querySelector('.slot-canvas'),
+      badge: slot.querySelector('.status-badge')
+    };
+  });
+
+  const preview = $('previewCanvas');
+  const previewEmpty = $('previewEmpty');
+  const btnPdf = $('btn-download-pdf');
+  const btnJpg = $('btn-download-jpg');
+  const btnPrint = $('btn-print');
+  const btnReset = $('btn-reset');
+  const btnRedetect = $('btn-auto-crop');
+  const wmToggle = $('watermark-toggle');
+  const borderToggle = $('border-toggle');
+
+  /* =====================================================
+     OpenCV readiness
+  ===================================================== */
+  let cvOK = false;
+  async function waitCV(maxMs) {
+    const t0 = Date.now();
+    while (Date.now() - t0 < maxMs) {
+      if (window._cvFail) return false;
+      try {
+        if (window.cv) {
+          if (typeof window.cv.then === 'function') window.cv = await window.cv;
+          if (window.cv && window.cv.Mat) return true;
+        }
+      } catch (e) { /* keep polling */ }
+      await sleep(250);
+    }
+    return false;
+  }
+  const cvReadyPromise = waitCV(180000).then(ok => {
+    cvOK = ok;
+    const chip = $('engineChip');
+    chip.classList.add(ok ? 'ready' : 'fail');
+    $('engineText').textContent = ok
+      ? 'Auto-detect engine ready'
+      : 'Auto-detect load nahi hua — corners manually adjust karein';
+    return ok;
+  });
+
+  /* =====================================================
+     Geometry helpers
+  ===================================================== */
+  function orderCorners(p) {
+    const cx = p.reduce((s, q) => s + q.x, 0) / 4;
+    const cy = p.reduce((s, q) => s + q.y, 0) / 4;
+    const q = p.slice().sort((a, b) => Math.atan2(a.y - cy, a.x - cx) - Math.atan2(b.y - cy, b.x - cx));
+    let start = 0, min = Infinity;
+    q.forEach((pt, i) => { const v = pt.x + pt.y; if (v < min) { min = v; start = i; } });
+    return [q[start], q[(start + 1) % 4], q[(start + 2) % 4], q[(start + 3) % 4]]; // TL, TR, BR, BL
+  }
+  function polyArea(p) {
+    let a = 0;
+    for (let i = 0; i < p.length; i++) {
+      const j = (i + 1) % p.length;
+      a += p[i].x * p[j].y - p[j].x * p[i].y;
+    }
+    return Math.abs(a) / 2;
+  }
+  function defaultCorners(work, m) {
+    m = m == null ? 0.05 : m;
+    const w = work.width, h = work.height;
+    return [
+      { x: w * m, y: h * m }, { x: w * (1 - m), y: h * m },
+      { x: w * (1 - m), y: h * (1 - m) }, { x: w * m, y: h * (1 - m) }
+    ];
+  }
+
+  /* =====================================================
+     Image loading
+  ===================================================== */
   function loadImage(file) {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-        img.src = e.target.result;
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('load failed')); };
+      img.src = url;
     });
   }
-
-  // ---------- Auto-crop using OpenCV ----------
-  async function autoCropCard(imgElement) {
-    if (!window._cvReady || typeof cv === 'undefined') {
-      console.warn('OpenCV not ready');
-      return null;
-    }
-
-    try {
-      const src = cv.imread(imgElement);
-      const gray = new cv.Mat();
-      const blurred = new cv.Mat();
-      const edges = new cv.Mat();
-      const contours = new cv.MatVector();
-      const hierarchy = new cv.Mat();
-
-      cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
-      cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
-      cv.Canny(blurred, edges, 75, 200);
-      cv.findContours(edges, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-
-      let maxArea = 0;
-      let bestApprox = null;
-
-      for (let i = 0; i < contours.size(); i++) {
-        const cnt = contours.get(i);
-        const area = cv.contourArea(cnt);
-        if (area > maxArea && area > (src.rows * src.cols * 0.1)) {
-          const peri = cv.arcLength(cnt, true);
-          const approx = new cv.Mat();
-          cv.approxPolyDP(cnt, approx, 0.02 * peri, true);
-          if (approx.rows === 4) {
-            maxArea = area;
-            if (bestApprox) bestApprox.delete();
-            bestApprox = approx;
-          } else {
-            approx.delete();
-          }
-        }
-        cnt.delete();
-      }
-
-      if (!bestApprox) {
-        src.delete(); gray.delete(); blurred.delete(); edges.delete();
-        contours.delete(); hierarchy.delete();
-        return null;
-      }
-
-      // Extract 4 corners from bestApprox
-      const pts = [];
-      for (let i = 0; i < 4; i++) {
-        pts.push([bestApprox.data32S[i * 2], bestApprox.data32S[i * 2 + 1]]);
-      }
-
-      // Sort: TL, TR, BR, BL
-      pts.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
-      const tl = pts[0], br = pts[3];
-      const remaining = [pts[1], pts[2]];
-      remaining.sort((a, b) => (b[0] - b[1]) - (a[0] - a[1]));
-      const tr = remaining[0], bl = remaining[1];
-
-      // Target size (CR80 aspect ratio at high res)
-      const tw = 1012, th = 638;
-
-      const srcTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
-        tl[0], tl[1],
-        tr[0], tr[1],
-        br[0], br[1],
-        bl[0], bl[1]
-      ]);
-      const dstTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
-        0, 0, tw, 0, tw, th, 0, th
-      ]);
-      const M = cv.getPerspectiveTransform(srcTri, dstTri);
-      const warped = new cv.Mat();
-      cv.warpPerspective(src, warped, M, new cv.Size(tw, th), cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
-
-      // Convert to canvas
-      const outCanvas = document.createElement('canvas');
-      outCanvas.width = tw;
-      outCanvas.height = th;
-      cv.imshow(outCanvas, warped);
-
-      // Cleanup
-      src.delete(); gray.delete(); blurred.delete(); edges.delete();
-      contours.delete(); hierarchy.delete();
-      srcTri.delete(); dstTri.delete(); M.delete(); warped.delete();
-      bestApprox.delete();
-
-      return outCanvas;
-    } catch (e) {
-      console.error('Auto-crop error:', e);
-      return null;
-    }
-  }
-
-  // ---------- Simple fallback canvas from image ----------
-  function imgToCanvas(img) {
+  function makeWork(img) {
+    const sc = Math.min(1, WORK_MAX / Math.max(img.naturalWidth, img.naturalHeight));
     const c = document.createElement('canvas');
-    c.width = img.naturalWidth;
-    c.height = img.naturalHeight;
-    c.getContext('2d').drawImage(img, 0, 0);
+    c.width = Math.round(img.naturalWidth * sc);
+    c.height = Math.round(img.naturalHeight * sc);
+    const x = c.getContext('2d');
+    x.imageSmoothingQuality = 'high';
+    x.drawImage(img, 0, 0, c.width, c.height);
     return c;
   }
 
-  // ---------- Update slot with cropped preview ----------
-  function setSlotImage(slot, canvasEl, success) {
-    // Remove old preview
-    const oldCanvas = slot.querySelector('.slot-canvas');
-    if (oldCanvas) oldCanvas.remove();
-    const oldBadge = slot.querySelector('.status-badge');
-    if (oldBadge) oldBadge.remove();
-    const oldBtn = slot.querySelector('.change-btn');
-    if (oldBtn) oldBtn.remove();
+  /* =====================================================
+     Card detection (OpenCV.js)
+  ===================================================== */
+  async function detectCorners(work) {
+    const ok = await Promise.race([cvReadyPromise, sleep(45000).then(() => false)]);
+    if (!ok) return null;
+    const cv = window.cv;
+    const mats = [], vecs = [];
+    const M = () => { const m = new cv.Mat(); mats.push(m); return m; };
+    try {
+      const sc = Math.min(1, 900 / Math.max(work.width, work.height));
+      const t = document.createElement('canvas');
+      t.width = Math.round(work.width * sc);
+      t.height = Math.round(work.height * sc);
+      t.getContext('2d').drawImage(work, 0, 0, t.width, t.height);
 
-    // Hide initial content
-    ['svg.slot-icon', '.slot-label', '.slot-title', '.slot-hint'].forEach(sel => {
-      const el = slot.querySelector(sel);
-      if (el) el.style.display = 'none';
-    });
+      const src = cv.imread(t); mats.push(src);
+      const gray = M(), blur = M();
+      cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+      cv.GaussianBlur(gray, blur, new cv.Size(5, 5), 0);
+      const imgArea = t.width * t.height;
+      const kernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(5, 5)); mats.push(kernel);
 
-    // Show canvas
-    canvasEl.className = 'slot-canvas';
-    slot.appendChild(canvasEl);
+      const masks = [];
+      const edges = M(); cv.Canny(blur, edges, 40, 120);
+      const edgesD = M(); cv.dilate(edges, edgesD, kernel, new cv.Point(-1, -1), 2);
+      masks.push(edgesD);
+      const bin = M(); cv.threshold(blur, bin, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU);
+      const binC = M(); cv.morphologyEx(bin, binC, cv.MORPH_CLOSE, kernel);
+      masks.push(binC);
+      const inv = M(); cv.bitwise_not(binC, inv);
+      masks.push(inv);
 
-    // Status badge
-    const badge = document.createElement('span');
-    badge.className = 'status-badge' + (success ? '' : ' fail');
-    badge.textContent = success ? '✓ AUTO-CROPPED' : '⚠ MANUAL';
-    slot.appendChild(badge);
+      let best = null, bestScore = 0;
+      for (const mask of masks) {
+        const contours = new cv.MatVector(); vecs.push(contours);
+        const hier = M();
+        cv.findContours(mask, contours, hier, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+        for (let i = 0; i < contours.size(); i++) {
+          const cnt = contours.get(i);
+          const area = cv.contourArea(cnt);
+          if (area < imgArea * 0.08 || area > imgArea * 0.98) { cnt.delete(); continue; }
+          const hull = new cv.Mat();
+          cv.convexHull(cnt, hull, false, true);
+          const peri = cv.arcLength(hull, true);
+          const approx = new cv.Mat();
+          cv.approxPolyDP(hull, approx, 0.02 * peri, true);
+          let pts = null, quad = false;
+          if (approx.rows === 4) {
+            pts = [];
+            for (let j = 0; j < 4; j++) pts.push({ x: approx.data32S[j * 2], y: approx.data32S[j * 2 + 1] });
+            quad = true;
+          } else {
+            const rect = cv.minAreaRect(hull);
+            const hullArea = cv.contourArea(hull);
+            const ra = rect.size.width * rect.size.height;
+            if (ra > 0 && hullArea / ra > 0.85) {
+              pts = cv.RotatedRect.points(rect).map(p => ({ x: p.x, y: p.y }));
+            }
+          }
+          approx.delete(); hull.delete(); cnt.delete();
+          if (!pts) continue;
 
-    // Change button
-    const btn = document.createElement('button');
-    btn.className = 'change-btn';
-    btn.textContent = 'Change';
-    btn.type = 'button';
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      const input = slot.querySelector('input[type="file"]');
-      input.value = '';
-      input.click();
-    };
-    slot.appendChild(btn);
-
-    slot.classList.add('has-image');
+          pts = orderCorners(pts);
+          const a = polyArea(pts);
+          const W = (dist(pts[0], pts[1]) + dist(pts[3], pts[2])) / 2;
+          const H = (dist(pts[0], pts[3]) + dist(pts[1], pts[2])) / 2;
+          const ratio = Math.max(W, H) / Math.max(1, Math.min(W, H));
+          let score = a * (quad ? 1 : 0.9);
+          if (ratio < 1.25 || ratio > 2.1) score *= 0.35;   // not card-shaped
+          if (a > imgArea * 0.85) score *= 0.3;             // probably the whole frame
+          if (score > bestScore) { bestScore = score; best = pts; }
+        }
+      }
+      if (!best) return null;
+      return best.map(p => ({ x: p.x / sc, y: p.y / sc }));
+    } catch (e) {
+      console.warn('Card detect failed:', e);
+      return null;
+    } finally {
+      mats.forEach(m => { try { m.delete(); } catch (_) {} });
+      vecs.forEach(v => { try { v.delete(); } catch (_) {} });
+    }
   }
 
-  function resetSlot(slot) {
-    slot.classList.remove('has-image');
-    ['.slot-canvas', '.change-btn', '.status-badge'].forEach(sel => {
-      const el = slot.querySelector(sel);
-      if (el) el.remove();
-    });
-    ['svg.slot-icon', '.slot-label', '.slot-title', '.slot-hint'].forEach(sel => {
-      const el = slot.querySelector(sel);
-      if (el) el.style.display = '';
+  /* =====================================================
+     Perspective warp (pure JS — works without OpenCV)
+  ===================================================== */
+  function gauss(A, B) {
+    const n = 8;
+    for (let i = 0; i < n; i++) A[i].push(B[i]);
+    for (let c = 0; c < n; c++) {
+      let p = c;
+      for (let r = c + 1; r < n; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r;
+      const tmp = A[c]; A[c] = A[p]; A[p] = tmp;
+      const d = A[c][c] || 1e-12;
+      for (let k = c; k <= n; k++) A[c][k] /= d;
+      for (let r = 0; r < n; r++) {
+        if (r === c) continue;
+        const f = A[r][c];
+        if (f) for (let k = c; k <= n; k++) A[r][k] -= f * A[c][k];
+      }
+    }
+    return A.map(r => r[n]);
+  }
+  function homography(from, to) {   // maps `from` points onto `to` points
+    const A = [], B = [];
+    for (let i = 0; i < 4; i++) {
+      const u = from[i][0], v = from[i][1], x = to[i][0], y = to[i][1];
+      A.push([u, v, 1, 0, 0, 0, -x * u, -x * v]); B.push(x);
+      A.push([0, 0, 0, u, v, 1, -y * u, -y * v]); B.push(y);
+    }
+    return gauss(A, B);
+  }
+  function warp(srcCanvas, pts, W, H) {
+    const sw = srcCanvas.width, sh = srcCanvas.height;
+    const sd = srcCanvas.getContext('2d').getImageData(0, 0, sw, sh).data;
+    const h = homography([[0, 0], [W, 0], [W, H], [0, H]], pts.map(p => [p.x, p.y]));
+    const out = document.createElement('canvas');
+    out.width = W; out.height = H;
+    const octx = out.getContext('2d');
+    const od = octx.createImageData(W, H);
+    const o = od.data;
+    const h0 = h[0], h1 = h[1], h2 = h[2], h3 = h[3], h4 = h[4], h5 = h[5], h6 = h[6], h7 = h[7];
+    const maxX = sw - 1.001, maxY = sh - 1.001;
+    for (let v = 0; v < H; v++) {
+      for (let u = 0; u < W; u++) {
+        const den = h6 * u + h7 * v + 1;
+        let x = (h0 * u + h1 * v + h2) / den;
+        let y = (h3 * u + h4 * v + h5) / den;
+        x = x < 0 ? 0 : (x > maxX ? maxX : x);
+        y = y < 0 ? 0 : (y > maxY ? maxY : y);
+        const x0 = x | 0, y0 = y | 0, fx = x - x0, fy = y - y0;
+        const i00 = (y0 * sw + x0) * 4, i10 = i00 + 4, i01 = i00 + sw * 4, i11 = i01 + 4;
+        const w00 = (1 - fx) * (1 - fy), w10 = fx * (1 - fy), w01 = (1 - fx) * fy, w11 = fx * fy;
+        const idx = (v * W + u) * 4;
+        o[idx]     = sd[i00]     * w00 + sd[i10]     * w10 + sd[i01]     * w01 + sd[i11]     * w11;
+        o[idx + 1] = sd[i00 + 1] * w00 + sd[i10 + 1] * w10 + sd[i01 + 1] * w01 + sd[i11 + 1] * w11;
+        o[idx + 2] = sd[i00 + 2] * w00 + sd[i10 + 2] * w10 + sd[i01 + 2] * w01 + sd[i11 + 2] * w11;
+        o[idx + 3] = 255;
+      }
+    }
+    octx.putImageData(od, 0, 0);
+    return out;
+  }
+
+  // Warp so that the card is ALWAYS horizontal (landscape); flip = extra 180°
+  function buildBase(side) {
+    const s = S[side];
+    const c = orderCorners(s.corners);
+    const W = (dist(c[0], c[1]) + dist(c[3], c[2])) / 2;
+    const H = (dist(c[0], c[3]) + dist(c[1], c[2])) / 2;
+    const start = (H > W ? 3 : 0) + (s.flip ? 2 : 0);
+    const pts = [0, 1, 2, 3].map(i => c[(start + i) % 4]);
+    s.base = warp(s.work, pts, CARD_W, CARD_H);
+    s.bg = null;
+  }
+
+  /* =====================================================
+     Scan filters (pure JS)
+  ===================================================== */
+  function levels(d, n) {
+    const hist = new Uint32Array(256);
+    for (let i = 0; i < n; i++) {
+      const j = i * 4;
+      hist[(0.299 * d[j] + 0.587 * d[j + 1] + 0.114 * d[j + 2]) | 0]++;
+    }
+    let acc = 0, lo = 0, hi = 255;
+    for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= n * 0.01) { lo = v; break; } }
+    acc = 0;
+    for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc >= n * 0.01) { hi = v; break; } }
+    if (hi - lo < 24) return;
+    const lut = new Uint8ClampedArray(256);
+    for (let v = 0; v < 256; v++) lut[v] = ((v - lo) * 255) / (hi - lo);
+    for (let i = 0; i < n; i++) {
+      const j = i * 4;
+      d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]];
+    }
+  }
+  function saturate(d, n, k) {
+    for (let i = 0; i < n; i++) {
+      const j = i * 4;
+      const g = 0.299 * d[j] + 0.587 * d[j + 1] + 0.114 * d[j + 2];
+      d[j] = g + (d[j] - g) * k; d[j + 1] = g + (d[j + 1] - g) * k; d[j + 2] = g + (d[j + 2] - g) * k;
+    }
+  }
+  function toGray(d, n) {
+    for (let i = 0; i < n; i++) {
+      const j = i * 4;
+      const g = 0.299 * d[j] + 0.587 * d[j + 1] + 0.114 * d[j + 2];
+      d[j] = d[j + 1] = d[j + 2] = g;
+    }
+  }
+  // Rough estimate of the "paper" colour across the card, used to flatten shadows
+  function bgData(base) {
+    const w = base.width, h = base.height;
+    const sw = Math.max(8, Math.round(w / 16)), sh = Math.max(8, Math.round(h / 16));
+    const sm = document.createElement('canvas');
+    sm.width = sw; sm.height = sh;
+    const sx = sm.getContext('2d');
+    sx.imageSmoothingQuality = 'high';
+    sx.drawImage(base, 0, 0, sw, sh);
+    const id = sx.getImageData(0, 0, sw, sh);
+    const s = id.data;
+    const mx = new Uint8ClampedArray(s.length);
+    const R = 2;
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) for (let ch = 0; ch < 3; ch++) {
+      let m = 0;
+      for (let dy = -R; dy <= R; dy++) {
+        const yy = clamp(y + dy, 0, sh - 1);
+        for (let dx = -R; dx <= R; dx++) {
+          const xx = clamp(x + dx, 0, sw - 1);
+          const v = s[(yy * sw + xx) * 4 + ch];
+          if (v > m) m = v;
+        }
+      }
+      mx[(y * sw + x) * 4 + ch] = m;
+    }
+    const bl = new Uint8ClampedArray(s.length);
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) {
+      for (let ch = 0; ch < 3; ch++) {
+        let sum = 0, cnt = 0;
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          sum += mx[(clamp(y + dy, 0, sh - 1) * sw + clamp(x + dx, 0, sw - 1)) * 4 + ch]; cnt++;
+        }
+        bl[(y * sw + x) * 4 + ch] = sum / cnt;
+      }
+      bl[(y * sw + x) * 4 + 3] = 255;
+    }
+    id.data.set(bl);
+    sx.putImageData(id, 0, 0);
+    const big = document.createElement('canvas');
+    big.width = w; big.height = h;
+    const bx = big.getContext('2d');
+    bx.imageSmoothingEnabled = true;
+    bx.imageSmoothingQuality = 'high';
+    bx.drawImage(sm, 0, 0, w, h);
+    return bx.getImageData(0, 0, w, h).data;
+  }
+  function smooth(a, b, x) {
+    const t = clamp((x - a) / (b - a), 0, 1);
+    return t * t * (3 - 2 * t);
+  }
+  function sharpen(d, w, h, amount) {
+    const src = new Uint8ClampedArray(d);
+    const k = (amount / 100) * 1.4;
+    const row = w * 4;
+    for (let y = 1; y < h - 1; y++) {
+      for (let x = 1; x < w - 1; x++) {
+        const i = (y * w + x) * 4;
+        for (let ch = 0; ch < 3; ch++) {
+          const c = src[i + ch];
+          const avg = (src[i - 4 + ch] + src[i + 4 + ch] + src[i - row + ch] + src[i + row + ch]) / 4;
+          d[i + ch] = c + k * (c - avg);
+        }
+      }
+    }
+  }
+
+  function enhance(s) {
+    const base = s.base, e = s.enh;
+    const w = base.width, h = base.height, n = w * h;
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const x = c.getContext('2d');
+    x.drawImage(base, 0, 0);
+    const id = x.getImageData(0, 0, w, h);
+    const d = id.data;
+
+    switch (e.filter) {
+      case 'auto':  levels(d, n); break;
+      case 'magic': levels(d, n); saturate(d, n, 1.25); break;
+      case 'gray':  levels(d, n); toGray(d, n); break;
+      case 'bw': {
+        if (!s.bg) s.bg = bgData(base);
+        const bg = s.bg;
+        for (let i = 0; i < n; i++) {
+          const j = i * 4;
+          const g = 0.299 * d[j] + 0.587 * d[j + 1] + 0.114 * d[j + 2];
+          const b = Math.max(40, 0.299 * bg[j] + 0.587 * bg[j + 1] + 0.114 * bg[j + 2]);
+          const v = smooth(0.50, 0.78, Math.min(1, g / b)) * 255;
+          d[j] = d[j + 1] = d[j + 2] = v;
+        }
+        break;
+      }
+      case 'white': {
+        if (!s.bg) s.bg = bgData(base);
+        const bg = s.bg;
+        for (let i = 0; i < n; i++) {
+          const j = i * 4;
+          for (let ch = 0; ch < 3; ch++) {
+            const nn = Math.min(1, d[j + ch] / Math.max(40, bg[j + ch]));
+            d[j + ch] = clamp((nn - 0.22) / 0.72, 0, 1) * 255;
+          }
+        }
+        saturate(d, n, 1.15);
+        break;
+      }
+      default: break; // original
+    }
+
+    if (e.bright || e.contrast) {
+      const cc = e.contrast * 2.0;
+      const fac = (259 * (cc + 255)) / (255 * (259 - cc));
+      const off = e.bright * 1.5;
+      const lut = new Uint8ClampedArray(256);
+      for (let v = 0; v < 256; v++) lut[v] = fac * (v - 128) + 128 + off;
+      for (let i = 0; i < n; i++) {
+        const j = i * 4;
+        d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]];
+      }
+    }
+    if (e.sharp > 0) sharpen(d, w, h, e.sharp);
+
+    x.putImageData(id, 0, 0);
+    return c;
+  }
+
+  /* =====================================================
+     Slots
+  ===================================================== */
+  function busy(side, text) {
+    UI[side].procText.textContent = text;
+    UI[side].proc.classList.add('active');
+  }
+  function drawSlot(side) {
+    const s = S[side], u = UI[side];
+    if (!s.out) return;
+    const cv = u.canvas;
+    cv.width = 700;
+    cv.height = Math.round(700 * s.out.height / s.out.width);
+    cv.getContext('2d').drawImage(s.out, 0, 0, cv.width, cv.height);
+    u.empty.hidden = true;
+    u.filled.hidden = false;
+    u.slot.classList.add('has-image');
+    u.badge.className = 'status-badge' + (s.mode === 'manual' ? ' manual' : (s.mode === 'fail' ? ' fail' : ''));
+    u.badge.textContent = s.mode === 'auto' ? '✓ AUTO-CROPPED' : (s.mode === 'manual' ? '✎ MANUAL CROP' : '⚠ CORNERS ADJUST KAREIN');
+  }
+  function resetSlot(side) {
+    const u = UI[side];
+    u.slot.classList.remove('has-image');
+    u.empty.hidden = false;
+    u.filled.hidden = true;
+    u.file.value = '';
+  }
+  function processSide(side) {
+    const s = S[side];
+    if (!s.base) return;
+    s.out = enhance(s);
+    drawSlot(side);
+  }
+
+  // Throttled re-processing (sliders fire a lot of events)
+  let pending = new Set(), rafId = 0;
+  function schedule(sides) {
+    sides.forEach(sd => { if (S[sd].base) pending.add(sd); });
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      rafId = 0;
+      const list = Array.from(pending); pending.clear();
+      list.forEach(processSide);
+      renderPreview();
     });
   }
 
-  // ---------- Handle uploads ----------
   async function handleUpload(side, file) {
-    if (!file || !file.type.startsWith('image/')) return;
-    const slot = side === 'front' ? slotFront : slotBack;
-    const proc = side === 'front' ? procFront : procBack;
-
-    proc.classList.add('active');
-
+    if (!file || !file.type.startsWith('image/')) {
+      alert('Sirf image file (JPG / PNG) upload karein.');
+      return;
+    }
+    busy(side, 'Photo load ho rahi hai…');
     try {
       const img = await loadImage(file);
-
-      // Save original for re-crop
-      if (side === 'front') origFront = img;
-      else origBack = img;
-
-      // Try auto-crop
-      let cropped = null;
-      if (window._cvReady && typeof cv !== 'undefined') {
-        cropped = await autoCropCard(img);
-      }
-
-      // Fallback to original
-      const finalCanvas = cropped || imgToCanvas(img);
-      const wasCropped = !!cropped;
-
-      if (side === 'front') imgFront = finalCanvas;
-      else imgBack = finalCanvas;
-
-      setSlotImage(slot, finalCanvas, wasCropped);
+      const s = S[side];
+      s.work = makeWork(img);
+      s.flip = false;
+      busy(side, cvOK ? 'Card detect ho raha hai…' : 'Auto-detect engine load ho raha hai (pehli baar thoda time lagta hai)…');
+      await nextFrame();
+      const found = await detectCorners(s.work);
+      if (found) { s.corners = orderCorners(found); s.mode = 'auto'; }
+      else { s.corners = defaultCorners(s.work); s.mode = 'fail'; }
+      busy(side, 'Enhance ho raha hai…');
+      await nextFrame();
+      buildBase(side);
+      processSide(side);
       renderPreview();
+      if (s.mode === 'fail') {
+        openEditor(side, 'Card auto-detect nahi ho paya. Chaaron circles ko card ke kono par drag karein, phir "Crop karein" dabayein.');
+      }
     } catch (err) {
-      console.error('Upload error:', err);
-      alert('Photo load nahi ho payi. Dobara try karein.');
+      console.error(err);
+      alert('Photo process nahi ho payi. Dobara try karein.');
     } finally {
-      proc.classList.remove('active');
+      UI[side].proc.classList.remove('active');
     }
   }
 
-  fileFront.addEventListener('change', (e) => {
-    if (e.target.files[0]) handleUpload('front', e.target.files[0]);
-  });
-  fileBack.addEventListener('change', (e) => {
-    if (e.target.files[0]) handleUpload('back', e.target.files[0]);
-  });
-
-  // Make upload slots clickable
-  slotFront.addEventListener('click', () => {
-    if (!slotFront.classList.contains('has-image')) fileFront.click();
-  });
-  slotBack.addEventListener('click', () => {
-    if (!slotBack.classList.contains('has-image')) fileBack.click();
-  });
-
-  // ---------- Re-auto-crop button ----------
-  btnAutoCrop.addEventListener('click', async () => {
-    if (!origFront && !origBack) return;
-    btnAutoCrop.disabled = true;
-    btnAutoCrop.textContent = 'Processing...';
-
-    if (origFront) {
-      procFront.classList.add('active');
-      let cropped = window._cvReady ? await autoCropCard(origFront) : null;
-      imgFront = cropped || imgToCanvas(origFront);
-      setSlotImage(slotFront, imgFront, !!cropped);
-      procFront.classList.remove('active');
-    }
-    if (origBack) {
-      procBack.classList.add('active');
-      let cropped = window._cvReady ? await autoCropCard(origBack) : null;
-      imgBack = cropped || imgToCanvas(origBack);
-      setSlotImage(slotBack, imgBack, !!cropped);
-      procBack.classList.remove('active');
-    }
-
-    renderPreview();
-    btnAutoCrop.disabled = false;
-    btnAutoCrop.textContent = 'Re-Auto-Crop';
+  SIDES.forEach(side => {
+    const u = UI[side];
+    u.file.addEventListener('change', e => { if (e.target.files[0]) handleUpload(side, e.target.files[0]); });
+    u.slot.addEventListener('click', e => {
+      if (e.target === u.file) return;
+      const b = e.target.closest('[data-act]');
+      if (b) {
+        e.stopPropagation();
+        const act = b.dataset.act;
+        if (act === 'change') { u.file.value = ''; u.file.click(); }
+        else if (act === 'corners') openEditor(side);
+        else if (act === 'flip') { S[side].flip = !S[side].flip; buildBase(side); processSide(side); renderPreview(); }
+        return;
+      }
+      if (!u.slot.classList.contains('has-image')) u.file.click();
+    });
+    u.slot.addEventListener('dragover', e => { e.preventDefault(); u.slot.classList.add('drag'); });
+    u.slot.addEventListener('dragleave', () => u.slot.classList.remove('drag'));
+    u.slot.addEventListener('drop', e => {
+      e.preventDefault();
+      u.slot.classList.remove('drag');
+      const f = e.dataTransfer && e.dataTransfer.files[0];
+      if (f) handleUpload(side, f);
+    });
   });
 
-  // ---------- Layout / size ----------
-  function getLayout() { return document.querySelector('input[name="layout"]:checked').value; }
-  function getSize()   { return document.querySelector('input[name="size"]:checked').value; }
-
-  function drawWatermark(c, w, h) {
-    if (!wmToggle || !wmToggle.checked) return;
-    c.save();
-    c.font = '600 28px Arial, sans-serif';
-    c.fillStyle = 'rgba(25, 57, 138, 0.55)';
-    c.textAlign = 'right';
-    c.fillText('DocEasy.org', w - 40, h - 30);
-    c.restore();
+  /* =====================================================
+     Enhance panel
+  ===================================================== */
+  let target = 'both';
+  const targets = () => target === 'both' ? SIDES : [target];
+  function syncControls() {
+    const e = S[targets()[0]].enh;
+    document.querySelectorAll('#filterRow .chip').forEach(c => c.classList.toggle('on', c.dataset.f === e.filter));
+    $('r-bright').value = e.bright;   $('v-bright').textContent = e.bright;
+    $('r-contrast').value = e.contrast; $('v-contrast').textContent = e.contrast;
+    $('r-sharp').value = e.sharp;     $('v-sharp').textContent = e.sharp;
   }
+  document.querySelectorAll('#enhTarget button').forEach(b => {
+    b.addEventListener('click', () => {
+      target = b.dataset.t;
+      document.querySelectorAll('#enhTarget button').forEach(x => x.classList.toggle('on', x === b));
+      syncControls();
+    });
+  });
+  document.querySelectorAll('#filterRow .chip').forEach(c => {
+    c.addEventListener('click', () => {
+      targets().forEach(sd => { S[sd].enh.filter = c.dataset.f; });
+      syncControls();
+      schedule(targets());
+    });
+  });
+  [['r-bright', 'bright', 'v-bright'], ['r-contrast', 'contrast', 'v-contrast'], ['r-sharp', 'sharp', 'v-sharp']].forEach(([id, key, lab]) => {
+    $(id).addEventListener('input', e => {
+      const v = parseInt(e.target.value, 10) || 0;
+      targets().forEach(sd => { S[sd].enh[key] = v; });
+      $(lab).textContent = v;
+      schedule(targets());
+    });
+  });
+  $('enhReset').addEventListener('click', () => {
+    targets().forEach(sd => { S[sd].enh = DEFAULT_ENH(); });
+    syncControls();
+    schedule(targets());
+  });
 
-  function drawImageContain(c, img, x, y, w, h) {
-    const iR = img.width / img.height;
-    const bR = w / h;
-    let dW, dH, dX, dY;
-    if (iR > bR) { dW = w; dH = w / iR; dX = x; dY = y + (h - dH) / 2; }
-    else { dH = h; dW = h * iR; dX = x + (w - dW) / 2; dY = y; }
-    c.drawImage(img, dX, dY, dW, dH);
-  }
+  /* =====================================================
+     Sheet composition (preview, PDF, JPG, print share this)
+  ===================================================== */
+  const getLayout = () => document.querySelector('input[name="layout"]:checked').value;
+  const getSize = () => document.querySelector('input[name="size"]:checked').value;
 
-  function drawBorder(c, x, y, w, h) {
-    c.strokeStyle = '#e5e7eb';
-    c.lineWidth = 2;
-    c.strokeRect(x, y, w, h);
+  function compose(cv, k) {
+    const layout = getLayout();
+    const size = SIZES[getSize()];
+    const page = layout === 'side' ? A4_L : A4_P;
+    const cw = Math.round(page.w * k), ch = Math.round(page.h * k);
+    cv.width = cw; cv.height = ch;
+    const c = cv.getContext('2d');
+    c.fillStyle = '#ffffff';
+    c.fillRect(0, 0, cw, ch);
+    c.imageSmoothingEnabled = true;
+    c.imageSmoothingQuality = 'high';
+
+    const sw = size.w * k, sh = size.h * k, gap = GAP * k;
+    let fx, fy, bx, by;
+    if (layout === 'side') {
+      const startX = (cw - (sw * 2 + gap)) / 2, y = (ch - sh) / 2;
+      fx = startX; bx = startX + sw + gap; fy = by = y;
+    } else {
+      const startY = (ch - (sh * 2 + gap)) / 2, x = (cw - sw) / 2;
+      fx = bx = x; fy = startY; by = startY + sh + gap;
+    }
+    c.drawImage(S.front.out, fx, fy, sw, sh);
+    c.drawImage(S.back.out, bx, by, sw, sh);
+
+    if (borderToggle.checked) {
+      c.strokeStyle = '#cbd5e1';
+      c.lineWidth = Math.max(1, 2 * k);
+      c.strokeRect(fx, fy, sw, sh);
+      c.strokeRect(bx, by, sw, sh);
+    }
+    if (wmToggle.checked) {
+      c.save();
+      c.font = '600 ' + (28 * k) + 'px Arial, sans-serif';
+      c.fillStyle = 'rgba(25, 57, 138, 0.55)';
+      c.textAlign = 'right';
+      c.fillText('DocEasy.org', cw - 40 * k, ch - 30 * k);
+      c.restore();
+    }
   }
 
   function renderPreview() {
-    if (!imgFront || !imgBack) {
-      canvas.style.display = 'none';
+    const any = !!(S.front.work || S.back.work);
+    btnRedetect.disabled = !any;
+    if (!S.front.out || !S.back.out) {
+      preview.style.display = 'none';
       previewEmpty.style.display = 'block';
-      btnPdf.disabled = true;
-      btnJpg.disabled = true;
-      btnPrint.disabled = true;
-      btnAutoCrop.disabled = !origFront && !origBack;
+      btnPdf.disabled = btnJpg.disabled = btnPrint.disabled = true;
       return;
     }
-
-    const layout = getLayout();
-    const size = SIZES[getSize()];
-    let cw, ch;
-    if (layout === 'side') { cw = A4_LAND_W; ch = A4_LAND_H; }
-    else { cw = A4_PORT_W; ch = A4_PORT_H; }
-
-    canvas.width = cw;
-    canvas.height = ch;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, cw, ch);
-
-    let fx, fy, bx, by;
-    if (layout === 'side') {
-      const totalW = size.w * 2 + GAP;
-      const startX = (cw - totalW) / 2;
-      const y = (ch - size.h) / 2;
-      fx = startX; bx = startX + size.w + GAP;
-      fy = by = y;
-    } else {
-      const totalH = size.h * 2 + GAP;
-      const startY = (ch - totalH) / 2;
-      const x = (cw - size.w) / 2;
-      fx = bx = x;
-      fy = startY; by = startY + size.h + GAP;
-    }
-
-    drawImageContain(ctx, imgFront, fx, fy, size.w, size.h);
-    drawBorder(ctx, fx, fy, size.w, size.h);
-    drawImageContain(ctx, imgBack, bx, by, size.w, size.h);
-    drawBorder(ctx, bx, by, size.w, size.h);
-    drawWatermark(ctx, cw, ch);
-
-    canvas.style.display = 'block';
+    compose(preview, 0.3);
+    preview.style.display = 'block';
     previewEmpty.style.display = 'none';
-    btnPdf.disabled = false;
-    btnJpg.disabled = false;
-    btnPrint.disabled = false;
-    btnAutoCrop.disabled = !origFront && !origBack;
+    btnPdf.disabled = btnJpg.disabled = btnPrint.disabled = false;
+  }
+  document.querySelectorAll('input[name="layout"], input[name="size"]').forEach(r => r.addEventListener('change', renderPreview));
+  wmToggle.addEventListener('change', renderPreview);
+  borderToggle.addEventListener('change', renderPreview);
+
+  /* =====================================================
+     Re-detect
+  ===================================================== */
+  btnRedetect.addEventListener('click', async () => {
+    btnRedetect.disabled = true;
+    const label = btnRedetect.innerHTML;
+    btnRedetect.textContent = 'Processing…';
+    for (const side of SIDES) {
+      const s = S[side];
+      if (!s.work) continue;
+      busy(side, 'Card detect ho raha hai…');
+      await nextFrame();
+      const found = await detectCorners(s.work);
+      if (found) { s.corners = orderCorners(found); s.mode = 'auto'; }
+      else { s.corners = defaultCorners(s.work); s.mode = 'fail'; }
+      s.flip = false;
+      buildBase(side);
+      processSide(side);
+      UI[side].proc.classList.remove('active');
+    }
+    renderPreview();
+    btnRedetect.innerHTML = label;
+    btnRedetect.disabled = false;
+  });
+
+  /* =====================================================
+     Corner editor
+  ===================================================== */
+  const edBox = $('editor'), edCv = $('edCanvas'), edX = edCv.getContext('2d');
+  const loupe = $('edLoupe'), lx = loupe.getContext('2d');
+  const ed = { side: null, corners: null, vs: 1, drag: -1 };
+
+  function openEditor(side, note) {
+    const s = S[side];
+    if (!s.work) return;
+    ed.side = side;
+    ed.corners = s.corners.map(p => ({ x: p.x, y: p.y }));
+    ed.vs = Math.min(1, 1400 / Math.max(s.work.width, s.work.height));
+    edCv.width = Math.round(s.work.width * ed.vs);
+    edCv.height = Math.round(s.work.height * ed.vs);
+    $('editorTitle').textContent = 'Corners adjust karein — ' + (side === 'front' ? 'Front' : 'Back');
+    $('editorNote').textContent = note || 'Chaaron blue circles ko card ke chaaron kono par drag karein.';
+    edBox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    drawEditor();
+  }
+  function closeEditor() {
+    edBox.hidden = true;
+    document.body.style.overflow = '';
+    ed.drag = -1;
+    loupe.style.display = 'none';
+  }
+  function drawEditor() {
+    const work = S[ed.side].work;
+    const w = edCv.width, h = edCv.height;
+    const rect = edCv.getBoundingClientRect();
+    const u = rect.width ? w / rect.width : 1;
+    edX.clearRect(0, 0, w, h);
+    edX.drawImage(work, 0, 0, w, h);
+    const p = ed.corners.map(q => ({ x: q.x * ed.vs, y: q.y * ed.vs }));
+    const o = orderCorners(p);
+
+    edX.save();
+    edX.fillStyle = 'rgba(0,0,0,0.5)';
+    edX.beginPath();
+    edX.rect(0, 0, w, h);
+    edX.moveTo(o[0].x, o[0].y);
+    for (let i = 1; i < 4; i++) edX.lineTo(o[i].x, o[i].y);
+    edX.closePath();
+    edX.fill('evenodd');
+    edX.restore();
+
+    edX.lineWidth = 2.5 * u;
+    edX.strokeStyle = '#3b82f6';
+    edX.beginPath();
+    edX.moveTo(o[0].x, o[0].y);
+    for (let i = 1; i < 4; i++) edX.lineTo(o[i].x, o[i].y);
+    edX.closePath();
+    edX.stroke();
+
+    p.forEach((q, i) => {
+      edX.beginPath();
+      edX.arc(q.x, q.y, 13 * u, 0, Math.PI * 2);
+      edX.fillStyle = i === ed.drag ? 'rgba(59,130,246,0.55)' : 'rgba(255,255,255,0.9)';
+      edX.fill();
+      edX.lineWidth = 3 * u;
+      edX.strokeStyle = '#2563eb';
+      edX.stroke();
+      edX.beginPath();
+      edX.arc(q.x, q.y, 2.5 * u, 0, Math.PI * 2);
+      edX.fillStyle = '#2563eb';
+      edX.fill();
+    });
+  }
+  function drawLoupe() {
+    if (ed.drag < 0) { loupe.style.display = 'none'; return; }
+    const work = S[ed.side].work;
+    const c = ed.corners[ed.drag];
+    const r = 0.03 * Math.max(work.width, work.height);
+    lx.fillStyle = '#000';
+    lx.fillRect(0, 0, 140, 140);
+    lx.drawImage(work, c.x - r, c.y - r, r * 2, r * 2, 0, 0, 140, 140);
+    lx.strokeStyle = 'rgba(37,99,235,0.95)';
+    lx.lineWidth = 1.5;
+    lx.beginPath();
+    lx.moveTo(70, 0); lx.lineTo(70, 140);
+    lx.moveTo(0, 70); lx.lineTo(140, 70);
+    lx.stroke();
+    loupe.style.display = 'block';
+    const leftHalf = (c.x * ed.vs) < edCv.width / 2;
+    loupe.style.left = leftHalf ? 'auto' : '14px';
+    loupe.style.right = leftHalf ? '14px' : 'auto';
+  }
+  function evPoint(e) {
+    const rect = edCv.getBoundingClientRect();
+    return {
+      x: (e.clientX - rect.left) * (edCv.width / rect.width),
+      y: (e.clientY - rect.top) * (edCv.height / rect.height)
+    };
+  }
+  function moveHandle(pt) {
+    const work = S[ed.side].work;
+    ed.corners[ed.drag] = {
+      x: clamp(pt.x / ed.vs, 0, work.width),
+      y: clamp(pt.y / ed.vs, 0, work.height)
+    };
+    drawEditor();
+    drawLoupe();
+  }
+  edCv.addEventListener('pointerdown', e => {
+    const pt = evPoint(e);
+    let bi = 0, bd = Infinity;
+    ed.corners.forEach((c, i) => {
+      const d = Math.hypot(c.x * ed.vs - pt.x, c.y * ed.vs - pt.y);
+      if (d < bd) { bd = d; bi = i; }
+    });
+    ed.drag = bi;
+    edCv.setPointerCapture(e.pointerId);
+    e.preventDefault();
+    moveHandle(pt);
+  });
+  edCv.addEventListener('pointermove', e => {
+    if (ed.drag < 0) return;
+    e.preventDefault();
+    moveHandle(evPoint(e));
+  });
+  const endDrag = () => { if (ed.drag >= 0) { ed.drag = -1; drawEditor(); drawLoupe(); } };
+  edCv.addEventListener('pointerup', endDrag);
+  edCv.addEventListener('pointercancel', endDrag);
+  window.addEventListener('resize', () => { if (!edBox.hidden) drawEditor(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !edBox.hidden) closeEditor(); });
+
+  $('ed-close').addEventListener('click', closeEditor);
+  $('ed-cancel').addEventListener('click', closeEditor);
+  edBox.addEventListener('click', e => { if (e.target === edBox) closeEditor(); });
+  $('ed-full').addEventListener('click', () => {
+    ed.corners = defaultCorners(S[ed.side].work, 0.02);
+    drawEditor();
+  });
+  $('ed-auto').addEventListener('click', async () => {
+    const btn = $('ed-auto');
+    btn.disabled = true;
+    const label = btn.textContent;
+    btn.textContent = 'Detecting…';
+    const found = await detectCorners(S[ed.side].work);
+    if (found) {
+      ed.corners = orderCorners(found);
+      $('editorNote').textContent = 'Card detect ho gaya. Zaroorat ho to circles drag karke theek karein.';
+    } else {
+      $('editorNote').textContent = 'Auto-detect nahi hua. Circles ko khud card ke kono par le jaayein.';
+    }
+    drawEditor();
+    btn.textContent = label;
+    btn.disabled = false;
+  });
+  $('ed-apply').addEventListener('click', () => {
+    const side = ed.side, s = S[side];
+    s.corners = orderCorners(ed.corners);
+    s.mode = 'manual';
+    closeEditor();
+    buildBase(side);
+    processSide(side);
+    renderPreview();
+  });
+
+  /* =====================================================
+     Export
+  ===================================================== */
+  function fullSheet() {
+    const c = document.createElement('canvas');
+    compose(c, 1);
+    return c;
+  }
+  function downloadBlob(blob, name) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
   }
 
-  document.querySelectorAll('input[name="layout"], input[name="size"]').forEach(r => {
-    r.addEventListener('change', renderPreview);
-  });
-  if (wmToggle) wmToggle.addEventListener('change', renderPreview);
-
-  // ---------- Download PDF ----------
   btnPdf.addEventListener('click', async () => {
-    if (!imgFront || !imgBack) return;
+    if (!S.front.out || !S.back.out) return;
     btnPdf.disabled = true;
-    const originalText = btnPdf.innerHTML;
-    btnPdf.textContent = 'Generating...';
-
+    const label = btnPdf.innerHTML;
+    btnPdf.textContent = 'Generating…';
     try {
       const layout = getLayout();
-      const pdfW = layout === 'side' ? 297 : 210;
-      const pdfH = layout === 'side' ? 210 : 297;
-
+      const pw = (layout === 'side' ? 297 : 210) * 72 / 25.4;
+      const ph = (layout === 'side' ? 210 : 297) * 72 / 25.4;
       const pdfDoc = await PDFLib.PDFDocument.create();
-      const page = pdfDoc.addPage([pdfW * 2.8346, pdfH * 2.8346]);
-
-      const fullCanvas = document.createElement('canvas');
-      fullCanvas.width = layout === 'side' ? A4_LAND_W : A4_PORT_W;
-      fullCanvas.height = layout === 'side' ? A4_LAND_H : A4_PORT_H;
-      const fctx = fullCanvas.getContext('2d');
-      fctx.fillStyle = '#ffffff';
-      fctx.fillRect(0, 0, fullCanvas.width, fullCanvas.height);
-
-      const size = SIZES[getSize()];
-      let fx, fy, bx, by;
-      if (layout === 'side') {
-        const totalW = size.w * 2 + GAP;
-        const startX = (fullCanvas.width - totalW) / 2;
-        const y = (fullCanvas.height - size.h) / 2;
-        fx = startX; bx = startX + size.w + GAP;
-        fy = by = y;
-      } else {
-        const totalH = size.h * 2 + GAP;
-        const startY = (fullCanvas.height - totalH) / 2;
-        const x = (fullCanvas.width - size.w) / 2;
-        fx = bx = x;
-        fy = startY; by = startY + size.h + GAP;
-      }
-
-      drawImageContain(fctx, imgFront, fx, fy, size.w, size.h);
-      drawImageContain(fctx, imgBack, bx, by, size.w, size.h);
-      drawWatermark(fctx, fullCanvas.width, fullCanvas.height);
-
-      const pngBlob = await new Promise(resolve => fullCanvas.toBlob(resolve, 'image/png'));
-      const pngBuffer = await pngBlob.arrayBuffer();
-      const pngImage = await pdfDoc.embedPng(pngBuffer);
-      page.drawImage(pngImage, { x: 0, y: 0, width: pdfW * 2.8346, height: pdfH * 2.8346 });
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = '2in1-id-page.pdf';
-      a.click();
-      URL.revokeObjectURL(url);
+      const page = pdfDoc.addPage([pw, ph]);
+      const jpg = await new Promise(r => fullSheet().toBlob(r, 'image/jpeg', 0.93));
+      const img = await pdfDoc.embedJpg(await jpg.arrayBuffer());
+      page.drawImage(img, { x: 0, y: 0, width: pw, height: ph });
+      const bytes = await pdfDoc.save();
+      downloadBlob(new Blob([bytes], { type: 'application/pdf' }), '2in1-id-page.pdf');
     } catch (err) {
       alert('PDF error: ' + err.message);
     } finally {
       btnPdf.disabled = false;
-      btnPdf.innerHTML = originalText;
+      btnPdf.innerHTML = label;
     }
   });
 
   btnJpg.addEventListener('click', () => {
-    if (!imgFront || !imgBack) return;
-    canvas.toBlob(blob => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = '2in1-id-page.jpg';
-      a.click();
-      URL.revokeObjectURL(url);
-    }, 'image/jpeg', 0.95);
+    if (!S.front.out || !S.back.out) return;
+    fullSheet().toBlob(blob => downloadBlob(blob, '2in1-id-page.jpg'), 'image/jpeg', 0.95);
   });
 
   btnPrint.addEventListener('click', () => {
-    if (!imgFront || !imgBack) return;
+    if (!S.front.out || !S.back.out) return;
     const layout = getLayout();
-    let printArea = document.getElementById('print-canvas-area');
-    if (!printArea) {
-      printArea = document.createElement('div');
-      printArea.id = 'print-canvas-area';
-      printArea.style.display = 'none';
-      document.body.appendChild(printArea);
+    $('pageStyle').textContent = '@page { size: A4 ' + (layout === 'side' ? 'landscape' : 'portrait') + '; margin: 0; }';
+    let area = $('print-canvas-area');
+    if (!area) {
+      area = document.createElement('div');
+      area.id = 'print-canvas-area';
+      area.style.display = 'none';
+      document.body.appendChild(area);
     }
-    printArea.innerHTML = '';
+    area.innerHTML = '';
     const img = document.createElement('img');
-    img.src = canvas.toDataURL('image/png');
+    img.src = fullSheet().toDataURL('image/jpeg', 0.92);
     img.style.width = layout === 'side' ? '297mm' : '210mm';
     img.style.height = layout === 'side' ? '210mm' : '297mm';
     img.style.display = 'block';
-    printArea.appendChild(img);
-    printArea.style.display = 'block';
+    area.appendChild(img);
+    area.style.display = 'block';
     setTimeout(() => {
       window.print();
-      setTimeout(() => { printArea.style.display = 'none'; }, 500);
+      setTimeout(() => { area.style.display = 'none'; }, 500);
     }, 200);
   });
 
   btnReset.addEventListener('click', () => {
-    imgFront = null;
-    imgBack = null;
-    origFront = null;
-    origBack = null;
-    fileFront.value = '';
-    fileBack.value = '';
-    resetSlot(slotFront);
-    resetSlot(slotBack);
-    if (wmToggle) wmToggle.checked = false;
-    canvas.style.display = 'none';
-    previewEmpty.style.display = 'block';
-    btnPdf.disabled = true;
-    btnJpg.disabled = true;
-    btnPrint.disabled = true;
-    btnAutoCrop.disabled = true;
+    SIDES.forEach(sd => { S[sd] = mkSide(); resetSlot(sd); });
+    syncControls();
+    renderPreview();
   });
 
+  syncControls();
+  renderPreview();
 })();
 </script>
 </body>
