@@ -3,21 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>2 in 1 ID Maker — Auto-Crop, 4-Corner Adjust &amp; Scan Filters | DocEasy</title>
-<meta name="description" content="Aadhaar, PAN, Voter ID ka front aur back auto-crop karke ek hi page par. 4-corner manual crop, hamesha horizontal card, brightness/contrast aur scan filters (Auto, B&W, Whiteboard). 100% browser-based, no upload, no signup.">
-<meta name="keywords" content="2 in 1 id maker, aadhaar auto crop, aadhaar front back one page, pan card 2 in 1 page, auto crop id card, id card scanner, adobe scan alternative">
+<title>2 in 1 ID Maker — Aadhaar, PAN Front &amp; Back on One Page | DocEasy</title>
+<meta name="description" content="Merge Aadhaar, PAN, Voter ID front and back on a single A4 page. Adjust 4 corners, apply scan filters, download print-ready PDF. 100% browser-based, no upload, no signup.">
+<meta name="keywords" content="2 in 1 id maker, aadhaar front back one page, pan card one page, id card merger, aadhaar print tool">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="2 in 1 ID Maker — Scan-Style Auto-Crop | DocEasy">
-<meta property="og:description" content="Aadhaar, PAN front aur back auto-crop, 4-corner adjust aur scan filters ke saath ek hi page par.">
+<meta property="og:title" content="2 in 1 ID Maker — Aadhaar, PAN Front &amp; Back | DocEasy">
+<meta property="og:description" content="Merge Aadhaar, PAN front and back on one A4 page. Free, private, no signup.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="2 in 1 ID Maker — DocEasy">
-<meta name="twitter:description" content="Aadhaar, PAN front &amp; back ek page par with scan-style auto-crop.">
-<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
 <script type="application/ld+json">
@@ -29,7 +26,7 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any (Web)",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Aadhaar, PAN front aur back auto-crop karke ek hi A4 page par, 4-corner adjust aur scan filters ke saath."
+  "description": "Merge Aadhaar, PAN front and back on a single A4 page with corner adjustment and scan filters."
 }
 </script>
 
@@ -38,31 +35,20 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Kya ye 2 in 1 ID Maker free hai?","acceptedAnswer":{"@type":"Answer","text":"Haan — 100% free. No signup, no email, no daily limit. Watermark optional hai aur default par band rehta hai."}},
-    {"@type":"Question","name":"Auto-crop kaise kaam karta hai?","acceptedAnswer":{"@type":"Answer","text":"OpenCV.js se card ke 4 corners detect hote hain, perspective correct hoti hai, aur card hamesha horizontal (landscape) CR80 size mein crop hota hai."}},
-    {"@type":"Question","name":"Agar auto-crop galat ho to?","acceptedAnswer":{"@type":"Answer","text":"Corners button dabayein aur chaaron blue circles ko card ke kono par drag karein. Mobile par zoom loupe bhi dikhta hai."}},
-    {"@type":"Question","name":"Meri photos upload hoti hain?","acceptedAnswer":{"@type":"Answer","text":"Kabhi nahi. Sab processing aapke browser mein hoti hai. Photos device se bahar nahi jaati."}}
+    {"@type":"Question","name":"Is this 2 in 1 ID Maker free?","acceptedAnswer":{"@type":"Answer","text":"Yes, 100% free. No signup, no email, no daily limit. Watermark is optional and off by default."}},
+    {"@type":"Question","name":"Are my photos uploaded?","acceptedAnswer":{"@type":"Answer","text":"Never. All processing runs in your browser. Photos never leave your device."}},
+    {"@type":"Question","name":"How do I crop the ID card?","acceptedAnswer":{"@type":"Answer","text":"Upload both sides. In the corner editor, drag the four blue circles to the card corners and click Crop."}}
   ]
 }
 </script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<script async src="https://docs.opencv.org/4.8.0/opencv.js" onerror="window._cvFail=true"></script>
 
 <style>
 .ad-slot-container, .ad-placeholder { display: none !important; }
 .merge-container { max-width: 980px; margin: 26px auto 0; }
-.merge-container [hidden], .editor-backdrop[hidden] { display: none !important; }
-
-.engine-chip {
-  display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
-  font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
-  background: var(--card-hover); border: 1px solid var(--border-color); color: var(--subtext-color);
-}
-.engine-chip i { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; display: inline-block; }
-.engine-chip.ready i { background: #16a34a; }
-.engine-chip.fail i { background: #dc2626; }
+.merge-container [hidden] { display: none !important; }
 
 /* ---------- Upload slots ---------- */
 .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
@@ -86,10 +72,8 @@
 .status-badge {
   position: absolute; top: 8px; left: 8px; color: #fff; border-radius: 6px;
   padding: 4px 10px; font-size: 10px; font-weight: 800; letter-spacing: .4px;
-  background: linear-gradient(135deg,#16a34a,#15803d);
+  background: linear-gradient(135deg,#2563eb,#19398a);
 }
-.status-badge.manual { background: linear-gradient(135deg,#2563eb,#19398a); }
-.status-badge.fail { background: linear-gradient(135deg,#f59e0b,#d97706); }
 .slot-tools { display: flex; gap: 6px; padding: 8px; justify-content: center; flex-wrap: wrap; border-top: 1px solid var(--border-color); }
 .slot-tools button {
   flex: 1; min-width: 86px; padding: 8px 8px; font-size: 12px; font-weight: 700; font-family: inherit;
@@ -152,8 +136,6 @@
 .action-btn:disabled { opacity: .5; cursor: not-allowed; }
 .action-btn.primary { background: linear-gradient(135deg, var(--accent), #2563eb); color: #fff; box-shadow: 0 6px 18px rgba(25,57,138,.35); }
 .action-btn.primary:hover:not(:disabled) { transform: translateY(-2px); }
-.action-btn.green { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
-.action-btn.green:hover:not(:disabled) { transform: translateY(-2px); }
 .action-btn.secondary { background: var(--card-bg); color: var(--text-color); border-color: var(--border-color); }
 .action-btn.secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .action-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -204,22 +186,21 @@
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">2 in 1 ID Maker — Scan-Style Auto-Crop</h1>
-    <p class="hero-sub">Aadhaar, PAN, Voter ID ka front aur back <b>auto-crop</b> karke ek hi A4 page par. Card hamesha <b>horizontal</b> aayega, 4 corners khud adjust kar sakte hain, aur scan filters se contrast &amp; background clean ho jaata hai. 100% browser-based.</p>
-    <span class="engine-chip" id="engineChip"><i></i><span id="engineText">Auto-detect engine load ho raha hai…</span></span>
+    <h1 class="hero-title">2 in 1 ID Maker</h1>
+    <p class="hero-sub">Merge Aadhaar, PAN, Voter ID front and back on a single A4 page. Adjust 4 corners, apply scan filters, download print-ready PDF. 100% browser-based, no upload, no signup.</p>
   </div>
 
   <div class="hd-banner">
     <div class="hd-icon">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2 L2 7 L12 12 L22 7 Z"/>
-        <path d="M2 17 L12 22 L22 17"/>
-        <path d="M2 12 L12 17 L22 12"/>
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <circle cx="9" cy="11" r="2"/>
+        <path d="M13 10h5M13 14h5M6 16h12"/>
       </svg>
     </div>
     <div class="hd-text">
-      <b>Auto-Crop + 4 Corner Adjust + Scan Filters</b>
-      <small>Photo tirchhi ho ya background ho — card khud detect hoga. Galat crop ho to chaaron corners drag karke theek karein. Output exact 85.6 × 54 mm, hamesha landscape.</small>
+      <b>One Page. Both Sides. Print-Ready.</b>
+      <small>Upload photos, drag 4 corners to crop each card, choose layout, download PDF at 300 DPI. Works fully offline after first load.</small>
     </div>
   </div>
 
@@ -235,14 +216,13 @@
           <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           <div class="slot-label">Step 1</div>
           <p class="slot-title">Front Side</p>
-          <p class="slot-hint">Photo upload ya drag-drop karein — auto-crop ho jaayega</p>
+          <p class="slot-hint">Click or drag &amp; drop a photo</p>
         </div>
         <div class="slot-filled" hidden>
           <canvas class="slot-canvas"></canvas>
-          <span class="status-badge"></span>
+          <span class="status-badge">✓ READY</span>
           <div class="slot-tools">
-            <button type="button" data-act="corners">Corners adjust</button>
-            <button type="button" data-act="flip">Ulta? 180° flip</button>
+            <button type="button" data-act="corners">Adjust Corners</button>
             <button type="button" data-act="change" class="danger">Change</button>
           </div>
         </div>
@@ -255,14 +235,13 @@
           <svg class="slot-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           <div class="slot-label">Step 2</div>
           <p class="slot-title">Back Side</p>
-          <p class="slot-hint">Photo upload ya drag-drop karein — auto-crop ho jaayega</p>
+          <p class="slot-hint">Click or drag &amp; drop a photo</p>
         </div>
         <div class="slot-filled" hidden>
           <canvas class="slot-canvas"></canvas>
-          <span class="status-badge"></span>
+          <span class="status-badge">✓ READY</span>
           <div class="slot-tools">
-            <button type="button" data-act="corners">Corners adjust</button>
-            <button type="button" data-act="flip">Ulta? 180° flip</button>
+            <button type="button" data-act="corners">Adjust Corners</button>
             <button type="button" data-act="change" class="danger">Change</button>
           </div>
         </div>
@@ -273,7 +252,7 @@
       <div class="enh-head">
         <h4>Scan Filters &amp; Adjust</h4>
         <div class="seg" id="enhTarget" role="group" aria-label="Apply to">
-          <button type="button" data-t="both" class="on">Dono</button>
+          <button type="button" data-t="both" class="on">Both</button>
           <button type="button" data-t="front">Front</button>
           <button type="button" data-t="back">Back</button>
         </div>
@@ -292,8 +271,8 @@
         <label>Sharpness <span id="v-sharp">0</span><input type="range" id="r-sharp" min="0" max="100" value="0"></label>
       </div>
       <div class="enh-foot">
-        <small>Contrast kam karna ho to slider left le jaayein. B&amp;W Doc aur Whiteboard text-wale documents ke liye best hain.</small>
-        <button type="button" class="link-btn" id="enhReset">Reset adjust</button>
+        <small>Move Contrast left to soften, right to sharpen. B&amp;W Doc and Whiteboard are best for text documents.</small>
+        <button type="button" class="link-btn" id="enhReset">Reset</button>
       </div>
     </div>
 
@@ -312,27 +291,23 @@
       </div>
       <div class="options-row" style="margin-top: 18px;">
         <div class="option-group">
-          <h4>Page</h4>
-          <label><input type="checkbox" id="border-toggle" checked> Card ke around cut-line border</label>
+          <h4>Page Options</h4>
+          <label><input type="checkbox" id="border-toggle" checked> Draw cut-line border around each card</label>
         </div>
         <div class="option-group">
           <h4>Watermark (optional)</h4>
-          <label><input type="checkbox" id="watermark-toggle"> Add small "DocEasy.org" watermark (bottom-right)</label>
+          <label><input type="checkbox" id="watermark-toggle"> Add "DocEasy.org" watermark (bottom-right)</label>
         </div>
       </div>
     </div>
 
     <div class="preview-section">
       <h4>Live Preview</h4>
-      <div class="preview-empty" id="previewEmpty">Dono sides upload karein — preview yahan dikhega</div>
+      <div class="preview-empty" id="previewEmpty">Upload both sides to see the preview</div>
       <canvas id="previewCanvas" class="preview-canvas"></canvas>
     </div>
 
     <div class="action-bar">
-      <button class="action-btn green" id="btn-auto-crop" disabled>
-        <svg viewBox="0 0 24 24"><path d="M6 2 L2 6 L6 10"/><path d="M18 22 L22 18 L18 14"/></svg>
-        Re-detect Corners
-      </button>
       <button class="action-btn primary" id="btn-download-pdf" disabled>
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download PDF
@@ -357,20 +332,19 @@
   <div class="editor-backdrop" id="editor" hidden role="dialog" aria-modal="true" aria-labelledby="editorTitle">
     <div class="editor-box">
       <div class="editor-head">
-        <b id="editorTitle">Corners adjust karein</b>
+        <b id="editorTitle">Adjust Corners</b>
         <button type="button" class="editor-x" id="ed-close" aria-label="Close">&times;</button>
       </div>
-      <p class="editor-note" id="editorNote"></p>
+      <p class="editor-note" id="editorNote">Drag the four blue circles to the four corners of the card, then tap Crop.</p>
       <div class="editor-stage">
         <canvas id="edCanvas"></canvas>
         <canvas id="edLoupe" width="140" height="140"></canvas>
       </div>
       <div class="editor-actions">
-        <button type="button" class="action-btn secondary" id="ed-auto">Auto-detect</button>
-        <button type="button" class="action-btn secondary" id="ed-full">Poori photo</button>
+        <button type="button" class="action-btn secondary" id="ed-full">Use Full Photo</button>
         <span class="spacer"></span>
         <button type="button" class="action-btn secondary" id="ed-cancel">Cancel</button>
-        <button type="button" class="action-btn primary" id="ed-apply">Crop karein</button>
+        <button type="button" class="action-btn primary" id="ed-apply">Crop</button>
       </div>
     </div>
   </div>
@@ -378,63 +352,71 @@
   <div class="ad-slot-container">Advertisement</div>
 
   <section class="seo-article">
-    <h2>2 in 1 ID Maker with Scan-Style Auto-Crop — Aadhaar, PAN Front aur Back ek hi Page par (2026)</h2>
+    <h2>2 in 1 ID Maker — Merge Aadhaar, PAN Front and Back on One Page</h2>
 
-    <p>Har Indian institution — banks, government portals, exam authorities, landlords, employers — aapke ID card ki copy maangti hai. Aur lagbhag sab ek hi page par chahte hain. DocEasy ka <b>2 in 1 ID Maker</b> aapke front aur back photos ko automatically crop karke, ek clean, print-ready A4 page par merge kar deta hai — seconds mein, puri tarah browser ke andar.</p>
+    <p>Every bank, government portal, exam authority, and office asks for a copy of your ID card on a single page. But when you photograph the front and back of your Aadhaar, PAN, or Voter ID, you end up with two separate images that take two pages to print. <b>DocEasy's 2 in 1 ID Maker</b> solves this — it crops both sides, merges them into one clean A4 page, and exports a print-ready PDF in seconds, all inside your browser.</p>
 
-    <h3>Is Tool Mein Kya Kya Hai</h3>
+    <h3>How to Use</h3>
+    <ol>
+      <li><b>Upload Front Side:</b> Click the left slot and choose your front-side photo.</li>
+      <li><b>Upload Back Side:</b> Click the right slot and choose your back-side photo.</li>
+      <li><b>Adjust Corners:</b> In the corner editor, drag the four blue circles to the card corners. Use the zoom loupe on mobile for precision.</li>
+      <li><b>Choose Layout:</b> Side by Side (A4 Landscape) or Stacked (A4 Portrait).</li>
+      <li><b>Choose Card Size:</b> Actual Size (85.6 × 54 mm) or Large (100 × 63 mm).</li>
+      <li><b>Apply Filters:</b> Use Auto, B&amp;W Doc, or Whiteboard to sharpen the output.</li>
+      <li><b>Download PDF:</b> Save the print-ready A4 PDF at 300 DPI. Print at 100% scale.</li>
+    </ol>
+
+    <h3>Why DocEasy</h3>
     <ul>
-      <li><b>Auto-crop</b> — card ke 4 corners khud detect hote hain aur perspective seedha ho jaata hai.</li>
-      <li><b>4-corner manual crop</b> — auto-crop galat ho to chaaron corners drag karke theek karein. Zoom loupe se corner exact pakad sakte hain.</li>
-      <li><b>Hamesha horizontal card</b> — photo vertical ho ya tirchhi, card output landscape mein hi banega. Ulta dikhe to ek tap mein 180° flip.</li>
-      <li><b>Scan filters</b> — Auto, Magic Color, Grayscale, B&amp;W Doc aur Whiteboard.</li>
-      <li><b>Brightness, Contrast, Sharpness</b> — contrast kam ya zyada karein, front aur back ko alag ya ek saath.</li>
-      <li><b>Print-ready</b> — A4 landscape ya portrait, 300 DPI, PDF / JPG / direct print.</li>
+      <li><b>100% private:</b> Photos never leave your device. All processing runs in your browser using Canvas and pdf-lib.</li>
+      <li><b>Fast:</b> No framework overhead, no external libraries. Loads in under a second.</li>
+      <li><b>Free forever:</b> No signup, no email, no daily limit. Watermark is optional and off by default.</li>
+      <li><b>Works offline:</b> After the page loads once, disconnect from the internet and it still works.</li>
+      <li><b>Mobile-ready:</b> Touch-friendly corner editor with zoom loupe.</li>
     </ul>
 
-    <h3>Auto-Crop Kya Hai — Aur Kyun Zaroori Hai</h3>
-    <p>Jab aap phone se Aadhaar card ki photo lete hain, to usually card table par rakha hota hai, aur photo mein bahut background bhi aa jaata hai. Agar aap isi photo ko merge kar dein, to output mein card chhota aur background zyada dikhega. Auto-Crop is problem ko solve karta hai — tool khud card ke 4 corners detect karta hai, background hataata hai, aur perspective correct karke exact CR80 size mein crop karta hai.</p>
-
-    <h3>Kaise Kaam Karta Hai — Technical Detail</h3>
-    <p>Ye tool <b>OpenCV.js</b> se card detect karta hai — computer vision library jo JavaScript mein compiled hai. Photo upload karte hi ye steps chalte hain:</p>
-    <ol>
-      <li><b>Grayscale + Gaussian blur</b> — noise hataata hai</li>
-      <li><b>Edge aur threshold detection</b> — card ki boundaries find karta hai</li>
-      <li><b>Contour detection</b> — sabse sahi 4-kone wala shape (yahi card hai) chunta hai</li>
-      <li><b>Perspective transform</b> — tirchhe corners ko straight karta hai</li>
-      <li><b>Landscape orientation</b> — card ko horizontal karke 85.6 × 54 mm ratio mein crop karta hai</li>
-      <li><b>Scan filter</b> — levels, contrast aur background cleanup apply hota hai</li>
-    </ol>
-    <p>Ye sab aapke device par hota hai, bina kisi server ke.</p>
+    <h3>Best Results — Tips</h3>
+    <ul>
+      <li>Photograph the card on a dark matte surface in daylight. Avoid flash and glare.</li>
+      <li>Keep the card flat and hold the camera parallel to the card.</li>
+      <li>For sharp output, crop the card precisely in the corner editor before merging.</li>
+      <li>Use B&amp;W Doc filter for text-heavy scans to make text crisp and background white.</li>
+      <li>Print at "Actual Size" or "100% Scale" — never "Fit to Page".</li>
+    </ul>
 
     <h3>Frequently Asked Questions</h3>
     <details>
-      <summary>Kya ye 2 in 1 ID Maker free hai?</summary>
-      <p>Haan — 100% free. No signup, no email, no daily limit. "DocEasy.org" watermark optional hai aur default par band rehta hai.</p>
+      <summary>Is this 2 in 1 ID Maker free?</summary>
+      <p>Yes, 100% free. No signup, no email, no daily limit. The "DocEasy.org" watermark is optional and off by default.</p>
     </details>
     <details>
-      <summary>Auto-crop kaise kaam karta hai?</summary>
-      <p>OpenCV.js se card ke 4 corners detect hote hain, perspective correct hoti hai, aur card hamesha horizontal CR80 size mein crop hota hai.</p>
+      <summary>Are my photos uploaded to any server?</summary>
+      <p>Never. All processing runs in your browser using Canvas and pdf-lib. Your photos never leave your device.</p>
     </details>
     <details>
-      <summary>Agar auto-crop galat ho ya fail ho jaye to?</summary>
-      <p>Tool corner editor khol deta hai (ya aap "Corners adjust" dabayein). Chaaron blue circles ko card ke kono par drag karein aur "Crop karein" dabayein. Mobile par drag karte waqt zoom loupe dikhta hai.</p>
+      <summary>How do I crop the card from a full photo?</summary>
+      <p>After uploading, tap "Adjust Corners" under the preview. Drag the four blue circles to the corners of the card. Pinch-zoom for precision. Then tap "Crop".</p>
     </details>
     <details>
-      <summary>Card ulta dikh raha hai, kya karein?</summary>
-      <p>Us side ke neeche "Ulta? 180° flip" button dabayein.</p>
+      <summary>Why is the output sometimes tilted?</summary>
+      <p>Because the source photo was taken at an angle. Use the "Adjust Corners" tool to drag the corners exactly onto the card's four corners. The perspective is corrected automatically.</p>
     </details>
     <details>
-      <summary>Contrast kam ya zyada kaise karein?</summary>
-      <p>"Scan Filters &amp; Adjust" mein Contrast slider use karein. Dono sides ko ek saath ya sirf Front / Back ko alag adjust kar sakte hain.</p>
+      <summary>What size PDF does it produce?</summary>
+      <p>Standard A4 size — 210 × 297 mm (portrait) or 297 × 210 mm (landscape) at 300 DPI. Banks and government portals universally accept this.</p>
     </details>
     <details>
-      <summary>Meri photos upload hoti hain?</summary>
-      <p>Kabhi nahi. Sab processing aapke browser mein hoti hai. Photos device se bahar nahi jaati.</p>
+      <summary>Can I choose the card size?</summary>
+      <p>Yes — Actual Size gives standard CR80 (85.6 × 54 mm), and Large gives 100 × 63 mm for easier reading.</p>
     </details>
     <details>
-      <summary>Kaunsa size PDF produce hota hai?</summary>
-      <p>Standard A4 size — 210 × 297 mm (portrait) ya 297 × 210 mm (landscape) at 300 DPI.</p>
+      <summary>Can I use it without internet?</summary>
+      <p>Yes. After the page loads once, disconnect from the internet and everything still works.</p>
+    </details>
+    <details>
+      <summary>Does it work on mobile phones?</summary>
+      <p>Yes. The tool is fully responsive and the corner editor includes a zoom loupe for touch devices.</p>
     </details>
 
     <h3>Related DocEasy Tools</h3>
@@ -471,7 +453,7 @@
   };
   const GAP = 200;
   const CARD_W = 1200, CARD_H = 756;   // warped card, always landscape (CR80 ratio)
-  const WORK_MAX = 2800;               // longest side of the working copy of each photo
+  const WORK_MAX = 2400;                // longest side of working copy
   const SIDES = ['front', 'back'];
   const DEFAULT_ENH = () => ({ filter: 'auto', bright: 0, contrast: 0, sharp: 0 });
 
@@ -487,8 +469,6 @@
   const mkSide = () => ({
     work: null,       // working canvas of the uploaded photo
     corners: null,    // 4 points in work-canvas coords
-    flip: false,      // 180° flip of the card
-    mode: 'none',     // auto | manual | fail
     base: null,       // warped landscape card (before filters)
     bg: null,         // cached background estimate for B&W / Whiteboard
     out: null,        // card after filters
@@ -506,8 +486,7 @@
       procText: slot.querySelector('.proc-text'),
       empty: slot.querySelector('.slot-empty'),
       filled: slot.querySelector('.slot-filled'),
-      canvas: slot.querySelector('.slot-canvas'),
-      badge: slot.querySelector('.status-badge')
+      canvas: slot.querySelector('.slot-canvas')
     };
   });
 
@@ -517,37 +496,8 @@
   const btnJpg = $('btn-download-jpg');
   const btnPrint = $('btn-print');
   const btnReset = $('btn-reset');
-  const btnRedetect = $('btn-auto-crop');
   const wmToggle = $('watermark-toggle');
   const borderToggle = $('border-toggle');
-
-  /* =====================================================
-     OpenCV readiness
-  ===================================================== */
-  let cvOK = false;
-  async function waitCV(maxMs) {
-    const t0 = Date.now();
-    while (Date.now() - t0 < maxMs) {
-      if (window._cvFail) return false;
-      try {
-        if (window.cv) {
-          if (typeof window.cv.then === 'function') window.cv = await window.cv;
-          if (window.cv && window.cv.Mat) return true;
-        }
-      } catch (e) { /* keep polling */ }
-      await sleep(250);
-    }
-    return false;
-  }
-  const cvReadyPromise = waitCV(180000).then(ok => {
-    cvOK = ok;
-    const chip = $('engineChip');
-    chip.classList.add(ok ? 'ready' : 'fail');
-    $('engineText').textContent = ok
-      ? 'Auto-detect engine ready'
-      : 'Auto-detect load nahi hua — corners manually adjust karein';
-    return ok;
-  });
 
   /* =====================================================
      Geometry helpers
@@ -559,14 +509,6 @@
     let start = 0, min = Infinity;
     q.forEach((pt, i) => { const v = pt.x + pt.y; if (v < min) { min = v; start = i; } });
     return [q[start], q[(start + 1) % 4], q[(start + 2) % 4], q[(start + 3) % 4]]; // TL, TR, BR, BL
-  }
-  function polyArea(p) {
-    let a = 0;
-    for (let i = 0; i < p.length; i++) {
-      const j = (i + 1) % p.length;
-      a += p[i].x * p[j].y - p[j].x * p[i].y;
-    }
-    return Math.abs(a) / 2;
   }
   function defaultCorners(work, m) {
     m = m == null ? 0.05 : m;
@@ -601,92 +543,7 @@
   }
 
   /* =====================================================
-     Card detection (OpenCV.js)
-  ===================================================== */
-  async function detectCorners(work) {
-    const ok = await Promise.race([cvReadyPromise, sleep(45000).then(() => false)]);
-    if (!ok) return null;
-    const cv = window.cv;
-    const mats = [], vecs = [];
-    const M = () => { const m = new cv.Mat(); mats.push(m); return m; };
-    try {
-      const sc = Math.min(1, 900 / Math.max(work.width, work.height));
-      const t = document.createElement('canvas');
-      t.width = Math.round(work.width * sc);
-      t.height = Math.round(work.height * sc);
-      t.getContext('2d').drawImage(work, 0, 0, t.width, t.height);
-
-      const src = cv.imread(t); mats.push(src);
-      const gray = M(), blur = M();
-      cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
-      cv.GaussianBlur(gray, blur, new cv.Size(5, 5), 0);
-      const imgArea = t.width * t.height;
-      const kernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(5, 5)); mats.push(kernel);
-
-      const masks = [];
-      const edges = M(); cv.Canny(blur, edges, 40, 120);
-      const edgesD = M(); cv.dilate(edges, edgesD, kernel, new cv.Point(-1, -1), 2);
-      masks.push(edgesD);
-      const bin = M(); cv.threshold(blur, bin, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU);
-      const binC = M(); cv.morphologyEx(bin, binC, cv.MORPH_CLOSE, kernel);
-      masks.push(binC);
-      const inv = M(); cv.bitwise_not(binC, inv);
-      masks.push(inv);
-
-      let best = null, bestScore = 0;
-      for (const mask of masks) {
-        const contours = new cv.MatVector(); vecs.push(contours);
-        const hier = M();
-        cv.findContours(mask, contours, hier, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-        for (let i = 0; i < contours.size(); i++) {
-          const cnt = contours.get(i);
-          const area = cv.contourArea(cnt);
-          if (area < imgArea * 0.08 || area > imgArea * 0.98) { cnt.delete(); continue; }
-          const hull = new cv.Mat();
-          cv.convexHull(cnt, hull, false, true);
-          const peri = cv.arcLength(hull, true);
-          const approx = new cv.Mat();
-          cv.approxPolyDP(hull, approx, 0.02 * peri, true);
-          let pts = null, quad = false;
-          if (approx.rows === 4) {
-            pts = [];
-            for (let j = 0; j < 4; j++) pts.push({ x: approx.data32S[j * 2], y: approx.data32S[j * 2 + 1] });
-            quad = true;
-          } else {
-            const rect = cv.minAreaRect(hull);
-            const hullArea = cv.contourArea(hull);
-            const ra = rect.size.width * rect.size.height;
-            if (ra > 0 && hullArea / ra > 0.85) {
-              pts = cv.RotatedRect.points(rect).map(p => ({ x: p.x, y: p.y }));
-            }
-          }
-          approx.delete(); hull.delete(); cnt.delete();
-          if (!pts) continue;
-
-          pts = orderCorners(pts);
-          const a = polyArea(pts);
-          const W = (dist(pts[0], pts[1]) + dist(pts[3], pts[2])) / 2;
-          const H = (dist(pts[0], pts[3]) + dist(pts[1], pts[2])) / 2;
-          const ratio = Math.max(W, H) / Math.max(1, Math.min(W, H));
-          let score = a * (quad ? 1 : 0.9);
-          if (ratio < 1.25 || ratio > 2.1) score *= 0.35;   // not card-shaped
-          if (a > imgArea * 0.85) score *= 0.3;             // probably the whole frame
-          if (score > bestScore) { bestScore = score; best = pts; }
-        }
-      }
-      if (!best) return null;
-      return best.map(p => ({ x: p.x / sc, y: p.y / sc }));
-    } catch (e) {
-      console.warn('Card detect failed:', e);
-      return null;
-    } finally {
-      mats.forEach(m => { try { m.delete(); } catch (_) {} });
-      vecs.forEach(v => { try { v.delete(); } catch (_) {} });
-    }
-  }
-
-  /* =====================================================
-     Perspective warp (pure JS — works without OpenCV)
+     Perspective warp (pure JS)
   ===================================================== */
   function gauss(A, B) {
     const n = 8;
@@ -705,7 +562,7 @@
     }
     return A.map(r => r[n]);
   }
-  function homography(from, to) {   // maps `from` points onto `to` points
+  function homography(from, to) {
     const A = [], B = [];
     for (let i = 0; i < 4; i++) {
       const u = from[i][0], v = from[i][1], x = to[i][0], y = to[i][1];
@@ -746,13 +603,13 @@
     return out;
   }
 
-  // Warp so that the card is ALWAYS horizontal (landscape); flip = extra 180°
+  // Warp so that the card is ALWAYS horizontal
   function buildBase(side) {
     const s = S[side];
     const c = orderCorners(s.corners);
     const W = (dist(c[0], c[1]) + dist(c[3], c[2])) / 2;
     const H = (dist(c[0], c[3]) + dist(c[1], c[2])) / 2;
-    const start = (H > W ? 3 : 0) + (s.flip ? 2 : 0);
+    const start = (H > W ? 3 : 0);
     const pts = [0, 1, 2, 3].map(i => c[(start + i) % 4]);
     s.base = warp(s.work, pts, CARD_W, CARD_H);
     s.bg = null;
@@ -793,7 +650,6 @@
       d[j] = d[j + 1] = d[j + 2] = g;
     }
   }
-  // Rough estimate of the "paper" colour across the card, used to flatten shadows
   function bgData(base) {
     const w = base.width, h = base.height;
     const sw = Math.max(8, Math.round(w / 16)), sh = Math.max(8, Math.round(h / 16));
@@ -898,7 +754,7 @@
         saturate(d, n, 1.15);
         break;
       }
-      default: break; // original
+      default: break;
     }
 
     if (e.bright || e.contrast) {
@@ -935,8 +791,6 @@
     u.empty.hidden = true;
     u.filled.hidden = false;
     u.slot.classList.add('has-image');
-    u.badge.className = 'status-badge' + (s.mode === 'manual' ? ' manual' : (s.mode === 'fail' ? ' fail' : ''));
-    u.badge.textContent = s.mode === 'auto' ? '✓ AUTO-CROPPED' : (s.mode === 'manual' ? '✎ MANUAL CROP' : '⚠ CORNERS ADJUST KAREIN');
   }
   function resetSlot(side) {
     const u = UI[side];
@@ -952,7 +806,6 @@
     drawSlot(side);
   }
 
-  // Throttled re-processing (sliders fire a lot of events)
   let pending = new Set(), rafId = 0;
   function schedule(sides) {
     sides.forEach(sd => { if (S[sd].base) pending.add(sd); });
@@ -967,32 +820,25 @@
 
   async function handleUpload(side, file) {
     if (!file || !file.type.startsWith('image/')) {
-      alert('Sirf image file (JPG / PNG) upload karein.');
+      alert('Please choose an image file (JPG, PNG, etc.)');
       return;
     }
-    busy(side, 'Photo load ho rahi hai…');
+    busy(side, 'Loading photo…');
     try {
       const img = await loadImage(file);
       const s = S[side];
       s.work = makeWork(img);
-      s.flip = false;
-      busy(side, cvOK ? 'Card detect ho raha hai…' : 'Auto-detect engine load ho raha hai (pehli baar thoda time lagta hai)…');
+      busy(side, 'Preparing editor…');
       await nextFrame();
-      const found = await detectCorners(s.work);
-      if (found) { s.corners = orderCorners(found); s.mode = 'auto'; }
-      else { s.corners = defaultCorners(s.work); s.mode = 'fail'; }
-      busy(side, 'Enhance ho raha hai…');
-      await nextFrame();
+      s.corners = defaultCorners(s.work, 0.05);
       buildBase(side);
       processSide(side);
       renderPreview();
-      if (s.mode === 'fail') {
-        openEditor(side, 'Card auto-detect nahi ho paya. Chaaron circles ko card ke kono par drag karein, phir "Crop karein" dabayein.');
-      }
+      UI[side].proc.classList.remove('active');
+      openEditor(side, 'Drag the four blue circles to the card corners, then tap Crop.');
     } catch (err) {
       console.error(err);
-      alert('Photo process nahi ho payi. Dobara try karein.');
-    } finally {
+      alert('Could not process the photo. Please try again.');
       UI[side].proc.classList.remove('active');
     }
   }
@@ -1007,8 +853,7 @@
         e.stopPropagation();
         const act = b.dataset.act;
         if (act === 'change') { u.file.value = ''; u.file.click(); }
-        else if (act === 'corners') openEditor(side);
-        else if (act === 'flip') { S[side].flip = !S[side].flip; buildBase(side); processSide(side); renderPreview(); }
+        else if (act === 'corners') openEditor(side, 'Drag the four blue circles to the card corners, then tap Crop.');
         return;
       }
       if (!u.slot.classList.contains('has-image')) u.file.click();
@@ -1064,7 +909,7 @@
   });
 
   /* =====================================================
-     Sheet composition (preview, PDF, JPG, print share this)
+     Compose sheet
   ===================================================== */
   const getLayout = () => document.querySelector('input[name="layout"]:checked').value;
   const getSize = () => document.querySelector('input[name="size"]:checked').value;
@@ -1110,8 +955,6 @@
   }
 
   function renderPreview() {
-    const any = !!(S.front.work || S.back.work);
-    btnRedetect.disabled = !any;
     if (!S.front.out || !S.back.out) {
       preview.style.display = 'none';
       previewEmpty.style.display = 'block';
@@ -1128,31 +971,6 @@
   borderToggle.addEventListener('change', renderPreview);
 
   /* =====================================================
-     Re-detect
-  ===================================================== */
-  btnRedetect.addEventListener('click', async () => {
-    btnRedetect.disabled = true;
-    const label = btnRedetect.innerHTML;
-    btnRedetect.textContent = 'Processing…';
-    for (const side of SIDES) {
-      const s = S[side];
-      if (!s.work) continue;
-      busy(side, 'Card detect ho raha hai…');
-      await nextFrame();
-      const found = await detectCorners(s.work);
-      if (found) { s.corners = orderCorners(found); s.mode = 'auto'; }
-      else { s.corners = defaultCorners(s.work); s.mode = 'fail'; }
-      s.flip = false;
-      buildBase(side);
-      processSide(side);
-      UI[side].proc.classList.remove('active');
-    }
-    renderPreview();
-    btnRedetect.innerHTML = label;
-    btnRedetect.disabled = false;
-  });
-
-  /* =====================================================
      Corner editor
   ===================================================== */
   const edBox = $('editor'), edCv = $('edCanvas'), edX = edCv.getContext('2d');
@@ -1167,8 +985,8 @@
     ed.vs = Math.min(1, 1400 / Math.max(s.work.width, s.work.height));
     edCv.width = Math.round(s.work.width * ed.vs);
     edCv.height = Math.round(s.work.height * ed.vs);
-    $('editorTitle').textContent = 'Corners adjust karein — ' + (side === 'front' ? 'Front' : 'Back');
-    $('editorNote').textContent = note || 'Chaaron blue circles ko card ke chaaron kono par drag karein.';
+    $('editorTitle').textContent = 'Adjust Corners — ' + (side === 'front' ? 'Front' : 'Back');
+    $('editorNote').textContent = note || 'Drag the four blue circles to the card corners, then tap Crop.';
     edBox.hidden = false;
     document.body.style.overflow = 'hidden';
     drawEditor();
@@ -1286,26 +1104,9 @@
     ed.corners = defaultCorners(S[ed.side].work, 0.02);
     drawEditor();
   });
-  $('ed-auto').addEventListener('click', async () => {
-    const btn = $('ed-auto');
-    btn.disabled = true;
-    const label = btn.textContent;
-    btn.textContent = 'Detecting…';
-    const found = await detectCorners(S[ed.side].work);
-    if (found) {
-      ed.corners = orderCorners(found);
-      $('editorNote').textContent = 'Card detect ho gaya. Zaroorat ho to circles drag karke theek karein.';
-    } else {
-      $('editorNote').textContent = 'Auto-detect nahi hua. Circles ko khud card ke kono par le jaayein.';
-    }
-    drawEditor();
-    btn.textContent = label;
-    btn.disabled = false;
-  });
   $('ed-apply').addEventListener('click', () => {
     const side = ed.side, s = S[side];
     s.corners = orderCorners(ed.corners);
-    s.mode = 'manual';
     closeEditor();
     buildBase(side);
     processSide(side);
