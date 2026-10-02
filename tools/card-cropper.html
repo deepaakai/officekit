@@ -403,27 +403,64 @@
   .article-image-box img { max-height: 260px; padding: 14px; }
 }
 
+/* ============ PRINT — Single Page Output ============ */
 @media print {
-  body * { visibility: hidden; }
-  #print-area, #print-area * { visibility: visible; }
-  #print-area {
-    position: absolute; top: 10mm; left: 10mm;
-    display: flex !important; flex-direction: row;
-    gap: 5mm; margin: 0; padding: 0;
+  @page {
+    size: A4 portrait;
+    margin: 0;
   }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+  }
+
+  /* Hide every direct child of body from layout */
+  body > * {
+    display: none !important;
+  }
+
+  /* Only show the print area */
+  #print-area {
+    display: flex !important;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 5mm;
+    padding: 10mm;
+    margin: 0;
+    box-sizing: border-box;
+    width: 210mm;
+    height: 297mm;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+  }
+
+  /* When print area is hidden (inline display:none), keep it hidden */
+  #print-area[style*="display: none"],
+  #print-area[style*="display:none"] {
+    display: none !important;
+  }
+
   .card-print-img {
-    width: 85mm !important; height: 55mm !important;
-    border: 0 !important; outline: 0 !important;
-    box-shadow: none !important; background: transparent !important;
+    display: block !important;
+    width: 85mm !important;
+    height: 55mm !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
     object-fit: fill;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
   }
-  html, body {
-    margin: 0 !important; padding: 0 !important;
-    height: auto !important; overflow: hidden !important;
-  }
-  @page { size: A4; margin: 0; }
 }
 </style>
 </head>
@@ -579,11 +616,6 @@
   </div>
 
   <canvas id="hd-master-canvas" style="display:none;"></canvas>
-
-  <div id="print-area" style="display:none;">
-    <img id="print-front-img" class="card-print-img" alt="Front">
-    <img id="print-back-img" class="card-print-img" alt="Back">
-  </div>
 
   <div class="ad-slot-container">Advertisement</div>
 
@@ -811,6 +843,15 @@
   <div class="ad-slot-container">Advertisement</div>
 
 </main>
+
+<!-- ============================================================
+     PRINT AREA — Must be outside <main> for single-page printing.
+     Only this element is visible when the browser print dialog opens.
+     ============================================================ -->
+<div id="print-area" style="display:none;">
+  <img id="print-front-img" class="card-print-img" alt="Front">
+  <img id="print-back-img" class="card-print-img" alt="Back">
+</div>
 
 <div id="doceasy-footer"></div>
 
@@ -1166,7 +1207,7 @@ btnDownloadBoth.onclick = () => {
     const fCanvas = getUltraHdCroppedCanvas(cropFront);
     const a1 = document.createElement("a");
     a1.href = fCanvas.toDataURL("image/png", 1.0);
-    a1.download = "id-card-front-300dpi.png";
+    a1.download = "DocEasy-ID-Card-Front-300DPI-" + Date.now() + ".png";
     a1.click();
   }
   if (backOn) {
@@ -1174,7 +1215,7 @@ btnDownloadBoth.onclick = () => {
       const bCanvas = getUltraHdCroppedCanvas(cropBack);
       const a2 = document.createElement("a");
       a2.href = bCanvas.toDataURL("image/png", 1.0);
-      a2.download = "id-card-back-300dpi.png";
+      a2.download = "DocEasy-ID-Card-Back-300DPI-" + Date.now() + ".png";
       a2.click();
     }, 300);
   }
