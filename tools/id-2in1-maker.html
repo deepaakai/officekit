@@ -37,7 +37,7 @@
   "mainEntity": [
     {"@type":"Question","name":"Is this 2 in 1 ID Maker free?","acceptedAnswer":{"@type":"Answer","text":"Yes, 100% free. No signup, no email, no daily limit. Watermark is optional and off by default."}},
     {"@type":"Question","name":"Are my photos uploaded?","acceptedAnswer":{"@type":"Answer","text":"Never. All processing runs in your browser. Photos never leave your device."}},
-    {"@type":"Question","name":"How do I crop the ID card?","acceptedAnswer":{"@type":"Answer","text":"Upload both sides. In the corner editor, drag the four blue circles to the card corners and click Crop."}}
+    {"@type":"Question","name":"How do I crop the ID card?","acceptedAnswer":{"@type":"Answer","text":"Upload both sides, then tap Adjust Corners. Drag the four blue circles to the card corners and tap Crop."}}
   ]
 }
 </script>
@@ -50,7 +50,6 @@
 .merge-container { max-width: 980px; margin: 26px auto 0; }
 .merge-container [hidden] { display: none !important; }
 
-/* ---------- Upload slots ---------- */
 .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
 .upload-slot {
   position: relative; background: var(--card-bg);
@@ -92,7 +91,6 @@
 .processing-overlay .spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,.25); border-top-color: #fff; border-radius: 50%; animation: spin .9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ---------- Option cards ---------- */
 .options-card, .enhance-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; }
 .options-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .option-group h4, .enhance-card h4 { font-size: 11.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 10px; }
@@ -121,7 +119,6 @@
 .enh-foot small { color: var(--subtext-color); font-size: 11.5px; }
 .link-btn { background: none; border: 0; color: var(--accent); font-weight: 700; font-size: 12.5px; cursor: pointer; font-family: inherit; padding: 4px 0; }
 
-/* ---------- Preview + actions ---------- */
 .preview-section { background: var(--card-hover); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; margin-bottom: 22px; text-align: center; }
 .preview-section h4 { font-size: 11.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--subtext-color); margin: 0 0 12px; }
 .preview-canvas { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 18px rgba(0,0,0,.15); background: #fff; display: none; }
@@ -140,21 +137,26 @@
 .action-btn.secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .action-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* ---------- Corner editor ---------- */
 .editor-backdrop {
   position: fixed; inset: 0; z-index: 9999; background: rgba(8,12,24,.86);
   display: flex; align-items: center; justify-content: center; padding: 12px;
 }
+.editor-backdrop[hidden] { display: none !important; }
 .editor-box {
   background: var(--card-bg); color: var(--text-color); border-radius: 16px; width: min(960px, 100%);
   max-height: 100%; display: flex; flex-direction: column; overflow: hidden;
 }
 .editor-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px 4px; }
 .editor-head b { font-size: 15px; }
-.editor-x { background: none; border: 0; font-size: 22px; line-height: 1; cursor: pointer; color: var(--subtext-color); padding: 4px 8px; }
+.editor-x {
+  background: none; border: 0; font-size: 26px; line-height: 1; cursor: pointer;
+  color: var(--subtext-color); padding: 4px 10px; border-radius: 8px;
+  transition: background .15s, color .15s;
+}
+.editor-x:hover { background: var(--card-hover); color: var(--text-color); }
 .editor-note { margin: 0; padding: 0 18px 10px; font-size: 12.5px; color: var(--subtext-color); }
 .editor-stage { position: relative; display: flex; justify-content: center; align-items: center; background: #0b1020; padding: 8px; min-height: 0; }
-#edCanvas { max-width: 100%; max-height: 62vh; width: auto; height: auto; touch-action: none; cursor: crosshair; display: block; }
+#edCanvas { max-width: 100%; max-height: 60vh; width: auto; height: auto; touch-action: none; cursor: crosshair; display: block; }
 #edLoupe {
   position: absolute; top: 14px; left: 14px; width: 120px; height: 120px; border-radius: 50%;
   border: 3px solid #fff; box-shadow: 0 4px 16px rgba(0,0,0,.5); pointer-events: none; display: none; background: #000;
@@ -328,14 +330,13 @@
 
   </div>
 
-  <!-- Corner editor -->
   <div class="editor-backdrop" id="editor" hidden role="dialog" aria-modal="true" aria-labelledby="editorTitle">
     <div class="editor-box">
       <div class="editor-head">
         <b id="editorTitle">Adjust Corners</b>
         <button type="button" class="editor-x" id="ed-close" aria-label="Close">&times;</button>
       </div>
-      <p class="editor-note" id="editorNote">Drag the four blue circles to the four corners of the card, then tap Crop.</p>
+      <p class="editor-note" id="editorNote">Drag the four blue circles to the card corners, then tap Crop.</p>
       <div class="editor-stage">
         <canvas id="edCanvas"></canvas>
         <canvas id="edLoupe" width="140" height="140"></canvas>
@@ -360,7 +361,7 @@
     <ol>
       <li><b>Upload Front Side:</b> Click the left slot and choose your front-side photo.</li>
       <li><b>Upload Back Side:</b> Click the right slot and choose your back-side photo.</li>
-      <li><b>Adjust Corners:</b> In the corner editor, drag the four blue circles to the card corners. Use the zoom loupe on mobile for precision.</li>
+      <li><b>Adjust Corners:</b> Tap "Adjust Corners", then drag the four blue circles to the card corners. Use the zoom loupe for precision.</li>
       <li><b>Choose Layout:</b> Side by Side (A4 Landscape) or Stacked (A4 Portrait).</li>
       <li><b>Choose Card Size:</b> Actual Size (85.6 × 54 mm) or Large (100 × 63 mm).</li>
       <li><b>Apply Filters:</b> Use Auto, B&amp;W Doc, or Whiteboard to sharpen the output.</li>
@@ -396,11 +397,11 @@
     </details>
     <details>
       <summary>How do I crop the card from a full photo?</summary>
-      <p>After uploading, tap "Adjust Corners" under the preview. Drag the four blue circles to the corners of the card. Pinch-zoom for precision. Then tap "Crop".</p>
+      <p>After uploading, tap "Adjust Corners". Drag the four blue circles to the corners of the card. Then tap "Crop".</p>
     </details>
     <details>
       <summary>Why is the output sometimes tilted?</summary>
-      <p>Because the source photo was taken at an angle. Use the "Adjust Corners" tool to drag the corners exactly onto the card's four corners. The perspective is corrected automatically.</p>
+      <p>Because the source photo was taken at an angle. Use "Adjust Corners" to drag the corners exactly onto the card's four corners. The perspective is corrected automatically.</p>
     </details>
     <details>
       <summary>What size PDF does it produce?</summary>
@@ -441,7 +442,7 @@
   'use strict';
 
   /* =====================================================
-     Constants
+     Constants (lightened for mobile performance)
   ===================================================== */
   const DPI = 300;
   const MM = DPI / 25.4;
@@ -452,8 +453,8 @@
     large:  { w: Math.round(100 * MM),  h: Math.round(63 * MM) }
   };
   const GAP = 200;
-  const CARD_W = 1200, CARD_H = 756;   // warped card, always landscape (CR80 ratio)
-  const WORK_MAX = 2400;                // longest side of working copy
+  const CARD_W = 900, CARD_H = 567;    // lighter warp for smooth mobile perf
+  const WORK_MAX = 1600;                // lighter working copy
   const SIDES = ['front', 'back'];
   const DEFAULT_ENH = () => ({ filter: 'auto', bright: 0, contrast: 0, sharp: 0 });
 
@@ -467,11 +468,11 @@
      State
   ===================================================== */
   const mkSide = () => ({
-    work: null,       // working canvas of the uploaded photo
-    corners: null,    // 4 points in work-canvas coords
-    base: null,       // warped landscape card (before filters)
-    bg: null,         // cached background estimate for B&W / Whiteboard
-    out: null,        // card after filters
+    work: null,
+    corners: null,
+    base: null,
+    bg: null,
+    out: null,
     enh: DEFAULT_ENH()
   });
   const S = { front: mkSide(), back: mkSide() };
@@ -500,7 +501,7 @@
   const borderToggle = $('border-toggle');
 
   /* =====================================================
-     Geometry helpers
+     Helpers
   ===================================================== */
   function orderCorners(p) {
     const cx = p.reduce((s, q) => s + q.x, 0) / 4;
@@ -508,10 +509,10 @@
     const q = p.slice().sort((a, b) => Math.atan2(a.y - cy, a.x - cx) - Math.atan2(b.y - cy, b.x - cx));
     let start = 0, min = Infinity;
     q.forEach((pt, i) => { const v = pt.x + pt.y; if (v < min) { min = v; start = i; } });
-    return [q[start], q[(start + 1) % 4], q[(start + 2) % 4], q[(start + 3) % 4]]; // TL, TR, BR, BL
+    return [q[start], q[(start + 1) % 4], q[(start + 2) % 4], q[(start + 3) % 4]];
   }
   function defaultCorners(work, m) {
-    m = m == null ? 0.05 : m;
+    m = m == null ? 0.06 : m;
     const w = work.width, h = work.height;
     return [
       { x: w * m, y: h * m }, { x: w * (1 - m), y: h * m },
@@ -519,9 +520,6 @@
     ];
   }
 
-  /* =====================================================
-     Image loading
-  ===================================================== */
   function loadImage(file) {
     return new Promise((resolve, reject) => {
       const url = URL.createObjectURL(file);
@@ -603,7 +601,6 @@
     return out;
   }
 
-  // Warp so that the card is ALWAYS horizontal
   function buildBase(side) {
     const s = S[side];
     const c = orderCorners(s.corners);
@@ -616,7 +613,7 @@
   }
 
   /* =====================================================
-     Scan filters (pure JS)
+     Scan filters
   ===================================================== */
   function levels(d, n) {
     const hist = new Uint32Array(256);
@@ -775,7 +772,7 @@
   }
 
   /* =====================================================
-     Slots
+     Slot rendering
   ===================================================== */
   function busy(side, text) {
     UI[side].procText.textContent = text;
@@ -785,8 +782,8 @@
     const s = S[side], u = UI[side];
     if (!s.out) return;
     const cv = u.canvas;
-    cv.width = 700;
-    cv.height = Math.round(700 * s.out.height / s.out.width);
+    cv.width = 600;
+    cv.height = Math.round(600 * s.out.height / s.out.width);
     cv.getContext('2d').drawImage(s.out, 0, 0, cv.width, cv.height);
     u.empty.hidden = true;
     u.filled.hidden = false;
@@ -818,6 +815,9 @@
     });
   }
 
+  /* =====================================================
+     Upload handler — NO auto-open of editor
+  ===================================================== */
   async function handleUpload(side, file) {
     if (!file || !file.type.startsWith('image/')) {
       alert('Please choose an image file (JPG, PNG, etc.)');
@@ -828,17 +828,16 @@
       const img = await loadImage(file);
       const s = S[side];
       s.work = makeWork(img);
-      busy(side, 'Preparing editor…');
+      busy(side, 'Preparing…');
       await nextFrame();
-      s.corners = defaultCorners(s.work, 0.05);
+      s.corners = defaultCorners(s.work, 0.06);
       buildBase(side);
       processSide(side);
       renderPreview();
-      UI[side].proc.classList.remove('active');
-      openEditor(side, 'Drag the four blue circles to the card corners, then tap Crop.');
     } catch (err) {
       console.error(err);
       alert('Could not process the photo. Please try again.');
+    } finally {
       UI[side].proc.classList.remove('active');
     }
   }
@@ -853,7 +852,7 @@
         e.stopPropagation();
         const act = b.dataset.act;
         if (act === 'change') { u.file.value = ''; u.file.click(); }
-        else if (act === 'corners') openEditor(side, 'Drag the four blue circles to the card corners, then tap Crop.');
+        else if (act === 'corners') openEditor(side);
         return;
       }
       if (!u.slot.classList.contains('has-image')) u.file.click();
@@ -876,9 +875,9 @@
   function syncControls() {
     const e = S[targets()[0]].enh;
     document.querySelectorAll('#filterRow .chip').forEach(c => c.classList.toggle('on', c.dataset.f === e.filter));
-    $('r-bright').value = e.bright;   $('v-bright').textContent = e.bright;
+    $('r-bright').value = e.bright;     $('v-bright').textContent = e.bright;
     $('r-contrast').value = e.contrast; $('v-contrast').textContent = e.contrast;
-    $('r-sharp').value = e.sharp;     $('v-sharp').textContent = e.sharp;
+    $('r-sharp').value = e.sharp;       $('v-sharp').textContent = e.sharp;
   }
   document.querySelectorAll('#enhTarget button').forEach(b => {
     b.addEventListener('click', () => {
@@ -977,31 +976,47 @@
   const loupe = $('edLoupe'), lx = loupe.getContext('2d');
   const ed = { side: null, corners: null, vs: 1, drag: -1 };
 
-  function openEditor(side, note) {
+  function openEditor(side) {
     const s = S[side];
     if (!s.work) return;
+
+    // Reset state fully before opening (fixes stuck popup issue)
+    edBox.hidden = true;
+    document.body.style.overflow = '';
+
     ed.side = side;
     ed.corners = s.corners.map(p => ({ x: p.x, y: p.y }));
     ed.vs = Math.min(1, 1400 / Math.max(s.work.width, s.work.height));
     edCv.width = Math.round(s.work.width * ed.vs);
     edCv.height = Math.round(s.work.height * ed.vs);
+
     $('editorTitle').textContent = 'Adjust Corners — ' + (side === 'front' ? 'Front' : 'Back');
-    $('editorNote').textContent = note || 'Drag the four blue circles to the card corners, then tap Crop.';
+    $('editorNote').textContent = 'Drag the four blue circles to the card corners, then tap Crop.';
+
     edBox.hidden = false;
     document.body.style.overflow = 'hidden';
-    drawEditor();
+    loupe.style.display = 'none';
+
+    // Wait for layout before drawing (fixes black canvas)
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (!edBox.hidden) drawEditor();
+    }));
   }
+
   function closeEditor() {
     edBox.hidden = true;
     document.body.style.overflow = '';
     ed.drag = -1;
     loupe.style.display = 'none';
   }
+
   function drawEditor() {
+    if (!ed.side || !S[ed.side].work) return;
     const work = S[ed.side].work;
     const w = edCv.width, h = edCv.height;
     const rect = edCv.getBoundingClientRect();
     const u = rect.width ? w / rect.width : 1;
+
     edX.clearRect(0, 0, w, h);
     edX.drawImage(work, 0, 0, w, h);
     const p = ed.corners.map(q => ({ x: q.x * ed.vs, y: q.y * ed.vs }));
@@ -1039,6 +1054,7 @@
       edX.fill();
     });
   }
+
   function drawLoupe() {
     if (ed.drag < 0) { loupe.style.display = 'none'; return; }
     const work = S[ed.side].work;
@@ -1058,6 +1074,7 @@
     loupe.style.left = leftHalf ? 'auto' : '14px';
     loupe.style.right = leftHalf ? '14px' : 'auto';
   }
+
   function evPoint(e) {
     const rect = edCv.getBoundingClientRect();
     return {
@@ -1074,6 +1091,7 @@
     drawEditor();
     drawLoupe();
   }
+
   edCv.addEventListener('pointerdown', e => {
     const pt = evPoint(e);
     let bi = 0, bd = Infinity;
@@ -1082,7 +1100,7 @@
       if (d < bd) { bd = d; bi = i; }
     });
     ed.drag = bi;
-    edCv.setPointerCapture(e.pointerId);
+    try { edCv.setPointerCapture(e.pointerId); } catch (_) {}
     e.preventDefault();
     moveHandle(pt);
   });
@@ -1097,15 +1115,27 @@
   window.addEventListener('resize', () => { if (!edBox.hidden) drawEditor(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !edBox.hidden) closeEditor(); });
 
-  $('ed-close').addEventListener('click', closeEditor);
-  $('ed-cancel').addEventListener('click', closeEditor);
-  edBox.addEventListener('click', e => { if (e.target === edBox) closeEditor(); });
+  /* Bulletproof close handlers (click + touchend for mobile) */
+  function forceClose(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    closeEditor();
+  }
+  const btnClose = $('ed-close');
+  const btnCancel = $('ed-cancel');
+  btnClose.addEventListener('click', forceClose);
+  btnClose.addEventListener('touchend', forceClose, { passive: false });
+  btnCancel.addEventListener('click', forceClose);
+  btnCancel.addEventListener('touchend', forceClose, { passive: false });
+  edBox.addEventListener('click', e => { if (e.target === edBox) forceClose(e); });
+  edBox.addEventListener('touchend', e => { if (e.target === edBox) forceClose(e); }, { passive: false });
+
   $('ed-full').addEventListener('click', () => {
     ed.corners = defaultCorners(S[ed.side].work, 0.02);
     drawEditor();
   });
   $('ed-apply').addEventListener('click', () => {
     const side = ed.side, s = S[side];
+    if (!side) { closeEditor(); return; }
     s.corners = orderCorners(ed.corners);
     closeEditor();
     buildBase(side);
@@ -1187,6 +1217,7 @@
 
   btnReset.addEventListener('click', () => {
     SIDES.forEach(sd => { S[sd] = mkSide(); resetSlot(sd); });
+    closeEditor();
     syncControls();
     renderPreview();
   });
