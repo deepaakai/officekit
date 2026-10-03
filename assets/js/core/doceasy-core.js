@@ -16,7 +16,7 @@
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
-    /* Clean Main Nav — Index.html के मुख्य सेक्शन्स */
+    /* Clean Main Nav */
     mainNav: [
       { href: 'index.html',                 label: 'Home',       root: true },
       { href: 'index.html#pdf-tools',       label: 'PDF Tools',  root: true },
@@ -55,7 +55,6 @@
         { href: 'card-cropper.html',      label: 'ID Card Cropper' },
         { href: 'emitra-csc-tools.html',  label: 'eMitra / CSC Tools' }
       ],
-      /* ---------- Company / Legal / Feedback column ---------- */
       legal: [
         { href: 'about.html',    label: 'About',                    root: true },
         { href: 'contact.html',  label: 'Contact',                  root: true },
@@ -73,14 +72,31 @@
     if (!isRoot && CONFIG.isSubPage) return href;
     if (isRoot && CONFIG.isSubPage) return '../' + href;
     if (!isRoot && !CONFIG.isSubPage && /\.html$/.test(href)) {
+      /* Files that live INSIDE the tools/ folder */
       var TOOL_PAGES = [
-        'image-compressor','signature-resize','image-bg-remover','image-converter',
-        'image-beautifier','invoice-generator','pdf-merge','pdf-split','jpg-to-pdf',
-        'pdf-to-jpg','doc-scanner','card-cropper','passport-maker','signature-bg-remover',
-        'pdf-editor','pdf-compressor','pdf-to-word','pdf-to-excel','pdf-writer',
-        'qr-generator','qr-scanner','word-counter','word-writer','word-to-pdf',
-        'excel-to-pdf','ppt-to-pdf','pan-photo-signature-resizer','business-tools',
-        'finance-tools','emitra-csc-tools'
+        /* PDF Tools */
+        'pdf-merge', 'pdf-split', 'pdf-compressor', 'pdf-editor',
+        'pdf-to-word', 'pdf-to-jpg', 'pdf-to-excel', 'pdf-writer',
+        'pdf-lock-unlock', 'merger',
+        /* Image Tools */
+        'image-compressor', 'image-converter', 'image-bg-remover',
+        'image-beautifier', 'photo-size-resize',
+        /* ID & Signature */
+        'card-cropper', 'passport-maker', 'signature-resize',
+        'signature-bg-remover', 'pan-photo-signature-resizer',
+        'id-2in1-maker',
+        /* Media & Audio */
+        'media-screen-recorder', 'media-webcam-recorder', 'media-voice-recorder',
+        'media-text-to-speech', 'media-meme-generator', 'media-editor',
+        'media-mic-test', 'media-webcam-test',
+        'video-enhancer', 'video-voice-changer', 'noise-remover',
+        /* Converters */
+        'jpg-to-pdf', 'word-to-pdf', 'excel-to-pdf', 'ppt-to-pdf',
+        /* Utility */
+        'qr-generator', 'qr-scanner', 'doc-scanner', 'word-counter',
+        'invoice-generator', 'word-writer',
+        /* Hubs inside tools/ */
+        'emitra-csc-tools', 'all-tools'
       ];
       var name = href.replace('.html', '');
       if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
@@ -169,7 +185,7 @@
           '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
         '</span>' +
         '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
-          '45+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
+          '49+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
         '</p>' +
         '<button type="button" class="footer-support-btn" onclick="docEasyOpenSupport()">' +
           '<span>☕</span> Support DocEasy' +
