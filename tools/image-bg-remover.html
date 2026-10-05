@@ -699,7 +699,7 @@ async function runAI() {
     const rb = await loadAIModel();
 
     // 🔥 SPEED OPTIMIZATION: Resize image to max 1500px before AI
-    const resizedCanvas = resizeImage(rawImg, 1500);
+    const resizedCanvas = resizeImage(rawImg, 800);
     const inputBlob = await new Promise(res => resizedCanvas.toBlob(res, "image/png"));
 
     aiLoaderText.textContent = "Removing Background...";
