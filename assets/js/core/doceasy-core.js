@@ -30,6 +30,7 @@
     /* Quick Top Bar Tools */
     quickTools: [
       { href: 'card-cropper.html',          label: 'ID Card Crop',     page: 'card-cropper' },
+      { href: 'resume-builder.html',        label: 'Resume Builder',   page: 'resume-builder' },
       { href: 'invoice-generator.html',     label: 'Invoice Maker',    page: 'invoice-generator' },
       { href: 'business-tools.html',        label: 'Business Tools',   page: 'business-tools' },
       { href: 'finance-tools.html',         label: 'Finance Tools',    page: 'finance-tools' },
@@ -37,7 +38,8 @@
       { href: 'pdf-merge.html',             label: 'Merge PDF',        page: 'pdf-merge' },
       { href: 'image-compressor.html',      label: 'Compress Image',   page: 'image-compressor' },
       { href: 'passport-maker.html',        label: 'Passport Photo',   page: 'passport-maker' },
-      { href: 'qr-generator.html',          label: 'QR Code',          page: 'qr-generator' }
+      { href: 'qr-generator.html',          label: 'QR Code',          page: 'qr-generator' },
+      { href: 'word-writer.html',           label: 'Word Writer',      page: 'word-writer' }
     ],
 
     footer: {
@@ -46,14 +48,24 @@
         { href: 'pdf-split.html',       label: 'Split PDF' },
         { href: 'pdf-compressor.html',  label: 'Compress PDF' },
         { href: 'pdf-editor.html',      label: 'PDF Editor' },
-        { href: 'pdf-to-word.html',     label: 'PDF to Word' }
+        { href: 'pdf-to-word.html',     label: 'PDF to Word' },
+        { href: 'pdf-lock-unlock.html', label: 'Lock / Unlock PDF' }
       ],
       businessTools: [
         { href: 'business-tools.html',    label: 'Business Suite' },
         { href: 'finance-tools.html',     label: 'Finance Calculators' },
         { href: 'invoice-generator.html', label: 'GST Invoice Maker' },
-        { href: 'card-cropper.html',      label: 'ID Card Cropper' },
+        { href: 'resume-builder.html',    label: 'Resume Builder' },
+        { href: 'word-writer.html',       label: 'Word Writer' },
         { href: 'emitra-csc-tools.html',  label: 'eMitra / CSC Tools' }
+      ],
+      idTools: [
+        { href: 'card-cropper.html',                    label: 'ID Card Cropper' },
+        { href: 'id-2in1-maker.html',                   label: '2 in 1 ID Maker' },
+        { href: 'passport-maker.html',                  label: 'Passport Photo Maker' },
+        { href: 'pan-photo-signature-resizer.html',     label: 'PAN Photo & Signature' },
+        { href: 'signature-resize.html',                label: 'Signature Resize' },
+        { href: 'signature-bg-remover.html',            label: 'Signature BG Remover' }
       ],
       legal: [
         { href: 'about.html',    label: 'About',                    root: true },
@@ -92,9 +104,9 @@
         'video-enhancer', 'video-voice-changer', 'noise-remover',
         /* Converters */
         'jpg-to-pdf', 'word-to-pdf', 'excel-to-pdf', 'ppt-to-pdf',
-        /* Utility */
+        /* Utility & Career */
         'qr-generator', 'qr-scanner', 'doc-scanner', 'word-counter',
-        'invoice-generator', 'word-writer',
+        'invoice-generator', 'word-writer', 'resume-builder',
         /* Hubs inside tools/ */
         'emitra-csc-tools', 'all-tools'
       ];
@@ -130,19 +142,18 @@
             '<div class="sm-pay-box">' +
               '<span class="sm-badge-country">🇮🇳 India (UPI)</span>' +
               '<div class="sm-qr-frame">' +
-                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=deepaakai@dbs%26pn=DocEasy%26am=110%26cu=INR" alt="UPI QR Code" class="sm-upi-qr">' +
+                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=deepaakai@dbs%26pn=DocEasy" alt="UPI QR Code" class="sm-upi-qr">' +
               '</div>' +
               '<p class="sm-upi-id">deepaakai@dbs</p>' +
               '<p class="sm-upi-text">GPay / PhonePe / Paytm</p>' +
-              '<span class="sm-amount-tag">☕ ₹110 (1 Coffee)</span>' +
             '</div>' +
             '<div class="sm-pay-box">' +
               '<span class="sm-badge-country">🌍 Worldwide</span>' +
               '<div class="sm-paypal-content">' +
                 '<svg viewBox="0 0 24 24" width="42" height="42" fill="#003087"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.78.78 0 0 1 .77-.655h6.634c3.275 0 5.64 1.34 6.183 4.293.447 2.435-.45 4.498-2.344 5.56 1.954.767 2.613 2.73 2.158 5.207-.547 2.977-3.037 4.545-6.674 4.545H7.71a.64.64 0 0 1-.634-.533l-.001-.005z"/></svg>' +
-                '<h4>Buy a $1 Coffee</h4>' +
+                '<h4>Buy a Coffee</h4>' +
                 '<p class="sm-pp-desc">Quick &amp; secure international contribution</p>' +
-                '<a href="https://www.paypal.me/DPaswan198/1" target="_blank" rel="noopener" class="sm-paypal-btn">Gift $1 via PayPal →</a>' +
+                '<a href="https://www.paypal.me/DPaswan198" target="_blank" rel="noopener" class="sm-paypal-btn">Gift a Coffee via PayPal →</a>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -193,6 +204,7 @@
       '</div>' +
       col('PDF Tools',      CONFIG.footer.pdfTools,      false) +
       col('Business Suite', CONFIG.footer.businessTools, false) +
+      col('ID Tools',       CONFIG.footer.idTools,       false) +
       col('Company',        CONFIG.footer.legal,         true)  +
       '</div><div class="footer-bottom-bar">' +
         '<div>© <span id="de-year"></span> DocEasy. All rights reserved.</div>' +
