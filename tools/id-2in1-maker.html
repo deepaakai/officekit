@@ -4,18 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>2 in 1 ID Maker — Aadhaar, PAN Front &amp; Back on One Page | DocEasy</title>
-<meta name="description" content="Merge Aadhaar, PAN, Voter ID front and back on a single A4 page. Adjust 4 corners, apply scan filters, download print-ready PDF. 100% browser-based, no upload, no signup.">
-<meta name="keywords" content="2 in 1 id maker, aadhaar front back one page, pan card one page, id card merger, aadhaar print tool">
+<meta name="description" content="Merge Aadhaar, PAN, Voter ID front and back on a single A4 page. Rotate, adjust 4 corners, apply scan filters, download print-ready PDF. 100% browser-based.">
+<meta name="keywords" content="2 in 1 id maker, aadhaar front back one page, pan card one page, id card merger, rotate id photo">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="2 in 1 ID Maker — Aadhaar, PAN Front &amp; Back | DocEasy">
-<meta property="og:description" content="Merge Aadhaar, PAN front and back on one A4 page. Free, private, no signup.">
+<meta property="og:description" content="Merge Aadhaar, PAN front and back on one A4 page. Rotate, crop, download.">
 <meta property="og:url" content="https://deepaakai.github.io/officekit/tools/id-2in1-maker.html">
 <meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<script async src="https://docs.opencv.org/4.8.0/opencv.js"></script>
 
 <script type="application/ld+json">
 {
@@ -35,9 +37,9 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Is this 2 in 1 ID Maker free?","acceptedAnswer":{"@type":"Answer","text":"Yes, 100% free. No signup, no email, no daily limit. Watermark is optional and off by default."}},
-    {"@type":"Question","name":"Are my photos uploaded?","acceptedAnswer":{"@type":"Answer","text":"Never. All processing runs in your browser. Photos never leave your device."}},
-    {"@type":"Question","name":"How do I crop the ID card?","acceptedAnswer":{"@type":"Answer","text":"Upload both sides, then tap Adjust Corners. Drag the four blue circles to the card corners and tap Crop."}}
+    {"@type":"Question","name":"Is this 2 in 1 ID Maker free?","acceptedAnswer":{"@type":"Answer","text":"Yes, 100% free. No signup, no email, no daily limit."}},
+    {"@type":"Question","name":"Are my photos uploaded?","acceptedAnswer":{"@type":"Answer","text":"Never. All processing runs in your browser."}},
+    {"@type":"Question","name":"How do I rotate a landscape photo?","acceptedAnswer":{"@type":"Answer","text":"Use the ↺ (rotate left) or ↻ (rotate right) buttons below each upload slot. Each click rotates 90°."}}
   ]
 }
 </script>
@@ -75,12 +77,20 @@
 }
 .slot-tools { display: flex; gap: 6px; padding: 8px; justify-content: center; flex-wrap: wrap; border-top: 1px solid var(--border-color); }
 .slot-tools button {
-  flex: 1; min-width: 86px; padding: 8px 8px; font-size: 12px; font-weight: 700; font-family: inherit;
+  flex: 1; min-width: 70px; padding: 8px 6px; font-size: 12px; font-weight: 700; font-family: inherit;
   background: var(--card-bg); color: var(--text-color); border: 1.5px solid var(--border-color);
   border-radius: 8px; cursor: pointer; transition: border-color .15s, color .15s;
 }
 .slot-tools button:hover { border-color: var(--accent); color: var(--accent); }
 .slot-tools button.danger:hover { border-color: #dc2626; color: #dc2626; }
+
+/* Rotate buttons — distinct style */
+.slot-tools button.rot {
+  flex: 0 0 auto; min-width: 44px; font-size: 16px; padding: 8px 4px;
+  background: var(--accent-soft); border-color: var(--accent);
+  color: var(--accent);
+}
+.slot-tools button.rot:hover { background: var(--accent); color: #fff; }
 
 .processing-overlay {
   position: absolute; inset: 0; background: rgba(15,23,42,.78); backdrop-filter: blur(3px);
@@ -165,13 +175,20 @@
 .editor-actions .action-btn { padding: 10px 16px; font-size: 13px; }
 .editor-actions .spacer { flex: 1; }
 
+/* Editor rotate buttons */
+.editor-actions .rot-btn {
+  background: var(--accent-soft); color: var(--accent);
+  border: 1.5px solid var(--accent); font-size: 15px; padding: 8px 14px;
+}
+.editor-actions .rot-btn:hover { background: var(--accent); color: #fff; }
+
 @media (max-width: 640px) {
   .upload-grid { grid-template-columns: 1fr; }
   .options-row { grid-template-columns: 1fr; gap: 12px; }
   .slider-grid { grid-template-columns: 1fr; gap: 14px; }
   .action-btn { flex: 1; min-width: 140px; justify-content: center; }
   .editor-actions .spacer { display: none; }
-  .editor-actions .action-btn { flex: 1; min-width: 120px; }
+  .editor-actions .action-btn { flex: 1; min-width: 110px; }
 }
 @media print {
   body * { visibility: hidden; }
@@ -189,7 +206,7 @@
 
   <div class="hero-box">
     <h1 class="hero-title">2 in 1 ID Maker</h1>
-    <p class="hero-sub">Merge Aadhaar, PAN, Voter ID front and back on a single A4 page. Adjust 4 corners, apply scan filters, download print-ready PDF. 100% browser-based, no upload, no signup.</p>
+    <p class="hero-sub">Merge Aadhaar, PAN, Voter ID front and back on a single A4 page. Rotate, auto-detect corners, apply scan filters, download print-ready PDF. 100% browser-based.</p>
   </div>
 
   <div class="hd-banner">
@@ -202,7 +219,7 @@
     </div>
     <div class="hd-text">
       <b>One Page. Both Sides. Print-Ready.</b>
-      <small>Upload photos, drag 4 corners to crop each card, choose layout, download PDF at 300 DPI. Works fully offline after first load.</small>
+      <small>Upload photos, rotate if needed, auto-detect corners, choose layout, download PDF at 300 DPI. Works fully offline after first load.</small>
     </div>
   </div>
 
@@ -224,7 +241,9 @@
           <canvas class="slot-canvas"></canvas>
           <span class="status-badge">✓ READY</span>
           <div class="slot-tools">
+            <button type="button" class="rot" data-act="rot-left" title="Rotate 90° Left">↺</button>
             <button type="button" data-act="corners">Adjust Corners</button>
+            <button type="button" class="rot" data-act="rot-right" title="Rotate 90° Right">↻</button>
             <button type="button" data-act="change" class="danger">Change</button>
           </div>
         </div>
@@ -243,7 +262,9 @@
           <canvas class="slot-canvas"></canvas>
           <span class="status-badge">✓ READY</span>
           <div class="slot-tools">
+            <button type="button" class="rot" data-act="rot-left" title="Rotate 90° Left">↺</button>
             <button type="button" data-act="corners">Adjust Corners</button>
+            <button type="button" class="rot" data-act="rot-right" title="Rotate 90° Right">↻</button>
             <button type="button" data-act="change" class="danger">Change</button>
           </div>
         </div>
@@ -273,7 +294,7 @@
         <label>Sharpness <span id="v-sharp">0</span><input type="range" id="r-sharp" min="0" max="100" value="0"></label>
       </div>
       <div class="enh-foot">
-        <small>Move Contrast left to soften, right to sharpen. B&amp;W Doc and Whiteboard are best for text documents.</small>
+        <small>B&amp;W Doc and Whiteboard are best for text documents. Use Brightness/Contrast to fine-tune.</small>
         <button type="button" class="link-btn" id="enhReset">Reset</button>
       </div>
     </div>
@@ -282,7 +303,7 @@
       <div class="options-row">
         <div class="option-group">
           <h4>Layout</h4>
-          <label><input type="radio" name="layout" value="side" checked> Side by Side (A4 Landscape)</label>
+          <label><input type="radio" name="layout" value="side" checked> Side by Side (A4 Landscape) ✅</label>
           <label><input type="radio" name="layout" value="stack"> Stacked (A4 Portrait)</label>
         </div>
         <div class="option-group">
@@ -342,6 +363,8 @@
         <canvas id="edLoupe" width="140" height="140"></canvas>
       </div>
       <div class="editor-actions">
+        <button type="button" class="action-btn rot-btn" id="ed-rot-left" title="Rotate 90° Left">↺ Rotate L</button>
+        <button type="button" class="action-btn rot-btn" id="ed-rot-right" title="Rotate 90° Right">↻ Rotate R</button>
         <button type="button" class="action-btn secondary" id="ed-full">Use Full Photo</button>
         <span class="spacer"></span>
         <button type="button" class="action-btn secondary" id="ed-cancel">Cancel</button>
@@ -354,71 +377,48 @@
 
   <section class="seo-article">
     <h2>2 in 1 ID Maker — Merge Aadhaar, PAN Front and Back on One Page</h2>
-
-    <p>Every bank, government portal, exam authority, and office asks for a copy of your ID card on a single page. But when you photograph the front and back of your Aadhaar, PAN, or Voter ID, you end up with two separate images that take two pages to print. <b>DocEasy's 2 in 1 ID Maker</b> solves this — it crops both sides, merges them into one clean A4 page, and exports a print-ready PDF in seconds, all inside your browser.</p>
+    <p>Every bank, government portal, exam authority, and office asks for a copy of your ID card on a single page. But when you photograph the front and back of your Aadhaar, PAN, or Voter ID, you end up with two separate images that take two pages to print. <b>DocEasy's 2 in 1 ID Maker</b> solves this — it rotates, auto-detects the card, crops both sides, merges them into one clean A4 page, and exports a print-ready PDF in seconds, all inside your browser.</p>
 
     <h3>How to Use</h3>
     <ol>
       <li><b>Upload Front Side:</b> Click the left slot and choose your front-side photo.</li>
+      <li><b>Rotate if Needed:</b> Use the ↺ or ↻ buttons to rotate the photo 90° left or right if it's tilted.</li>
       <li><b>Upload Back Side:</b> Click the right slot and choose your back-side photo.</li>
-      <li><b>Adjust Corners:</b> Tap "Adjust Corners", then drag the four blue circles to the card corners. Use the zoom loupe for precision.</li>
-      <li><b>Choose Layout:</b> Side by Side (A4 Landscape) or Stacked (A4 Portrait).</li>
-      <li><b>Choose Card Size:</b> Actual Size (85.6 × 54 mm) or Large (100 × 63 mm).</li>
+      <li><b>Adjust Corners (if needed):</b> Tap "Adjust Corners" and drag the four blue circles to the card corners.</li>
+      <li><b>Choose Layout &amp; Size:</b> Side by Side or Stacked; Actual or Large.</li>
       <li><b>Apply Filters:</b> Use Auto, B&amp;W Doc, or Whiteboard to sharpen the output.</li>
       <li><b>Download PDF:</b> Save the print-ready A4 PDF at 300 DPI. Print at 100% scale.</li>
     </ol>
 
+    <h3>Rotate Feature</h3>
+    <p>Photos taken on phones are often landscape when they should be portrait, or vice versa. The rotate buttons (↺ = 90° left, ↻ = 90° right) let you fix orientation in a single click. Each click rotates the photo 90°. So two clicks in the same direction give you a 180° rotation.</p>
+
     <h3>Why DocEasy</h3>
     <ul>
-      <li><b>100% private:</b> Photos never leave your device. All processing runs in your browser using Canvas and pdf-lib.</li>
-      <li><b>Fast:</b> No framework overhead, no external libraries. Loads in under a second.</li>
-      <li><b>Free forever:</b> No signup, no email, no daily limit. Watermark is optional and off by default.</li>
-      <li><b>Works offline:</b> After the page loads once, disconnect from the internet and it still works.</li>
-      <li><b>Mobile-ready:</b> Touch-friendly corner editor with zoom loupe.</li>
+      <li><b>100% private:</b> Photos never leave your device.</li>
+      <li><b>Smart Auto-Detect:</b> OpenCV automatically finds the ID card edges.</li>
+      <li><b>Free forever:</b> No signup, no email, no daily limit.</li>
+      <li><b>Works offline:</b> After the page loads once, disconnect and it still works.</li>
+      <li><b>Mobile-ready:</b> Touch-friendly editor with zoom loupe.</li>
     </ul>
 
     <h3>Best Results — Tips</h3>
     <ul>
       <li>Photograph the card on a dark matte surface in daylight. Avoid flash and glare.</li>
       <li>Keep the card flat and hold the camera parallel to the card.</li>
-      <li>For sharp output, crop the card precisely in the corner editor before merging.</li>
+      <li>Use the rotate buttons before adjusting corners — it's faster.</li>
       <li>Use B&amp;W Doc filter for text-heavy scans to make text crisp and background white.</li>
       <li>Print at "Actual Size" or "100% Scale" — never "Fit to Page".</li>
     </ul>
 
     <h3>Frequently Asked Questions</h3>
-    <details>
-      <summary>Is this 2 in 1 ID Maker free?</summary>
-      <p>Yes, 100% free. No signup, no email, no daily limit. The "DocEasy.org" watermark is optional and off by default.</p>
-    </details>
-    <details>
-      <summary>Are my photos uploaded to any server?</summary>
-      <p>Never. All processing runs in your browser using Canvas and pdf-lib. Your photos never leave your device.</p>
-    </details>
-    <details>
-      <summary>How do I crop the card from a full photo?</summary>
-      <p>After uploading, tap "Adjust Corners". Drag the four blue circles to the corners of the card. Then tap "Crop".</p>
-    </details>
-    <details>
-      <summary>Why is the output sometimes tilted?</summary>
-      <p>Because the source photo was taken at an angle. Use "Adjust Corners" to drag the corners exactly onto the card's four corners. The perspective is corrected automatically.</p>
-    </details>
-    <details>
-      <summary>What size PDF does it produce?</summary>
-      <p>Standard A4 size — 210 × 297 mm (portrait) or 297 × 210 mm (landscape) at 300 DPI. Banks and government portals universally accept this.</p>
-    </details>
-    <details>
-      <summary>Can I choose the card size?</summary>
-      <p>Yes — Actual Size gives standard CR80 (85.6 × 54 mm), and Large gives 100 × 63 mm for easier reading.</p>
-    </details>
-    <details>
-      <summary>Can I use it without internet?</summary>
-      <p>Yes. After the page loads once, disconnect from the internet and everything still works.</p>
-    </details>
-    <details>
-      <summary>Does it work on mobile phones?</summary>
-      <p>Yes. The tool is fully responsive and the corner editor includes a zoom loupe for touch devices.</p>
-    </details>
+    <details><summary>Is this 2 in 1 ID Maker free?</summary><p>Yes, 100% free. No signup, no email, no daily limit.</p></details>
+    <details><summary>Are my photos uploaded to any server?</summary><p>Never. All processing runs in your browser using Canvas and pdf-lib.</p></details>
+    <details><summary>How do I rotate a photo?</summary><p>Use the ↺ (rotate left) or ↻ (rotate right) buttons below each upload slot. Each click rotates 90°. Two clicks give 180°.</p></details>
+    <details><summary>How do I crop the card from a full photo?</summary><p>Tap "Adjust Corners". Drag the four blue circles to the corners of the card. Then tap "Crop".</p></details>
+    <details><summary>What size PDF does it produce?</summary><p>Standard A4 size — 210 × 297 mm at 300 DPI.</p></details>
+    <details><summary>Can I use it without internet?</summary><p>Yes. After the page loads once, disconnect from the internet and everything still works.</p></details>
+    <details><summary>Does it work on mobile phones?</summary><p>Yes. Fully responsive with touch-friendly editor and rotate buttons.</p></details>
 
     <h3>Related DocEasy Tools</h3>
     <ul>
@@ -426,8 +426,6 @@
       <li><a href="passport-maker.html">Passport Photo Maker</a> — 35×45 mm photos</li>
       <li><a href="pan-photo-signature-resizer.html">PAN Photo &amp; Signature</a> — 213×213 &amp; 400×200</li>
       <li><a href="signature-resize.html">Signature Resize</a> — Exact pixel / KB size</li>
-      <li><a href="pdf-merge.html">Merge PDF</a> — Combine multiple PDFs</li>
-      <li><a href="jpg-to-pdf.html">JPG to PDF</a> — Images to PDF</li>
     </ul>
   </section>
 
@@ -441,9 +439,6 @@
 (function () {
   'use strict';
 
-  /* =====================================================
-     Constants (lightened for mobile performance)
-  ===================================================== */
   const DPI = 300;
   const MM = DPI / 25.4;
   const A4_L = { w: Math.round(297 * MM), h: Math.round(210 * MM) };
@@ -453,28 +448,17 @@
     large:  { w: Math.round(100 * MM),  h: Math.round(63 * MM) }
   };
   const GAP = 200;
-  const CARD_W = 900, CARD_H = 567;    // lighter warp for smooth mobile perf
-  const WORK_MAX = 1600;                // lighter working copy
+  const CARD_W = 900, CARD_H = 567;
+  const WORK_MAX = 1600;
   const SIDES = ['front', 'back'];
   const DEFAULT_ENH = () => ({ filter: 'auto', bright: 0, contrast: 0, sharp: 0 });
 
   const $ = id => document.getElementById(id);
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
   const nextFrame = () => new Promise(r => requestAnimationFrame(() => setTimeout(r, 0)));
   const clamp = (v, a, b) => v < a ? a : (v > b ? b : v);
   const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
-  /* =====================================================
-     State
-  ===================================================== */
-  const mkSide = () => ({
-    work: null,
-    corners: null,
-    base: null,
-    bg: null,
-    out: null,
-    enh: DEFAULT_ENH()
-  });
+  const mkSide = () => ({ work: null, corners: null, base: null, bg: null, out: null, enh: DEFAULT_ENH() });
   const S = { front: mkSide(), back: mkSide() };
 
   const UI = {};
@@ -500,9 +484,7 @@
   const wmToggle = $('watermark-toggle');
   const borderToggle = $('border-toggle');
 
-  /* =====================================================
-     Helpers
-  ===================================================== */
+  /* ---------- Helpers ---------- */
   function orderCorners(p) {
     const cx = p.reduce((s, q) => s + q.x, 0) / 4;
     const cy = p.reduce((s, q) => s + q.y, 0) / 4;
@@ -519,7 +501,6 @@
       { x: w * (1 - m), y: h * (1 - m) }, { x: w * m, y: h * (1 - m) }
     ];
   }
-
   function loadImage(file) {
     return new Promise((resolve, reject) => {
       const url = URL.createObjectURL(file);
@@ -540,9 +521,98 @@
     return c;
   }
 
-  /* =====================================================
-     Perspective warp (pure JS)
-  ===================================================== */
+  /* ========== ROTATE FUNCTION ========== */
+  // direction: 'left' (CCW 90°) or 'right' (CW 90°)
+  function rotateWork(side, direction) {
+    const s = S[side];
+    if (!s.work) return;
+
+    const oldW = s.work.width;
+    const oldH = s.work.height;
+
+    // Create new rotated canvas (dimensions swapped)
+    const newC = document.createElement('canvas');
+    newC.width = oldH;
+    newC.height = oldW;
+    const ctx = newC.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+
+    if (direction === 'right') {
+      // 90° clockwise
+      ctx.translate(oldH, 0);
+      ctx.rotate(Math.PI / 2);
+    } else {
+      // 90° counter-clockwise
+      ctx.translate(0, oldW);
+      ctx.rotate(-Math.PI / 2);
+    }
+    ctx.drawImage(s.work, 0, 0);
+
+    // Rotate corner points to match
+    if (s.corners && s.corners.length === 4) {
+      s.corners = s.corners.map(c => {
+        if (direction === 'right') {
+          return { x: oldH - c.y, y: c.x };
+        } else {
+          return { x: c.y, y: oldW - c.x };
+        }
+      });
+      s.corners = orderCorners(s.corners);
+    } else {
+      s.corners = defaultCorners(newC, 0.06);
+    }
+
+    s.work = newC;
+    s.bg = null;
+    buildBase(side);
+    processSide(side);
+    renderPreview();
+  }
+
+  /* ---------- OpenCV Auto Detect ---------- */
+  window.onOpenCvReady = function() { console.log("OpenCV.js ready"); };
+
+  async function autoDetectCorners(workCanvas) {
+    if (typeof cv === 'undefined' || !cv.Mat) return null;
+    try {
+      const src = cv.imread(workCanvas);
+      const gray = new cv.Mat();
+      cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+      const blurred = new cv.Mat();
+      cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
+      const edges = new cv.Mat();
+      cv.Canny(blurred, edges, 75, 200);
+      const contours = new cv.MatVector();
+      const hierarchy = new cv.Mat();
+      cv.findContours(edges, contours, hierarchy, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE);
+
+      let bestCorners = null, maxArea = 0;
+      for (let i = 0; i < contours.size(); i++) {
+        const cnt = contours.get(i);
+        const approx = new cv.Mat();
+        const peri = cv.arcLength(cnt, true);
+        cv.approxPolyDP(cnt, approx, 0.02 * peri, true);
+        if (approx.rows === 4 && cv.isContourConvex(approx)) {
+          const area = cv.contourArea(approx);
+          if (area > 5000 && area > maxArea) {
+            maxArea = area;
+            bestCorners = [];
+            for (let j = 0; j < 4; j++) {
+              bestCorners.push({ x: approx.data32S[j * 2], y: approx.data32S[j * 2 + 1] });
+            }
+          }
+        }
+        approx.delete();
+      }
+      src.delete(); gray.delete(); blurred.delete(); edges.delete(); contours.delete(); hierarchy.delete();
+      return bestCorners;
+    } catch (err) {
+      console.error("OpenCV Error:", err);
+      return null;
+    }
+  }
+
+  /* ---------- Perspective warp ---------- */
   function gauss(A, B) {
     const n = 8;
     for (let i = 0; i < n; i++) A[i].push(B[i]);
@@ -612,9 +682,7 @@
     s.bg = null;
   }
 
-  /* =====================================================
-     Scan filters
-  ===================================================== */
+  /* ---------- Scan filters ---------- */
   function levels(d, n) {
     const hist = new Uint32Array(256);
     for (let i = 0; i < n; i++) {
@@ -628,10 +696,7 @@
     if (hi - lo < 24) return;
     const lut = new Uint8ClampedArray(256);
     for (let v = 0; v < 256; v++) lut[v] = ((v - lo) * 255) / (hi - lo);
-    for (let i = 0; i < n; i++) {
-      const j = i * 4;
-      d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]];
-    }
+    for (let i = 0; i < n; i++) { const j = i * 4; d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]]; }
   }
   function saturate(d, n, k) {
     for (let i = 0; i < n; i++) {
@@ -687,8 +752,7 @@
     const big = document.createElement('canvas');
     big.width = w; big.height = h;
     const bx = big.getContext('2d');
-    bx.imageSmoothingEnabled = true;
-    bx.imageSmoothingQuality = 'high';
+    bx.imageSmoothingEnabled = true; bx.imageSmoothingQuality = 'high';
     bx.drawImage(sm, 0, 0, w, h);
     return bx.getImageData(0, 0, w, h).data;
   }
@@ -760,10 +824,7 @@
       const off = e.bright * 1.5;
       const lut = new Uint8ClampedArray(256);
       for (let v = 0; v < 256; v++) lut[v] = fac * (v - 128) + 128 + off;
-      for (let i = 0; i < n; i++) {
-        const j = i * 4;
-        d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]];
-      }
+      for (let i = 0; i < n; i++) { const j = i * 4; d[j] = lut[d[j]]; d[j + 1] = lut[d[j + 1]]; d[j + 2] = lut[d[j + 2]]; }
     }
     if (e.sharp > 0) sharpen(d, w, h, e.sharp);
 
@@ -771,9 +832,7 @@
     return c;
   }
 
-  /* =====================================================
-     Slot rendering
-  ===================================================== */
+  /* ---------- Slot rendering ---------- */
   function busy(side, text) {
     UI[side].procText.textContent = text;
     UI[side].proc.classList.add('active');
@@ -815,9 +874,7 @@
     });
   }
 
-  /* =====================================================
-     Upload handler — NO auto-open of editor
-  ===================================================== */
+  /* ---------- Upload ---------- */
   async function handleUpload(side, file) {
     if (!file || !file.type.startsWith('image/')) {
       alert('Please choose an image file (JPG, PNG, etc.)');
@@ -828,9 +885,16 @@
       const img = await loadImage(file);
       const s = S[side];
       s.work = makeWork(img);
+      busy(side, 'Auto-detecting card...');
+      await nextFrame();
+      let autoCorners = await autoDetectCorners(s.work);
+      if (autoCorners && autoCorners.length === 4) {
+        s.corners = orderCorners(autoCorners);
+      } else {
+        s.corners = defaultCorners(s.work, 0.06);
+      }
       busy(side, 'Preparing…');
       await nextFrame();
-      s.corners = defaultCorners(s.work, 0.06);
       buildBase(side);
       processSide(side);
       renderPreview();
@@ -842,6 +906,7 @@
     }
   }
 
+  /* ---------- Slot interactions ---------- */
   SIDES.forEach(side => {
     const u = UI[side];
     u.file.addEventListener('change', e => { if (e.target.files[0]) handleUpload(side, e.target.files[0]); });
@@ -853,6 +918,8 @@
         const act = b.dataset.act;
         if (act === 'change') { u.file.value = ''; u.file.click(); }
         else if (act === 'corners') openEditor(side);
+        else if (act === 'rot-left') rotateWork(side, 'left');
+        else if (act === 'rot-right') rotateWork(side, 'right');
         return;
       }
       if (!u.slot.classList.contains('has-image')) u.file.click();
@@ -867,9 +934,7 @@
     });
   });
 
-  /* =====================================================
-     Enhance panel
-  ===================================================== */
+  /* ---------- Enhance panel ---------- */
   let target = 'both';
   const targets = () => target === 'both' ? SIDES : [target];
   function syncControls() {
@@ -907,9 +972,7 @@
     schedule(targets());
   });
 
-  /* =====================================================
-     Compose sheet
-  ===================================================== */
+  /* ---------- Compose (Top-aligned, Horizontal) ---------- */
   const getLayout = () => document.querySelector('input[name="layout"]:checked').value;
   const getSize = () => document.querySelector('input[name="size"]:checked').value;
 
@@ -928,10 +991,13 @@
     const sw = size.w * k, sh = size.h * k, gap = GAP * k;
     let fx, fy, bx, by;
     if (layout === 'side') {
-      const startX = (cw - (sw * 2 + gap)) / 2, y = (ch - sh) / 2;
+      const startX = (cw - (sw * 2 + gap)) / 2;
+      const topMargin = 120 * k;
+      const y = topMargin;
       fx = startX; bx = startX + sw + gap; fy = by = y;
     } else {
-      const startY = (ch - (sh * 2 + gap)) / 2, x = (cw - sw) / 2;
+      const startY = (ch - (sh * 2 + gap)) / 2;
+      const x = (cw - sw) / 2;
       fx = bx = x; fy = startY; by = startY + sh + gap;
     }
     c.drawImage(S.front.out, fx, fy, sw, sh);
@@ -969,9 +1035,7 @@
   wmToggle.addEventListener('change', renderPreview);
   borderToggle.addEventListener('change', renderPreview);
 
-  /* =====================================================
-     Corner editor
-  ===================================================== */
+  /* ---------- Corner editor ---------- */
   const edBox = $('editor'), edCv = $('edCanvas'), edX = edCv.getContext('2d');
   const loupe = $('edLoupe'), lx = loupe.getContext('2d');
   const ed = { side: null, corners: null, vs: 1, drag: -1 };
@@ -979,8 +1043,6 @@
   function openEditor(side) {
     const s = S[side];
     if (!s.work) return;
-
-    // Reset state fully before opening (fixes stuck popup issue)
     edBox.hidden = true;
     document.body.style.overflow = '';
 
@@ -991,16 +1053,12 @@
     edCv.height = Math.round(s.work.height * ed.vs);
 
     $('editorTitle').textContent = 'Adjust Corners — ' + (side === 'front' ? 'Front' : 'Back');
-    $('editorNote').textContent = 'Drag the four blue circles to the card corners, then tap Crop.';
+    $('editorNote').textContent = 'Drag the four blue circles to the card corners. You can also rotate using the buttons below.';
 
     edBox.hidden = false;
     document.body.style.overflow = 'hidden';
     loupe.style.display = 'none';
-
-    // Wait for layout before drawing (fixes black canvas)
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      if (!edBox.hidden) drawEditor();
-    }));
+    requestAnimationFrame(() => requestAnimationFrame(() => { if (!edBox.hidden) drawEditor(); }));
   }
 
   function closeEditor() {
@@ -1115,7 +1173,6 @@
   window.addEventListener('resize', () => { if (!edBox.hidden) drawEditor(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !edBox.hidden) closeEditor(); });
 
-  /* Bulletproof close handlers (click + touchend for mobile) */
   function forceClose(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     closeEditor();
@@ -1133,6 +1190,35 @@
     ed.corners = defaultCorners(S[ed.side].work, 0.02);
     drawEditor();
   });
+
+  // Rotate from within editor
+  $('ed-rot-left').addEventListener('click', () => {
+    const side = ed.side;
+    if (!side) return;
+    // Save current corner positions relative to work, then rotate
+    S[side].corners = ed.corners.map(p => ({ x: p.x, y: p.y }));
+    rotateWork(side, 'left');
+    // Reset editor view to new dimensions
+    const s = S[side];
+    ed.vs = Math.min(1, 1400 / Math.max(s.work.width, s.work.height));
+    edCv.width = Math.round(s.work.width * ed.vs);
+    edCv.height = Math.round(s.work.height * ed.vs);
+    ed.corners = s.corners.map(p => ({ x: p.x, y: p.y }));
+    drawEditor();
+  });
+  $('ed-rot-right').addEventListener('click', () => {
+    const side = ed.side;
+    if (!side) return;
+    S[side].corners = ed.corners.map(p => ({ x: p.x, y: p.y }));
+    rotateWork(side, 'right');
+    const s = S[side];
+    ed.vs = Math.min(1, 1400 / Math.max(s.work.width, s.work.height));
+    edCv.width = Math.round(s.work.width * ed.vs);
+    edCv.height = Math.round(s.work.height * ed.vs);
+    ed.corners = s.corners.map(p => ({ x: p.x, y: p.y }));
+    drawEditor();
+  });
+
   $('ed-apply').addEventListener('click', () => {
     const side = ed.side, s = S[side];
     if (!side) { closeEditor(); return; }
@@ -1143,9 +1229,7 @@
     renderPreview();
   });
 
-  /* =====================================================
-     Export
-  ===================================================== */
+  /* ---------- Export ---------- */
   function fullSheet() {
     const c = document.createElement('canvas');
     compose(c, 1);
