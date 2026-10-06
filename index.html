@@ -11,11 +11,18 @@
 <meta name="theme-color" content="#19398a">
 <link rel="canonical" href="https://doceasy.org/">
 
+<!-- PWA & Mobile App Settings -->
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DocEasy">
+
 <meta property="og:type" content="website">
 <meta property="og:title" content="DocEasy — 90+ Free Online Tools: PDF, Resume, Finance, Media">
 <meta property="og:description" content="90+ free browser-based tools. Merge PDFs, build resumes, calculate EMI/GST, compress images, remove backgrounds, record screen. No signup, no uploads.">
 <meta property="og:url" content="https://doceasy.org/">
-<meta property="og:image" content="https://doceasy.org/og-cover.png">
+<meta property="og:image" content="https://doceasy.org/assets/images/icon-512.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="DocEasy">
@@ -24,9 +31,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DocEasy — 90+ Free Online Tools">
 <meta name="twitter:description" content="90+ free browser-based tools. No signup, no uploads, 100% private.">
-<meta name="twitter:image" content="https://doceasy.org/og-cover.png">
+<meta name="twitter:image" content="https://doceasy.org/assets/images/icon-512.png">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+<!-- Favicon & Touch Icons -->
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/icon-512.png">
 
 <!-- ============ STRUCTURED DATA ============ -->
 
@@ -577,6 +587,17 @@
 
 <script src="assets/js/core/doceasy-core.js"></script>
 
+<!-- Service Worker Registration for PWA / Mobile App -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(err) {
+      console.log('SW registration skipped:', err);
+    });
+  });
+}
+</script>
+
 <script>
 (function () {
   var btn = document.getElementById('upload-btn');
@@ -613,4 +634,4 @@
 })();
 </script>
 </body>
-                                                                              </html>
+</html>
