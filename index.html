@@ -30,6 +30,16 @@
 <link rel="icon" type="image/png" href="assets/images/favicon.png?v=2">
 <link rel="apple-touch-icon" href="assets/images/favicon.png?v=2">
 
+<!-- PWA Manifest & Service Worker Registration -->
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function() {});
+  });
+}
+</script>
+
 <!-- ============ STRUCTURED DATA ============ -->
 
 <script type="application/ld+json">
