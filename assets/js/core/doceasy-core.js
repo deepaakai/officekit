@@ -1,4 +1,26 @@
 /* ==========================================================================
+   DocEasy Auto-Favicon Injector — Replaces old icons on all 90+ tools
+   ========================================================================== */
+(function () {
+  'use strict';
+  try {
+    var oldIcons = document.querySelectorAll("link[rel*='icon']");
+    oldIcons.forEach(function (el) { el.remove(); });
+
+    var link = document.createElement('link');
+    link.type = 'image/png';
+    link.rel = 'icon';
+    link.href = '/assets/images/favicon.png?v=2';
+    document.head.appendChild(link);
+
+    var appleTouch = document.createElement('link');
+    appleTouch.rel = 'apple-touch-icon';
+    appleTouch.href = '/assets/images/favicon.png?v=2';
+    document.head.appendChild(appleTouch);
+  } catch (e) {}
+})();
+
+/* ==========================================================================
    DocEasy Core — Auto-injects clean header, footer, theme toggle on every page.
    IDs: #doceasy-header, #doceasy-footer  |  Theme key: doceasy_theme
    ========================================================================== */
@@ -52,20 +74,20 @@
         { href: 'pdf-lock-unlock.html', label: 'Lock / Unlock PDF' }
       ],
       businessTools: [
-        { href: 'business-tools.html',    label: 'Business Suite' },
-        { href: 'finance-tools.html',     label: 'Finance Calculators' },
+        { href: 'business-tools.html',   label: 'Business Suite' },
+        { href: 'finance-tools.html',    label: 'Finance Calculators' },
         { href: 'invoice-generator.html', label: 'GST Invoice Maker' },
-        { href: 'resume-builder.html',    label: 'Resume Builder' },
-        { href: 'word-writer.html',       label: 'Word Writer' },
+        { href: 'resume-builder.html',   label: 'Resume Builder' },
+        { href: 'word-writer.html',      label: 'Word Writer' },
         { href: 'emitra-csc-tools.html',  label: 'eMitra / CSC Tools' }
       ],
       idTools: [
-        { href: 'card-cropper.html',                    label: 'ID Card Cropper' },
-        { href: 'id-2in1-maker.html',                   label: '2 in 1 ID Maker' },
-        { href: 'passport-maker.html',                  label: 'Passport Photo Maker' },
-        { href: 'pan-photo-signature-resizer.html',     label: 'PAN Photo & Signature' },
-        { href: 'signature-resize.html',                label: 'Signature Resize' },
-        { href: 'signature-bg-remover.html',            label: 'Signature BG Remover' }
+        { href: 'card-cropper.html',                 label: 'ID Card Cropper' },
+        { href: 'id-2in1-maker.html',                label: '2 in 1 ID Maker' },
+        { href: 'passport-maker.html',               label: 'Passport Photo Maker' },
+        { href: 'pan-photo-signature-resizer.html',  label: 'PAN Photo & Signature' },
+        { href: 'signature-resize.html',             label: 'Signature Resize' },
+        { href: 'signature-bg-remover.html',         label: 'Signature BG Remover' }
       ],
       legal: [
         { href: 'about.html',    label: 'About',                    root: true },
