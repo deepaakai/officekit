@@ -4,31 +4,101 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Universal Media Editor — Trim, Mute, Convert Video Online Free | DocEasy</title>
-<meta name="description" content="Edit video &amp; audio in your browser: trim, mute, compress, resize, rotate, flip, speed, extract audio, convert format, extract frames. No upload, 100% private.">
-<meta name="keywords" content="video trimmer, mute video, compress video, video converter, extract audio, video editor online, free video tools, browser video editor">
+<meta name="description" content="Edit video and audio directly in your browser: trim, mute, compress, resize, rotate, flip, speed, extract audio, convert format, and extract frames. 100% private, no server uploads.">
+<meta name="keywords" content="video trimmer, mute video, compress video, video converter, extract audio, video editor online, free video tools, browser video editor, ffmpeg wasm online, mp4 to mp3 converter">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://deepaakai.github.io/officekit/tools/media-editor.html">
+
+<!-- Fixed Canonical URL -->
+<link rel="canonical" href="https://doceasy.org/tools/media-editor.html">
+
+<!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Universal Media Editor — 12 Tools in 1 | DocEasy">
-<meta property="og:description" content="Trim, mute, compress, resize, rotate, flip, speed, extract audio, convert — all in your browser. No upload.">
-<meta property="og:url" content="https://deepaakai.github.io/officekit/tools/media-editor.html">
-<meta property="og:image" content="https://deepaakai.github.io/officekit/assets/images/media-editor-demo.jpg">
+<meta property="og:description" content="Trim, mute, compress, resize, rotate, flip, speed, extract audio, and convert video locally in your browser. Zero uploads.">
+<meta property="og:url" content="https://doceasy.org/tools/media-editor.html">
+<meta property="og:image" content="https://doceasy.org/assets/images/media-editor-demo.jpg">
 <meta property="og:site_name" content="DocEasy">
+
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Universal Media Editor — 12 Tools in 1 | DocEasy">
-<meta name="twitter:description" content="Trim, mute, compress, convert — all in your browser.">
-<meta name="twitter:image" content="https://deepaakai.github.io/officekit/assets/images/media-editor-demo.jpg">
+<meta name="twitter:description" content="12 essential audio and video tools in a single browser window. 100% private client-side processing.">
+<meta name="twitter:image" content="https://doceasy.org/assets/images/media-editor-demo.jpg">
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
+<!-- Structured Data: WebApplication + FAQPage Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Universal Media Editor — DocEasy",
-  "url": "https://deepaakai.github.io/officekit/tools/media-editor.html",
-  "applicationCategory": "MultimediaApplication",
-  "operatingSystem": "Any (Web)",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "12 media tools in one browser page. Trim, mute, compress, resize, rotate, flip, speed, loop, reverse, extract audio, convert, extract frames."
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "DocEasy Universal Media Editor",
+      "url": "https://doceasy.org/tools/media-editor.html",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any (Web Browser)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Lossless video trimming and audio stripping",
+        "H.264 video compression with custom CRF presets",
+        "Resolution downscaling and video aspect ratio adjustment",
+        "Audio track extraction to MP3, WAV, OGG, and M4A",
+        "Format conversion between MP4, WebM, and animated GIF",
+        "Zero server file uploads via WebAssembly FFmpeg engine"
+      ],
+      "description": "12 media tools in one browser page. Trim, mute, compress, resize, rotate, flip, speed, loop, reverse, extract audio, convert, and extract frames client-side."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does DocEasy edit video and audio files without uploading them to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DocEasy utilizes FFmpeg compiled directly to WebAssembly (Wasm). This allows the industry-standard FFmpeg audio and video processing engine to execute locally inside your browser's virtual machine sandbox. Your media files are decoded, modified, and encoded on your local CPU and GPU, ensuring absolute privacy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is video trimming completely lossless?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, for standard MP4 and H.264 containers, our Trim operation uses stream copying (-c copy). It clips the stream at keyframe boundaries without re-encoding video frames, which preserves 100% of the original video quality and completes within a few seconds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the maximum file size supported by the Universal Media Editor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because processing takes place directly inside browser memory (RAM), files up to 500 MB can be processed smoothly on devices with 8 GB or more RAM. For ultra-heavy files, closing other open browser tabs ensures sufficient memory allocation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I extract background audio or speech as an MP3 file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Select the 'Audio' tab, choose your preferred format (MP3, WAV, OGG, or M4A) and target bitrate (from 64 kbps up to 320 kbps), and process the file to save the isolated audio track."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the processed video or audio carry any watermark?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. DocEasy adds no watermarks, timestamps, or promotional text overlays to any output video, GIF, or audio file."
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
 
@@ -134,7 +204,7 @@
   width: 100%; padding: 10px 12px; border-radius: 10px;
   border: 1px solid var(--border-color); background: var(--card-bg);
   color: var(--text-color); font-size: 13.5px; font-family: inherit;
-  outline: none; transition: all 0.18s;
+  outline: none; transition: all 0.18s; box-sizing: border-box;
 }
 .field input:focus, .field select:focus {
   border-color: var(--accent);
@@ -209,6 +279,7 @@
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 14px;
+  box-sizing: border-box;
 }
 .seo-article h2 {
   font-size: 26px !important;
@@ -247,6 +318,7 @@
 }
 .seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
 .seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article a:hover { color: var(--accent-hover); }
 .seo-article code {
   background: var(--card-hover);
   padding: 2px 8px;
@@ -256,13 +328,44 @@
   color: var(--accent);
 }
 
+.seo-article .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+.seo-article .table-wrap table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 14px;
+}
+.seo-article th, .seo-article td {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--subtext-color);
+  font-size: 14px;
+  vertical-align: top;
+}
+.seo-article th {
+  background: var(--card-hover);
+  color: var(--text-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .article-image-box {
   margin: 32px auto;
   max-width: 720px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border-color);
-  background: var(--card-bg);
+  background: #fff;
   text-align: center;
 }
 .article-image-box img {
@@ -283,16 +386,16 @@
 }
 
 .seo-article details {
-  background: var(--bg-color);
+  background: var(--card-hover);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 18px 22px;
+  border-radius: 10px;
+  padding: 16px 20px;
   margin-bottom: 12px;
   transition: all 0.2s;
 }
 .seo-article details:hover { border-color: var(--accent); }
 .seo-article details summary {
-  font-size: 16px !important;
+  font-size: 15.5px !important;
   font-weight: 700;
   color: var(--text-color);
   cursor: pointer;
@@ -305,13 +408,13 @@
 .seo-article details summary::-webkit-details-marker { display: none; }
 .seo-article details summary::after {
   content: "+";
-  font-size: 22px;
+  font-size: 20px;
   color: var(--accent);
-  font-weight: 300;
+  font-weight: 400;
 }
 .seo-article details[open] summary::after { content: "−"; }
 .seo-article details p {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   font-size: 15px !important;
   line-height: 1.75;
 }
@@ -383,7 +486,7 @@
     </div>
 
     <div class="tab-panel" data-panel="mute">
-      <p style="font-size:13.5px;color:var(--subtext-color);margin:0 0 12px;">Removes the audio track completely. Video quality unchanged.</p>
+      <p style="font-size:13.5px;color:var(--subtext-color);margin:0 0 12px;">Removes the audio track completely. Video stream is copied losslessly without re-encoding.</p>
     </div>
 
     <div class="tab-panel" data-panel="compress">
@@ -395,7 +498,7 @@
             <option value="36">Strong (smaller, some quality loss)</option>
           </select>
         </div>
-        <div class="field"><label>Scale width</label><input type="number" id="compressWidth" placeholder="1280" value="1280"><small>Optional. Leave for original.</small></div>
+        <div class="field"><label>Scale width</label><input type="number" id="compressWidth" placeholder="1280" value="1280"><small>Optional. Leave blank to keep original resolution.</small></div>
       </div>
     </div>
 
@@ -520,271 +623,237 @@
 
   <div class="ad-slot-container">Advertisement</div>
 
-  <!-- ============ SEO ARTICLE — How to Use + 2000+ word FAQ ============ -->
+  <!-- ============ EXTENSIVE 2000+ WORD SEO ARTICLE ============ -->
   <section class="seo-article">
 
-    <h2>Universal Media Editor — 12 Tools in One Page (2026)</h2>
+    <h2>Comprehensive Technical Guide: Browser-Based Video &amp; Audio Processing (2026)</h2>
 
-    <p>DocEasy's <b>Universal Media Editor</b> packs 12 professional video and audio tools into a single browser page — no install, no signup, no watermark, and complete privacy. Whether you need to <b>trim a clip</b> for social media, <b>compress a video</b> for WhatsApp, <b>extract audio</b> for a podcast, or <b>convert formats</b> for compatibility, this tool covers it all with a single upload.</p>
+    <p>In modern digital communication, rich media accounts for the overwhelming majority of global network bandwidth. From corporate webinars, academic lectures, and podcast recordings to short-form social video on Instagram Reels, TikTok, and YouTube Shorts, content creators and professionals interact with multimedia daily. However, everyday media editing frequently hits frustrating obstacles: files that exceed email and WhatsApp attachment ceilings, footage captured with inverted smartphone orientation, or multi-gigabyte video recordings that require only an isolated audio track.</p>
+
+    <p>Historically, solving these issues demanded installing bulky commercial desktop software suites like Adobe Premiere Pro, Final Cut, or DaVinci Resolve. Beyond steep subscription fees and complex timelines, these heavy tools require gigabytes of local storage and specialized hardware. Alternatively, free cloud-based converter websites compromise personal security by uploading private camera files to remote servers, often enforcing queue throttling, 50 MB limits, and intrusive watermarks.</p>
+
+    <p>The <strong>DocEasy Universal Media Editor</strong> eliminates these compromises. By combining the power of the open-source FFmpeg multimedia framework with cutting-edge WebAssembly (Wasm) runtime technology, it delivers a high-speed, 12-in-1 media manipulation workstation directly inside your web browser. All encoding, stream multiplexing, and filtering processes execute locally on your device with 100% privacy and zero data uploads.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/media-editor-demo.jpg" alt="Universal Media Editor interface with 12 tool tabs and FFmpeg WebAssembly processing" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/media-editor-demo.jpg]</div>';">
-      <div class="article-image-caption">The Universal Media Editor shows all 12 tools as tabs — pick one, drop your file, and process locally in your browser.</div>
+      <img src="../assets/images/media-editor-demo.jpg" alt="DocEasy Universal Media Editor WebAssembly Interface Demonstration" loading="lazy" width="720" height="360" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Demo Image: assets/images/media-editor-demo.jpg]</div>';">
+      <div class="article-image-caption">Unified in-browser multimedia workstation: 12 modular tools powered by client-side FFmpeg WebAssembly for lossless video trimming, compression, and audio extraction.</div>
     </div>
 
-    <h3>What Are the 12 Tools?</h3>
-
-    <p>Instead of navigating to 12 different pages, the Universal Media Editor consolidates everything into a single tabbed interface:</p>
-
-    <ul>
-      <li><b>1. Trim</b> — Cut video or audio to exact start and end times. Lossless for MP4/H.264.</li>
-      <li><b>2. Mute</b> — Remove the audio track completely while keeping video untouched.</li>
-      <li><b>3. Compress</b> — Reduce file size with three CRF presets (Light, Balanced, Strong).</li>
-      <li><b>4. Resize</b> — Change resolution to any width × height (e.g., 4K → 720p).</li>
-      <li><b>5. Rotate</b> — Turn video 90°, 180°, or 270° to fix phone orientation.</li>
-      <li><b>6. Flip</b> — Mirror horizontally or vertically for creative or corrective effects.</li>
-      <li><b>7. Speed</b> — Speed up or slow down video from 0.25× to 4×. Audio pitch preserved.</li>
-      <li><b>8. Loop</b> — Repeat the video 2–10 times into a single continuous file.</li>
-      <li><b>9. Reverse</b> — Play video and audio backwards (great for short clips).</li>
-      <li><b>10. Extract Audio</b> — Pull the audio track as MP3, WAV, OGG, or M4A.</li>
-      <li><b>11. Convert</b> — Change format to MP4, WebM, animated GIF, or MP3.</li>
-      <li><b>12. Extract Frames</b> — Export JPG stills at custom frame rates.</li>
-    </ul>
-
-    <h3>How to Use — Step by Step</h3>
-
+    <h3>Step-by-Step Tutorial: How to Edit Media Files Online</h3>
     <ol>
-      <li><b>Step 1 — Pick a tool:</b> Click any tab at the top (Trim, Mute, Compress, etc.).</li>
-      <li><b>Step 2 — Drop your file:</b> Drag-and-drop video or audio into the drop zone, or click to browse.</li>
-      <li><b>Step 3 — Configure options:</b> Each tool shows its own options below the drop zone (e.g., timestamps for Trim, CRF preset for Compress).</li>
-      <li><b>Step 4 — Click "Process File":</b> The FFmpeg WebAssembly engine loads once (~10 seconds) then processes locally.</li>
-      <li><b>Step 5 — Preview and download:</b> Watch the result and click "Download Result" to save it.</li>
+      <li><b>Select Your Operation:</b> Choose from the 12 tabs at the top of the interface based on your desired task (e.g., <i>Trim</i>, <i>Compress</i>, <i>Extract Audio</i>, or <i>Convert</i>).</li>
+      <li><b>Load Source Media:</b> Drag and drop your video or audio file directly into the staging zone, or tap to browse your local storage.</li>
+      <li><b>Configure Process Parameters:</b>
+        <ul>
+          <li><i>Trim:</i> Enter exact start and end timestamps in standard <code>HH:MM:SS</code> format.</li>
+          <li><i>Compress:</i> Select your target Constant Rate Factor (CRF) preset and optional downscaling width.</li>
+          <li><i>Extract Audio:</i> Select your desired output container (MP3, WAV, OGG, M4A) and audio bitrate.</li>
+          <li><i>Rotate / Flip:</i> Select rotation angle (90°, 180°, 270°) or mirror axis to correct camera orientation.</li>
+        </ul>
+      </li>
+      <li><b>Execute Client-Side Processing:</b> Click the purple "Process File" button. The integrated FFmpeg engine handles the file in your browser's memory, displaying real-time progress.</li>
+      <li><b>Preview and Download:</b> Test the rendered output directly in the integrated HTML5 media player and click "Download Result" to save your clean, watermark-free file.</li>
     </ol>
 
-    <p>That's it — no signup, no email, no watermark. The entire workflow runs in your browser tab.</p>
+    <hr style="border:0; border-top:1px solid var(--border-color); margin:32px 0;">
 
-    <h3>Why Use a Browser-Based Editor?</h3>
+    <h3>1. Architectural Breakdown: How FFmpeg Runs Inside Your Web Browser</h3>
+    <p>To understand how DocEasy processes high-definition media without a server, it helps to explore the underlying software architecture. Traditional web applications act merely as file transfer portals: you upload your file, a cloud server executes the processing, and you download the converted file back.</p>
 
-    <p>Traditional video editing requires installing heavy desktop software (Adobe Premiere, DaVinci Resolve) or uploading files to cloud services (Kapwing, CloudConvert, Loom). Both have drawbacks:</p>
-
-    <ul>
-      <li><b>Desktop software:</b> Takes minutes to install, requires admin rights, consumes gigabytes of disk space, and often has a steep learning curve.</li>
-      <li><b>Cloud services:</b> Requires uploading potentially sensitive files to a third-party server, often with file-size limits, watermarks, or paywalls.</li>
-    </ul>
-
-    <p>DocEasy's Universal Media Editor takes a different approach: it uses <b>FFmpeg compiled to WebAssembly</b>, which runs the same professional-grade video engine directly inside your browser. Your files never leave your device. And because WebAssembly runs at near-native speed, processing is fast — often within 1–3 seconds for simple operations.</p>
-
-    <h3>Trim: Cut Any Video to Exact Time</h3>
-
-    <p>The Trim tool is the fastest way to cut a video clip. Enter your start time (<code>00:00:00</code> or seconds) and end time (<code>00:02:45</code>), click Process, and download. For MP4/H.264 files, the trim is <b>lossless</b> — we cut at keyframe boundaries without re-encoding, which means no quality loss and instant processing (typically 1–3 seconds).</p>
-
-    <h3>Mute: Remove Audio Without Re-Encoding</h3>
-
-    <p>Mute strips the audio track completely while leaving the video codec untouched. This is useful when you want to reuse a video clip with new music, or when you want a silent version for a kiosk or background video. Because we use stream copy (<code>-c:v copy</code>), the operation is virtually instant.</p>
-
-    <h3>Compress: Reduce File Size for Sharing</h3>
-
-    <p>Compression uses H.264 with adjustable CRF (Constant Rate Factor):</p>
+    <p>DocEasy operates on an entirely client-side paradigm powered by <b>WebAssembly (Wasm)</b>. WebAssembly is a low-level binary code format that executes at near-native speed inside all modern browser engines (Chromium, Gecko, WebKit). The complete C/C++ codebase of FFmpeg—the world's most versatile audio/video processing library—is compiled into a WebAssembly binary.</p>
 
     <ul>
-      <li><b>Light (CRF 28):</b> Best quality, ~30–50% size reduction.</li>
-      <li><b>Balanced (CRF 32):</b> Recommended for social media — 50–70% size reduction, minimal visible loss.</li>
-      <li><b>Strong (CRF 36):</b> Maximum compression — 70–85% reduction, visible artifacts.</li>
+      <li><b>In-Memory Virtual File System (MEMFS):</b> When you drop a video into DocEasy, the file is read into an in-memory virtual filesystem inside your browser tab using JavaScript <code>Uint8Array</code> buffers.</li>
+      <li><b>Multi-Threaded Execution:</b> The Wasm runtime allocates processing across your local CPU cores, calculating discrete cosine transforms (DCT), motion vectors, and audio filtering locally.</li>
+      <li><b>Blob Instantiation:</b> Once FFmpeg writes the finished file, the data is packaged into a native browser Blob URL for instant downloading. Zero bytes of your original or edited media ever travel across the internet.</li>
     </ul>
 
-    <p>Combine with Resize (e.g., 4K → 1080p) for dramatic size savings — a 500 MB video often shrinks to under 50 MB.</p>
+    <h3>2. Exhaustive Analysis of the 12 Media Modules</h3>
 
-    <h3>Resize, Rotate, Flip — Fix Orientation Issues</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Module Name</th>
+            <th>Underlying Method</th>
+            <th>Primary Application</th>
+            <th>Quality &amp; Speed Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>1. Trim</b></td>
+            <td>Stream Copy (<code>-c copy</code>)</td>
+            <td>Isolating specific scenes, removing dead air, cutting video clips.</td>
+            <td>Lossless &amp; instantaneous (1–3 seconds).</td>
+          </tr>
+          <tr>
+            <td><b>2. Mute</b></td>
+            <td>Audio Strip (<code>-an -c:v copy</code>)</td>
+            <td>Removing unwanted background noise, preparing silent social b-roll.</td>
+            <td>Lossless &amp; instantaneous (no re-encoding).</td>
+          </tr>
+          <tr>
+            <td><b>3. Compress</b></td>
+            <td>H.264 CRF Quantization</td>
+            <td>Shrinking 400 MB camera files to under 25 MB for email/WhatsApp.</td>
+            <td>Tunable: Light (CRF 28), Balanced (CRF 32), Strong (CRF 36).</td>
+          </tr>
+          <tr>
+            <td><b>4. Resize</b></td>
+            <td>Scale Filter (<code>scale=w:h</code>)</td>
+            <td>Standardizing resolutions (e.g., 4K down to 1080p or 720p).</td>
+            <td>Bilinear resampling with original audio preserved.</td>
+          </tr>
+          <tr>
+            <td><b>5. Rotate</b></td>
+            <td>Transpose Matrix Filter</td>
+            <td>Correcting smartphone video recorded in the wrong orientation.</td>
+            <td>Rotates 90°, 180°, or 270° clockwise with pixel accuracy.</td>
+          </tr>
+          <tr>
+            <td><b>6. Flip</b></td>
+            <td>Horizontal / Vertical Flip</td>
+            <td>Un-mirroring selfie camera footage, creative symmetry effects.</td>
+            <td>Inverts spatial coordinates across designated axes.</td>
+          </tr>
+          <tr>
+            <td><b>7. Speed</b></td>
+            <td>PTS Scaling &amp; ATempo Filter</td>
+            <td>Creating timelapses (up to 4×) or slow-motion (0.25×).</td>
+            <td>Preserves audio pitch automatically across speed shifts.</td>
+          </tr>
+          <tr>
+            <td><b>8. Loop</b></td>
+            <td>Stream Loop Multiplexing</td>
+            <td>Creating repeated background videos for kiosks, websites, or reels.</td>
+            <td>Duplicates stream 2 to 10 times into a single file.</td>
+          </tr>
+          <tr>
+            <td><b>9. Reverse</b></td>
+            <td>Temporal Reverse Buffer</td>
+            <td>Playing video and audio backwards for creative effects.</td>
+            <td>Best for short clips (under 60 seconds) due to RAM usage.</td>
+          </tr>
+          <tr>
+            <td><b>10. Extract Audio</b></td>
+            <td>Demuxing &amp; Audio Transcoding</td>
+            <td>Converting video lectures, interviews, and music clips to audio.</td>
+            <td>Exports to MP3, WAV (lossless), OGG, or M4A (64k–320k).</td>
+          </tr>
+          <tr>
+            <td><b>11. Convert</b></td>
+            <td>Codec Transcoding</td>
+            <td>Converting between MP4 (H.264), WebM (VP9), and animated GIF.</td>
+            <td>Cross-platform compatibility with selectable quality tiers.</td>
+          </tr>
+          <tr>
+            <td><b>12. Extract Frames</b></td>
+            <td>Temporal Frame Sampling</td>
+            <td>Exporting high-resolution JPG stills, thumbnails, and storyboards.</td>
+            <td>Extracts 1 to 10 fps up to user-defined frame limits.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <p>Videos filmed on phones often end up sideways or upside-down. The Rotate tool fixes orientation in one click (90°, 180°, 270°). The Flip tool mirrors horizontally (useful for un-mirroring selfie videos) or vertically. The Resize tool changes resolution to any exact dimensions — great for uploading to platforms with specific requirements.</p>
-
-    <h3>Speed, Loop, Reverse — Creative Effects</h3>
-
-    <p>Speed lets you create timelapses (0.25× fast-forward) or slow-motion (up to 4× slower) with audio pitch preserved. Loop repeats a video 2–10 times into a single file — perfect for animated backgrounds or repetitive content. Reverse plays everything backwards — great for short clips, humorous effects, or reversing a specific action for dramatic effect.</p>
-
-    <h3>Extract Audio — Video to MP3</h3>
-
-    <p>Extract Audio pulls the sound from any video file and saves it as MP3, WAV, OGG, or M4A. Choose your bitrate (64 kbps for voice, 192–320 kbps for music), click Process, and download. This is the fastest way to convert a lecture or interview video into a portable audio file.</p>
-
-    <h3>Convert — Format Conversion</h3>
-
-    <p>The Convert tool handles the most common format conversions:</p>
+    <h3>3. Understanding Video Compression: Constant Rate Factor (CRF)</h3>
+    <p>When compressing video, many free tools force a crude bitrate limit that creates muddy, blocky artifacts during high-motion scenes while wasting data on static shots. DocEasy utilizes <b>Constant Rate Factor (CRF)</b> encoding via the industry-standard <code>libx264</code> codec:</p>
 
     <ul>
-      <li><b>MP4:</b> Universal compatibility (H.264 + AAC).</li>
-      <li><b>WebM:</b> Modern, efficient, royalty-free (VP9 + Opus).</li>
-      <li><b>GIF:</b> Animated image (limited to 256 colors, no audio).</li>
-      <li><b>MP3:</b> Audio-only extraction.</li>
+      <li><b>How CRF Works:</b> Instead of maintaining a fixed bitrate per second, CRF dynamically allocates data based on scene complexity. Fast-moving sports scenes receive more bits to preserve edge clarity, while static interviews receive fewer bits, maximizing compression efficiency.</li>
+      <li><b>Light Preset (CRF 28):</b> Provides modest 30% to 50% file weight reductions while remaining virtually indistinguishable from the source on standard smartphone and laptop displays.</li>
+      <li><b>Balanced Preset (CRF 32):</b> The recommended default for internet sharing. Delivers 50% to 70% size reduction with minimal visible softening.</li>
+      <li><b>Strong Preset (CRF 36):</b> For strict upload limits (e.g., email attachment caps or messaging apps). Reduces file size by 75% to 85% with some noticeable compression artifacts in dark areas.</li>
     </ul>
 
-    <h3>Extract Frames — Video to JPG Stills</h3>
+    <h3>4. Audio Codecs &amp; Demuxing: Extracting Pristine Sound</h3>
+    <p>Extracting audio from a video file requires separating the audio stream from the video container (a process known as demuxing) and re-encoding it into an appropriate audio container:</p>
+    <ul>
+      <li><b>MP3 (MPEG-1 Audio Layer III):</b> The universal standard. Plays on every smartphone, car stereo, computer, and media player manufactured in the last three decades. Recommended at 192 kbps for music and podcasts.</li>
+      <li><b>WAV (Waveform Audio File Format):</b> Uncompressed Pulse Code Modulation (PCM). Delivers studio-grade, bit-perfect lossless quality, making it ideal for further audio mastering or transcription pipelines.</li>
+      <li><b>M4A / AAC (Advanced Audio Coding):</b> Apple's preferred container. Delivers superior fidelity compared to MP3 at equivalent bitrates (e.g., 128 kbps AAC sounds clearer than 128 kbps MP3).</li>
+      <li><b>OGG / Vorbis:</b> A modern, open-source patent-free audio container commonly utilized in web gaming, Linux environments, and open-source software stacks.</li>
+    </ul>
 
-    <p>The Frames tool exports JPG images from any video at a chosen frame rate (1–10 fps) with a maximum frame count. Use it for thumbnails, storyboards, preview images, or extracting a specific moment from a video.</p>
-
-    <h3>Privacy and Security</h3>
-
-    <p>Unlike cloud-based editors that require uploading your files to a third-party server, DocEasy's Universal Media Editor processes everything locally:</p>
+    <h3>5. Data Privacy &amp; Confidentiality: Why Browser Processing Matters</h3>
+    <p>Video files often contain deeply personal or sensitive visual data: home recordings of family members, confidential business meetings, internal corporate demonstrations, or sensitive legal recordings. Uploading these assets to third-party cloud conversion websites introduces major privacy hazards:</p>
 
     <ul>
-      <li><b>No uploads:</b> Files stay in your browser's memory.</li>
-      <li><b>No server storage:</b> Nothing is saved anywhere except your device.</li>
-      <li><b>No tracking:</b> We don't log which files you process or when.</li>
-      <li><b>No account:</b> Use it completely anonymously.</li>
-      <li><b>Offline capable:</b> After the FFmpeg engine loads once, the tool works offline.</li>
+      <li><b>Server Persistence:</b> Files uploaded to cloud conversion services frequently sit in temporary server directories or caching layers long after processing is complete.</li>
+      <li><b>Data Interception:</b> Transporting raw video files over public networks exposes files to man-in-the-middle sniffing and corporate data breaches.</li>
+      <li><b>AI Model Ingestion:</b> Some consumer online converters reserve rights in their terms of service to scan uploaded media for machine learning datasets.</li>
     </ul>
 
-    <p>You can verify the privacy claim yourself: open Developer Tools (F12) → Network tab, drop a file, and click Process. You'll see the FFmpeg engine download (first time only) but <b>zero requests carrying your file data</b> — because it never travels over the network.</p>
+    <p><b>The DocEasy Protocol:</b> DocEasy completely removes remote servers from the pipeline. The entire media editor runs in your browser's private sandbox memory. Once the initial WebAssembly engine is loaded into your browser cache, the tool can function entirely offline. You can verify this independently: disconnect your Wi-Fi or enable Airplane Mode, and edit your media files freely.</p>
 
-    <h3>Best Practices</h3>
+    <hr style="border:0; border-top:1px solid var(--border-color); margin:32px 0;">
 
+    <h3>6. Frequently Asked Questions (FAQ)</h3>
+
+    <details>
+      <summary>Q1: Is the Universal Media Editor completely free to use?</summary>
+      <p>Yes. DocEasy is 100% free with no hidden subscriptions, trial expirations, daily usage caps, or watermark overlays on output files.</p>
+    </details>
+
+    <details>
+      <summary>Q2: Does the editor upload my video or audio files to an external server?</summary>
+      <p>No. All media operations execute locally inside your browser via WebAssembly FFmpeg. Zero video or audio data is ever transmitted across the internet.</p>
+    </details>
+
+    <details>
+      <summary>Q3: Why does the tool take about 10 seconds to load the first time I click Process?</summary>
+      <p>On your initial use, your browser downloads the compiled FFmpeg WebAssembly engine (~25 MB). Once downloaded, your browser caches it locally, allowing subsequent edits to start much faster.</p>
+    </details>
+
+    <details>
+      <summary>Q4: What should I do if the browser tab runs out of memory or crashes?</summary>
+      <p>Browser tabs have strict RAM allocations. For very large files (exceeding 300–500 MB), close unnecessary browser tabs and background applications, use Google Chrome or Microsoft Edge (which have superior Wasm memory management), and consider trimming down large files first.</p>
+    </details>
+
+    <details>
+      <summary>Q5: Does trimming an MP4 video cause any quality loss?</summary>
+      <p>No. Trimming uses stream copy mode (<code>-c copy</code>), which slices the existing compressed video and audio streams at keyframe boundaries without re-encoding frames. The output quality is identical to the original file.</p>
+    </details>
+
+    <details>
+      <summary>Q6: Can I convert high-definition videos into animated GIFs?</summary>
+      <p>Yes. Select the <i>Convert</i> tab, choose <i>Animated GIF</i>, and process. The tool utilizes an optimized Lanczos color palette generator to output smooth 10 FPS animations suitable for web embedding and social media.</p>
+    </details>
+
+    <details>
+      <summary>Q7: Can I use this media editor on mobile devices (Android / iOS)?</summary>
+      <p>Yes. The tool runs on mobile browsers that support WebAssembly (Chrome, Safari, Firefox). Because smartphones have less RAM than desktop computers, we recommend keeping mobile video files under 100 MB for optimal performance.</p>
+    </details>
+
+    <details>
+      <summary>Q8: Can I extract individual still frames from a 4K video?</summary>
+      <p>Yes. Use the <i>Frames</i> tab to sample images at your preferred rate (1 to 10 frames per second). The engine extracts full-resolution JPEG images directly from the video stream.</p>
+    </details>
+
+    <details>
+      <summary>Q9: Will changing video speed alter the audio pitch?</summary>
+      <p>No. Our speed filter combines presentation timestamp adjustments (<code>setpts</code>) with the <code>atempo</code> audio filter, which speeds up or slows down audio playback while maintaining natural vocal pitch.</p>
+    </details>
+
+    <details>
+      <summary>Q10: Can I process copyright-protected or DRM-encrypted videos?</summary>
+      <p>No. Videos protected by Digital Rights Management (such as downloads from streaming platforms like Netflix or Disney+) are encrypted and cannot be decoded by browser-based tools.</p>
+    </details>
+
+    <hr style="border:0; border-top:1px solid var(--border-color); margin:32px 0;">
+
+    <h3>7. Recommended Multi-Tool Workflow for Content Creators</h3>
+    <p>Media editing often interfaces with other creative and document preparation tasks. Combine DocEasy utilities for an efficient workflow:</p>
     <ul>
-      <li><b>Close other tabs</b> before processing large files (above 200 MB) to free RAM.</li>
-      <li><b>Use Chrome or Edge</b> for the best WebAssembly performance.</li>
-      <li><b>Trim first, then compress</b> — smaller files process faster.</li>
-      <li><b>Use MP4 for universal compatibility</b>, WebM for modern browsers.</li>
-      <li><b>Choose 128 kbps for voice</b>, 192–320 kbps for music extraction.</li>
-      <li><b>Test with a short clip</b> before processing a full-length video.</li>
+      <li><b>Step 1 — Record Raw Footage:</b> Capture screen demonstrations or webcam reactions using our <a href="media-screen-recorder.html">Screen Recorder</a> or <a href="media-webcam-recorder.html">Webcam Recorder</a>.</li>
+      <li><b>Step 2 — Polish and Cut:</b> Use the <strong>Universal Media Editor</strong> to trim unwanted footage, mute audio, or adjust playback speed.</li>
+      <li><b>Step 3 — Extract Audio for Podcasting:</b> Extract speech tracks directly into MP3 format for audio hosting.</li>
+      <li><b>Step 4 — Compress for Delivery:</b> Shrink finished videos down to balanced CRF file sizes for smooth social sharing or email attachments.</li>
     </ul>
 
-    <h3>Frequently Asked Questions</h3>
-
-    <details>
-      <summary>What can I do with this Universal Media Editor?</summary>
-      <p>It replaces 12 separate tools: Trim, Mute, Compress, Resize, Rotate, Flip, Speed, Loop, Reverse, Extract Audio, Convert, and Extract Frames. All in one tabbed interface.</p>
-    </details>
-
-    <details>
-      <summary>Is this tool really free?</summary>
-      <p>Yes — 100% free, forever. No signup, no email, no watermark, no daily limit, no file-size cap, and no premium tier.</p>
-    </details>
-
-    <details>
-      <summary>How does processing work without a server?</summary>
-      <p>We use FFmpeg compiled to WebAssembly — the same engine used by professional video software, running entirely in your browser. Nothing is uploaded to any server.</p>
-    </details>
-
-    <details>
-      <summary>Which file formats are supported?</summary>
-      <p><strong>Input:</strong> MP4, WebM, MOV, MKV, AVI, FLV, TS, M4V, 3GP (video); MP3, WAV, OGG, OPUS, M4A, AAC, FLAC, WMA (audio). <strong>Output:</strong> MP4, WebM, GIF, MP3, WAV, OGG, M4A, JPG (frames).</p>
-    </details>
-
-    <details>
-      <summary>How do I trim a video to a specific time?</summary>
-      <p>Click the Trim tab, enter start and end times in <code>HH:MM:SS</code> format (or plain seconds), and click Process. For MP4/H.264, the trim is lossless — no quality loss.</p>
-    </details>
-
-    <details>
-      <summary>Does compressing a video reduce quality?</summary>
-      <p>Depends on the preset. "Light" (CRF 28) keeps most quality, "Balanced" (CRF 32) is best for social media, and "Strong" (CRF 36) reduces size dramatically with visible artifacts.</p>
-    </details>
-
-    <details>
-      <summary>How do I extract audio as MP3?</summary>
-      <p>Click the Audio tab, select MP3 and 192 kbps (music) or 128 kbps (voice), drop your video, click Process. You'll get an MP3 file containing only the audio track.</p>
-    </details>
-
-    <details>
-      <summary>Can I convert video to GIF?</summary>
-      <p>Yes — click Convert, choose "Animated GIF," and click Process. GIFs are limited to 256 colors and don't support audio. Best for short clips under 10 seconds.</p>
-    </details>
-
-    <details>
-      <summary>What's the maximum file size?</summary>
-      <p>No hard limit — practical limits depend on your device's RAM. 4 GB RAM handles ~200 MB, 8 GB RAM handles ~500 MB, 16 GB RAM handles 1 GB+.</p>
-    </details>
-
-    <details>
-      <summary>How long does processing take?</summary>
-      <p>Simple operations (trim, mute, rotate, flip) take 1–3 seconds. Compress, resize, and convert take 10–60 seconds for a 100 MB file. The first operation also includes a one-time ~10-second FFmpeg engine load.</p>
-    </details>
-
-    <details>
-      <summary>Does the tool work offline?</summary>
-      <p>Partially. After the FFmpeg engine loads once, the tool works offline for subsequent uses. The first load requires internet to download the engine.</p>
-    </details>
-
-    <details>
-      <summary>Which browsers are supported?</summary>
-      <p>Chrome 90+, Edge 90+, Firefox 88+, Safari 14+, Brave, Opera, Vivaldi, and all Chromium browsers. Chrome and Edge perform best.</p>
-    </details>
-
-    <details>
-      <summary>Can I batch-process multiple files?</summary>
-      <p>Not in this version — one file at a time. For heavy batch work (20+ files), use FFmpeg on desktop (command-line) or a dedicated batch converter.</p>
-    </details>
-
-    <details>
-      <summary>Is my file safe? Do you see it?</summary>
-      <p>Your file never leaves your device. Full stop. You can verify with Developer Tools → Network tab: zero requests carry your file data.</p>
-    </details>
-
-    <details>
-      <summary>Why is my output file larger than expected?</summary>
-      <p>Common reasons: (1) MP4 → WebM often increases size; (2) lossless trim preserves the original bitrate; (3) GIF is inherently large; (4) WAV is uncompressed. To reduce size, use Compress with CRF 32 and reduce resolution first.</p>
-    </details>
-
-    <details>
-      <summary>Does the output have a watermark?</summary>
-      <p>No — never. Every file is watermark-free. What you see in the preview is exactly what you download.</p>
-    </details>
-
-    <details>
-      <summary>Can I use the output commercially?</summary>
-      <p>Yes — everything you create is yours to use freely, including commercially. No licensing restrictions on the output.</p>
-    </details>
-
-    <details>
-      <summary>What if the tool crashes?</summary>
-      <p>Usually caused by memory limits. Try: (1) Close other tabs; (2) Use a smaller file; (3) Switch to Chrome or Edge; (4) Reload the page.</p>
-    </details>
-
-    <details>
-      <summary>Do you log which files I process?</summary>
-      <p>No. We don't log filenames, sizes, operations, or metadata. Our analytics only records anonymous page views — never file activity.</p>
-    </details>
-
-    <details>
-      <summary>How is this different from desktop editors?</summary>
-      <p>Desktop editors (Premiere, DaVinci) offer advanced features like multi-track, color grading, and effects. DocEasy is faster for quick tasks: trim, convert, compress, extract audio. No installation, cross-platform, private by default.</p>
-    </details>
-
-    <details>
-      <summary>Can I add subtitles or stickers?</summary>
-      <p>Not in this tool. DocEasy has separate tools for Add Subtitles and Add Stickers on the Media Tools hub page.</p>
-    </details>
-
-    <details>
-      <summary>Why is the first load slow?</summary>
-      <p>Your browser downloads the FFmpeg WebAssembly engine (~25 MB) on first use. Takes 8–15 seconds on typical broadband. Cached afterward for instant loading.</p>
-    </details>
-
-    <details>
-      <summary>Can I use it on my phone?</summary>
-      <p>Yes — works on Android and iOS. Mobile RAM is lower, so practical file limits are smaller (50–100 MB on 4 GB RAM, up to 300 MB on 8 GB+ flagships).</p>
-    </details>
-
-    <details>
-      <summary>Why does the preview show black for some videos?</summary>
-      <p>DRM-protected content (Netflix, Disney+) blacks out intentionally. Try non-DRM files. If the file plays fine in VLC but not in preview, it's a browser codec limitation — the download still works.</p>
-    </details>
-
-    <h3>Related DocEasy Tools</h3>
-
-    <ul>
-      <li><a href="media-screen-recorder.html">Screen Recorder</a> — Record your screen with audio</li>
-      <li><a href="media-voice-recorder.html">Voice Recorder</a> — Record audio from your microphone</li>
-      <li><a href="media-webcam-recorder.html">Webcam Recorder</a> — Record yourself on camera</li>
-      <li><a href="media-meme-generator.html">Meme Generator</a> — Add text to any image</li>
-      <li><a href="media-teleprompter.html">Teleprompter</a> — Read scripts while recording</li>
-      <li><a href="media-mic-test.html">Mic Test</a> — Verify your microphone before recording</li>
-      <li><a href="media-webcam-test.html">Webcam Test</a> — Check your camera before recording</li>
-    </ul>
-
-    <h3>Conclusion</h3>
-
-    <p>The Universal Media Editor is a complete video and audio toolkit that runs entirely in your browser. From trimming a clip for social media to compressing a video for WhatsApp, extracting audio for a podcast, or converting formats for compatibility — every common media task is covered without any installation, signup, or upload.</p>
-
-    <p>Try it above. Pick a tab, drop your file, click Process, and download your result in seconds. All free, all private, all in your browser.</p>
+    <h3>8. Summary</h3>
+    <p>Fast, reliable multimedia editing no longer requires costly desktop software or surrendering your personal files to cloud upload services. The DocEasy Universal Media Editor provides an instantaneous, versatile, and secure video and audio editing suite directly inside your web browser. Bookmark this page today for quick, private media editing on any device.</p>
 
   </section>
 
@@ -1048,7 +1117,7 @@
         await ffmpeg.exec(args);
         var frameData = await ffmpeg.readFile('frame-001.jpg');
         var frameBlob = new Blob([frameData.buffer], { type: 'image/jpeg' });
-        var frameUrl = URL.createObjectURL(frameBlob);
+        var frameUrl = URL.createObjectURL(blobUrlSafe(frameBlob));
         resultPreview.innerHTML = '<img src="' + frameUrl + '" style="width:100%;border-radius:10px;margin-bottom:12px;"><p style="font-size:12.5px;color:var(--subtext-color);margin:0 0 12px;">Showing first frame. All ' + maxF + ' frames were extracted.</p>';
         downloadLink.href = frameUrl;
         downloadLink.download = 'frame-001.jpg';
@@ -1092,6 +1161,10 @@
       processBtn.disabled = false;
     }
   });
+
+  function blobUrlSafe(b) {
+    return b;
+  }
 })();
 </script>
 </body>
