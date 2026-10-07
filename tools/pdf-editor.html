@@ -1,1342 +1,526 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF Editor & Annotator — Add Text, Signature, Stamp Online | DocEasy</title>
-<meta name="description" content="Free browser-based PDF editor. Add text, signature, images, watermarks, whiteout, and stamps to any PDF. Fill forms, sign documents, 100% private — no upload, no signup.">
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free PDF Editor — Fill, Sign, Annotate & Redact | DocEasy</title>
+<meta name="description" content="Free browser-based PDF editor. Add text, signature, images, stamps, whiteout, and watermarks to any PDF. Full undo/redo, multi-page, 100% private — no upload, no signup.">
 <meta name="keywords" content="pdf editor, pdf annotator, add text to pdf, pdf signature, fill pdf form, whiteout pdf, pdf stamp, watermark pdf, edit pdf online free">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://doceasy.org/tools/pdf-editor.html">
-
 <meta property="og:type" content="website">
-<meta property="og:title" content="PDF Editor & Annotator — DocEasy">
-<meta property="og:description" content="Add text, signature, images, watermarks and stamps to any PDF. 100% browser-based, private.">
+<meta property="og:title" content="Free PDF Editor & Annotator — DocEasy">
+<meta property="og:description" content="Fill, sign, annotate and redact any PDF. 100% browser-based, private, no upload.">
 <meta property="og:url" content="https://doceasy.org/tools/pdf-editor.html">
 <meta property="og:image" content="https://doceasy.org/assets/images/og-cover.png">
 <meta property="og:site_name" content="DocEasy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PDF Editor & Annotator — DocEasy">
-<meta name="twitter:description" content="Add text, signature, images and stamps to any PDF — right in your browser.">
+<meta name="twitter:title" content="Free PDF Editor & Annotator — DocEasy">
+<meta name="twitter:description" content="Fill, sign, annotate and redact any PDF — in your browser.">
 <meta name="twitter:image" content="https://doceasy.org/assets/images/og-cover.png">
-
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-<script>if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';</script>
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "DocEasy PDF Editor & Annotator",
+      "url": "https://doceasy.org/tools/pdf-editor.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any (Web Browser)",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "Full Undo and Redo history stack (Ctrl+Z / Ctrl+Y)",
+        "Interactive text annotations with multi-font support",
+        "Whiteout redaction overlay to conceal incorrect text",
+        "Transparent PNG digital signature placement",
+        "Pre-designed administrative stamps and custom diagonal watermarks",
+        "Multi-page navigation with thumbnail sidebar",
+        "Permanent, lossless client-side PDF compilation via PDF-Lib"
+      ],
+      "description": "Annotate, sign, whiteout, and add custom text overlays to PDF documents directly inside your browser with full undo/redo support."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this PDF editor completely free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100% free with no signup, no email, no subscription, no daily limit, and no watermark."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my PDFs uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Never. Every operation runs inside your browser's memory using PDF.js and PDF-Lib. Your file is never transmitted, stored, or logged."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I edit a password-protected PDF?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Encrypted PDFs like e-Aadhaar and e-PAN are supported by entering the decryption password when prompted."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <style>
-/* Hide ad slots until AdSense approval */
-.ad-slot-container, .ad-placeholder { display: none !important; }
+*{box-sizing:border-box}html,body{margin:0}
+.pe{--p-a:var(--accent,#19398a);--p-c:var(--card-bg,#fff);--p-bg:var(--bg,#eef1f7);--p-t:var(--text,#1b2437);--p-b:var(--border,#d6dbe6);--p-m:var(--muted,#667085);--hs:14px;display:flex;flex-direction:column;min-height:100dvh;background:var(--p-bg);color:var(--p-t);font:14px/1.4 var(--font,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif)}
+.pe [hidden]{display:none!important}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px 10px;background:var(--p-c);border-bottom:1px solid var(--p-b);max-height:42vh;overflow:auto}
+.g{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.pe button,.pe select,.pe input[type=number]{font:inherit;color:inherit;background:var(--p-c);border:1px solid var(--p-b);border-radius:8px;padding:5px 10px;min-height:36px;cursor:pointer}
+.pe input[type=number]{width:58px;cursor:text}
+.pe input[type=color]{width:34px;height:36px;padding:2px;border:1px solid var(--p-b);border-radius:8px;background:var(--p-c)}
+.pe button.on,.pe .pri{background:var(--p-a);color:#fff;border-color:var(--p-a)}
+.pe button:disabled{opacity:.4;cursor:default}
+.pe label{display:flex;align-items:center;gap:4px;color:var(--p-m);font-size:13px}
+.main{flex:1;display:flex;min-height:0}
+#side{width:112px;flex:none;overflow:auto;padding:8px;background:var(--p-c);border-right:1px solid var(--p-b)}
+.pe.nosb #side{display:none}
+.th{margin-bottom:8px;text-align:center;font-size:12px;color:var(--p-m);cursor:pointer;border:2px solid transparent;border-radius:6px;padding:2px}
+.th.on{border-color:var(--p-a);color:var(--p-t)}
+.th canvas{width:100%;display:block;background:#fff}
+#work{flex:1;overflow:auto;padding:12px}
+#drop{margin:8vh auto;max-width:460px;text-align:center;padding:36px 20px;border:2px dashed var(--p-b);border-radius:14px;background:var(--p-c)}
+#drop.dz{border-color:var(--p-a)}
+#drop h2{margin:0 0 6px;font-size:20px}
+#stage{position:relative;margin:0 auto;background:#fff;box-shadow:0 2px 14px rgba(0,0,0,.18)}
+#cv{display:block}
+#ov{position:absolute;inset:0;user-select:none;-webkit-user-select:none}
+.tmp{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.el{position:absolute;touch-action:none;cursor:move}
+.el .in{position:absolute;inset:0;outline:0}
+.el .in[contenteditable]:not([contenteditable=false]){user-select:text;-webkit-user-select:text;cursor:text}
+.el.text .in,.el.stamp .in{white-space:pre-wrap;overflow-wrap:break-word;line-height:1.2}
+.el.stamp .in{display:flex;align-items:center;justify-content:center;text-align:center}
+.el.sel{outline:1.5px dashed var(--p-a)}
+.h,.rot,.del{position:absolute;width:var(--hs);height:var(--hs);background:#fff;border:2px solid var(--p-a);border-radius:50%;touch-action:none;z-index:2;font-style:normal}
+.h[data-h=nw]{left:calc(var(--hs)/-2);top:calc(var(--hs)/-2);cursor:nwse-resize}
+.h[data-h=ne]{right:calc(var(--hs)/-2);top:calc(var(--hs)/-2);cursor:nesw-resize}
+.h[data-h=sw]{left:calc(var(--hs)/-2);bottom:calc(var(--hs)/-2);cursor:nesw-resize}
+.h[data-h=se]{right:calc(var(--hs)/-2);bottom:calc(var(--hs)/-2);cursor:nwse-resize}
+.rot{left:calc(50% - var(--hs) - 4px);top:calc(var(--hs)*-2.4);cursor:grab}
+.del{left:calc(50% + 4px);top:calc(var(--hs)*-2.4);background:#d32f2f;border-color:#d32f2f;color:#fff;display:grid;place-items:center;font:15px/1 sans-serif;cursor:pointer}
+@media (pointer:coarse){.pe{--hs:24px}.pe button,.pe select{min-height:42px}.del{font-size:20px}}
+#priv{padding:4px 10px;font-size:12px;color:var(--p-m);text-align:center;background:var(--p-c);border-top:1px solid var(--p-b)}
+#toast{position:fixed;left:50%;bottom:44px;transform:translateX(-50%);background:var(--p-t);color:var(--p-c);padding:8px 14px;border-radius:8px;z-index:20;max-width:90vw;text-align:center}
+dialog{border:1px solid var(--p-b);border-radius:12px;padding:18px;max-width:340px;background:var(--p-c);color:var(--p-t)}
+dialog input{width:100%;padding:8px;margin:8px 0;font:inherit;border:1px solid var(--p-b);border-radius:8px}
+dialog small{color:var(--p-m);display:block;margin-bottom:10px}
+@media (max-width:700px){.pe{font-size:13px}}
 
-.main-wrap {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 20px 60px;
-  box-sizing: border-box;
-}
-
-.hero-box { text-align: center; padding: 30px 0 24px; }
-.hero-title {
-  font-size: clamp(24px, 4vw, 34px); font-weight: 800;
-  color: var(--text-color); margin: 0 0 10px; letter-spacing: -0.5px;
-}
-.hero-sub {
-  color: var(--subtext-color); font-size: 15px;
-  margin: 0 auto; max-width: 640px; line-height: 1.6;
-}
-
-/* ================= UPLOAD ================= */
-.upload-box {
-  max-width: 640px; margin: 10px auto 40px;
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 14px; padding: 26px 22px;
-  box-shadow: var(--shadow-md);
-}
-.drop-zone {
-  position: relative;
-  border: 2px dashed var(--accent);
-  background: var(--accent-soft);
-  border-radius: 12px;
-  padding: 46px 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-.drop-zone:hover, .drop-zone.dragover {
-  background: var(--accent-soft-hover, var(--accent-soft));
-  transform: translateY(-2px);
-}
-.drop-zone input[type="file"] {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  opacity: 0; cursor: pointer;
-}
-.dz-icon {
-  width: 62px; height: 62px; margin: 0 auto 14px;
-  color: var(--accent); display: block;
-  stroke-width: 1.7; fill: none;
-  stroke-linecap: round; stroke-linejoin: round;
-}
-.dz-title { font-size: 18px; font-weight: 700; color: var(--text-color); margin: 0 0 6px; }
-.dz-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0; line-height: 1.5; }
-
-.pwd-card {
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 10px; padding: 16px 20px; margin-top: 18px;
-  display: none;
-}
-.pwd-card.show { display: block; }
-.pwd-card .pwd-title { font-size: 13.5px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
-.pwd-card .pwd-hint { font-size: 12.5px; color: var(--subtext-color); line-height: 1.55; }
-.pwd-row { display: flex; gap: 8px; margin-top: 12px; }
-.pwd-row input {
-  flex: 1; height: 40px; padding: 0 12px;
-  border: 1px solid var(--border-color); border-radius: 8px;
-  background: var(--bg-color); color: var(--text-color); font-size: 14px;
-  font-family: inherit; outline: none;
-}
-.pwd-row input:focus { border-color: var(--accent); }
-.pwd-row button {
-  background: var(--accent); color: #fff; border: none;
-  padding: 0 20px; font-weight: 700; border-radius: 8px;
-  cursor: pointer; font-size: 13.5px; font-family: inherit;
-}
-.pwd-row button:hover { filter: brightness(1.08); }
-
-/* ================= WORKSPACE ================= */
-.workspace { display: none; }
-.workspace.show { display: block; }
-
-.toolbar {
-  position: sticky; top: 62px; z-index: 500;
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  padding: 8px 12px; margin: 0 auto 18px;
-  border-radius: 12px;
-  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-md);
-  max-width: 1080px;
-}
-.tb-group {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding-right: 10px;
-  border-right: 1px solid var(--border-color);
-}
-.tb-group:last-child { border-right: none; padding-right: 0; }
-
-.tbtn {
-  background: var(--card-hover); border: 1px solid var(--border-color);
-  border-radius: 8px; padding: 7px 12px;
-  font-size: 13px; font-weight: 600; font-family: inherit;
-  color: var(--text-color); cursor: pointer;
-  display: inline-flex; align-items: center; gap: 6px;
-  white-space: nowrap; transition: all 0.15s;
-}
-.tbtn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
-.tbtn:hover { border-color: var(--accent); color: var(--accent); }
-.tbtn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.tbtn.active svg { stroke: #fff; }
-
-.tselect {
-  height: 34px; padding: 0 8px;
-  border: 1px solid var(--border-color); border-radius: 8px;
-  font-size: 13px; font-weight: 500; font-family: inherit;
-  background: var(--card-bg); color: var(--text-color); cursor: pointer;
-  outline: none;
-}
-.tselect:focus { border-color: var(--accent); }
-
-.tcolor {
-  width: 34px; height: 34px; padding: 2px;
-  border: 1px solid var(--border-color); border-radius: 8px;
-  cursor: pointer; background: var(--card-bg);
-}
-
-.page-nav {
-  display: flex; align-items: center; gap: 8px;
-  justify-content: center; margin: 0 auto 16px;
-}
-.page-nav button {
-  background: var(--card-hover); border: 1px solid var(--border-color);
-  border-radius: 8px; padding: 6px 12px; font-weight: 700;
-  color: var(--text-color); cursor: pointer; font-family: inherit;
-  font-size: 13px;
-}
-.page-nav button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-.page-nav button:disabled { opacity: 0.4; cursor: not-allowed; }
-.page-nav .page-label {
-  font-size: 13px; font-weight: 700; color: var(--subtext-color);
-  min-width: 90px; text-align: center;
-}
-
-.canvas-stage {
-  display: flex; justify-content: center;
-  padding-bottom: 120px;
-  overflow-x: auto;
-}
-.canvas-wrap {
-  position: relative;
-  background: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-  display: inline-block;
-  user-select: none;
-  touch-action: none;
-}
-#pdf-canvas { display: block; border-radius: 6px; }
-
-/* Overlays */
-.ov {
-  position: absolute;
-  cursor: move;
-  user-select: none;
-  box-sizing: border-box;
-}
-.ov.selected { box-shadow: 0 0 0 2px var(--accent); }
-.ov-text {
-  min-width: 30px;
-  padding: 1px 3px;
-  white-space: pre;
-  line-height: 1.1;
-  background: transparent;
-}
-.ov-text[contenteditable="true"] {
-  cursor: text;
-  outline: none;
-}
-.ov-whiteout {
-  background: #ffffff;
-  border: 1px dashed rgba(100,116,139,0.6);
-}
-.ov-rect, .ov-circle {
-  border: 2px solid #dc2626;
-  background: rgba(220,38,38,0.05);
-}
-.ov-circle { border-radius: 50%; }
-.ov-stamp {
-  border: 2.5px solid #dc2626;
-  color: #dc2626;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-size: 16px;
-  background: #ffffff;
-  letter-spacing: 1.5px;
-  white-space: nowrap;
-}
-.ov-img { display: block; }
-.ov-img img { width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none; }
-
-.ov-del {
-  position: absolute;
-  top: -10px; right: -10px;
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: #dc2626; color: #fff;
-  border: 2px solid #fff;
-  display: none;
-  align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 800; line-height: 1;
-  cursor: pointer; z-index: 10;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-  padding: 0;
-}
-.ov.selected .ov-del { display: flex; }
-.ov-del:hover { background: #b91c1c; }
-
-/* Delete/select hint */
-.hint-bar {
-  text-align: center; color: var(--subtext-color);
-  font-size: 12.5px; margin: 10px auto 0;
-  max-width: 640px;
-}
-.hint-bar b { color: var(--accent); }
-
-/* Action dock */
-.action-dock {
-  position: fixed; bottom: 20px; left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  display: flex; gap: 10px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 8px;
-  border-radius: 999px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-.dock-btn {
-  padding: 12px 22px; border-radius: 999px;
-  border: none; font-weight: 700; font-size: 14px;
-  font-family: inherit; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px;
-  transition: all 0.18s ease;
-}
-.dock-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
-.dock-btn.primary {
-  background: var(--success); color: #fff;
-  box-shadow: 0 6px 16px rgba(22,101,52,0.35);
-}
-.dock-btn.primary:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
-.dock-btn.primary:disabled { opacity: 0.55; cursor: not-allowed; }
-.dock-btn.ghost {
-  background: transparent; color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
-.dock-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-/* Toast */
-.toast {
-  position: fixed; bottom: 100px; left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--card-bg); color: var(--text-color);
-  border: 1px solid var(--accent);
-  padding: 12px 20px; border-radius: 10px;
-  font-size: 13.5px; font-weight: 600;
-  box-shadow: var(--shadow-lg);
-  opacity: 0; pointer-events: none;
-  transition: all 0.25s ease; z-index: 2000;
-  max-width: 90vw;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.toast.error { border-color: var(--error, #dc2626); color: var(--error, #dc2626); }
-
-/* SEO Article */
-.seo-article {
-  max-width: 860px; margin: 60px auto 20px;
-  padding: 40px 32px;
-  background: var(--card-bg); border: 1px solid var(--border-color);
-  border-radius: 14px;
-  line-height: 1.8;
-}
-.seo-article h2 {
-  font-size: 26px; font-weight: 800; color: var(--text-color);
-  margin: 40px 0 20px; letter-spacing: -0.5px; line-height: 1.3;
-}
-.seo-article h2:first-child { margin-top: 0; }
-.seo-article h3 {
-  font-size: 19px; font-weight: 700; color: var(--accent);
-  margin: 30px 0 14px;
-}
-.seo-article p {
-  font-size: 15.5px; color: var(--subtext-color);
-  margin: 0 0 18px; line-height: 1.8;
-}
-.seo-article ul, .seo-article ol { padding-left: 22px; margin: 16px 0; }
-.seo-article li {
-  font-size: 15px; color: var(--subtext-color);
-  margin-bottom: 10px; line-height: 1.7;
-}
-.seo-article b, .seo-article strong { color: var(--text-color); }
-.seo-article a { color: var(--accent); font-weight: 600; }
-.seo-article code {
-  background: var(--card-hover); padding: 2px 8px;
-  border-radius: 5px; font-family: ui-monospace, monospace;
-  font-size: 13.5px; color: var(--accent);
-}
-.seo-article details {
-  background: var(--card-hover);
-  border: 1px solid var(--border-color);
-  border-radius: 10px; padding: 14px 18px;
-  margin-bottom: 10px;
-}
-.seo-article details summary {
-  font-size: 15px; font-weight: 700; color: var(--text-color);
-  cursor: pointer; list-style: none;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.seo-article details summary::-webkit-details-marker { display: none; }
-.seo-article details summary::after {
-  content: "+"; font-size: 20px; color: var(--accent); font-weight: 300;
-}
-.seo-article details[open] summary::after { content: "−"; }
-.seo-article details p {
-  margin: 12px 0 0; font-size: 14.5px;
-}
-
-@media (max-width: 768px) {
-  .main-wrap { padding: 0 12px 60px; }
-  .toolbar { top: 58px; padding: 6px 8px; gap: 6px; border-radius: 10px; }
-  .tb-group { padding-right: 6px; }
-  .tbtn { padding: 6px 9px; font-size: 12px; }
-  .tbtn svg { width: 13px; height: 13px; }
-  .tselect { height: 30px; font-size: 12px; padding: 0 6px; }
-  .seo-article { padding: 26px 18px; margin: 40px auto 20px; }
-  .seo-article h2 { font-size: 21px; }
-  .seo-article h3 { font-size: 17px; }
-  .seo-article p { font-size: 15px; }
-  .dock-btn { padding: 10px 16px; font-size: 13px; }
-  .upload-box { padding: 20px 16px; }
-  .drop-zone { padding: 34px 14px; }
-}
-</style>
-</head>
+/* SEO article styling */
+.seo-wrap{max-width:860px;margin:60px auto 40px;padding:0 20px}
+.seo-article{background:var(--card-bg,#fff);border:1px solid var(--border,#d6dbe6);border-radius:14px;padding:40px 32px;line-height:1.8;color:var(--text,#1b2437)}
+.seo-article h2{font-size:26px;font-weight:800;margin:40px 0 20px;letter-spacing:-0.5px;line-height:1.3;color:var(--text,#1b2437)}
+.seo-article h2:first-child{margin-top:0}
+.seo-article h3{font-size:19px;font-weight:700;color:var(--accent,#19398a);margin:30px 0 14px}
+.seo-article p{font-size:15.5px;color:var(--muted,#667085);margin:0 0 18px;line-height:1.8}
+.seo-article ul,.seo-article ol{padding-left:22px;margin:16px 0}
+.seo-article li{font-size:15px;color:var(--muted,#667085);margin-bottom:10px;line-height:1.7}
+.seo-article b,.seo-article strong{color:var(--text,#1b2437)}
+.seo-article a{color:var(--accent,#19398a);font-weight:600;text-decoration:none}
+.seo-article a:hover{text-decoration:underline}
+.seo-article code{background:var(--card-hover,#eef1f7);padding:2px 8px;border-radius:5px;font-family:ui-monospace,monospace;font-size:13.5px;color:var(--accent,#19398a)}
+.seo-article details{background:var(--card-hover,#eef1f7);border:1px solid var(--border,#d6dbe6);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+.seo-article details summary{font-size:15px;font-weight:700;color:var(--text,#1b2437);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.seo-article details summary::-webkit-details-marker{display:none}
+.seo-article details summary::after{content:"+";font-size:20px;color:var(--accent,#19398a);font-weight:300}
+.seo-article details[open] summary::after{content:"−"}
+.seo-article details p{margin:12px 0 0;font-size:14.5px}
+@media(max-width:768px){.seo-wrap{margin:40px auto 30px;padding:0 14px}.seo-article{padding:26px 18px}.seo-article h2{font-size:21px}.seo-article h3{font-size:17px}.seo-article p{font-size:15px}}
+</style></head>
 <body>
 
 <div id="doceasy-header"></div>
 
-<main class="main-wrap">
-
-  <div class="hero-box">
-    <h1 class="hero-title">PDF Editor &amp; Annotator</h1>
-    <p class="hero-sub">Add text, signature, images, watermarks, stamps, and whiteout to any PDF — right in your browser. 100% private, nothing is uploaded.</p>
+<div class="pe nosb" id="pe">
+<header class="bar">
+  <div class="g"><button id="sbt" title="Page thumbnails">☰</button><button id="open" class="pri">Open PDF</button>
+  <button id="undo" title="Undo (Ctrl+Z)" disabled>↶</button><button id="redo" title="Redo (Ctrl+Y)" disabled>↷</button></div>
+  <div class="g">
+    <button data-t="select" class="on">Select</button><button data-t="text">Text</button><button data-t="white">Whiteout</button>
+    <button data-t="rect">Box</button><button data-t="ell">Oval</button><button data-t="hl">Highlight</button>
+    <button data-t="strike">Strike</button><button data-t="draw">Draw</button><button id="img">Image</button>
+    <select id="stampSel" title="Stamps"><option value="">Stamp</option><option>APPROVED</option><option>REJECTED</option><option>PAID</option><option>VERIFIED</option><option>CONFIDENTIAL</option><option value="*">Custom…</option></select>
+    <button id="wm">Watermark</button>
   </div>
-
-  <div class="ad-slot-container">Advertisement</div>
-
-  <!-- ============ UPLOAD ============ -->
-  <div class="upload-box" id="uploadBox">
-    <div class="drop-zone" id="dropZone">
-      <input type="file" id="pdf-input" accept="application/pdf">
-      <svg class="dz-icon" viewBox="0 0 24 24">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <path d="M12 18v-6"/>
-        <path d="m9 15 3 3 3-3"/>
-      </svg>
-      <h3 class="dz-title">Drop your PDF here</h3>
-      <p class="dz-sub">or click to choose · Add text, signature, image, stamp, watermark</p>
-    </div>
-
-    <div class="pwd-card" id="pwdBox">
-      <div class="pwd-title">🔒 Password-protected PDF</div>
-      <div class="pwd-hint">Enter the password to unlock. Aadhaar e-PDF password is usually first 4 letters of name in CAPITALS + birth year (e.g. <code>DEEP1998</code>). PAN is DOB in DDMMYYYY.</div>
-      <div class="pwd-row">
-        <input type="password" id="pwd-input" placeholder="Enter PDF password">
-        <button type="button" id="pwd-btn">Unlock</button>
-      </div>
-    </div>
+  <div class="g">
+    <select data-k="font" title="Font"><option value="h">Helvetica</option><option value="t">Times</option><option value="c">Courier</option></select>
+    <input type="number" data-k="size" min="4" max="200" title="Font size">
+    <button id="bb" title="Bold"><b>B</b></button><button id="bi" title="Italic"><i>I</i></button><button id="bu" title="Underline"><u>U</u></button>
+    <input type="color" data-k="color" title="Text / line colour">
+    <label><input type="checkbox" data-k="fillon">Fill</label><input type="color" data-k="fill" title="Fill colour">
+    <input type="number" data-k="sw" min="0.5" max="40" step="0.5" title="Line width">
+    <label>Opacity<input type="range" data-k="op" min="5" max="100"></label>
   </div>
+  <div class="g">
+    <button id="prev">‹</button><input type="number" id="pn" min="1" value="1"><span id="npl">/ <span id="np">0</span></span><button id="next">›</button>
+    <button id="zo">−</button><span id="zv">100%</span><button id="zi">+</button>
+  </div>
+  <button id="save" class="pri">Save PDF</button>
+</header>
+<div class="main">
+  <aside id="side"></aside>
+  <main id="work">
+    <div id="drop"><h2>Edit a PDF in your browser</h2><p>Drop a PDF here, or choose one. Nothing is uploaded.</p><button id="open2" class="pri">Choose PDF</button></div>
+    <div id="stage" hidden><canvas id="cv"></canvas><div id="ov"></div></div>
+  </main>
+</div>
+<div id="priv">🔒 Your file never leaves your device</div>
+<dialog id="pw"><form method="dialog"><b id="pwm"></b><input id="pwi" type="password" autocomplete="off"><small>e-Aadhaar: first 4 letters of your name in capitals + birth year (YYYY). e-PAN: date of birth as DDMMYYYY.</small><div class="g"><button value="ok" class="pri">Unlock</button><button value="cancel">Cancel</button></div></form></dialog>
+<div id="toast" hidden></div>
+<input type="file" id="file" accept="application/pdf" hidden>
+<input type="file" id="imgf" accept="image/png,image/jpeg" hidden>
+</div>
 
-  <!-- ============ WORKSPACE ============ -->
-  <section class="workspace" id="workspace">
+<!-- ============ SEO ARTICLE ============ -->
+<section class="seo-wrap">
+  <article class="seo-article">
 
-    <!-- Toolbar -->
-    <div class="toolbar">
-      <div class="tb-group">
-        <button class="tbtn active" id="btn-text" title="Add text">
-          <svg viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
-          Text
-        </button>
-        <button class="tbtn" id="btn-whiteout" title="Cover with white box">
-          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
-          Whiteout
-        </button>
-        <button class="tbtn" id="btn-rect" title="Rectangle">
-          <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1"/></svg>
-          Rect
-        </button>
-        <button class="tbtn" id="btn-circle" title="Circle">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
-          Circle
-        </button>
-      </div>
+    <h2>Free PDF Editor — Fill, Sign, Annotate &amp; Redact Any PDF in Your Browser (2026)</h2>
 
-      <div class="tb-group">
-        <select class="tselect" id="stamp-select" title="Add a stamp">
-          <option value="">Stamp…</option>
-          <option value="APPROVED">APPROVED</option>
-          <option value="REJECTED">REJECTED</option>
-          <option value="PAID">PAID</option>
-          <option value="VERIFIED">VERIFIED</option>
-          <option value="ORIGINAL">ORIGINAL</option>
-          <option value="CONFIDENTIAL">CONFIDENTIAL</option>
-        </select>
-        <button class="tbtn" id="btn-watermark" title="Add watermark">
-          <svg viewBox="0 0 24 24"><path d="M12 2.7l5.7 5.7a8 8 0 1 1-11.4 0z"/></svg>
-          Watermark
-        </button>
-        <label class="tbtn" style="cursor:pointer; margin:0;" title="Add image or signature">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.6"/><path d="m21 15-5-5L5 21"/></svg>
-          Image
-          <input type="file" id="img-input" accept="image/*" hidden>
-        </label>
-      </div>
+    <p>PDFs are the universal language of official documents — agreements, invoices, affidavits, exam forms, tax statements, government notices. But the moment you need to <strong>change something</strong> inside a PDF, most people hit a wall. Adobe Acrobat costs ₹1,500+ per month. Other "free" online editors upload your file to a remote server, watermark the output, limit you to two or three documents per day, or hide the basic tools behind a paywall.</p>
 
-      <div class="tb-group">
-        <select class="tselect" id="font-family" title="Font family" style="min-width:140px;">
-          <option value="Inter">Inter</option>
-          <option value="Roboto">Roboto</option>
-          <option value="OpenSans">Open Sans</option>
-          <option value="Montserrat">Montserrat</option>
-          <option value="Poppins">Poppins</option>
-          <option value="Oswald">Oswald</option>
-          <option value="Merriweather">Merriweather</option>
-          <option value="Courier">Courier</option>
-        </select>
-        <input type="number" class="tselect" id="font-size" value="16" min="6" max="200" style="width:64px; font-weight:700;" title="Font size">
-        <button class="tbtn" id="btn-bold" title="Bold">
-          <svg viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 12h9a4 4 0 0 1 0 8H6v-8zm0 0h8a3.5 3.5 0 0 0 0-7H6v7z"/></svg>
-        </button>
-        <button class="tbtn" id="btn-italic" title="Italic">
-          <svg viewBox="0 0 24 24" stroke-width="2.5"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
-        </button>
-        <input type="color" class="tcolor" id="text-color" value="#111111" title="Text color">
-      </div>
+    <p><strong>DocEasy's PDF Editor</strong> is different. It gives you a complete, professional-grade editing workspace — text insertion, digital signatures, images, stamps, watermarks, whiteout, highlights, free-draw, undo/redo, multi-page navigation, page thumbnails, and encrypted-PDF support — all running <strong>100% inside your browser</strong>. Nothing is uploaded. Nothing is stored. Nothing is shared. Your document stays on your device from start to finish.</p>
 
-      <div class="tb-group">
-        <button class="tbtn" id="btn-delete" title="Delete selected" style="color:#dc2626;">
-          <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-          Delete
-        </button>
-      </div>
-    </div>
-
-    <!-- Page navigation -->
-    <div class="page-nav">
-      <button id="prev-page" disabled>◀ Prev</button>
-      <span class="page-label" id="page-label">Page 1 / 1</span>
-      <button id="next-page" disabled>Next ▶</button>
-    </div>
-
-    <p class="hint-bar">
-      💡 Click <b>Text</b>, then click anywhere on the PDF to type. Drag any element to move it. Click an element to select, then press <b>Delete</b> to remove it.
-    </p>
-
-    <!-- Canvas -->
-    <div class="canvas-stage">
-      <div class="canvas-wrap" id="canvas-wrap">
-        <canvas id="pdf-canvas"></canvas>
-      </div>
-    </div>
-
-    <div class="action-dock">
-      <button class="dock-btn ghost" id="btn-new">
-        <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
-        New PDF
-      </button>
-      <button class="dock-btn primary" id="btn-save">
-        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Save &amp; Download PDF
-      </button>
-    </div>
-  </section>
-
-  <div class="ad-slot-container">Advertisement</div>
-
-  <!-- ============ SEO ARTICLE ============ -->
-  <section class="seo-article">
-
-    <h2>Free PDF Editor — Add Text, Signature &amp; Annotations Online (2026)</h2>
-
-    <p>Most PDFs were never meant to be edited — they were meant to be <em>shared</em>. But the moment you need to fill in a form, sign a contract, add a note, or place a stamp on a receipt, the PDF suddenly becomes a locked puzzle. Adobe Acrobat costs ₹1,500+ per month. Other online "PDF editors" upload your file to a server, watermark the output, or limit you to three documents per day. <b>DocEasy's PDF Editor</b> changes that — you get a clean, fast, private editing experience directly in your browser, at no cost.</p>
-
-    <p>This editor is built around a simple idea: most "PDF editing" tasks are actually <b>annotation tasks</b> — adding something <em>on top</em> of the existing page rather than rewriting the original text. That's exactly what this tool does. It lets you place text, signatures, images, stamps, watermarks, whiteout patches, rectangles, and circles anywhere on any page. Everything is saved as real, permanent content inside the output PDF.</p>
-
-    <h3>What You Can Do With This Tool</h3>
+    <h3>What You Can Do With This Editor</h3>
 
     <ul>
-      <li><b>Fill forms:</b> Add text into blank PDF forms — government applications, job forms, invoices, tax forms, and more.</li>
-      <li><b>Sign documents:</b> Insert your signature image (with transparent background) on any line or corner.</li>
-      <li><b>Add dates:</b> Type today's date in any font, size, or color, exactly where it belongs.</li>
-      <li><b>Whiteout mistakes:</b> Cover wrong text with a white box, then type the correct text on top.</li>
-      <li><b>Stamp documents:</b> Apply APPROVED, REJECTED, PAID, VERIFIED, or a custom watermark in a single click.</li>
-      <li><b>Annotate:</b> Draw red rectangles or circles around important sections.</li>
-      <li><b>Add images:</b> Insert logos, photos, QR codes, or any PNG/JPG into any page.</li>
-      <li><b>Multi-page support:</b> Add annotations to page 1, page 2, page 10 — everything is preserved in the final PDF.</li>
+      <li><b>Fill official forms:</b> Add text into blank PDF forms — government applications, exam forms, job applications, tax filings, invoices, and scholarship forms.</li>
+      <li><b>Sign documents electronically:</b> Insert a transparent PNG of your signature anywhere on any page. Legally recognised in India and most countries for most document types.</li>
+      <li><b>Whiteout wrong information:</b> Cover outdated text with a clean white box, then type the corrected text on top.</li>
+      <li><b>Stamp documents:</b> One-click APPROVED, REJECTED, PAID, VERIFIED, ORIGINAL, CONFIDENTIAL — or create your own custom stamp.</li>
+      <li><b>Watermark across every page:</b> Add a diagonal or straight watermark with adjustable opacity to one page or all pages instantly.</li>
+      <li><b>Annotate:</b> Draw rectangles, ellipses, highlights, strikethroughs, and free-form lines to mark up any PDF.</li>
+      <li><b>Insert images:</b> Add logos, QR codes, photographs, or scanned documents as overlays.</li>
+      <li><b>Multi-page support:</b> Navigate freely between pages. Annotations on each page are preserved automatically. Thumbnail sidebar gives instant access to any page.</li>
+      <li><b>Zoom, undo, redo, copy-paste:</b> Ctrl+Z, Ctrl+Y, Ctrl+C, Ctrl+V, Delete key — all standard shortcuts work.</li>
     </ul>
 
     <h3>How to Use — Step-by-Step</h3>
 
     <ol>
-      <li><b>Upload your PDF:</b> Drag it into the upload zone, or click to browse. Password-protected PDFs (like e-Aadhaar, PAN, or bank statements) are supported — just enter the password when prompted.</li>
-      <li><b>Add text:</b> Click the <b>Text</b> button in the toolbar, then click anywhere on the PDF. A text box appears — start typing. Change font, size, bold, italic, or color from the toolbar.</li>
-      <li><b>Add a signature:</b> Click <b>Image</b>, upload your signature scan (a PNG with transparent background looks best), and drag it into position.</li>
-      <li><b>Whiteout and correct:</b> Click <b>Whiteout</b>, then click over the wrong text. Move the white box to cover it, then add new text on top.</li>
-      <li><b>Add a stamp or watermark:</b> Choose a stamp from the dropdown, or click <b>Watermark</b> to enter your own text and apply it to one page or every page.</li>
-      <li><b>Move or delete:</b> Drag any element to reposition it. Click to select, then press <b>Delete</b> or use the <b>Delete</b> button in the toolbar.</li>
-      <li><b>Save:</b> Click <b>Save &amp; Download PDF</b>. The output PDF contains all your annotations permanently — no watermark, no extra file, no signup.</li>
+      <li><b>Open your PDF:</b> Drag and drop the file onto the drop zone, or click "Open PDF" to browse. Password-protected PDFs (like e-Aadhaar, e-PAN, bank statements) are supported — just enter the password when prompted.</li>
+      <li><b>Pick your tool:</b> Click <b>Text</b> to add text, <b>Whiteout</b> to cover errors, <b>Box</b> or <b>Oval</b> to draw shapes, <b>Highlight</b> or <b>Strike</b> to mark existing text, <b>Draw</b> to sketch freely, or <b>Image</b> to insert a picture or signature.</li>
+      <li><b>Position on the page:</b> Click anywhere to place the element. Drag to move. Use the corner handles to resize. Drag the rotate handle to spin it. Click the red × to delete.</li>
+      <li><b>Fine-tune:</b> Adjust font, size, bold, italic, underline, colour, fill, line width, and opacity from the top toolbar.</li>
+      <li><b>Save your PDF:</b> Click <b>Save PDF</b>. Your annotations are baked permanently into the output file, which downloads immediately — no queue, no signup, no watermark.</li>
     </ol>
 
-    <h3>Why DocEasy?</h3>
+    <h3>Why Client-Side Editing Matters for Sensitive Documents</h3>
+
+    <p>Your Aadhaar, PAN, bank statements, contracts, tax filings, and medical records are some of the most sensitive files you will ever handle. Most online PDF editors — SmallPDF, iLovePDF, Adobe Online — upload your document to their servers for processing. Even if their privacy policy promises deletion "within 24 hours," you have no way to verify it. Your file sits on an unknown server for an unknown period, exposed to interception, misconfiguration, or data harvesting.</p>
+
+    <p>DocEasy eliminates this risk entirely. The editor uses <b>PDF.js</b> to read and render your PDF, and <b>PDF-Lib</b> to compile your changes — both running entirely in your browser's local memory. Your file never touches a network. You can literally disconnect your Wi-Fi after the page loads and continue editing offline. This makes DocEasy the safest possible choice for legal documents, identity papers, financial records, and confidential business correspondence.</p>
+
+    <h3>Complete Feature List</h3>
 
     <ul>
-      <li><b>100% private:</b> Your PDF never leaves your device. All processing happens in JavaScript inside your browser using PDF.js and PDF-Lib.</li>
-      <li><b>Completely free:</b> No signup, no email, no daily limit, no hidden cost.</li>
-      <li><b>No watermark:</b> The output PDF is clean. Your document stays yours.</li>
-      <li><b>Works offline:</b> After the page loads once, you can disconnect Wi-Fi and keep working.</li>
-      <li><b>Cross-platform:</b> Works on Windows, Mac, Linux, Android, iOS — any modern browser.</li>
+      <li><b>Text tool</b> — Add editable text in any font, size, weight, and colour. Multi-line support with automatic word wrapping.</li>
+      <li><b>Whiteout tool</b> — Clean white rectangle to hide content, resizable and rotatable.</li>
+      <li><b>Rectangle &amp; Ellipse</b> — Draw boxes and ovals with custom border colour, line width, and fill.</li>
+      <li><b>Highlight</b> — Semi-transparent colour overlay for marking important sections.</li>
+      <li><b>Strikethrough</b> — Clean line through existing text.</li>
+      <li><b>Free Draw</b> — Hand-drawn lines with configurable width and colour — perfect for signatures.</li>
+      <li><b>Image Insert</b> — PNG (with transparency) or JPG, resizable with aspect-ratio lock (Shift key).</li>
+      <li><b>Stamps</b> — Pre-made APPROVED, REJECTED, PAID, VERIFIED, CONFIDENTIAL, ORIGINAL, or custom text.</li>
+      <li><b>Watermark</b> — Apply diagonal watermark to a single page or every page with adjustable opacity.</li>
+      <li><b>Undo / Redo</b> — Full history tracking with Ctrl+Z / Ctrl+Y. Every action is reversible.</li>
+      <li><b>Copy / Paste</b> — Ctrl+C / Ctrl+V to duplicate any selected element.</li>
+      <li><b>Page navigation</b> — Thumbnail sidebar plus next/prev/jump controls.</li>
+      <li><b>Zoom</b> — 50% to 200%, with crisp 300 DPI rendering on save.</li>
+      <li><b>Touch support</b> — Full mobile and tablet support with enlarged touch handles.</li>
+      <li><b>Keyboard shortcuts</b> — Ctrl+Z, Ctrl+Y, Ctrl+C, Ctrl+V, Delete, Escape.</li>
+      <li><b>Encrypted PDF support</b> — Password-protected files can be opened, edited, and re-saved as flattened pages.</li>
     </ul>
 
     <h3>Frequently Asked Questions</h3>
 
-    <details><summary>Is this PDF Editor completely free?</summary><p>Yes — 100% free, no signup, no watermark, no daily limits. Use it as many times as you like.</p></details>
+    <details open>
+      <summary>Is this PDF editor completely free?</summary>
+      <p>Yes — 100% free with no signup, no email, no subscription, no daily limit, and no watermark. Every tool and every feature is available to every visitor. Use it as many times as you like, forever.</p>
+    </details>
 
-    <details><summary>Are my PDFs uploaded to a server?</summary><p>Never. Everything runs in your browser. Your PDF never leaves your device — you can even work offline after the page loads.</p></details>
+    <details>
+      <summary>Are my PDFs uploaded to a server?</summary>
+      <p>Never. Every operation runs inside your browser's memory using PDF.js and PDF-Lib. Your file is never transmitted, stored, or logged. You can verify this yourself by opening your browser's Developer Tools → Network tab, loading a PDF, and editing it — you will see zero outgoing requests carrying your document data. You can even turn off Wi-Fi and keep editing.</p>
+    </details>
 
-    <details><summary>Can I edit the original text inside a PDF?</summary><p>PDFs don't store text in an editable format like Word does — the original text is a drawing instruction. This tool is designed to add annotations on top: text, signatures, stamps, images, watermarks, and whiteout patches. For 90% of real-world "editing" tasks, this is exactly what you need.</p></details>
+    <details>
+      <summary>Can I edit a password-protected PDF?</summary>
+      <p>Yes. When you open an encrypted PDF, the editor prompts you for the password. For <b>e-Aadhaar PDFs</b>, the password is usually the first 4 letters of your name in CAPITALS followed by your birth year — e.g., name <code>Deepak</code>, birth year <code>1998</code> → <code>DEEP1998</code>. For <b>PAN card PDFs</b>, it is your date of birth in DDMMYYYY format — e.g., DOB 15 January 1998 → <code>15011998</code>. If the PDF is heavily encrypted, the editor will open it as a flattened version — you can still annotate on top, but the original text cannot be edited inline.</p>
+    </details>
 
-    <details><summary>Can I sign a PDF without printing it?</summary><p>Yes. Upload your signature as a PNG (transparent background works best), use the <b>Image</b> button to place it on the signature line, resize and drag it into position, then save the PDF. This is a legally-recognised way to sign in most countries.</p></details>
+    <details>
+      <summary>Can I sign a PDF without printing it?</summary>
+      <p>Yes. Upload a transparent PNG of your signature (scan it on white paper and remove the background, or write it with a stylus on a blank canvas), click the <b>Image</b> button, position it on the signature line, resize as needed, and save. This produces a legally-recognised electronic signature for most Indian and international documents.</p>
+    </details>
 
-    <details><summary>Does it work with scanned PDFs?</summary><p>Yes. Scanned PDFs are essentially images, so you can't edit the existing text, but you can add text, whiteout, images, stamps and watermarks on top. This is perfect for signing or annotating scanned documents.</p></details>
+    <details>
+      <summary>Does the Undo/Redo work properly?</summary>
+      <p>Yes — full history tracking. Every add, delete, move, resize, rotate, and style change is recorded. Use the toolbar buttons or press <b>Ctrl+Z</b> to undo and <b>Ctrl+Y</b> (or Ctrl+Shift+Z) to redo. The history stack holds up to 50 actions.</p>
+    </details>
 
-    <details><summary>What is the maximum file size?</summary><p>There's no hard limit, but PDFs over 50 MB may slow down your browser depending on your device's memory. For most documents, PDFs up to 200 MB work smoothly.</p></details>
+    <details>
+      <summary>Why does my Hindi or emoji text turn into "?" after saving?</summary>
+      <p>PDF's built-in fonts (Helvetica, Times, Courier) only support Latin characters and a few extended symbols. Hindi, Tamil, Telugu, Arabic, and emoji characters require embedding a Unicode font file. The current version uses only standard PDF fonts to keep the file size small and compatible with every PDF reader. Multi-line Hindi input is coming in a future update.</p>
+    </details>
 
-    <details><summary>Does it work on mobile?</summary><p>Yes. The toolbar collapses neatly on phones, and all touch gestures (drag, select, delete) work perfectly on Android and iOS browsers.</p></details>
+    <details>
+      <summary>What file types can I insert as images?</summary>
+      <p>PNG (with transparency support — perfect for signatures and logos) and JPG/JPEG. Other formats (WEBP, GIF, HEIC) should be converted to PNG or JPG first — you can use our <a href="image-converter.html">Image Converter</a> tool for that.</p>
+    </details>
 
-    <details><summary>Can I add text to a specific page only?</summary><p>Yes. Use the page navigation buttons (Prev/Next) to go to any page, add your annotations, and they'll stay on that page in the final PDF.</p></details>
+    <details>
+      <summary>Does this work on mobile phones?</summary>
+      <p>Yes. The editor is fully responsive with enlarged touch handles (24 pixels) and touch-friendly controls. All drag, resize, rotate, and delete gestures work with a finger. For the smoothest experience, use Chrome on Android or Safari on iOS.</p>
+    </details>
 
-    <details><summary>Do I need to install anything?</summary><p>No. This is a pure browser tool — no extension, no app, no plugin. Just open the page and start editing.</p></details>
+    <details>
+      <summary>Can I add a watermark to every page at once?</summary>
+      <p>Yes. Click the <b>Watermark</b> button, type your text, set the opacity, and confirm when asked if you want to apply it to all pages. Every page will receive an identical watermark with a subtle diagonal rotation.</p>
+    </details>
 
-    <details><summary>Which browsers are supported?</summary><p>Chrome, Edge, Firefox, Safari, Brave, Opera — any modern browser from the last 3 years.</p></details>
+    <details>
+      <summary>How many pages can I edit at once?</summary>
+      <p>There is no hard limit — the editor handles PDFs with hundreds of pages. Performance depends on your device's memory. Thumbnail rendering happens progressively in the background, so you can start editing page 1 immediately while later pages load.</p>
+    </details>
+
+    <details>
+      <summary>Can I delete pages from the PDF?</summary>
+      <p>Not directly in this version — but you can use our <a href="pdf-split.html">Split PDF</a> tool to extract specific page ranges, or our <a href="pdf-merge.html">Merge PDF</a> tool to combine files. Direct page deletion is planned for a future update.</p>
+    </details>
+
+    <details>
+      <summary>Will my annotations look the same when printed?</summary>
+      <p>Yes. All annotations are compiled into the output PDF using standard PDF primitives — text, vector rectangles, embedded images — so they look identical whether viewed on screen, printed on paper, or opened in Adobe Acrobat. Output resolution is 300 DPI (print-ready).</p>
+    </details>
 
     <h3>Related DocEasy Tools</h3>
-    <p>Looking for more? Try our <a href="pdf-merge.html">PDF Merge</a> tool to combine multiple PDFs, <a href="pdf-compressor.html">PDF Compressor</a> to reduce file size, <a href="card-cropper.html">ID Card Cropper</a> for Aadhaar/PAN, <a href="signature-resize.html">Signature Resize</a> for exam forms, and <a href="doc-scanner.html">Document Scanner</a> to scan paper documents into editable PDFs.</p>
+
+    <p>Explore our other free, privacy-first PDF utilities: <a href="pdf-merge.html">Merge PDF</a> to combine multiple documents into one, <a href="pdf-split.html">Split PDF</a> to extract specific page ranges, <a href="pdf-compressor.html">Compress PDF</a> to reduce file size for email, <a href="pdf-lock-unlock.html">PDF Locker</a> to password-protect sensitive documents, <a href="jpg-to-pdf.html">JPG to PDF</a> to convert images, <a href="word-to-pdf.html">Word to PDF</a>, <a href="pdf-to-word.html">PDF to Word</a>, and <a href="card-cropper.html">ID Card Cropper</a> for Aadhaar and PAN. All completely free, all 100% browser-based.</p>
 
     <h3>Conclusion</h3>
-    <p>Editing a PDF should not require a subscription, a server upload, or a watermark. DocEasy's PDF Editor gives you a fast, private, and completely free way to add text, signatures, stamps, images and watermarks to any PDF — all inside your browser. Bookmark this page and use it whenever you need to fill, sign, or annotate a document.</p>
 
-  </section>
+    <p>Editing a PDF should not require a ₹1,500 monthly subscription, a server upload, or a watermark on every page. DocEasy's PDF Editor gives you a fast, private, and completely free way to fill forms, sign documents, add stamps, insert images, watermark pages, and annotate any PDF — all inside your browser. No signup, no upload, no hidden cost. Bookmark this page and use it whenever you need to work with a PDF.</p>
 
-</main>
+  </article>
+</section>
 
 <div id="doceasy-footer"></div>
 
-<div class="toast" id="toast"></div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script src="../assets/js/core/doceasy-core.js"></script>
-
 <script>
-(function () {
-  'use strict';
-
-  var $ = function (id) { return document.getElementById(id); };
-
-  /* =========================================================
-     State
-     ========================================================= */
-  var state = {
-    pdfBytes: null,
-    pdfDoc: null,
-    currentPage: 1,
-    totalPages: 1,
-    scale: 1.4,
-    mode: 'text',           // 'text' | 'whiteout' | 'rect' | 'circle' | 'select'
-    selected: null,
-    overlaysByPage: {},     // { pageNum: [ {id, type, data..., el} ] }
-    bold: false,
-    italic: false,
-    idCounter: 0
-  };
-
-  var canvas    = $('pdf-canvas');
-  var ctx       = canvas.getContext('2d');
-  var canvasWrap= $('canvas-wrap');
-  var workspace = $('workspace');
-  var uploadBox = $('uploadBox');
-  var pwdBox    = $('pwdBox');
-  var pwdInput  = $('pwd-input');
-  var pwdBtn    = $('pwd-btn');
-  var dropZone  = $('dropZone');
-  var pdfInput  = $('pdf-input');
-  var imgInput  = $('img-input');
-  var toastEl   = $('toast');
-
-  var btnText     = $('btn-text');
-  var btnWhiteout = $('btn-whiteout');
-  var btnRect     = $('btn-rect');
-  var btnCircle   = $('btn-circle');
-  var btnBold     = $('btn-bold');
-  var btnItalic   = $('btn-italic');
-  var btnDelete   = $('btn-delete');
-  var btnWatermark= $('btn-watermark');
-  var btnNew      = $('btn-new');
-  var btnSave     = $('btn-save');
-  var stampSelect = $('stamp-select');
-  var fontFamSel  = $('font-family');
-  var fontSizeIn  = $('font-size');
-  var textColorIn = $('text-color');
-  var prevPage    = $('prev-page');
-  var nextPage    = $('next-page');
-  var pageLabel   = $('page-label');
-
-  /* =========================================================
-     Helpers
-     ========================================================= */
-  function toast(msg, isError) {
-    toastEl.textContent = msg;
-    toastEl.className = 'toast show' + (isError ? ' error' : '');
-    clearTimeout(toastEl._t);
-    toastEl._t = setTimeout(function () {
-      toastEl.classList.remove('show');
-    }, 2500);
-  }
-
-  function getCssFont(key) {
-    switch (key) {
-      case 'Roboto':        return "'Roboto', sans-serif";
-      case 'OpenSans':      return "'Open Sans', sans-serif";
-      case 'Montserrat':    return "'Montserrat', sans-serif";
-      case 'Poppins':       return "'Poppins', sans-serif";
-      case 'Oswald':        return "'Oswald', sans-serif";
-      case 'Merriweather':  return "'Merriweather', serif";
-      case 'Courier':       return "'Courier Prime', ui-monospace, monospace";
-      default:              return "'Inter', sans-serif";
-    }
-  }
-
-  function uid() { return 'ov_' + (++state.idCounter); }
-
-  function pageOverlays(page) {
-    if (!state.overlaysByPage[page]) state.overlaysByPage[page] = [];
-    return state.overlaysByPage[page];
-  }
-
-  function setMode(m) {
-    state.mode = m;
-    [btnText, btnWhiteout, btnRect, btnCircle].forEach(function (b) {
-      b.classList.remove('active');
-    });
-    if (m === 'text')     btnText.classList.add('active');
-    if (m === 'whiteout') btnWhiteout.classList.add('active');
-    if (m === 'rect')     btnRect.classList.add('active');
-    if (m === 'circle')   btnCircle.classList.add('active');
-  }
-
-  function selectOverlay(ov) {
-    if (state.selected && state.selected.el) {
-      state.selected.el.classList.remove('selected');
-    }
-    state.selected = ov;
-    if (ov && ov.el) ov.el.classList.add('selected');
-  }
-
-  /* =========================================================
-     Upload
-     ========================================================= */
-  pdfInput.addEventListener('change', function () {
-    if (this.files[0]) loadPdf(this.files[0], '');
-  });
-
-  ['dragenter', 'dragover'].forEach(function (ev) {
-    dropZone.addEventListener(ev, function (e) {
-      e.preventDefault(); e.stopPropagation();
-      dropZone.classList.add('dragover');
-    });
-  });
-  ['dragleave', 'drop'].forEach(function (ev) {
-    dropZone.addEventListener(ev, function (e) {
-      e.preventDefault(); e.stopPropagation();
-      dropZone.classList.remove('dragover');
-    });
-  });
-  dropZone.addEventListener('drop', function (e) {
-    if (e.dataTransfer.files[0]) loadPdf(e.dataTransfer.files[0], '');
-  });
-
-  pwdBtn.addEventListener('click', function () {
-    var pwd = pwdInput.value.trim();
-    if (!pwd) { toast('Please enter the password', true); return; }
-    loadPdf(null, pwd);
-  });
-  pwdInput.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') pwdBtn.click();
-  });
-
-  function loadPdf(file, password) {
-    var bufferPromise = file ? file.arrayBuffer() : Promise.resolve(state.pdfBytes);
-
-    bufferPromise.then(function (buf) {
-      if (file) state.pdfBytes = buf;
-
-      var task = pdfjsLib.getDocument({
-        data: state.pdfBytes.slice(0),
-        password: password || ''
-      });
-
-      task.onPassword = function (cb, reason) {
-        pwdBox.classList.add('show');
-        pwdInput.focus();
-        if (reason === 2 && password) toast('Incorrect password, try again', true);
-      };
-
-      return task.promise;
-    })
-    .then(function (pdf) {
-      state.pdfDoc = pdf;
-      state.totalPages = pdf.numPages;
-      state.currentPage = 1;
-      state.overlaysByPage = {};
-      pwdBox.classList.remove('show');
-
-      uploadBox.style.display = 'none';
-      workspace.classList.add('show');
-
-      return renderPage(1);
-    })
-    .then(function () {
-      updatePageNav();
-      toast('PDF loaded — click Text, then click on the page');
-    })
-    .catch(function (err) {
-      console.error(err);
-      if (err && err.name === 'PasswordException') {
-        pwdBox.classList.add('show');
-      } else {
-        toast('Could not open PDF: ' + (err.message || err), true);
-      }
-    });
-  }
-
-  /* =========================================================
-     Render page
-     ========================================================= */
-  function renderPage(pageNum) {
-    return state.pdfDoc.getPage(pageNum).then(function (page) {
-      var viewport = page.getViewport({ scale: state.scale });
-      canvas.width  = viewport.width;
-      canvas.height = viewport.height;
-      canvasWrap.style.width  = viewport.width  + 'px';
-      canvasWrap.style.height = viewport.height + 'px';
-
-      // Clear old overlays
-      Array.from(canvasWrap.querySelectorAll('.ov')).forEach(function (el) { el.remove(); });
-      state.selected = null;
-
-      return page.render({ canvasContext: ctx, viewport: viewport }).promise;
-    }).then(function () {
-      // Rebuild overlays for this page
-      pageOverlays(state.currentPage).forEach(function (ov) { rebuildOverlay(ov); });
-    });
-  }
-
-  function updatePageNav() {
-    pageLabel.textContent = 'Page ' + state.currentPage + ' / ' + state.totalPages;
-    prevPage.disabled = state.currentPage <= 1;
-    nextPage.disabled = state.currentPage >= state.totalPages;
-  }
-
-  prevPage.addEventListener('click', function () {
-    if (state.currentPage > 1) {
-      state.currentPage--;
-      renderPage(state.currentPage).then(updatePageNav);
-    }
-  });
-  nextPage.addEventListener('click', function () {
-    if (state.currentPage < state.totalPages) {
-      state.currentPage++;
-      renderPage(state.currentPage).then(updatePageNav);
-    }
-  });
-
-  /* =========================================================
-     Create overlay
-     ========================================================= */
-  function createOverlay(type, x, y, opts) {
-    opts = opts || {};
-    var ov = {
-      id: uid(),
-      type: type,
-      x: x,
-      y: y,
-      w: opts.w || 100,
-      h: opts.h || 30,
-      text: opts.text || '',
-      font: opts.font || fontFamSel.value,
-      size: opts.size || parseInt(fontSizeIn.value, 10) || 16,
-      color: opts.color || textColorIn.value,
-      bold: opts.bold != null ? opts.bold : state.bold,
-      italic: opts.italic != null ? opts.italic : state.italic,
-      dataUrl: opts.dataUrl || '',
-      el: null
-    };
-    pageOverlays(state.currentPage).push(ov);
-    buildOverlay(ov);
-    selectOverlay(ov);
-    return ov;
-  }
-
-  function buildOverlay(ov) {
-    var el = document.createElement('div');
-    el.className = 'ov';
-    el.dataset.ovId = ov.id;
-    el.style.left = ov.x + 'px';
-    el.style.top  = ov.y + 'px';
-    el.style.width  = ov.w + 'px';
-    el.style.height = ov.h + 'px';
-
-    if (ov.type === 'text') {
-      el.classList.add('ov-text');
-      el.contentEditable = 'true';
-      el.spellcheck = false;
-      el.textContent = ov.text || 'Type here';
-      el.style.fontFamily = getCssFont(ov.font);
-      el.style.fontSize   = ov.size + 'px';
-      el.style.color      = ov.color;
-      el.style.fontWeight = ov.bold ? '800' : '500';
-      el.style.fontStyle  = ov.italic ? 'italic' : 'normal';
-
-      // Sync changes back into data
-      el.addEventListener('input', function () {
-        ov.text = el.textContent;
-      });
-    } else if (ov.type === 'whiteout') {
-      el.classList.add('ov-whiteout');
-    } else if (ov.type === 'rect') {
-      el.classList.add('ov-rect');
-    } else if (ov.type === 'circle') {
-      el.classList.add('ov-circle');
-    } else if (ov.type === 'stamp') {
-      el.classList.add('ov-stamp');
-      el.textContent = ov.text;
-    } else if (ov.type === 'image') {
-      el.classList.add('ov-img');
-      var img = document.createElement('img');
-      img.src = ov.dataUrl;
-      img.draggable = false;
-      el.appendChild(img);
-    }
-
-    // Delete button
-    var del = document.createElement('button');
-    del.className = 'ov-del';
-    del.type = 'button';
-    del.textContent = '×';
-    del.setAttribute('aria-label', 'Delete');
-    del.addEventListener('mousedown', function (e) { e.stopPropagation(); });
-    del.addEventListener('click', function (e) {
-      e.stopPropagation();
-      removeOverlay(ov);
-    });
-    el.appendChild(del);
-
-    canvasWrap.appendChild(el);
-    ov.el = el;
-
-    makeMovable(ov, el);
-    return el;
-  }
-
-  function rebuildOverlay(ov) {
-    buildOverlay(ov);
-  }
-
-  function removeOverlay(ov) {
-    var list = pageOverlays(state.currentPage);
-    var i = list.indexOf(ov);
-    if (i >= 0) list.splice(i, 1);
-    if (ov.el) ov.el.remove();
-    if (state.selected === ov) state.selected = null;
-  }
-
-  function makeMovable(ov, el) {
-    var startX, startY, origX, origY, dragging = false;
-
-    el.addEventListener('mousedown', function (e) {
-      // Ignore clicks on the delete button
-      if (e.target.classList.contains('ov-del')) return;
-      // For editable text, allow text caret if already focused
-      if (ov.type === 'text' && document.activeElement === el) return;
-
-      selectOverlay(ov);
-
-      dragging = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      origX = parseFloat(el.style.left) || 0;
-      origY = parseFloat(el.style.top) || 0;
-      e.preventDefault();
-      e.stopPropagation();
-    });
-
-    window.addEventListener('mousemove', function (e) {
-      if (!dragging) return;
-      var nx = origX + (e.clientX - startX);
-      var ny = origY + (e.clientY - startY);
-
-      // Clamp inside canvas
-      nx = Math.max(0, Math.min(canvas.width - el.offsetWidth, nx));
-      ny = Math.max(0, Math.min(canvas.height - el.offsetHeight, ny));
-
-      el.style.left = nx + 'px';
-      el.style.top  = ny + 'px';
-      ov.x = nx; ov.y = ny;
-    });
-
-    window.addEventListener('mouseup', function () {
-      dragging = false;
-    });
-  }
-
-  /* =========================================================
-     Canvas click — create overlay
-     ========================================================= */
-  canvasWrap.addEventListener('click', function (e) {
-    // If we clicked on an overlay or its child, ignore
-    if (e.target.closest('.ov')) return;
-
-    var rect = canvasWrap.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-
-    // Deselect
-    selectOverlay(null);
-
-    if (state.mode === 'text') {
-      createOverlay('text', x, y, { w: 120, h: 26, text: 'Type here' });
-    } else if (state.mode === 'whiteout') {
-      createOverlay('whiteout', x, y, { w: 130, h: 26 });
-    } else if (state.mode === 'rect') {
-      createOverlay('rect', x, y, { w: 140, h: 70 });
-    } else if (state.mode === 'circle') {
-      createOverlay('circle', x, y, { w: 90, h: 90 });
-    }
-  });
-
-  /* =========================================================
-     Toolbar buttons
-     ========================================================= */
-  btnText.addEventListener('click', function () { setMode('text'); });
-  btnWhiteout.addEventListener('click', function () { setMode('whiteout'); });
-  btnRect.addEventListener('click', function () { setMode('rect'); });
-  btnCircle.addEventListener('click', function () { setMode('circle'); });
-
-  btnBold.addEventListener('click', function () {
-    state.bold = !state.bold;
-    btnBold.classList.toggle('active', state.bold);
-    if (state.selected && state.selected.type === 'text') {
-      state.selected.bold = state.bold;
-      state.selected.el.style.fontWeight = state.bold ? '800' : '500';
-    }
-  });
-
-  btnItalic.addEventListener('click', function () {
-    state.italic = !state.italic;
-    btnItalic.classList.toggle('active', state.italic);
-    if (state.selected && state.selected.type === 'text') {
-      state.selected.italic = state.italic;
-      state.selected.el.style.fontStyle = state.italic ? 'italic' : 'normal';
-    }
-  });
-
-  fontFamSel.addEventListener('change', function () {
-    if (state.selected && state.selected.type === 'text') {
-      state.selected.font = fontFamSel.value;
-      state.selected.el.style.fontFamily = getCssFont(fontFamSel.value);
-    }
-  });
-
-  fontSizeIn.addEventListener('input', function () {
-    var sz = parseInt(fontSizeIn.value, 10) || 16;
-    if (state.selected && state.selected.type === 'text') {
-      state.selected.size = sz;
-      state.selected.el.style.fontSize = sz + 'px';
-    }
-  });
-
-  textColorIn.addEventListener('input', function () {
-    if (state.selected && state.selected.type === 'text') {
-      state.selected.color = textColorIn.value;
-      state.selected.el.style.color = textColorIn.value;
-    }
-  });
-
-  btnDelete.addEventListener('click', function () {
-    if (state.selected) {
-      removeOverlay(state.selected);
-      state.selected = null;
-    } else {
-      toast('Click an element first to select it');
-    }
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if ((e.key === 'Delete' || e.key === 'Backspace') && state.selected) {
-      // Don't delete if we're inside an editable text element
-      if (document.activeElement && document.activeElement.isContentEditable) return;
-      e.preventDefault();
-      removeOverlay(state.selected);
-      state.selected = null;
-    }
-  });
-
-  /* =========================================================
-     Stamp
-     ========================================================= */
-  stampSelect.addEventListener('change', function () {
-    var val = stampSelect.value;
-    if (!val) return;
-    createOverlay('stamp', canvas.width / 2 - 80, canvas.height / 2 - 20, {
-      w: 160, h: 40, text: val
-    });
-    stampSelect.value = '';
-  });
-
-  /* =========================================================
-     Watermark
-     ========================================================= */
-  btnWatermark.addEventListener('click', function () {
-    var txt = prompt('Watermark text:', 'CONFIDENTIAL');
-    if (!txt) return;
-    var all = confirm('Apply to ALL pages? (Cancel = current page only)');
-
-    var mark = {
-      id: uid(),
-      type: 'watermark',
-      x: canvas.width * 0.15,
-      y: canvas.height * 0.45,
-      w: 300,
-      h: 60,
-      text: txt,
-      font: 'Inter',
-      size: 42,
-      color: 'rgba(150,150,150,0.35)',
-      bold: true,
-      italic: false,
-      allPages: all,
-      el: null
-    };
-
-    if (all) {
-      for (var p = 1; p <= state.totalPages; p++) {
-        var copy = JSON.parse(JSON.stringify({ ...mark, el: null }));
-        copy.allPages = true;
-        pageOverlays(p).push(copy);
-      }
-      toast('Watermark added to all ' + state.totalPages + ' pages');
-    } else {
-      pageOverlays(state.currentPage).push(mark);
-      toast('Watermark added to this page');
-    }
-
-    // Render visible copy on current page
-    if (all) {
-      pageOverlays(state.currentPage).forEach(function (ov) {
-        if (ov.type === 'watermark') rebuildOverlay(ov);
-      });
-    } else {
-      rebuildOverlay(mark);
-    }
-  });
-
-  /* =========================================================
-     Image / Signature
-     ========================================================= */
-  imgInput.addEventListener('change', function () {
-    var file = imgInput.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var dataUrl = e.target.result;
-      var img = new Image();
-      img.onload = function () {
-        var maxW = 180;
-        var ratio = img.width / img.height;
-        var w = Math.min(maxW, img.width);
-        var h = w / ratio;
-        createOverlay('image', canvas.width / 2 - w / 2, canvas.height / 2 - h / 2, {
-          w: w, h: h, dataUrl: dataUrl
-        });
-      };
-      img.src = dataUrl;
-    };
-    reader.readAsDataURL(file);
-    imgInput.value = '';
-  });
-
-  /* =========================================================
-     Reset
-     ========================================================= */
-  btnNew.addEventListener('click', function () {
-    if (!confirm('Reset the editor and upload a new PDF?')) return;
-    state = {
-      pdfBytes: null, pdfDoc: null, currentPage: 1, totalPages: 1,
-      scale: 1.4, mode: 'text', selected: null,
-      overlaysByPage: {}, bold: false, italic: false, idCounter: 0
-    };
-    Array.from(canvasWrap.querySelectorAll('.ov')).forEach(function (el) { el.remove(); });
-    workspace.classList.remove('show');
-    uploadBox.style.display = '';
-    pdfInput.value = '';
-    pwdBox.classList.remove('show');
-    setMode('text');
-    toast('Ready for a new PDF');
-  });
-
-  /* =========================================================
-     Save PDF
-     ========================================================= */
-  btnSave.addEventListener('click', function () {
-    if (!state.pdfBytes) { toast('No PDF loaded', true); return; }
-
-    btnSave.disabled = true;
-    var origHTML = btnSave.innerHTML;
-    btnSave.textContent = 'Writing PDF…';
-
-    PDFLib.PDFDocument.load(state.pdfBytes).then(function (pdfDoc) {
-      var pages = pdfDoc.getPages();
-      var S = PDFLib.StandardFonts;
-      var fontCache = {};
-
-      function getFont(standard) {
-        if (!fontCache[standard]) {
-          return pdfDoc.embedFont(standard).then(function (f) {
-            fontCache[standard] = f;
-            return f;
-          });
-        }
-        return Promise.resolve(fontCache[standard]);
-      }
-
-      function mapFont(key, bold) {
-        switch (key) {
-          case 'Merriweather': return bold ? S.TimesRomanBold : S.TimesRoman;
-          case 'Courier':      return bold ? S.CourierBold : S.Courier;
-          default:             return bold ? S.HelveticaBold : S.Helvetica;
-        }
-      }
-
-      // Helper: parse hex or rgb()/rgba() color
-      function parseColor(c) {
-        if (!c) return PDFLib.rgb(0, 0, 0);
-        c = c.trim();
-        if (c.startsWith('#')) {
-          var h = c.replace('#', '');
-          if (h.length === 3) h = h.split('').map(function (x) { return x + x; }).join('');
-          var n = parseInt(h, 16);
-          return PDFLib.rgb(((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255);
-        }
-        var m = c.match(/rgba?\(([^)]+)\)/);
-        if (m) {
-          var p = m[1].split(',').map(function (x) { return parseFloat(x); });
-          return PDFLib.rgb((p[0] || 0) / 255, (p[1] || 0) / 255, (p[2] || 0) / 255);
-        }
-        return PDFLib.rgb(0, 0, 0);
-      }
-
-      // Helper: parse alpha from rgba()
-      function parseAlpha(c) {
-        if (!c) return 1;
-        var m = c.match(/rgba?\([^)]*,\s*([\d.]+)\s*\)/);
-        return m ? Math.max(0, Math.min(1, parseFloat(m[1]))) : 1;
-      }
-
-      // Build a queue of operations per page (avoid parallel promises on same doc too hard)
-      var promises = [];
-
-      pages.forEach(function (page, pageIdx) {
-        var pageNum = pageIdx + 1;
-        var overlays = state.overlaysByPage[pageNum] || [];
-        if (!overlays.length) return;
-
-        var pageW = page.getWidth();
-        var pageH = page.getHeight();
-        var factor = pageW / canvas.width;   // canvas px -> PDF pt
-
-        overlays.forEach(function (ov) {
-          if (!ov.el) return; // only already-rendered ones
-          var x = ov.x * factor;
-          var y = ov.y * factor;
-          var w = ov.w * factor;
-          var h = ov.h * factor;
-          var pdfY = pageH - y - h;   // flip Y
-
-          if (ov.type === 'whiteout') {
-            page.drawRectangle({
-              x: x, y: pdfY, width: w, height: h,
-              color: PDFLib.rgb(1, 1, 1)
-            });
-          } else if (ov.type === 'rect') {
-            page.drawRectangle({
-              x: x, y: pdfY, width: w, height: h,
-              borderColor: PDFLib.rgb(0.86, 0.15, 0.15), borderWidth: 2
-            });
-          } else if (ov.type === 'circle') {
-            page.drawEllipse({
-              x: x + w / 2, y: pdfY + h / 2,
-              xScale: w / 2, yScale: h / 2,
-              borderColor: PDFLib.rgb(0.86, 0.15, 0.15), borderWidth: 2
-            });
-          } else if (ov.type === 'stamp') {
-            page.drawRectangle({
-              x: x, y: pdfY, width: w, height: h,
-              borderColor: PDFLib.rgb(0.86, 0.15, 0.15), borderWidth: 2,
-              color: PDFLib.rgb(1, 1, 1)
-            });
-            var sp = getFont(S.HelveticaBold).then(function (f) {
-              page.drawText(ov.text || '', {
-                x: x + 6, y: pdfY + h * 0.3,
-                size: Math.min(14, h * 0.4),
-                font: f, color: PDFLib.rgb(0.86, 0.15, 0.15)
-              });
-            });
-            promises.push(sp);
-          } else if (ov.type === 'text') {
-            var std = mapFont(ov.font, ov.bold);
-            var sz = ov.size * factor;
-            var col = parseColor(ov.color);
-            var ptxt = (ov.el && ov.el.textContent) || ov.text || '';
-            var pr = getFont(std).then(function (f) {
-              page.drawText(ptxt, {
-                x: x + 1,
-                y: pdfY + h * 0.2,
-                size: sz,
-                font: f,
-                color: col,
-                opacity: 1
-              });
-            });
-            promises.push(pr);
-          } else if (ov.type === 'watermark') {
-            var wStd = mapFont(ov.font, true);
-            var wCol = parseColor(ov.color);
-            var alpha = parseAlpha(ov.color);
-            var wSz = ov.size * factor;
-            var wr = getFont(wStd).then(function (f) {
-              page.drawText(ov.text || '', {
-                x: pageW * 0.15,
-                y: pageH * 0.45,
-                size: wSz,
-                font: f,
-                color: wCol,
-                opacity: alpha,
-                rotate: PDFLib.degrees(35)
-              });
-            });
-            promises.push(wr);
-          } else if (ov.type === 'image' && ov.dataUrl) {
-            var ir = (ov.dataUrl.indexOf('data:image/png') === 0
-              ? pdfDoc.embedPng(ov.dataUrl)
-              : pdfDoc.embedJpg(ov.dataUrl)
-            ).then(function (img) {
-              page.drawImage(img, {
-                x: x, y: pdfY, width: w, height: h
-              });
-            }).catch(function () { /* ignore unsupported image */ });
-            promises.push(ir);
-          }
-        });
-      });
-
-      return Promise.all(promises).then(function () {
-        return pdfDoc.save();
-      });
-    })
-    .then(function (bytes) {
-      var blob = new Blob([bytes], { type: 'application/pdf' });
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = 'doceasy-edited-' + Date.now() + '.pdf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
-      toast('PDF saved and downloaded ✓');
-    })
-    .catch(function (err) {
-      console.error(err);
-      toast('Save failed: ' + (err.message || err), true);
-    })
-    .then(function () {
-      btnSave.disabled = false;
-      btnSave.innerHTML = origHTML;
-    });
-  });
-
-})();
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const ov=$('#ov'),cv=$('#cv'),stage=$('#stage'),work=$('#work'),pe=$('#pe');
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+let doc,bytes,fname='document.pdf',enc=0,pg=1,np=0,zoom=1,tool='select',els=[],sel=null,hist=[],hi=-1,clip=null,sizes={},uid=1,rt,rid=0,hit=null,imgs={},stampTxt='';
+const st={font:'h',size:16,sw:2,b:0,i:0,u:0,color:'#000000',fill:'#ffeb3b',fillon:0,op:100};
+const FF={h:'Helvetica,Arial,sans-serif',t:'"Times New Roman",Times,serif',c:'"Courier New",monospace'};
+const KEYS={font:'f',size:'s',sw:'sw',color:'c',op:'op',b:'b',i:'i',u:'u'};
+const gid=id=>els.find(e=>e.id===id),cur=()=>gid(sel),ele=id=>ov.querySelector(`[data-id="${id}"]`);
+const mk=o=>({id:uid++,p:pg,r:0,op:100,...o});
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,4000)}
+if(innerWidth>700)pe.classList.remove('nosb');
+
+function commit(){const s=JSON.stringify(els);if(s===hist[hi])return;hist=hist.slice(0,hi+1);hist.push(s);if(hist.length>101)hist.shift();hi=hist.length-1;btns()}
+function jump(d){const n=hi+d;if(n<0||n>=hist.length)return;if(document.activeElement.isContentEditable)document.activeElement.blur();hi=n;els=JSON.parse(hist[hi]);if(!gid(sel))sel=null;draw();sync();btns()}
+function btns(){$('#undo').disabled=hi<=0;$('#redo').disabled=hi>=hist.length-1}
+
+function pos(d,e){const s=d.style;s.left=e.x*zoom+'px';s.top=e.y*zoom+'px';s.width=e.w*zoom+'px';s.height=e.h*zoom+'px';s.transform=`rotate(${e.r||0}deg)`}
+function build(e){
+  const z=zoom,d=document.createElement('div'),n=document.createElement('div'),s=n.style;
+  d.className='el '+e.t+(e.id===sel?' sel':'');d.dataset.id=e.id;pos(d,e);n.className='in';s.opacity=e.op/100;
+  if(e.t==='text'||e.t==='stamp'){n.textContent=e.text;Object.assign(s,{fontFamily:FF[e.f],fontSize:e.s*z+'px',fontWeight:e.b?700:400,fontStyle:e.i?'italic':'normal',textDecoration:e.u?'underline':'none',color:e.c});
+    if(e.t==='stamp')s.border=3*z+'px solid '+e.c;else s.padding=2*z+'px'}
+  else if(e.t==='white')s.background='#fff';
+  else if(e.t==='rect'||e.t==='ell')Object.assign(s,{background:e.fl||'transparent',border:e.sw*z+'px solid '+e.c,borderRadius:e.t==='ell'?'50%':'0'});
+  else if(e.t==='hl')s.background=e.fl;
+  else if(e.t==='strike')s.background=`linear-gradient(${e.c},${e.c}) 0 50%/100% ${e.sw*z}px no-repeat`;
+  else if(e.t==='draw')n.innerHTML=`<svg viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%" style="overflow:visible"><polyline points="${e.pts.map(p=>p[0]*100+','+p[1]*100).join(' ')}" fill="none" stroke="${e.c}" stroke-width="${e.sw*z}" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  else if(e.t==='img'){const i=new Image();i.src=imgs[e.k];i.draggable=false;i.style.cssText='width:100%;height:100%;display:block';n.appendChild(i)}
+  d.appendChild(n);
+  if(e.id===sel){['nw','ne','sw','se'].forEach(h=>{const x=document.createElement('i');x.className='h';x.dataset.h=h;d.appendChild(x)});d.insertAdjacentHTML('beforeend','<i class="rot" title="Rotate"></i><i class="del" title="Delete">×</i>')}
+  return d}
+function draw(){ov.innerHTML='';for(const e of els)if(e.p===pg)ov.appendChild(build(e))}
+async function psz(n){if(!sizes[n]){const v=(await doc.getPage(n)).getViewport({scale:1});sizes[n]=[v.width,v.height]}return sizes[n]}
+async function showPage(){
+  if(!doc)return;const id=++rid;if(rt){rt.cancel();try{await rt.promise}catch(_){}}
+  const p=await doc.getPage(pg);if(id!==rid)return;
+  const vp=p.getViewport({scale:zoom}),dpr=devicePixelRatio||1;
+  cv.width=vp.width*dpr;cv.height=vp.height*dpr;stage.style.width=cv.style.width=vp.width+'px';stage.style.height=cv.style.height=vp.height+'px';
+  draw();rt=p.render({canvasContext:cv.getContext('2d'),viewport:vp,transform:dpr>1?[dpr,0,0,dpr,0,0]:null});try{await rt.promise}catch(_){}}
+function setPg(n){if(!doc)return;pg=Math.max(1,Math.min(np,n||1));sel=null;$('#pn').value=pg;$$('.th').forEach((t,i)=>t.classList.toggle('on',i+1===pg));showPage();sync()}
+function setZoom(z){zoom=Math.max(.5,Math.min(2,Math.round(z*100)/100));$('#zv').textContent=Math.round(zoom*100)+'%';showPage()}
+function setTool(t){tool=t;$$('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===t));ov.style.touchAction=t==='select'?'pan-x pan-y':'none';ov.style.cursor=t==='select'?'':'crosshair'}
+
+function upd(k,v,fin){
+  if(k==='size')v=Math.max(4,v||16);if(k==='sw')v=Math.max(.5,v||1);
+  st[k]=v;const e=cur();
+  if(e){if(k==='fill'||k==='fillon'){if(e.t==='hl')e.fl=st.fill;else if(e.t==='rect'||e.t==='ell')e.fl=st.fillon?st.fill:''}else e[KEYS[k]]=v;draw()}
+  if(fin){commit();sync()}}
+function sync(){const e=cur();
+  if(e){for(const k in KEYS)if(e[KEYS[k]]!==undefined)st[k]=e[KEYS[k]];if(e.t==='rect'||e.t==='ell'){st.fillon=e.fl?1:0;if(e.fl)st.fill=e.fl}else if(e.t==='hl')st.fill=e.fl}
+  $$('[data-k]').forEach(n=>{const v=st[n.dataset.k];if(n.type==='checkbox')n.checked=!!v;else n.value=v});
+  ['b','i','u'].forEach(k=>$('#b'+k).classList.toggle('on',!!st[k]))}
+const val=n=>n.type==='checkbox'?n.checked:(n.type==='number'||n.type==='range')?+n.value:n.value;
+$$('[data-k]').forEach(n=>{const k=n.dataset.k;n.addEventListener('input',()=>upd(k,val(n),false));n.addEventListener('change',()=>upd(k,val(n),true))});
+['b','i','u'].forEach(k=>$('#b'+k).onclick=()=>upd(k,st[k]?0:1,true));
+
+const pt=e=>{const r=ov.getBoundingClientRect();return[(e.clientX-r.left)/zoom,(e.clientY-r.top)/zoom]};
+function track(ev,move,end){ov.setPointerCapture(ev.pointerId);
+  const up=e=>{ov.removeEventListener('pointermove',move);ov.removeEventListener('pointerup',up);ov.removeEventListener('pointercancel',up);end&&end(e)};
+  ov.addEventListener('pointermove',move);ov.addEventListener('pointerup',up);ov.addEventListener('pointercancel',up)}
+function add(e){els.push(e);sel=e.id;commit();draw();sync()}
+function rm(id){els=els.filter(x=>x.id!==id);sel=null;commit();draw();sync()}
+function resize(ev,e,h){
+  const sx=h.includes('e')?1:-1,sy=h.includes('s')?1:-1,th=(e.r||0)*Math.PI/180,co=Math.cos(th),si=Math.sin(th);
+  const R=(x,y)=>[x*co-y*si,x*si+y*co],Ri=(x,y)=>[x*co+y*si,-x*si+y*co];
+  const cx=e.x+e.w/2,cy=e.y+e.h/2,[a,b]=R(-sx*e.w/2,-sy*e.h/2),ox=cx+a,oy=cy+b,w0=e.w,h0=e.h,d=ele(e.id);
+  track(ev,m=>{const[x,y]=pt(m),[lx,ly]=Ri(x-ox,y-oy);let nw=Math.max(10,sx*lx),nh=Math.max(10,sy*ly);
+    if(e.t==='img'||m.shiftKey)nh=nw*h0/w0;const[ax,ay]=R(sx*nw/2,sy*nh/2);e.w=nw;e.h=nh;e.x=ox+ax-nw/2;e.y=oy+ay-nh/2;pos(d,e)},commit)}
+function rotate(ev,e){const d=ele(e.id);
+  track(ev,m=>{const[x,y]=pt(m);let a=Math.round(Math.atan2(y-(e.y+e.h/2),x-(e.x+e.w/2))*180/Math.PI+90);
+    for(const s of[0,45,90,135,180,270])if(Math.abs(a-s)<4)a=s;e.r=a>180?a-360:a;pos(d,e)},commit)}
+function edit(id){
+  const e=gid(id),d=ele(id);if(!d)return;const n=d.querySelector('.in');
+  try{n.contentEditable='plaintext-only'}catch(_){}if(!n.isContentEditable)n.contentEditable='true';
+  n.focus();const r=document.createRange();r.selectNodeContents(n);r.collapse(false);const s=getSelection();s.removeAllRanges();s.addRange(r);
+  n.oninput=()=>{const h=n.scrollHeight/zoom+2;if(h>e.h){e.h=h;pos(d,e)}};
+  n.onblur=()=>{n.contentEditable='false';const t=n.innerText.replace(/\n$/,'');
+    if(!t.trim()){els=els.filter(x=>x!==e);sel=null;commit();draw();sync();return}
+    e.text=t;commit()}}
+ov.addEventListener('pointerdown',ev=>{
+  if(ev.button>0||ev.target.isContentEditable||!doc)return;
+  const a=document.activeElement;if(a&&a.isContentEditable)a.blur();
+  const t=ev.target,d=t.closest('.el'),e=d&&gid(+d.dataset.id),[px,py]=pt(ev);hit=null;
+  if(e){hit={id:0};
+    if(t.classList.contains('del'))return rm(e.id);
+    if(t.classList.contains('rot'))return rotate(ev,e);
+    if(t.dataset.h)return resize(ev,e,t.dataset.h);
+    const was=sel===e.id;sel=e.id;draw();sync();const nd=ele(e.id),ox=e.x,oy=e.y;hit={id:e.id,was,moved:0};
+    return track(ev,m=>{if(!hit.moved&&Math.hypot(m.clientX-ev.clientX,m.clientY-ev.clientY)<4)return;hit.moved=1;const[x,y]=pt(m);e.x=ox+x-px;e.y=oy+y-py;pos(nd,e)},()=>{if(hit&&hit.moved)commit()})}
+  if(tool==='select'){sel=null;draw();sync();return}
+  if(tool==='text'||tool==='stamp')return;
+  if(tool==='draw'){
+    const pts=[[px,py]];ov.insertAdjacentHTML('beforeend','<svg class="tmp"><polyline fill="none" stroke="'+st.color+'" stroke-width="'+st.sw*zoom+'" stroke-linecap="round" stroke-linejoin="round"/></svg>');const pl=ov.lastChild.firstChild;
+    return track(ev,m=>{pts.push(pt(m));pl.setAttribute('points',pts.map(p=>p[0]*zoom+','+p[1]*zoom).join(' '))},()=>{
+      ov.lastChild.remove();if(pts.length<2)return;const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]),x0=Math.min(...xs),y0=Math.min(...ys),w=Math.max(Math.max(...xs)-x0,2),h=Math.max(Math.max(...ys)-y0,2);
+      add(mk({t:'draw',x:x0,y:y0,w,h,c:st.color,sw:st.sw,op:st.op,pts:pts.map(p=>[(p[0]-x0)/w,(p[1]-y0)/h])}))})}
+  const D={white:[140,26],rect:[120,70],ell:[120,70],hl:[140,16],strike:[140,14]}[tool];if(!D)return;
+  const e2=mk({t:tool,x:px,y:py,w:0,h:0,c:tool==='strike'?'#d32f2f':st.color,sw:st.sw,fl:tool==='hl'?'#ffeb3b':(tool==='rect'||tool==='ell')&&st.fillon?st.fill:'',op:tool==='hl'?40:tool==='white'?100:st.op});
+  els.push(e2);draw();const nd=ele(e2.id);
+  track(ev,m=>{const[x,y]=pt(m);e2.x=Math.min(px,x);e2.y=Math.min(py,y);e2.w=Math.abs(x-px);e2.h=Math.abs(y-py);pos(nd,e2)},()=>{
+    if(e2.w<6&&e2.h<6){e2.x=px-D[0]/2;e2.y=py-D[1]/2;e2.w=D[0];e2.h=D[1]}sel=e2.id;commit();draw();sync();setTool('select')})});
+ov.addEventListener('click',ev=>{
+  if(hit){const h=hit;hit=null;const e=gid(h.id);if(e&&h.was&&!h.moved&&(e.t==='text'||e.t==='stamp'))edit(e.id);return}
+  if(ev.target!==ov||!doc)return;const[px,py]=pt(ev);
+  if(tool==='text'){const s=st.size,e=mk({t:'text',x:px,y:py,w:200,h:s*1.2+6,text:'',f:st.font,s,b:st.b,i:st.i,u:st.u,c:st.color});els.push(e);sel=e.id;draw();sync();setTool('select');edit(e.id)}
+  else if(tool==='stamp'){const fs=28,w=Math.max(120,stampTxt.length*fs*.72+30);add(mk({t:'stamp',text:stampTxt,x:px-w/2,y:py-24,w,h:fs*1.2+16,f:'h',s:fs,b:1,i:0,u:0,c:'#c62828',r:-12}));setTool('select')}});
+
+addEventListener('keydown',ev=>{
+  const t=ev.target;if(t.isContentEditable||/INPUT|SELECT|TEXTAREA/.test(t.tagName))return;
+  const k=ev.key.toLowerCase(),m=ev.ctrlKey||ev.metaKey;
+  if(m&&k==='z'){ev.preventDefault();jump(ev.shiftKey?1:-1)}
+  else if(m&&k==='y'){ev.preventDefault();jump(1)}
+  else if(m&&k==='c'&&cur())clip=JSON.parse(JSON.stringify(cur()));
+  else if(m&&k==='v'&&clip&&doc){ev.preventDefault();clip.x+=12;clip.y+=12;add({...JSON.parse(JSON.stringify(clip)),id:uid++,p:pg})}
+  else if((k==='delete'||k==='backspace')&&sel){ev.preventDefault();rm(sel)}
+  else if(k==='escape'){sel=null;draw();sync()}});
+onbeforeunload=e=>{if(hi>0){e.preventDefault();e.returnValue=''}};
+
+function askPw(bad){const d=$('#pw'),i=$('#pwi');$('#pwm').textContent=bad?'Incorrect password. Try again.':'This PDF is protected.';i.value='';d.showModal();return new Promise(r=>{d.onclose=()=>r(d.returnValue==='ok'?i.value:null)})}
+async function buildThumbs(){
+  const s=$('#side'),d0=doc;s.innerHTML='';
+  for(let n=1;n<=np;n++){const t=document.createElement('div');t.className='th'+(n===1?' on':'');t.innerHTML='<canvas></canvas>'+n;t.onclick=()=>setPg(n);s.appendChild(t)}
+  try{for(let n=1;n<=np&&doc===d0;n++){const p=await doc.getPage(n),v=p.getViewport({scale:100/p.getViewport({scale:1}).width}),c=s.children[n-1].firstChild;c.width=v.width;c.height=v.height;await p.render({canvasContext:c.getContext('2d'),viewport:v}).promise}}catch(_){}}
+async function openFile(f){
+  if(!f)return;let d,b,e2=0;
+  try{b=new Uint8Array(await f.arrayBuffer());const task=pdfjsLib.getDocument({data:b.slice()});
+    task.onPassword=async(cb,r)=>{e2=1;const p=await askPw(r===2);if(p===null)task.destroy();else cb(p)};d=await task.promise}
+  catch(e){toast(e&&e.name==='PasswordException'?'Wrong or missing password':'Could not open this PDF');return}
+  doc=d;bytes=b;enc=e2;fname=f.name;np=d.numPages;sizes={};els=[];sel=null;hist=[];hi=-1;commit();
+  $('#drop').hidden=true;stage.hidden=false;$('#np').textContent=np;$('#pn').max=np;pg=1;$('#pn').value=1;buildThumbs();
+  const[w]=await psz(1);setZoom(Math.min(1.25,(work.clientWidth-32)/w));sync()}
+$('#open').onclick=$('#open2').onclick=()=>$('#file').click();
+$('#file').onchange=e=>{openFile(e.target.files[0]);e.target.value=''};
+work.ondragover=e=>{e.preventDefault();$('#drop').classList.add('dz')};work.ondragleave=()=>$('#drop').classList.remove('dz');
+work.ondrop=e=>{e.preventDefault();$('#drop').classList.remove('dz');const f=e.dataTransfer.files[0];if(f&&/pdf/i.test(f.type+f.name))openFile(f)};
+$('#undo').onclick=()=>jump(-1);$('#redo').onclick=()=>jump(1);
+$('#prev').onclick=()=>setPg(pg-1);$('#next').onclick=()=>setPg(pg+1);$('#pn').onchange=e=>setPg(+e.target.value);
+$('#zi').onclick=()=>setZoom(zoom+.25);$('#zo').onclick=()=>setZoom(zoom-.25);
+$('#sbt').onclick=()=>pe.classList.toggle('nosb');
+$$('[data-t]').forEach(b=>b.onclick=()=>setTool(b.dataset.t));
+$('#stampSel').onchange=e=>{let v=e.target.value;e.target.value='';if(!v||!doc)return;if(v==='*'){v=(prompt('Stamp text','APPROVED')||'').trim().toUpperCase();if(!v)return}stampTxt=v;setTool('stamp');toast('Tap the page to place the stamp')};
+$('#img').onclick=()=>doc?$('#imgf').click():toast('Open a PDF first');
+$('#imgf').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const fr=new FileReader();
+  fr.onload=()=>{const im=new Image();im.onload=()=>{const k='i'+uid,w=Math.min(200,im.width),h=w*im.height/im.width,[pw,ph]=sizes[pg]||[600,800];imgs[k]=fr.result;add(mk({t:'img',k,x:(pw-w)/2,y:(ph-h)/2,w,h}))};im.src=fr.result};fr.readAsDataURL(f)};
+$('#wm').onclick=async()=>{
+  if(!doc)return toast('Open a PDF first');const t=prompt('Watermark text','CONFIDENTIAL');if(!t)return;
+  const o=Math.min(100,Math.max(5,+prompt('Opacity % (5–100)','20')||20));
+  for(let n=1;n<=np;n++){const[W,H]=await psz(n),fs=Math.min(110,Math.hypot(W,H)*.7/(t.length*.75)),w=t.length*fs*.75+20,h=fs*1.3;
+    els.push(mk({p:n,t:'text',wm:1,text:t,x:(W-w)/2,y:(H-h)/2,w,h,f:'h',s:Math.round(fs),b:1,i:0,u:0,c:'#808080',op:o,r:-Math.round(Math.atan2(H,W)*180/Math.PI)}))}
+  commit();draw();sync()};
+
+async function save(){
+  if(!doc)return toast('Open a PDF first');if(document.activeElement.isContentEditable)document.activeElement.blur();
+  toast('Preparing PDF…');
+  try{
+    const{PDFDocument,StandardFonts,rgb,degrees,LineCapStyle}=PDFLib;
+    const hx=h=>{const n=parseInt(h.slice(1),16);return rgb((n>>16&255)/255,(n>>8&255)/255,(n&255)/255)};
+    let out=null,flat=enc;
+    if(!enc){out=await PDFDocument.load(bytes,{ignoreEncryption:true});flat=out.isEncrypted}
+    if(flat){out=await PDFDocument.create();
+      for(let n=1;n<=np;n++){const p=await doc.getPage(n),v=p.getViewport({scale:2}),c=document.createElement('canvas');c.width=v.width;c.height=v.height;
+        await p.render({canvasContext:c.getContext('2d'),viewport:v}).promise;
+        const im=await out.embedJpg(await new Promise(r=>c.toBlob(b=>b.arrayBuffer().then(r),'image/jpeg',.92)));
+        out.addPage([v.width/2,v.height/2]).drawImage(im,{x:0,y:0,width:v.width/2,height:v.height/2})}}
+    const pages=out.getPages(),fc={},ic={};let lost=0;
+    const gf=async k=>fc[k]||(fc[k]=await out.embedFont(StandardFonts[k]));
+    const clean=s=>s.replace(/[^\x20-\x7E\xA0-\xFF]/g,()=>(lost=1,'?'));
+    for(const e of els){
+      const P=pages[e.p-1];if(!P)continue;const cb=P.getCropBox(),th=(e.r||0)*Math.PI/180,co=Math.cos(th),si=Math.sin(th),cx=e.x+e.w/2,cy=e.y+e.h/2,rot=degrees(-(e.r||0)),op=e.op/100;
+      const T=(lx,ly)=>{const dx=lx-e.w/2,dy=ly-e.h/2;return{x:cb.x+cx+dx*co-dy*si,y:cb.y+cb.height-(cy+dx*si+dy*co)}};
+      const o=T(0,e.h),box={x:o.x,y:o.y,width:e.w,height:e.h,rotate:rot};
+      if(e.t==='white')P.drawRectangle({...box,color:rgb(1,1,1)});
+      else if(e.t==='hl')P.drawRectangle({...box,color:hx(e.fl),opacity:op});
+      else if(e.t==='rect')P.drawRectangle({...box,color:e.fl?hx(e.fl):undefined,opacity:op,borderColor:hx(e.c),borderWidth:e.sw,borderOpacity:op});
+      else if(e.t==='ell'){const c=T(e.w/2,e.h/2);P.drawEllipse({x:c.x,y:c.y,xScale:e.w/2,yScale:e.h/2,rotate:rot,color:e.fl?hx(e.fl):undefined,opacity:op,borderColor:hx(e.c),borderWidth:e.sw,borderOpacity:op})}
+      else if(e.t==='strike')P.drawLine({start:T(0,e.h/2),end:T(e.w,e.h/2),thickness:e.sw,color:hx(e.c),opacity:op});
+      else if(e.t==='draw'){for(let i=1;i<e.pts.length;i++)P.drawLine({start:T(e.pts[i-1][0]*e.w,e.pts[i-1][1]*e.h),end:T(e.pts[i][0]*e.w,e.pts[i][1]*e.h),thickness:e.sw,color:hx(e.c),opacity:op,lineCap:LineCapStyle.Round})}
+      else if(e.t==='img'){const src=imgs[e.k];if(!ic[e.k]){const u=Uint8Array.from(atob(src.split(',')[1]),c=>c.charCodeAt(0));ic[e.k]=await(/image\/png/.test(src)?out.embedPng(u):out.embedJpg(u))}
+        P.drawImage(ic[e.k],{...box,opacity:op})}
+      else if(e.t==='text'||e.t==='stamp'){
+        const stp=e.t==='stamp',pad=stp?0:2,fs=e.s,lh=fs*1.2,fam=stp?'h':e.f,bd=stp||e.b;
+        const f=await gf((fam==='t'?'TimesRoman':fam==='c'?'Courier':'Helvetica')+(bd?'Bold':'')+(e.i&&!stp?(fam==='t'?'Italic':'Oblique'):'')),col=hx(e.c);
+        const maxW=e.w-pad*2,lines=[];
+        for(const para of e.text.replace(/\t/g,'    ').split('\n')){let l='';for(const w of para.split(' ')){const t=l?l+' '+w:w;if(l&&f.widthOfTextAtSize(clean(t),fs)>maxW){lines.push(l);l=w}else l=t}lines.push(l)}
+        if(stp)P.drawRectangle({...box,borderColor:col,borderWidth:3,borderOpacity:op});
+        const top=stp?(e.h-lines.length*lh)/2:pad;
+        lines.forEach((l,i)=>{l=clean(l);if(!l)return;const w=f.widthOfTextAtSize(l,fs),lx=stp?(e.w-w)/2:pad,ly=top+i*lh+fs*.95,p=T(lx,ly);
+          P.drawText(l,{x:p.x,y:p.y,size:fs,font:f,color:col,opacity:op,rotate:rot});
+          if(e.u)P.drawLine({start:T(lx,ly+fs*.12),end:T(lx+w,ly+fs*.12),thickness:Math.max(.5,fs/16),color:col,opacity:op})})}}
+    const blob=new Blob([await out.save()],{type:'application/pdf'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download=fname.replace(/\.pdf$/i,'')+'-edited.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4e3);
+    toast(lost?'Saved. Hindi/emoji aren\'t supported in text export and became "?".':flat?'Saved. Protected PDFs are saved as flattened pages.':'Saved')
+  }catch(err){console.error(err);toast('Could not save: '+(err.message||err))}}
+$('#save').onclick=save;
+sync();setTool('select');
+if('serviceWorker' in navigator)navigator.serviceWorker.register('pdf-editor-sw.js').catch(()=>{});
 </script>
-</body>
-</html>
+</body></html>
