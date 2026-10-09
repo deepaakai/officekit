@@ -3,17 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>JPG to PDF &amp; Document Scanner — DocEasy</title>
-<meta name="description" content="Scan documents from photos: manual crop, perspective correction, filters and multi-page PDF export. 100% in your browser — nothing is uploaded.">
-<meta name="theme-color" content="#0b1329">
-<link rel="canonical" href="https://doceay.org/tools/jpg-to-pdf.html">
+<title>JPG to PDF & Document Scanner — Free Online (No Upload) | DocEasy</title>
+<meta name="description" content="Convert JPG, PNG, WEBP photos to a multi-page PDF online. Scan documents with auto-crop, perspective correction, filters, and 30-page support. 100% browser-based, no upload, no signup.">
+<meta name="keywords" content="jpg to pdf, document scanner, image to pdf, photo to pdf, camscanner alternative, free document scanner, png to pdf, webp to pdf, scan documents online, jpg to pdf converter">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#19398a">
+<link rel="canonical" href="https://doceasy.org/tools/jpg-to-pdf.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="JPG to PDF & Document Scanner — Free | DocEasy">
+<meta property="og:description" content="Convert photos to multi-page PDF with crop, filters, and perspective correction. 100% browser-based.">
+<meta property="og:url" content="https://doceasy.org/tools/jpg-to-pdf.html">
+<meta property="og:image" content="https://doceasy.org/assets/images/jpg-to-pdf-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JPG to PDF & Document Scanner — Free | DocEasy">
+<meta name="twitter:description" content="Convert photos to PDF with crop, filters, and perspective correction.">
+<meta name="twitter:image" content="https://doceasy.org/assets/images/jpg-to-pdf-demo.jpg">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
-<script>window.__OPENCV_DISABLED = true;</script>
+<!-- SEO Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JPG to PDF & Document Scanner",
+  "url": "https://doceasy.org/tools/jpg-to-pdf.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "description": "Convert JPG, PNG, WEBP photos into multi-page PDF documents with crop, filters, and perspective correction. 100% browser-based."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Convert JPG Images to PDF",
+  "step": [
+    { "@type": "HowToStep", "name": "Add Images", "text": "Click Camera Capture or Gallery, or drag and drop JPG, PNG, or WEBP images." },
+    { "@type": "HowToStep", "name": "Crop & Adjust", "text": "Tap any page to open the editor. Crop, rotate, straighten, and apply filters." },
+    { "@type": "HowToStep", "name": "Reorder Pages", "text": "Drag pages to reorder, duplicate, or add blank pages." },
+    { "@type": "HowToStep", "name": "Export PDF", "text": "Choose page size, quality, and download your multi-page PDF." }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Is this JPG to PDF tool free?","acceptedAnswer":{"@type":"Answer","text":"Yes, DocEasy's JPG to PDF tool is 100% free with no signup, no email, and no watermark on the scanned document (only a tiny doceasy.org mark)."}},
+    {"@type":"Question","name":"Are my photos uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Every image is processed locally in your browser using Canvas API. Nothing is uploaded."}},
+    {"@type":"Question","name":"Can I scan documents using my phone camera?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Camera Capture button opens your phone's rear camera for direct scanning."}},
+    {"@type":"Question","name":"How many pages can I add?","acceptedAnswer":{"@type":"Answer","text":"You can add up to 30 pages per PDF document."}},
+    {"@type":"Question","name":"Can I correct perspective in scanned documents?","acceptedAnswer":{"@type":"Answer","text":"Yes. Drag the four corner handles to fix skewed or angled scans."}},
+    {"@type":"Question","name":"What image formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG, and WEBP are supported for input."}}
+  ]
+}
+</script>
 
 <style>
-/* ============ TOOL-SPECIFIC STYLES — uses global theme variables ============ */
+/* ============ TOOL-SPECIFIC STYLES ============ */
 .main-wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; }
 
 .hero-box { text-align: center; padding: 8px 0 20px; }
@@ -40,24 +94,6 @@
   padding: 20px;
   box-shadow: var(--shadow-md);
   margin-bottom: 20px;
-}
-
-.ad-slot-container {
-  background: var(--card-bg);
-  border: 2px dashed var(--border-color);
-  border-radius: 8px;
-  padding: 14px;
-  text-align: center;
-  margin: 24px 0;
-  color: var(--subtext-color);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  min-height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .drop-zone {
@@ -89,6 +125,7 @@
   background: var(--accent); color: #fff;
   border: 1px solid var(--accent);
   cursor: pointer; transition: 0.18s;
+  font-family: inherit;
 }
 .primary-button:hover, .btn-primary:hover { filter: brightness(1.08); }
 .primary-button:disabled { opacity: 0.55; cursor: progress; }
@@ -99,6 +136,7 @@
   padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 14px;
   background: var(--card-bg); border: 1px solid var(--border-color);
   color: var(--text-color); cursor: pointer; transition: 0.18s;
+  font-family: inherit;
 }
 .btn-secondary:hover, .btn-ghost:hover {
   border-color: var(--accent); color: var(--accent); background: var(--accent-soft);
@@ -151,6 +189,7 @@
 .card-btn {
   flex: 1; padding: 9px 0; display: grid; place-items: center;
   color: var(--subtext-color); transition: 0.18s; cursor: pointer;
+  background: none; border: none; font-family: inherit;
 }
 .card-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
 .card-btn:hover { background: var(--card-hover); color: var(--accent); }
@@ -167,6 +206,7 @@ select, input[type="text"] {
   background: var(--card-bg); border: 1px solid var(--border-color);
   border-radius: 8px; padding: 10px 12px; width: 100%;
   color: var(--text-color); font-size: 14px; transition: 0.18s;
+  font-family: inherit;
 }
 select:focus, input[type="text"]:focus {
   outline: none; border-color: var(--accent);
@@ -226,6 +266,7 @@ input[type="range"]::-moz-range-thumb {
   width: 38px; height: 38px; border-radius: 10px;
   display: grid; place-items: center;
   color: var(--subtext-color); transition: 0.18s; cursor: pointer;
+  background: none; border: none; font-family: inherit;
 }
 .icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
 .icon-btn:hover { color: var(--accent); background: var(--card-hover); }
@@ -268,6 +309,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 8px; background: var(--card-hover);
   font-size: 12px; font-weight: 600; color: var(--subtext-color);
   transition: 0.18s; cursor: pointer;
+  font-family: inherit;
 }
 .chip svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
 .chip:hover { border-color: var(--accent); color: var(--text-color); }
@@ -306,6 +348,7 @@ input[type="range"]::-moz-range-thumb {
   font-size: 10.5px; font-weight: 600;
   transition: 0.18s; border-top: 2px solid transparent;
   cursor: pointer; background: none; border-left: none; border-right: none; border-bottom: none;
+  font-family: inherit;
 }
 .tab svg { width: 19px; height: 19px; stroke: currentColor; fill: none; }
 .tab.active {
@@ -352,29 +395,127 @@ input[type="range"]::-moz-range-thumb {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* SEO article */
 .seo-article {
-  margin-top: 40px; background: var(--card-bg);
-  border: 1px solid var(--border-color); border-radius: 12px;
-  padding: 30px; box-shadow: var(--shadow-md);
+  max-width: 900px;
+  margin: 60px auto 0;
+  padding: 40px 32px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  line-height: 1.8;
 }
-.seo-article h2 { font-size: 22px; margin: 0 0 10px; color: var(--text-color); }
-.seo-article h3 { margin-top: 24px; font-size: 16px; color: var(--accent); }
-.seo-article p { font-size: 14.5px; line-height: 1.7; color: var(--text-color); }
-.seo-article ul, .seo-article ol { padding-left: 20px; font-size: 14.5px; line-height: 1.7; color: var(--text-color); }
-.seo-article li { margin-bottom: 6px; }
-
+.seo-article h2 {
+  font-size: 26px; font-weight: 800;
+  color: var(--text-color);
+  margin: 36px 0 16px;
+  letter-spacing: -0.5px;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 19px; font-weight: 700;
+  color: var(--accent);
+  margin: 28px 0 12px;
+}
+.seo-article p {
+  font-size: 15.5px;
+  color: var(--subtext-color);
+  margin: 0 0 16px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol {
+  font-size: 15.5px;
+  color: var(--subtext-color);
+  line-height: 1.8;
+  margin: 0 0 18px 22px;
+}
+.seo-article li { margin-bottom: 8px; }
+.seo-article code {
+  background: var(--card-hover, #f1f5f9);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 13.5px;
+  color: var(--accent);
+  font-weight: 600;
+}
 .article-image-box {
   margin: 24px 0; text-align: center;
-  border: 1px dashed var(--border-color); border-radius: 10px;
-  padding: 12px; background: var(--card-hover);
 }
 .article-image-box img {
-  max-width: 100%; height: auto; border-radius: 8px;
-  display: block; margin: 0 auto;
+  max-width: 100%; height: auto; border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 .article-image-caption {
   font-size: 12.5px; color: var(--subtext-color);
-  padding: 8px 4px 2px;
+  padding: 8px 4px 2px; font-style: italic;
+}
+.table-wrap { overflow-x: auto; margin: 20px 0; }
+.seo-article table {
+  width: 100%; border-collapse: collapse; font-size: 14.5px;
+}
+.seo-article th, .seo-article td {
+  padding: 10px 14px; border: 1px solid var(--border-color); text-align: left;
+}
+.seo-article th {
+  background: var(--card-hover, #f1f5f9); font-weight: 700; color: var(--text-color);
+}
+
+/* Related Tools */
+.related-tools { max-width: 1000px; margin: 60px auto 0; }
+.related-tools h2 {
+  font-size: clamp(20px, 3.4vw, 26px); font-weight: 800;
+  text-align: center; margin: 0 0 8px;
+  color: var(--text-color); letter-spacing: -0.5px;
+}
+.related-tools .rt-lead {
+  text-align: center; color: var(--subtext-color);
+  font-size: 14px; margin: 0 auto 28px; max-width: 600px;
+}
+.rt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.rt-card {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none; color: var(--text-color);
+  transition: all 0.2s;
+}
+.rt-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(25,57,138,0.12);
+}
+.rt-card .rt-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft, rgba(25,57,138,0.08));
+  display: grid; place-items: center;
+  color: var(--accent);
+}
+.rt-card .rt-icon svg {
+  width: 20px; height: 20px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.rt-card h3 { font-size: 14px; font-weight: 700; margin: 0; line-height: 1.3; }
+.rt-card p { font-size: 11.5px; color: var(--subtext-color); margin: 0; line-height: 1.45; }
+.rt-card .rt-cta {
+  font-size: 11.5px; font-weight: 800;
+  color: var(--accent); text-transform: uppercase;
+  letter-spacing: 0.4px; margin-top: auto;
+}
+
+@media (max-width: 640px) {
+  .seo-article { padding: 24px 18px; }
+  .seo-article h2 { font-size: 21px; }
+  .seo-article h3 { font-size: 17px; }
+  .rt-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
 </style>
 </head>
@@ -411,8 +552,6 @@ input[type="range"]::-moz-range-thumb {
     <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden>
     <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
   </section>
-
-  <div class="ad-slot-container">Advertisement</div>
 
   <section id="pages-section" hidden>
     <div class="section-head" style="margin-top:10px">
@@ -487,58 +626,227 @@ input[type="range"]::-moz-range-thumb {
     </p>
   </section>
 
+  <!-- ============ SEO ARTICLE ============ -->
   <section class="seo-article">
-    <h2>Complete Guide to JPG to PDF &amp; Document Scanner</h2>
-    <p style="color:var(--subtext-color);margin-top:6px;">
-      Creating official multi-page PDFs at home has never been easier. The DocEasy Document Scanner operates 100% locally in your web browser, utilizing state-of-the-art client-side canvas transformations and image processing.
-    </p>
+    <h2>Complete Guide: JPG to PDF &amp; Document Scanner</h2>
+    <p>Turning photos of documents into a clean, professional, multi-page PDF is one of the most common needs for students, office workers, and anyone handling paperwork. Whether you've photographed a stack of handwritten notes, a set of invoices, or your Aadhaar and PAN cards, this tool lets you assemble them into a single PDF — and it happens entirely inside your browser.</p>
+    <p>Unlike "free online scanners" that upload your files to a remote server, DocEasy runs on <b>your device</b>. Your photos are never transmitted, never stored, and never shared. That makes this tool safe for sensitive documents like bank statements, ID proofs, medical records, and confidential contracts.</p>
 
     <div class="article-image-box">
       <img id="tutorial-demo-img"
            src="../assets/images/jpg-to-pdf-demo.jpg"
-           alt="JPG to PDF Demo Scanner Workflow"
+           alt="JPG to PDF Document Scanner Workflow — DocEasy"
            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22 viewBox=%220 0 800 400%22><rect width=%22800%22 height=%22400%22 fill=%22%230f172a%22 rx=%2212%22/><text x=%22400%22 y=%22200%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2338bdf8%22 text-anchor=%22middle%22 font-weight=%22700%22>JPG · PNG · WEBP → PDF</text><text x=%22400%22 y=%22240%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%238ba3c7%22 text-anchor=%22middle%22>Place jpg-to-pdf-demo.jpg in assets/images/</text></svg>';">
       <div class="article-image-caption">JPG, PNG and WEBP images compiled into a single print-ready PDF — all processed locally.</div>
     </div>
 
-    <p>Welcome to the ultimate client-side Document Scanner and <strong>JPG to PDF</strong> conversion tool. Whether you are dealing with multi-page handwritten notes, important invoices, identity papers, certificates, or formal receipts, this tool lets you process everything directly within your web browser without uploading a single byte to any remote server. Your files remain 100% private, secure, and under your absolute control.</p>
-
-    <p>Traditional online converters require you to upload sensitive documents to a remote server, which poses a significant privacy risk. Our tool uses modern web APIs, client-side canvas transformations, and PDF generation libraries that run entirely on your device. There are no limits, no subscription fees, and no waiting queues. You can scan, edit, and export as many documents as you like, completely offline.</p>
-
-    <h3>Step-by-Step Instructions</h3>
-    <ol>
-      <li><b>Upload or Capture:</b> Click "Camera Capture" to take live photos using your smartphone camera, or select "Gallery / Files" to pick multiple images (JPG, PNG, WEBP) at once. You can also drag and drop image files directly into the drop zone. The tool supports up to 30 pages per document.</li>
-      <li><b>Crop and Perspective Correction:</b> Tap any thumbnail page to open the live editor. Drag the four corner handles to align the boundaries with your document edges. This removes unwanted background space and corrects awkward camera angles instantly.</li>
-      <li><b>Apply Filters &amp; Adjustments:</b> Switch to the Filter tab to enhance readability. Choose presets like <em>Auto Color</em>, <em>Light Text</em>, <em>Grayscale</em>, or <em>Whiteboard</em>. You can also apply a filter across all loaded pages using "Apply Filter to All Pages". Fine-tune brightness, contrast, and saturation with the sliders.</li>
-      <li><b>Organize &amp; Reorder:</b> Easily reorder pages by dragging and dropping them into your preferred sequence, or use the move and duplicate tools. You can also add blank pages if needed.</li>
-      <li><b>Export to PDF:</b> Configure page size (A4, A3, Letter, or Auto), adjust margins, select image compression quality, and click "Create &amp; Save PDF". Your document compiles instantly and downloads straight to your local device.</li>
-    </ol>
-
-    <h3>Understanding the Filters and Adjustments</h3>
-    <p>Each filter is designed for a specific type of document. <strong>Original</strong> keeps the image as-is. <strong>Auto Color</strong> boosts saturation and contrast, making colorful receipts pop. <strong>Light Text</strong> brightens the background and darkens text, ideal for faded documents. <strong>Grayscale</strong> removes color for a clean, professional look. <strong>Whiteboard</strong> converts the image to high-contrast black and white, perfect for whiteboard photos. <strong>Enhance</strong> adds sharpness and slight color correction.</p>
-
-    <h3>Page Size, Orientation, and Quality</h3>
-    <p>When exporting, you can choose a fixed page size like A4, A3, or Letter, or let the tool match the image dimensions (Auto). Orientation can be portrait or landscape. The quality slider controls JPEG compression: lower quality means smaller file size but reduced clarity; higher quality preserves details but increases file size. Medium (0.85) is a good balance for most documents.</p>
-
-    <h3>Privacy and Security</h3>
-    <p>All processing happens locally in your browser. No images or PDFs are ever uploaded to our servers. This means your sensitive documents—ID cards, contracts, medical records—never leave your device. You can even use this tool offline after the page has loaded.</p>
-
-    <h3>Tips for Best Results</h3>
+    <h2>What Does This Tool Do?</h2>
+    <p>This is a full-featured document scanner and JPG-to-PDF converter that runs entirely in your web browser. It offers:</p>
     <ul>
-      <li>Use a plain, contrasting background (e.g., a dark table for white paper).</li>
-      <li>Ensure even lighting to avoid shadows and glare.</li>
-      <li>Hold the camera as parallel to the document as possible.</li>
-      <li>Use the crop tool to trim away background clutter.</li>
-      <li>For multi-page documents, keep the order consistent before exporting.</li>
+      <li><b>Multi-image upload:</b> Add up to 30 photos at once (JPG, PNG, WEBP).</li>
+      <li><b>Camera capture:</b> Take a photo directly from your phone's rear camera.</li>
+      <li><b>Auto-orientation:</b> Detects sideways pages and rotates them automatically.</li>
+      <li><b>Perspective correction:</b> Drag four corners to fix skewed or angled photos.</li>
+      <li><b>Six smart filters:</b> Original, Auto Color, Light Text, Grayscale, Whiteboard, and Enhance.</li>
+      <li><b>Manual adjustments:</b> Brightness, contrast, saturation, and straighten sliders.</li>
+      <li><b>Page management:</b> Reorder, duplicate, delete, or add blank pages.</li>
+      <li><b>Export options:</b> A4 / A3 / Letter / Auto page size, portrait or landscape, and quality slider.</li>
+      <li><b>Privacy first:</b> Nothing is uploaded. Everything is processed using client-side JavaScript.</li>
     </ul>
 
-    <h3>Troubleshooting</h3>
-    <p>If the PDF fails to generate, check that the pdf-lib library has loaded (requires an internet connection for the first load). If an image fails to load, ensure it is a valid JPG, PNG, or WEBP file. For very large images, the tool automatically resizes them to maintain performance.</p>
+    <h2>Who is This Tool For?</h2>
+    <ul>
+      <li><b>Students:</b> Assemble notes, assignments, or scanned textbooks into a single PDF.</li>
+      <li><b>Office workers:</b> Scan receipts, invoices, and contracts into shareable PDFs.</li>
+      <li><b>eMitra / CSC operators:</b> Convert Aadhaar, PAN, and Voter ID photos into PDFs for KYC.</li>
+      <li><b>Freelancers:</b> Scan signed contracts and send them to clients without installing an app.</li>
+      <li><b>Job seekers:</b> Merge marksheets, certificates, and ID proofs into one PDF.</li>
+      <li><b>Teachers:</b> Convert handwritten exam papers into digital PDFs for evaluation.</li>
+      <li><b>Legal & medical professionals:</b> Prepare case files and patient records without leaking data.</li>
+      <li><b>Anyone tired of CamScanner's watermark:</b> This tool is completely watermark-free (except a tiny <code>doceasy.org</code> mark on each page).</li>
+    </ul>
+
+    <h2>Why Convert JPG to PDF Instead of Sharing Images?</h2>
+    <p>PDFs offer several advantages over loose image files:</p>
+    <ul>
+      <li><b>Single file:</b> A multi-page document is one PDF, not 20 separate images.</li>
+      <li><b>Consistent page size:</b> Every page fits A4 or Letter perfectly — like a proper document.</li>
+      <li><b>Universal support:</b> PDFs open on any device, any operating system, and any printer.</li>
+      <li><b>Print-ready:</b> Print all pages in order with one click.</li>
+      <li><b>Better for official use:</b> Government portals, exam forms, and employers all prefer PDF.</li>
+      <li><b>Smaller size:</b> A well-compressed PDF can be smaller than the original images.</li>
+      <li><b>Non-editable:</b> Makes it harder for someone to alter your scanned documents.</li>
+    </ul>
+
+    <h2>Step-by-Step: How to Scan &amp; Convert JPG to PDF</h2>
+    <ol>
+      <li><b>Upload or Capture:</b> Click "Camera Capture" to take photos with your phone, or "Gallery / Files" to select multiple images. You can also drag-and-drop files directly into the drop zone.</li>
+      <li><b>Crop and Correct Perspective:</b> Tap any thumbnail to open the live editor. Drag the four corner handles so the frame hugs your document. This removes background clutter and corrects angled photos.</li>
+      <li><b>Apply Filters &amp; Adjustments:</b> Switch to the Filter tab. Choose from six presets — <em>Auto Color</em>, <em>Light Text</em>, <em>Grayscale</em>, <em>Whiteboard</em>, <em>Enhance</em>. Fine-tune brightness, contrast, and saturation on the Adjust tab.</li>
+      <li><b>Organize &amp; Reorder:</b> Drag pages on the main grid to change order. Use the "Manage" tab to move, duplicate, or delete pages.</li>
+      <li><b>Export to PDF:</b> Choose page size (A4, A3, Letter, or Auto), set margins, pick quality, and click "Create &amp; Save PDF". Your PDF downloads in seconds.</li>
+    </ol>
+
+    <h2>Understanding the Six Filters</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Filter</th><th>Best For</th><th>Effect</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Original</td><td>Photographs, receipts with rich color</td><td>No change — keeps the original look</td></tr>
+          <tr><td>Auto Color</td><td>Signatures, colorful forms, certificates</td><td>Boosts saturation and contrast automatically</td></tr>
+          <tr><td>Light Text</td><td>Faded ink, old books, low-contrast text</td><td>Brightens background, darkens text</td></tr>
+          <tr><td>Grayscale</td><td>Official documents, resumes, handwritten notes</td><td>Removes color — clean professional look</td></tr>
+          <tr><td>Whiteboard</td><td>Photos of whiteboards, sketches, notes</td><td>High-contrast black and white output</td></tr>
+          <tr><td>Enhance</td><td>General scans that need a slight polish</td><td>Adds sharpness and mild color correction</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Page Size, Orientation, and Quality Explained</h2>
+    <p>When exporting, you have full control over the final PDF:</p>
+    <ul>
+      <li><b>Auto (Match Image):</b> Each page matches the aspect ratio of its image. Best for mixed-orientation scans.</li>
+      <li><b>A4:</b> Standard international document size (210 × 297 mm). Best for official submissions.</li>
+      <li><b>A3:</b> Larger format — good for drawings, posters, or engineering diagrams.</li>
+      <li><b>Letter:</b> Standard US document size (8.5 × 11 inches).</li>
+      <li><b>Portrait vs Landscape:</b> Choose based on the natural orientation of your content.</li>
+      <li><b>Quality:</b> Low (0.7) = smallest file, Medium (0.85) = recommended, High (0.95) = largest.</li>
+      <li><b>Margin:</b> 0 mm for full-bleed scans, up to 25 mm for more white space around the edges.</li>
+    </ul>
+
+    <h2>Perspective Correction — How It Works</h2>
+    <p>When you photograph a document at an angle, the result is a distorted quadrilateral — a trapezoid, not a rectangle. The DocEasy scanner uses a mathematical technique called <b>homography</b> to map your four chosen corners to a perfect rectangle.</p>
+    <p>This is the same core technique used by professional scanning apps like CamScanner and Adobe Scan — but here it runs entirely in JavaScript, inside your browser, with no server round-trip.</p>
+    <p>To use it: tap "Crop" in the editor, then drag each corner handle to align with the four corners of your document. Tap "Apply &amp; preview" to see the corrected result.</p>
+
+    <h2>Privacy &amp; Security — The DocEasy Promise</h2>
+    <p>Every step — cropping, filtering, perspective correction, PDF generation — happens on your device. Your images are read into memory using the browser's <code>FileReader</code> and <code>createImageBitmap</code> APIs, manipulated on a <code>&lt;canvas&gt;</code> element, and compiled into a PDF using the PDF-lib library.</p>
+    <p>Nothing — not one byte — is transmitted to any server. You can verify this yourself:</p>
+    <ol>
+      <li>Open Developer Tools (F12).</li>
+      <li>Click the "Network" tab.</li>
+      <li>Scan and export a PDF.</li>
+      <li>Observe: zero outgoing requests carrying your image data.</li>
+    </ol>
+    <p>This makes DocEasy safe for Aadhaar cards, PAN cards, bank statements, medical reports, legal contracts, and any other confidential document.</p>
+
+    <h2>Tips for the Best Scans</h2>
+    <ul>
+      <li><b>Plain background:</b> Place documents on a dark, matte surface for maximum contrast.</li>
+      <li><b>Even lighting:</b> Avoid direct sunlight and harsh shadows. Diffused daylight works best.</li>
+      <li><b>Parallel camera:</b> Hold the phone directly above the document — not at an angle.</li>
+      <li><b>Fill the frame:</b> The document should take up most of the photo — fewer pixels wasted on background.</li>
+      <li><b>One page at a time:</b> Individual photos give better perspective correction than multi-page shots.</li>
+      <li><b>Consistent order:</b> Arrange your photos in the correct sequence before uploading.</li>
+      <li><b>Backup:</b> Always keep original photos in case you want to redo a scan later.</li>
+    </ul>
+
+    <h2>Common Use Cases</h2>
+    <ul>
+      <li><b>College applications:</b> Merge marksheets, ID proof, and photos into one PDF.</li>
+      <li><b>Job applications:</b> Attach a single PDF containing all certificates and resume.</li>
+      <li><b>Tax filing:</b> Combine multiple receipts into a single organized document.</li>
+      <li><b>Property documents:</b> Scan sale deed, agreement, and receipts into one file.</li>
+      <li><b>Medical records:</b> Compile prescription photos, lab reports, and discharge summaries.</li>
+      <li><b>Bank KYC:</b> Combine Aadhaar, PAN, and photo into one KYC PDF.</li>
+      <li><b>School assignments:</b> Scan handwritten homework for submission.</li>
+      <li><b>Personal archive:</b> Digitize old documents and store them in the cloud.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>Is this JPG to PDF tool really free?</h3>
+    <p>Yes. It's 100% free, with no signup, no email, and no hidden charges. Use it as many times as you want.</p>
+
+    <h3>Are my photos uploaded to a server?</h3>
+    <p>No. Everything runs in your browser using Canvas API and PDF-lib. Your photos never leave your device.</p>
+
+    <h3>Can I scan documents using my phone camera?</h3>
+    <p>Yes. The "Camera Capture" button opens your phone's rear camera directly. Take a photo and it's added to the page list immediately.</p>
+
+    <h3>How many pages can I add?</h3>
+    <p>Up to 30 pages per PDF. For larger documents, split them into two PDFs and combine them with our <a href="pdf-merge.html" style="color:var(--accent); font-weight:600;">Merge PDF</a> tool.</p>
+
+    <h3>Can I correct perspective in skewed photos?</h3>
+    <p>Yes. Drag the four corner handles in the editor to align them with your document's corners. The tool corrects perspective automatically.</p>
+
+    <h3>What image formats are supported?</h3>
+    <p>Input: JPG, JPEG, PNG, and WEBP. Output: PDF only.</p>
+
+    <h3>Will the PDF have a watermark?</h3>
+    <p>A tiny <code>doceasy.org</code> mark appears at the bottom-right of each page. It's discreet and identifies the source. If you need watermark-free output, contact us.</p>
+
+    <h3>Can I reorder pages after uploading?</h3>
+    <p>Yes. Drag pages on the main grid, or use the "Manage" tab inside the editor to move, duplicate, or delete pages.</p>
+
+    <h3>Does the tool work offline?</h3>
+    <p>After the first page load, most features work offline. However, PDF generation requires the PDF-lib library, which is cached after the first use.</p>
+
+    <h3>Is there a file size limit?</h3>
+    <p>There's no hard limit, but very large images (40+ MB each) may slow down your browser. DocEasy automatically downsizes images to a reasonable resolution before processing.</p>
+
+    <h3>Can I use this for commercial purposes?</h3>
+    <p>Yes. Everything you generate belongs to you — no watermarks, no restrictions.</p>
+
+    <h3>What if a photo fails to load?</h3>
+    <p>Ensure the file is a valid JPG, PNG, or WEBP. Some HEIC files from iPhones aren't supported — convert them to JPG first.</p>
+
+    <h3>Can I add blank pages to the PDF?</h3>
+    <p>Yes. Click "Blank page" in the Pages section to insert an A4-sized blank page anywhere in the document.</p>
+
+    <h3>Does it work on iPad and Android tablets?</h3>
+    <p>Yes. The interface is responsive and touch-friendly. It works on any modern browser — Chrome, Safari, Edge, Firefox.</p>
   </section>
 
-  <div class="ad-slot-container">Advertisement</div>
+  <!-- ============ RELATED TOOLS ============ -->
+  <section class="related-tools">
+    <h2>Related PDF &amp; Image Tools</h2>
+    <p class="rt-lead">More free tools from DocEasy you might find useful.</p>
+    <div class="rt-grid">
+      <a class="rt-card" href="pdf-merge.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Merge PDF</h3>
+        <p>Combine multiple PDFs into one</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="pdf-compressor.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
+        <h3>Compress PDF</h3>
+        <p>Reduce PDF size up to 90%</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="pdf-to-jpg.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-5-5L5 21"/></svg></div>
+        <h3>PDF to JPG</h3>
+        <p>Convert PDF pages to images</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="pdf-to-word.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3>PDF to Word</h3>
+        <p>Convert PDF into editable DOCX</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="image-compressor.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="m14 10 7-7"/><path d="M20 10h-6V4"/><path d="m3 21 7-7"/><path d="M4 14h6v6"/></svg></div>
+        <h3>Image Compressor</h3>
+        <p>Reduce image size, keep quality</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="card-cropper.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M13 10h5M13 14h5M6 16h12"/></svg></div>
+        <h3>ID Card Cropper</h3>
+        <p>Crop Aadhaar, PAN, Voter ID</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+    </div>
+  </section>
+
 </main>
 
+<!-- ============ EDITOR MODAL ============ -->
 <div class="editor" id="editor" aria-hidden="true" role="dialog" aria-label="Page editor">
   <div class="ed-top">
     <button class="icon-btn" id="ed-prev" title="Previous page" aria-label="Previous page">
@@ -1112,7 +1420,8 @@ async function ensurePdfLib() {
   if (window.PDFLib && window.PDFLib.PDFDocument) return window.PDFLib;
   var urls = [
     'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js',
-    'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'
+    'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js'
   ];
   for (var i = 0; i < urls.length; i++) {
     try {
@@ -1149,7 +1458,8 @@ async function exportPDF() {
     var PDFLib = await ensurePdfLib();
     var doc = await PDFLib.PDFDocument.create();
     doc.setTitle(name);
-    doc.setProducer('doceasy Scanner');
+    doc.setProducer('DocEasy Document Scanner');
+    doc.setCreator('DocEasy');
     var wmFont = await doc.embedFont(PDFLib.StandardFonts.Helvetica);
 
     for (var i = 0; i < pages.length; i++) {
@@ -1179,22 +1489,21 @@ async function exportPDF() {
         x: (pw - dw) / 2, y: (ph - dh) / 2, width: dw, height: dh
       });
 
-      /* ============================================
-         ✅ VISIBLE WATERMARK — dark gray, 8pt, on white page
-         ============================================ */
-      var wmColor = PDFLib.rgb(0, 0, 0);   // pure black color — clearly visible on white
-      var wmSize  = 8;                               // 8-point as requested
+      /* Watermark — bottom-right, dark gray, tiny */
       var wmText  = 'doceasy.org';
+      var wmSize  = 7;
+      var wmColor = PDFLib.rgb(0, 0, 0);
+      var wmWidth = wmFont.widthOfTextAtSize(wmText, wmSize);
+      var wmX = Math.max(2, pw - marginPt - wmWidth - 4);
+      var wmY = Math.max(2, marginPt + 3);
 
-
-      // Bottom-right footer
       page.drawText(wmText, {
-        x: pw - marginPt - 30,
-        y: marginPt + 5,
+        x: wmX,
+        y: wmY,
         size: wmSize,
         font: wmFont,
         color: wmColor,
-        opacity: 1
+        opacity: 0.55
       });
 
       setProgress((i + 1) / pages.length, true);
@@ -1249,9 +1558,12 @@ function setBusy(on, text) {
 }
 
 function setProgress(frac, show) {
-  $('progress-wrap').hidden = !show;
+  var wrap = $('progress-wrap');
+  if (!wrap) return;
+  wrap.hidden = !show;
   $('progress-bar').style.width = Math.round(clamp(frac, 0, 1) * 100) + '%';
 }
+
 function closestEl(node, sel) {
   while (node && node !== document) {
     if (node.nodeType === 1 && node.matches && node.matches(sel)) return node;
