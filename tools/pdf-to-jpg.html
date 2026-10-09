@@ -3,12 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF to Image Converter (JPG, PNG, WEBP) — DocEasy</title>
-<meta name="description" content="Extract every page from a PDF into high-quality JPG, PNG, or WEBP images bundled inside a ZIP. 100% browser-based.">
-<meta name="keywords" content="pdf to jpg, pdf to png, pdf to webp, pdf to image, pdf to zip, extract images from pdf">
+<title>PDF to Image Converter (JPG, PNG, WEBP) — Free Online | DocEasy</title>
+<meta name="description" content="Convert PDF pages to high-quality JPG, PNG, or WEBP images. Extract all pages into a ZIP archive instantly. 100% browser-based, no upload, no signup, watermark-free.">
+<meta name="keywords" content="pdf to jpg, pdf to png, pdf to webp, pdf to image, pdf to zip, extract images from pdf, pdf page to image converter, free pdf converter">
 <link rel="canonical" href="https://doceasy.org/tools/pdf-to-jpg.html">
 
+<meta property="og:type" content="website">
+<meta property="og:title" content="PDF to Image Converter (JPG, PNG, WEBP) — Free | DocEasy">
+<meta property="og:description" content="Extract every PDF page as high-quality JPG, PNG, or WEBP images bundled inside a ZIP. 100% private, browser-based.">
+<meta property="og:url" content="https://doceasy.org/tools/pdf-to-jpg.html">
+<meta property="og:image" content="https://doceasy.org/assets/images/pdf-to-jpg-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF to Image Converter — Free | DocEasy">
+<meta name="twitter:description" content="Convert PDF pages to JPG, PNG, or WEBP images. 100% browser-based.">
+<meta name="twitter:image" content="https://doceasy.org/assets/images/pdf-to-jpg-demo.jpg">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
+
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
+
+<!-- SEO Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PDF to Image Converter",
+  "url": "https://doceasy.org/tools/pdf-to-jpg.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "description": "Convert PDF pages to JPG, PNG, or WEBP images. 100% browser-based, no upload."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Convert PDF Pages to Images",
+  "step": [
+    { "@type": "HowToStep", "name": "Upload PDF", "text": "Select or drop your PDF file into the upload box." },
+    { "@type": "HowToStep", "name": "Choose Format", "text": "Pick JPG, PNG, or WEBP as your output format." },
+    { "@type": "HowToStep", "name": "Convert", "text": "Click the Convert button to render each page." },
+    { "@type": "HowToStep", "name": "Download ZIP", "text": "Download all pages bundled inside a ZIP archive." }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Are my PDF files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Every page is rendered locally inside your browser using PDF.js and Canvas. Nothing is uploaded."}},
+    {"@type":"Question","name":"Do the output images have watermarks?","acceptedAnswer":{"@type":"Answer","text":"No. All output images are completely clean with no watermark, no logo, no branding."}},
+    {"@type":"Question","name":"Can I convert a password-protected PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool automatically detects encrypted PDFs and asks for the password. The password is used only locally in your browser."}},
+    {"@type":"Question","name":"Which format should I choose — JPG, PNG, or WEBP?","acceptedAnswer":{"@type":"Answer","text":"Use JPG for photos and scanned documents, PNG for text-heavy pages and screenshots, WEBP for the best compression at modern quality."}},
+    {"@type":"Question","name":"How many pages can I convert at once?","acceptedAnswer":{"@type":"Answer","text":"There is no hard limit. You can convert hundreds of pages in one go; larger PDFs take longer because rendering happens on your device."}},
+    {"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. DocEasy's PDF to Image Converter is 100% free forever — no signup, no email, no hidden charges."}}
+  ]
+}
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -61,12 +115,167 @@
 }
 .password-error {
   font-size: 12px;
-  color: var(--error);
+  color: var(--error, #dc2626);
   margin-top: 4px;
   font-weight: 600;
   display: none;
 }
 .password-error.show { display: block; }
+
+/* Related Tools Grid */
+.related-tools {
+  max-width: 1000px;
+  margin: 60px auto 0;
+}
+.related-tools h2 {
+  font-size: clamp(20px, 3.4vw, 26px);
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 8px;
+  color: var(--text-color);
+  letter-spacing: -0.5px;
+}
+.related-tools .rt-lead {
+  text-align: center;
+  color: var(--subtext-color);
+  font-size: 14px;
+  margin: 0 auto 28px;
+  max-width: 600px;
+}
+.rt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.rt-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+.rt-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(25,57,138,0.12);
+}
+.rt-card .rt-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft, rgba(25,57,138,0.08));
+  display: grid; place-items: center;
+  color: var(--accent);
+}
+.rt-card .rt-icon svg {
+  width: 20px; height: 20px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.rt-card h3 {
+  font-size: 14px; font-weight: 700; margin: 0; line-height: 1.3;
+}
+.rt-card p {
+  font-size: 11.5px; color: var(--subtext-color); margin: 0; line-height: 1.45;
+}
+.rt-card .rt-cta {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-top: auto;
+}
+
+/* Enhanced SEO article typography */
+.seo-article {
+  max-width: 900px;
+  margin: 60px auto 0;
+  padding: 40px 32px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  line-height: 1.8;
+}
+.seo-article h2 {
+  font-size: 26px; font-weight: 800;
+  color: var(--text-color);
+  margin: 36px 0 16px;
+  letter-spacing: -0.5px;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 19px; font-weight: 700;
+  color: var(--accent);
+  margin: 28px 0 12px;
+}
+.seo-article p {
+  font-size: 15.5px;
+  color: var(--subtext-color);
+  margin: 0 0 16px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol {
+  font-size: 15.5px;
+  color: var(--subtext-color);
+  line-height: 1.8;
+  margin: 0 0 18px 22px;
+}
+.seo-article li { margin-bottom: 8px; }
+.seo-article code {
+  background: var(--card-hover, #f1f5f9);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 13.5px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.article-image-box {
+  margin: 24px 0;
+  text-align: center;
+}
+.article-image-box img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.article-image-caption {
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  margin-top: 10px;
+  font-style: italic;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+.seo-article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+.seo-article th, .seo-article td {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+.seo-article th {
+  background: var(--card-hover, #f1f5f9);
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+@media (max-width: 640px) {
+  .seo-article { padding: 24px 18px; }
+  .seo-article h2 { font-size: 21px; }
+  .seo-article h3 { font-size: 17px; }
+  .rt-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
 </style>
 </head>
 <body>
@@ -79,8 +288,6 @@
     <p class="hero-sub">Extract all pages from a PDF file into high-quality JPG, PNG, or WEBP images bundled inside a ZIP archive.</p>
   </div>
 
-  <div class="ad-slot-container">Advertisement</div>
-
   <div class="tool-card" style="max-width:900px; margin:0 auto;">
     <div class="drop-zone">
       <input type="file" id="pdf-in" accept="application/pdf">
@@ -92,7 +299,6 @@
     <div id="controls" hidden>
       <p id="info" style="font-weight:600; color:var(--accent); font-size:14px; margin:0;"></p>
 
-      <!-- Password field (hidden by default, shown only if PDF is encrypted) -->
       <div class="f-group" id="passwordBox" style="display:none; margin-top:16px;">
         <label for="pdf-password">PDF Password</label>
         <input type="password" id="pdf-password" placeholder="Enter password" autocomplete="off">
@@ -123,43 +329,183 @@
     </div>
   </div>
 
-  <div class="ad-slot-container">Advertisement</div>
-
+  <!-- ============ SEO ARTICLE ============ -->
   <section class="seo-article">
-    <h2>Complete Guide: Convert PDF Pages into High-Resolution Images (ZIP)</h2>
-    <p>Extracting raster graphics, presentations, invoice records, and scanned document pages from multi-page PDFs is often necessary when embedding slides into web presentations, sharing images via social apps, or uploading pictures into document portals. The DocEasy PDF to Image Converter renders each vector page locally at high pixel density and delivers a consolidated ZIP archive in seconds.</p>
+    <h2>Complete Guide: Convert PDF Pages into High-Resolution Images</h2>
+    <p>Converting a PDF into images is one of the most common tasks for students, office workers, designers, and anyone who deals with digital documents. Whether you want to post a page on Instagram, attach a screenshot to an email, embed a page in a blog, or simply share a single page from a 100-page report on WhatsApp — extracting PDF pages as JPG, PNG, or WEBP images is the fastest way to do it.</p>
+    <p>DocEasy's PDF to Image Converter does exactly this — and it does it entirely inside your browser. No uploads, no file servers, no waiting in queues. The moment you click convert, PDF.js reads the PDF, renders every page on a hidden Canvas, converts each page to your chosen image format, and finally bundles all pages into a single downloadable ZIP archive.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/pdf-to-jpg-demo.jpg" alt="DocEasy PDF to Image Conversion and ZIP Archiving Diagram" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/pdf-to-jpg-demo.jpg]</div>';">
-      <div class="article-image-caption">High-resolution canvas extraction, sequential page naming, and ZIP bundling.</div>
+      <img src="../assets/images/pdf-to-jpg-demo.jpg" alt="DocEasy PDF to Image Conversion and ZIP Archiving" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/pdf-to-jpg-demo.jpg]</div>';">
+      <div class="article-image-caption">High-resolution canvas extraction, sequential page naming, and ZIP bundling — all done locally.</div>
     </div>
 
-    <h3>Password-Protected PDFs</h3>
-    <p>If your PDF is password-protected, the tool detects this automatically and shows a password input field. Enter the correct password, and the conversion proceeds normally. No password is stored or transmitted anywhere — it is used only in your browser to unlock the file.</p>
+    <h2>What is PDF to Image Conversion?</h2>
+    <p>PDF (Portable Document Format) is a container that stores text, images, vector graphics, and fonts together. When you open a PDF, your PDF reader renders it into pixels. PDF to image conversion is simply capturing that rendered output as a picture file — one image per page.</p>
+    <p>The result is a set of image files (JPG, PNG, or WEBP), each representing one page of your original PDF. This makes the content easier to share, embed, or edit with any image tool. For example, a PDF page can be posted directly on social media, added to a Google Slides presentation, or inserted into a Word document.</p>
 
-    <h3>Choose Your Image Format</h3>
+    <h2>Why Convert PDF to Images?</h2>
     <ul>
-      <li><b>JPG:</b> Best for photos and documents where file size matters.</li>
-      <li><b>PNG:</b> Best for graphics, screenshots, and text-heavy pages.</li>
-      <li><b>WEBP:</b> Modern format with excellent compression.</li>
+      <li><b>Sharing on social media:</b> Instagram, WhatsApp, and Facebook don't support PDF — but they love images.</li>
+      <li><b>Embedding in websites:</b> Blog posts and e-commerce listings accept image URLs, not PDFs.</li>
+      <li><b>Editing the content:</b> You can crop, annotate, or OCR an image using free tools.</li>
+      <li><b>Creating thumbnails:</b> Websites need preview images of PDF documents.</li>
+      <li><b>Uploading to portals:</b> Many government and exam portals accept only images, not PDFs.</li>
+      <li><b>Reading on any device:</b> Images open instantly on any phone without a PDF reader.</li>
+      <li><b>Archiving individual pages:</b> Sometimes you only want one page from a large report.</li>
+      <li><b>Printing single pages:</b> Print exactly one page as an image without opening a PDF reader.</li>
     </ul>
 
-    <h3>What's Inside the ZIP?</h3>
+    <h2>How to Use This Tool (Step-by-Step)</h2>
+    <ol>
+      <li><b>Upload your PDF:</b> Click the drop zone or drag a PDF file into it. The tool instantly reads the file — nothing is uploaded anywhere.</li>
+      <li><b>Enter password (if needed):</b> If the PDF is encrypted, a password box appears. Type the password — it is used only locally in your browser.</li>
+      <li><b>Choose output format:</b> Pick JPG, PNG, or WEBP depending on your use case (see comparison below).</li>
+      <li><b>Select image quality:</b> Low (smallest), High (recommended), or Maximum (largest). This affects the JPEG/WEBP compression.</li>
+      <li><b>Click "Convert &amp; Download ZIP":</b> The tool renders each page one by one, showing progress as it goes.</li>
+      <li><b>Save the ZIP:</b> Your browser downloads a ZIP file containing one image per page plus a README.html file.</li>
+    </ol>
+
+    <h2>JPG vs PNG vs WEBP — Which Format Should You Pick?</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Best For</th><th>File Size</th><th>Transparency</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>JPG</b></td><td>Photos, scanned pages, documents</td><td>Small</td><td>No</td></tr>
+          <tr><td><b>PNG</b></td><td>Text pages, screenshots, charts</td><td>Large</td><td>Yes</td></tr>
+          <tr><td><b>WEBP</b></td><td>Websites, best compression</td><td>Smallest</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><b>Rule of thumb:</b> If your PDF contains photos or scanned images, use JPG. If it contains crisp text, charts, or graphs — use PNG to preserve sharp edges. If you're uploading to a website and want the smallest file, use WEBP.</p>
+
+    <h2>Password-Protected PDFs</h2>
+    <p>Many PDFs (bank statements, exam admit cards, government documents) are encrypted with a password. DocEasy detects this automatically. As soon as you drop the file, PDF.js tries to open it — and if it throws a <code>PasswordException</code>, a password input field appears.</p>
+    <p>Enter the correct password, and the conversion proceeds normally. The password is never stored, never logged, and never leaves your browser. It is used only in-memory to unlock the PDF and render its pages.</p>
+
+    <h2>What's Inside the ZIP?</h2>
     <ul>
-      <li>One image per PDF page, named sequentially.</li>
-      <li>A <code>README.html</code> file with usage info and links.</li>
+      <li><b>One image per PDF page</b>, named like <code>your-file-page-1.jpg</code>, <code>your-file-page-2.jpg</code>, and so on.</li>
+      <li><b>A README.html file</b> — a printable A4 document that lists how many pages were converted, what format, and links back to DocEasy.</li>
     </ul>
 
-    <h3>FAQ</h3>
-    <p><b>Q: Do the images have watermarks?</b><br>
-    No. Images are clean and watermark-free.</p>
-    <p><b>Q: Can I convert a password-protected PDF?</b><br>
-    Yes. Enter the password when prompted, and the tool will unlock the file in your browser.</p>
-    <p><b>Q: Are my files uploaded?</b><br>
-    Never. Everything runs purely client-side, including password entry.</p>
+    <h2>Privacy — Why DocEasy is Different</h2>
+    <p>Most "free online PDF tools" upload your document to their servers. From there, they can technically read, log, or store your file. For sensitive documents like bank statements, ID proofs, or legal contracts, this is a real privacy risk.</p>
+    <p>DocEasy processes everything in your browser using <b>PDF.js</b> (Mozilla's open-source PDF engine) and the <b>HTML5 Canvas API</b>. When you click convert:</p>
+    <ul>
+      <li>Your file is read into the browser's memory via <code>FileReader</code> / <code>arrayBuffer()</code>.</li>
+      <li>Pages are rendered locally using your device's CPU/GPU.</li>
+      <li>Images are converted to Base64 using Canvas.</li>
+      <li>All pages are zipped using <b>JSZip</b>, entirely offline.</li>
+      <li>Nothing is sent over the network.</li>
+    </ul>
+    <p>You can verify this yourself — open Developer Tools (F12), go to the <b>Network</b> tab, and click Convert. You will see zero outgoing requests carrying your PDF data.</p>
+
+    <h2>Common Use Cases</h2>
+    <ul>
+      <li><b>Students:</b> Extract diagrams from textbook PDFs for notes and assignments.</li>
+      <li><b>Office workers:</b> Convert invoices and reports into image attachments for emails.</li>
+      <li><b>Designers:</b> Convert design mockups into high-resolution PNGs for clients.</li>
+      <li><b>Content creators:</b> Turn PDF pages into Instagram carousel images.</li>
+      <li><b>Teachers:</b> Convert exam papers into images for online classes.</li>
+      <li><b>Developers:</b> Generate preview thumbnails for uploaded PDFs.</li>
+      <li><b>eMitra / CSC operators:</b> Convert Aadhaar and PAN PDFs into images for KYC submissions.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>Are my PDF files uploaded to a server?</h3>
+    <p>No. Every page is rendered locally inside your browser using PDF.js and Canvas. Nothing is uploaded, stored, or logged.</p>
+
+    <h3>Do the output images have watermarks?</h3>
+    <p>No. All output images are completely clean — no watermark, no logo, no branding. You can use them commercially.</p>
+
+    <h3>Can I convert a password-protected PDF?</h3>
+    <p>Yes. The tool automatically detects encrypted PDFs and shows a password field. Enter the correct password, and conversion continues. The password never leaves your browser.</p>
+
+    <h3>How many pages can I convert at once?</h3>
+    <p>There is no hard limit. You can convert hundreds of pages in one go. Larger PDFs take longer because rendering happens on your device's CPU.</p>
+
+    <h3>Which format should I choose — JPG, PNG, or WEBP?</h3>
+    <p>Use JPG for photos and scanned documents, PNG for text-heavy pages and screenshots, and WEBP for the best compression at modern quality.</p>
+
+    <h3>Will the output quality be good enough for printing?</h3>
+    <p>Yes. Pages are rendered at 2× scale (approximately 144 DPI), which is sharp enough for A4 printing and screen use.</p>
+
+    <h3>What if I only want one page?</h3>
+    <p>Convert the entire PDF and simply delete the images you don't need from the extracted ZIP folder.</p>
+
+    <h3>Can I convert to a single long image instead of one image per page?</h3>
+    <p>Not currently. This tool produces one image per page, which is the standard output format for PDF-to-image conversion.</p>
+
+    <h3>Is this tool free?</h3>
+    <p>Yes. DocEasy's PDF to Image Converter is 100% free forever — no signup, no email, no hidden charges, no daily limit.</p>
+
+    <h3>Does it work on mobile phones?</h3>
+    <p>Yes. It works on Android, iPhone, and iPad in any modern browser (Chrome, Safari, Edge, Firefox).</p>
+
+    <h3>What is the maximum file size?</h3>
+    <p>There is no fixed limit, but very large PDFs (100+ MB) may slow down your browser. For best results, use Chrome or Edge on a device with at least 4 GB RAM.</p>
+
+    <h3>Are the images compressed or full quality?</h3>
+    <p>You control the quality. "Maximum" gives near-lossless quality; "Low" gives smaller files. PNG is always lossless.</p>
+
+    <h3>Can I use this for commercial purposes?</h3>
+    <p>Yes. Everything you generate with DocEasy belongs to you. You can use it for commercial projects, client work, or paid courses.</p>
+
+    <h3>Do I need to install any software?</h3>
+    <p>No. It runs entirely in your browser. No installation, no extensions, no signup.</p>
+
+    <h3>Why is the conversion taking time?</h3>
+    <p>All rendering happens on your device — not on a server. Large PDFs with many pages or high-resolution graphics take longer. A 10-page PDF typically converts in 5–10 seconds on a modern device.</p>
   </section>
 
-  <div class="ad-slot-container">Advertisement</div>
+  <!-- ============ RELATED TOOLS ============ -->
+  <section class="related-tools">
+    <h2>Related PDF &amp; Image Tools</h2>
+    <p class="rt-lead">More free tools from DocEasy you might find useful.</p>
+    <div class="rt-grid">
+      <a class="rt-card" href="pdf-merge.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Merge PDF</h3>
+        <p>Combine multiple PDFs into one file</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="pdf-compressor.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v2H4zm0 4h16v2H4zm8-14-6.17 6.17 1.41 1.41L11 8.83V14h2V8.83l3.76 3.75 1.41-1.41z"/></svg></div>
+        <h3>Compress PDF</h3>
+        <p>Reduce PDF file size up to 80%</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="pdf-split.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
+        <h3>Split PDF</h3>
+        <p>Extract pages from any PDF</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="pdf-to-word.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3>PDF to Word</h3>
+        <p>Convert PDF into editable DOCX</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="pdf-editor.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+        <h3>PDF Editor</h3>
+        <p>Edit text and images in PDFs</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+      <a class="rt-card" href="image-compressor.html">
+        <div class="rt-icon"><svg viewBox="0 0 24 24"><path d="m14 10 7-7"/><path d="M20 10h-6V4"/><path d="m3 21 7-7"/><path d="M4 14h6v6"/></svg></div>
+        <h3>Image Compressor</h3>
+        <p>Reduce image size without losing quality</p>
+        <span class="rt-cta">Open →</span>
+      </a>
+    </div>
+  </section>
+
 </main>
 
 <div id="doceasy-footer"></div>
@@ -188,7 +534,6 @@
     var file = e.target.files[0];
     if (!file) return;
 
-    // Sanitize filename
     fileName = file.name.replace(/\.[^/.]+$/, '')
       .replace(/[^a-zA-Z0-9\s\-_]/g, '')
       .replace(/\s+/g, '-')
@@ -199,7 +544,6 @@
 
     pdfFileBytes = await file.arrayBuffer();
 
-    // Detect encryption: try loading without password
     isEncrypted = false;
     passwordBox.style.display = 'none';
     passwordError.classList.remove('show');
@@ -235,7 +579,6 @@
       var mimeType = mimeMap[format] || 'image/jpeg';
       var fileExt  = extMap[format]  || '.jpg';
 
-      // Browser support check
       var testCanvas = document.createElement('canvas');
       testCanvas.width = 1; testCanvas.height = 1;
       var testUrl = testCanvas.toDataURL(mimeType);
@@ -246,7 +589,6 @@
         alert('This format is not supported in your browser. Using JPG instead.');
       }
 
-      // Build the getDocument options
       var loadOptions = { data: pdfFileBytes.slice(0) };
       if (isEncrypted) {
         var pwd = passwordIn.value;
@@ -260,7 +602,6 @@
         loadOptions.password = pwd;
       }
 
-      // Load PDF
       var pdf;
       try {
         pdf = await pdfjsLib.getDocument(loadOptions).promise;
@@ -276,7 +617,6 @@
         throw err;
       }
 
-      // If we got here, password was correct (or not needed)
       passwordError.classList.remove('show');
 
       var zip = new JSZip();
@@ -305,7 +645,6 @@
         zip.file(fileName + '-page-' + i + fileExt, base64, { base64: true });
       }
 
-      // README.html — A4 friendly, 12pt
       var readmeHtml =
         '<!DOCTYPE html>\n' +
         '<html>\n' +
@@ -353,7 +692,7 @@
         '  <a class="btn green" href="https://www.paypal.me/DPaswan198">Buy me a coffee →</a>\n' +
         '</p>\n' +
         '<h2>More Tools</h2>\n' +
-        '<p>Explore 25+ free tools for PDFs, images, and documents:</p>\n' +
+        '<p>Explore 90+ free tools for PDFs, images, and documents:</p>\n' +
         '<p class="center">\n' +
         '  <a class="btn" href="https://www.doceasy.org">Visit DocEasy →</a>\n' +
         '</p>\n' +
