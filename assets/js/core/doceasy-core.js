@@ -33,6 +33,26 @@
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) {}
 
+  /* ==========================================================================
+     ROOT-LEVEL PAGES — these live in the SITE ROOT (not inside tools/)
+     Everything else is assumed to be inside /tools/
+     ========================================================================== */
+  var ROOT_PAGES = [
+    'index',
+    'about',
+    'contact',
+    'privacy',
+    'terms',
+    'feedback',
+    'business-tools',
+    'finance-tools',
+    'printing-tools',
+    'career-tools',
+    'media-tools',
+    'categories',
+    'blog'
+  ];
+
   /* ---------- Config ---------- */
   var CONFIG = {
     brand: 'DocEasy',
@@ -51,17 +71,17 @@
 
     /* Quick Top Bar Tools */
     quickTools: [
-      { href: 'card-cropper.html',          label: 'ID Card Crop',     page: 'card-cropper' },
-      { href: 'resume-builder.html',        label: 'Resume Builder',   page: 'resume-builder' },
-      { href: 'invoice-generator.html',     label: 'Invoice Maker',    page: 'invoice-generator' },
-      { href: 'business-tools.html',        label: 'Business Tools',   page: 'business-tools' },
-      { href: 'finance-tools.html',         label: 'Finance Tools',    page: 'finance-tools' },
-      { href: 'emitra-csc-tools.html',      label: 'eMitra / CSC',     page: 'emitra-csc-tools' },
-      { href: 'pdf-merge.html',             label: 'Merge PDF',        page: 'pdf-merge' },
-      { href: 'image-compressor.html',      label: 'Compress Image',   page: 'image-compressor' },
-      { href: 'passport-maker.html',        label: 'Passport Photo',   page: 'passport-maker' },
-      { href: 'qr-generator.html',          label: 'QR Code',          page: 'qr-generator' },
-      { href: 'word-writer.html',           label: 'Word Writer',      page: 'word-writer' }
+      { href: 'card-cropper.html',          label: 'ID Card Crop' },
+      { href: 'resume-builder.html',        label: 'Resume Builder' },
+      { href: 'invoice-generator.html',     label: 'Invoice Maker' },
+      { href: 'business-tools.html',        label: 'Business Tools',  root: true },
+      { href: 'finance-tools.html',         label: 'Finance Tools',   root: true },
+      { href: 'emitra-csc-tools.html',      label: 'eMitra / CSC' },
+      { href: 'pdf-merge.html',             label: 'Merge PDF' },
+      { href: 'image-compressor.html',      label: 'Compress Image' },
+      { href: 'passport-maker.html',        label: 'Passport Photo' },
+      { href: 'qr-generator.html',          label: 'QR Code' },
+      { href: 'word-writer.html',           label: 'Word Writer' }
     ],
 
     footer: {
@@ -74,11 +94,11 @@
         { href: 'pdf-lock-unlock.html', label: 'Lock / Unlock PDF' }
       ],
       businessTools: [
-        { href: 'business-tools.html',   label: 'Business Suite' },
-        { href: 'finance-tools.html',    label: 'Finance Calculators' },
+        { href: 'business-tools.html',    label: 'Business Suite',      root: true },
+        { href: 'finance-tools.html',     label: 'Finance Calculators', root: true },
         { href: 'invoice-generator.html', label: 'GST Invoice Maker' },
-        { href: 'resume-builder.html',   label: 'Resume Builder' },
-        { href: 'word-writer.html',      label: 'Word Writer' },
+        { href: 'resume-builder.html',    label: 'Resume Builder' },
+        { href: 'word-writer.html',       label: 'Word Writer' },
         { href: 'emitra-csc-tools.html',  label: 'eMitra / CSC Tools' }
       ],
       idTools: [
@@ -99,43 +119,41 @@
     }
   };
 
-  /* ---------- Path resolver ---------- */
+  /* ==========================================================================
+     FIXED PATH RESOLVER
+     Correctly handles:
+       • Root pages (index, business-tools, finance-tools, about, etc.)
+       • Tool pages (pdf-merge, resume-builder, etc. inside /tools/)
+       • Anchor links (index.html#pdf-tools)
+       • External URLs (https://...)
+     ========================================================================== */
   function resolvePath(href, isRoot) {
     if (!href) return '#';
     if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
-    if (!isRoot && CONFIG.isSubPage) return href;
-    if (isRoot && CONFIG.isSubPage) return '../' + href;
-    if (!isRoot && !CONFIG.isSubPage && /\.html$/.test(href)) {
-      /* Files that live INSIDE the tools/ folder */
-      var TOOL_PAGES = [
-        /* PDF Tools */
-        'pdf-merge', 'pdf-split', 'pdf-compressor', 'pdf-editor',
-        'pdf-to-word', 'pdf-to-jpg', 'pdf-to-excel', 'pdf-writer',
-        'pdf-lock-unlock', 'merger',
-        /* Image Tools */
-        'image-compressor', 'image-converter', 'image-bg-remover',
-        'image-beautifier', 'photo-size-resize',
-        /* ID & Signature */
-        'card-cropper', 'passport-maker', 'signature-resize',
-        'signature-bg-remover', 'pan-photo-signature-resizer',
-        'id-2in1-maker',
-        /* Media & Audio */
-        'media-screen-recorder', 'media-webcam-recorder', 'media-voice-recorder',
-        'media-text-to-speech', 'media-meme-generator', 'media-editor',
-        'media-mic-test', 'media-webcam-test',
-        'video-enhancer', 'video-voice-changer', 'noise-remover',
-        /* Converters */
-        'jpg-to-pdf', 'word-to-pdf', 'excel-to-pdf', 'ppt-to-pdf',
-        /* Utility & Career */
-        'qr-generator', 'qr-scanner', 'doc-scanner', 'word-counter',
-        'invoice-generator', 'word-writer', 'resume-builder',
-        /* Hubs inside tools/ */
-        'emitra-csc-tools', 'all-tools'
-      ];
-      var name = href.replace('.html', '');
-      if (TOOL_PAGES.indexOf(name) !== -1) return 'tools/' + href;
+
+    // Extract base name (without .html and without #anchor)
+    var baseName = href.split('#')[0].replace(/\.html$/, '');
+
+    // Is this link pointing to a page that lives in the ROOT folder?
+    var isRootPage = isRoot === true || ROOT_PAGES.indexOf(baseName) !== -1;
+
+    if (CONFIG.isSubPage) {
+      // We are currently inside /tools/ folder
+      if (isRootPage) {
+        // Root page → go up one level
+        return '../' + href;
+      }
+      // Tool page → same folder, use as-is
+      return href;
+    } else {
+      // We are currently at site root (index.html, business-tools.html, etc.)
+      if (isRootPage) {
+        // Root page → use as-is
+        return href;
+      }
+      // Tool page → prefix with tools/
+      return 'tools/' + href;
     }
-    return href;
   }
 
   /* ---------- Header builder ---------- */
@@ -145,7 +163,7 @@
     }).join('');
 
     var quickLinks = CONFIG.quickTools.map(function (t) {
-      return '<a href="' + resolvePath(t.href, false) + '" data-page="' + t.page + '">' + t.label + '</a>';
+      return '<a href="' + resolvePath(t.href, t.root) + '" data-page="' + t.href.replace('.html', '') + '">' + t.label + '</a>';
     }).join('');
 
     var homeHref = resolvePath('index.html', true);
@@ -205,9 +223,9 @@
 
   /* ---------- Footer builder ---------- */
   function buildFooter() {
-    function col(title, items, isRoot) {
+    function col(title, items) {
       var lis = items.map(function (it) {
-        return '<li><a href="' + resolvePath(it.href, isRoot || it.root) + '">' + it.label + '</a></li>';
+        return '<li><a href="' + resolvePath(it.href, it.root) + '">' + it.label + '</a></li>';
       }).join('');
       return '<div class="footer-col"><h5>' + title + '</h5><ul>' + lis + '</ul></div>';
     }
@@ -224,10 +242,10 @@
           '<span>☕</span> Support DocEasy' +
         '</button>' +
       '</div>' +
-      col('PDF Tools',      CONFIG.footer.pdfTools,      false) +
-      col('Business Suite', CONFIG.footer.businessTools, false) +
-      col('ID Tools',       CONFIG.footer.idTools,       false) +
-      col('Company',        CONFIG.footer.legal,         true)  +
+      col('PDF Tools',      CONFIG.footer.pdfTools) +
+      col('Business Suite', CONFIG.footer.businessTools) +
+      col('ID Tools',       CONFIG.footer.idTools) +
+      col('Company',        CONFIG.footer.legal) +
       '</div><div class="footer-bottom-bar">' +
         '<div>© <span id="de-year"></span> DocEasy. All rights reserved.</div>' +
         '<div><a class="made-with-love-link" href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Made with ❤️ by Deepaak Kumar</a></div>' +
@@ -242,6 +260,7 @@
     var f = document.getElementById('doceasy-footer');
     if (f && !document.querySelector('.site-footer')) f.outerHTML = buildFooter();
 
+    /* Mark active quick tool link */
     var current = location.pathname.split('/').pop().replace('.html', '');
     document.querySelectorAll('.top-nav a[data-page]').forEach(function (a) {
       if (a.getAttribute('data-page') === current) a.classList.add('active');
