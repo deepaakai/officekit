@@ -81,28 +81,21 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Drop zone — native popup trigger (Camera + Files chooser) */
-.drop-zone {
-  position: relative;
+/* Single visible scan button */
+.drop-zone-btn {
+  display: block;
+  width: 100%;
   border: 2px dashed var(--accent);
   background: var(--accent-soft);
   border-radius: 10px;
   padding: 40px 20px;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
-  display: block;
   text-align: center;
+  font-family: inherit;
 }
-.drop-zone:hover { background: var(--accent-soft-hover); }
-.drop-zone input[type="file"] {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-.drop-zone .dz-icon {
+.drop-zone-btn:hover { background: var(--accent-soft-hover); }
+.drop-zone-btn .dz-icon {
   width: 56px; height: 56px;
   border-radius: 16px;
   background: rgba(255,255,255,0.6);
@@ -110,18 +103,105 @@
   display: grid; place-items: center;
   margin: 0 auto 14px;
 }
-.drop-zone .dz-icon svg {
+.drop-zone-btn .dz-icon svg {
   width: 30px; height: 30px;
   stroke: currentColor; fill: none; stroke-width: 1.8;
 }
-.drop-zone h3 {
+.drop-zone-btn h3 {
   color: var(--text-color); margin: 0 0 6px;
   font-size: 18px; font-weight: 800;
 }
-.drop-zone p {
+.drop-zone-btn p {
   color: var(--subtext-color); margin: 0;
   font-size: 13.5px;
 }
+
+/* ============ Scan chooser modal ============ */
+.scan-modal {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: scanFadeIn 0.2s ease;
+}
+.scan-modal.show { display: flex; }
+@keyframes scanFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.scan-modal-inner {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 26px 22px 20px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  animation: scanSlideUp 0.25s ease;
+}
+@keyframes scanSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.scan-modal-inner h3 {
+  font-size: 18px; font-weight: 800;
+  color: var(--text-color); margin: 0 0 4px;
+}
+.scan-modal-inner p {
+  font-size: 13px; color: var(--subtext-color);
+  margin: 0 0 20px;
+}
+.scan-modal-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.scan-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+.scan-opt:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+}
+.scan-opt svg {
+  width: 32px; height: 32px;
+  stroke: var(--accent); fill: none;
+  stroke-width: 1.8;
+}
+.scan-opt span {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-color);
+}
+.scan-modal-cancel {
+  background: none;
+  border: none;
+  color: var(--subtext-color);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 16px;
+  font-family: inherit;
+  text-decoration: underline;
+}
+.scan-modal-cancel:hover { color: var(--accent); }
 
 /* ============ Result box ============ */
 .result-box {
@@ -364,7 +444,7 @@
     </div>
     <div class="hd-text">
       <b>Instant QR Scan — Camera or Image Upload</b>
-      <small>Tap the box below to open Camera or Files. Loud beep plays when a QR code is detected. Nothing is uploaded.</small>
+      <small>Tap the button below, then choose Camera or Files. Loud beep plays when a QR code is detected. Nothing is uploaded.</small>
     </div>
   </div>
 
@@ -373,9 +453,8 @@
   <div style="text-align:center;">
     <div class="upload-box">
 
-      <!-- SINGLE TAP BOX — opens native Camera/Files chooser (Camera + Files) -->
-      <label class="drop-zone" for="fileInput">
-        <input type="file" id="fileInput" accept="image/*">
+      <!-- Single visible button -->
+      <button type="button" class="drop-zone-btn" id="openScanBtn">
         <div class="dz-icon">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -385,7 +464,11 @@
         </div>
         <h3>Tap to Scan QR Code</h3>
         <p>Opens Camera or Files — PNG, JPG, WEBP supported</p>
-      </label>
+      </button>
+
+      <!-- Hidden inputs — one for camera, one for gallery -->
+      <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+      <input type="file" id="galleryInput" accept="image/*" hidden>
 
       <!-- Progress -->
       <div class="progress-wrap" id="progressWrap">
@@ -443,7 +526,7 @@
       Why use DocEasy QR Scanner?
     </h3>
     <ul>
-      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Native Camera / Files chooser on mobile</li>
+      <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Choose Camera or Files every time</li>
       <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Loud beep when QR is detected</li>
       <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 100% private — nothing is uploaded</li>
       <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Copy or open result instantly</li>
@@ -459,7 +542,7 @@
 
     <p>QR codes are everywhere. They are on product packaging, restaurant menus, business cards, event tickets, payment screens, boarding passes, government forms, and even on billboards. What started as a tool for tracking auto parts in Japanese factories has become the universal shortcut between the physical and digital world. Yet many people still do not know how to scan one without a dedicated app — or how to safely check a QR code before opening it.</p>
 
-    <p>The <strong>DocEasy QR Code Scanner</strong> solves both problems. It works entirely in your browser — no app installation, no signup, no upload. Tap one box and the native Camera or Files chooser opens on your phone. Pick a fresh photo or an existing screenshot — the QR code is decoded instantly, with a loud beep to confirm success. Everything happens locally on your device.</p>
+    <p>The <strong>DocEasy QR Code Scanner</strong> solves both problems. It works entirely in your browser — no app installation, no signup, no upload. Tap one button, then choose Camera or Files from the popup. Pick a fresh photo or an existing screenshot — the QR code is decoded instantly, with a loud beep to confirm success. Everything happens locally on your device.</p>
 
     <h3>What is a QR Code?</h3>
 
@@ -520,9 +603,9 @@
     <p>Using the scanner takes only a few seconds. Here is the exact process:</p>
 
     <ol>
-      <li><b>Tap the box:</b> Tap the large drop zone at the top. On mobile, the native chooser opens automatically with <b>Camera</b> and <b>Files</b> options.</li>
-      <li><b>Choose Camera:</b> Snap a fresh photo of the QR code you want to scan. The tool decodes it automatically.</li>
-      <li><b>Or choose Files:</b> Pick an existing screenshot or photo from your gallery. The tool decodes any QR code inside it.</li>
+      <li><b>Tap the button:</b> Tap the large scan button at the top. A popup opens with two big options — <b>Camera</b> and <b>Files</b>.</li>
+      <li><b>Choose Camera:</b> Your phone's camera opens. Snap a fresh photo of the QR code you want to scan.</li>
+      <li><b>Or choose Files:</b> Your gallery / file picker opens. Select an existing screenshot or photo that contains a QR code.</li>
       <li><b>Wait for the beep:</b> When a valid QR code is decoded, a loud confirmation beep plays and the result appears in a clean card below.</li>
       <li><b>Copy or open:</b> Click "Copy" to copy the text to your clipboard, or "Open Link" to open a URL in a new tab. The "Open Link" button only appears for URLs.</li>
       <li><b>Scan another:</b> Click "Scan Another" to clear the result and scan a fresh QR code.</li>
@@ -646,7 +729,7 @@
 
     <details>
       <summary>Can I scan QR codes from a screenshot?</summary>
-      <p>Yes. Tap the box and choose Files, then select the screenshot from your gallery. The tool decodes any QR code inside it, even if the QR is inverted (white on black) or low contrast.</p>
+      <p>Yes. Tap the button, choose Files, then select the screenshot from your gallery. The tool decodes any QR code inside it, even if the QR is inverted (white on black) or low contrast.</p>
     </details>
 
     <details>
@@ -656,7 +739,7 @@
 
     <details>
       <summary>Does it work on mobile phones?</summary>
-      <p>Yes. Tapping the box opens the native Camera / Files chooser on both iOS and Android. No app installation required.</p>
+      <p>Yes. Tap the button, then choose Camera or Files from the popup. Both options work on iOS and Android. No app installation required.</p>
     </details>
 
     <details>
@@ -716,6 +799,32 @@
 
 <div id="doceasy-footer"></div>
 
+<!-- Scan chooser modal -->
+<div class="scan-modal" id="scanModal">
+  <div class="scan-modal-inner">
+    <h3>Scan QR Code</h3>
+    <p>Choose where to get the image from</p>
+    <div class="scan-modal-options">
+      <button type="button" class="scan-opt" id="pickCamera">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span>Camera</span>
+      </button>
+      <button type="button" class="scan-opt" id="pickGallery">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.6"/>
+          <path d="M21 15.5l-4.5-4.5L5.5 21"/>
+        </svg>
+        <span>Files</span>
+      </button>
+    </div>
+    <button type="button" class="scan-modal-cancel" id="cancelScan">Cancel</button>
+  </div>
+</div>
+
 <div class="toast" id="toast">
   <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="toastIcon">
     <path d="M20 6L9 17l-5-5"/>
@@ -731,18 +840,24 @@
 
   var $ = function (id) { return document.getElementById(id); };
 
-  var fileInput     = $('fileInput');
-  var progressWrap  = $('progressWrap');
-  var progressText  = $('progressText');
-  var resultBox     = $('resultBox');
-  var resultHeading = $('resultHeading');
-  var resultText    = $('resultText');
-  var copyBtn       = $('copyBtn');
-  var openBtn       = $('openBtn');
-  var scanAgainBtn  = $('scanAgainBtn');
-  var toast         = $('toast');
-  var toastMsg      = $('toastMsg');
-  var toastIcon     = $('toastIcon');
+  var openScanBtn  = $('openScanBtn');
+  var cameraInput  = $('cameraInput');
+  var galleryInput = $('galleryInput');
+  var scanModal    = $('scanModal');
+  var pickCamera   = $('pickCamera');
+  var pickGallery  = $('pickGallery');
+  var cancelScan   = $('cancelScan');
+  var progressWrap = $('progressWrap');
+  var progressText = $('progressText');
+  var resultBox    = $('resultBox');
+  var resultHeading= $('resultHeading');
+  var resultText   = $('resultText');
+  var copyBtn      = $('copyBtn');
+  var openBtn      = $('openBtn');
+  var scanAgainBtn = $('scanAgainBtn');
+  var toast        = $('toast');
+  var toastMsg     = $('toastMsg');
+  var toastIcon    = $('toastIcon');
 
   var scanCanvas = document.createElement('canvas');
   var scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true });
@@ -830,14 +945,41 @@
     if (text) progressText.textContent = text;
   }
 
-  /* ---------- Handle file (from Camera OR Files) ---------- */
-  fileInput.addEventListener('change', function () {
-    if (this.files && this.files[0]) {
-      scanImageFile(this.files[0]);
-    }
+  /* ---------- Open chooser modal ---------- */
+  openScanBtn.addEventListener('click', function () {
+    scanModal.classList.add('show');
+  });
+
+  function closeScanModal() {
+    scanModal.classList.remove('show');
+  }
+  cancelScan.addEventListener('click', closeScanModal);
+  scanModal.addEventListener('click', function (e) {
+    if (e.target === scanModal) closeScanModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeScanModal();
+  });
+
+  pickCamera.addEventListener('click', function () {
+    closeScanModal();
+    cameraInput.click();
+  });
+  pickGallery.addEventListener('click', function () {
+    closeScanModal();
+    galleryInput.click();
+  });
+
+  cameraInput.addEventListener('change', function () {
+    if (this.files && this.files[0]) scanImageFile(this.files[0]);
+    this.value = '';
+  });
+  galleryInput.addEventListener('change', function () {
+    if (this.files && this.files[0]) scanImageFile(this.files[0]);
     this.value = '';
   });
 
+  /* ---------- Decode image ---------- */
   async function scanImageFile(file) {
     if (!file) return;
     if (!/^image\//.test(file.type)) {
@@ -870,7 +1012,6 @@
         var imgData = scanCtx.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
 
         var code = null;
-
         code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, {
           inversionAttempts: 'attemptBoth'
         });
@@ -914,6 +1055,7 @@
     img.src = url;
   }
 
+  /* ---------- Show result ---------- */
   function showResult(text) {
     resultText.textContent = text;
     var isUrl = /^https?:\/\//i.test(text.trim());
@@ -924,6 +1066,7 @@
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  /* ---------- Copy ---------- */
   copyBtn.addEventListener('click', function () {
     var txt = resultText.textContent || '';
     if (!txt || txt === '—') return;
@@ -950,12 +1093,14 @@
     ta.remove();
   }
 
+  /* ---------- Open URL ---------- */
   openBtn.addEventListener('click', function () {
     var url = openBtn.dataset.url;
     if (!url) return;
     window.open(url, '_blank', 'noopener,noreferrer');
   });
 
+  /* ---------- Scan Again ---------- */
   scanAgainBtn.addEventListener('click', function () {
     resultBox.classList.remove('show');
     resultText.textContent = '—';
