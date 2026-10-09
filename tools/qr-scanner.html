@@ -81,7 +81,7 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Drop zone — native popup trigger */
+/* Drop zone — native popup trigger (Camera + Files chooser) */
 .drop-zone {
   position: relative;
   border: 2px dashed var(--accent);
@@ -287,10 +287,6 @@
   color: var(--accent); margin: 32px 0 16px;
   line-height: 1.4; word-wrap: break-word;
 }
-.seo-article h4 {
-  font-size: 17px !important; font-weight: 700;
-  color: var(--text-color); margin: 24px 0 12px;
-}
 .seo-article p {
   font-size: 16px !important; color: var(--subtext-color);
   margin: 0 0 20px; line-height: 1.8;
@@ -310,26 +306,6 @@
   background: var(--card-hover); padding: 2px 8px;
   border-radius: 5px; font-family: ui-monospace, monospace;
   font-size: 14px; color: var(--accent);
-}
-
-.article-image-box {
-  margin: 32px auto; max-width: 720px;
-  border-radius: 12px; overflow: hidden;
-  border: 1px solid var(--border-color);
-  background: #fff; text-align: center;
-}
-.article-image-box img {
-  width: 100%; max-height: 360px;
-  object-fit: contain; padding: 20px;
-  display: block; margin: 0 auto;
-  box-sizing: border-box;
-}
-.article-image-caption {
-  padding: 14px 18px; font-size: 13px;
-  color: var(--subtext-color);
-  background: var(--card-bg);
-  border-top: 1px solid var(--border-color);
-  line-height: 1.55;
 }
 
 .seo-article details {
@@ -364,7 +340,6 @@
   .seo-article h3 { font-size: 18px !important; }
   .seo-article p { font-size: 15.5px !important; }
   .seo-article li { font-size: 15px !important; }
-  .article-image-box img { max-height: 260px; padding: 14px; }
 }
 </style>
 </head>
@@ -398,7 +373,7 @@
   <div style="text-align:center;">
     <div class="upload-box">
 
-      <!-- SINGLE TAP BOX — opens native Camera/Files chooser -->
+      <!-- SINGLE TAP BOX — opens native Camera/Files chooser (Camera + Files) -->
       <label class="drop-zone" for="fileInput">
         <input type="file" id="fileInput" accept="image/*">
         <div class="dz-icon">
@@ -485,11 +460,6 @@
     <p>QR codes are everywhere. They are on product packaging, restaurant menus, business cards, event tickets, payment screens, boarding passes, government forms, and even on billboards. What started as a tool for tracking auto parts in Japanese factories has become the universal shortcut between the physical and digital world. Yet many people still do not know how to scan one without a dedicated app — or how to safely check a QR code before opening it.</p>
 
     <p>The <strong>DocEasy QR Code Scanner</strong> solves both problems. It works entirely in your browser — no app installation, no signup, no upload. Tap one box and the native Camera or Files chooser opens on your phone. Pick a fresh photo or an existing screenshot — the QR code is decoded instantly, with a loud beep to confirm success. Everything happens locally on your device.</p>
-
-    <div class="article-image-box">
-      <img src="../assets/images/qr-scanner-demo.jpg" alt="QR Code Scanner demo showing camera scan and image upload options" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Image: assets/images/qr-scanner-demo.jpg]</div>';">
-      <div class="article-image-caption">Tap once to open Camera or Files — decode any QR code instantly in your browser.</div>
-    </div>
 
     <h3>What is a QR Code?</h3>
 
@@ -815,22 +785,19 @@
       if (audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
-      // Two-tone loud beep for clear success confirmation
       var now = audioCtx.currentTime;
 
-      // First tone — 880 Hz
       var osc1 = audioCtx.createOscillator();
       var gain1 = audioCtx.createGain();
-      osc1.type = 'square';          // square wave = louder and sharper than sine
+      osc1.type = 'square';
       osc1.frequency.value = 880;
-      gain1.gain.setValueAtTime(1.0, now);      // MAX volume
+      gain1.gain.setValueAtTime(1.0, now);
       gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
       osc1.connect(gain1);
       gain1.connect(audioCtx.destination);
       osc1.start(now);
       osc1.stop(now + 0.15);
 
-      // Second tone — 1320 Hz, slightly delayed
       var osc2 = audioCtx.createOscillator();
       var gain2 = audioCtx.createGain();
       osc2.type = 'square';
@@ -841,9 +808,7 @@
       gain2.connect(audioCtx.destination);
       osc2.start(now + 0.18);
       osc2.stop(now + 0.35);
-
     } catch (e) {
-      // Silent fail — some browsers block audio before user interaction
       console.warn('Beep failed:', e);
     }
   }
@@ -906,12 +871,10 @@
 
         var code = null;
 
-        // Attempt 1: as-is, both inversions
         code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, {
           inversionAttempts: 'attemptBoth'
         });
 
-        // Attempt 2: high-contrast black & white
         if (!code) {
           try {
             var tempData = new Uint8ClampedArray(imgData.data);
@@ -931,7 +894,7 @@
         setProgress(false);
 
         if (code && code.data) {
-          playBeep();        // ← LOUD BEEP on success
+          playBeep();
           showResult(code.data);
         } else {
           showToast('No QR code found. Try a clearer image.', 'error');
@@ -951,7 +914,6 @@
     img.src = url;
   }
 
-  /* ---------- Show result ---------- */
   function showResult(text) {
     resultText.textContent = text;
     var isUrl = /^https?:\/\//i.test(text.trim());
@@ -962,7 +924,6 @@
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  /* ---------- Copy ---------- */
   copyBtn.addEventListener('click', function () {
     var txt = resultText.textContent || '';
     if (!txt || txt === '—') return;
@@ -989,14 +950,12 @@
     ta.remove();
   }
 
-  /* ---------- Open URL ---------- */
   openBtn.addEventListener('click', function () {
     var url = openBtn.dataset.url;
     if (!url) return;
     window.open(url, '_blank', 'noopener,noreferrer');
   });
 
-  /* ---------- Scan Again ---------- */
   scanAgainBtn.addEventListener('click', function () {
     resultBox.classList.remove('show');
     resultText.textContent = '—';
