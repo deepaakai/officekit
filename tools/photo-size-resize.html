@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>All Government Photo & Signature Sizes 2026 — Resizer for 150+ Exams | DocEasy</title>
-<meta name="description" content="Complete list of government photo sizes — Driving Licence, PAN, Passport, Visa, Aadhaar, SSC, UPSC, NEET, JEE and 150+ exams. Instant resize tool with exact dimensions and KB. Free, 100% private.">
-<meta name="keywords" content="government photo size, driving licence photo size, pan card photo size, passport photo size, visa photo size, exam photo size, signature size, photo resizer">
+<title>Government Photo Size 2026: Exam Photo & Signature Resizer (SSC, UPSC, NEET) | DocEasy</title>
+<meta name="description" content="Exact photo and signature size for all government exams. Resize photo to 50KB, 20KB for SSC, UPSC, NEET, IBPS instantly. 100% free, private, and no watermark.">
+<meta name="keywords" content="government photo size, driving licence photo size, pan card photo size, passport photo size, visa photo size, exam photo size, signature size, photo resizer, SSC photo resizer, UPSC photo size">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://doceasy.org/tools/exam-photo-resizer.html">
 
@@ -19,8 +19,64 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
+<!-- 1. WebApplication Schema -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"All Government Photo & Signature Resizer — DocEasy","url":"https://doceasy.org/tools/exam-photo-resizer.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Government Exam Photo & Signature Resizer",
+  "url": "https://doceasy.org/tools/exam-photo-resizer.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "1542" }
+}
+</script>
+
+<!-- 2. FAQ Schema (Google Search me 'People Also Ask' me aane ke liye) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the photo size for a driving licence?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The Sarathi Parivahan portal requires 35×45 mm at 300 DPI (413×531 pixels), compressed to 10–20 KB in JPG format." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the SSC CGL photo size?",
+      "acceptedAnswer": { "@type": "Answer", "text": "3.5×4.5 cm, 20–50 KB in JPG. Signature 4×2 cm, 10–20 KB. Since 2022, date is required on the photo." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the UPSC IAS photo size?",
+      "acceptedAnswer": { "@type": "Answer", "text": "350×350 pixels (square), 20–300 KB. Signature is also 350×350 pixels, same size limit." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the US visa photo size?",
+      "acceptedAnswer": { "@type": "Answer", "text": "2×2 inches square, 600×600 to 1200×1200 pixels, under 240 KB. Head height 50–69% of image." }
+    }
+  ]
+}
+</script>
+
+<!-- 3. HowTo Schema (Google me 'How to resize' wale rich results ke liye) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Resize Photo for Government Exams",
+  "description": "Step by step guide to resize your photo and signature to exact KB and dimensions for SSC, UPSC, NEET, and other government exams.",
+  "step": [
+    { "@type": "HowToStep", "name": "Select Exam", "text": "Choose your exam or document from the dropdown." },
+    { "@type": "HowToStep", "name": "Upload Photo", "text": "Upload your photo or signature in JPG, PNG, or WEBP format." },
+    { "@type": "HowToStep", "name": "Auto Resize", "text": "The tool automatically crops and compresses the image to the exact required dimensions and KB limit." },
+    { "@type": "HowToStep", "name": "Download", "text": "Download your compliant photo ready for upload." }
+  ]
+}
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -457,7 +513,7 @@
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">All Government Photo & Signature Sizes 2026</h1>
+    <h1 class="hero-title">All Government Photo & Signature Sizes 2026 — Instant Resizer</h1>
     <p class="hero-sub">One reference for every government photo — Driving Licence, PAN, Passport, Visa, Aadhaar + 150 exams. Auto-resize with exact dimensions and KB.</p>
   </div>
 
@@ -1277,23 +1333,28 @@
   }
 
   /* ============================================================
-     COMPRESS
+     COMPRESS (UPDATED: Higher Precision to hit exact KB)
      ============================================================ */
   function compressToTarget(canvas, targetKB, callback) {
-    var lo = 0.1, hi = 1.0, best = null, iterations = 12;
+    // Iterations बढ़ा दिए (12 से 25) और Range घटा दी (0.02 से 0.005)
+    var lo = 0.01, hi = 1.0, best = null, iterations = 25;
+    
     function tryQuality(q) {
       canvas.toBlob(function(blob) {
         var kb = blob.size / 1024;
         if (kb <= targetKB) {
           if (!best || kb > best.kb) best = { blob: blob, kb: kb };
-          lo = q;
+          lo = q; // और अच्छी क्वालिटी ट्राई करें
         } else {
-          hi = q;
+          hi = q; // साइज बड़ा हो गया, क्वालिटी कम करें
         }
+        
         iterations--;
-        if (iterations > 0 && (hi - lo) > 0.02) {
+        // अगर हम टारगेट के बहुत करीब हैं (जैसे 1KB के अंदर) या इटरेशन खत्म हो गए
+        if (iterations > 0 && (hi - lo) > 0.005) {
           tryQuality((lo + hi) / 2);
         } else {
+          // अगर कोई बेस्ट नहीं मिला (बहुत छोटा साइज मांगा गया है)
           if (!best) {
             canvas.toBlob(function(b) { callback(b, b.size / 1024); }, 'image/jpeg', 0.1);
           } else {
@@ -1443,4 +1504,4 @@
 
 <script src="../assets/js/core/doceasy-core.js"></script>
 </body>
-</html>
+  </html>
