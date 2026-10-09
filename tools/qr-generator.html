@@ -1,99 +1,706 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>QR Code Generator Online — DocEasy</title>
-<meta name="description" content="Generate high-definition QR codes from any URL, text, or payment link. Free, private, no signup.">
+<title>QR Code Generator Online Free — Create Custom QR Codes | DocEasy</title>
+<meta name="description" content="Free online QR code generator. Create high-definition QR codes for URLs, text, UPI payments, WiFi, vCard contacts, and more. No signup, 100% private, no watermark.">
+<meta name="keywords" content="qr code generator, qr generator online, free qr code maker, upi qr code, wifi qr code, vcard qr, custom qr code, qr code download png">
+<meta name="robots" content="index, follow">
 <link rel="canonical" href="https://doceasy.org/tools/qr-generator.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="QR Code Generator Online Free — DocEasy">
+<meta property="og:description" content="Create custom QR codes for URLs, UPI, WiFi, vCard and more. Free, private, no signup.">
+<meta property="og:url" content="https://doceasy.org/tools/qr-generator.html">
+<meta property="og:image" content="https://doceasy.org/assets/images/qr-generator-demo.jpg">
+<meta property="og:site_name" content="DocEasy">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="QR Code Generator Online Free — DocEasy">
+<meta name="twitter:description" content="Create custom QR codes for URLs, UPI, WiFi, vCard and more. Free, private, no signup.">
+<meta name="twitter:image" content="https://doceasy.org/assets/images/qr-generator-demo.jpg">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2319398a'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='white' text-anchor='middle' font-family='Arial'%3EDE%3C/text%3E%3C/svg%3E">
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
 <style>
-.input-box label { display: block; font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
-.input-box input {
-  width: 100%; height: 46px;
+.ad-slot-container,
+.ad-placeholder { display: none !important; }
+
+/* ============ TOOL ============ */
+.qr-tool-card {
+  max-width: 640px;
+  margin: 0 auto;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  color: var(--text-color);
-  padding: 0 12px; border-radius: 6px; font-size: 14px;
+  border-radius: 14px;
+  padding: 26px 22px;
+  box-shadow: var(--shadow-md);
 }
-.input-box input:focus { border-color: var(--accent); }
+
+.qr-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border-color);
+}
+.qr-tab {
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  text-align: center;
+}
+.qr-tab:hover { border-color: var(--accent); color: var(--accent); }
+.qr-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(25,57,138,0.28);
+}
+@media (max-width: 560px) {
+  .qr-tabs { grid-template-columns: repeat(2, 1fr); }
+}
+
+.input-box { margin-bottom: 16px; }
+.input-box label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+.input-box input,
+.input-box textarea {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-color);
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input-box input { height: 46px; }
+.input-box textarea {
+  min-height: 90px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.input-box input:focus,
+.input-box textarea:focus { border-color: var(--accent); }
+
+.qr-size-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.qr-size-btn {
+  flex: 1;
+  min-width: 70px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.qr-size-btn:hover { border-color: var(--accent); color: var(--accent); }
+.qr-size-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
 
 .qr-preview-box {
-  text-align: center; margin: 25px 0; padding: 20px;
-  background: var(--card-bg);
+  text-align: center;
+  margin: 22px 0;
+  padding: 22px;
+  background: var(--card-hover);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
-  display: inline-block; width: 100%;
+  border-radius: 12px;
 }
 .qr-preview-box img {
-  width: 240px; height: 240px;
+  width: 240px;
+  height: 240px;
   border: 1px solid var(--border-color);
-  padding: 8px; border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   background: #ffffff;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+.qr-preview-box img:hover { transform: scale(1.02); }
+.qr-preview-info {
+  font-size: 12.5px;
+  color: var(--subtext-color);
+  margin-top: 12px;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.primary-button {
+  flex: 1;
+  min-width: 180px;
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  box-shadow: 0 6px 18px rgba(25,57,138,0.28);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.primary-button:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-2px); }
+.primary-button:disabled { opacity: 0.55; cursor: not-allowed; }
+.secondary-button {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: inherit;
+}
+.secondary-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============ SEO ARTICLE ============ */
+.seo-article {
+  max-width: 860px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  line-height: 1.8;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+.seo-article h2 {
+  font-size: 26px !important;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+}
+.seo-article h2:first-child { margin-top: 0; }
+.seo-article h3 {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  line-height: 1.4;
+}
+.seo-article h4 {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 24px 0 12px;
+}
+.seo-article p {
+  font-size: 16px !important;
+  color: var(--subtext-color);
+  margin: 0 0 20px;
+  line-height: 1.8;
+}
+.seo-article ul, .seo-article ol {
+  margin: 20px 0;
+  padding-left: 24px;
+}
+.seo-article li {
+  font-size: 15.5px !important;
+  color: var(--subtext-color);
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+.seo-article b, .seo-article strong { color: var(--text-color); font-weight: 700; }
+.seo-article a { color: var(--accent); text-decoration: underline; font-weight: 600; }
+.seo-article a:hover { color: var(--accent-hover); }
+.seo-article code {
+  background: var(--card-hover);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  color: var(--accent);
+}
+.seo-article details {
+  background: var(--card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+.seo-article details:hover { border-color: var(--accent); }
+.seo-article details summary {
+  font-size: 15px !important;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.seo-article details summary::-webkit-details-marker { display: none; }
+.seo-article details summary::after {
+  content: "+";
+  font-size: 20px;
+  color: var(--accent);
+  font-weight: 300;
+}
+.seo-article details[open] summary::after { content: "−"; }
+.seo-article details p {
+  margin: 12px 0 0 !important;
+  font-size: 14.5px !important;
+  line-height: 1.7;
+}
+
+.article-image-box {
+  margin: 32px auto;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  text-align: center;
+}
+.article-image-box img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  margin: 0 auto;
+}
+.article-image-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--subtext-color);
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .seo-article { padding: 28px 20px; margin: 32px auto; }
+  .seo-article h2 { font-size: 22px !important; }
+  .seo-article h3 { font-size: 18px !important; }
+  .seo-article p { font-size: 15.5px !important; }
+  .seo-article li { font-size: 15px !important; }
+  .qr-tool-card { padding: 20px 16px; }
 }
 </style>
 </head>
 <body>
 
-<div id="-header"></div>
+<div id="doceasy-header"></div>
 
 <main class="main-wrap">
+
   <div class="hero-box">
-    <h1 class="hero-title">Instant QR Code Generator</h1>
-    <p class="hero-sub">Enter any text, website URL, contact card, or UPI payment link to generate a high-definition QR code.</p>
+    <h1 class="hero-title">QR Code Generator</h1>
+    <p class="hero-sub">Create high-definition QR codes for URLs, text, UPI payments, WiFi, and contact cards. 100% browser-based, no signup, no watermark.</p>
   </div>
 
-  <div class="ad-slot-container">Advertisement</div>
+  <div class="qr-tool-card">
 
-  <div class="tool-card" style="max-width:600px; margin:0 auto;">
-    <div class="input-box">
-      <label>Enter URL, Text or Payment Link</label>
-      <input type="text" id="qr-val" placeholder="https://example.com" value="https://.tools">
+    <!-- Type tabs -->
+    <div class="qr-tabs" id="qrTabs">
+      <button class="qr-tab active" data-type="url">URL / Text</button>
+      <button class="qr-tab" data-type="upi">UPI Payment</button>
+      <button class="qr-tab" data-type="wifi">WiFi</button>
+      <button class="qr-tab" data-type="vcard">vCard</button>
     </div>
+
+    <!-- URL / Text -->
+    <div class="qr-fields" id="fields-url">
+      <div class="input-box">
+        <label>Enter URL or Plain Text</label>
+        <input type="text" id="qr-url" placeholder="https://example.com or any text">
+      </div>
+    </div>
+
+    <!-- UPI -->
+    <div class="qr-fields" id="fields-upi" style="display:none">
+      <div class="input-box">
+        <label>UPI ID</label>
+        <input type="text" id="upi-id" placeholder="yourname@upi">
+      </div>
+      <div class="input-box">
+        <label>Payee Name</label>
+        <input type="text" id="upi-name" placeholder="Your Business Name">
+      </div>
+      <div class="input-box">
+        <label>Amount (optional)</label>
+        <input type="number" id="upi-amt" placeholder="0.00" step="0.01">
+      </div>
+      <div class="input-box">
+        <label>Note (optional)</label>
+        <input type="text" id="upi-note" placeholder="Payment for...">
+      </div>
+    </div>
+
+    <!-- WiFi -->
+    <div class="qr-fields" id="fields-wifi" style="display:none">
+      <div class="input-box">
+        <label>Network Name (SSID)</label>
+        <input type="text" id="wifi-ssid" placeholder="My WiFi Network">
+      </div>
+      <div class="input-box">
+        <label>Password</label>
+        <input type="text" id="wifi-pass" placeholder="Password">
+      </div>
+    </div>
+
+    <!-- vCard -->
+    <div class="qr-fields" id="fields-vcard" style="display:none">
+      <div class="input-box">
+        <label>Full Name</label>
+        <input type="text" id="vc-name" placeholder="Priya Sharma">
+      </div>
+      <div class="input-box">
+        <label>Phone</label>
+        <input type="text" id="vc-phone" placeholder="+91 9876543210">
+      </div>
+      <div class="input-box">
+        <label>Email</label>
+        <input type="text" id="vc-email" placeholder="priya@example.com">
+      </div>
+      <div class="input-box">
+        <label>Company (optional)</label>
+        <input type="text" id="vc-org" placeholder="Acme Corp">
+      </div>
+    </div>
+
+    <!-- Size -->
+    <div class="input-box" style="margin-top:6px;">
+      <label>Download Size</label>
+      <div class="qr-size-row" id="sizeRow">
+        <button class="qr-size-btn" data-size="300">300 px</button>
+        <button class="qr-size-btn active" data-size="500">500 px</button>
+        <button class="qr-size-btn" data-size="800">800 px</button>
+        <button class="qr-size-btn" data-size="1000">1000 px</button>
+      </div>
+    </div>
+
+    <!-- Preview -->
     <div class="qr-preview-box">
-      <img id="qr-img" alt="Generated QR Code">
+      <img id="qr-img" alt="Generated QR Code" src="">
+      <div class="qr-preview-info" id="qrPreviewInfo">Enter content above to generate QR code</div>
     </div>
-    <button class="primary-button" id="btn-dl-qr" style="width:100%;">Download QR Code (PNG)</button>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <button class="primary-button" id="btnDlQr">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+        </svg>
+        Download QR (PNG)
+      </button>
+      <button class="secondary-button" id="btnCopyImg">Copy Image URL</button>
+    </div>
+
   </div>
 
-  <div class="ad-slot-container">Advertisement</div>
-
+  <!-- ===================== SEO ARTICLE ===================== -->
   <section class="seo-article">
-    <h2>Complete Guide: Generate Custom, High-Definition QR Codes Online Free</h2>
-    <p>Quick Response (QR) codes have become the ubiquitous standard for instant physical-to-digital interactions across storefront menus, packaging labels, marketing collaterals, digital payments, and Wi-Fi provisioning. The  Instant QR Code Generator offers a streamlined, fast utility to encode URLs, plain text strings, phone numbers, and payment addresses into crisp 500x500 pixel matrices.</p>
+
+    <h2>QR Code Generator — Create Custom High-Definition QR Codes Free (2026)</h2>
+
+    <p>QR codes have become the universal bridge between the physical and digital world. From restaurant menus and product packaging to UPI payments, WiFi sharing, business cards, and event tickets — a simple black-and-white square now carries an entire digital identity in a single scan. The <strong>DocEasy QR Code Generator</strong> lets you create unlimited QR codes instantly, right in your browser, with no signup, no watermark, and no expiration.</p>
+
+    <p>Whether you are a small business owner printing flyers, a cyber café operator setting up a UPI payment counter, a teacher sharing resources, or a freelancer making a digital business card, this tool gives you everything you need in one place.</p>
 
     <div class="article-image-box">
-      <img src="../assets/images/qr-generator-demo.jpg" alt="doceasy Instant QR Code Generator Workflow" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/qr-generator-demo.jpg]</div>';">
-      <div class="article-image-caption">Visual sequence showing text encoding, dynamic matrix generation, and lossless PNG download.</div>
+      <img src="../assets/images/qr-generator-demo.jpg" alt="DocEasy QR Code Generator demo" onerror="this.onerror=null; this.parentElement.style.padding='40px 20px'; this.parentElement.innerHTML='<div style=\'color:var(--accent);font-weight:700;\'>📷 [Place Demo Here: assets/images/qr-generator-demo.jpg]</div>';">
+      <div class="article-image-caption">Generate custom QR codes for URLs, UPI payments, WiFi networks, and contact cards — all in your browser.</div>
     </div>
 
-    <h3>Step-by-Step Instructions:</h3>
+    <h3>What is a QR Code?</h3>
+
+    <p>A QR code (Quick Response code) is a two-dimensional matrix barcode invented in 1994 by Masahiro Hara at Denso Wave, a Japanese automotive subsidiary. Unlike traditional 1D barcodes that can only hold about 20 numeric characters, a QR code can store up to 4,296 alphanumeric characters or 7,089 numeric characters — enough to encode a long URL, a complete contact card, a WiFi password, or an entire block of text.</p>
+
+    <p>The distinctive square design is made up of:</p>
+
     <ul>
-      <li><b>Step 1 - Enter Your Content:</b> Paste any website destination URL, contact detail, or plain text instruction.</li>
-      <li><b>Step 2 - Live Matrix Preview:</b> The preview canvas updates automatically with every keystroke.</li>
-      <li><b>Step 3 - Download High-Res PNG:</b> Click "Download QR Code (PNG)" to retrieve a 500x500 HD image.</li>
+      <li><b>Three finder patterns</b> — the large corner squares that tell scanners where the code begins</li>
+      <li><b>Alignment patterns</b> — smaller squares that help correct for perspective distortion</li>
+      <li><b>Timing patterns</b> — dotted lines that define the grid size</li>
+      <li><b>Data modules</b> — the actual payload encoded as black or white squares</li>
+      <li><b>Error correction codes</b> — Reed-Solomon codes that allow up to 30% of the QR to be damaged and still scan reliably</li>
     </ul>
+
+    <h3>What Types of QR Codes Can You Generate?</h3>
+
+    <p>The DocEasy QR Code Generator supports four major QR types, each built for a different real-world use case:</p>
+
+    <h4>1. URL / Text QR Codes</h4>
+
+    <p>The simplest and most common type. Encode any website URL, message, phone number, email address, or plain text string. When a user scans the QR code, their phone automatically opens the URL or shows the text.</p>
+
+    <ul>
+      <li>Marketing flyers and posters</li>
+      <li>Business cards and brochures</li>
+      <li>Product packaging with a website link</li>
+      <li>Event banners with registration links</li>
+      <li>Restaurant table cards with online menus</li>
+      <li>Classroom handouts with resource links</li>
+    </ul>
+
+    <h4>2. UPI Payment QR Codes</h4>
+
+    <p>UPI (Unified Payments Interface) has become the standard for digital payments in India. Every small shop, street vendor, auto rickshaw, and service provider now displays a UPI QR code. Our generator supports the complete UPI deep-link format:</p>
+
+    <p><code>upi://pay?pa=upiid&amp;pn=name&amp;am=amount&amp;tn=note</code></p>
+
+    <p>You can generate a UPI QR with:</p>
+
+    <ul>
+      <li><b>Static QR</b> — no amount preset, the customer enters the amount</li>
+      <li><b>Dynamic QR</b> — amount fixed, customer only needs to scan and confirm</li>
+      <li><b>Custom payee name and note</b> — great for invoices and service businesses</li>
+    </ul>
+
+    <p>When scanned by any UPI app (GPay, PhonePe, Paytm, BHIM, Amazon Pay), the payment screen opens with your details pre-filled. No app install required for the customer.</p>
+
+    <h4>3. WiFi QR Codes</h4>
+
+    <p>Give guests instant WiFi access without typing passwords. When they scan the QR code, their phone automatically connects to your WiFi network.</p>
+
+    <p>The encoded format follows the industry-standard:</p>
+
+    <p><code>WIFI:T:WPA;S:NetworkName;P:password;;</code></p>
+
+    <ul>
+      <li>Hotels and guest houses</li>
+      <li>Cafes and restaurants</li>
+      <li>Home guest networks</li>
+      <li>Small office WiFi sharing</li>
+      <li>Event venue networks</li>
+    </ul>
+
+    <h4>4. vCard Contact QR Codes</h4>
+
+    <p>Share your complete contact details in a single scan. When someone scans the QR, their phone immediately offers to save your contact — with name, phone number, email, and company already filled in.</p>
+
+    <ul>
+      <li>Networking events and conferences</li>
+      <li>Sales representatives and freelancers</li>
+      <li>Business card alternatives</li>
+      <li>LinkedIn-style digital introductions</li>
+    </ul>
+
+    <h3>How to Generate a QR Code — Step by Step</h3>
+
+    <ol>
+      <li><b>Choose the QR type:</b> Click on one of the four tabs — URL/Text, UPI Payment, WiFi, or vCard.</li>
+      <li><b>Enter your content:</b> Fill in the required fields. For URL/Text, just type or paste your link. For UPI, enter your UPI ID, name, and optional amount. For WiFi, enter the network name and password. For vCard, enter name, phone, email, and company.</li>
+      <li><b>Watch it update live:</b> The preview QR code updates instantly as you type — no "Generate" button needed.</li>
+      <li><b>Choose your download size:</b> Pick 300px, 500px, 800px, or 1000px depending on where you plan to use it. 500px is ideal for digital sharing; 1000px is best for print.</li>
+      <li><b>Download as PNG:</b> Click "Download QR (PNG)" to save a high-definition image with a clean white background — no watermark, no logo.</li>
+      <li><b>Print or share:</b> Use the QR code on flyers, posters, packaging, business cards, or digital channels — anywhere your audience can scan it.</li>
+    </ol>
 
     <h3>Why Choose DocEasy QR Generator?</h3>
+
     <ul>
-      <li><b>No Expiration:</b> Codes are static — they never expire or redirect through tracking links.</li>
-      <li><b>High Error Tolerance:</b> Built with Reed-Solomon error correction for reliable readability.</li>
-      <li><b>Uncapped & Free:</b> Generate unlimited QR codes with zero signups.</li>
+      <li><b>100% free, forever:</b> No signup, no email, no daily limit, no premium tier.</li>
+      <li><b>No watermark:</b> The downloaded QR code is completely clean and professional.</li>
+      <li><b>Static & non-expiring:</b> The content is permanently encoded in the QR pattern. It will never expire, redirect through a tracker, or stop working.</li>
+      <li><b>High-definition PNG:</b> Download up to 1000x1000 pixels — perfect for both digital and print.</li>
+      <li><b>Instant live preview:</b> See your QR code update in real-time as you type.</li>
+      <li><b>Four QR types:</b> URL, UPI, WiFi, and vCard — all in one tool.</li>
+      <li><b>Privacy-first:</b> All generation happens locally in your browser. Your UPI ID, WiFi password, or contact details are never uploaded to any server.</li>
     </ul>
 
-    <h3>FAQ</h3>
-    <p><b>Q: Do these QR codes expire after a certain period?</b><br>
-    No. These are standard static QR codes with content hardcoded into the grid pattern.</p>
-    <p><b>Q: Can I use these QR codes for commercial printing?</b><br>
-    Yes. The 500x500 px PNG is suitable for brochures, posters, and product packaging.</p>
-    <p><b>Q: Is my entered information private?</b><br>
-    Yes. No user tracking, accounts, or logging.</p>
+    <h3>Are Static QR Codes Better Than Dynamic QR Codes?</h3>
+
+    <p>The QR code industry uses two types: <b>static</b> and <b>dynamic</b>.</p>
+
+    <p><b>Static QR codes</b> (which DocEasy generates) encode the actual content directly into the black-and-white square pattern. This means:</p>
+
+    <ul>
+      <li>They never expire</li>
+      <li>They work offline — the scanner doesn't need an internet lookup</li>
+      <li>No third-party server is involved in the scan</li>
+      <li>Zero ongoing cost</li>
+      <li>No tracking of who scanned the code</li>
+    </ul>
+
+    <p><b>Dynamic QR codes</b> (used by paid platforms) encode a short redirect URL. When scanned, the phone hits the vendor's server, which then forwards the user to the real destination. This allows the vendor to:</p>
+
+    <ul>
+      <li>Change the destination without reprinting the QR</li>
+      <li>Track scan analytics</li>
+      <li>Disable the QR when the subscription ends</li>
+    </ul>
+
+    <p>Dynamic QR codes are useful for large marketing campaigns, but they also mean your code stops working the moment you stop paying, and every scan passes through the vendor's server.</p>
+
+    <p>For most personal, small-business, and Indian UPI use cases, <b>static QR codes are strictly better</b> — and that's what DocEasy gives you.</p>
+
+    <h3>Best Practices for Printing QR Codes</h3>
+
+    <p>Generating a QR code is easy, but a bad print job can make it unscannable. Follow these rules for guaranteed results:</p>
+
+    <ul>
+      <li><b>Minimum physical size:</b> Never print a QR code smaller than 2 × 2 cm (0.8 × 0.8 inches). Below that, many phone cameras struggle to focus.</li>
+      <li><b>Ideal scan distance:</b> A rule of thumb — the QR code side should be at least 1/10th of the scanning distance. For 1 metre away, print at least 10 cm × 10 cm.</li>
+      <li><b>High contrast:</b> Always place the QR code on a white or light background. Never invert to white-on-black — most scanners fail on inverted codes.</li>
+      <li><b>Quiet zone:</b> Leave at least 4 modules of white space around the QR code. Don't let text or images touch the edges.</li>
+      <li><b>Good lighting:</b> Avoid shiny, glossy paper if it reflects light. Matte finishes work best for scanning.</li>
+      <li><b>Test before printing thousands:</b> Always print one copy and scan it with multiple phones before placing a large order.</li>
+      <li><b>Use 1000px for print:</b> For brochures and posters, choose the 1000px download option so the QR stays sharp when scaled up.</li>
+    </ul>
+
+    <h3>Common Use Cases in India</h3>
+
+    <p>QR codes have become an integral part of Indian daily life, especially after the UPI payments revolution. Here are the most common real-world uses:</p>
+
+    <ul>
+      <li><b>Street vendors & kirana stores:</b> Static UPI QR codes printed and pasted on the counter</li>
+      <li><b>Auto rickshaws & taxis:</b> UPI QR codes on the dashboard for instant payments</li>
+      <li><b>Restaurants & cafes:</b> QR menu codes at every table</li>
+      <li><b>Cyber café & CSC centers:</b> UPI QR codes for faster billing</li>
+      <li><b>Temples & donation boxes:</b> UPI QR codes for digital donations</li>
+      <li><b>Weddings & events:</b> QR codes for gift registries or invitations</li>
+      <li><b>Schools & colleges:</b> QR codes for attendance, library books, or admission forms</li>
+      <li><b>Government forms:</b> QR codes for verification of documents like Aadhaar, PAN, and Ayushman Bharat</li>
+      <li><b>Business cards:</b> vCard QR codes for instant contact saving</li>
+      <li><b>Hotels & homestays:</b> WiFi QR codes in rooms and reception areas</li>
+      <li><b>Small e-commerce brands:</b> QR codes on product packaging for brand engagement</li>
+      <li><b>Digital invoices:</b> UPI payment QR codes on PDF invoices for instant settlement</li>
+    </ul>
+
+    <h3>QR Code Security — Stay Safe</h3>
+
+    <p>QR codes are convenient, but they have also been misused by scammers. Follow these safety practices:</p>
+
+    <ul>
+      <li><b>Preview the destination:</b> Before scanning an unknown QR code, use our <a href="qr-scanner.html">QR Code Scanner</a> to see what's inside.</li>
+      <li><b>Look for tampering:</b> If a QR sticker looks pasted on top of another, treat it with suspicion.</li>
+      <li><b>Verify UPI recipient:</b> Always check the payee name shown inside your payment app before confirming.</li>
+      <li><b>Avoid public WiFi QR codes</b> that ask for banking credentials.</li>
+      <li><b>Never scan a QR from an unsolicited email or message</b> — that's the most common phishing tactic.</li>
+    </ul>
+
+    <h3>Privacy and Security</h3>
+
+    <p>DocEasy QR Generator runs entirely in your browser. When you type your UPI ID, WiFi password, or contact details, that information is never transmitted anywhere — it is encoded directly into the QR image on your device using a client-side library. When you close the browser tab, everything is gone from memory.</p>
+
+    <p>This makes DocEasy safe for sensitive information like bank UPI IDs, personal email addresses, and private WiFi passwords.</p>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
+      <summary>Is the DocEasy QR Code Generator really free?</summary>
+      <p>Yes — 100% free, forever. No signup, no email, no daily limits, no watermark, no hidden premium tier.</p>
+    </details>
+
+    <details>
+      <summary>Do my QR codes expire?</summary>
+      <p>No. DocEasy generates <b>static QR codes</b> — meaning the content is permanently encoded in the black-and-white pattern itself. They will never expire, redirect, or stop working, even years later.</p>
+    </details>
+
+    <details>
+      <summary>Are my QR codes tracked?</summary>
+      <p>No. Static QR codes don't go through any server. When someone scans your QR, their phone reads the content directly with no third party involved. There is no analytics, no tracking, and no log of who scanned it.</p>
+    </details>
+
+    <details>
+      <summary>Can I use these QR codes for commercial printing?</summary>
+      <p>Absolutely. Download the 1000px version for posters, banners, brochures, product packaging, or any print material. The image is watermark-free and high-contrast, so it prints cleanly on any paper or sticker.</p>
+    </details>
+
+    <details>
+      <summary>What is the best size to download?</summary>
+      <p>For digital sharing (WhatsApp, email, websites), 500px is ideal. For small print (business cards, table cards), 800px works well. For large prints (posters, banners), choose 1000px.</p>
+    </details>
+
+    <details>
+      <summary>Can I add my logo or brand colour to the QR code?</summary>
+      <p>Currently DocEasy generates clean black-and-white QR codes. Adding a logo or brand colours can reduce scan reliability, especially when printed small. For brand-embedded QR codes, we recommend using a dedicated design tool while keeping the centre clear so scanners can still decode it.</p>
+    </details>
+
+    <details>
+      <summary>Why does my UPI QR not work on some apps?</summary>
+      <p>Ensure the UPI ID is correctly formatted (e.g., <code>yourname@okhdfcbank</code>). Some older apps may have bugs. Test your QR with at least two different UPI apps (GPay, PhonePe, Paytm) before printing and distributing it.</p>
+    </details>
+
+    <details>
+      <summary>Can I generate QR codes for phone numbers and SMS?</summary>
+      <p>Yes. For a phone number, enter the plain number in the URL/Text field. For advanced formats like <code>tel:+91XXXXXXXXXX</code>, <code>mailto:email@example.com</code>, or <code>smsto:number:message</code>, just paste the full URI in the text field — the QR generator will encode it correctly.</p>
+    </details>
+
+    <details>
+      <summary>What happens to my data after I close the page?</summary>
+      <p>Nothing is stored. All content is generated in your browser's memory and discarded when you close the tab. Nothing is uploaded, logged, or saved anywhere.</p>
+    </details>
+
+    <details>
+      <summary>Does the QR generator work offline?</summary>
+      <p>After the page loads once, yes. The QR encoding library runs entirely in your browser. You can disconnect from Wi-Fi and continue generating and downloading QR codes.</p>
+    </details>
+
+    <h3>Related DocEasy Tools</h3>
+
+    <ul>
+      <li><a href="qr-scanner.html">QR Code Scanner</a> — Scan any QR code from camera or image</li>
+      <li><a href="invoice-generator.html">Invoice Generator</a> — Add UPI QR codes to your professional invoices</li>
+      <li><a href="card-cropper.html">ID Card Cropper</a> — Aadhaar, PAN, Voter ID at 300 DPI</li>
+      <li><a href="doc-scanner.html">Document Scanner &amp; OCR</a> — Scan paper documents to digital PDFs</li>
+      <li><a href="pdf-merge.html">Merge PDF</a> — Combine multiple PDFs into one file</li>
+      <li><a href="resume-builder.html">Resume Builder</a> — Create a professional ATS-friendly CV</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+
+    <p>QR codes are now an essential part of daily commerce, communication, and identity in India and worldwide. The DocEasy QR Code Generator gives you a free, private, and fast way to create unlimited QR codes — for URLs, UPI payments, WiFi sharing, and vCard contacts — with clean high-definition downloads and zero watermarks.</p>
+
+    <p>No signup. No fees. No tracking. No expiration. Just enter your content, choose your size, and download. Bookmark this page and use it whenever you need a QR code, whether for a business flyer, a UPI payment counter, a WiFi sign at home, or a digital business card.</p>
+
   </section>
 
-  <div class="ad-slot-container">Advertisement</div>
 </main>
 
 <div id="doceasy-footer"></div>
@@ -101,34 +708,181 @@
 <script src="../assets/js/core/doceasy-core.js"></script>
 
 <script>
-const qrVal = document.getElementById("qr-val");
-const qrImg = document.getElementById("qr-img");
-const btnDl = document.getElementById("btn-dl-qr");
+(function () {
+  'use strict';
 
-function updateQR() {
-  const txt = encodeURIComponent(qrVal.value.trim() || "doceasy");
-  qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${txt}`;
-}
-qrVal.addEventListener("input", updateQR);
-updateQR();
+  var currentType = 'url';
+  var currentSize = 500;
 
-btnDl.addEventListener("click", async () => {
-  btnDl.textContent = "Downloading...";
-  try {
-    const res = await fetch(qrImg.src);
-    const blob = await res.blob();
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "qrcode.png";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  } catch (err) {
-    alert("Failed to download image: " + err.message);
-  } finally {
-    btnDl.textContent = "Download QR Code (PNG)";
+  var qrImg      = document.getElementById('qr-img');
+  var previewInfo= document.getElementById('qrPreviewInfo');
+  var btnDl      = document.getElementById('btnDlQr');
+  var btnCopy    = document.getElementById('btnCopyImg');
+
+  /* ---------- Tab switching ---------- */
+  document.getElementById('qrTabs').addEventListener('click', function (e) {
+    var btn = e.target.closest('.qr-tab');
+    if (!btn) return;
+    document.querySelectorAll('.qr-tab').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentType = btn.getAttribute('data-type');
+
+    ['url', 'upi', 'wifi', 'vcard'].forEach(function (t) {
+      var el = document.getElementById('fields-' + t);
+      if (el) el.style.display = (t === currentType) ? 'block' : 'none';
+    });
+
+    updateQR();
+  });
+
+  /* ---------- Size switching ---------- */
+  document.getElementById('sizeRow').addEventListener('click', function (e) {
+    var btn = e.target.closest('.qr-size-btn');
+    if (!btn) return;
+    document.querySelectorAll('.qr-size-btn').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentSize = parseInt(btn.getAttribute('data-size'), 10) || 500;
+    updateQR();
+  });
+
+  /* ---------- Build data string based on type ---------- */
+  function buildData() {
+    if (currentType === 'url') {
+      var v = (document.getElementById('qr-url').value || '').trim();
+      return v || 'https://doceasy.org';
+    }
+
+    if (currentType === 'upi') {
+      var id = (document.getElementById('upi-id').value || '').trim();
+      if (!id) return '';
+      var name = (document.getElementById('upi-name').value || '').trim();
+      var amt = (document.getElementById('upi-amt').value || '').trim();
+      var note = (document.getElementById('upi-note').value || '').trim();
+      var params = ['pa=' + encodeURIComponent(id)];
+      if (name) params.push('pn=' + encodeURIComponent(name));
+      if (amt && parseFloat(amt) > 0) params.push('am=' + encodeURIComponent(parseFloat(amt).toFixed(2)));
+      if (note) params.push('tn=' + encodeURIComponent(note));
+      params.push('cu=INR');
+      return 'upi://pay?' + params.join('&');
+    }
+
+    if (currentType === 'wifi') {
+      var ssid = (document.getElementById('wifi-ssid').value || '').trim();
+      var pass = (document.getElementById('wifi-pass').value || '').trim();
+      if (!ssid) return '';
+      var esc = function (s) { return s.replace(/([\\;,:"])/g, '\\$1'); };
+      return 'WIFI:T:WPA;S:' + esc(ssid) + ';P:' + esc(pass) + ';;';
+    }
+
+    if (currentType === 'vcard') {
+      var n = (document.getElementById('vc-name').value || '').trim();
+      if (!n) return '';
+      var phone = (document.getElementById('vc-phone').value || '').trim();
+      var email = (document.getElementById('vc-email').value || '').trim();
+      var org = (document.getElementById('vc-org').value || '').trim();
+      var lines = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:' + n,
+        'N:' + n + ';;;;'
+      ];
+      if (phone) lines.push('TEL;TYPE=CELL:' + phone);
+      if (email) lines.push('EMAIL:' + email);
+      if (org) lines.push('ORG:' + org);
+      lines.push('END:VCARD');
+      return lines.join('\n');
+    }
+
+    return '';
   }
-});
+
+  /* ---------- Update QR preview ---------- */
+  function updateQR() {
+    var data = buildData();
+
+    if (!data) {
+      qrImg.src = '';
+      previewInfo.textContent = 'Fill the fields above to generate QR code';
+      return;
+    }
+
+    var encoded = encodeURIComponent(data);
+    qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=' + currentSize + 'x' + currentSize + '&data=' + encoded;
+
+    /* Truncate preview info for long data */
+    var display = data.length > 80 ? data.substring(0, 77) + '...' : data;
+    previewInfo.textContent = display;
+  }
+
+  /* ---------- Attach input listeners ---------- */
+  ['qr-url', 'upi-id', 'upi-name', 'upi-amt', 'upi-note', 'wifi-ssid', 'wifi-pass',
+   'vc-name', 'vc-phone', 'vc-email', 'vc-org'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', updateQR);
+      el.addEventListener('change', updateQR);
+    }
+  });
+
+  /* ---------- Download ---------- */
+  btnDl.addEventListener('click', async function () {
+    var data = buildData();
+    if (!data) {
+      alert('Please enter content to generate a QR code.');
+      return;
+    }
+
+    var original = btnDl.innerHTML;
+    btnDl.disabled = true;
+    btnDl.textContent = 'Downloading…';
+
+    try {
+      var res = await fetch(qrImg.src);
+      if (!res.ok) throw new Error('Could not generate QR image');
+      var blob = await res.blob();
+
+      var a = document.createElement('a');
+      var url = URL.createObjectURL(blob);
+      a.href = url;
+      var safeName = 'qrcode-' + currentType + '-' + currentSize + 'px-' + Date.now() + '.png';
+      a.download = safeName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 3000);
+    } catch (err) {
+      alert('Failed to download QR code: ' + (err.message || err));
+    } finally {
+      btnDl.disabled = false;
+      btnDl.innerHTML = original;
+    }
+  });
+
+  /* ---------- Copy image URL ---------- */
+  btnCopy.addEventListener('click', function () {
+    var data = buildData();
+    if (!data) {
+      alert('Please enter content first.');
+      return;
+    }
+    var link = qrImg.src;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(function () {
+        var old = btnCopy.textContent;
+        btnCopy.textContent = '✓ Copied!';
+        setTimeout(function () { btnCopy.textContent = old; }, 1500);
+      }).catch(function () {
+        alert('Could not copy. Right-click the QR image and choose "Copy Image Address".');
+      });
+    } else {
+      alert('Copy not supported. Right-click the QR image and choose "Copy Image Address".');
+    }
+  });
+
+  /* ---------- Init ---------- */
+  updateQR();
+
+})();
 </script>
 </body>
 </html>
