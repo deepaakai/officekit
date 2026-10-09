@@ -193,6 +193,17 @@
   width: 16px; height: 16px; stroke: var(--success); fill: none;
   flex-shrink: 0; margin-top: 3px; stroke-width: 2.5;
 }
+
+/* Unicode warning banner */
+.unicode-warn {
+  background: #fffbeb; border: 1px solid #fcd34d; color: #78350f;
+  padding: 12px 16px; border-radius: 10px; font-size: 13px;
+  font-weight: 600; margin-bottom: 16px; line-height: 1.55; display: none;
+}
+[data-theme="dark"] .unicode-warn {
+  background: rgba(180, 83, 9, 0.15); border-color: rgba(180, 83, 9, 0.5); color: #fbbf24;
+}
+.unicode-warn.show { display: block; }
 </style>
 </head>
 <body>
@@ -224,6 +235,10 @@
         </svg>
         Choose Word File
       </button>
+    </div>
+
+    <div class="unicode-warn" id="unicodeWarn">
+      ⚠️ <b>Heads-up:</b> This tool uses a standard English PDF font. Hindi, Arabic, emoji, or other non-English characters will be replaced with "?" in the output PDF. If your document contains Hindi, please convert it using a Unicode-capable tool.
     </div>
 
     <div class="file-info" id="fileInfo" style="display:none;">
@@ -327,6 +342,7 @@
       <li>For heavily formatted documents with tables, columns, or images, check the resulting PDF and make small tweaks if needed.</li>
       <li>If your Word file contains only images, consider using our JPG to PDF tool instead.</li>
       <li>Always keep a backup of your original Word file — you may want to edit it again later.</li>
+      <li><b>For Hindi or other non-English documents:</b> This tool uses a standard English PDF font, so Hindi characters will appear as "?" — please use a Unicode-capable converter for Hindi documents.</li>
     </ul>
 
     <h3>Frequently Asked Questions</h3>
@@ -344,6 +360,9 @@
 
     <p><b>Does it work on mobile?</b><br>
     Yes. DocEasy works on any modern browser — desktop, tablet, or smartphone — with no app install required.</p>
+
+    <p><b>Why are Hindi characters turning into "?" in my PDF?</b><br>
+    The tool uses the standard Helvetica font, which supports only English and Latin characters. Hindi, Arabic, Chinese, Japanese, Korean, and emoji are not supported by this font. If your document contains these characters, please use a Unicode-capable PDF converter.</p>
 
     <p><b>Can I remove the watermark?</b><br>
     The doceasy.org watermark is a small branding mark that helps readers identify the source of the converted document. It is intentionally subtle so it does not interfere with your content.</p>
@@ -389,6 +408,7 @@
   var toast       = $('toast');
   var toastMsg    = $('toastMsg');
   var toastIcon   = $('toastIcon');
+  var unicodeWarn = $('unicodeWarn');
 
   var currentFile = null;
 
@@ -410,6 +430,34 @@
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   }
 
+  /* --------------------------------------------------------
+     Safe text — converts smart quotes, dashes, bullets, and
+     any non-Latin-1 character to something Helvetica can
+     encode. Fixes "WinAnsi cannot encode 0xf11d" errors.
+  -------------------------------------------------------- */
+  function safeText(str) {
+    if (!str) return '';
+    return String(str)
+      // Smart single quotes → straight
+      .replace(/[\u2018\u2019\u201A\u201B\u2032]/g, "'")
+      // Smart double quotes → straight
+      .replace(/[\u201C\u201D\u201E\u201F\u2033]/g, '"')
+      // En/em dashes → hyphen
+      .replace(/[\u2013\u2014]/g, '-')
+      // Ellipsis → three dots
+      .replace(/\u2026/g, '...')
+      // Bullets and various dots → asterisk
+      .replace(/[\u2022\u25CF\u25AA\u25A0\u25E6\u2043\u2219]/g, '*')
+      // Non-breaking space → regular space
+      .replace(/\u00A0/g, ' ')
+      // Zero-width and directional marks → strip
+      .replace(/[\u200B-\u200F\u202A-\u202E\u2060\uFEFF]/g, '')
+      // Tabs and newlines → space
+      .replace(/[\t\r\n]+/g, ' ')
+      // Anything outside Latin-1 printable range → "?"
+      .replace(/[^\x20-\x7E\xA0-\xFF]/g, '?');
+  }
+
   function handleFile(file) {
     if (!file) return;
     var name = (file.name || '').toLowerCase();
@@ -427,6 +475,7 @@
     fileInfo.style.display = 'flex';
     actionRow.style.display = 'flex';
     dropZone.style.display = 'none';
+    unicodeWarn.classList.add('show');
   }
 
   function resetAll() {
@@ -438,6 +487,7 @@
     progressWrap.classList.remove('show');
     progressBar.style.width = '0%';
     progressText.textContent = 'Processing…';
+    unicodeWarn.classList.remove('show');
   }
 
   fileInput.addEventListener('change', function () { handleFile(this.files[0]); });
@@ -502,23 +552,35 @@
       var margin = 56;
       var maxWidth = pageWidth - margin * 2;
 
+      /* -----------------------------------------------
+         Break text into wrapped lines. Every string is
+         run through safeText() so Helvetica can encode it.
+      ------------------------------------------------*/
       var paragraphs = text.split(/\r?\n/);
       var lines = [];
       paragraphs.forEach(function (para) {
-        var trimmed = para.trim();
+        var trimmed = safeText(para.trim());
         if (!trimmed) { lines.push(''); return; }
         var words = trimmed.split(/\s+/);
         var currentLine = '';
         words.forEach(function (word) {
           var testLine = currentLine ? currentLine + ' ' + word : word;
-          if (font.widthOfTextAtSize(testLine, fontSize) > maxWidth && currentLine) {
-            lines.push(currentLine);
+          var width;
+          try {
+            width = font.widthOfTextAtSize(testLine, fontSize);
+          } catch (e) {
+            // In case a stray character slips through
+            testLine = safeText(testLine);
+            width = font.widthOfTextAtSize(testLine, fontSize);
+          }
+          if (width > maxWidth && currentLine) {
+            lines.push(safeText(currentLine));
             currentLine = word;
           } else {
             currentLine = testLine;
           }
         });
-        if (currentLine) lines.push(currentLine);
+        if (currentLine) lines.push(safeText(currentLine));
       });
 
       var page = pdfDoc.addPage([pageWidth, pageHeight]);
@@ -530,15 +592,24 @@
           y = pageHeight - margin;
         }
         if (line) {
-          page.drawText(line, {
-            x: margin, y: y, size: fontSize, font: font,
-            color: PDFLib.rgb(0.12, 0.16, 0.24)
-          });
+          try {
+            page.drawText(line, {
+              x: margin, y: y, size: fontSize, font: font,
+              color: PDFLib.rgb(0.12, 0.16, 0.24)
+            });
+          } catch (e) {
+            // Last-resort fallback: replace unsupported char with '?'
+            var fallback = line.replace(/[^\x20-\x7E]/g, '?');
+            page.drawText(fallback, {
+              x: margin, y: y, size: fontSize, font: font,
+              color: PDFLib.rgb(0.12, 0.16, 0.24)
+            });
+          }
         }
         y -= lineHeight;
       });
 
-      // Watermark
+      // Watermark on every page
       var pages = pdfDoc.getPages();
       pages.forEach(function (p) {
         p.drawText('doceasy.org', {
@@ -572,7 +643,11 @@
 
     } catch (err) {
       console.error(err);
-      showToast('Conversion failed: ' + (err.message || 'Unknown error'), 'error');
+      var msg = err.message || 'Unknown error';
+      if (msg.indexOf('WinAnsi') !== -1 || msg.indexOf('cannot encode') !== -1) {
+        msg = 'This document contains unsupported characters (Hindi, emoji, or special symbols). Please use a Unicode-capable converter.';
+      }
+      showToast('Conversion failed: ' + msg, 'error');
       progressWrap.classList.remove('show');
       progressBar.style.width = '0%';
     } finally {
