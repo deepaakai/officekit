@@ -236,7 +236,7 @@
           '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
         '</span>' +
         '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
-          '49+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
+          '90+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
         '</p>' +
         '<button type="button" class="footer-support-btn" onclick="docEasyOpenSupport()">' +
           '<span>☕</span> Support DocEasy' +
