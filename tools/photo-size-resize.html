@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Government Photo Size 2026: Exam Photo & Signature Resizer (SSC, UPSC, NEET) | DocEasy</title>
 <meta name="description" content="Exact photo and signature size for all government exams. Resize photo to 50KB, 20KB for SSC, UPSC, NEET, IBPS instantly. 100% free, private, and no watermark.">
-<meta name="keywords" content="government photo size, driving licence photo size, pan card photo size, passport photo size, visa photo size, exam photo size, signature size, photo resizer, SSC photo resizer, UPSC photo size">
+<meta name="keywords" content="government photo size, driving licence photo size, pan card photo size, passport photo size, visa photo size, exam photo size, signature size, photo resizer, SSC photo resizer, UPSC photo size, PAN card NSDL UTIITSL photo size">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://doceasy.org/tools/exam-photo-resizer.html">
 
@@ -56,8 +56,8 @@
     },
     {
       "@type": "Question",
-      "name": "What is the US visa photo size?",
-      "acceptedAnswer": { "@type": "Answer", "text": "2×2 inches square, 600×600 to 1200×1200 pixels, under 240 KB. Head height 50–69% of image." }
+      "name": "What is the PAN card photo size?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For NSDL: 2.5×3.5 cm at 200 DPI (up to 20 KB). For UTIITSL: 2.13×2.13 cm at 300 DPI (up to 30 KB). Signature for UTIITSL is 600 DPI." }
     }
   ]
 }
@@ -530,7 +530,7 @@
 
       <div class="exam-search">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></svg>
-        <input type="text" id="examSearch" placeholder="Search exam (e.g. SSC CGL, NEET, Driving Licence)…" autocomplete="off">
+        <input type="text" id="examSearch" placeholder="Search exam (e.g. SSC CGL, NEET, PAN Card)…" autocomplete="off">
       </div>
 
       <select class="exam-select" id="examSelect">
@@ -551,9 +551,9 @@
       <div class="quick-exams">
         <span>Quick:</span>
         <button class="quick-chip" data-exam="driving-lic">Driving Licence</button>
-        <button class="quick-chip" data-exam="pan-card">PAN Card</button>
+        <button class="quick-chip" data-exam="pan-card-nsdl">PAN Card (NSDL)</button>
+        <button class="quick-chip" data-exam="pan-card-uti">PAN Card (UTIITSL)</button>
         <button class="quick-chip" data-exam="passport-ind">Passport</button>
-        <button class="quick-chip" data-exam="visa-us">US Visa</button>
         <button class="quick-chip" data-exam="ssc-cgl">SSC CGL</button>
         <button class="quick-chip" data-exam="neet-ug">NEET UG</button>
       </div>
@@ -680,23 +680,23 @@
 
     <p>Most rejections happen because applicants use a photo that is 4×6 inches (a standard print size) instead of 35×45 mm. The Sarathi system needs the photo at exactly 35mm wide and 45mm tall — that's 413 × 531 pixels at 300 DPI.</p>
 
-    <p>To resize a photo for Driving Licence, use the DocEasy tool, select "Driving Licence (Sarathi)" from the dropdown, upload your photo, and download. The tool automatically applies 35×45 mm at 300 DPI and compresses the file to under 20 KB.</p>
+    <h3>3. PAN Card Photo Size (NSDL / UTIITSL)</h3>
 
-    <h3>3. PAN Card Photo Size (NSDL / UTI)</h3>
-
-    <p>PAN card applications and corrections — whether through NSDL (Protean) or UTIITSL — require a photo that fits into a small physical box on the form. The requirements:</p>
+    <p>PAN card applications and corrections have different requirements depending on the portal:</p>
 
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Document</th><th>Dimensions</th><th>File Size</th></tr></thead>
+        <thead><tr><th>Portal</th><th>Document</th><th>Dimensions</th><th>DPI</th><th>File Size</th></tr></thead>
         <tbody>
-          <tr><td>Photo</td><td>25 × 35 mm (2.5 × 3.5 cm)</td><td>20–50 KB</td></tr>
-          <tr><td>Signature</td><td>20 × 10 mm (2 × 1 cm)</td><td>10–20 KB</td></tr>
+          <tr><td>NSDL</td><td>Photo</td><td>2.5 × 3.5 cm</td><td>200 DPI</td><td>10–20 KB</td></tr>
+          <tr><td>NSDL</td><td>Signature</td><td>2 × 1 cm</td><td>200 DPI</td><td>5–10 KB</td></tr>
+          <tr><td>UTIITSL</td><td>Photo</td><td>2.13 × 2.13 cm</td><td>300 DPI</td><td>20–30 KB</td></tr>
+          <tr><td>UTIITSL</td><td>Signature</td><td>3.75 × 1.73 cm</td><td>600 DPI</td><td>40–60 KB</td></tr>
         </tbody>
       </table>
     </div>
 
-    <p>The most common mistake here is uploading an Aadhaar-style photo (35×45 mm) instead of the smaller PAN-specific size. The form expects a small photo — larger ones get rejected.</p>
+    <p>The most common mistake here is uploading the same photo for both portals. NSDL requires a 200 DPI image, while UTIITSL requires a 300 DPI photo and a very high-resolution 600 DPI signature. Our tool now handles both separately.</p>
 
     <h3>4. Indian Passport Photo Size</h3>
 
@@ -999,157 +999,158 @@
   var $ = function(id) { return document.getElementById(id); };
 
   /* ============================================================
-     EXAM DATA
+     EXAM DATA (Updated with DPI for all exams)
      ============================================================ */
   var EXAMS = {
     /* ========== SSC ========== */
-    'ssc-cgl':          { group: 'SSC', cat: 'ssc', name: 'SSC CGL',                photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
-    'ssc-chsl':         { group: 'SSC', cat: 'ssc', name: 'SSC CHSL',               photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
-    'ssc-mts':          { group: 'SSC', cat: 'ssc', name: 'SSC MTS',                photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
-    'ssc-gd':           { group: 'SSC', cat: 'ssc', name: 'SSC GD Constable',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
-    'ssc-cpo':          { group: 'SSC', cat: 'ssc', name: 'SSC CPO',                photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
-    'ssc-je':           { group: 'SSC', cat: 'ssc', name: 'SSC JE',                 photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
-    'ssc-stenographer': { group: 'SSC', cat: 'ssc', name: 'SSC Stenographer',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
-    'ssc-capf':         { group: 'SSC', cat: 'ssc', name: 'SSC CAPF',               photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20 } },
+    'ssc-cgl':          { group: 'SSC', cat: 'ssc', name: 'SSC CGL',                photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
+    'ssc-chsl':         { group: 'SSC', cat: 'ssc', name: 'SSC CHSL',               photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
+    'ssc-mts':          { group: 'SSC', cat: 'ssc', name: 'SSC MTS',                photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
+    'ssc-gd':           { group: 'SSC', cat: 'ssc', name: 'SSC GD Constable',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
+    'ssc-cpo':          { group: 'SSC', cat: 'ssc', name: 'SSC CPO',                photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
+    'ssc-je':           { group: 'SSC', cat: 'ssc', name: 'SSC JE',                 photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
+    'ssc-stenographer': { group: 'SSC', cat: 'ssc', name: 'SSC Stenographer',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
+    'ssc-capf':         { group: 'SSC', cat: 'ssc', name: 'SSC CAPF',               photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 4,   h: 2,   unit: 'cm', kb: 20, dpi: 200 } },
 
     /* ========== UPSC ========== */
-    'upsc-ias':         { group: 'UPSC', cat: 'upsc', name: 'UPSC Civil Services (IAS/IPS)', photo: { w: 350, h: 350, unit: 'px', kb: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300 } },
-    'upsc-nda':         { group: 'UPSC', cat: 'upsc', name: 'UPSC NDA',              photo: { w: 350, h: 350, unit: 'px', kb: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300 } },
-    'upsc-cds':         { group: 'UPSC', cat: 'upsc', name: 'UPSC CDS',              photo: { w: 350, h: 350, unit: 'px', kb: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300 } },
-    'upsc-capf':        { group: 'UPSC', cat: 'upsc', name: 'UPSC CAPF',             photo: { w: 350, h: 350, unit: 'px', kb: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300 } },
-    'upsc-ese':         { group: 'UPSC', cat: 'upsc', name: 'UPSC ESE',              photo: { w: 350, h: 350, unit: 'px', kb: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300 } },
+    'upsc-ias':         { group: 'UPSC', cat: 'upsc', name: 'UPSC Civil Services (IAS/IPS)', photo: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 } },
+    'upsc-nda':         { group: 'UPSC', cat: 'upsc', name: 'UPSC NDA',              photo: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 } },
+    'upsc-cds':         { group: 'UPSC', cat: 'upsc', name: 'UPSC CDS',              photo: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 } },
+    'upsc-capf':        { group: 'UPSC', cat: 'upsc', name: 'UPSC CAPF',             photo: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 } },
+    'upsc-ese':         { group: 'UPSC', cat: 'upsc', name: 'UPSC ESE',              photo: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 }, sign: { w: 350, h: 350, unit: 'px', kb: 300, dpi: 300 } },
 
     /* ========== NEET ========== */
-    'neet-ug':          { group: 'NEET / Medical', cat: 'neet', name: 'NEET UG',     photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'neet-pg':          { group: 'NEET / Medical', cat: 'neet', name: 'NEET PG',     photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'neet-mds':         { group: 'NEET / Medical', cat: 'neet', name: 'NEET MDS',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'aiims-pg':         { group: 'NEET / Medical', cat: 'neet', name: 'AIIMS PG',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
+    'neet-ug':          { group: 'NEET / Medical', cat: 'neet', name: 'NEET UG',     photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 30, dpi: 300 } },
+    'neet-pg':          { group: 'NEET / Medical', cat: 'neet', name: 'NEET PG',     photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80, dpi: 200 } },
+    'neet-mds':         { group: 'NEET / Medical', cat: 'neet', name: 'NEET MDS',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'aiims-pg':         { group: 'NEET / Medical', cat: 'neet', name: 'AIIMS PG',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
 
     /* ========== JEE ========== */
-    'jee-main':         { group: 'JEE / Engineering', cat: 'jee', name: 'JEE Main',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'jee-advanced':     { group: 'JEE / Engineering', cat: 'jee', name: 'JEE Advanced',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 150 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'gate':             { group: 'JEE / Engineering', cat: 'jee', name: 'GATE',              photo: { w: 240, h: 320, unit: 'px', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'bitsat':           { group: 'JEE / Engineering', cat: 'jee', name: 'BITSAT',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'viteee':           { group: 'JEE / Engineering', cat: 'jee', name: 'VITEEE',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'mht-cet':          { group: 'JEE / Engineering', cat: 'jee', name: 'MHT CET',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'kcet':             { group: 'JEE / Engineering', cat: 'jee', name: 'KCET',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'wbjee':            { group: 'JEE / Engineering', cat: 'jee', name: 'WBJEE',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'comedk':           { group: 'JEE / Engineering', cat: 'jee', name: 'COMEDK',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'keam':             { group: 'JEE / Engineering', cat: 'jee', name: 'KEAM',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
+    'jee-main':         { group: 'JEE / Engineering', cat: 'jee', name: 'JEE Main',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 30, dpi: 300 } },
+    'jee-advanced':     { group: 'JEE / Engineering', cat: 'jee', name: 'JEE Advanced',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 150, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'gate':             { group: 'JEE / Engineering', cat: 'jee', name: 'GATE',              photo: { w: 240, h: 320, unit: 'px', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'bitsat':           { group: 'JEE / Engineering', cat: 'jee', name: 'BITSAT',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'viteee':           { group: 'JEE / Engineering', cat: 'jee', name: 'VITEEE',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'mht-cet':          { group: 'JEE / Engineering', cat: 'jee', name: 'MHT CET',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'kcet':             { group: 'JEE / Engineering', cat: 'jee', name: 'KCET',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'wbjee':            { group: 'JEE / Engineering', cat: 'jee', name: 'WBJEE',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'comedk':           { group: 'JEE / Engineering', cat: 'jee', name: 'COMEDK',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'keam':             { group: 'JEE / Engineering', cat: 'jee', name: 'KEAM',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
 
     /* ========== Banking ========== */
-    'ibps-po':          { group: 'Banking', cat: 'banking', name: 'IBPS PO / Clerk',    photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'sbi-po':           { group: 'Banking', cat: 'banking', name: 'SBI PO',             photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'sbi-clerk':        { group: 'Banking', cat: 'banking', name: 'SBI Clerk',          photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'ibps-rrb-po':      { group: 'Banking', cat: 'banking', name: 'IBPS RRB PO',        photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'ibps-rrb-clerk':   { group: 'Banking', cat: 'banking', name: 'IBPS RRB Clerk',     photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'rbi-grade-b':      { group: 'Banking', cat: 'banking', name: 'RBI Grade B',        photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'rbi-assistant':    { group: 'Banking', cat: 'banking', name: 'RBI Assistant',      photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'nabard-grade-a':   { group: 'Banking', cat: 'banking', name: 'NABARD Grade A',     photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'lic-aao':          { group: 'Banking', cat: 'banking', name: 'LIC AAO',            photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'lic-ado':          { group: 'Banking', cat: 'banking', name: 'LIC ADO',            photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'sebi-grade-a':     { group: 'Banking', cat: 'banking', name: 'SEBI Grade A',       photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
+    'ibps-po':          { group: 'Banking', cat: 'banking', name: 'IBPS PO / Clerk',    photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'sbi-po':           { group: 'Banking', cat: 'banking', name: 'SBI PO',             photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'sbi-clerk':        { group: 'Banking', cat: 'banking', name: 'SBI Clerk',          photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'ibps-rrb-po':      { group: 'Banking', cat: 'banking', name: 'IBPS RRB PO',        photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'ibps-rrb-clerk':   { group: 'Banking', cat: 'banking', name: 'IBPS RRB Clerk',     photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'rbi-grade-b':      { group: 'Banking', cat: 'banking', name: 'RBI Grade B',        photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 200 } },
+    'rbi-assistant':    { group: 'Banking', cat: 'banking', name: 'RBI Assistant',      photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 200 } },
+    'nabard-grade-a':   { group: 'Banking', cat: 'banking', name: 'NABARD Grade A',     photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 200 } },
+    'lic-aao':          { group: 'Banking', cat: 'banking', name: 'LIC AAO',            photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'lic-ado':          { group: 'Banking', cat: 'banking', name: 'LIC ADO',            photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'sebi-grade-a':     { group: 'Banking', cat: 'banking', name: 'SEBI Grade A',       photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 100, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 200 } },
 
     /* ========== Railway ========== */
-    'rrb-ntpc':         { group: 'Railway', cat: 'railway', name: 'RRB NTPC',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'rrb-group-d':      { group: 'Railway', cat: 'railway', name: 'RRB Group D',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'rrb-alp':          { group: 'Railway', cat: 'railway', name: 'RRB ALP',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'rrb-je':           { group: 'Railway', cat: 'railway', name: 'RRB JE',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'rpf-si':           { group: 'Railway', cat: 'railway', name: 'RPF SI',             photo: { w: 35, h: 45, unit: 'mm', kb: 70 },    sign: { w: 30, h: 10, unit: 'mm', kb: 30 } },
-    'rpf-constable':    { group: 'Railway', cat: 'railway', name: 'RPF Constable',      photo: { w: 35, h: 45, unit: 'mm', kb: 70 },    sign: { w: 30, h: 10, unit: 'mm', kb: 30 } },
+    'rrb-ntpc':         { group: 'Railway', cat: 'railway', name: 'RRB NTPC',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 100 },  sign: { w: 5, h: 2, unit: 'cm', kb: 40, dpi: 100 } },
+    'rrb-group-d':      { group: 'Railway', cat: 'railway', name: 'RRB Group D',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 100 },  sign: { w: 5, h: 2, unit: 'cm', kb: 40, dpi: 100 } },
+    'rrb-alp':          { group: 'Railway', cat: 'railway', name: 'RRB ALP',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 100 },  sign: { w: 5, h: 2, unit: 'cm', kb: 40, dpi: 100 } },
+    'rrb-je':           { group: 'Railway', cat: 'railway', name: 'RRB JE',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 100 },  sign: { w: 5, h: 2, unit: 'cm', kb: 40, dpi: 100 } },
+    'rpf-si':           { group: 'Railway', cat: 'railway', name: 'RPF SI',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 70, dpi: 100 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 49, dpi: 100 } },
+    'rpf-constable':    { group: 'Railway', cat: 'railway', name: 'RPF Constable',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 70, dpi: 100 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 49, dpi: 100 } },
 
     /* ========== Police / Defence ========== */
-    'delhi-police':     { group: 'Police / Defence', cat: 'police', name: 'Delhi Police Constable', photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'up-police':        { group: 'Police / Defence', cat: 'police', name: 'UP Police Constable',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'rajasthan-police': { group: 'Police / Defence', cat: 'police', name: 'Rajasthan Police',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'mp-police':        { group: 'Police / Defence', cat: 'police', name: 'MP Police',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'bihar-police':     { group: 'Police / Defence', cat: 'police', name: 'Bihar Police',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'agniveer-army':    { group: 'Police / Defence', cat: 'police', name: 'Agniveer Army',          photo: { w: 200, h: 230, unit: 'px', kb: 30 }, sign: { w: 200, h: 100, unit: 'px', kb: 20 } },
-    'agniveer-navy':    { group: 'Police / Defence', cat: 'police', name: 'Agniveer Navy',          photo: { w: 200, h: 230, unit: 'px', kb: 30 }, sign: { w: 200, h: 100, unit: 'px', kb: 20 } },
-    'agniveer-airforce':{ group: 'Police / Defence', cat: 'police', name: 'Agniveer Air Force',     photo: { w: 200, h: 230, unit: 'px', kb: 30 }, sign: { w: 200, h: 100, unit: 'px', kb: 20 } },
-    'afcat':            { group: 'Police / Defence', cat: 'police', name: 'AFCAT',                  photo: { w: 2, h: 2, unit: 'in', kb: 50 },     sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'crpf-constable':   { group: 'Police / Defence', cat: 'police', name: 'CRPF Constable',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'bsf-constable':    { group: 'Police / Defence', cat: 'police', name: 'BSF Constable',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'itbp-constable':   { group: 'Police / Defence', cat: 'police', name: 'ITBP Constable',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'cisf-constable':   { group: 'Police / Defence', cat: 'police', name: 'CISF Constable',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
+    'delhi-police':     { group: 'Police / Defence', cat: 'police', name: 'Delhi Police Constable', photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'up-police':        { group: 'Police / Defence', cat: 'police', name: 'UP Police Constable',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'rajasthan-police': { group: 'Police / Defence', cat: 'police', name: 'Rajasthan Police',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'mp-police':        { group: 'Police / Defence', cat: 'police', name: 'MP Police',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'bihar-police':     { group: 'Police / Defence', cat: 'police', name: 'Bihar Police',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'agniveer-army':    { group: 'Police / Defence', cat: 'police', name: 'Agniveer Army',          photo: { w: 200, h: 230, unit: 'px', kb: 50, dpi: 96 },  sign: { w: 100, h: 40, unit: 'px', kb: 30, dpi: 96 } },
+    'agniveer-navy':    { group: 'Police / Defence', cat: 'police', name: 'Agniveer Navy',          photo: { w: 413, h: 531, unit: 'px', kb: 50, dpi: 96 },  sign: { w: 200, h: 100, unit: 'px', kb: 50, dpi: 96 } },
+    'agniveer-airforce':{ group: 'Police / Defence', cat: 'police', name: 'Agniveer Air Force',     photo: { w: 100, h: 120, unit: 'px', kb: 50, dpi: 96 },  sign: { w: 100, h: 40, unit: 'px', kb: 30, dpi: 96 } },
+    'afcat':            { group: 'Police / Defence', cat: 'police', name: 'AFCAT',                  photo: { w: 2, h: 2, unit: 'in', kb: 50, dpi: 300 },     sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'crpf-constable':   { group: 'Police / Defence', cat: 'police', name: 'CRPF Constable',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'bsf-constable':    { group: 'Police / Defence', cat: 'police', name: 'BSF Constable',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'itbp-constable':   { group: 'Police / Defence', cat: 'police', name: 'ITBP Constable',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'cisf-constable':   { group: 'Police / Defence', cat: 'police', name: 'CISF Constable',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
 
     /* ========== State PSC ========== */
-    'rpsc-ras':         { group: 'State PSC', cat: 'state', name: 'RPSC RAS (Rajasthan)',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'uppsc-pcs':        { group: 'State PSC', cat: 'state', name: 'UPPSC PCS (UP)',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'bpsc':             { group: 'State PSC', cat: 'state', name: 'BPSC (Bihar)',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 25 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'mppsc':            { group: 'State PSC', cat: 'state', name: 'MPPSC (MP)',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'mpsc':             { group: 'State PSC', cat: 'state', name: 'MPSC (Maharashtra)',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'kpsc':             { group: 'State PSC', cat: 'state', name: 'KPSC KAS (Karnataka)',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'tnpsc-group1':     { group: 'State PSC', cat: 'state', name: 'TNPSC Group 1 (TN)',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'tnpsc-group2':     { group: 'State PSC', cat: 'state', name: 'TNPSC Group 2',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'tnpsc-group4':     { group: 'State PSC', cat: 'state', name: 'TNPSC Group 4',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'wbpsc':            { group: 'State PSC', cat: 'state', name: 'WBPSC WBCS (WB)',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'cgpsc':            { group: 'State PSC', cat: 'state', name: 'CGPSC (Chhattisgarh)',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'opsc-oas':         { group: 'State PSC', cat: 'state', name: 'OPSC OAS (Odisha)',     photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
+    'rpsc-ras':         { group: 'State PSC', cat: 'state', name: 'RPSC RAS (Rajasthan)',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'uppsc-pcs':        { group: 'State PSC', cat: 'state', name: 'UPPSC PCS (UP)',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'bpsc':             { group: 'State PSC', cat: 'state', name: 'BPSC (Bihar)',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 25, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'mppsc':            { group: 'State PSC', cat: 'state', name: 'MPPSC (MP)',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'mpsc':             { group: 'State PSC', cat: 'state', name: 'MPSC (Maharashtra)',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'kpsc':             { group: 'State PSC', cat: 'state', name: 'KPSC KAS (Karnataka)',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'tnpsc-group1':     { group: 'State PSC', cat: 'state', name: 'TNPSC Group 1 (TN)',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'tnpsc-group2':     { group: 'State PSC', cat: 'state', name: 'TNPSC Group 2',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'tnpsc-group4':     { group: 'State PSC', cat: 'state', name: 'TNPSC Group 4',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'wbpsc':            { group: 'State PSC', cat: 'state', name: 'WBPSC WBCS (WB)',       photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'cgpsc':            { group: 'State PSC', cat: 'state', name: 'CGPSC (Chhattisgarh)',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'opsc-oas':         { group: 'State PSC', cat: 'state', name: 'OPSC OAS (Odisha)',     photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
 
     /* ========== Teaching ========== */
-    'ctet':             { group: 'Teaching / TET', cat: 'teaching', name: 'CTET',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'up-tet':           { group: 'Teaching / TET', cat: 'teaching', name: 'UP TET',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'bihar-tet':        { group: 'Teaching / TET', cat: 'teaching', name: 'Bihar TET',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'rtet':             { group: 'Teaching / TET', cat: 'teaching', name: 'Rajasthan TET',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'mptet':            { group: 'Teaching / TET', cat: 'teaching', name: 'MP TET',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'kvs-tgt-pgt':      { group: 'Teaching / TET', cat: 'teaching', name: 'KVS TGT/PGT',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'nvs-tgt-pgt':      { group: 'Teaching / TET', cat: 'teaching', name: 'NVS TGT/PGT',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'dsssb':            { group: 'Teaching / TET', cat: 'teaching', name: 'DSSSB',          photo: { w: 5, h: 7, unit: 'in', kb: 300 },      sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'ugc-net':          { group: 'Teaching / TET', cat: 'teaching', name: 'UGC NET',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
+    'ctet':             { group: 'Teaching / TET', cat: 'teaching', name: 'CTET',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 30, dpi: 200 } },
+    'up-tet':           { group: 'Teaching / TET', cat: 'teaching', name: 'UP TET',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'bihar-tet':        { group: 'Teaching / TET', cat: 'teaching', name: 'Bihar TET',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'rtet':             { group: 'Teaching / TET', cat: 'teaching', name: 'Rajasthan TET',  photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'mptet':            { group: 'Teaching / TET', cat: 'teaching', name: 'MP TET',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'kvs-tgt-pgt':      { group: 'Teaching / TET', cat: 'teaching', name: 'KVS TGT/PGT',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'nvs-tgt-pgt':      { group: 'Teaching / TET', cat: 'teaching', name: 'NVS TGT/PGT',    photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 200 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 200 } },
+    'dsssb':            { group: 'Teaching / TET', cat: 'teaching', name: 'DSSSB',          photo: { w: 5, h: 7, unit: 'in', kb: 300, dpi: 300 },      sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'ugc-net':          { group: 'Teaching / TET', cat: 'teaching', name: 'UGC NET',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 30, dpi: 200 } },
 
     /* ========== Entrance ========== */
-    'clat':             { group: 'Entrance Exams', cat: 'entrance', name: 'CLAT',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'ailet':            { group: 'Entrance Exams', cat: 'entrance', name: 'AILET',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'cat':              { group: 'Entrance Exams', cat: 'entrance', name: 'CAT',            photo: { w: 30, h: 45, unit: 'mm', kb: 80 },    sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80 } },
-    'xat':              { group: 'Entrance Exams', cat: 'entrance', name: 'XAT',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80 } },
-    'snap':             { group: 'Entrance Exams', cat: 'entrance', name: 'SNAP',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80 } },
-    'mat':              { group: 'Entrance Exams', cat: 'entrance', name: 'MAT',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80 } },
-    'iift':             { group: 'Entrance Exams', cat: 'entrance', name: 'IIFT',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80 } },
-    'cuet-ug':          { group: 'Entrance Exams', cat: 'entrance', name: 'CUET UG',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'cuet-pg':          { group: 'Entrance Exams', cat: 'entrance', name: 'CUET PG',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
+    'clat':             { group: 'Entrance Exams', cat: 'entrance', name: 'CLAT',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'ailet':            { group: 'Entrance Exams', cat: 'entrance', name: 'AILET',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'cat':              { group: 'Entrance Exams', cat: 'entrance', name: 'CAT',            photo: { w: 30, h: 45, unit: 'mm', kb: 80, dpi: 300 },    sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80, dpi: 300 } },
+    'xat':              { group: 'Entrance Exams', cat: 'entrance', name: 'XAT',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80, dpi: 300 } },
+    'snap':             { group: 'Entrance Exams', cat: 'entrance', name: 'SNAP',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80, dpi: 300 } },
+    'mat':              { group: 'Entrance Exams', cat: 'entrance', name: 'MAT',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80, dpi: 300 } },
+    'iift':             { group: 'Entrance Exams', cat: 'entrance', name: 'IIFT',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 80, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 80, dpi: 300 } },
+    'cuet-ug':          { group: 'Entrance Exams', cat: 'entrance', name: 'CUET UG',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'cuet-pg':          { group: 'Entrance Exams', cat: 'entrance', name: 'CUET PG',        photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
 
     /* ========== Documents ========== */
-    'driving-lic':      { group: 'Documents', cat: 'documents', name: 'Driving Licence (Sarathi)', photo: { w: 35, h: 45, unit: 'mm', kb: 20 },  sign: { w: 30, h: 10, unit: 'mm', kb: 10 } },
-    'sarathi-parivahan':{ group: 'Documents', cat: 'documents', name: 'Sarathi Parivahan',        photo: { w: 35, h: 45, unit: 'mm', kb: 20 },  sign: { w: 30, h: 10, unit: 'mm', kb: 10 } },
-    'learning-licence': { group: 'Documents', cat: 'documents', name: 'Learning Licence',         photo: { w: 35, h: 45, unit: 'mm', kb: 20 },  sign: { w: 30, h: 10, unit: 'mm', kb: 10 } },
-    'pan-card':         { group: 'Documents', cat: 'documents', name: 'PAN Card (NSDL/UTI)',      photo: { w: 2.5, h: 3.5, unit: 'cm', kb: 50 }, sign: { w: 2, h: 1, unit: 'cm', kb: 20 } },
-    'aadhaar':          { group: 'Documents', cat: 'documents', name: 'Aadhaar Card',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'voter-id':         { group: 'Documents', cat: 'documents', name: 'Voter ID',                 photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'ration-card':      { group: 'Documents', cat: 'documents', name: 'Ration Card',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'ayushman':         { group: 'Documents', cat: 'documents', name: 'Ayushman Bharat Card',     photo: { w: 200, h: 200, unit: 'px', kb: 50 },  sign: { w: 200, h: 100, unit: 'px', kb: 30 } },
-    'e-shram':          { group: 'Documents', cat: 'documents', name: 'e-Shram Card',             photo: { w: 200, h: 230, unit: 'px', kb: 50 },  sign: { w: 200, h: 100, unit: 'px', kb: 30 } },
-    'digilocker':       { group: 'Documents', cat: 'documents', name: 'DigiLocker Profile',       photo: { w: 200, h: 200, unit: 'px', kb: 100 }, sign: { w: 200, h: 100, unit: 'px', kb: 50 } },
-    'umang':            { group: 'Documents', cat: 'documents', name: 'UMANG App Profile',        photo: { w: 200, h: 200, unit: 'px', kb: 100 }, sign: { w: 200, h: 100, unit: 'px', kb: 50 } },
-    'pm-kisan':         { group: 'Documents', cat: 'documents', name: 'PM Kisan Portal',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'epfo-uan':         { group: 'Documents', cat: 'documents', name: 'EPFO UAN',                 photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'ignou':            { group: 'Documents', cat: 'documents', name: 'IGNOU',                    photo: { w: 100, h: 100, unit: 'px', kb: 100 }, sign: { w: 200, h: 100, unit: 'px', kb: 50 } },
-    'school-admission': { group: 'Documents', cat: 'documents', name: 'School Admission',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
+    'driving-lic':      { group: 'Documents', cat: 'documents', name: 'Driving Licence (Sarathi)', photo: { w: 35, h: 45, unit: 'mm', kb: 20, dpi: 300 },  sign: { w: 30, h: 10, unit: 'mm', kb: 10, dpi: 300 } },
+    'sarathi-parivahan':{ group: 'Documents', cat: 'documents', name: 'Sarathi Parivahan',        photo: { w: 35, h: 45, unit: 'mm', kb: 20, dpi: 300 },  sign: { w: 30, h: 10, unit: 'mm', kb: 10, dpi: 300 } },
+    'learning-licence': { group: 'Documents', cat: 'documents', name: 'Learning Licence',         photo: { w: 35, h: 45, unit: 'mm', kb: 20, dpi: 300 },  sign: { w: 30, h: 10, unit: 'mm', kb: 10, dpi: 300 } },
+    'pan-card-nsdl':    { group: 'Documents', cat: 'documents', name: 'PAN Card (NSDL)',           photo: { w: 2.5, h: 3.5, unit: 'cm', kb: 20, dpi: 200 }, sign: { w: 2, h: 1, unit: 'cm', kb: 10, dpi: 200 } },
+    'pan-card-uti':     { group: 'Documents', cat: 'documents', name: 'PAN Card (UTIITSL)',        photo: { w: 2.13, h: 2.13, unit: 'cm', kb: 30, dpi: 300 }, sign: { w: 3.75, h: 1.73, unit: 'cm', kb: 60, dpi: 600 } },
+    'aadhaar':          { group: 'Documents', cat: 'documents', name: 'Aadhaar Card',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'voter-id':         { group: 'Documents', cat: 'documents', name: 'Voter ID',                 photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'ration-card':      { group: 'Documents', cat: 'documents', name: 'Ration Card',              photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'ayushman':         { group: 'Documents', cat: 'documents', name: 'Ayushman Bharat Card',     photo: { w: 200, h: 200, unit: 'px', kb: 50, dpi: 300 },  sign: { w: 200, h: 100, unit: 'px', kb: 30, dpi: 300 } },
+    'e-shram':          { group: 'Documents', cat: 'documents', name: 'e-Shram Card',             photo: { w: 200, h: 230, unit: 'px', kb: 50, dpi: 300 },  sign: { w: 200, h: 100, unit: 'px', kb: 30, dpi: 300 } },
+    'digilocker':       { group: 'Documents', cat: 'documents', name: 'DigiLocker Profile',       photo: { w: 200, h: 200, unit: 'px', kb: 100, dpi: 300 }, sign: { w: 200, h: 100, unit: 'px', kb: 50, dpi: 300 } },
+    'umang':            { group: 'Documents', cat: 'documents', name: 'UMANG App Profile',        photo: { w: 200, h: 200, unit: 'px', kb: 100, dpi: 300 }, sign: { w: 200, h: 100, unit: 'px', kb: 50, dpi: 300 } },
+    'pm-kisan':         { group: 'Documents', cat: 'documents', name: 'PM Kisan Portal',          photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'epfo-uan':         { group: 'Documents', cat: 'documents', name: 'EPFO UAN',                 photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'ignou':            { group: 'Documents', cat: 'documents', name: 'IGNOU',                    photo: { w: 100, h: 100, unit: 'px', kb: 100, dpi: 300 }, sign: { w: 200, h: 100, unit: 'px', kb: 50, dpi: 300 } },
+    'school-admission': { group: 'Documents', cat: 'documents', name: 'School Admission',         photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
 
     /* ========== Visa & Passport ========== */
-    'passport-ind':     { group: 'Visa & Passport', cat: 'visa', name: 'Passport (India)',      photo: { w: 2, h: 2, unit: 'in', kb: 100 },     sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'passport-seva':    { group: 'Visa & Passport', cat: 'visa', name: 'Passport Seva',          photo: { w: 3.5, h: 3.5, unit: 'cm', kb: 200 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'visa-us':          { group: 'Visa & Passport', cat: 'visa', name: 'US Visa (DS-160)',       photo: { w: 2, h: 2, unit: 'in', kb: 240 },     sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'visa-uk':          { group: 'Visa & Passport', cat: 'visa', name: 'UK Visa',                photo: { w: 35, h: 45, unit: 'mm', kb: 240 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'visa-schengen':    { group: 'Visa & Passport', cat: 'visa', name: 'Schengen Visa',          photo: { w: 35, h: 45, unit: 'mm', kb: 200 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'visa-canada':      { group: 'Visa & Passport', cat: 'visa', name: 'Canada Visa',            photo: { w: 35, h: 45, unit: 'mm', kb: 240 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'visa-australia':   { group: 'Visa & Passport', cat: 'visa', name: 'Australia Visa',         photo: { w: 35, h: 45, unit: 'mm', kb: 500 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
-    'visa-uae':         { group: 'Visa & Passport', cat: 'visa', name: 'UAE Visa',               photo: { w: 43, h: 55, unit: 'mm', kb: 200 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100 } },
+    'passport-ind':     { group: 'Visa & Passport', cat: 'visa', name: 'Passport (India)',      photo: { w: 2, h: 2, unit: 'in', kb: 100, dpi: 300 },     sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'passport-seva':    { group: 'Visa & Passport', cat: 'visa', name: 'Passport Seva',          photo: { w: 3.5, h: 3.5, unit: 'cm', kb: 200, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'visa-us':          { group: 'Visa & Passport', cat: 'visa', name: 'US Visa (DS-160)',       photo: { w: 2, h: 2, unit: 'in', kb: 240, dpi: 300 },     sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'visa-uk':          { group: 'Visa & Passport', cat: 'visa', name: 'UK Visa',                photo: { w: 35, h: 45, unit: 'mm', kb: 240, dpi: 300 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'visa-schengen':    { group: 'Visa & Passport', cat: 'visa', name: 'Schengen Visa',          photo: { w: 35, h: 45, unit: 'mm', kb: 200, dpi: 300 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'visa-canada':      { group: 'Visa & Passport', cat: 'visa', name: 'Canada Visa',            photo: { w: 35, h: 45, unit: 'mm', kb: 240, dpi: 300 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'visa-australia':   { group: 'Visa & Passport', cat: 'visa', name: 'Australia Visa',         photo: { w: 35, h: 45, unit: 'mm', kb: 500, dpi: 300 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
+    'visa-uae':         { group: 'Visa & Passport', cat: 'visa', name: 'UAE Visa',               photo: { w: 43, h: 55, unit: 'mm', kb: 200, dpi: 300 },   sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 100, dpi: 300 } },
 
     /* ========== Professional ========== */
-    'icai-ca':          { group: 'Professional', cat: 'entrance', name: 'ICAI CA Exam',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'icsi-cs':          { group: 'Professional', cat: 'entrance', name: 'ICSI CS Exam',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
+    'icai-ca':          { group: 'Professional', cat: 'entrance', name: 'ICAI CA Exam',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'icsi-cs':          { group: 'Professional', cat: 'entrance', name: 'ICSI CS Exam',      photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
 
     /* ========== Research ========== */
-    'barc':             { group: 'Research', cat: 'entrance', name: 'BARC Exam',             photo: { w: 165, h: 125, unit: 'px', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'drdo-ceptam':      { group: 'Research', cat: 'entrance', name: 'DRDO CEPTAM',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
+    'barc':             { group: 'Research', cat: 'entrance', name: 'BARC Exam',             photo: { w: 165, h: 125, unit: 'px', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'drdo-ceptam':      { group: 'Research', cat: 'entrance', name: 'DRDO CEPTAM',           photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
 
     /* ========== Others ========== */
-    'nvs-navodaya':     { group: 'Others', cat: 'entrance', name: 'Navodaya Vidyalaya (NVS)', photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50 } },
-    'kvs-kendriya':     { group: 'Others', cat: 'entrance', name: 'KVS Admission',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'esic-sso':         { group: 'Others', cat: 'banking', name: 'ESIC SSO',                   photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'esic-nursing':     { group: 'Others', cat: 'banking', name: 'ESIC Nursing Officer',       photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } },
-    'nhm-staff-nurse':  { group: 'Others', cat: 'banking', name: 'NHM Staff Nurse',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20 } }
+    'nvs-navodaya':     { group: 'Others', cat: 'entrance', name: 'Navodaya Vidyalaya (NVS)', photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 100, dpi: 300 }, sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 50, dpi: 300 } },
+    'kvs-kendriya':     { group: 'Others', cat: 'entrance', name: 'KVS Admission',             photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'esic-sso':         { group: 'Others', cat: 'banking', name: 'ESIC SSO',                   photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'esic-nursing':     { group: 'Others', cat: 'banking', name: 'ESIC Nursing Officer',       photo: { w: 4.5, h: 3.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } },
+    'nhm-staff-nurse':  { group: 'Others', cat: 'banking', name: 'NHM Staff Nurse',            photo: { w: 3.5, h: 4.5, unit: 'cm', kb: 50, dpi: 300 },  sign: { w: 3.5, h: 1.5, unit: 'cm', kb: 20, dpi: 300 } }
   };
 
   /* ============================================================
@@ -1199,10 +1200,10 @@
   };
 
   /* ============================================================
-     UNIT CONVERSION
+     UNIT CONVERSION (UPDATED: Uses spec.dpi)
      ============================================================ */
   function toPixels(w, h, unit, dpi) {
-    dpi = dpi || 300;
+    dpi = dpi || 300; // Default DPI
     switch (unit) {
       case 'cm': return { w: Math.round(w * dpi / 2.54), h: Math.round(h * dpi / 2.54) };
       case 'mm': return { w: Math.round(w * dpi / 25.4), h: Math.round(h * dpi / 25.4) };
@@ -1302,12 +1303,12 @@
   });
 
   /* ============================================================
-     PROCESS IMAGE
+     PROCESS IMAGE (UPDATED: Passes DPI from spec)
      ============================================================ */
   function processImage() {
     if (!state.image || !state.currentExam) return;
     var spec = state.mode === 'photo' ? state.currentExam.photo : state.currentExam.sign;
-    var px = toPixels(spec.w, spec.h, spec.unit);
+    var px = toPixels(spec.w, spec.h, spec.unit, spec.dpi);
 
     previewCanvas.width = px.w;
     previewCanvas.height = px.h;
