@@ -48,31 +48,11 @@
           {
             "@type": "FAQPage",
             "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "Is the DocEasy GST Invoice Generator completely free to use?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Yes, DocEasy GST Invoice Generator is 100% free with no hidden subscriptions, credit card mandates, or creation limits. A subtle watermark is enabled by default to support server costs, which can be permanently unlocked for free by completing two short video views." }
-              },
-              {
-                "@type": "Question",
-                "name": "Are my business details, client records, and banking data uploaded to your servers?",
-                "acceptedAnswer": { "@type": "Answer", "text": "No. The invoice generator operates entirely client-side using JavaScript. Your business information, client records, item prices, and invoice history are stored exclusively in your browser's local storage (localStorage) on your personal device." }
-              },
-              {
-                "@type": "Question",
-                "name": "How does the tool automatically calculate CGST, SGST, and IGST?",
-                "acceptedAnswer": { "@type": "Answer", "text": "The generator compares your company's state with the buyer's state and Place of Supply. If both parties reside in the same state (intra-state transaction), the tax is automatically divided equally into CGST and SGST. If the transaction crosses state borders (inter-state transaction), the entire tax rate is applied as IGST." }
-              },
-              {
-                "@type": "Question",
-                "name": "Can I save, edit, and reprint previous invoices?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Yes. Clicking the 'Save' button records your invoice into your browser's local history. You can open the 'History' tab anytime to edit previous entries, reprint them directly, or remove archived invoices." }
-              },
-              {
-                "@type": "Question",
-                "name": "How do I download or export the invoice as a PDF file?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Click the 'PDF' button on the toolbar or press Ctrl+P. The browser print interface will open formatted for standard A4 paper. Select 'Save as PDF' under the destination printer dropdown." }
-              }
+              { "@type": "Question", "name": "Is the DocEasy GST Invoice Generator completely free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, DocEasy GST Invoice Generator is 100% free with no hidden subscriptions, credit card mandates, or creation limits." } },
+              { "@type": "Question", "name": "Are my business details, client records, and banking data uploaded to your servers?", "acceptedAnswer": { "@type": "Answer", "text": "No. The invoice generator operates entirely client-side using JavaScript. Your business information is stored exclusively in your browser's local storage." } },
+              { "@type": "Question", "name": "How does the tool automatically calculate CGST, SGST, and IGST?", "acceptedAnswer": { "@type": "Answer", "text": "The generator compares your company's state with the buyer's state. If both are in the same state, tax is split into CGST and SGST. If different states, the entire rate is IGST." } },
+              { "@type": "Question", "name": "Can I save, edit, and reprint previous invoices?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Clicking Save records your invoice into browser's local history. Open History tab anytime to edit, reprint, or delete." } },
+              { "@type": "Question", "name": "How do I download or export the invoice as a PDF file?", "acceptedAnswer": { "@type": "Answer", "text": "Click the PDF button or press Ctrl+P. The print interface opens formatted for A4. Select Save as PDF as destination." } }
             ]
           },
           {
@@ -83,17 +63,8 @@
             "logo": "https://doceasy.org/assets/images/logo-full.png",
             "foundingDate": "2026",
             "founder": { "@type": "Person", "name": "Deepak Kumar" },
-            "description": "Free browser-based tools for PDFs, images, and business utilities. 100% private.",
-            "sameAs": [
-              "https://github.com/deepaakai",
-              "https://deepaakai.github.io/portfolio/"
-            ],
-            "contactPoint": {
-              "@type": "ContactPoint",
-              "contactType": "Customer Support",
-              "url": "https://doceasy.org/contact.html",
-              "availableLanguage": ["English", "Hindi"]
-            }
+            "sameAs": ["https://github.com/deepaakai", "https://deepaakai.github.io/portfolio/"],
+            "contactPoint": { "@type": "ContactPoint", "contactType": "Customer Support", "url": "https://doceasy.org/contact.html", "availableLanguage": ["English", "Hindi"] }
           },
           {
             "@type": "BreadcrumbList",
@@ -115,7 +86,6 @@
       .hero-title { font-size: clamp(20px, 3.5vw, 26px); font-weight: 800; color: var(--text-color); margin: 0 0 6px; }
       .hero-sub { color: var(--subtext-color); font-size: 13.5px; margin: 0 auto; max-width: 620px; }
 
-      /* Language Toggle */
       .lang-toggle-btn {
         padding: 8px 20px;
         border: 1.5px solid var(--border-color);
@@ -129,12 +99,7 @@
         transition: all 0.18s;
       }
       .lang-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
-      .lang-toggle-btn.active {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #fff;
-        box-shadow: 0 4px 12px rgba(25,57,138,0.25);
-      }
+      .lang-toggle-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(25,57,138,0.25); }
 
       .inv-tabs { display: flex; gap: 4px; padding: 4px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 14px; }
       .inv-tab { flex: 1; padding: 10px 12px; border: none; background: transparent; color: var(--subtext-color); font-family: inherit; font-size: 13px; font-weight: 700; border-radius: 7px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: 0.15s; }
@@ -164,10 +129,8 @@
 
       .preview-box { background: var(--card-hover); border-radius: 10px; padding: 16px; overflow-x: auto; display: flex; justify-content: center; margin-bottom: 20px; }
       .invoice-preview { background: #fff; width: 100%; max-width: 800px; min-height: 1000px; padding: 28px 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); font-family: 'Helvetica Neue', Arial, sans-serif; color: #111827; font-size: 12px; line-height: 1.5; box-sizing: border-box; position: relative; overflow: hidden; }
-
       .invoice-preview .inv-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); font-size: 90px; font-weight: 900; color: rgba(25,57,138,0.08); letter-spacing: 8px; pointer-events: none; user-select: none; white-space: nowrap; z-index: 0; font-family: Arial, sans-serif; }
       .invoice-preview > *:not(.inv-watermark) { position: relative; z-index: 1; }
-
       .invoice-preview .tpl-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #19398a; }
       .invoice-preview .tpl-header .brand-block { flex: 1; min-width: 0; }
       .invoice-preview .tpl-header h1 { font-size: 22px; margin: 0 0 6px; color: #19398a; font-weight: 800; letter-spacing: 0.5px; }
@@ -176,18 +139,15 @@
       .invoice-preview .tpl-header .right-block { text-align: right; flex-shrink: 0; }
       .invoice-preview .tpl-header .right-block h2 { font-size: 16px; margin: 0 0 4px; color: #111827; font-weight: 800; letter-spacing: 1px; }
       .invoice-preview .tpl-logo { max-height: 55px; max-width: 150px; margin-bottom: 8px; object-fit: contain; display: block; }
-
       .invoice-preview .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
       .invoice-preview .meta-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 12px; }
       .invoice-preview .meta-card h4 { margin: 0 0 5px; font-size: 10px; text-transform: uppercase; color: #19398a; letter-spacing: 0.5px; font-weight: 800; }
       .invoice-preview .meta-card p { margin: 0; font-size: 11.5px; color: #1f2937; line-height: 1.5; }
-
       .invoice-preview table.items-prev { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 11.5px; }
       .invoice-preview table.items-prev thead th { background: #19398a; color: #fff; padding: 8px 7px; text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 700; }
       .invoice-preview table.items-prev tbody td { padding: 7px; border-bottom: 1px solid #e5e7eb; color: #1f2937; vertical-align: top; }
       .invoice-preview table.items-prev tbody tr:nth-child(even) { background: #f9fafb; }
       .invoice-preview table.items-prev .num { text-align: right; white-space: nowrap; }
-
       .invoice-preview .totals-block { display: flex; justify-content: flex-end; margin-bottom: 14px; }
       .invoice-preview .totals-inner { width: 300px; border: 1px solid #e5e7eb; border-radius: 6px; overflow: hidden; }
       .invoice-preview .totals-row { display: flex; justify-content: space-between; padding: 6px 12px; font-size: 11.5px; border-bottom: 1px solid #e5e7eb; }
@@ -195,7 +155,6 @@
       .invoice-preview .totals-row.grand { background: #19398a; color: #fff; font-weight: 800; font-size: 13px; padding: 9px 12px; }
       .invoice-preview .totals-row .lbl { color: #4b5563; }
       .invoice-preview .totals-row.grand .lbl { color: #fff; }
-
       .invoice-preview .words-row { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #374151; margin-bottom: 12px; }
       .invoice-preview .words-row b { color: #111827; text-transform: uppercase; font-size: 10px; letter-spacing: 0.4px; }
       .invoice-preview .info-block { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; }
@@ -268,7 +227,6 @@
 
       .ad-modal { max-width: 640px; }
       .ad-stage { background: #0f172a; border-radius: 10px; aspect-ratio: 16/9; display: grid; place-items: center; margin-bottom: 16px; position: relative; overflow: hidden; }
-      .ad-stage video { width: 100%; height: 100%; object-fit: cover; background: #000; }
       .ad-stage .ad-placeholder-ad { color: #fff; text-align: center; padding: 20px; }
       .ad-stage .ad-placeholder-ad svg { width: 60px; height: 60px; stroke: #38bdf8; fill: none; stroke-width: 2; margin: 0 auto 12px; display: block; opacity: 0.8; }
       .ad-stage .ad-placeholder-ad h3 { color: #fff; margin: 0 0 8px; font-size: 18px; font-weight: 800; }
@@ -413,12 +371,103 @@
         .seo-article h3 { font-size: 17px !important; }
       }
 
+      /* ============ PRINT — SINGLE PAGE A4 ============ */
       @media print {
-        body * { visibility: hidden !important; }
-        #invoicePreview, #invoicePreview * { visibility: visible !important; }
-        #invoicePreview { position: absolute !important; left: 0; top: 0; width: 210mm !important; min-height: auto !important; box-shadow: none !important; padding: 12mm !important; font-size: 11pt !important; }
-        #invoicePreview .inv-watermark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        @page { size: A4; margin: 0; }
+        html, body {
+          margin: 0 !important;
+          padding: 0 !important;
+          background: #fff !important;
+          height: auto !important;
+          overflow: visible !important;
+        }
+
+        body > *,
+        main > *,
+        .inv-wrap > *,
+        .inv-tabs,
+        .toolbar,
+        .modal-backdrop,
+        .toast,
+        .ad-slot-container,
+        #doceasy-header,
+        #doceasy-footer,
+        .hero-box,
+        .lang-toggle-btn,
+        .seo-article,
+        .inv-panel:not(#tab-create) {
+          display: none !important;
+        }
+
+        body { display: block !important; }
+        main { display: block !important; }
+        .inv-wrap { display: block !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+        .inv-panel#tab-create { display: block !important; }
+        .preview-box {
+          display: block !important;
+          background: transparent !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          border-radius: 0 !important;
+          overflow: visible !important;
+        }
+
+        #invoicePreview {
+          display: block !important;
+          position: static !important;
+          width: 210mm !important;
+          max-width: 210mm !important;
+          min-height: auto !important;
+          margin: 0 auto !important;
+          padding: 10mm 12mm !important;
+          box-shadow: none !important;
+          border: none !important;
+          font-size: 10pt !important;
+          line-height: 1.4 !important;
+          background: #fff !important;
+          page-break-inside: avoid !important;
+          page-break-after: avoid !important;
+          overflow: visible !important;
+        }
+
+        #invoicePreview .tpl-header { margin-bottom: 10px !important; padding-bottom: 8px !important; }
+        #invoicePreview .tpl-header h1 { font-size: 18px !important; }
+        #invoicePreview .tpl-header .company-name { font-size: 12px !important; }
+        #invoicePreview .tpl-header .small-line { font-size: 9pt !important; line-height: 1.35 !important; }
+        #invoicePreview .tpl-logo { max-height: 42px !important; margin-bottom: 4px !important; }
+
+        #invoicePreview .meta-grid { gap: 8px !important; margin-bottom: 8px !important; }
+        #invoicePreview .meta-card { padding: 7px 9px !important; }
+        #invoicePreview .meta-card h4 { font-size: 8pt !important; margin-bottom: 3px !important; }
+        #invoicePreview .meta-card p { font-size: 9pt !important; line-height: 1.35 !important; }
+
+        #invoicePreview table.items-prev { margin-bottom: 8px !important; }
+        #invoicePreview table.items-prev thead th { padding: 5px 6px !important; font-size: 8.5pt !important; }
+        #invoicePreview table.items-prev tbody td { padding: 5px 6px !important; font-size: 9pt !important; }
+
+        #invoicePreview .words-row { padding: 5px 9px !important; font-size: 9pt !important; margin-bottom: 8px !important; }
+        #invoicePreview .totals-inner { width: 270px !important; }
+        #invoicePreview .totals-row { padding: 4px 9px !important; font-size: 9pt !important; }
+        #invoicePreview .totals-row.grand { padding: 6px 9px !important; font-size: 11pt !important; }
+
+        #invoicePreview .info-block { padding: 6px 9px !important; margin-bottom: 8px !important; }
+        #invoicePreview .info-block h4 { font-size: 8.5pt !important; margin-bottom: 3px !important; }
+        #invoicePreview .info-block p { font-size: 8.5pt !important; line-height: 1.4 !important; margin: 1px 0 !important; }
+
+        #invoicePreview .sign-row { margin-top: 10px !important; padding-top: 8px !important; }
+        #invoicePreview .sign-box .sign-img { max-height: 40px !important; }
+        #invoicePreview .sign-box .sign-line { font-size: 9pt !important; padding-top: 2px !important; }
+
+        #invoicePreview .note-line { margin-top: 6px !important; font-size: 8pt !important; }
+
+        #invoicePreview .inv-watermark {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
       }
     </style>
   </head>
@@ -660,7 +709,7 @@
         </details>
         <details>
           <summary>Q5: What is the purpose of the 'Computer Generated Invoice' disclaimer?</summary>
-          <p>Under modern commercial law and IT Act provisions, digitally transmitted invoices that carry an explicit note stating "This is a computer-generated invoice and does not require a physical signature" are legally valid for commercial trade and audit reconciliation, eliminating the need to print and physically sign documents.</p>
+          <p>Under modern commercial law and IT Act provisions, digitally transmitted invoices that carry an explicit note stating "This is a computer-generated invoice and does not require a physical signature" are legally valid for commercial trade and audit reconciliation.</p>
         </details>
         <details>
           <summary>Q6: What image formats should I use for company logos and signatures?</summary>
@@ -672,11 +721,11 @@
         </details>
         <details>
           <summary>Q8: How does the Round-Off toggle function?</summary>
-          <p>When set to "Auto", the calculator automatically rounds fractional decimal totals to the nearest whole rupee, adjusting the difference under a designated "Round Off" line item in compliance with standard commercial bookkeeping practices.</p>
+          <p>When set to "Auto", the calculator automatically rounds fractional decimal totals to the nearest whole rupee, adjusting the difference under a designated "Round Off" line item.</p>
         </details>
         <details>
           <summary>Q9: Can I use this generator for non-GST or composite dealer billing?</summary>
-          <p>Yes. Simply set the Tax Mode dropdown to "No Tax" or configure item GST fields to 0%. This formats the document as a clean Bill of Supply or commercial debit note without tax calculations.</p>
+          <p>Yes. Simply set the Tax Mode dropdown to "No Tax" or configure item GST fields to 0%. This formats the document as a clean Bill of Supply or commercial debit note.</p>
         </details>
         <details>
           <summary>Q10: Is there any limit on how many line items I can add to an invoice?</summary>
@@ -701,7 +750,6 @@
 
     <div id="doceasy-footer"></div>
 
-    <!-- TEMPLATE MODAL -->
     <div class="modal-backdrop" id="tplModal">
       <div class="modal">
         <div class="modal-header">
@@ -714,7 +762,6 @@
       </div>
     </div>
 
-    <!-- AD MODAL -->
     <div class="modal-backdrop" id="adModal">
       <div class="modal ad-modal">
         <div class="modal-header">
@@ -744,7 +791,6 @@
       </div>
     </div>
 
-    <!-- FORM MODAL -->
     <div class="modal-backdrop" id="formModal">
       <div class="modal" style="max-width:780px;">
         <div class="modal-header">
@@ -764,15 +810,9 @@
                   <button type="button" class="x" onclick="clearLogo(event)">✕</button>
                 </label>
               </div>
-              <div class="fg full">
-                <label>Company Name *</label>
-                <input type="text" id="companyName" value="YOUR COMPANY PVT. LTD." />
-              </div>
-              <div class="fg full">
-                <label>Address *</label>
-                <textarea id="companyAddress">123 Business Park, Connaught Place
-New Delhi - 110001, India</textarea>
-              </div>
+              <div class="fg full"><label>Company Name *</label><input type="text" id="companyName" value="YOUR COMPANY PVT. LTD." /></div>
+              <div class="fg full"><label>Address *</label><textarea id="companyAddress">123 Business Park, Connaught Place
+New Delhi - 110001, India</textarea></div>
               <div class="fg"><label>GSTIN</label><input type="text" id="companyGstin" value="07ABCDE1234F1Z5" /></div>
               <div class="fg"><label>PAN</label><input type="text" id="companyPan" value="ABCDE1234F" /></div>
               <div class="fg"><label>Phone</label><input type="tel" id="companyPhone" value="+91 98765 43210" /></div>
@@ -1450,29 +1490,18 @@ New Delhi - 110001, India</textarea>
 
         $('printBtn').addEventListener('click', function () { window.print(); });
 
-        /* ============================================================
-           LANGUAGE TOGGLE (EN ↔ HI)
-           ============================================================ */
         var TRANSLATIONS = {
           hi: {
             'Professional GST Invoice Generator': 'प्रोफेशनल GST इनवॉइस जनरेटर',
             'Create GST invoices with 8 templates, custom watermark, auto tax, discount, logo, signature and history.': '8 टेम्पलेट, कस्टम वॉटरमार्क, ऑटो टैक्स, डिस्काउंट, लोगो, सिग्नेचर और हिस्ट्री के साथ GST इनवॉइस बनाएं।',
-            'Create': 'बनाएं',
-            'History': 'इतिहास',
-            'FAQ': 'सामान्य प्रश्न',
-            'Remove Watermark': 'वॉटरमार्क हटाएं',
-            'Template': 'टेम्पलेट',
-            'Edit': 'एडिट',
-            'Save': 'सेव',
-            'PDF': 'PDF',
-            'Your Company': 'आपकी कंपनी',
-            'Bill To (Buyer)': 'बिल टू (खरीदार)',
-            'Invoice Details': 'इनवॉइस विवरण',
-            'Items': 'आइटम',
+            'Create': 'बनाएं', 'History': 'इतिहास', 'FAQ': 'सामान्य प्रश्न',
+            'Remove Watermark': 'वॉटरमार्क हटाएं', 'Template': 'टेम्पलेट',
+            'Edit': 'एडिट', 'Save': 'सेव', 'PDF': 'PDF',
+            'Your Company': 'आपकी कंपनी', 'Bill To (Buyer)': 'बिल टू (खरीदार)',
+            'Invoice Details': 'इनवॉइस विवरण', 'Items': 'आइटम',
             'Discount & Charges': 'डिस्काउंट और चार्जेज',
             'Bank, Signature & Notes': 'बैंक, सिग्नेचर और नोट्स',
-            'Done': 'हो गया',
-            'Reset Form': 'फॉर्म रीसेट करें',
+            'Done': 'हो गया', 'Reset Form': 'फॉर्म रीसेट करें',
             'Load Demo Data': 'डेमो डेटा लोड करें',
             'Choose Invoice Template': 'इनवॉइस टेम्पलेट चुनें',
             'Edit Invoice Details': 'इनवॉइस विवरण एडिट करें'
@@ -1484,29 +1513,23 @@ New Delhi - 110001, India</textarea>
           var enBtn = document.getElementById('langEn');
           var hiBtn = document.getElementById('langHi');
           if (lang === 'hi') {
-            enBtn.classList.remove('active');
-            hiBtn.classList.add('active');
-            document.documentElement.lang = 'hi';
-            applyTranslation('hi');
+            enBtn.classList.remove('active'); hiBtn.classList.add('active');
+            document.documentElement.lang = 'hi'; applyTranslation('hi');
           } else {
-            hiBtn.classList.remove('active');
-            enBtn.classList.add('active');
-            document.documentElement.lang = 'en';
-            applyTranslation('en');
+            hiBtn.classList.remove('active'); enBtn.classList.add('active');
+            document.documentElement.lang = 'en'; applyTranslation('en');
           }
           try { localStorage.setItem('doceasy_invoice_lang', lang); } catch (e) {}
         };
 
         function applyTranslation(lang) {
           var map = TRANSLATIONS[lang] || {};
-
           document.querySelectorAll('.hero-title, .hero-sub').forEach(function (el) {
             var key = el.textContent.trim();
             if (!originalTexts[key]) originalTexts[key] = el.textContent;
             if (lang === 'hi' && map[key]) el.textContent = map[key];
             else if (lang === 'en' && originalTexts[key]) el.textContent = originalTexts[key];
           });
-
           document.querySelectorAll('.inv-tab, .toolbar .btn, .modal-header h3, .form-section h4').forEach(function (el) {
             var textNode = Array.from(el.childNodes).find(function (n) { return n.nodeType === 3 && n.textContent.trim(); });
             if (textNode) {
@@ -1520,14 +1543,9 @@ New Delhi - 110001, India</textarea>
 
         try {
           var savedLang = localStorage.getItem('doceasy_invoice_lang');
-          if (savedLang === 'hi') {
-            setTimeout(function () { window.setLanguage('hi'); }, 100);
-          }
+          if (savedLang === 'hi') { setTimeout(function () { window.setLanguage('hi'); }, 100); }
         } catch (e) {}
 
-        /* ============================================================
-           INIT
-           ============================================================ */
         (function init() {
           var today = new Date();
           $('invoiceDate').value = today.toISOString().slice(0,10);
@@ -1541,4 +1559,4 @@ New Delhi - 110001, India</textarea>
       })();
     </script>
   </body>
-                </html>
+  </html>
