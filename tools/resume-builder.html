@@ -45,13 +45,6 @@
     "priceCurrency": "INR",
     "availability": "https://schema.org/InStock"
   },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "ratingCount": "2367",
-    "bestRating": "5",
-    "worstRating": "1"
-  },
   "description": "Free online resume builder with 30 ATS-friendly templates, real-time live preview, auto-save history, and print-ready PDF export. 100% browser-based, no signup, no watermark.",
   "screenshot": "https://doceasy.org/assets/images/resume-builder-og.jpg",
   "featureList": [
@@ -301,7 +294,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Serif+Display&family=Cormorant+Garamond:wght@500;600;700&family=Fraunces:wght@600;700;800&family=Sora:wght@500;600;700;800&family=Outfit:wght@400;500;600;700&family=Jost:wght@400;500;600&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Space+Mono:wght@400;700&family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ==================== EXISTING STYLES — UNCHANGED ==================== */
+/* ==================== EXISTING STYLES — FIXED ==================== */
   :root {
     --de-blue: #19398a;
     --de-blue-hover: #132c6e;
@@ -329,7 +322,8 @@
   padding-right: 14px;
 }
 
-@@media (max-width: 900px) {
+/* FIXED: @@media to @media */
+@media (max-width: 900px) {
   .main-wrap {
     padding-top: 160px !important;
     padding-left: 10px !important;
@@ -701,6 +695,27 @@
     .seo-article p { font-size: 15.5px !important; }
   }
 
+  /* ==================== ADSENSE AD PLACEHOLDER STYLES ==================== */
+  .adsense-container {
+    margin: 24px auto;
+    max-width: 860px;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    text-align: center;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 12px;
+  }
+  .adsense-container ins {
+    display: block;
+    width: 100%;
+  }
+
   #printArea { display: none; }
   @media print {
     @page { margin: 0 !important; size: A4 portrait !important; }
@@ -718,6 +733,20 @@
 <div id="doceasy-header"></div>
 
 <main class="main-wrap">
+
+  <!-- ADSENSE AD UNIT 1: Top Banner (Replace with your AdSense code) -->
+  <div class="adsense-container">
+    <!-- 
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+    <span>Advertisement (Top Banner AdSense)</span>
+  </div>
 
   <div class="hero-box">
     <h1 class="hero-title">Free Resume Builder &amp; CV Maker — 30 ATS-Friendly Templates</h1>
@@ -747,46 +776,46 @@
       <input type="file" id="photoInput" accept="image/*">
 
       <label>Full Name</label>
-      <input type="text" id="f_name" value="Deepaak Kumar">
+      <input type="text" id="f_name" value="Deepaak Kumar" placeholder="e.g. Deepaak Kumar">
 
       <label>Job Title / Profession</label>
-      <input type="text" id="f_title" value="Senior Software Developer">
+      <input type="text" id="f_title" value="Senior Software Developer" placeholder="e.g. Senior Software Developer">
 
       <div class="field-row">
-        <div><label>Phone</label><input type="text" id="f_phone" value="+91 98765 43210"></div>
-        <div><label>Email</label><input type="text" id="f_email" value="deepaak.kumar@email.com"></div>
+        <div><label>Phone</label><input type="text" id="f_phone" value="+91 98765 43210" placeholder="+91 98765 43210"></div>
+        <div><label>Email</label><input type="text" id="f_email" value="deepaak.kumar@email.com" placeholder="your@email.com"></div>
       </div>
       <div class="field-row">
-        <div><label>Location</label><input type="text" id="f_location" value="New Delhi, India"></div>
-        <div><label>LinkedIn / Portfolio</label><input type="text" id="f_linkedin" value="linkedin.com/in/deepaakkumar"></div>
+        <div><label>Location</label><input type="text" id="f_location" value="New Delhi, India" placeholder="City, Country"></div>
+        <div><label>LinkedIn / Portfolio</label><input type="text" id="f_linkedin" value="linkedin.com/in/deepaakkumar" placeholder="linkedin.com/in/username"></div>
       </div>
       <div class="field-row">
-        <div><label>Date of Birth</label><input type="text" id="f_dob" value="12/Aug/1995"></div>
-        <div><label>Nationality</label><input type="text" id="f_nationality" value="Indian"></div>
+        <div><label>Date of Birth</label><input type="text" id="f_dob" value="12/Aug/1995" placeholder="DD/MMM/YYYY"></div>
+        <div><label>Nationality</label><input type="text" id="f_nationality" value="Indian" placeholder="Indian"></div>
       </div>
 
       <label>Professional Summary / Objective</label>
-      <textarea id="f_summary" rows="3">Dedicated and results-driven professional with 4+ years of hands-on expertise building production-ready digital applications under deadlines. Proven track record of taking ownership and delivering measurable client impact.</textarea>
+      <textarea id="f_summary" rows="3" placeholder="Write a brief summary of your professional background...">Dedicated and results-driven professional with 4+ years of hands-on expertise building production-ready digital applications under deadlines. Proven track record of taking ownership and delivering measurable client impact.</textarea>
 
       <label>Work Experience (Title | Company | Dates | Description)</label>
-      <textarea id="f_experience" rows="4">Senior Developer | Tech Corp Global | 2023–Present | Leading web application performance, building scalable frontend tools and modern user experiences.
+      <textarea id="f_experience" rows="4" placeholder="Title | Company | Dates | Description">Senior Developer | Tech Corp Global | 2023–Present | Leading web application performance, building scalable frontend tools and modern user experiences.
 Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web tools, handled cross-browser optimization, and maintained 99.9% uptime.</textarea>
 
       <label>Education (Degree | Institute | Year)</label>
-      <textarea id="f_education" rows="3">B.Tech (Computer Science) | Delhi Technological University | 2021
+      <textarea id="f_education" rows="3" placeholder="Degree | Institute | Year">B.Tech (Computer Science) | Delhi Technological University | 2021
 12th (Science) | Central Board of Secondary Education | 2017</textarea>
 
       <label>Core Skills (Comma Separated)</label>
-      <input type="text" id="f_skills" value="JavaScript, HTML5/CSS3, Python, Git, UI/UX Optimization, API Integration">
+      <input type="text" id="f_skills" value="JavaScript, HTML5/CSS3, Python, Git, UI/UX Optimization, API Integration" placeholder="JavaScript, HTML, CSS, React...">
 
       <label>Key Strengths</label>
-      <input type="text" id="f_strengths" value="Problem Solving, Quick Learner, Clear Technical Communication, Team Leadership">
+      <input type="text" id="f_strengths" value="Problem Solving, Quick Learner, Clear Technical Communication, Team Leadership" placeholder="Problem Solving, Leadership...">
 
       <label>Certifications</label>
-      <input type="text" id="f_certs" value="Full-Stack Web Development, Cloud Computing Essentials">
+      <input type="text" id="f_certs" value="Full-Stack Web Development, Cloud Computing Essentials" placeholder="AWS Certified, Google Analytics...">
 
       <label>Languages Known</label>
-      <input type="text" id="f_languages" value="English - Fluent, Hindi - Native">
+      <input type="text" id="f_languages" value="English - Fluent, Hindi - Native" placeholder="English - Fluent, Hindi - Native">
     </div>
 
     <div class="preview-panel">
@@ -799,6 +828,20 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
       </div>
     </div>
 
+  </div>
+
+  <!-- ADSENSE AD UNIT 2: Middle Content (After Workspace) -->
+  <div class="adsense-container">
+    <!-- 
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+    <span>Advertisement (Middle Content AdSense)</span>
   </div>
 
   <!-- ==================== EXPANDED SEO ARTICLE (2400+ words) ==================== -->
@@ -920,6 +963,20 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
       <li><b>Lying or exaggeration:</b> Background verification checks are standard in 2026. Never claim a degree or job you didn't have.</li>
     </ul>
 
+    <!-- ADSENSE AD UNIT 3: In-Article (Middle of SEO Article) -->
+    <div class="adsense-container">
+      <!-- 
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      -->
+      <span>Advertisement (In-Article AdSense)</span>
+    </div>
+
     <h2>Frequently Asked Questions (FAQ)</h2>
 
     <details>
@@ -969,6 +1026,20 @@ Software Engineer | AEGIS Digital Labs | 2021–2023 | Developed client-side web
     </div>
 
   </section>
+
+  <!-- ADSENSE AD UNIT 4: Bottom Banner -->
+  <div class="adsense-container">
+    <!-- 
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+    <span>Advertisement (Bottom Banner AdSense)</span>
+  </div>
 
 </main>
 
