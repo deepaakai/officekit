@@ -616,13 +616,16 @@ function layoutPage(b, paper, orient, margin = 10) {
 
 
 /* ---------- Converter engine (libredwg-web, WebAssembly) ----------
-   Tried in order. To self-host (recommended for production): run `npm i @mlightcad/libredwg-web@0.7.15`,
-   copy its `dist/` and `wasm/` folders into assets/vendor/libredwg-web/, and point `module` at the ES module
-   file listed as "module" in that package.json. */
-const ENGINE_SOURCES = [
-  { name: 'self-hosted', module: '../assets/vendor/libredwg-web/libredwg-web.js', wasm: '../assets/vendor/libredwg-web/' },
-  { name: 'jsdelivr', module: 'https://cdn.jsdelivr.net/npm/@mlightcad/libredwg-web@0.7.15/+esm', wasm: 'https://cdn.jsdelivr.net/npm/@mlightcad/libredwg-web@0.7.15/wasm/' },
-];
+   The package needs its .wasm file in the SAME folder as its JavaScript file. For production, self-host both:
+   run `npm i @mlightcad/libredwg-web@0.7.15`, then copy everything inside node_modules/@mlightcad/libredwg-web/dist/
+   plus node_modules/@mlightcad/libredwg-web/wasm/libredwg-web.wasm into assets/vendor/libredwg-web/.
+   If the main file in that package.json ("module") is not libredwg-web.js, change selfModule below.
+   A CDN fallback is tried second; failures are listed in the error box to help debugging. */
+const ENGINE_CFG = {
+  selfDir: '../assets/vendor/libredwg-web/',
+  selfModule: '../assets/vendor/libredwg-web/libredwg-web.js',
+  cdn: 'https://cdn.jsdelivr.net/npm/@mlightcad/libredwg-web@0.7.15',
+};
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -643,21 +646,41 @@ function readVersion(buf) {
 
 async function loadEngine() {
   if (state.engine) return state.engine;
-  let lastErr;
-  for (const src of ENGINE_SOURCES) {
-    try {
-      const mod = await import(src.module);
-      const LibreDwg = mod.LibreDwg ?? mod.default?.LibreDwg;
-      if (!LibreDwg) throw new Error('LibreDwg export not found in module');
-      const lib = await LibreDwg.create(src.wasm);
-      state.engine = { lib, type: (mod.Dwg_File_Type ?? mod.default?.Dwg_File_Type)?.DWG ?? 0, source: src.name };
-      return state.engine;
-    } catch (e) {
-      lastErr = e;
-      console.error('Converter engine failed to load from', src.name, e);
+  const errs = [];
+  const attempt = async (label, fn) => {
+    try { return await fn(); } catch (e) { errs.push(label + ': ' + String(e?.message || e).slice(0, 140)); console.error('engine:', label, e); return null; }
+  };
+  const fromModule = async (label, modUrl, wasmDirs, glue) => {
+    const mod = await import(modUrl);
+    const LibreDwg = mod.LibreDwg ?? mod.default?.LibreDwg;
+    const type = (mod.Dwg_File_Type ?? mod.default?.Dwg_File_Type)?.DWG ?? 0;
+    if (!LibreDwg) throw new Error('LibreDwg export not found');
+    for (const dir of wasmDirs) {
+      const lib = await attempt(label + ' create(' + (dir ?? '') + ')', () => (dir === undefined ? LibreDwg.create() : LibreDwg.create(dir)));
+      if (lib) return { lib, type, source: label };
     }
+    if (glue) { // last resort: start the raw WebAssembly module ourselves and wrap it
+      const lib = await attempt(label + ' raw', async () => {
+        const g = await import(glue.js);
+        const inst = await (g.createModule ?? g.default)({ locateFile: (p) => glue.base + p });
+        return new LibreDwg(inst);
+      });
+      if (lib) return { lib, type, source: label + ' (raw)' };
+    }
+    return null;
+  };
+  const C = ENGINE_CFG;
+  const strategies = [
+    () => fromModule('self-hosted', C.selfModule, [undefined, C.selfDir]),
+    () => fromModule('cdn', C.cdn + '/dist/libredwg-web.js', [C.cdn + '/wasm/', C.cdn + '/dist/', undefined], { js: C.cdn + '/wasm/libredwg-web.js', base: C.cdn + '/wasm/' }),
+  ];
+  for (const s of strategies) {
+    const eng = await attempt('strategy', s);
+    if (eng) return (state.engine = eng);
   }
-  throw lastErr || new Error('Converter engine could not be loaded');
+  const err = new Error('the converter engine files could not be loaded');
+  err.details = errs;
+  throw err;
 }
 
 function readDwg(engine, buf) {
@@ -682,7 +705,7 @@ async function openFile(file) {
   setStatus('Loading converter engine...', 'busy');
   let engine;
   try { engine = await loadEngine(); }
-  catch (e) { return setStatus('The converter engine could not be loaded. Check your internet connection and try again. (' + (e?.message || e) + ')', 'error'); }
+  catch (e) { return setStatus('The converter engine could not be loaded. Reload and try again; if it keeps failing, the site owner must host the engine files (see the comment in the page code). Details: ' + (e?.details ? e.details.join(' | ') : (e?.message || e)).slice(0, 700), 'error'); }
 
   setStatus('Reading drawing (' + ver.label + ')...', 'busy');
   await nextFrame();
