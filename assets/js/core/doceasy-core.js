@@ -58,15 +58,15 @@
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
 
-    /* Clean Main Nav */
+    /* Clean Main Nav (Section IDs aligned with index.html) */
     mainNav: [
       { href: 'index.html',                 label: 'Home',       root: true },
       { href: 'index.html#pdf-tools',       label: 'PDF Tools',  root: true },
       { href: 'index.html#image-tools',     label: 'Images',     root: true },
-      { href: 'index.html#id-tools',        label: 'ID Cards',   root: true },
-      { href: 'index.html#media-tools',     label: 'Media',      root: true },
-      { href: 'index.html#utility-tools',   label: 'Utilities',  root: true },
-      { href: 'index.html#more-tools',      label: 'More Hubs',  root: true }
+      { href: 'index.html#id-forms',        label: 'ID Cards',   root: true },
+      { href: 'index.html#media',           label: 'Media',      root: true },
+      { href: 'index.html#utility',         label: 'Utilities',  root: true },
+      { href: 'categories.html',            label: 'All Hubs',   root: true }
     ],
 
     /* Quick Top Bar Tools */
@@ -74,14 +74,14 @@
       { href: 'card-cropper.html',          label: 'ID Card Crop' },
       { href: 'resume-builder.html',        label: 'Resume Builder' },
       { href: 'invoice-generator.html',     label: 'Invoice Maker' },
+      { href: 'printing-tools.html',        label: 'Printing Suite',  root: true },
       { href: 'business-tools.html',        label: 'Business Tools',  root: true },
       { href: 'finance-tools.html',         label: 'Finance Tools',   root: true },
+      { href: 'career-tools.html',          label: 'Career Tools',    root: true },
       { href: 'emitra-csc-tools.html',      label: 'eMitra / CSC' },
       { href: 'pdf-merge.html',             label: 'Merge PDF' },
       { href: 'image-compressor.html',      label: 'Compress Image' },
-      { href: 'passport-maker.html',        label: 'Passport Photo' },
-      { href: 'qr-generator.html',          label: 'QR Code' },
-      { href: 'word-writer.html',           label: 'Word Writer' }
+      { href: 'passport-maker.html',        label: 'Passport Photo' }
     ],
 
     footer: {
@@ -96,18 +96,19 @@
       businessTools: [
         { href: 'business-tools.html',    label: 'Business Suite',      root: true },
         { href: 'finance-tools.html',     label: 'Finance Calculators', root: true },
+        { href: 'career-tools.html',      label: 'Career Suite',        root: true },
         { href: 'invoice-generator.html', label: 'GST Invoice Maker' },
         { href: 'resume-builder.html',    label: 'Resume Builder' },
-        { href: 'word-writer.html',       label: 'Word Writer' },
         { href: 'emitra-csc-tools.html',  label: 'eMitra / CSC Tools' }
       ],
       idTools: [
+        { href: 'printing-tools.html',               label: 'Printing Hub',        root: true },
         { href: 'card-cropper.html',                 label: 'ID Card Cropper' },
         { href: 'id-2in1-maker.html',                label: '2 in 1 ID Maker' },
         { href: 'passport-maker.html',               label: 'Passport Photo Maker' },
         { href: 'pan-photo-signature-resizer.html',  label: 'PAN Photo & Signature' },
         { href: 'signature-resize.html',             label: 'Signature Resize' },
-        { href: 'signature-bg-remover.html',         label: 'Signature BG Remover' }
+        { href: 'photo-size-resize.html',            label: 'Photo Size Resize' }
       ],
       legal: [
         { href: 'about.html',    label: 'About',                    root: true },
@@ -121,37 +122,19 @@
 
   /* ==========================================================================
      FIXED PATH RESOLVER
-     Correctly handles:
-       • Root pages (index, business-tools, finance-tools, about, etc.)
-       • Tool pages (pdf-merge, resume-builder, etc. inside /tools/)
-       • Anchor links (index.html#pdf-tools)
-       • External URLs (https://...)
      ========================================================================== */
   function resolvePath(href, isRoot) {
     if (!href) return '#';
     if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
 
-    // Extract base name (without .html and without #anchor)
     var baseName = href.split('#')[0].replace(/\.html$/, '');
-
-    // Is this link pointing to a page that lives in the ROOT folder?
     var isRootPage = isRoot === true || ROOT_PAGES.indexOf(baseName) !== -1;
 
     if (CONFIG.isSubPage) {
-      // We are currently inside /tools/ folder
-      if (isRootPage) {
-        // Root page → go up one level
-        return '../' + href;
-      }
-      // Tool page → same folder, use as-is
+      if (isRootPage) return '../' + href;
       return href;
     } else {
-      // We are currently at site root (index.html, business-tools.html, etc.)
-      if (isRootPage) {
-        // Root page → use as-is
-        return href;
-      }
-      // Tool page → prefix with tools/
+      if (isRootPage) return href;
       return 'tools/' + href;
     }
   }
@@ -168,6 +151,7 @@
 
     var homeHref = resolvePath('index.html', true);
 
+    /* TEMPORARILY DISABLED FOR ADSENSE APPROVAL (Original Code Saved Below)
     var supportModal =
       '<div class="support-modal-backdrop" id="supportModal">' +
         '<div class="support-modal">' +
@@ -199,6 +183,7 @@
           '</div>' +
         '</div>' +
       '</div>';
+    */
 
     return '<header class="site-header">' +
       '<div class="header-inner">' +
@@ -208,17 +193,18 @@
           '</span>' +
         '</a>' +
         '<nav class="pill-nav" aria-label="Sections">' + navLinks + '</nav>' +
+        /* Support button temporarily hidden for AdSense Review
         '<button type="button" class="support-link" onclick="docEasyOpenSupport()" aria-label="Support">' +
           '<span class="support-icon">☕</span>' +
           '<span class="support-text">Support</span>' +
-        '</button>' +
+        '</button>' + */
         '<label class="theme-switch" aria-label="Toggle theme">' +
           '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
           '<span class="slider"></span>' +
         '</label>' +
       '</div>' +
       '<nav class="top-nav" aria-label="Quick tools">' + quickLinks + '</nav>' +
-    '</header>' + supportModal;
+    '</header>';
   }
 
   /* ---------- Footer builder ---------- */
@@ -238,13 +224,14 @@
         '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
           '90+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
         '</p>' +
+        /* Support button temporarily hidden
         '<button type="button" class="footer-support-btn" onclick="docEasyOpenSupport()">' +
           '<span>☕</span> Support DocEasy' +
-        '</button>' +
+        '</button>' + */
       '</div>' +
       col('PDF Tools',      CONFIG.footer.pdfTools) +
       col('Business Suite', CONFIG.footer.businessTools) +
-      col('ID Tools',       CONFIG.footer.idTools) +
+      col('ID & Print',     CONFIG.footer.idTools) +
       col('Company',        CONFIG.footer.legal) +
       '</div><div class="footer-bottom-bar">' +
         '<div>© <span id="de-year"></span> DocEasy. All rights reserved.</div>' +
@@ -260,7 +247,6 @@
     var f = document.getElementById('doceasy-footer');
     if (f && !document.querySelector('.site-footer')) f.outerHTML = buildFooter();
 
-    /* Mark active quick tool link */
     var current = location.pathname.split('/').pop().replace('.html', '');
     document.querySelectorAll('.top-nav a[data-page]').forEach(function (a) {
       if (a.getAttribute('data-page') === current) a.classList.add('active');
@@ -286,31 +272,9 @@
   };
   window.officekitToggleTheme = window.docEasyToggleTheme;
 
-  /* ---------- Support Modal Open/Close ---------- */
-  window.docEasyOpenSupport = function () {
-    var m = document.getElementById('supportModal');
-    if (m) {
-      m.classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
-  };
-  window.docEasyCloseSupport = function () {
-    var m = document.getElementById('supportModal');
-    if (m) {
-      m.classList.remove('show');
-      document.body.style.overflow = '';
-    }
-  };
-
-  document.addEventListener('click', function (e) {
-    var m = document.getElementById('supportModal');
-    if (m && e.target === m) {
-      window.docEasyCloseSupport();
-    }
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') window.docEasyCloseSupport();
-  });
+  /* ---------- Support Modal Open/Close (Stubbed safely) ---------- */
+  window.docEasyOpenSupport = function () {};
+  window.docEasyCloseSupport = function () {};
 
   /* ---------- Init ---------- */
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
@@ -320,11 +284,10 @@
 /* ============ Auto-Hide Header On Scroll ============ */
 (function () {
   'use strict';
-
   var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
   var ticking = false;
-  var HIDE_THRESHOLD = 80;
-  var DELTA = 8;
+  var HIDE_THRESHOLD = 120;
+  var DELTA = 15;
 
   function updateHeader() {
     var currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
