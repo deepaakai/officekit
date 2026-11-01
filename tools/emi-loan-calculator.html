@@ -6,13 +6,13 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EMI & Loan Calculator - Reducing Balance EMI & Private Loan Interest Ledger (रुपये सैकड़ा ब्याज) | DocEasy</title>
-<meta name="description" content="Free global and Indian EMI & loan calculator. Calculate bank reducing balance EMI and private money lender monthly interest (रुपये सैकड़ा ब्याज) with party ledger, dual-copy printable promissory agreements, manual offline repayment tables, photos, and signatures.">
-<meta name="keywords" content="emi calculator, loan calculator, reducing balance emi calculator, private loan interest calculator, mahajani byaj calculator, rupaye saikda biyaaj calculator, car loan emi, home mortgage payment calculator, loan amortization schedule csv, download loan statement pdf, private debt ledger, party loan agreement, informal lending calculator, 2 percent biyaaj calculator monthly, promissory note with repayment schedule, peer to peer lending ledger">
+<meta name="description" content="Free global and Indian EMI & loan calculator. Calculate bank reducing balance EMI, car loan, home mortgage, and private money lender monthly interest (रुपये सैकड़ा ब्याज / सूद) with party ledger, dual-copy printable promissory agreements, manual offline repayment tables, photos, and signatures.">
+<meta name="keywords" content="emi calculator, loan calculator, reducing balance emi calculator, private loan interest calculator, mahajani byaj calculator, rupaye saikda biyaaj calculator, car loan emi, home mortgage payment calculator, loan amortization schedule csv, download loan statement pdf, private debt ledger, party loan agreement, informal lending calculator, 2 percent biyaaj calculator monthly, promissory note with repayment schedule, peer to peer lending ledger, byaj par diye paise ka hisab">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/emi-loan-calculator.html">
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
 
-<!-- jsPDF and AutoTable for Client-Side Statement & Ledger Generation -->
+<!-- jsPDF and AutoTable for Clean Client-Side Statement & Ledger Generation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
@@ -61,6 +61,14 @@
         "@type": "Answer",
         "text": "You can toggle the PDF language between English and हिन्दी. The generated document translates the repayment ledger, loan undertaking terms, and receiver signature blocks into the selected language."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the manual offline repayment table included in the PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because DocEasy is 100% client-side and stores zero user data, the printed physical table allows parties to record dates, cash payments, remaining principal, and receiver signatures by hand for authentic offline tracking."
+      }
     }
   ]
 }
@@ -99,7 +107,7 @@
 .input-group input, .input-group select{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s;}
 .input-group input:focus, .input-group select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg);}
 
-/* Credentials Box & Responsive Layout */
+/* Credentials Box & Fully Mobile-Responsive Layout */
 .credentials-box{grid-column:1 / -1;background:var(--card-hover);border:1.5px dashed var(--border-color);border-radius:14px;padding:20px;margin-bottom:6px;}
 .credentials-box h4{margin:0 0 14px;font-size:13.5px;font-weight:900;text-transform:uppercase;color:var(--accent);letter-spacing:0.8px;display:flex;align-items:center;gap:6px;}
 .credentials-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:16px;}
@@ -816,20 +824,20 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const scale = 4; // High DPI for crisp printing
-    const cssFont = `${isBold}${fontSize * scale}px "Noto Sans Devanagari", "Mangal", "Nirmala UI", sans-serif`;
+    const cssFont = `${isBold}${fontSize * scale}px "Mangal", "Noto Sans Devanagari", "Nirmala UI", sans-serif`;
 
     ctx.font = cssFont;
     const metrics = ctx.measureText(text);
     const textWidth = metrics.width;
     const textHeight = fontSize * scale * 1.35;
 
-    canvas.width = Math.ceil(textWidth + 20);
-    canvas.height = Math.ceil(textHeight + 10);
+    canvas.width = Math.ceil(textWidth + 24);
+    canvas.height = Math.ceil(textHeight + 12);
 
     ctx.font = cssFont;
     ctx.fillStyle = fontColor;
     ctx.textBaseline = 'middle';
-    ctx.fillText(text, 10, canvas.height / 2);
+    ctx.fillText(text, 12, canvas.height / 2);
 
     const imgData = canvas.toDataURL('image/png');
     const pdfW = (canvas.width / scale) * 0.264583;
@@ -1072,9 +1080,9 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       margin: { left: 14, right: 14 }
     });
 
-    // 6. Undertaking Terms, Dual Photo Boxes & Cross-Signatures
+    // 6. Undertaking Terms, Dual Photo Boxes & Clean Spaced Cross-Signatures
     let finalY = doc.lastAutoTable.finalY + 7;
-    if (finalY > pageHeight - 65) {
+    if (finalY > pageHeight - 68) {
       doc.addPage();
       finalY = 18;
     }
@@ -1103,7 +1111,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         doc.text("3. The borrower acknowledges receipt of the principal in full and agrees to the stated repayment terms.", 18, finalY + 14);
       }
 
-      finalY += 20;
+      finalY += 21;
 
       const photoW = 20;
       const photoH = 24;
@@ -1138,33 +1146,37 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         }
       }
 
-      // Cross Signature Prompt
+      // Prompt cleanly below photo
       if (isHi) {
-        renderNativeText(doc, "फोटो के आर-पार हस्ताक्षर करें", lenderX + (photoW / 2), finalY + photoH + 3.5, { fontSize: 6, color: '#64748b', align: 'center' });
+        renderNativeText(doc, "फोटो पर तिरछा साइन करें", lenderX + (photoW / 2), finalY + photoH + 3, { fontSize: 5.8, color: '#64748b', align: 'center' });
       } else {
         doc.setFontSize(5.5);
         doc.setFont("helvetica", "italic");
         doc.setTextColor(100, 116, 139);
-        doc.text("Sign Across Photo", lenderX + (photoW / 2), finalY + photoH + 3.5, { align: "center" });
+        doc.text("Sign Across Photo", lenderX + (photoW / 2), finalY + photoH + 3, { align: "center" });
       }
 
-      // Main Signature Line
+      // Signature line with ample blank space
+      const signLineStartX = lenderX + photoW + 8;
+      const signLineEndX = signLineStartX + 52;
+      const signBaseY = finalY + photoH - 6;
+
       doc.setDrawColor(148, 163, 184);
       doc.setLineDashPattern([1.5, 1.5], 0);
-      doc.line(lenderX + photoW + 6, finalY + photoH - 4, lenderX + photoW + 55, finalY + photoH - 4);
+      doc.line(signLineStartX, signBaseY, signLineEndX, signBaseY);
 
       if (isHi) {
-        renderNativeText(doc, "ऋणदाता (Lender) के हस्ताक्षर", lenderX + photoW + 6, finalY + photoH, { fontSize: 7.5, bold: true, color: '#0f172a' });
-        renderNativeText(doc, "(रकम देने वाले का नाम व तारीख)", lenderX + photoW + 6, finalY + photoH + 3.8, { fontSize: 6.5, color: '#64748b' });
+        renderNativeText(doc, "ऋणदाता (Lender) के हस्ताक्षर", signLineStartX, signBaseY + 4, { fontSize: 7.5, bold: true, color: '#0f172a' });
+        renderNativeText(doc, "(रकम देने वाले का नाम व तारीख)", signLineStartX, signBaseY + 8, { fontSize: 6.2, color: '#64748b' });
       } else {
         doc.setFontSize(7.5);
         doc.setFont("helvetica", "bold");
         doc.setTextColor(15, 23, 42);
-        doc.text("LENDER SIGNATURE", lenderX + photoW + 6, finalY + photoH);
-        doc.setFontSize(6.5);
+        doc.text("LENDER SIGNATURE", signLineStartX, signBaseY + 4);
+        doc.setFontSize(6.2);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(100, 116, 139);
-        doc.text("(Given By / Name & Date)", lenderX + photoW + 6, finalY + photoH + 3.5);
+        doc.text("(Given By / Name & Date)", signLineStartX, signBaseY + 8);
       }
 
       // ================= BORROWER SECTION (Right Side) =================
@@ -1199,62 +1211,64 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         }
       }
 
-      // Cross Signature Prompt
+      // Prompt cleanly below photo
       if (isHi) {
-        renderNativeText(doc, "फोटो के आर-पार हस्ताक्षर करें", borrowerPhotoX + (photoW / 2), finalY + photoH + 3.5, { fontSize: 6, color: '#64748b', align: 'center' });
+        renderNativeText(doc, "फोटो पर तिरछा साइन करें", borrowerPhotoX + (photoW / 2), finalY + photoH + 3, { fontSize: 5.8, color: '#64748b', align: 'center' });
       } else {
         doc.setFontSize(5.5);
         doc.setFont("helvetica", "italic");
         doc.setTextColor(100, 116, 139);
-        doc.text("Sign Across Photo", borrowerPhotoX + (photoW / 2), finalY + photoH + 3.5, { align: "center" });
+        doc.text("Sign Across Photo", borrowerPhotoX + (photoW / 2), finalY + photoH + 3, { align: "center" });
       }
 
-      // Main Signature Line
+      // Signature line with ample blank space to the left of borrower photo
+      const bSignLineEndX = borrowerPhotoX - 8;
+      const bSignLineStartX = bSignLineEndX - 52;
+
       doc.setDrawColor(148, 163, 184);
       doc.setLineDashPattern([1.5, 1.5], 0);
-      doc.line(borrowerPhotoX - 55, finalY + photoH - 4, borrowerPhotoX - 6, finalY + photoH - 4);
+      doc.line(bSignLineStartX, signBaseY, bSignLineEndX, signBaseY);
 
       if (isHi) {
-        renderNativeText(doc, "कर्जदार (Borrower) के हस्ताक्षर", borrowerPhotoX - 55, finalY + photoH, { fontSize: 7.5, bold: true, color: '#0f172a' });
-        renderNativeText(doc, "(रकम लेने वाले की सहमति व पावती)", borrowerPhotoX - 55, finalY + photoH + 3.8, { fontSize: 6.5, color: '#64748b' });
+        renderNativeText(doc, "कर्जदार (Borrower) के हस्ताक्षर", bSignLineStartX, signBaseY + 4, { fontSize: 7.5, bold: true, color: '#0f172a' });
+        renderNativeText(doc, "(रकम लेने वाले की सहमति व पावती)", bSignLineStartX, signBaseY + 8, { fontSize: 6.2, color: '#64748b' });
       } else {
         doc.setFontSize(7.5);
         doc.setFont("helvetica", "bold");
         doc.setTextColor(15, 23, 42);
-        doc.text("BORROWER SIGNATURE", borrowerPhotoX - 55, finalY + photoH);
-        doc.setFontSize(6.5);
+        doc.text("BORROWER SIGNATURE", bSignLineStartX, signBaseY + 4);
+        doc.setFontSize(6.2);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(100, 116, 139);
-        doc.text("(Taken By / Acknowledged)", borrowerPhotoX - 55, finalY + photoH + 3.5);
+        doc.text("(Taken By / Acknowledged)", bSignLineStartX, signBaseY + 8);
       }
 
       doc.setLineDashPattern([], 0);
     }
 
-    // ================= 7. Non-Clipping Centered Legal Disclaimer & Footer =================
+    // ================= 7. Well-Spaced Legal Disclaimer & Footer =================
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
 
-      // Low Opacity Muted Gray
-      doc.setFontSize(6);
+      const maxDisclaimerWidth = pageWidth - 28;
+      doc.setFontSize(5.8);
       doc.setFont("helvetica", "normal");
       doc.setTextColor(175, 185, 200);
 
-      // Multi-line fit with maxWidth to PREVENT cut-offs
-      const maxDisclaimerWidth = pageWidth - 28;
-      
+      // English disclaimer
       const disclaimerEn = "DISCLAIMER: This system is a self-service calculation tool. DocEasy/its developers hold no legal responsibility for any personal debt disputes or financial default. All liabilities rest entirely between the lender and borrower.";
       const disclaimerLinesEn = doc.splitTextToSize(disclaimerEn, maxDisclaimerWidth);
-      doc.text(disclaimerLinesEn, pageWidth / 2, pageHeight - 14, { align: "center" });
+      doc.text(disclaimerLinesEn, pageWidth / 2, pageHeight - 13.5, { align: "center" });
 
+      // Hindi disclaimer
       if (isHi) {
         const disclaimerHi = "कानूनी अस्वीकरण: यह केवल गणना टूल है। किसी भी विवाद या डिफ़ॉल्ट के लिए सॉफ़्टवेयर ज़िम्मेदार नहीं होगा। सारी जवाबदेही दोनों पक्षों की है।";
-        renderNativeText(doc, disclaimerHi, pageWidth / 2, pageHeight - 9, { fontSize: 6, color: '#afb9c8', align: 'center' });
+        renderNativeText(doc, disclaimerHi, pageWidth / 2, pageHeight - 8.5, { fontSize: 5.8, color: '#afb9c8', align: 'center' });
       } else {
-        const safeHiText = "Legal Notice: The software holds no liability. All mutual rights and obligations rest strictly between the parties involved.";
-        const disclaimerLinesHi = doc.splitTextToSize(safeHiText, maxDisclaimerWidth);
-        doc.text(disclaimerLinesHi, pageWidth / 2, pageHeight - 9, { align: "center" });
+        const safeNoticeEn = "Legal Notice: The software holds no liability. All mutual rights and obligations rest strictly between the parties involved.";
+        const disclaimerLinesHi = doc.splitTextToSize(safeNoticeEn, maxDisclaimerWidth);
+        doc.text(disclaimerLinesHi, pageWidth / 2, pageHeight - 8.5, { align: "center" });
       }
 
       // Bottom Privacy & Pagination Line
