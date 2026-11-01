@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Working Days Calculator - Business Days & Holidays | DocEasy</title>
+<meta name="description" content="Free working days calculator. Calculate the exact number of business days between two dates. Exclude weekends and custom holidays. Perfect for project deadlines.">
+<meta name="keywords" content="working days calculator, business days calculator, calculate working days, work days between dates, exclude weekends and holidays">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/working-days-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Working Days Calculator - Business Days | DocEasy">
+<meta property="og:description" content="Calculate working days between two dates, excluding weekends and holidays.">
+<meta property="og:url" content="https://doceasy.org/tools/working-days-calculator.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Working Days Calculator — DocEasy","url":"https://doceasy.org/tools/working-days-calculator.html","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Calculate business days between dates, excluding weekends and custom holidays."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"How to Calculate Working Days","totalTime":"PT2M","step":[
+{"@type":"HowToStep","position":1,"name":"Enter Dates","text":"Select your start date and end date."},
+{"@type":"HowToStep","position":2,"name":"Add Holidays","text":"Optionally type in any public holidays to exclude them from the count."},
+{"@type":"HowToStep","position":3,"name":"See Result","text":"The tool shows total days, working days, and weekend days."}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the working days calculator work?","acceptedAnswer":{"@type":"Answer","text":"It counts every day between your start and end dates, but skips Saturdays and Sundays. If you add specific holiday dates, it skips those as well."}},
+{"@type":"Question","name":"Are Saturdays and Sundays both weekends?","acceptedAnswer":{"@type":"Answer","text":"In most Western countries and India, yes. However, in some Middle Eastern countries, the weekend is Friday and Saturday. Our tool assumes Saturday and Sunday are weekends."}},
+{"@type":"Question","name":"How do I calculate my notice period end date?","acceptedAnswer":{"@type":"Answer","text":"You can use our Date Calculator for that. This tool tells you how many working days are in a given period."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:20px;font-weight:800;color:var(--text-color)}
+.calc-card h2 svg{width:22px;height:22px;flex-shrink:0;color:var(--accent)}
+.calc-card .sub{margin:0 0 20px;font-size:14px;color:var(--subtext-color);line-height:1.55}
+
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:560px){.input-row{grid-template-columns:1fr}}
+.input-group{display:flex;flex-direction:column;gap:8px}
+.input-group label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.input-group input{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s}
+.input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
+
+.holiday-box{margin-bottom:20px;padding:16px;background:var(--card-hover);border-radius:12px;border:1px solid var(--border-color)}
+.holiday-box h3{font-size:14px;font-weight:800;color:var(--text-color);margin:0 0 8px;display:flex;align-items:center;gap:6px}
+.holiday-box h3 svg{width:16px;height:16px;color:var(--accent)}
+.holiday-box p{font-size:12.5px;color:var(--subtext-color);margin:0 0 12px}
+#holidays-list{width:100%;padding:12px;border:1.5px solid var(--border-color);border-radius:8px;background:var(--card-bg);color:var(--text-color);font-family:inherit;font-size:14px;resize:vertical;min-height:80px;outline:none;line-height:1.5}
+#holidays-list:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+.calc-btn{width:100%;padding:14px 20px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(25,57,138,0.28);transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.calc-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(25,57,138,0.35)}
+.calc-btn svg{width:18px;height:18px;flex-shrink:0}
+
+.result-section{margin-top:26px;display:none}
+.result-section.show{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.result-hero{text-align:center;padding:28px 20px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:14px;color:#fff;box-shadow:0 10px 30px rgba(25,57,138,0.25);margin-bottom:16px}
+.result-hero .res-lbl{font-size:13px;text-transform:uppercase;letter-spacing:0.5px;opacity:0.9;font-weight:700;margin-bottom:4px}
+.result-hero .res-num{font-size:clamp(36px,7vw,48px);font-weight:900;letter-spacing:-1px;line-height:1.1}
+
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:16px}
+.res-card{padding:16px;background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;text-align:center}
+.res-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:800;color:var(--subtext-color);margin-bottom:6px}
+.res-card .val{font-size:20px;font-weight:800;color:var(--accent);letter-spacing:-0.3px}
+
+/* SEO & How To Content Styling */
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+.step-box{background:var(--card-hover);padding:20px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--accent)}
+.step-box h4{margin:0 0 8px;font-size:16px;color:var(--text-color);font-weight:800}
+
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .calc-card{padding:20px 16px}
+  .content-section{padding:24px 16px;margin:24px auto}
+  .content-section h2{font-size:20px}
+  .content-section p,.content-section li{font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Working Days Calculator</h1>
+    <p class="hero-sub">Find out exactly how many business days are between two dates. Perfect for project planning, notice periods, and deadlines. Excludes weekends automatically.</p>
+  </div>
+
+  <div class="calc-card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Calculate Working Days
+    </h2>
+    <p class="sub">Choose your start and end dates. The calculator will count Monday to Friday.</p>
+
+    <div class="input-row">
+      <div class="input-group">
+        <label for="start-date">Start Date</label>
+        <input type="date" id="start-date">
+      </div>
+      <div class="input-group">
+        <label for="end-date">End Date</label>
+        <input type="date" id="end-date">
+      </div>
+    </div>
+
+    <div class="holiday-box">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Add Public Holidays (Optional)
+      </h3>
+      <p>If there are holidays in between (like Diwali, Holi, or a national holiday), enter the dates here. One date per line (Format: YYYY-MM-DD).</p>
+      <textarea id="holidays-list" placeholder="Example:&#10;2024-10-31&#10;2024-11-01"></textarea>
+    </div>
+
+    <button class="calc-btn" id="calc-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Calculate Working Days
+    </button>
+
+    <div class="result-section" id="result">
+      <div class="result-hero">
+        <div class="res-lbl">Total Working Days</div>
+        <div class="res-num" id="res-working-days">0</div>
+      </div>
+      
+      <div class="result-grid">
+        <div class="res-card">
+          <div class="lbl">Calendar Days</div>
+          <div class="val" id="res-total-days">0</div>
+        </div>
+        <div class="res-card">
+          <div class="lbl">Weekend Days</div>
+          <div class="val" id="res-weekend-days">0</div>
+        </div>
+        <div class="res-card">
+          <div class="lbl">Holidays Removed</div>
+          <div class="val" id="res-holiday-days">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <article class="content-section">
+    <h2>How to Use the Working Days Calculator</h2>
+    <p>This tool is designed to help professionals and students calculate time accurately. Here is how to use it:</p>
+    
+    <div class="step-box">
+      <h4>Step 1: Enter Your Dates</h4>
+      <p>Select your starting date and ending date in the boxes provided. The tool will calculate the total number of calendar days between these dates.</p>
+    </div>
+    
+    <div class="step-box">
+      <h4>Step 2: Remove Weekends Automatically</h4>
+      <p>By default, the calculator will subtract all Saturdays and Sundays from the total. It only counts Monday, Tuesday, Wednesday, Thursday, and Friday. This gives you the pure "business days."</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 3: Add Custom Holidays (Optional)</h4>
+      <p>Weekends aren't the only days you don't work. If a public holiday (like Independence Day or Diwali) falls on a weekday, it is not a working day. In the "Add Public Holidays" box, type the dates of the holidays. The tool will subtract these days as well.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 4: Read Your Results</h4>
+      <p>You will see the exact number of working days in the blue box. Below it, you can see the breakdown: total calendar days, how many weekend days were skipped, and how many holidays were removed.</p>
+    </div>
+
+    <h2>Why Do You Need a Working Days Calculator?</h2>
+    <p>Counting days by hand is easy, but counting *working* days is hard. Different months have different numbers of days, and there are weekends and holidays. Here is why this tool is essential:</p>
+
+    <h3>1. Project Management</h3>
+    <p>When planning a project, deadlines are rarely set in "calendar days." If a client says, "You have 45 days to finish this website," they usually mean 45 *working* days. Knowing exactly when the 45th business day falls is crucial for delivering on time.</p>
+
+    <h3>2. Corporate Notice Periods</h3>
+    <p>If you resign from a job, your notice period is often 30, 60, or 90 days. But HR departments usually calculate your last working day based on business days, not calendar days. You need to know exactly how many days of actual work you have left.</p>
+
+    <h3>3. Banking and Financial Services</h3>
+    <p>Banks operate on business days. If a cheque is cleared in "3 working days," and you deposit it on a Friday, it will not clear on Monday. It will clear by Wednesday (skipping the weekend). Knowing this helps you manage your finances.</p>
+
+    <h3>4. Event Planning</h3>
+    <p>If you are planning a conference or a wedding, vendors often require advance booking in working days. If your caterer says "We need 15 business days' notice," you need this calculator to know exactly when to call them.</p>
+
+    <h2>Is Your Data Safe?</h2>
+    <p>Yes, 100%. The calculation happens entirely in your web browser. We do not know your start date, end date, or which holidays you entered. Your data is completely private.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <details class="faq">
+      <summary>How does the working days calculator work?</summary>
+      <p>It counts every day between your start and end dates but automatically skips Saturdays and Sundays. If you manually add dates to the "Holidays" box, it will skip those as well.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Does the calculator include the start and end date?</summary>
+      <p>The calculator counts the days *between* the two dates. For example, if you select January 1 to January 5, that is 4 days. However, for working days, it adjusts based on the days of the week.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Are Saturdays and Sundays always the weekend?</summary>
+      <p>In most Western countries and India, yes. However, in some Middle Eastern countries, the weekend is Friday and Saturday. Our tool currently assumes Saturday and Sunday are the weekends.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How do I calculate my notice period end date?</summary>
+      <p>This tool tells you how many working days are in a period. If you want to find out what the exact date is after 60 working days, you can use our <a href="date-calculator.html">Date Calculator</a>.</p>
+    </details>
+  </article>
+</main>
+
+<div id="doceasy-footer"></div>
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function(){
+  var startInput = document.getElementById('start-date');
+  var endInput = document.getElementById('end-date');
+  var holidaysInput = document.getElementById('holidays-list');
+  var calcBtn = document.getElementById('calc-btn');
+  
+  var resultSection = document.getElementById('result');
+  var resWorking = document.getElementById('res-working-days');
+  var resTotal = document.getElementById('res-total-days');
+  var resWeekend = document.getElementById('res-weekend-days');
+  var resHoliday = document.getElementById('res-holiday-days');
+
+  // Set default dates to today and 30 days from now
+  var today = new Date();
+  var future = new Date();
+  future.setDate(today.getDate() + 30);
+  
+  startInput.value = today.toISOString().split('T')[0];
+  endInput.value = future.toISOString().split('T')[0];
+
+  function calculate() {
+    var startVal = startInput.value;
+    var endVal = endInput.value;
+
+    if (!startVal || !endVal) {
+      alert('Please select both start and end dates.');
+      return;
+    }
+
+    var startDate = new Date(startVal);
+    var endDate = new Date(endVal);
+
+    // Ensure time is zeroed out for accurate day counting
+    startDate.setHours(0,0,0,0);
+    endDate.setHours(0,0,0,0);
+
+    if (startDate > endDate) {
+      alert('End date must be on or after the start date.');
+      return;
+    }
+
+    // Parse holidays
+    var holidays = [];
+    var rawHolidays = holidaysInput.value.split('\n');
+    rawHolidays.forEach(function(line) {
+      var dateStr = line.trim();
+      if (dateStr) {
+        var d = new Date(dateStr);
+        // Check if valid date
+        if (!isNaN(d.getTime())) {
+          d.setHours(0,0,0,0);
+          holidays.push(d.getTime());
+        }
+      }
+    });
+
+    var totalDays = 0;
+    var weekendDays = 0;
+    var holidayCount = 0;
+    var workingDays = 0;
+
+    var currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      totalDays++;
+      
+      var dayOfWeek = currentDate.getDay(); // 0 is Sunday, 6 is Saturday
+      var isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+      var isHoliday = holidays.includes(currentDate.getTime());
+
+      if (isWeekend) {
+        weekendDays++;
+      } else if (isHoliday) {
+        holidayCount++;
+      } else {
+        workingDays++;
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    // Display results
+    resWorking.textContent = workingDays;
+    resTotal.textContent = totalDays;
+    resWeekend.textContent = weekendDays;
+    resHoliday.textContent = holidayCount;
+
+    resultSection.classList.add('show');
+  }
+
+  calcBtn.addEventListener('click', calculate);
+  
+  // Auto calculate on load
+  calculate();
+
+})();
+</script>
+</body>
+</html>
