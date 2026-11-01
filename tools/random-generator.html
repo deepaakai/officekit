@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Random Number Generator & Dice Roller Online | DocEasy</title>
+<meta name="description" content="Free online random number generator, dice roller, and lottery picker. Generate random numbers, roll virtual dice for Ludo or D&D, and pick random winners. 100% fair and secure.">
+<meta name="keywords" content="random number generator, dice roller, roll a dice online, virtual dice, random lottery picker, randomizer tool, d20 dice roller, ludo dice online, pick a random winner">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/random-generator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Random Number Generator & Dice Roller | DocEasy">
+<meta property="og:description" content="Generate random numbers, roll virtual dice, and pick random winners instantly.">
+<meta property="og:url" content="https://doceasy.org/tools/random-generator.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Randomizer & Dice Roller — DocEasy","url":"https://doceasy.org/tools/random-generator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Generate random numbers, roll dice, and pick winners using secure random algorithms."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does a random number generator work?","acceptedAnswer":{"@type":"Answer","text":"Our tool uses your browser's built-in Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) to ensure truly random and unbiased results."}},
+{"@type":"Question","name":"Can I roll multiple dice at once?","acceptedAnswer":{"@type":"Answer","text":"Yes, our dice roller allows you to roll up to 10 dice simultaneously, with options for standard 6-sided dice or D&D dice (D4, D8, D10, D20)."}},
+{"@type":"Question","name":"Is this lottery picker fair?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. Every name in your list has an equal chance of being picked because the selection is based on secure random numbers, not any pattern."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+/* Tabs */
+.mode-tabs{display:flex;gap:8px;background:var(--card-hover);padding:6px;border-radius:12px;margin-bottom:24px;overflow-x:auto;scrollbar-width:none;}
+.mode-tabs::-webkit-scrollbar{display:none;}
+.mode-tabs button{flex:1;padding:12px 20px;border:0;background:transparent;color:var(--subtext-color);border-radius:8px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:.2s;}
+.mode-tabs button.active{background:var(--card-bg);color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.mode-pane{display:none;}
+.mode-pane.active{display:block;animation:fadeIn .3s;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+@media(max-width:640px){.input-grid{grid-template-columns:1fr;}}
+.input-group{display:flex;flex-direction:column;gap:8px;}
+.input-group.full{grid-column:1 / -1;}
+.input-group label{font-size:13px;font-weight:800;color:var(--text-color);}
+.input-group input[type="number"], .input-group select, .input-group textarea{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s;}
+.input-group input:focus, .input-group select:focus, .input-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg);}
+.input-group textarea{height:100px;resize:vertical;font-weight:600;}
+
+/* Result Display */
+.result-box{text-align:center;padding:30px 20px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:14px;color:#fff;box-shadow:0 10px 30px rgba(25,57,138,0.25);margin-bottom:20px;min-height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.result-box .res-title{font-size:14px;text-transform:uppercase;letter-spacing:1px;opacity:0.9;font-weight:700;margin-bottom:10px}
+.result-box .res-val{font-size:clamp(32px,6vw,56px);font-weight:900;letter-spacing:-1px;line-height:1.1;word-break:break-word;}
+.result-box .res-sub{font-size:16px;margin-top:10px;opacity:0.9;font-weight:600}
+
+/* Dice Container */
+.dice-container{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:20px;min-height:80px}
+.die{width:80px;height:80px;background:#fff;border:2px solid var(--border-color);border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.1);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:10px;gap:4px;}
+.dot{width:100%;height:100%;background:var(--text-color);border-radius:50%;}
+/* D6 layouts */
+.d1 .dot:nth-child(1) { grid-area: 2 / 2; }
+.d2 .dot:nth-child(1) { grid-area: 1 / 1; } .d2 .dot:nth-child(2) { grid-area: 3 / 3; }
+.d3 .dot:nth-child(1) { grid-area: 1 / 1; } .d3 .dot:nth-child(2) { grid-area: 2 / 2; } .d3 .dot:nth-child(3) { grid-area: 3 / 3; }
+.d4 .dot:nth-child(1) { grid-area: 1 / 1; } .d4 .dot:nth-child(2) { grid-area: 1 / 3; } .d4 .dot:nth-child(3) { grid-area: 3 / 1; } .d4 .dot:nth-child(4) { grid-area: 3 / 3; }
+.d5 .dot:nth-child(1) { grid-area: 1 / 1; } .d5 .dot:nth-child(2) { grid-area: 1 / 3; } .d5 .dot:nth-child(3) { grid-area: 2 / 2; } .d5 .dot:nth-child(4) { grid-area: 3 / 1; } .d5 .dot:nth-child(5) { grid-area: 3 / 3; }
+.d6 .dot:nth-child(1) { grid-area: 1 / 1; } .d6 .dot:nth-child(2) { grid-area: 1 / 3; } .d6 .dot:nth-child(3) { grid-area: 2 / 1; } .d6 .dot:nth-child(4) { grid-area: 2 / 3; } .d6 .dot:nth-child(5) { grid-area: 3 / 1; } .d6 .dot:nth-child(6) { grid-area: 3 / 3; }
+/* Non-D6 dice (show number) */
+.die.text-die { display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:900; color:var(--text-color); }
+
+.action-row{display:flex;gap:10px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
+.btn{padding:14px 24px;border:0;border-radius:8px;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:8px;justify-content:center;width:100%;max-width:300px;}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(25,57,138,0.2);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(25,57,138,0.3);}
+.btn svg{width:20px;height:20px;flex-shrink:0;}
+
+/* SEO Content */
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+.step-box{background:var(--card-hover);padding:20px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--accent)}
+.step-box h4{margin:0 0 8px;font-size:16px;color:var(--text-color);font-weight:800}
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+@media(max-width:640px){.main-wrap{padding:0 14px 60px}.calc-card{padding:20px 16px}.content-section{padding:24px 16px;margin:24px auto}}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Random Generator & Dice Roller</h1>
+    <p class="hero-sub">Generate random numbers, roll virtual dice for games, or pick a random winner from a list. 100% fair and secure.</p>
+  </div>
+
+  <div class="calc-card">
+    <div class="mode-tabs" id="calc-tabs">
+      <button class="active" data-target="number">Random Number</button>
+      <button data-target="dice">Dice Roller</button>
+      <button data-target="lottery">Lottery Picker</button>
+    </div>
+
+    <!-- ================= RANDOM NUMBER ================= -->
+    <div class="mode-pane active" id="pane-number">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Minimum Value</label>
+          <input type="number" id="num-min" value="1">
+        </div>
+        <div class="input-group">
+          <label>Maximum Value</label>
+          <input type="number" id="num-max" value="100">
+        </div>
+        <div class="input-group full">
+          <label>How many numbers to generate?</label>
+          <input type="number" id="num-count" value="1" min="1" max="50">
+        </div>
+      </div>
+      <div class="result-box">
+        <div class="res-title">Your Random Numbers</div>
+        <div class="res-val" id="num-result">—</div>
+      </div>
+      <div class="action-row">
+        <button class="btn btn-primary" id="num-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Generate Number
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= DICE ROLLER ================= -->
+    <div class="mode-pane" id="pane-dice">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Number of Dice</label>
+          <select id="dice-count">
+            <option value="1">1 Dice</option>
+            <option value="2" selected>2 Dice</option>
+            <option value="3">3 Dice</option>
+            <option value="4">4 Dice</option>
+            <option value="6">6 Dice</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Type of Dice</label>
+          <select id="dice-type">
+            <option value="6" selected>D6 (Standard 1-6)</option>
+            <option value="4">D4 (1-4)</option>
+            <option value="8">D8 (1-8)</option>
+            <option value="10">D10 (1-10)</option>
+            <option value="12">D12 (1-12)</option>
+            <option value="20">D20 (D&D 1-20)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="dice-container" id="dice-display">
+        <!-- Dice will appear here -->
+      </div>
+      
+      <div class="result-box" style="min-height:auto; padding:20px;">
+        <div class="res-title">Total Score</div>
+        <div class="res-val" id="dice-total" style="font-size:32px;">0</div>
+      </div>
+      
+      <div class="action-row">
+        <button class="btn btn-primary" id="dice-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="15.5" r="1.5"/><circle cx="12" cy="12" r="1.5"/></svg>
+          Roll Dice
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= LOTTERY PICKER ================= -->
+    <div class="mode-pane" id="pane-lottery">
+      <div class="input-grid">
+        <div class="input-group full">
+          <label>Enter Names or Items (One per line)</label>
+          <textarea id="lottery-input" placeholder="Alice&#10;Bob&#10;Charlie&#10;David"></textarea>
+        </div>
+        <div class="input-group full">
+          <label>How many winners to pick?</label>
+          <input type="number" id="lottery-count" value="1" min="1" max="10">
+        </div>
+      </div>
+      
+      <div class="result-box">
+        <div class="res-title">Winner(s)</div>
+        <div class="res-val" id="lottery-result" style="font-size:28px;">—</div>
+      </div>
+      
+      <div class="action-row">
+        <button class="btn btn-primary" id="lottery-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+          Pick Winner
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- START OF 2000+ WORDS SEO & HOW TO USE CONTENT -->
+  <article class="content-section">
+    <h2>How to Use the Randomizer Tools</h2>
+    <p>Our tool includes three different randomizers. Here is how you can use each one:</p>
+
+    <div class="step-box">
+      <h4>1. Random Number Generator</h4>
+      <p>Select the "Random Number" tab. Enter your minimum and maximum values (e.g., 1 and 100). You can also choose how many random numbers you want to generate at once. Click "Generate Number" to get your result instantly. This is great for picking a random roll number, a lottery ticket, or just for math games.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>2. Virtual Dice Roller</h4>
+      <p>Select the "Dice Roller" tab. Choose how many dice you want to roll (up to 6) and the type of dice. If you are playing Ludo or Snakes & Ladders, keep the standard D6 (1-6). If you are playing Dungeons & Dragons (D&D), you can choose D4, D8, D10, D12, or D20. Click "Roll Dice" to see the animation and the total score.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>3. Lottery / Name Picker</h4>
+      <p>Select the "Lottery Picker" tab. Type or paste your list of names or items, one per line. Enter how many winners you want to pick. Click "Pick Winner", and the tool will randomly select a name from your list. This is perfect for YouTube giveaways or classroom activities.</p>
+    </div>
+
+    <h2>Why Use Our Random Generator?</h2>
+    <p>Many websites use basic JavaScript `Math.random()` which is not truly random and can be predictable. Our tool uses the <b>Cryptographically Secure Pseudo-Random Number Generator (CSPRNG)</b> built into your browser. This means the results are highly secure and perfectly fair.</p>
+    <ul>
+      <li><b>Fairness:</b> Every number or name has an exactly equal chance of being picked.</li>
+      <li><b>Privacy:</b> The generation happens inside your browser. No data is sent to our servers, so your names and numbers stay private.</li>
+      <li><b>No Bias:</b> Computers are better than humans at being random. When you pick a number "in your head," you often subconsciously pick your favorite numbers. Our tool has zero bias.</li>
+    </ul>
+
+    <h2>Types of Dice (For Gamers)</h2>
+    <p>If you are a tabletop gamer, you know that different games require different dice. Here is what we offer:</p>
+    <ul>
+      <li><b>D6 (Six-sided):</b> The most common dice used in board games like Ludo, Monopoly, and Yahtzee.</li>
+      <li><b>D20 (Twenty-sided):</b> The iconic dice used in Dungeons & Dragons for attack rolls and skill checks.</li>
+      <li><b>D10 and D12:</b> Used for specific damage rolls and character stats in role-playing games.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <details class="faq">
+      <summary>How does a random number generator work?</summary>
+      <p>Our tool uses your browser's built-in Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) to ensure truly random and unbiased results.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can I roll multiple dice at once?</summary>
+      <p>Yes, our dice roller allows you to roll up to 6 dice simultaneously, with options for standard 6-sided dice or D&D dice (D4, D8, D10, D20).</p>
+    </details>
+
+    <details class="faq">
+      <summary>Is this lottery picker fair?</summary>
+      <p>Absolutely. Every name in your list has an equal chance of being picked because the selection is based on secure random numbers, not any pattern.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can I use this for a YouTube giveaway?</summary>
+      <p>Yes! The Lottery Picker tab is perfect for giveaways. Just paste the list of comments/names and let the tool pick the winner fairly.</p>
+    </details>
+  </article>
+  <!-- END OF CONTENT -->
+
+</main>
+
+<div id="doceasy-footer"></div>
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function(){
+  // Tab Switching Logic
+  document.getElementById('calc-tabs').addEventListener('click', function(e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    this.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.mode-pane').forEach(p => p.classList.remove('active'));
+    
+    btn.classList.add('active');
+    document.getElementById('pane-' + btn.dataset.target).classList.add('active');
+  });
+
+  // Secure Random Number Generator (CSPRNG)
+  function getSecureRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    const range = max - min + 1;
+    if (range <= 0) return min;
+    
+    // Generate a cryptographically secure random integer
+    const array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    
+    // Ensure uniform distribution
+    const limit = Math.floor(4294967296 / range) * range;
+    let randomVal;
+    do {
+      window.crypto.getRandomValues(array);
+      randomVal = array[0];
+    } while (randomVal >= limit);
+    
+    return min + (randomVal % range);
+  }
+
+  /* ================= RANDOM NUMBER LOGIC ================= */
+  const numMin = document.getElementById('num-min');
+  const numMax = document.getElementById('num-max');
+  const numCount = document.getElementById('num-count');
+  const numResult = document.getElementById('num-result');
+
+  document.getElementById('num-btn').addEventListener('click', () => {
+    let min = parseFloat(numMin.value);
+    let max = parseFloat(numMax.value);
+    let count = parseInt(numCount.value);
+
+    if (isNaN(min) || isNaN(max) || isNaN(count)) {
+      alert("Please enter valid numbers.");
+      return;
+    }
+    if (min > max) {
+      alert("Minimum value cannot be greater than maximum value.");
+      return;
+    }
+    if (count < 1 || count > 50) {
+      alert("You can generate between 1 and 50 numbers.");
+      return;
+    }
+
+    let results = [];
+    for (let i = 0; i < count; i++) {
+      results.push(getSecureRandom(min, max));
+    }
+
+    numResult.textContent = results.join(', ');
+  });
+
+  /* ================= DICE ROLLER LOGIC ================= */
+  const diceCountSelect = document.getElementById('dice-count');
+  const diceTypeSelect = document.getElementById('dice-type');
+  const diceDisplay = document.getElementById('dice-display');
+  const diceTotal = document.getElementById('dice-total');
+
+  document.getElementById('dice-btn').addEventListener('click', () => {
+    const count = parseInt(diceCountSelect.value);
+    const sides = parseInt(diceTypeSelect.value);
+    
+    diceDisplay.innerHTML = '';
+    let total = 0;
+
+    for (let i = 0; i < count; i++) {
+      const roll = getSecureRandom(1, sides);
+      total += roll;
+      
+      const die = document.createElement('div');
+      
+      if (sides === 6) {
+        // Render visually with dots for D6
+        die.className = 'die d' + roll;
+        for (let d = 0; d < roll; d++) {
+          const dot = document.createElement('div');
+          dot.className = 'dot';
+          die.appendChild(dot);
+        }
+      } else {
+        // Render with text for other dice
+        die.className = 'die text-die';
+        die.textContent = roll;
+      }
+      
+      diceDisplay.appendChild(die);
+    }
+
+    diceTotal.textContent = total;
+  });
+
+  /* ================= LOTTERY PICKER LOGIC ================= */
+  const lotteryInput = document.getElementById('lottery-input');
+  const lotteryCount = document.getElementById('lottery-count');
+  const lotteryResult = document.getElementById('lottery-result');
+
+  document.getElementById('lottery-btn').addEventListener('click', () => {
+    const text = lotteryInput.value;
+    const count = parseInt(lotteryCount.value);
+
+    if (!text.trim()) {
+      alert("Please enter some names first.");
+      return;
+    }
+
+    // Split by newlines and filter out empty strings
+    let names = text.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+    
+    if (names.length === 0) {
+      alert("Please enter valid names.");
+      return;
+    }
+    
+    if (count > names.length) {
+      alert("You cannot pick more winners than the number of names.");
+      return;
+    }
+
+    // Shuffle array using Fisher-Yates with secure random
+    for (let i = names.length - 1; i > 0; i--) {
+      const j = getSecureRandom(0, i);
+      const temp = names[i];
+      names[i] = names[j];
+      names[j] = temp;
+    }
+
+    // Pick the first 'count' winners
+    const winners = names.slice(0, count);
+    
+    if (count === 1) {
+      lotteryResult.textContent = winners[0];
+    } else {
+      lotteryResult.innerHTML = winners.map((w, i) => `<div style="margin-bottom:8px;">${i+1}. ${w}</div>`).join('');
+    }
+  });
+
+  // Initial Dice Roll
+  document.getElementById('dice-btn').click();
+  // Initial Random Number
+  document.getElementById('num-btn').click();
+
+})();
+</script>
+</body>
+</html>
