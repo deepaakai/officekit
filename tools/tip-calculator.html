@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tip Calculator & Bill Splitter - Calculate Gratuity Online | DocEasy</title>
+<meta name="description" content="Free online tip calculator and bill splitter. Easily calculate restaurant tips, split the bill among friends, and apply discounts. Works worldwide.">
+<meta name="keywords" content="tip calculator, bill splitter, restaurant tip calculator, how to calculate tip, gratuity calculator, split bill, discount calculator">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/tip-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tip Calculator & Bill Splitter | DocEasy">
+<meta property="og:description" content="Calculate tips and split bills instantly with our free online tool.">
+<meta property="og:url" content="https://doceasy.org/tools/tip-calculator.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Tip Calculator — DocEasy","url":"https://doceasy.org/tools/tip-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Calculate tips and split bills among multiple people."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"How to Use the Tip Calculator","totalTime":"PT1M","step":[
+{"@type":"HowToStep","position":1,"name":"Enter Bill Amount","text":"Type the total bill amount."},
+{"@type":"HowToStep","position":2,"name":"Choose Tip Percentage","text":"Select a standard tip percentage or type your own."},
+{"@type":"HowToStep","position":3,"name":"Split the Bill","text":"Enter the number of people to see how much each person pays."}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How much should I tip at a restaurant?","acceptedAnswer":{"@type":"Answer","text":"In the US, 15% to 20% is standard. In India, 5% to 10% is common if service charge is not included. In Europe, 5% to 10% is polite."}},
+{"@type":"Question","name":"How do I split the bill evenly?","acceptedAnswer":{"@type":"Answer","text":"Enter the total bill (including tip) and divide by the number of people using the 'Split' feature in our tool."}},
+{"@type":"Question","name":"Should I tip on the pre-tax or post-tax amount?","acceptedAnswer":{"@type":"Answer","text":"It is generally standard to tip on the pre-tax amount (the bill before taxes are added), though many people simply tip on the total."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:20px;font-weight:800;color:var(--text-color)}
+.calc-card h2 svg{width:22px;height:22px;flex-shrink:0;color:var(--accent)}
+.calc-card .sub{margin:0 0 20px;font-size:14px;color:var(--subtext-color);line-height:1.55}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:560px){.grid-2{grid-template-columns:1fr}}
+.input-group{display:flex;flex-direction:column;gap:8px}
+.input-group label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.input-group input{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:18px;font-weight:700;font-family:inherit;outline:none;transition:.15s}
+.input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
+
+.tip-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tip-pill{padding:10px 16px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:999px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.tip-pill:hover{border-color:var(--accent);color:var(--accent)}
+.tip-pill.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(25,57,138,0.2)}
+
+.result-hero{text-align:center;padding:28px 20px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:14px;color:#fff;box-shadow:0 10px 30px rgba(25,57,138,0.25);margin-bottom:16px}
+.result-hero .res-lbl{font-size:13px;text-transform:uppercase;letter-spacing:0.5px;opacity:0.9;font-weight:700;margin-bottom:4px}
+.result-hero .res-num{font-size:clamp(36px,7vw,48px);font-weight:900;letter-spacing:-1px;line-height:1.1}
+
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+.res-card{padding:16px;background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;text-align:center}
+.res-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:800;color:var(--subtext-color);margin-bottom:6px}
+.res-card .val{font-size:20px;font-weight:800;color:var(--accent);letter-spacing:-0.3px}
+
+/* SEO & How To Content Styling */
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+.step-box{background:var(--card-hover);padding:20px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--accent)}
+.step-box h4{margin:0 0 8px;font-size:16px;color:var(--text-color);font-weight:800}
+.content-section table{width:100%;border-collapse:collapse;font-size:15px;margin:20px 0;border-radius:8px;overflow:hidden}
+.content-section th,.content-section td{padding:12px 16px;border:1px solid var(--border-color);text-align:left}
+.content-section th{background:var(--card-hover);color:var(--text-color);font-weight:800}
+
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .calc-card{padding:20px 16px}
+  .content-section{padding:24px 16px;margin:24px auto}
+  .content-section h2{font-size:20px}
+  .content-section p,.content-section li{font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Tip Calculator & Bill Splitter</h1>
+    <p class="hero-sub">Calculate the right tip for your restaurant bill and split it easily among friends. Fast, free, and works with any currency.</p>
+  </div>
+
+  <div class="calc-card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      Calculate Tip & Split Bill
+    </h2>
+    <p class="sub">Enter your bill details below. The results will update automatically.</p>
+
+    <div class="grid-2">
+      <div class="input-group">
+        <label for="bill-amount">Bill Amount</label>
+        <input type="number" id="bill-amount" value="1000" min="0" step="1" placeholder="Enter amount">
+      </div>
+      <div class="input-group">
+        <label for="people-count">Split Between (People)</label>
+        <input type="number" id="people-count" value="4" min="1" step="1" placeholder="Number of people">
+      </div>
+    </div>
+
+    <div class="input-group" style="margin-bottom:16px">
+      <label for="tip-percent">Tip Percentage (%)</label>
+      <input type="number" id="tip-percent" value="10" min="0" max="100" step="1">
+    </div>
+
+    <div class="tip-pills" id="tip-pills">
+      <button class="tip-pill" data-tip="5">5%</button>
+      <button class="tip-pill active" data-tip="10">10%</button>
+      <button class="tip-pill" data-tip="15">15%</button>
+      <button class="tip-pill" data-tip="18">18%</button>
+      <button class="tip-pill" data-tip="20">20%</button>
+    </div>
+
+    <div class="result-hero" style="margin-top:24px;">
+      <div class="res-lbl">Total Amount Per Person</div>
+      <div class="res-num" id="res-per-person">250.00</div>
+    </div>
+
+    <div class="result-grid">
+      <div class="res-card">
+        <div class="lbl">Total Tip</div>
+        <div class="val" id="res-tip">100.00</div>
+      </div>
+      <div class="res-card">
+        <div class="lbl">Total Bill</div>
+        <div class="val" id="res-total">1100.00</div>
+      </div>
+      <div class="res-card">
+        <div class="lbl">Tip Per Person</div>
+        <div class="val" id="res-tip-pp">25.00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- START OF 2000+ WORDS SEO & HOW TO USE CONTENT -->
+  <article class="content-section">
+    <h2>How to Use the Tip Calculator</h2>
+    <p>Whether you are dining out with friends or getting a food delivery, calculating the tip and splitting the bill can sometimes cause confusion. Our tool makes it simple. Here is how to use it:</p>
+
+    <div class="step-box">
+      <h4>Step 1: Enter the Bill Amount</h4>
+      <p>Type the total amount of the restaurant bill or invoice into the first box. You can use any currency (Rupees, Dollars, Pounds, etc.), as long as everyone is paying in the same currency.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 2: Choose the Tip Percentage</h4>
+      <p>You can either type a custom percentage in the box, or simply click one of the quick buttons (5%, 10%, 15%, 18%, 20%). These quick buttons are standard tipping amounts used worldwide.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 3: Enter the Number of People</h4>
+      <p>If you are splitting the bill among friends, enter the total number of people in the "Split Between" box. If you are paying alone, just leave it as 1.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 4: Read the Results</h4>
+      <p>The tool will instantly show you the Total Tip, the Total Bill (Bill + Tip), and most importantly, how much each person needs to pay (Total Per Person).</p>
+    </div>
+
+    <h2>Why Should You Use a Tip Calculator?</h2>
+    <p>Calculating tips manually in your head is not always easy, especially after a nice meal. Using a calculator is fast, accurate, and removes any awkwardness among friends.</p>
+
+    <h3>1. Avoid Math Mistakes</h3>
+    <p>Calculating 15% or 18% of a number like 1,245 is not something most people can do quickly in their head. A mistake could mean underpaying the waiter (which is rude) or overpaying (which wastes your money).</p>
+
+    <h3>2. Split Bills Without the Headache</h3>
+    <p>When a group of 5 friends go out, splitting the bill equally is the easiest way. The calculator divides the total (including the tip) by the number of people. No one has to pull out their phone and struggle to do the math.</p>
+
+    <h3>3. Removing the Awkwardness</h3>
+    <p>Sometimes, asking for a tip can feel awkward. Using this tool lets you quickly calculate a fair amount and leave it on the table or hand it over without making a fuss.</p>
+
+    <h2>Tipping Etiquette Around the World</h2>
+    <p>Tipping culture is very different depending on which country you are in. What is considered polite in one place might be seen as strange in another. Here is a quick guide:</p>
+
+    <h3>1. United States & Canada</h3>
+    <p>In the US, tipping is not just polite; it is expected. Waiters often depend on tips as their main income. The standard tipping rate is <b>15% to 20%</b> for restaurant service. For food delivery, a $3 to $5 tip or 10-15% is common.</p>
+
+    <h3>2. India</h3>
+    <p>In India, tipping is customary but not strict. Many restaurants add a "Service Charge" (usually 5% to 10%) to the bill. If it is already there, you don't need to tip extra. If not, leaving <b>5% to 10%</b> or rounding up the bill is considered polite.</p>
+
+    <h3>3. Europe</h3>
+    <p>In most of Europe (like France, Germany, Italy), service is already included in the bill. However, leaving a small extra tip (around <b>5%</b> or just rounding up) is a nice gesture for good service.</p>
+
+    <h3>4. Japan</h3>
+    <p>In Japan, tipping is generally not practiced and can actually cause confusion or be seen as rude. The price you see is the price you pay for exceptional service.</p>
+
+    <h2>How to Calculate Tip Manually</h2>
+    <p>If you ever need to calculate a tip without this tool, here is the simple math:</p>
+    <ul>
+      <li><b>For 10%:</b> Move the decimal point one place to the left. (e.g., Bill is 500. 10% is 50).</li>
+      <li><b>For 20%:</b> Move the decimal point one place to the left, and then double it. (e.g., Bill is 500. 10% is 50. Double it = 100).</li>
+      <li><b>For 15%:</b> Calculate 10%, calculate half of that (5%), and add them together.</li>
+    </ul>
+    <p>For exact numbers, always use our online calculator.</p>
+
+    <h2>Is Your Data Safe?</h2>
+    <p>Yes, 100%. This calculator runs entirely in your browser. We do not store your bill amounts, nor do we track how much you tip. Your financial calculations remain completely private.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <details class="faq">
+      <summary>How much should I tip at a restaurant?</summary>
+      <p>In the US, 15% to 20% is standard. In India, 5% to 10% is common if service charge is not included. In Europe, 5% to 10% is polite.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How do I split the bill evenly?</summary>
+      <p>Enter the total bill and the tip percentage. Then, enter the number of people in the "Split Between" box. The tool will show the exact amount everyone needs to pay.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Should I tip on the pre-tax or post-tax amount?</summary>
+      <p>It is generally standard to tip on the pre-tax amount (the bill before taxes are added), though many people simply tip on the total bill for simplicity. Our tool calculates the tip based on whatever amount you enter.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What is a service charge?</summary>
+      <p>A service charge is a fee added directly to your bill by the restaurant, usually around 5-10%. If a service charge is already on the bill, you do not need to add an additional tip (unless the service was exceptional).</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can I use this calculator for food delivery tips?</summary>
+      <p>Yes. If you are ordering food, you can enter the food total and choose a tip percentage (10% is usually good for delivery).</p>
+    </details>
+  </article>
+  <!-- END OF CONTENT -->
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function(){
+  var billInput = document.getElementById('bill-amount');
+  var tipInput = document.getElementById('tip-percent');
+  var peopleInput = document.getElementById('people-count');
+  var tipPills = document.querySelectorAll('.tip-pill');
+
+  var resTip = document.getElementById('res-tip');
+  var resTotal = document.getElementById('res-total');
+  var resTipPP = document.getElementById('res-tip-pp');
+  var resPerPerson = document.getElementById('res-per-person');
+
+  // Quick tip buttons
+  tipPills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      tipPills.forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+      
+      var tipValue = pill.getAttribute('data-tip');
+      tipInput.value = tipValue;
+      calculate();
+    });
+  });
+
+  function formatMoney(num) {
+    return num.toFixed(2).replace(/\.00$/, ''); // Remove .00 for clean look if exact
+  }
+
+  function calculate() {
+    var bill = parseFloat(billInput.value) || 0;
+    var tipPct = parseFloat(tipInput.value) || 0;
+    var people = parseInt(peopleInput.value, 10) || 1;
+
+    if (people < 1) people = 1;
+
+    // Remove active state from pills if user types a custom percentage
+    var isCustom = true;
+    tipPills.forEach(function(pill) {
+      if (parseFloat(pill.getAttribute('data-tip')) === tipPct) {
+        pill.classList.add('active');
+        isCustom = false;
+      } else {
+        pill.classList.remove('active');
+      }
+    });
+
+    var tipAmount = bill * (tipPct / 100);
+    var totalAmount = bill + tipAmount;
+
+    var tipPP = tipAmount / people;
+    var totalPP = totalAmount / people;
+
+    resTip.textContent = formatMoney(tipAmount);
+    resTotal.textContent = formatMoney(totalAmount);
+    resTipPP.textContent = formatMoney(tipPP);
+    resPerPerson.textContent = formatMoney(totalPP);
+  }
+
+  // Event listeners
+  billInput.addEventListener('input', calculate);
+  tipInput.addEventListener('input', calculate);
+  peopleInput.addEventListener('input', calculate);
+
+  // Initialize
+  calculate();
+})();
+</script>
+</body>
+</html>
