@@ -5,13 +5,13 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BMI Calculator - International & Asian Standards | DocEasy</title>
-<meta name="description" content="Free global BMI calculator. Choose between WHO International or Asian/Indian standards. Enter your weight and height to find your BMI and healthy weight range.">
-<meta name="keywords" content="bmi calculator, global bmi, who bmi standard, asian bmi, body mass index, healthy weight calculator">
+<meta name="description" content="Free global BMI calculator. Choose between WHO International or Asian/Indian standards. Enter weight in kg or lbs, and height in cm or feet/inches.">
+<meta name="keywords" content="bmi calculator, global bmi, who bmi standard, asian bmi, body mass index, healthy weight calculator, bmi in feet and kg">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/bmi-calculator.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="BMI Calculator - Global & Asian Standards | DocEasy">
-<meta property="og:description" content="Calculate your BMI using WHO International or Asian standards.">
+<meta property="og:description" content="Calculate your BMI using WHO International or Asian standards. Easy weight and height unit selectors.">
 <meta property="og:url" content="https://doceasy.org/tools/bmi-calculator.html">
 <meta property="og:site_name" content="DocEasy">
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
@@ -24,7 +24,7 @@
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Which BMI standard should I use?","acceptedAnswer":{"@type":"Answer","text":"If you are of Asian or Indian descent, use the Asian/Indian standard because it flags health risks at a lower weight. People of European or African descent usually use the WHO International standard."}},
 {"@type":"Question","name":"Why is the Asian BMI standard different?","acceptedAnswer":{"@type":"Answer","text":"Research shows that people of Asian descent tend to have more body fat at the same weight and height compared to other groups. This puts them at a higher risk of diabetes and heart disease at a lower BMI."}},
-{"@type":"Question","name":"Is my data saved?","acceptedAnswer":{"@type":"Answer","text":"No. All calculations happen in your browser. We do not save your weight, height, or any personal data."}}
+{"@type":"Question","name":"Can I use kg and feet together?","acceptedAnswer":{"@type":"Answer","text":"Yes! Our tool allows you to choose weight in kg or lbs, and height in cm or feet/inches independently."}}
 ]}
 </script>
 
@@ -41,23 +41,24 @@
 .calc-card h2 svg{width:22px;height:22px;flex-shrink:0;color:var(--accent)}
 .calc-card .sub{margin:0 0 20px;font-size:14px;color:var(--subtext-color);line-height:1.55}
 
-.top-controls{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px}
-.unit-toggle{display:flex;gap:6px;background:var(--card-hover);padding:5px;border-radius:10px;width:fit-content}
-.unit-toggle button{padding:8px 16px;border:0;background:transparent;color:var(--subtext-color);font-weight:800;font-size:13px;border-radius:7px;cursor:pointer;font-family:inherit;transition:.15s}
-.unit-toggle button.active{background:var(--card-bg);color:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,0.08)}
-
+.top-controls{display:flex;justify-content:flex-end;margin-bottom:20px}
 .standard-btn{padding:10px 16px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;transition:.15s}
 .standard-btn:hover{border-color:var(--accent);color:var(--accent)}
 .standard-btn svg{width:16px;height:16px}
 
-.input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
 @media(max-width:560px){.input-row{grid-template-columns:1fr}}
 .input-field{display:flex;flex-direction:column;gap:6px}
 .input-field label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
-.input-field input{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s}
-.input-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
-.feet-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;grid-column:1/-1}
-@media(min-width:561px){.feet-grid{grid-column:auto}}
+
+/* New Input Group with Unit Dropdown */
+.input-with-unit{display:flex;gap:8px;align-items:center}
+.input-with-unit input{flex:1;padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s;min-width:0}
+.input-with-unit input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
+.input-with-unit select{padding:14px 12px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--card-bg);color:var(--text-color);font-size:14px;font-weight:800;font-family:inherit;outline:none;cursor:pointer}
+.input-with-unit select:focus{border-color:var(--accent)}
+.height-inputs{display:flex;gap:8px;flex:1}
+.height-inputs input{width:50%}
 
 .calc-btn{width:100%;padding:14px 20px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(25,57,138,0.28);transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
 .calc-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(25,57,138,0.35)}
@@ -134,7 +135,6 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   .content-section{padding:24px 16px;margin:24px auto}
   .content-section h2{font-size:20px}
   .content-section p,.content-section li{font-size:15px}
-  .content-section th,.content-section td{padding:10px 12px;font-size:14px}
 }
 </style>
 </head>
@@ -146,7 +146,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
   <div class="hero-box">
     <h1 class="hero-title">BMI Calculator</h1>
-    <p class="hero-sub">Find out your Body Mass Index using globally recognized health standards. Choose between WHO International or Asian/Indian metrics.</p>
+    <p class="hero-sub">Find out your Body Mass Index using globally recognized health standards. You can mix units, like weight in kg and height in feet/inches.</p>
   </div>
 
   <div class="calc-card">
@@ -154,45 +154,42 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       Calculate Your BMI
     </h2>
-    <p class="sub">Enter your details below. The calculator will show your BMI, health category, and healthy weight range based on your chosen standard.</p>
-
+    
     <div class="top-controls">
-      <div class="unit-toggle" id="unit-toggle">
-        <button class="active" data-unit="metric">KG & CM</button>
-        <button data-unit="imperial">Feet & Pounds</button>
-      </div>
       <button class="standard-btn" id="open-modal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Standard: <span id="current-standard-label">Asian/Indian</span>
       </button>
     </div>
 
-    <!-- Metric Inputs -->
-    <div class="input-row" id="metric-inputs">
+    <div class="input-row">
+      <!-- Weight Input -->
       <div class="input-field">
-        <label for="weight-kg">Weight (Kilograms)</label>
-        <input type="number" id="weight-kg" value="70" min="10" max="300" step="0.1">
-      </div>
-      <div class="input-field">
-        <label for="height-cm">Height (Centimeters)</label>
-        <input type="number" id="height-cm" value="170" min="50" max="250" step="0.1">
-      </div>
-    </div>
-
-    <!-- Imperial Inputs -->
-    <div class="input-row" id="imperial-inputs" style="display:none">
-      <div class="input-field">
-        <label for="weight-lb">Weight (Pounds)</label>
-        <input type="number" id="weight-lb" value="154" min="20" max="600" step="0.1">
-      </div>
-      <div class="feet-grid">
-        <div class="input-field">
-          <label for="height-ft">Height (Feet)</label>
-          <input type="number" id="height-ft" value="5" min="1" max="8" step="1">
+        <label>Weight</label>
+        <div class="input-with-unit">
+          <input type="number" id="weight-val" value="70" min="1" step="0.1">
+          <select id="weight-unit">
+            <option value="kg">kg</option>
+            <option value="lb">lbs</option>
+          </select>
         </div>
-        <div class="input-field">
-          <label for="height-in">Inches</label>
-          <input type="number" id="height-in" value="7" min="0" max="11" step="0.1">
+      </div>
+
+      <!-- Height Input -->
+      <div class="input-field">
+        <label>Height</label>
+        <div class="input-with-unit">
+          <div class="height-inputs" id="height-cm-group">
+            <input type="number" id="height-cm" value="170" min="50" max="250" step="0.1">
+          </div>
+          <div class="height-inputs" id="height-ft-group" style="display:none;">
+            <input type="number" id="height-ft" value="5" min="1" max="8" step="1" placeholder="ft">
+            <input type="number" id="height-in" value="7" min="0" max="11" step="0.1" placeholder="in">
+          </div>
+          <select id="height-unit">
+            <option value="cm">cm</option>
+            <option value="ft">ft/in</option>
+          </select>
         </div>
       </div>
     </div>
@@ -271,47 +268,30 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   <!-- START OF 2000+ WORDS SEO & HOW TO USE CONTENT -->
   <article class="content-section">
     <h2>How to Use the BMI Calculator</h2>
-    <p>This tool is designed for people all over the world. It is very easy to use. Just follow these simple steps:</p>
+    <p>This tool is designed for people all over the world, allowing you to mix different units of measurement. Here is how to use it:</p>
 
     <div class="step-box">
-      <h4>Step 1: Choose Your Units</h4>
-      <p>At the top, choose "KG & CM" if you use the metric system (common in India, Europe, and Australia), or "Feet & Pounds" if you use the imperial system (common in the USA).</p>
+      <h4>Step 1: Select Your Standard</h4>
+      <p>Click the "Standard: Asian/Indian" button at the top. If you are of Asian descent, keep the Asian Standard. If you are from Europe, Africa, or the Americas, select the WHO International Standard.</p>
     </div>
 
     <div class="step-box">
-      <h4>Step 2: Select Your Standard</h4>
-      <p>Click the "Standard: Asian/Indian" button. A popup will open. If you are of Asian descent, keep the Asian Standard. If you are from Europe, Africa, or the Americas, select the WHO International Standard. Then click close.</p>
+      <h4>Step 2: Enter Your Weight</h4>
+      <p>Type your weight into the box and use the dropdown next to it to choose either <b>kg</b> (kilograms) or <b>lbs</b> (pounds).</p>
     </div>
 
     <div class="step-box">
-      <h4>Step 3: Enter Your Weight and Height</h4>
-      <p>Type your current weight and height into the boxes. Try to be as accurate as possible.</p>
+      <h4>Step 3: Enter Your Height</h4>
+      <p>Type your height. If you use centimeters, keep the dropdown as <b>cm</b>. If you know your height in feet and inches, change the dropdown to <b>ft/in</b>, and two boxes will appear for you to enter both.</p>
     </div>
 
     <div class="step-box">
       <h4>Step 4: Click Calculate</h4>
-      <p>Press the big blue "Calculate BMI" button. The tool will do the math instantly.</p>
+      <p>Press the "Calculate BMI" button. The tool will instantly show your BMI, your health category, your healthy weight range, and how much weight you should lose or gain.</p>
     </div>
-
-    <div class="step-box">
-      <h4>Step 5: Read Your Result</h4>
-      <p>You will see a big number in a colored box. This is your BMI. Below that, you will see your category (Underweight, Normal, Overweight, or Obese), your healthy weight range, and how much weight you should lose or gain to be in the normal range.</p>
-    </div>
-
-    <h2>What is BMI?</h2>
-    <p>BMI stands for Body Mass Index. It is a simple number that is calculated using your weight and your height. Doctors and health experts use BMI to get a quick idea of whether a person has a healthy body weight or not.</p>
-    <p>The math is simple: your weight in kilograms is divided by your height in meters squared. The result is your BMI number. For example, if you weigh 70 kg and your height is 1.70 meters, your BMI would be 24.2.</p>
-    <p>BMI is not a perfect measure of health, but it is a very good starting point. It helps you understand if you are at risk of weight-related health problems.</p>
 
     <h2>Why Are There Two Different Standards?</h2>
-    <p>You might wonder why we give you the option to choose a standard. The truth is, body composition is different all over the world.</p>
-    
-    <h3>1. The WHO International Standard</h3>
-    <p>This is the standard created by the World Health Organization for global use, primarily based on data from Western populations. Under this standard, a BMI below 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 is overweight, and 30 and above is obese.</p>
-
-    <h3>2. The Asian / Indian Standard</h3>
-    <p>Research has shown that people of Asian descent tend to have a higher percentage of body fat and more fat around their belly at the same weight and height compared to people of European descent. Because of this, people of Asian descent are at a higher risk of developing health issues like type 2 diabetes and heart disease at a lower weight.</p>
-    <p>Therefore, the WHO created a specific Asian standard. Under this standard, a BMI of 23 is already considered overweight. This lower cutoff helps doctors catch health risks early.</p>
+    <p>Body composition is different all over the world. Research has shown that people of Asian descent tend to have a higher percentage of body fat at the same weight and height compared to people of European descent. This puts them at a higher risk of health issues like diabetes at a lower weight. Therefore, the Asian standard flags "overweight" at a BMI of 23, while the International standard flags it at 25.</p>
 
     <h3>Comparison Table</h3>
     <table>
@@ -346,44 +326,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
       </tbody>
     </table>
 
-    <h2>Why is Knowing Your BMI Important?</h2>
-    <p>Your body weight has a very big effect on your overall health. Knowing your BMI helps you in many ways:</p>
-
-    <h3>1. You Can Catch Health Problems Early</h3>
-    <p>If your BMI is in the Overweight or Obese range, your body has extra fat. This extra fat puts pressure on your heart, lungs, and joints. By checking your BMI regularly, you can see if you are gaining weight and take action before it becomes a serious problem like diabetes or heart disease.</p>
-
-    <h3>2. It Helps You Set Fitness Goals</h3>
-    <p>If you are trying to lose weight, BMI is a great way to track your progress. When you start a diet or exercise plan, check your BMI every month. Seeing the number go down can keep you motivated. The "Healthy Weight Range" result in our tool tells you exactly what your target weight should be.</p>
-
-    <h3>3. It Helps Doctors Treat You Better</h3>
-    <p>Whenever you go to a hospital or clinic, the doctor will usually note your height and weight. Your BMI helps them decide if you need certain tests, like blood sugar or cholesterol checks. Many medical insurance companies also check BMI when giving you a policy.</p>
-
     <h2>Limitations of BMI</h2>
-    <p>While BMI is very useful, it is not perfect. It does not tell you everything about your health. Here are a few things to keep in mind:</p>
-    <ul>
-      <li><b>It doesn't know the difference between muscle and fat.</b> Muscle is heavier than fat. Bodybuilders and athletes have a lot of muscle, so their BMI is often high. They are very fit, but the calculator might call them "overweight."</li>
-      <li><b>It doesn't show where the fat is.</b> If you have fat around your belly (visceral fat), it is more dangerous than fat on your arms or legs. BMI cannot tell where your fat is located.</li>
-      <li><b>It is not for everyone.</b> BMI should not be used for children, pregnant women, or very old people. Children have a different growth chart, and pregnant women have extra weight from the baby.</li>
-    </ul>
-    <p>You should use BMI as a general guide, not a final answer. If you are worried about your weight, you should always talk to a doctor or a dietitian.</p>
-
-    <h2>How to Improve Your BMI</h2>
-    <p>If your BMI is not in the healthy range, do not panic. You can improve it by making small, healthy changes:</p>
-    <ul>
-      <li><b>Eat better food:</b> Try to eat more vegetables, fruits, and protein. Cut down on sugar, cold drinks, and deep-fried foods.</li>
-      <li><b>Move more:</b> Try to walk for at least 30 minutes every day. You can also try simple exercises at home, like yoga or skipping.</li>
-      <li><b>Sleep well:</b> Not getting enough sleep can make you feel hungry and eat more. Try to sleep for 7 to 8 hours every night.</li>
-      <li><b>Drink water:</b> Drink plenty of water throughout the day instead of sugary drinks.</li>
-    </ul>
-
-    <h2>Is Your Data Private?</h2>
-    <p>Yes, completely private. Our BMI calculator runs directly on your computer or phone. We do not send your weight or height to our servers. We do not ask for your name, email, or any other personal details. Your health information stays with you.</p>
+    <p>While BMI is very useful for a quick check, it is not perfect. It does not distinguish between muscle and fat. Bodybuilders may have a high BMI while being very fit. It also doesn't show where the fat is located (belly fat is more dangerous). You should use BMI as a general guide, not a medical diagnosis.</p>
 
     <h2>Frequently Asked Questions (FAQ)</h2>
 
     <details class="faq">
-      <summary>Which BMI standard should I use?</summary>
-      <p>If you are of Asian or Indian descent, use the Asian/Indian standard because it flags health risks at a lower weight. People of European or African descent usually use the WHO International standard.</p>
+      <summary>Can I use kg and feet together?</summary>
+      <p>Yes, absolutely. We designed this tool so you can select the unit for weight and height independently. This is especially useful in India where weight is often measured in kg and height in feet/inches.</p>
     </details>
 
     <details class="faq">
@@ -394,16 +344,6 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     <details class="faq">
       <summary>What is a good BMI for a woman?</summary>
       <p>The healthy BMI range is the same for both men and women based on the standard you select. For the Asian standard, 18.5 to 22.9 is considered healthy.</p>
-    </details>
-
-    <details class="faq">
-      <summary>Can I use this for my child?</summary>
-      <p>No. Children and teenagers grow very fast, so their BMI is measured differently. Doctors use a special chart called a "percentile chart" for children under 19. You should ask your child's doctor to check their BMI.</p>
-    </details>
-
-    <details class="faq">
-      <summary>What does "Healthy Weight Range" mean?</summary>
-      <p>This is the weight range where your BMI would fall into the "Normal" category based on the standard you chose. If you weigh within this range, you are considered to have a very healthy weight for your height.</p>
     </details>
   </article>
   <!-- END OF CONTENT -->
@@ -416,12 +356,19 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
 <script>
 (function(){
-  var currentUnit = 'metric';
   var currentStandard = 'asian'; // Default standard
   
-  var unitToggle = document.getElementById('unit-toggle');
-  var metricInputs = document.getElementById('metric-inputs');
-  var imperialInputs = document.getElementById('imperial-inputs');
+  // DOM Elements
+  var weightInput = document.getElementById('weight-val');
+  var weightUnit = document.getElementById('weight-unit');
+  
+  var heightCmInput = document.getElementById('height-cm');
+  var heightFtInput = document.getElementById('height-ft');
+  var heightInInput = document.getElementById('height-in');
+  var heightUnit = document.getElementById('height-unit');
+  
+  var cmGroup = document.getElementById('height-cm-group');
+  var ftGroup = document.getElementById('height-ft-group');
   
   // Modal Elements
   var modal = document.getElementById('standard-modal');
@@ -430,19 +377,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   var standardOptions = document.querySelectorAll('.standard-option');
   var currentStdLabel = document.getElementById('current-standard-label');
 
-  // Unit Toggle Logic
-  unitToggle.addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    unitToggle.querySelectorAll('button').forEach(function(x){ x.classList.remove('active'); });
-    b.classList.add('active');
-    currentUnit = b.dataset.unit;
-    
-    if(currentUnit === 'metric'){
-      metricInputs.style.display = 'grid';
-      imperialInputs.style.display = 'none';
+  // Toggle Height Inputs (cm vs ft/in)
+  heightUnit.addEventListener('change', function() {
+    if (heightUnit.value === 'cm') {
+      cmGroup.style.display = 'flex';
+      ftGroup.style.display = 'none';
     } else {
-      metricInputs.style.display = 'none';
-      imperialInputs.style.display = 'grid';
+      cmGroup.style.display = 'none';
+      ftGroup.style.display = 'flex';
     }
     calculateBMI();
   });
@@ -480,17 +422,23 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   });
 
   function getBMIData(){
-    var weightKg, heightM;
+    var weightVal = parseFloat(weightInput.value) || 0;
+    var weightKg = weightVal;
     
-    if (currentUnit === 'metric'){
-      weightKg = parseFloat(document.getElementById('weight-kg').value) || 0;
-      var hCm = parseFloat(document.getElementById('height-cm').value) || 0;
-      heightM = hCm / 100;
+    // Convert weight to kg if in lbs
+    if (weightUnit.value === 'lb') {
+      weightKg = weightVal * 0.453592;
+    }
+    
+    var heightM = 0;
+    
+    // Calculate height in meters
+    if (heightUnit.value === 'cm') {
+      var cm = parseFloat(heightCmInput.value) || 0;
+      heightM = cm / 100;
     } else {
-      var lb = parseFloat(document.getElementById('weight-lb').value) || 0;
-      weightKg = lb * 0.453592;
-      var ft = parseFloat(document.getElementById('height-ft').value) || 0;
-      var inch = parseFloat(document.getElementById('height-in').value) || 0;
+      var ft = parseFloat(heightFtInput.value) || 0;
+      var inch = parseFloat(heightInInput.value) || 0;
       heightM = (ft * 12 + inch) * 0.0254;
     }
     
@@ -548,9 +496,17 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     document.getElementById('bmi-marker').style.left = pct + '%';
 
     // Healthy Weight Range (Uses the selected standard's limits)
+    // Convert back to lbs if user is using lbs
+    var multiplier = weightUnit.value === 'lb' ? 2.20462 : 1;
+    var unitLabel = weightUnit.value === 'lb' ? 'lbs' : 'kg';
+
     var lowKg = underLimit * (hM * hM);
     var highKg = (overLimit - 0.1) * (hM * hM); 
-    document.getElementById('healthy-range').textContent = lowKg.toFixed(1) + ' - ' + highKg.toFixed(1) + ' kg';
+    
+    var lowDisp = lowKg * multiplier;
+    var highDisp = highKg * multiplier;
+    
+    document.getElementById('healthy-range').textContent = lowDisp.toFixed(1) + ' - ' + highDisp.toFixed(1) + ' ' + unitLabel;
     
     document.getElementById('cat-val').textContent = category;
     document.getElementById('cat-sub-txt').textContent = currentStandard === 'asian' ? 'Asian Standard' : 'WHO Standard';
@@ -558,10 +514,12 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     // Calculate weight difference
     var diffEl = document.getElementById('weight-diff');
     if (data.weightKg > highKg) {
-      diffEl.textContent = 'Lose ' + (data.weightKg - highKg).toFixed(1) + ' kg';
+      var diffVal = (data.weightKg - highKg) * multiplier;
+      diffEl.textContent = 'Lose ' + diffVal.toFixed(1) + ' ' + unitLabel;
       diffEl.style.color = '#dc2626';
     } else if (data.weightKg < lowKg) {
-      diffEl.textContent = 'Gain ' + (lowKg - data.weightKg).toFixed(1) + ' kg';
+      var diffVal = (lowKg - data.weightKg) * multiplier;
+      diffEl.textContent = 'Gain ' + diffVal.toFixed(1) + ' ' + unitLabel;
       diffEl.style.color = '#0ea5e9';
     } else {
       diffEl.textContent = 'You are perfect';
@@ -582,9 +540,13 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   // Add event listeners to all inputs to auto-calculate
   document.getElementById('calc-btn').addEventListener('click', calculateBMI);
   
-  var inputs = ['weight-kg','height-cm','weight-lb','height-ft','height-in'];
-  inputs.forEach(function(id){
-    document.getElementById(id).addEventListener('input', function(){
+  [weightInput, weightUnit, heightCmInput, heightFtInput, heightInInput].forEach(function(el) {
+    el.addEventListener('input', function() {
+      if (document.getElementById('result').classList.contains('show')) {
+        calculateBMI();
+      }
+    });
+    el.addEventListener('change', function() {
       if (document.getElementById('result').classList.contains('show')) {
         calculateBMI();
       }
