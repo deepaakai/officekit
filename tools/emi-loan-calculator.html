@@ -43,7 +43,7 @@
       "name": "Can I print dual copies of this agreement for physical record-keeping?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, absolutely. Print two identical copies of the generated PDF statement: one for the lender (देनदार) and one for the borrower (कर्जदार). Both sign across their photos and at the bottom. Whenever monthly interest or principal is paid offline, record the date, amount, and receiver signature directly on both physical papers with a pen."
+        "text": "Yes, absolutely. Print two identical copies of the generated PDF statement: one for the lender and one for the borrower. Both sign across their photos and at the bottom. Whenever monthly interest or principal is paid offline, record the date, amount, and receiver signature directly on both physical papers with a pen."
       }
     },
     {
@@ -56,18 +56,10 @@
     },
     {
       "@type": "Question",
-      "name": "How does the manual repayment tracking work on the printed PDF?",
+      "name": "How does the language toggle work for PDF generation?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The PDF features empty columns for Paid Date, Amount Paid, and Receiver Signature with expanded row heights, allowing both parties to log physical cash settlements offline without storing sensitive data on any web server."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does this work internationally for personal loans and promissory notes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Switch the currency toggle to $ USD. All metrics adapt to international standards with standard promissory undertaking clauses, debtor/creditor ledger records, and dual signature sections recognized globally."
+        "text": "You can toggle the PDF language between English and हिन्दी. The generated document translates the repayment ledger, loan undertaking terms, and receiver signature blocks into the selected language."
       }
     }
   ]
@@ -151,7 +143,13 @@
 .table-section{margin-top:34px;border-top:1px solid var(--border-color);padding-top:24px;}
 .table-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
 .table-header h3{margin:0;font-size:18.5px;font-weight:800;color:var(--text-color);}
-.action-buttons{display:flex;gap:10px;flex-wrap:wrap;}
+.action-buttons{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
+/* Language Toggle for PDF */
+.lang-toggle{display:flex;background:var(--card-hover);border-radius:8px;padding:3px;border:1px solid var(--border-color);}
+.lang-toggle button{border:0;background:transparent;padding:6px 12px;font-size:12.5px;font-weight:800;color:var(--subtext-color);border-radius:5px;cursor:pointer;transition:.15s;font-family:inherit;}
+.lang-toggle button.active{background:var(--card-bg);color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+
 .export-btn{padding:11px 18px;border:0;border-radius:10px;font-size:14px;font-weight:800;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;color:#fff;}
 .btn-csv{background:#16a34a;}
 .btn-csv:hover{background:#15803d;}
@@ -385,6 +383,12 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       <div class="table-header">
         <h3 id="table-title">Loan Repayment Schedule</h3>
         <div class="action-buttons">
+          <!-- Language Toggle for PDF -->
+          <div class="lang-toggle" id="pdf-lang-toggle" title="Choose PDF Language">
+            <button type="button" class="active" data-lang="en">English</button>
+            <button type="button" data-lang="hi">हिन्दी</button>
+          </div>
+
           <button type="button" class="export-btn btn-csv" id="download-csv">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Export CSV
@@ -433,15 +437,16 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     <ol>
       <li><b>Calculate the Loan Terms:</b> Enter the sanctioned amount, interest rate (% p.a. for reducing bank loans or % per month for private credit), and tenure.</li>
       <li><b>Provide Party & Photo Details:</b> Enter the names of both the Lender (देनदार) and Borrower (कर्जदार). Upload passport photos using the photo buttons, or leave them empty to glue physical passport photos later.</li>
+      <li><b>Select Your PDF Language:</b> Choose <b>English</b> or <b>हिन्दी</b> based on your preference before downloading.</li>
       <li><b>Print Exactly Two Copies:</b> Click <b>Download PDF</b> and print two identical copies on paper.</li>
       <li><b>Mutual Signatures & Cross-Attestation:</b> Both parties sign across their respective photos (Sign Across Photo) and at the bottom on both physical sheets.</li>
-      <li><b>Manual Offline Repayment Logging:</b> Each month when interest or principal cash is exchanged, record the payment date, amount received, and receiver's signature directly on <b>both papers</b> with a pen.</li>
+      <li><b>Manual Offline Repayment Logging:</b> Each month when interest or principal cash is exchanged, record the payment date, amount received, remaining balance, and receiver's signature directly on <b>both papers</b> with a pen.</li>
     </ol>
 
     <h2>Frequently Asked Questions (FAQ)</h2>
     <details class="faq">
       <summary>Can I print two copies of this agreement for physical record-keeping? (दो कॉपी कैसे काम करती हैं?)</summary>
-      <p><b>Yes, absolutely.</b> This is the recommended approach for private loans. Print two identical PDF copies: one original for the lender and one counterpart for the borrower. Whenever an installment is paid, record the date, amount, and signature on both sheets simultaneously for 100% mutual transparency.</p>
+      <p><b>Yes, absolutely.</b> This is the recommended approach for private loans. Print two identical PDF copies: one original for the lender and one counterpart for the borrower. Whenever an installment is paid, record the date, amount, remaining balance, and signature on both sheets simultaneously for 100% mutual transparency.</p>
     </details>
     <details class="faq">
       <summary>What does ₹2 सैकड़ा (2 Rupees Saikda) mean in private money lending?</summary>
@@ -465,6 +470,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
 (function(){
   let currentCurrency = 'inr';
   let currentCalc = 'bank';
+  let currentPdfLang = 'en'; // 'en' or 'hi'
   let scheduleData = [];
   let currentMetrics = {};
   let lenderPhotoData = null;
@@ -563,7 +569,19 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     });
   }
 
-  // 4. Input Change Listeners
+  // 4. PDF Language Toggle Switcher
+  const pdfLangToggle = document.getElementById('pdf-lang-toggle');
+  if (pdfLangToggle) {
+    pdfLangToggle.addEventListener('click', function(e) {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      pdfLangToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPdfLang = btn.dataset.lang;
+    });
+  }
+
+  // 5. Input Change Listeners
   document.querySelectorAll('input, select').forEach(el => {
     el.addEventListener('input', calculateAll);
     el.addEventListener('change', calculateAll);
@@ -677,7 +695,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
 
       currentMetrics = {
         title: "Private Loan Interest Statement & Repayment Ledger",
-        category: "Private Monthly Lending (सूद)",
+        category: "Private Monthly Lending",
         principal: principal,
         rate: monthlyRate + "% p.m." + saikdaLabel,
         tenure: yrVal + " Years " + moVal + " Months (" + totalMonths + " Months)",
@@ -788,7 +806,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     document.body.removeChild(link);
   });
 
-  // Professional PDF Export with Photos, Cross-Signatures & Muted Disclaimer
+  // Professional PDF Export with Language Toggle, Closing Balance, Photos & Fit-Width Disclaimer
   document.getElementById('download-pdf').addEventListener('click', function() {
     if (scheduleData.length === 0 || !window.jspdf) return;
 
@@ -796,6 +814,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     const doc = new jsPDF('p', 'mm', 'a4');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
+    const isHi = (currentPdfLang === 'hi');
 
     // 1. Solid Navy Brand Header
     doc.setFillColor(25, 57, 138);
@@ -809,18 +828,25 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8.5);
     doc.setTextColor(226, 232, 240);
-    doc.text(currentCalc === 'bank' ? "Loan Amortization Statement" : "Dual-Copy Loan Agreement & Repayment Ledger", pageWidth - 14, 13, { align: "right" });
+    const headerSub = isHi 
+      ? (currentCalc === 'bank' ? "Bank Loan Amortization Schedule" : "Do-Pratiya Byaj Khata va Samjhouta")
+      : (currentCalc === 'bank' ? "Loan Amortization Statement" : "Dual-Copy Loan Agreement & Repayment Ledger");
+    doc.text(headerSub, pageWidth - 14, 13, { align: "right" });
 
     // 2. Document Heading
     doc.setTextColor(15, 23, 42);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(13);
-    doc.text(currentMetrics.title, 14, 29);
+    doc.setFontSize(12.5);
+    const headingMain = isHi
+      ? (currentCalc === 'bank' ? "Bank Reducing Balance EMI Statement" : "Niji Byaj Rin Vivaran va Bhugtan Khata (Ledger)")
+      : currentMetrics.title;
+    doc.text(headingMain, 14, 29);
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(100, 116, 139);
-    doc.text("Generated on: " + new Date().toLocaleString() + " | Currency: " + currentCurrency.toUpperCase() + " | Dual Counterpart Agreement", 14, 34);
+    const dateStr = isHi ? "Tithy (Date): " : "Generated on: ";
+    doc.text(dateStr + new Date().toLocaleString() + " | Currency: " + currentCurrency.toUpperCase() + (isHi ? " | Do-Prati (Dual Copy)" : " | Dual Counterpart Agreement"), 14, 34);
 
     // 3. Structured Metric Card (No Overlapping)
     doc.setDrawColor(226, 232, 240);
@@ -830,22 +856,27 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     // Left Column
     doc.setFontSize(8);
     doc.setTextColor(100, 116, 139);
-    doc.text(currentCalc === 'bank' ? "Loan Category:" : "Loan Architecture:", 18, 45);
-    doc.text(currentCalc === 'bank' ? "Annual Rate:" : "Monthly Rate:", 18, 52);
-    doc.text("Tenure / Duration:", 18, 59);
+    doc.text(isHi ? (currentCalc === 'bank' ? "Rin Prakar:" : "Rin Vidhi:") : (currentCalc === 'bank' ? "Loan Category:" : "Loan Architecture:"), 18, 45);
+    doc.text(isHi ? (currentCalc === 'bank' ? "Varshik Dar:" : "Masik Dar (Rate):") : (currentCalc === 'bank' ? "Annual Rate:" : "Monthly Rate:"), 18, 52);
+    doc.text(isHi ? "Samay (Tenure):" : "Tenure / Duration:", 18, 59);
 
     doc.setFont("helvetica", "bold");
     doc.setTextColor(15, 23, 42);
-    doc.text(currentMetrics.category, 54, 45);
-    doc.text(currentMetrics.rate || "", 54, 52);
-    doc.text(currentMetrics.tenure || "", 54, 59);
+    const safeCategory = currentCalc === 'bank' ? document.getElementById('bank-type').value : (isHi ? "Niji Masik Byaj (Saikda)" : "Private Monthly Lending");
+    doc.text(safeCategory, 52, 45);
+    
+    const rateText = currentCalc === 'bank' 
+      ? (document.getElementById('bank-rate').value + "% p.a.") 
+      : (document.getElementById('pl-rate').value + "% p.m. (Rs. " + document.getElementById('pl-rate').value + " Saikda)");
+    doc.text(rateText, 52, 52);
+    doc.text(currentMetrics.tenure || "", 52, 59);
 
     // Right Column
     doc.setFont("helvetica", "normal");
     doc.setTextColor(100, 116, 139);
-    doc.text("Principal Amount:", 114, 45);
-    doc.text(currentCalc === 'bank' ? "Total Interest:" : "Cumulative Interest:", 114, 52);
-    doc.text("Total Repayable:", 114, 59);
+    doc.text(isHi ? "Muldhan (Principal):" : "Principal Amount:", 116, 45);
+    doc.text(isHi ? "Kul Byaj (Interest):" : (currentCalc === 'bank' ? "Total Interest:" : "Cumulative Interest:"), 116, 52);
+    doc.text(isHi ? "Kul Rashi (Repayable):" : "Total Repayable:", 116, 59);
 
     doc.setFont("helvetica", "bold");
     doc.setTextColor(15, 23, 42);
@@ -869,7 +900,10 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       doc.setFontSize(7.5);
       doc.setFont("helvetica", "bold");
       doc.setTextColor(25, 57, 138);
-      doc.text(currentCalc === 'bank' ? "INSTITUTIONAL ACCOUNT CREDENTIALS" : "MUTUAL PARTY LOAN CREDENTIALS", 18, startTableY + 4.5);
+      const credTitle = isHi
+        ? (currentCalc === 'bank' ? "BANK VA KHATA VIVARAN" : "DOGHOU PAKSH (LENDER & BORROWER) VIVARAN")
+        : (currentCalc === 'bank' ? "INSTITUTIONAL ACCOUNT CREDENTIALS" : "MUTUAL PARTY LOAN CREDENTIALS");
+      doc.text(credTitle, 18, startTableY + 4.5);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(7.5);
@@ -881,9 +915,9 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         if (currentMetrics.client) credLine.push("BORROWER: " + currentMetrics.client);
         if (currentMetrics.folio) credLine.push("A/C: " + currentMetrics.folio);
       } else {
-        if (currentMetrics.lender) credLine.push("GIVEN BY: " + currentMetrics.lender);
-        if (currentMetrics.borrower) credLine.push("TAKEN BY: " + currentMetrics.borrower);
-        if (currentMetrics.purpose) credLine.push("PURPOSE: " + currentMetrics.purpose);
+        if (currentMetrics.lender) credLine.push((isHi ? "DENDAR (LENDER): " : "GIVEN BY: ") + currentMetrics.lender);
+        if (currentMetrics.borrower) credLine.push((isHi ? "KARJDAR (BORROWER): " : "TAKEN BY: ") + currentMetrics.borrower);
+        if (currentMetrics.purpose) credLine.push((isHi ? "UDAHYESH (PURPOSE): " : "PURPOSE: ") + currentMetrics.purpose);
       }
 
       doc.text(credLine.join("   |   "), 18, startTableY + 9.5);
@@ -892,12 +926,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       startTableY += 3;
     }
 
-    // 5. Build Schedule Table
+    // 5. Build Schedule Table (Closing Balance Column Included)
     let headers = [];
     let rows = [];
 
     if (currentCalc === 'bank') {
-      headers = [["Timeline", "Total Installment", "Interest Component", "Principal Repaid", "Closing Balance"]];
+      headers = isHi
+        ? [["Samay", "Kul Kist (EMI)", "Byaj Rashi", "Muldhan Rashi", "Bacha Khata (Balance)"]]
+        : [["Timeline", "Total Installment", "Interest Component", "Principal Repaid", "Closing Balance"]];
       rows = scheduleData.map(item => [
         item.timeline,
         formatCurrencyRaw(item.installment),
@@ -906,14 +942,17 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         formatCurrencyRaw(item.balance)
       ]);
     } else {
-      headers = [["Cycle", "Monthly Due", "Cumulative", "Paid Date", "Amount Paid", "Receiver Sign"]];
+      headers = isHi
+        ? [["Chakra", "Masik Byaj", "Kul Byaj", "Bacha Muldhan", "Bhugtan Tithy", "Diya Rupya", "Panvati Sign"]]
+        : [["Cycle", "Monthly Due", "Cumulative", "Closing Balance", "Paid Date", "Amount Paid", "Receiver Sign"]];
       rows = scheduleData.map(item => [
         item.timeline,
         formatCurrencyRaw(item.installment),
         "+" + formatCurrencyRaw(item.interest),
-        "", 
-        "", 
-        ""  
+        formatCurrencyRaw(item.balance), // Remaining Principal Balance
+        "", // Manual Paid Date
+        "", // Manual Amount Paid
+        ""  // Manual Receiver Sign
       ]);
     }
 
@@ -926,9 +965,9 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         fillColor: [30, 41, 59],
         textColor: 255,
         fontStyle: 'bold',
-        fontSize: 8,
+        fontSize: 7.5,
         halign: 'center',
-        cellPadding: 2.8
+        cellPadding: 2.5
       },
       columnStyles: currentCalc === 'bank' ? {
         0: { halign: 'left', fontStyle: 'bold', cellWidth: 28 },
@@ -937,17 +976,18 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         3: { halign: 'right', textColor: [22, 163, 74] },
         4: { halign: 'right', fontStyle: 'bold' }
       } : {
-        0: { halign: 'left', fontStyle: 'bold', cellWidth: 24 },
-        1: { halign: 'right', cellWidth: 28 },
-        2: { halign: 'right', textColor: [234, 88, 12], cellWidth: 28 },
-        3: { halign: 'center', cellWidth: 32 },
-        4: { halign: 'center', cellWidth: 34 },
-        5: { halign: 'center', cellWidth: 36 }
+        0: { halign: 'left', fontStyle: 'bold', cellWidth: 20 },
+        1: { halign: 'right', cellWidth: 24 },
+        2: { halign: 'right', textColor: [234, 88, 12], cellWidth: 24 },
+        3: { halign: 'right', fontStyle: 'bold', cellWidth: 26 }, // Closing Balance
+        4: { halign: 'center', cellWidth: 28 }, // Paid Date (Manual)
+        5: { halign: 'center', cellWidth: 30 }, // Amount Paid (Manual)
+        6: { halign: 'center', cellWidth: 30 }  // Receiver Sign (Manual)
       },
       styles: {
-        fontSize: 7.5,
+        fontSize: 7,
         minCellHeight: currentCalc === 'private' ? 7.2 : 4,
-        cellPadding: 2,
+        cellPadding: 1.8,
         textColor: [51, 65, 85],
         lineColor: [203, 213, 225],
         lineWidth: 0.2
@@ -973,14 +1013,21 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       doc.setFontSize(7.5);
       doc.setFont("helvetica", "bold");
       doc.setTextColor(15, 23, 42);
-      doc.text("UNDERTAKING & MUTUAL LOAN TERMS:", 18, finalY + 4.2);
+      doc.text(isHi ? "AAPSIC SAMJHOUTA VA SHARTEIN (TERMS):" : "UNDERTAKING & MUTUAL LOAN TERMS:", 18, finalY + 4.2);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(6.8);
       doc.setTextColor(71, 85, 105);
-      doc.text("1. Executed in two identical counterparts; one retained by the lender and one by the borrower.", 18, finalY + 7.5);
-      doc.text("2. Payments recorded in this physical ledger with receiver signature serve as valid proof of monthly settlement.", 18, finalY + 10.8);
-      doc.text("3. The borrower acknowledges receipt of the principal in full and agrees to the stated repayment terms.", 18, finalY + 14);
+
+      if (isHi) {
+        doc.text("1. Yeh dastavez do barabar pratiyo me banaya gaya hai; ek Dendar aur ek Karjdar ke paas rahega.", 18, finalY + 7.5);
+        doc.text("2. Is kagaz par darj bhugtan tithy, di gayi rashi aur praptkarta ke hastakshar hi manya sabut honge.", 18, finalY + 10.8);
+        doc.text("3. Karjdar ne pura muldhan prapt kiya hai aur nirdharit masik byaj v samay par wapas karne par sahmat hai.", 18, finalY + 14);
+      } else {
+        doc.text("1. Executed in two identical counterparts; one retained by the lender and one by the borrower.", 18, finalY + 7.5);
+        doc.text("2. Payments recorded in this physical ledger with receiver signature serve as valid proof of monthly settlement.", 18, finalY + 10.8);
+        doc.text("3. The borrower acknowledges receipt of the principal in full and agrees to the stated repayment terms.", 18, finalY + 14);
+      }
 
       finalY += 20;
 
@@ -1007,16 +1054,16 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         doc.setFontSize(5.5);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(148, 163, 184);
-        doc.text("AFFIX", lenderX + (photoW / 2), finalY + 8.5, { align: "center" });
-        doc.text("LENDER", lenderX + (photoW / 2), finalY + 12, { align: "center" });
-        doc.text("PHOTO", lenderX + (photoW / 2), finalY + 15.5, { align: "center" });
+        doc.text(isHi ? "PHOTO" : "AFFIX", lenderX + (photoW / 2), finalY + 8.5, { align: "center" });
+        doc.text(isHi ? "DENDAR" : "LENDER", lenderX + (photoW / 2), finalY + 12, { align: "center" });
+        doc.text(isHi ? "LAGAYEIN" : "PHOTO", lenderX + (photoW / 2), finalY + 15.5, { align: "center" });
       }
 
       // Cross Signature Prompt
       doc.setFontSize(5.5);
       doc.setFont("helvetica", "italic");
       doc.setTextColor(100, 116, 139);
-      doc.text("Sign Across Photo", lenderX + (photoW / 2), finalY + photoH + 3.5, { align: "center" });
+      doc.text(isHi ? "Photo par aada tircha sign karein" : "Sign Across Photo", lenderX + (photoW / 2), finalY + photoH + 3.5, { align: "center" });
 
       // Main Signature Line
       doc.setDrawColor(148, 163, 184);
@@ -1026,11 +1073,11 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       doc.setFontSize(7.5);
       doc.setFont("helvetica", "bold");
       doc.setTextColor(15, 23, 42);
-      doc.text("LENDER SIGNATURE", lenderX + photoW + 6, finalY + photoH);
+      doc.text(isHi ? "DENDAR KE HASTAKSHAR" : "LENDER SIGNATURE", lenderX + photoW + 6, finalY + photoH);
       doc.setFontSize(6.5);
       doc.setFont("helvetica", "normal");
       doc.setTextColor(100, 116, 139);
-      doc.text("(Given By / Name & Date)", lenderX + photoW + 6, finalY + photoH + 3.5);
+      doc.text(isHi ? "(Rupya Dene Wale Ka Naam va Tithy)" : "(Given By / Name & Date)", lenderX + photoW + 6, finalY + photoH + 3.5);
 
 
       // ================= BORROWER SECTION (Right Side) =================
@@ -1055,16 +1102,16 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
         doc.setFontSize(5.5);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(148, 163, 184);
-        doc.text("AFFIX", borrowerPhotoX + (photoW / 2), finalY + 8.5, { align: "center" });
-        doc.text("BORROWER", borrowerPhotoX + (photoW / 2), finalY + 12, { align: "center" });
-        doc.text("PHOTO", borrowerPhotoX + (photoW / 2), finalY + 15.5, { align: "center" });
+        doc.text(isHi ? "PHOTO" : "AFFIX", borrowerPhotoX + (photoW / 2), finalY + 8.5, { align: "center" });
+        doc.text(isHi ? "KARJDAR" : "BORROWER", borrowerPhotoX + (photoW / 2), finalY + 12, { align: "center" });
+        doc.text(isHi ? "LAGAYEIN" : "PHOTO", borrowerPhotoX + (photoW / 2), finalY + 15.5, { align: "center" });
       }
 
       // Cross Signature Prompt
       doc.setFontSize(5.5);
       doc.setFont("helvetica", "italic");
       doc.setTextColor(100, 116, 139);
-      doc.text("Sign Across Photo", borrowerPhotoX + (photoW / 2), finalY + photoH + 3.5, { align: "center" });
+      doc.text(isHi ? "Photo par aada tircha sign karein" : "Sign Across Photo", borrowerPhotoX + (photoW / 2), finalY + photoH + 3.5, { align: "center" });
 
       // Main Signature Line
       doc.setDrawColor(148, 163, 184);
@@ -1074,38 +1121,45 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       doc.setFontSize(7.5);
       doc.setFont("helvetica", "bold");
       doc.setTextColor(15, 23, 42);
-      doc.text("BORROWER SIGNATURE", borrowerPhotoX - 55, finalY + photoH);
+      doc.text(isHi ? "KARJDAR KE HASTAKSHAR" : "BORROWER SIGNATURE", borrowerPhotoX - 55, finalY + photoH);
       doc.setFontSize(6.5);
       doc.setFont("helvetica", "normal");
       doc.setTextColor(100, 116, 139);
-      doc.text("(Taken By / Acknowledged)", borrowerPhotoX - 55, finalY + photoH + 3.5);
+      doc.text(isHi ? "(Rupya Lene Wale Ki Sahmati)" : "(Taken By / Acknowledged)", borrowerPhotoX - 55, finalY + photoH + 3.5);
 
       doc.setLineDashPattern([], 0);
     }
 
-    // ================= 7. Muted Watermark Legal Disclaimer & Page Numbering =================
+    // ================= 7. Non-Clipping Centered Legal Disclaimer & Footer =================
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
       doc.setPage(i);
 
       // Low Opacity Muted Gray
-      doc.setFontSize(6.2);
+      doc.setFontSize(6);
       doc.setFont("helvetica", "normal");
-      doc.setTextColor(180, 190, 205);
+      doc.setTextColor(175, 185, 200);
 
+      // Multi-line fit with maxWidth to PREVENT cut-offs
+      const maxDisclaimerWidth = pageWidth - 28;
+      
       const disclaimerEn = "DISCLAIMER: This system is a self-service calculation tool. DocEasy/its developers hold no legal responsibility for any personal debt disputes or financial default. All liabilities rest entirely between the lender and borrower.";
-      doc.text(disclaimerEn, pageWidth / 2, pageHeight - 12.5, { align: "center" });
+      const disclaimerLinesEn = doc.splitTextToSize(disclaimerEn, maxDisclaimerWidth);
+      doc.text(disclaimerLinesEn, pageWidth / 2, pageHeight - 14, { align: "center" });
 
       const safeHiText = "Kanooni Asweekaran: Software ya Company ki koi zimmewari nahi hogi. Is leyn-deyn ke purn zimmewar kewal Lendor aur Borrower swayam hain.";
-      doc.text(safeHiText, pageWidth / 2, pageHeight - 9.5, { align: "center" });
+      const disclaimerLinesHi = doc.splitTextToSize(safeHiText, maxDisclaimerWidth);
+      doc.text(disclaimerLinesHi, pageWidth / 2, pageHeight - 8.5, { align: "center" });
 
-      doc.setFontSize(7);
+      // Bottom Privacy & Pagination Line
+      doc.setFontSize(6.8);
       doc.setTextColor(148, 163, 184);
-      doc.text("DocEasy.org | 100% Client-Side Privacy", 14, pageHeight - 5);
-      doc.text("Page " + i + " of " + totalPages, pageWidth - 14, pageHeight - 5, { align: "right" });
+      doc.text("DocEasy.org | 100% Client-Side Privacy", 14, pageHeight - 4);
+      doc.text("Page " + i + " of " + totalPages, pageWidth - 14, pageHeight - 4, { align: "right" });
     }
 
-    doc.save(`DocEasy_${currentCalc.toUpperCase()}_Loan_Statement_${currentCurrency.toUpperCase()}.pdf`);
+    const langSuffix = isHi ? "_HI" : "_EN";
+    doc.save(`DocEasy_${currentCalc.toUpperCase()}_Loan_Statement_${currentCurrency.toUpperCase()}${langSuffix}.pdf`);
   });
 
   // Startup calculation
