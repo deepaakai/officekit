@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>All-in-One Finance Calculator - SIP, FD, PPF, EPF, NPS | DocEasy</title>
+<meta name="description" content="Free financial calculators with charts and CSV download. Calculate SIP, FD, PPF, EPF, NPS, Simple Interest, and Compound Interest in INR (Lakhs/Crores) and USD.">
+<meta name="keywords" content="sip calculator, fd calculator, ppf calculator, epf calculator, nps calculator, compound interest calculator, simple interest calculator, month wise csv download, investment calculator india, retirement planning calculator">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/finance-master-calculator.html">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<!-- Structured Data for SEO (WebApplication & FAQ) -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Finance Master Calculator — DocEasy","url":"https://doceasy.org/tools/finance-master-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"All-in-one finance calculator for SIP, FD, PPF, EPF, NPS, and interest calculations with CSV export."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is the best SIP calculator for India?","acceptedAnswer":{"@type":"Answer","text":"DocEasy's SIP calculator is one of the best because it allows you to calculate returns in Lakhs and Crores, visualizes data in a chart, and lets you download a month-wise CSV schedule."}},
+{"@type":"Question","name":"How is FD interest calculated?","acceptedAnswer":{"@type":"Answer","text":"FD interest in India is usually calculated on a quarterly compounding basis. Our calculator uses the standard formula A = P(1 + r/4)^(4*t) to give you the exact maturity amount."}},
+{"@type":"Question","name":"Is PPF interest tax-free?","acceptedAnswer":{"@type":"Answer","text":"Yes, PPF (Public Provident Fund) falls under the EEE (Exempt-Exempt-Exempt) category, meaning the investment, interest earned, and maturity amount are all tax-free under Section 80C."}},
+{"@type":"Question","name":"Can I download the investment schedule?","acceptedAnswer":{"@type":"Answer","text":"Yes, our tool features a unique 'Download CSV' button that gives you a year-by-year breakdown of your investments, complete with the DocEasy.org watermark."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1100px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+
+/* Currency Toggle */
+.currency-toggle{display:flex;background:var(--card-hover);border-radius:10px;padding:4px;border:1px solid var(--border-color);}
+.currency-toggle button{border:0;background:transparent;padding:8px 16px;font-weight:800;font-size:14px;color:var(--subtext-color);border-radius:6px;cursor:pointer;transition:.15s;font-family:inherit;}
+.currency-toggle button.active{background:var(--card-bg);color:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+
+/* Tabs */
+.mode-tabs{display:flex;gap:8px;background:var(--card-hover);padding:6px;border-radius:12px;margin-bottom:24px;overflow-x:auto;scrollbar-width:none;}
+.mode-tabs::-webkit-scrollbar{display:none;}
+.mode-tabs button{flex:0 0 auto;padding:10px 18px;border:0;background:transparent;color:var(--subtext-color);border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;transition:.2s;}
+.mode-tabs button.active{background:var(--card-bg);color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.mode-pane{display:none;}
+.mode-pane.active{display:block;animation:fadeIn .3s;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+@media(max-width:640px){.input-grid{grid-template-columns:1fr;}}
+.input-group{display:flex;flex-direction:column;gap:8px;}
+.input-group.full{grid-column:1 / -1;}
+.input-group label{font-size:13px;font-weight:800;color:var(--text-color);display:flex;justify-content:space-between;}
+.input-group label span{color:var(--accent);}
+.input-group input[type="number"], .input-group select{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s;}
+.input-group input:focus, .input-group select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg);}
+
+/* Results & Chart */
+.result-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px;align-items:start;}
+@media(max-width:780px){.result-layout{grid-template-columns:1fr;}}
+
+.chart-box{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:20px;background:var(--card-hover);border-radius:16px;border:1px solid var(--border-color);}
+.chart-container{position:relative;width:220px;height:220px;}
+.chart-container svg{width:100%;height:100%;transform:rotate(-90deg);}
+.chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:100%;}
+.chart-center .lbl{font-size:12px;text-transform:uppercase;font-weight:800;color:var(--subtext-color);}
+.chart-center .val{font-size:18px;font-weight:900;color:var(--accent);}
+
+.data-grid{display:flex;flex-direction:column;gap:12px;}
+.data-box{background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;}
+.data-box .lbl{font-size:14px;font-weight:700;color:var(--subtext-color);display:flex;align-items:center;gap:8px;}
+.data-box .dot{width:10px;height:10px;border-radius:50%;}
+.data-box .val{font-size:18px;font-weight:800;color:var(--text-color);}
+.data-box.total{background:var(--accent-soft);border-color:rgba(25,57,138,0.3);}
+.data-box.total .lbl{color:var(--accent);}
+.data-box.total .val{color:var(--accent);font-size:22px;}
+
+/* Table & CSV */
+.table-section{margin-top:30px;border-top:1px solid var(--border-color);padding-top:20px;}
+.table-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+.table-header h3{margin:0;font-size:18px;font-weight:800;color:var(--text-color);}
+.csv-btn{padding:10px 16px;border:0;border-radius:8px;background:#16a34a;color:#fff;font-size:14px;font-weight:800;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s;}
+.csv-btn:hover{background:#15803d;}
+.csv-btn svg{width:16px;height:16px;}
+.table-wrap{overflow-x:auto;border:1px solid var(--border-color);border-radius:12px;max-height:300px;scrollbar-width:thin;}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px;}
+th,td{padding:12px 16px;text-align:right;border-bottom:1px solid var(--border-color);}
+th{background:var(--card-hover);font-weight:800;color:var(--text-color);position:sticky;top:0;z-index:10;}
+td{color:var(--subtext-color);font-weight:600;}
+td:first-child, th:first-child{text-align:left;}
+tr:last-child td{border-bottom:none;}
+
+/* SEO Content */
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+.step-box{background:var(--card-hover);padding:20px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--accent)}
+.step-box h4{margin:0 0 8px;font-size:16px;color:var(--text-color);font-weight:800}
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+@media(max-width:640px){.main-wrap{padding:0 14px 60px}.calc-card{padding:20px 16px}.content-section{padding:24px 16px;margin:24px auto}}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">All-in-One Finance Calculator</h1>
+    <p class="hero-sub">SIP, FD, PPF, EPF, NPS और Interest की सारी कैलकुलेशन एक ही जगह। महीने-दर-महीने हिसाब देखें और DocEasy वॉटरमार्क के साथ CSV फाइल डाउनलोड करें।</p>
+  </div>
+
+  <div class="top-bar">
+    <div class="mode-tabs" id="calc-tabs">
+      <button class="active" data-target="sip">SIP</button>
+      <button data-target="fd">FD</button>
+      <button data-target="ppf">PPF</button>
+      <button data-target="epf">EPF</button>
+      <button data-target="nps">NPS</button>
+      <button data-target="si">Simple Int.</button>
+      <button data-target="ci">Compound Int.</button>
+    </div>
+    
+    <div class="currency-toggle" id="currency-toggle">
+      <button class="active" data-currency="inr">₹ INR</button>
+      <button data-currency="usd">$ USD</button>
+    </div>
+  </div>
+
+  <div class="calc-card">
+    
+    <!-- ================= SIP ================= -->
+    <div class="mode-pane active" id="pane-sip">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Monthly Investment <span id="sip-inv-label">₹ 5,000</span></label>
+          <input type="number" id="sip-inv" value="5000" min="500">
+        </div>
+        <div class="input-group">
+          <label>Expected Return (p.a) <span id="sip-rate-label">12%</span></label>
+          <input type="number" id="sip-rate" value="12" min="1" max="30" step="0.5">
+        </div>
+        <div class="input-group full">
+          <label>Time Period <span id="sip-yr-label">10 Years</span></label>
+          <input type="number" id="sip-yr" value="10" min="1" max="40">
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FD ================= -->
+    <div class="mode-pane" id="pane-fd">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Total Deposit <span id="fd-inv-label">₹ 1,00,000</span></label>
+          <input type="number" id="fd-inv" value="100000" min="1000">
+        </div>
+        <div class="input-group">
+          <label>Interest Rate (p.a) <span id="fd-rate-label">7%</span></label>
+          <input type="number" id="fd-rate" value="7" min="1" max="15" step="0.1">
+        </div>
+        <div class="input-group full">
+          <label>Time Period <span id="fd-yr-label">5 Years</span></label>
+          <input type="number" id="fd-yr" value="5" min="1" max="20">
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PPF ================= -->
+    <div class="mode-pane" id="pane-ppf">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Yearly Investment <span id="ppf-inv-label">₹ 1,50,000</span></label>
+          <input type="number" id="ppf-inv" value="150000" min="500">
+        </div>
+        <div class="input-group">
+          <label>Interest Rate (p.a) <span id="ppf-rate-label">7.1%</span></label>
+          <input type="number" id="ppf-rate" value="7.1" min="1" max="15" step="0.1">
+        </div>
+        <div class="input-group full">
+          <label>Time Period <span id="ppf-yr-label">15 Years</span></label>
+          <input type="number" id="ppf-yr" value="15" min="1" max="50">
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= EPF ================= -->
+    <div class="mode-pane" id="pane-epf">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Current Monthly Basic + DA <span id="epf-inv-label">₹ 30,000</span></label>
+          <input type="number" id="epf-inv" value="30000" min="1000">
+        </div>
+        <div class="input-group">
+          <label>Annual Salary Growth <span id="epf-growth-label">5%</span></label>
+          <input type="number" id="epf-growth" value="5" min="0" max="20" step="0.5">
+        </div>
+        <div class="input-group">
+          <label>EPF Interest Rate <span id="epf-rate-label">8.25%</span></label>
+          <input type="number" id="epf-rate" value="8.25" min="1" max="15" step="0.05">
+        </div>
+        <div class="input-group">
+          <label>Years to Retirement <span id="epf-yr-label">20 Years</span></label>
+          <input type="number" id="epf-yr" value="20" min="1" max="40">
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= NPS ================= -->
+    <div class="mode-pane" id="pane-nps">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Monthly Contribution <span id="nps-inv-label">₹ 5,000</span></label>
+          <input type="number" id="nps-inv" value="5000" min="500">
+        </div>
+        <div class="input-group">
+          <label>Expected Return <span id="nps-rate-label">10%</span></label>
+          <input type="number" id="nps-rate" value="10" min="1" max="20" step="0.5">
+        </div>
+        <div class="input-group">
+          <label>Years to Retirement <span id="nps-yr-label">30 Years</span></label>
+          <input type="number" id="nps-yr" value="30" min="1" max="40">
+        </div>
+        <div class="input-group">
+          <label>Annuity Split (%) <span id="nps-ann-label">40%</span></label>
+          <input type="number" id="nps-ann" value="40" min="40" max="100" step="5">
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SI ================= -->
+    <div class="mode-pane" id="pane-si">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Principal Amount <span id="si-inv-label">₹ 1,00,000</span></label>
+          <input type="number" id="si-inv" value="100000" min="1000">
+        </div>
+        <div class="input-group">
+          <label>Rate (p.a) <span id="si-rate-label">10%</span></label>
+          <input type="number" id="si-rate" value="10" min="1" max="50" step="0.1">
+        </div>
+        <div class="input-group full">
+          <label>Time (Years) <span id="si-yr-label">5 Years</span></label>
+          <input type="number" id="si-yr" value="5" min="1" max="30">
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CI ================= -->
+    <div class="mode-pane" id="pane-ci">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Principal Amount <span id="ci-inv-label">₹ 1,00,000</span></label>
+          <input type="number" id="ci-inv" value="100000" min="1000">
+        </div>
+        <div class="input-group">
+          <label>Rate (p.a) <span id="ci-rate-label">10%</span></label>
+          <input type="number" id="ci-rate" value="10" min="1" max="50" step="0.1">
+        </div>
+        <div class="input-group">
+          <label>Time (Years) <span id="ci-yr-label">10 Years</span></label>
+          <input type="number" id="ci-yr" value="10" min="1" max="30">
+        </div>
+        <div class="input-group">
+          <label>Compounding Frequency</label>
+          <select id="ci-freq">
+            <option value="1">Yearly</option>
+            <option value="2">Half-Yearly</option>
+            <option value="4" selected>Quarterly</option>
+            <option value="12">Monthly</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS DISPLAY -->
+    <div class="result-layout">
+      <div class="chart-box">
+        <div class="chart-container">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#e2e8f0" stroke-width="16"></circle>
+            <circle id="chart-invested" cx="50" cy="50" r="40" fill="none" stroke="#19398a" stroke-width="16" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+            <circle id="chart-returns" cx="50" cy="50" r="40" fill="none" stroke="#16a34a" stroke-width="16" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+          </svg>
+          <div class="chart-center">
+            <div class="lbl" id="chart-label">Total Value</div>
+            <div class="val" id="chart-val">₹ 0</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="data-grid">
+        <div class="data-box">
+          <div class="lbl"><div class="dot" style="background:#19398a"></div> Total Invested</div>
+          <div class="val" id="res-invested">₹ 0</div>
+        </div>
+        <div class="data-box">
+          <div class="lbl"><div class="dot" style="background:#16a34a"></div> Estimated Returns</div>
+          <div class="val" id="res-returns">₹ 0</div>
+        </div>
+        <div class="data-box total">
+          <div class="lbl" id="res-total-label">Total Maturity Value</div>
+          <div class="val" id="res-total">₹ 0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONTH-WISE TABLE & CSV -->
+    <div class="table-section">
+      <div class="table-header">
+        <h3>Year-wise Breakdown</h3>
+        <button class="csv-btn" id="download-csv">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CSV
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table id="schedule-table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Invested</th>
+              <th>Interest/Returns</th>
+              <th>Total Value</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Rows generated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SEO Content -->
+  <article class="content-section">
+    <h2>How to Use the All-in-One Finance Calculator</h2>
+    <p>This master tool combines all major financial calculators into one simple page. Here is how to use it:</p>
+    <div class="step-box">
+      <h4>Step 1: Choose Your Calculator</h4>
+      <p>Use the top tabs to select SIP, FD, PPF, EPF, NPS, Simple Interest, or Compound Interest.</p>
+    </div>
+    <div class="step-box">
+      <h4>Step 2: Select Currency</h4>
+      <p>Click ₹ for Indian formatting (Lakhs/Crores) or $ for International formatting (Millions).</p>
+    </div>
+    <div class="step-box">
+      <h4>Step 3: Enter Details</h4>
+      <p>Enter the investment amount, rate, and time. The chart, total values, and year-wise table will update instantly.</p>
+    </div>
+    <div class="step-box">
+      <h4>Step 4: Download CSV</h4>
+      <p>Click the "Download CSV" button. A file will be downloaded containing the year-wise schedule, complete with the "Generated by DocEasy.org" watermark.</p>
+    </div>
+
+    <h2>Understanding the Calculators</h2>
+    <h3>1. SIP (Systematic Investment Plan)</h3>
+    <p>Invest a fixed amount monthly in mutual funds. The chart shows how compounding grows your wealth over time.</p>
+    <h3>2. FD (Fixed Deposit)</h3>
+    <p>A lump sum deposit for a fixed time. Interest is usually compounded quarterly.</p>
+    <h3>3. PPF (Public Provident Fund)</h3>
+    <p>A 15-year government scheme with tax-free returns. You invest once a year, and interest is compounded annually.</p>
+    <h3>4. EPF (Employee Provident Fund)</h3>
+    <p>Your retirement fund. 12% of your basic salary goes into it monthly, matched by your employer. Interest is calculated monthly but compounded annually.</p>
+    <h3>5. NPS (National Pension System)</h3>
+    <p>A retirement scheme where you invest monthly. At age 60, you can withdraw a portion as a lump sum and must buy an annuity with the rest.</p>
+    <h3>6. Simple Interest</h3>
+    <p>Interest calculated only on the principal amount. Best for short-term loans.</p>
+    <h3>7. Compound Interest</h3>
+    <p>Interest calculated on principal + accumulated interest. The frequency (yearly, quarterly, monthly) greatly affects the final amount.</p>
+  </article>
+
+</main>
+
+<div id="doceasy-footer"></div>
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function(){
+  let currentCurrency = 'inr';
+  let currentCalc = 'sip';
+  let scheduleData = []; 
+
+  // Currency formatting
+  function formatCurrency(amount) {
+    if (isNaN(amount)) amount = 0;
+    if (currentCurrency === 'inr') {
+      if (amount >= 10000000) return '₹ ' + (amount / 10000000).toFixed(2) + ' Cr';
+      if (amount >= 100000) return '₹ ' + (amount / 100000).toFixed(2) + ' L';
+      return '₹ ' + Math.round(amount).toLocaleString('en-IN');
+    } else {
+      if (amount >= 1000000000) return '$ ' + (amount / 1000000000).toFixed(2) + ' B';
+      if (amount >= 1000000) return '$ ' + (amount / 1000000).toFixed(2) + ' M';
+      return '$ ' + Math.round(amount).toLocaleString('en-US');
+    }
+  }
+
+  // Switch Tabs
+  document.getElementById('calc-tabs').addEventListener('click', function(e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    this.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCalc = btn.dataset.target;
+
+    document.querySelectorAll('.mode-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('pane-' + currentCalc).classList.add('active');
+    calculateAll();
+  });
+
+  // Switch Currency
+  document.getElementById('currency-toggle').addEventListener('click', function(e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    this.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCurrency = btn.dataset.currency;
+    calculateAll();
+  });
+
+  // Input event listeners
+  document.querySelectorAll('.mode-pane input, .mode-pane select').forEach(input => {
+    input.addEventListener('input', calculateAll);
+  });
+
+  // Main Calculation Function
+  function calculateAll() {
+    let invested = 0, returns = 0, total = 0;
+    scheduleData = [];
+
+    if (currentCalc === 'sip') {
+      const P = +document.getElementById('sip-inv').value || 0;
+      const rate = +document.getElementById('sip-rate').value || 0;
+      const years = +document.getElementById('sip-yr').value || 0;
+      
+      document.getElementById('sip-inv-label').textContent = formatCurrency(P);
+      document.getElementById('sip-rate-label').textContent = rate + '%';
+      document.getElementById('sip-yr-label').textContent = years + ' Years';
+      
+      const i = rate / 12 / 100;
+      let bal = 0;
+      for (let y = 1; y <= years; y++) {
+        for (let m = 1; m <= 12; m++) {
+          bal = (bal + P) * (1 + i);
+          invested += P;
+        }
+        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
+      }
+      total = bal;
+      returns = total - invested;
+
+    } else if (currentCalc === 'fd') {
+      const P = +document.getElementById('fd-inv').value || 0;
+      const rate = +document.getElementById('fd-rate').value || 0;
+      const years = +document.getElementById('fd-yr').value || 0;
+      
+      document.getElementById('fd-inv-label').textContent = formatCurrency(P);
+      document.getElementById('fd-rate-label').textContent = rate + '%';
+      document.getElementById('fd-yr-label').textContent = years + ' Years';
+
+      invested = P;
+      let bal = P;
+      const r = rate / 100 / 4; // Quarterly
+      
+      for (let y = 1; y <= years; y++) {
+        for (let q = 1; q <= 4; q++) {
+          bal = bal * (1 + r);
+        }
+        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
+      }
+      total = bal;
+      returns = total - invested;
+
+    } else if (currentCalc === 'ppf') {
+      const P = +document.getElementById('ppf-inv').value || 0;
+      const rate = +document.getElementById('ppf-rate').value || 0;
+      const years = +document.getElementById('ppf-yr').value || 0;
+      
+      document.getElementById('ppf-inv-label').textContent = formatCurrency(P);
+      document.getElementById('ppf-rate-label').textContent = rate + '%';
+      document.getElementById('ppf-yr-label').textContent = years + ' Years';
+
+      let bal = 0;
+      for (let y = 1; y <= years; y++) {
+        bal = (bal + P) * (1 + rate / 100);
+        invested += P;
+        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
+      }
+      total = bal;
+      returns = total - invested;
+
+    } else if (currentCalc === 'epf') {
+      const baseSalary = +document.getElementById('epf-inv').value || 0;
+      const growth = +document.getElementById('epf-growth').value || 0;
+      const rate = +document.getElementById('epf-rate').value || 0;
+      const years = +document.getElementById('epf-yr').value || 0;
+      
+      document.getElementById('epf-inv-label').textContent = formatCurrency(baseSalary);
+      document.getElementById('epf-growth-label').textContent = growth + '%';
+      document.getElementById('epf-rate-label').textContent = rate + '%';
+      document.getElementById('epf-yr-label').textContent = years + ' Years';
+
+      let bal = 0;
+      let currentBasic = baseSalary;
+      const monthlyRate = rate / 12 / 100;
+      
+      for (let y = 1; y <= years; y++) {
+        for (let m = 1; m <= 12; m++) {
+          const contribution = currentBasic * 0.12 + currentBasic * 0.0367;
+          bal = (bal + contribution) * (1 + monthlyRate);
+          invested += contribution;
+        }
+        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
+        currentBasic = currentBasic * (1 + growth / 100);
+      }
+      total = bal;
+      returns = total - invested;
+
+    } else if (currentCalc === 'nps') {
+      const P = +document.getElementById('nps-inv').value || 0;
+      const rate = +document.getElementById('nps-rate').value || 0;
+      const years = +document.getElementById('nps-yr').value || 0;
+      const annuityPct = +document.getElementById('nps-ann').value || 40;
+      
+      document.getElementById('nps-inv-label').textContent = formatCurrency(P);
+      document.getElementById('nps-rate-label').textContent = rate + '%';
+      document.getElementById('nps-yr-label').textContent = years + ' Years';
+      document.getElementById('nps-ann-label').textContent = annuityPct + '%';
+
+      const i = rate / 12 / 100;
+      let bal = 0;
+      for (let y = 1; y <= years; y++) {
+        for (let m = 1; m <= 12; m++) {
+          bal = (bal + P) * (1 + i);
+          invested += P;
+        }
+        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
+      }
+      total = bal;
+      returns = total - invested;
+
+    } else if (currentCalc === 'si') {
+      const P = +document.getElementById('si-inv').value || 0;
+      const rate = +document.getElementById('si-rate').value || 0;
+      const years = +document.getElementById('si-yr').value || 0;
+      
+      document.getElementById('si-inv-label').textContent = formatCurrency(P);
+      document.getElementById('si-rate-label').textContent = rate + '%';
+      document.getElementById('si-yr-label').textContent = years + ' Years';
+
+      for (let y = 1; y <= years; y++) {
+        const int = (P * rate * y) / 100;
+        scheduleData.push({ period: 'Year ' + y, invested: P, returns: int, total: P + int });
+      }
+      invested = P;
+      returns = (P * rate * years) / 100;
+      total = P + returns;
+
+    } else if (currentCalc === 'ci') {
+      const P = +document.getElementById('ci-inv').value || 0;
+      const rate = +document.getElementById('ci-rate').value || 0;
+      const years = +document.getElementById('ci-yr').value || 0;
+      const freq = +document.getElementById('ci-freq').value || 1;
+      
+      document.getElementById('ci-inv-label').textContent = formatCurrency(P);
+      document.getElementById('ci-rate-label').textContent = rate + '%';
+      document.getElementById('ci-yr-label').textContent = years + ' Years';
+
+      invested = P;
+      const r = rate / 100;
+      for (let y = 1; y <= years; y++) {
+        const amt = P * Math.pow(1 + (r / freq), freq * y);
+        scheduleData.push({ period: 'Year ' + y, invested: P, returns: amt - P, total: amt });
+      }
+      total = P * Math.pow(1 + (r / freq), freq * years);
+      returns = total - invested;
+    }
+
+    // Update Totals
+    document.getElementById('res-invested').textContent = formatCurrency(invested);
+    document.getElementById('res-returns').textContent = formatCurrency(returns);
+    document.getElementById('res-total').textContent = formatCurrency(total);
+    document.getElementById('chart-val').textContent = formatCurrency(total);
+
+    // Draw Chart & Table
+    drawChart(invested, returns);
+    updateTable();
+  }
+
+  // Draw Donut Chart
+  function drawChart(invested, returns) {
+    const total = invested + returns;
+    const circumference = 251.2;
+    
+    const investedPct = total > 0 ? (invested / total) : 0;
+    const returnsPct = total > 0 ? (returns / total) : 0;
+    
+    const investEl = document.getElementById('chart-invested');
+    const returnEl = document.getElementById('chart-returns');
+
+    investEl.style.strokeDashoffset = circumference - (investedPct * circumference);
+    
+    returnEl.style.strokeDashoffset = circumference - (returnsPct * circumference);
+    returnEl.style.transform = `rotate(${(investedPct * 360)}deg)`;
+    returnEl.style.transformOrigin = '50% 50%';
+  }
+
+  // Update HTML Table
+  function updateTable() {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = '';
+    
+    scheduleData.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.period}</td>
+        <td>${formatCurrency(row.invested)}</td>
+        <td style="color:#16a34a;">+ ${formatCurrency(row.returns)}</td>
+        <td>${formatCurrency(row.total)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Download CSV Function (With Your Custom Watermark)
+  document.getElementById('download-csv').addEventListener('click', function() {
+    if (scheduleData.length === 0) {
+      alert('No data available to download.');
+      return;
+    }
+
+    let csvContent = "";
+    
+    // 1. TOP WATERMARK & HEADER
+    csvContent += "==================================================\n";
+    csvContent += "WEBSITE: DocEasy.org\n";
+    csvContent += "TOOL NAME: " + currentCalc.toUpperCase() + " Calculator\n";
+    csvContent += "GENERATED ON: " + new Date().toLocaleString() + "\n";
+    csvContent += "URL: https://doceasy.org/tools/finance-master-calculator.html\n";
+    csvContent += "==================================================\n\n";
+
+    // 2. TABLE HEADERS
+    csvContent += "Period,Invested Amount,Interest/Returns,Total Value\n";
+
+    // 3. TABLE DATA
+    scheduleData.forEach(row => {
+      let invStr = row.invested.toFixed(2);
+      let retStr = row.returns.toFixed(2);
+      let totStr = row.total.toFixed(2);
+      csvContent += `${row.period},${invStr},${retStr},${totStr}\n`;
+    });
+
+    // 4. BOTTOM WATERMARK & DISCLAIMER
+    csvContent += "\n==================================================\n";
+    csvContent += "Thank you for using DocEasy.org!\n";
+    csvContent += "Disclaimer: This calculation is for informational purposes only. Please consult a financial advisor before making investment decisions.\n";
+    csvContent += "==================================================\n";
+
+    // 5. CREATE AND DOWNLOAD FILE
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    
+    // File Name Format
+    link.setAttribute("download", `DocEasy_${currentCalc.toUpperCase()}_Schedule.csv`);
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+
+  // Initial Call on Page Load
+  calculateAll();
+
+})();
+</script>
+</body>
+</html>
