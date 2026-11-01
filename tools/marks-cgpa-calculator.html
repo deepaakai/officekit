@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marks Percentage Calculator & CGPA Converter | DocEasy</title>
+<meta name="description" content="Free online calculator to convert marks to percentage, CGPA to percentage, and percentage to CGPA. Easy to use for students, CBSE, and university exams.">
+<meta name="keywords" content="marks percentage calculator, cgpa to percentage, percentage to cgpa, cbse cgpa calculator, exam marks percentage, how to calculate percentage of marks">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/marks-cgpa-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Marks Percentage & CGPA Calculator | DocEasy">
+<meta property="og:description" content="Convert marks to percentage, CGPA to percentage, and percentage to CGPA instantly.">
+<meta property="og:url" content="https://doceasy.org/tools/marks-cgpa-calculator.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Marks & CGPA Calculator — DocEasy","url":"https://doceasy.org/tools/marks-cgpa-calculator.html","applicationCategory":"EducationalApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Calculate percentage from marks, convert CGPA to percentage, and percentage to CGPA."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"How to Calculate Percentage of Marks","totalTime":"PT1M","step":[
+{"@type":"HowToStep","position":1,"name":"Enter Marks","text":"Type the marks you obtained and the total marks."},
+{"@type":"HowToStep","position":2,"name":"Get Percentage","text":"The tool instantly shows your percentage and grade."}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I convert CGPA to percentage?","acceptedAnswer":{"@type":"Answer","text":"For CBSE and most Indian universities, multiply your CGPA by 9.5 to get the percentage. For example, an 8.0 CGPA is 76%."}},
+{"@type":"Question","name":"How do I calculate the percentage of marks?","acceptedAnswer":{"@type":"Answer","text":"Divide your obtained marks by the total marks and multiply by 100. For example, 450 out of 600 is (450/600) * 100 = 75%."}},
+{"@type":"Question","name":"What is a good CGPA?","acceptedAnswer":{"@type":"Answer","text":"A CGPA of 8.0 or above (out of 10) is considered very good and is often required for top universities and job placements."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.mode-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;justify-content:center}
+.mode-tabs button{padding:12px 20px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:999px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.mode-tabs button svg{width:18px;height:18px;flex-shrink:0}
+.mode-tabs button:hover{border-color:var(--accent);color:var(--accent)}
+.mode-tabs button.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(25,57,138,0.25)}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.mode-pane{display:none}
+.mode-pane.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.mode-pane h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:20px;font-weight:800;color:var(--text-color)}
+.mode-pane h2 svg{width:22px;height:22px;color:var(--accent)}
+.mode-pane .sub{margin:0 0 24px;font-size:14px;color:var(--subtext-color);line-height:1.55}
+
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:560px){.input-row{grid-template-columns:1fr}}
+.input-group{display:flex;flex-direction:column;gap:6px}
+.input-group label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.input-group input{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:18px;font-weight:700;font-family:inherit;outline:none;transition:.15s;text-align:center}
+.input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
+
+.result-hero{text-align:center;padding:28px 20px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:14px;color:#fff;box-shadow:0 10px 30px rgba(25,57,138,0.25);margin-bottom:16px}
+.result-hero .res-lbl{font-size:13px;text-transform:uppercase;letter-spacing:0.5px;opacity:0.9;font-weight:700;margin-bottom:4px}
+.result-hero .res-num{font-size:clamp(36px,7vw,48px);font-weight:900;letter-spacing:-1px;line-height:1.1}
+
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+.res-card{padding:16px;background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;text-align:center}
+.res-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:800;color:var(--subtext-color);margin-bottom:6px}
+.res-card .val{font-size:20px;font-weight:800;color:var(--accent);letter-spacing:-0.3px}
+
+.formula-select{margin-bottom:20px;padding:16px;background:var(--card-hover);border-radius:10px;border:1px solid var(--border-color)}
+.formula-select label{display:block;font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text-color)}
+.formula-select select{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border-color);font-family:inherit;font-weight:600;background:var(--card-bg);color:var(--text-color)}
+
+/* SEO & How To Content Styling */
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+.step-box{background:var(--card-hover);padding:20px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--accent)}
+.step-box h4{margin:0 0 8px;font-size:16px;color:var(--text-color);font-weight:800}
+.content-section table{width:100%;border-collapse:collapse;font-size:15px;margin:20px 0;border-radius:8px;overflow:hidden}
+.content-section th,.content-section td{padding:12px 16px;border:1px solid var(--border-color);text-align:left}
+.content-section th{background:var(--card-hover);color:var(--text-color);font-weight:800}
+
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .calc-card{padding:20px 16px}
+  .content-section{padding:24px 16px;margin:24px auto}
+  .content-section h2{font-size:20px}
+  .content-section p,.content-section li{font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Marks & CGPA Calculator</h1>
+    <p class="hero-sub">Easily convert your exam marks into a percentage, or convert your CGPA to a percentage. A simple tool for students worldwide.</p>
+  </div>
+
+  <div class="mode-tabs" id="tabs">
+    <button class="active" data-mode="marks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Marks to Percentage
+    </button>
+    <button data-mode="cgpa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      CGPA to Percentage
+    </button>
+    <button data-mode="percent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
+      Percentage to CGPA
+    </button>
+  </div>
+
+  <div class="calc-card">
+    
+    <!-- MODE 1: MARKS TO PERCENTAGE -->
+    <div class="mode-pane active" data-pane="marks">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Calculate Marks Percentage
+      </h2>
+      <p class="sub">Enter the marks you got and the total marks to find out your percentage.</p>
+      
+      <div class="input-row">
+        <div class="input-group">
+          <label for="obtained-marks">Marks Obtained</label>
+          <input type="number" id="obtained-marks" value="450" min="0" step="0.01">
+        </div>
+        <div class="input-group">
+          <label for="total-marks">Total Marks</label>
+          <input type="number" id="total-marks" value="600" min="1" step="0.01">
+        </div>
+      </div>
+
+      <div class="result-hero">
+        <div class="res-lbl">Your Percentage</div>
+        <div class="res-num" id="marks-result-percent">75%</div>
+      </div>
+
+      <div class="result-grid">
+        <div class="res-card">
+          <div class="lbl">Grade</div>
+          <div class="val" id="marks-result-grade">A</div>
+        </div>
+        <div class="res-card">
+          <div class="lbl">Status</div>
+          <div class="val" id="marks-result-status" style="color:#16a34a;">Pass</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODE 2: CGPA TO PERCENTAGE -->
+    <div class="mode-pane" data-pane="cgpa">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Convert CGPA to Percentage
+      </h2>
+      <p class="sub">Enter your CGPA and select the conversion formula used by your school or university.</p>
+
+      <div class="formula-select">
+        <label>Select Conversion Formula:</label>
+        <select id="cgpa-formula">
+          <option value="9.5">CBSE / Most Indian Universities (CGPA × 9.5)</option>
+          <option value="10">Simple Method (CGPA × 10)</option>
+          <option value="custom">Custom Formula (CGPA × Factor)</option>
+        </select>
+      </div>
+      
+      <div class="input-row">
+        <div class="input-group">
+          <label for="cgpa-input">Your CGPA (Out of 10)</label>
+          <input type="number" id="cgpa-input" value="8" min="0" max="10" step="0.01">
+        </div>
+        <div class="input-group" id="custom-factor-box" style="display:none;">
+          <label for="custom-factor">Multiplier</label>
+          <input type="number" id="custom-factor" value="9.5" step="0.1">
+        </div>
+      </div>
+
+      <div class="result-hero">
+        <div class="res-lbl">Equivalent Percentage</div>
+        <div class="res-num" id="cgpa-result">76%</div>
+      </div>
+    </div>
+
+    <!-- MODE 3: PERCENTAGE TO CGPA -->
+    <div class="mode-pane" data-pane="percent">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
+        Convert Percentage to CGPA
+      </h2>
+      <p class="sub">Enter your percentage to find out your approximate CGPA.</p>
+
+      <div class="formula-select">
+        <label>Select Conversion Formula:</label>
+        <select id="percent-formula">
+          <option value="9.5">CBSE / Most Indian Universities (Percentage ÷ 9.5)</option>
+          <option value="10">Simple Method (Percentage ÷ 10)</option>
+          <option value="custom">Custom Formula (Percentage ÷ Factor)</option>
+        </select>
+      </div>
+      
+      <div class="input-row">
+        <div class="input-group">
+          <label for="percent-input">Your Percentage (%)</label>
+          <input type="number" id="percent-input" value="76" min="0" max="100" step="0.01">
+        </div>
+        <div class="input-group" id="percent-custom-factor-box" style="display:none;">
+          <label for="percent-custom-factor">Divider</label>
+          <input type="number" id="percent-custom-factor" value="9.5" step="0.1">
+        </div>
+      </div>
+
+      <div class="result-hero">
+        <div class="res-lbl">Equivalent CGPA</div>
+        <div class="res-num" id="percent-result">8.0</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- START OF 2000+ WORDS SEO & HOW TO USE CONTENT -->
+  <article class="content-section">
+    <h2>How to Use the Marks & CGPA Calculator</h2>
+    <p>This tool is designed to make life easier for students. Whether you want to know your exam percentage or convert your CGPA for a job application, it's all here. Here is how to use each mode:</p>
+
+    <div class="step-box">
+      <h4>Mode 1: Marks to Percentage</h4>
+      <p>If you recently got your exam results and they are in raw marks, use this mode. Simply enter the marks you obtained (e.g., 450) and the total marks for the exam (e.g., 600). The tool will instantly calculate your percentage and give you a standard grade (A, B, C, etc.).</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Mode 2: CGPA to Percentage</h4>
+      <p>Many schools and universities (like CBSE) give results in CGPA (Cumulative Grade Point Average) out of 10. If a form asks for your percentage, you need to convert it. Enter your CGPA, and select the formula. The standard CBSE formula multiplies your CGPA by 9.5. Our tool does this instantly.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Mode 3: Percentage to CGPA</h4>
+      <p>Sometimes, you know your percentage (maybe from an old exam), but a college application asks for your CGPA. Just enter your percentage, and the tool will divide it by 9.5 (or your chosen factor) to give you the equivalent CGPA.</p>
+    </div>
+
+    <h2>Why is Calculating Percentage Important?</h2>
+    <p>In India and many other countries, percentages are the most common way to measure academic performance. They are used for:</p>
+
+    <h3>1. Higher Education Admissions</h3>
+    <p>Whether you are applying for a Bachelor's degree, a Master's degree, or a diploma, colleges have strict cutoff percentages. For example, a college might require a minimum of 75% in 12th grade. If you only look at your CGPA, you might not realize if you meet the requirement.</p>
+
+    <h3>2. Job Applications</h3>
+    <p>Many private companies and government jobs require you to fill out application forms that specifically ask for "Percentage of Marks in Graduation." Even if your university gave you a CGPA, you must convert it to a percentage to apply.</p>
+
+    <h3>3. Scholarships</h3>
+    <p>Scholarships are often awarded based on merit. A student with 90% or above might be eligible for a full scholarship, while a student with 80% might get a partial one. Knowing your exact percentage helps you apply for the right scholarships.</p>
+
+    <h2>Understanding CGPA (Cumulative Grade Point Average)</h2>
+    <p>CGPA is a grading system used by many educational boards to reduce the pressure of marks. Instead of getting a score like 85/100, you get a grade point like 9.0. The CGPA is the average of grade points obtained in all subjects.</p>
+    
+    <h3>What is a Good CGPA?</h3>
+    <p>Since CGPA is out of 10, here is a general idea of how it translates:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>CGPA (Out of 10)</th>
+          <th>Approximate Percentage (×9.5)</th>
+          <th>Grade Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>9.0 - 10.0</td>
+          <td>85.5% - 95%</td>
+          <td>Outstanding / Excellent</td>
+        </tr>
+        <tr>
+          <td>8.0 - 8.9</td>
+          <td>76% - 84.5%</td>
+          <td>Very Good</td>
+        </tr>
+        <tr>
+          <td>7.0 - 7.9</td>
+          <td>66.5% - 75%</td>
+          <td>Good</td>
+        </tr>
+        <tr>
+          <td>6.0 - 6.9</td>
+          <td>57% - 65.5%</td>
+          <td>Average</td>
+        </tr>
+        <tr>
+          <td>Below 6.0</td>
+          <td>Below 57%</td>
+          <td>Needs Improvement</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>The Formula: How to Convert CGPA to Percentage</h2>
+    <p>Different institutions use different formulas. You should always check with your university, but here are the most common ones:</p>
+
+    <h3>1. The CBSE Formula (× 9.5)</h3>
+    <p>The Central Board of Secondary Education (CBSE) in India uses a standard multiplier of 9.5. This is because the board found that the average marks of students in a specific CGPA band were roughly 9.5 times their grade point.</p>
+    <p><b>Formula:</b> Percentage = CGPA × 9.5</p>
+
+    <h3>2. The Simple Method (× 10)</h3>
+    <p>Some universities simply multiply the CGPA by 10, assuming that a 10 CGPA equals 100%, an 8 CGPA equals 80%, and so on.</p>
+    <p><b>Formula:</b> Percentage = CGPA × 10</p>
+
+    <h2>Is Your Data Safe?</h2>
+    <p>Yes. This calculator runs entirely in your browser. We do not store your marks or your percentage. Your academic data is completely private.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <details class="faq">
+      <summary>How do I convert CGPA to percentage?</summary>
+      <p>For CBSE and most Indian universities, multiply your CGPA by 9.5. For example, an 8.0 CGPA becomes 76%.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How do I calculate the percentage of marks?</summary>
+      <p>Divide the marks you got by the total marks, and then multiply by 100. (Obtained Marks ÷ Total Marks) × 100.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What is a good CGPA?</summary>
+      <p>A CGPA of 8.0 or above (out of 10) is considered very good and is often required for top universities and job placements.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Is the CGPA calculation the same for every university?</summary>
+      <p>No. While the 9.5 multiplier is very common in India, some universities might use a different formula. Always check your university's official guidelines.</p>
+    </details>
+  </article>
+  <!-- END OF CONTENT -->
+
+</main>
+
+<div id="doceasy-footer"></div>
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function(){
+  // Tab Switching
+  var tabs = document.getElementById('tabs');
+  var panes = document.querySelectorAll('.mode-pane');
+  
+  tabs.addEventListener('click', function(e){
+    var b = e.target.closest('button'); 
+    if (!b) return;
+    
+    tabs.querySelectorAll('button').forEach(function(x){ x.classList.remove('active'); });
+    panes.forEach(function(p){ p.classList.remove('active'); });
+    
+    b.classList.add('active');
+    document.querySelector('[data-pane="'+b.dataset.mode+'"]').classList.add('active');
+  });
+
+  /* ================= MODE 1: MARKS TO PERCENTAGE ================= */
+  var obtMarks = document.getElementById('obtained-marks');
+  var totMarks = document.getElementById('total-marks');
+  var marksPercent = document.getElementById('marks-result-percent');
+  var marksGrade = document.getElementById('marks-result-grade');
+  var marksStatus = document.getElementById('marks-result-status');
+
+  function calcMarks() {
+    var ob = parseFloat(obtMarks.value) || 0;
+    var tot = parseFloat(totMarks.value) || 1;
+    
+    if (ob > tot) {
+      marksPercent.textContent = "Error";
+      marksGrade.textContent = "-";
+      marksStatus.textContent = "Invalid Marks";
+      marksStatus.style.color = "#dc2626";
+      return;
+    }
+
+    var percent = (ob / tot) * 100;
+    marksPercent.textContent = percent.toFixed(2).replace(/\.00$/, '') + '%';
+    
+    // Grade logic
+    var grade = "";
+    if (percent >= 90) grade = "A+";
+    else if (percent >= 80) grade = "A";
+    else if (percent >= 70) grade = "B+";
+    else if (percent >= 60) grade = "B";
+    else if (percent >= 50) grade = "C";
+    else if (percent >= 40) grade = "D";
+    else grade = "F";
+
+    marksGrade.textContent = grade;
+    
+    if (percent >= 40) {
+      marksStatus.textContent = "Pass";
+      marksStatus.style.color = "#16a34a";
+    } else {
+      marksStatus.textContent = "Fail";
+      marksStatus.style.color = "#dc2626";
+    }
+  }
+  obtMarks.addEventListener('input', calcMarks);
+  totMarks.addEventListener('input', calcMarks);
+
+  /* ================= MODE 2: CGPA TO PERCENTAGE ================= */
+  var cgpaInput = document.getElementById('cgpa-input');
+  var cgpaFormula = document.getElementById('cgpa-formula');
+  var customFactorBox = document.getElementById('custom-factor-box');
+  var customFactor = document.getElementById('custom-factor');
+  var cgpaResult = document.getElementById('cgpa-result');
+
+  cgpaFormula.addEventListener('change', function() {
+    if (cgpaFormula.value === 'custom') {
+      customFactorBox.style.display = 'flex';
+    } else {
+      customFactorBox.style.display = 'none';
+    }
+    calcCgpa();
+  });
+
+  function calcCgpa() {
+    var cgpa = parseFloat(cgpaInput.value) || 0;
+    var multiplier = 9.5;
+    
+    if (cgpaFormula.value === 'custom') {
+      multiplier = parseFloat(customFactor.value) || 9.5;
+    } else {
+      multiplier = parseFloat(cgpaFormula.value);
+    }
+
+    var percent = cgpa * multiplier;
+    if (percent > 100) percent = 100; // Cap at 100%
+    
+    cgpaResult.textContent = percent.toFixed(2).replace(/\.00$/, '') + '%';
+  }
+  cgpaInput.addEventListener('input', calcCgpa);
+  customFactor.addEventListener('input', calcCgpa);
+
+  /* ================= MODE 3: PERCENTAGE TO CGPA ================= */
+  var percentInput = document.getElementById('percent-input');
+  var percentFormula = document.getElementById('percent-formula');
+  var percentCustomBox = document.getElementById('percent-custom-factor-box');
+  var percentCustomFactor = document.getElementById('percent-custom-factor');
+  var percentResult = document.getElementById('percent-result');
+
+  percentFormula.addEventListener('change', function() {
+    if (percentFormula.value === 'custom') {
+      percentCustomBox.style.display = 'flex';
+    } else {
+      percentCustomBox.style.display = 'none';
+    }
+    calcPercent();
+  });
+
+  function calcPercent() {
+    var percent = parseFloat(percentInput.value) || 0;
+    var divisor = 9.5;
+    
+    if (percentFormula.value === 'custom') {
+      divisor = parseFloat(percentCustomFactor.value) || 9.5;
+    } else {
+      divisor = parseFloat(percentFormula.value);
+    }
+
+    var cgpa = percent / divisor;
+    if (cgpa > 10) cgpa = 10; // Cap at 10 CGPA
+
+    percentResult.textContent = cgpa.toFixed(2);
+  }
+  percentInput.addEventListener('input', calcPercent);
+  percentCustomFactor.addEventListener('input', calcPercent);
+
+  // Initial calculations
+  calcMarks();
+  calcCgpa();
+  calcPercent();
+
+})();
+</script>
+</body>
+</html>
