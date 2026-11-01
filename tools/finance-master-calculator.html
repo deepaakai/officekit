@@ -4,24 +4,16 @@
 <meta charset="UTF-8">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>All-in-One Finance Calculator - SIP, FD, PPF, EPF, NPS | DocEasy</title>
-<meta name="description" content="Free financial calculators with charts and CSV download. Calculate SIP, FD, PPF, EPF, NPS, Simple Interest, and Compound Interest in INR (Lakhs/Crores) and USD.">
-<meta name="keywords" content="sip calculator, fd calculator, ppf calculator, epf calculator, nps calculator, compound interest calculator, simple interest calculator, month wise csv download, investment calculator india, retirement planning calculator">
+<title>Finance Master Calculator - EMI, Loan, SIP, FD | DocEasy</title>
+<meta name="description" content="Free global and India finance calculator with monthly and yearly calculations. Calculate bank EMI, private money lender monthly interest, SIP, FD, PPF, and compound interest in INR (₹) and USD ($).">
+<meta name="keywords" content="finance calculator, emi calculator, loan calculator, mortgage calculator, car loan emi, private loan calculator, monthly interest calculator india, money lender interest calculator, sip calculator monthly yearly, fd calculator months, investment calculator">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/finance-master-calculator.html">
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
 
-<!-- Structured Data for SEO (WebApplication & FAQ) -->
+<!-- Structured Data for SEO -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Finance Master Calculator — DocEasy","url":"https://doceasy.org/tools/finance-master-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"All-in-one finance calculator for SIP, FD, PPF, EPF, NPS, and interest calculations with CSV export."}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"What is the best SIP calculator for India?","acceptedAnswer":{"@type":"Answer","text":"DocEasy's SIP calculator is one of the best because it allows you to calculate returns in Lakhs and Crores, visualizes data in a chart, and lets you download a month-wise CSV schedule."}},
-{"@type":"Question","name":"How is FD interest calculated?","acceptedAnswer":{"@type":"Answer","text":"FD interest in India is usually calculated on a quarterly compounding basis. Our calculator uses the standard formula A = P(1 + r/4)^(4*t) to give you the exact maturity amount."}},
-{"@type":"Question","name":"Is PPF interest tax-free?","acceptedAnswer":{"@type":"Answer","text":"Yes, PPF (Public Provident Fund) falls under the EEE (Exempt-Exempt-Exempt) category, meaning the investment, interest earned, and maturity amount are all tax-free under Section 80C."}},
-{"@type":"Question","name":"Can I download the investment schedule?","acceptedAnswer":{"@type":"Answer","text":"Yes, our tool features a unique 'Download CSV' button that gives you a year-by-year breakdown of your investments, complete with the DocEasy.org watermark."}}
-]}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Finance & Loan Master — DocEasy","url":"https://doceasy.org/tools/finance-master-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Calculate EMI, private loans, SIP, FD, and interest with CSV export."}
 </script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
@@ -58,6 +50,11 @@
 .input-group label span{color:var(--accent);}
 .input-group input[type="number"], .input-group select{padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s;}
 .input-group input:focus, .input-group select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg);}
+
+/* Time Input Combo */
+.select-with-input{display:flex;gap:8px;width:100%;}
+.select-with-input input{flex:1;min-width:0;}
+.select-with-input select{flex:0 0 45%;}
 
 /* Results & Chart */
 .result-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px;align-items:start;}
@@ -120,18 +117,19 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">All-in-One Finance Calculator</h1>
-    <p class="hero-sub">SIP, FD, PPF, EPF, NPS और Interest की सारी कैलकुलेशन एक ही जगह। महीने-दर-महीने हिसाब देखें और DocEasy वॉटरमार्क के साथ CSV फाइल डाउनलोड करें।</p>
+    <h1 class="hero-title">Finance & Loan Master Calculator</h1>
+    <p class="hero-sub">EMI, प्राइवेट सूदखोरों का ब्याज (महीना/साल), SIP, FD, PPF और Compound Interest—सब कुछ एक ही जगह। हर टूल में महीना और साल दोनों का ऑप्शन है।</p>
   </div>
 
   <div class="top-bar">
     <div class="mode-tabs" id="calc-tabs">
-      <button class="active" data-target="sip">SIP</button>
+      <button class="active" data-target="emi">EMI Calculator</button>
+      <button data-target="private">Private Loan (PI)</button>
+      <button data-target="sip">SIP</button>
       <button data-target="fd">FD</button>
       <button data-target="ppf">PPF</button>
       <button data-target="epf">EPF</button>
       <button data-target="nps">NPS</button>
-      <button data-target="si">Simple Int.</button>
       <button data-target="ci">Compound Int.</button>
     </div>
     
@@ -143,8 +141,67 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
   <div class="calc-card">
     
+    <!-- ================= EMI ================= -->
+    <div class="mode-pane active" id="pane-emi">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Loan Type</label>
+          <select id="emi-type">
+            <option value="Home Loan / Mortgage">Home Loan / Mortgage</option>
+            <option value="Car Loan">Car Loan</option>
+            <option value="Bike Loan">Bike Loan</option>
+            <option value="School Fees">School / Education Fees</option>
+            <option value="Personal Loan">Personal Loan</option>
+            <option value="Business Loan">Business Loan</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Loan Amount (Principal) <span id="emi-inv-label">₹ 1,00,000</span></label>
+          <input type="number" id="emi-inv" value="100000" min="1000">
+        </div>
+        <div class="input-group">
+          <label>Annual Interest Rate <span id="emi-rate-label">10%</span></label>
+          <input type="number" id="emi-rate" value="10" min="1" max="30" step="0.1">
+        </div>
+        <div class="input-group">
+          <label>Tenure <span id="emi-yr-label">5 Years</span></label>
+          <div class="select-with-input">
+            <input type="number" id="emi-yr-val" value="5" min="1">
+            <select id="emi-yr-unit">
+              <option value="years">Years</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PRIVATE LOAN ================= -->
+    <div class="mode-pane" id="pane-private">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Loan Amount (Principal) <span id="pl-inv-label">₹ 1,00,000</span></label>
+          <input type="number" id="pl-inv" value="100000" min="1000">
+        </div>
+        <div class="input-group">
+          <label>Monthly Interest Rate (%) <span id="pl-rate-label">10%</span></label>
+          <input type="number" id="pl-rate" value="10" min="1" max="50" step="0.5">
+        </div>
+        <div class="input-group full">
+          <label>Tenure <span id="pl-time-label">12 Months</span></label>
+          <div class="select-with-input">
+            <input type="number" id="pl-time-val" value="12" min="1">
+            <select id="pl-time-unit">
+              <option value="months" selected>Months</option>
+              <option value="years">Years</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ================= SIP ================= -->
-    <div class="mode-pane active" id="pane-sip">
+    <div class="mode-pane" id="pane-sip">
       <div class="input-grid">
         <div class="input-group">
           <label>Monthly Investment <span id="sip-inv-label">₹ 5,000</span></label>
@@ -155,8 +212,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <input type="number" id="sip-rate" value="12" min="1" max="30" step="0.5">
         </div>
         <div class="input-group full">
-          <label>Time Period <span id="sip-yr-label">10 Years</span></label>
-          <input type="number" id="sip-yr" value="10" min="1" max="40">
+          <label>Time Period <span id="sip-time-label">10 Years</span></label>
+          <div class="select-with-input">
+            <input type="number" id="sip-time-val" value="10" min="1">
+            <select id="sip-time-unit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -173,8 +236,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <input type="number" id="fd-rate" value="7" min="1" max="15" step="0.1">
         </div>
         <div class="input-group full">
-          <label>Time Period <span id="fd-yr-label">5 Years</span></label>
-          <input type="number" id="fd-yr" value="5" min="1" max="20">
+          <label>Time Period <span id="fd-time-label">5 Years</span></label>
+          <div class="select-with-input">
+            <input type="number" id="fd-time-val" value="5" min="1">
+            <select id="fd-time-unit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -191,8 +260,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <input type="number" id="ppf-rate" value="7.1" min="1" max="15" step="0.1">
         </div>
         <div class="input-group full">
-          <label>Time Period <span id="ppf-yr-label">15 Years</span></label>
-          <input type="number" id="ppf-yr" value="15" min="1" max="50">
+          <label>Time Period <span id="ppf-time-label">15 Years</span></label>
+          <div class="select-with-input">
+            <input type="number" id="ppf-time-val" value="15" min="1">
+            <select id="ppf-time-unit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -213,8 +288,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <input type="number" id="epf-rate" value="8.25" min="1" max="15" step="0.05">
         </div>
         <div class="input-group">
-          <label>Years to Retirement <span id="epf-yr-label">20 Years</span></label>
-          <input type="number" id="epf-yr" value="20" min="1" max="40">
+          <label>Time Period <span id="epf-time-label">20 Years</span></label>
+          <div class="select-with-input">
+            <input type="number" id="epf-time-val" value="20" min="1">
+            <select id="epf-time-unit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -231,30 +312,18 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <input type="number" id="nps-rate" value="10" min="1" max="20" step="0.5">
         </div>
         <div class="input-group">
-          <label>Years to Retirement <span id="nps-yr-label">30 Years</span></label>
-          <input type="number" id="nps-yr" value="30" min="1" max="40">
+          <label>Time Period <span id="nps-time-label">30 Years</span></label>
+          <div class="select-with-input">
+            <input type="number" id="nps-time-val" value="30" min="1">
+            <select id="nps-time-unit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
         </div>
         <div class="input-group">
           <label>Annuity Split (%) <span id="nps-ann-label">40%</span></label>
           <input type="number" id="nps-ann" value="40" min="40" max="100" step="5">
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= SI ================= -->
-    <div class="mode-pane" id="pane-si">
-      <div class="input-grid">
-        <div class="input-group">
-          <label>Principal Amount <span id="si-inv-label">₹ 1,00,000</span></label>
-          <input type="number" id="si-inv" value="100000" min="1000">
-        </div>
-        <div class="input-group">
-          <label>Rate (p.a) <span id="si-rate-label">10%</span></label>
-          <input type="number" id="si-rate" value="10" min="1" max="50" step="0.1">
-        </div>
-        <div class="input-group full">
-          <label>Time (Years) <span id="si-yr-label">5 Years</span></label>
-          <input type="number" id="si-yr" value="5" min="1" max="30">
         </div>
       </div>
     </div>
@@ -271,8 +340,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <input type="number" id="ci-rate" value="10" min="1" max="50" step="0.1">
         </div>
         <div class="input-group">
-          <label>Time (Years) <span id="ci-yr-label">10 Years</span></label>
-          <input type="number" id="ci-yr" value="10" min="1" max="30">
+          <label>Time Period <span id="ci-time-label">10 Years</span></label>
+          <div class="select-with-input">
+            <input type="number" id="ci-time-val" value="10" min="1">
+            <select id="ci-time-unit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
         </div>
         <div class="input-group">
           <label>Compounding Frequency</label>
@@ -304,11 +379,11 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
       
       <div class="data-grid">
         <div class="data-box">
-          <div class="lbl"><div class="dot" style="background:#19398a"></div> Total Invested</div>
+          <div class="lbl"><div class="dot" style="background:#19398a"></div> <span id="lbl-invested">Total Invested</span></div>
           <div class="val" id="res-invested">₹ 0</div>
         </div>
         <div class="data-box">
-          <div class="lbl"><div class="dot" style="background:#16a34a"></div> Estimated Returns</div>
+          <div class="lbl"><div class="dot" style="background:#16a34a"></div> <span id="lbl-returns">Estimated Returns</span></div>
           <div class="val" id="res-returns">₹ 0</div>
         </div>
         <div class="data-box total">
@@ -318,10 +393,10 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
       </div>
     </div>
 
-    <!-- MONTH-WISE TABLE & CSV -->
+    <!-- TABLE & CSV -->
     <div class="table-section">
       <div class="table-header">
-        <h3>Year-wise Breakdown</h3>
+        <h3 id="table-title">Year-wise Breakdown</h3>
         <button class="csv-btn" id="download-csv">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download CSV
@@ -332,9 +407,9 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <thead>
             <tr>
               <th>Period</th>
-              <th>Invested</th>
+              <th>Amount Paid</th>
               <th>Interest/Returns</th>
-              <th>Total Value</th>
+              <th>Balance / Total</th>
             </tr>
           </thead>
           <tbody id="table-body">
@@ -348,40 +423,45 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
   <!-- SEO Content -->
   <article class="content-section">
-    <h2>How to Use the All-in-One Finance Calculator</h2>
-    <p>This master tool combines all major financial calculators into one simple page. Here is how to use it:</p>
+    <h2>How to Use the Master Finance Calculator</h2>
+    <p>This tool is designed to handle all your personal and business financial calculations. Here is how to use it:</p>
     <div class="step-box">
       <h4>Step 1: Choose Your Calculator</h4>
-      <p>Use the top tabs to select SIP, FD, PPF, EPF, NPS, Simple Interest, or Compound Interest.</p>
+      <p>Use the top tabs to select EMI, Private Loan, SIP, FD, PPF, EPF, NPS, or Compound Interest.</p>
     </div>
     <div class="step-box">
-      <h4>Step 2: Select Currency</h4>
-      <p>Click ₹ for Indian formatting (Lakhs/Crores) or $ for International formatting (Millions).</p>
+      <h4>Step 2: Set Your Time Period (Months or Years)</h4>
+      <p>In every tab, you will see a Time Period input. You can type a number (like 6, 18, or 24) and choose <b>Months</b> or <b>Years</b> from the dropdown next to it. The calculator will automatically handle the math.</p>
     </div>
     <div class="step-box">
-      <h4>Step 3: Enter Details</h4>
-      <p>Enter the investment amount, rate, and time. The chart, total values, and year-wise table will update instantly.</p>
-    </div>
-    <div class="step-box">
-      <h4>Step 4: Download CSV</h4>
-      <p>Click the "Download CSV" button. A file will be downloaded containing the year-wise schedule, complete with the "Generated by DocEasy.org" watermark.</p>
+      <h4>Step 3: Download CSV Schedule</h4>
+      <p>Click the "Download CSV" button to get a complete breakdown of your payments and interest. The file is Excel-safe and includes the DocEasy.org watermark.</p>
     </div>
 
     <h2>Understanding the Calculators</h2>
-    <h3>1. SIP (Systematic Investment Plan)</h3>
-    <p>Invest a fixed amount monthly in mutual funds. The chart shows how compounding grows your wealth over time.</p>
-    <h3>2. FD (Fixed Deposit)</h3>
-    <p>A lump sum deposit for a fixed time. Interest is usually compounded quarterly.</p>
-    <h3>3. PPF (Public Provident Fund)</h3>
-    <p>A 15-year government scheme with tax-free returns. You invest once a year, and interest is compounded annually.</p>
-    <h3>4. EPF (Employee Provident Fund)</h3>
-    <p>Your retirement fund. 12% of your basic salary goes into it monthly, matched by your employer. Interest is calculated monthly but compounded annually.</p>
-    <h3>5. NPS (National Pension System)</h3>
-    <p>A retirement scheme where you invest monthly. At age 60, you can withdraw a portion as a lump sum and must buy an annuity with the rest.</p>
-    <h3>6. Simple Interest</h3>
-    <p>Interest calculated only on the principal amount. Best for short-term loans.</p>
-    <h3>7. Compound Interest</h3>
-    <p>Interest calculated on principal + accumulated interest. The frequency (yearly, quarterly, monthly) greatly affects the final amount.</p>
+    
+    <h3>1. Bank EMI Calculator</h3>
+    <p>EMI stands for Equated Monthly Installment. Whether you are taking a car loan, home loan (mortgage), or a bike loan, this tool uses the standard reducing balance formula to calculate your exact monthly payment.</p>
+    
+    <h3>2. Private Loan Calculator (Monthly Interest)</h3>
+    <p>Local money lenders (sahukars) or private financiers in India often charge interest on a <b>monthly basis</b> (e.g., 10% per month). Use this tab to see exactly how much interest you will pay. You can calculate it for a few months or several years.</p>
+
+    <h3>3. SIP, FD, PPF, EPF, NPS, and Compound Interest</h3>
+    <p>These investment calculators now support both monthly and yearly timeframes. Whether you want to invest in a 6-month FD, or calculate your PPF for 15 years, you can toggle the dropdown to get the exact result.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <details class="faq">
+      <summary>How do I calculate for 18 months?</summary>
+      <p>In the Time Period box, type "18" and select "Months" from the dropdown. The chart and table will automatically show you the breakdown for 1.5 years.</p>
+    </details>
+    <details class="faq">
+      <summary>What is the CSV file for?</summary>
+      <p>The CSV file gives you a complete table of your payments or investments. You can open it in Excel or Google Sheets for your personal records.</p>
+    </details>
+    <details class="faq">
+      <summary>Does this tool support US Dollars?</summary>
+      <p>Yes. Click the '$ USD' button at the top to convert all calculations and charts into US Dollars.</p>
+    </details>
   </article>
 
 </main>
@@ -392,10 +472,9 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 <script>
 (function(){
   let currentCurrency = 'inr';
-  let currentCalc = 'sip';
+  let currentCalc = 'emi';
   let scheduleData = []; 
 
-  // Currency formatting
   function formatCurrency(amount) {
     if (isNaN(amount)) amount = 0;
     if (currentCurrency === 'inr') {
@@ -409,7 +488,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     }
   }
 
-  // Switch Tabs
+  // Tab Switching Logic
   document.getElementById('calc-tabs').addEventListener('click', function(e) {
     const btn = e.target.closest('button');
     if (!btn) return;
@@ -419,10 +498,24 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
     document.querySelectorAll('.mode-pane').forEach(p => p.classList.remove('active'));
     document.getElementById('pane-' + currentCalc).classList.add('active');
+    
+    // Update Table Headers based on calc type
+    if (currentCalc === 'emi' || currentCalc === 'private') {
+      document.getElementById('table-title').textContent = currentCalc === 'emi' ? 'Amortization Schedule' : 'Month-wise Interest';
+      document.getElementById('lbl-invested').textContent = currentCalc === 'emi' ? 'Total EMI Paid' : 'Principal Amount';
+      document.getElementById('lbl-returns').textContent = 'Total Interest';
+      document.getElementById('res-total-label').textContent = currentCalc === 'emi' ? 'Principal Amount' : 'Total Payable';
+    } else {
+      document.getElementById('table-title').textContent = 'Year-wise Breakdown';
+      document.getElementById('lbl-invested').textContent = 'Total Invested';
+      document.getElementById('lbl-returns').textContent = 'Estimated Returns';
+      document.getElementById('res-total-label').textContent = 'Total Maturity Value';
+    }
+
     calculateAll();
   });
 
-  // Switch Currency
+  // Currency Toggle
   document.getElementById('currency-toggle').addEventListener('click', function(e) {
     const btn = e.target.closest('button');
     if (!btn) return;
@@ -432,180 +525,244 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     calculateAll();
   });
 
-  // Input event listeners
   document.querySelectorAll('.mode-pane input, .mode-pane select').forEach(input => {
     input.addEventListener('input', calculateAll);
   });
 
-  // Main Calculation Function
+  // Main Calculation
   function calculateAll() {
-    let invested = 0, returns = 0, total = 0;
+    let invested = 0, returns = 0, total = 0, chartDisplayVal = 0;
     scheduleData = [];
 
-    if (currentCalc === 'sip') {
+    if (currentCalc === 'emi') {
+      const P = +document.getElementById('emi-inv').value || 0;
+      const rate = +document.getElementById('emi-rate').value || 0;
+      let tenureVal = +document.getElementById('emi-yr-val').value || 0;
+      const tenureUnit = document.getElementById('emi-yr-unit').value;
+      
+      let months = tenureUnit === 'years' ? tenureVal * 12 : tenureVal;
+      if(months === 0) months = 1;
+
+      document.getElementById('emi-inv-label').textContent = formatCurrency(P);
+      document.getElementById('emi-rate-label').textContent = rate + '%';
+      document.getElementById('emi-yr-label').textContent = tenureVal + ' ' + (tenureUnit === 'years' ? 'Years' : 'Months');
+      
+      const r = rate / 12 / 100;
+      let emi = 0;
+      if (r === 0) emi = P / months;
+      else emi = (P * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+      
+      total = emi * months;
+      returns = total - P;
+      invested = total; // For EMI, invested column means Total EMI Paid
+      chartDisplayVal = P; // Show principal in center
+      
+      let balance = P;
+      for (let m = 1; m <= months; m++) {
+        const interest = balance * r;
+        const principal = emi - interest;
+        balance -= principal;
+        if (m % 12 === 0 || m === months) {
+            let yearsDisp = (m / 12).toFixed(1).replace(/\.0$/, '');
+            scheduleData.push({ period: 'Year ' + yearsDisp, invested: emi * m, returns: (emi*m) - (P - balance), total: Math.max(0, balance) });
+        }
+      }
+
+    } else if (currentCalc === 'private') {
+      const P = +document.getElementById('pl-inv').value || 0;
+      const rate = +document.getElementById('pl-rate').value || 0; // Monthly
+      let timeVal = +document.getElementById('pl-time-val').value || 0;
+      const timeUnit = document.getElementById('pl-time-unit').value;
+      let months = timeUnit === 'years' ? timeVal * 12 : timeVal;
+      if(months === 0) months = 1;
+
+      document.getElementById('pl-inv-label').textContent = formatCurrency(P);
+      document.getElementById('pl-rate-label').textContent = rate + '%';
+      document.getElementById('pl-time-label').textContent = timeVal + ' ' + (timeUnit === 'years' ? 'Years' : 'Months');
+
+      const monthlyInterest = P * (rate / 100);
+      returns = monthlyInterest * months;
+      invested = P;
+      total = P + returns;
+      chartDisplayVal = total;
+
+      for (let m = 1; m <= months; m++) {
+        if (m % 12 === 0 || m === months) {
+            let yearsDisp = (m / 12).toFixed(1).replace(/\.0$/, '');
+            scheduleData.push({ period: 'Year ' + yearsDisp, invested: P, returns: monthlyInterest * m, total: P + (monthlyInterest * m) });
+        }
+      }
+
+    } else if (currentCalc === 'sip') {
       const P = +document.getElementById('sip-inv').value || 0;
       const rate = +document.getElementById('sip-rate').value || 0;
-      const years = +document.getElementById('sip-yr').value || 0;
+      let timeVal = +document.getElementById('sip-time-val').value || 0;
+      const timeUnit = document.getElementById('sip-time-unit').value;
+      let months = timeUnit === 'years' ? timeVal * 12 : timeVal;
       
       document.getElementById('sip-inv-label').textContent = formatCurrency(P);
       document.getElementById('sip-rate-label').textContent = rate + '%';
-      document.getElementById('sip-yr-label').textContent = years + ' Years';
+      document.getElementById('sip-time-label').textContent = timeVal + ' ' + (timeUnit === 'years' ? 'Years' : 'Months');
       
       const i = rate / 12 / 100;
       let bal = 0;
-      for (let y = 1; y <= years; y++) {
-        for (let m = 1; m <= 12; m++) {
-          bal = (bal + P) * (1 + i);
-          invested += P;
+      for (let m = 1; m <= months; m++) {
+        bal = (bal + P) * (1 + i);
+        invested += P;
+        if (m % 12 === 0 || m === months) {
+            let yearsDisp = (m / 12).toFixed(1).replace(/\.0$/, '');
+            scheduleData.push({ period: 'Year ' + yearsDisp, invested: invested, returns: bal - invested, total: bal });
         }
-        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
       }
       total = bal;
       returns = total - invested;
+      chartDisplayVal = total;
 
     } else if (currentCalc === 'fd') {
       const P = +document.getElementById('fd-inv').value || 0;
       const rate = +document.getElementById('fd-rate').value || 0;
-      const years = +document.getElementById('fd-yr').value || 0;
-      
+      let timeVal = +document.getElementById('fd-time-val').value || 0;
+      const timeUnit = document.getElementById('fd-time-unit').value;
+      let months = timeUnit === 'years' ? timeVal * 12 : timeVal;
+
       document.getElementById('fd-inv-label').textContent = formatCurrency(P);
       document.getElementById('fd-rate-label').textContent = rate + '%';
-      document.getElementById('fd-yr-label').textContent = years + ' Years';
+      document.getElementById('fd-time-label').textContent = timeVal + ' ' + (timeUnit === 'years' ? 'Years' : 'Months');
 
       invested = P;
       let bal = P;
       const r = rate / 100 / 4; // Quarterly
       
-      for (let y = 1; y <= years; y++) {
-        for (let q = 1; q <= 4; q++) {
-          bal = bal * (1 + r);
+      for (let m = 1; m <= months; m++) {
+        bal = bal * Math.pow(1 + r, 1/3); // Approximation for monthly display, actual calculation is quarterly
+        if (m % 12 === 0 || m === months) {
+            let yearsDisp = (m / 12).toFixed(1).replace(/\.0$/, '');
+            scheduleData.push({ period: 'Year ' + yearsDisp, invested: invested, returns: bal - invested, total: bal });
         }
-        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
       }
-      total = bal;
+      total = P * Math.pow(1 + r, months/3);
       returns = total - invested;
+      chartDisplayVal = total;
 
     } else if (currentCalc === 'ppf') {
       const P = +document.getElementById('ppf-inv').value || 0;
       const rate = +document.getElementById('ppf-rate').value || 0;
-      const years = +document.getElementById('ppf-yr').value || 0;
+      let timeVal = +document.getElementById('ppf-time-val').value || 0;
+      const timeUnit = document.getElementById('ppf-time-unit').value;
+      let years = timeUnit === 'months' ? timeVal / 12 : timeVal;
       
       document.getElementById('ppf-inv-label').textContent = formatCurrency(P);
       document.getElementById('ppf-rate-label').textContent = rate + '%';
-      document.getElementById('ppf-yr-label').textContent = years + ' Years';
+      document.getElementById('ppf-time-label').textContent = timeVal + ' ' + (timeUnit === 'years' ? 'Years' : 'Months');
 
       let bal = 0;
-      for (let y = 1; y <= years; y++) {
-        bal = (bal + P) * (1 + rate / 100);
-        invested += P;
+      for (let y = 1; y <= Math.ceil(years); y++) {
+        let actualYearFraction = Math.min(1, years - (y - 1));
+        bal = (bal + (P * actualYearFraction)) * Math.pow(1 + rate / 100, actualYearFraction);
+        invested += P * actualYearFraction;
         scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
       }
       total = bal;
       returns = total - invested;
+      chartDisplayVal = total;
 
     } else if (currentCalc === 'epf') {
       const baseSalary = +document.getElementById('epf-inv').value || 0;
       const growth = +document.getElementById('epf-growth').value || 0;
       const rate = +document.getElementById('epf-rate').value || 0;
-      const years = +document.getElementById('epf-yr').value || 0;
+      let timeVal = +document.getElementById('epf-time-val').value || 0;
+      const timeUnit = document.getElementById('epf-time-unit').value;
+      let months = timeUnit === 'years' ? timeVal * 12 : timeVal;
       
       document.getElementById('epf-inv-label').textContent = formatCurrency(baseSalary);
       document.getElementById('epf-growth-label').textContent = growth + '%';
       document.getElementById('epf-rate-label').textContent = rate + '%';
-      document.getElementById('epf-yr-label').textContent = years + ' Years';
+      document.getElementById('epf-time-label').textContent = timeVal + ' ' + (timeUnit === 'years' ? 'Years' : 'Months');
 
       let bal = 0;
       let currentBasic = baseSalary;
       const monthlyRate = rate / 12 / 100;
       
-      for (let y = 1; y <= years; y++) {
-        for (let m = 1; m <= 12; m++) {
-          const contribution = currentBasic * 0.12 + currentBasic * 0.0367;
-          bal = (bal + contribution) * (1 + monthlyRate);
-          invested += contribution;
+      for (let m = 1; m <= months; m++) {
+        const contribution = currentBasic * 0.12 + currentBasic * 0.0367;
+        bal = (bal + contribution) * (1 + monthlyRate);
+        invested += contribution;
+        
+        if (m % 12 === 0) currentBasic = currentBasic * (1 + growth / 100);
+        
+        if (m % 12 === 0 || m === months) {
+            let yearsDisp = (m / 12).toFixed(1).replace(/\.0$/, '');
+            scheduleData.push({ period: 'Year ' + yearsDisp, invested: invested, returns: bal - invested, total: bal });
         }
-        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
-        currentBasic = currentBasic * (1 + growth / 100);
       }
       total = bal;
       returns = total - invested;
+      chartDisplayVal = total;
 
     } else if (currentCalc === 'nps') {
       const P = +document.getElementById('nps-inv').value || 0;
       const rate = +document.getElementById('nps-rate').value || 0;
-      const years = +document.getElementById('nps-yr').value || 0;
-      const annuityPct = +document.getElementById('nps-ann').value || 40;
+      let timeVal = +document.getElementById('nps-time-val').value || 0;
+      const timeUnit = document.getElementById('nps-time-unit').value;
+      let months = timeUnit === 'years' ? timeVal * 12 : timeVal;
       
       document.getElementById('nps-inv-label').textContent = formatCurrency(P);
       document.getElementById('nps-rate-label').textContent = rate + '%';
-      document.getElementById('nps-yr-label').textContent = years + ' Years';
-      document.getElementById('nps-ann-label').textContent = annuityPct + '%';
+      document.getElementById('nps-time-label').textContent = timeVal + ' ' + (timeUnit === 'years' ? 'Years' : 'Months');
+      document.getElementById('nps-ann-label').textContent = document.getElementById('nps-ann').value + '%';
 
       const i = rate / 12 / 100;
       let bal = 0;
-      for (let y = 1; y <= years; y++) {
-        for (let m = 1; m <= 12; m++) {
-          bal = (bal + P) * (1 + i);
-          invested += P;
+      for (let m = 1; m <= months; m++) {
+        bal = (bal + P) * (1 + i);
+        invested += P;
+        if (m % 12 === 0 || m === months) {
+            let yearsDisp = (m / 12).toFixed(1).replace(/\.0$/, '');
+            scheduleData.push({ period: 'Year ' + yearsDisp, invested: invested, returns: bal - invested, total: bal });
         }
-        scheduleData.push({ period: 'Year ' + y, invested: invested, returns: bal - invested, total: bal });
       }
       total = bal;
       returns = total - invested;
-
-    } else if (currentCalc === 'si') {
-      const P = +document.getElementById('si-inv').value || 0;
-      const rate = +document.getElementById('si-rate').value || 0;
-      const years = +document.getElementById('si-yr').value || 0;
-      
-      document.getElementById('si-inv-label').textContent = formatCurrency(P);
-      document.getElementById('si-rate-label').textContent = rate + '%';
-      document.getElementById('si-yr-label').textContent = years + ' Years';
-
-      for (let y = 1; y <= years; y++) {
-        const int = (P * rate * y) / 100;
-        scheduleData.push({ period: 'Year ' + y, invested: P, returns: int, total: P + int });
-      }
-      invested = P;
-      returns = (P * rate * years) / 100;
-      total = P + returns;
+      chartDisplayVal = total;
 
     } else if (currentCalc === 'ci') {
       const P = +document.getElementById('ci-inv').value || 0;
       const rate = +document.getElementById('ci-rate').value || 0;
-      const years = +document.getElementById('ci-yr').value || 0;
+      let timeVal = +document.getElementById('ci-time-val').value || 0;
+      const timeUnit = document.getElementById('ci-time-unit').value;
+      let years = timeUnit === 'months' ? timeVal / 12 : timeVal;
       const freq = +document.getElementById('ci-freq').value || 1;
       
       document.getElementById('ci-inv-label').textContent = formatCurrency(P);
       document.getElementById('ci-rate-label').textContent = rate + '%';
-      document.getElementById('ci-yr-label').textContent = years + ' Years';
+      document.getElementById('ci-time-label').textContent = timeVal + ' ' + (timeUnit === 'years' ? 'Years' : 'Months');
 
       invested = P;
       const r = rate / 100;
-      for (let y = 1; y <= years; y++) {
-        const amt = P * Math.pow(1 + (r / freq), freq * y);
+      
+      for (let y = 1; y <= Math.ceil(years); y++) {
+        let actualYearFraction = Math.min(1, years - (y - 1));
+        const amt = P * Math.pow(1 + (r / freq), freq * (y * actualYearFraction)); // Simplified fractional compounding
         scheduleData.push({ period: 'Year ' + y, invested: P, returns: amt - P, total: amt });
       }
       total = P * Math.pow(1 + (r / freq), freq * years);
       returns = total - invested;
+      chartDisplayVal = total;
     }
 
-    // Update Totals
+    // Update UI
     document.getElementById('res-invested').textContent = formatCurrency(invested);
     document.getElementById('res-returns').textContent = formatCurrency(returns);
     document.getElementById('res-total').textContent = formatCurrency(total);
-    document.getElementById('chart-val').textContent = formatCurrency(total);
+    document.getElementById('chart-val').textContent = formatCurrency(chartDisplayVal);
 
-    // Draw Chart & Table
     drawChart(invested, returns);
     updateTable();
   }
 
-  // Draw Donut Chart
   function drawChart(invested, returns) {
     const total = invested + returns;
     const circumference = 251.2;
-    
     const investedPct = total > 0 ? (invested / total) : 0;
     const returnsPct = total > 0 ? (returns / total) : 0;
     
@@ -613,70 +770,58 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     const returnEl = document.getElementById('chart-returns');
 
     investEl.style.strokeDashoffset = circumference - (investedPct * circumference);
-    
     returnEl.style.strokeDashoffset = circumference - (returnsPct * circumference);
     returnEl.style.transform = `rotate(${(investedPct * 360)}deg)`;
     returnEl.style.transformOrigin = '50% 50%';
   }
 
-  // Update HTML Table
   function updateTable() {
     const tbody = document.getElementById('table-body');
     tbody.innerHTML = '';
-    
     scheduleData.forEach(row => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${row.period}</td>
         <td>${formatCurrency(row.invested)}</td>
-        <td style="color:#16a34a;">+ ${formatCurrency(row.returns)}</td>
+        <td style="color:#16a34a;">${formatCurrency(row.returns)}</td>
         <td>${formatCurrency(row.total)}</td>
       `;
       tbody.appendChild(tr);
     });
   }
 
-  // Download CSV Function (With Your Custom Watermark)
+  // Bulletproof CSV Download
   document.getElementById('download-csv').addEventListener('click', function() {
-    if (scheduleData.length === 0) {
-      alert('No data available to download.');
-      return;
-    }
+    if (scheduleData.length === 0) return;
 
-    let csvContent = "";
+    // \uFEFF is a BOM (Byte Order Mark) that forces Excel to open the file in UTF-8 and prevents the "Year" column auto-fill bug
+    let csvContent = "\uFEFF"; 
     
-    // 1. TOP WATERMARK & HEADER
     csvContent += "==================================================\n";
-    csvContent += "WEBSITE: DocEasy.org\n";
-    csvContent += "TOOL NAME: " + currentCalc.toUpperCase() + " Calculator\n";
-    csvContent += "GENERATED ON: " + new Date().toLocaleString() + "\n";
-    csvContent += "URL: https://doceasy.org/tools/finance-master-calculator.html\n";
+    csvContent += "WEBSITE,DocEasy.org\n";
+    csvContent += "TOOL NAME," + currentCalc.toUpperCase() + " Calculator\n";
+    csvContent += "GENERATED ON," + new Date().toLocaleString() + "\n";
+    csvContent += "URL,https://doceasy.org/tools/finance-master-calculator.html\n";
     csvContent += "==================================================\n\n";
 
-    // 2. TABLE HEADERS
-    csvContent += "Period,Invested Amount,Interest/Returns,Total Value\n";
+    csvContent += "Period,Amount Paid / Invested,Interest / Returns,Balance / Total Value\n";
 
-    // 3. TABLE DATA
     scheduleData.forEach(row => {
+      // Quoting values prevents Excel from breaking on commas inside the numbers
       let invStr = row.invested.toFixed(2);
       let retStr = row.returns.toFixed(2);
       let totStr = row.total.toFixed(2);
-      csvContent += `${row.period},${invStr},${retStr},${totStr}\n`;
+      csvContent += `"${row.period}","${invStr}","${retStr}","${totStr}"\n`;
     });
 
-    // 4. BOTTOM WATERMARK & DISCLAIMER
     csvContent += "\n==================================================\n";
     csvContent += "Thank you for using DocEasy.org!\n";
-    csvContent += "Disclaimer: This calculation is for informational purposes only. Please consult a financial advisor before making investment decisions.\n";
-    csvContent += "==================================================\n";
+    csvContent += "Disclaimer,This calculation is for informational purposes only.\n";
 
-    // 5. CREATE AND DOWNLOAD FILE
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    
-    // File Name Format
     link.setAttribute("download", `DocEasy_${currentCalc.toUpperCase()}_Schedule.csv`);
     
     document.body.appendChild(link);
@@ -684,9 +829,8 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     document.body.removeChild(link);
   });
 
-  // Initial Call on Page Load
+  // Initial Call
   calculateAll();
-
 })();
 </script>
 </body>
