@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Age Calculator — Calculate Exact Age from Date of Birth (Free) | DocEasy</title>
+<meta name="description" content="Free age calculator. Enter your date of birth to get exact age in years, months, days, total hours, minutes, and seconds. Also shows next birthday countdown and day of week you were born.">
+<meta name="keywords" content="age calculator, date of birth calculator, umar calculator, exact age calculator, birthday calculator, age in days, age in months">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/age-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Age Calculator — Exact Age from DOB | DocEasy">
+<meta property="og:description" content="Calculate exact age in years, months, days, hours, and minutes. Free, private, browser-based.">
+<meta property="og:url" content="https://doceasy.org/tools/age-calculator.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Age Calculator — DocEasy","url":"https://doceasy.org/tools/age-calculator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web, Android, iOS)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Calculate exact age in years, months, days, hours, minutes from date of birth."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How is age calculated exactly?","acceptedAnswer":{"@type":"Answer","text":"Age is calculated by counting complete years, then complete months within the final year, then remaining days. This is the standard used by government forms, school admissions, and passport applications."}},
+{"@type":"Question","name":"Does the calculator show my age in hours and minutes?","acceptedAnswer":{"@type":"Answer","text":"Yes. Along with years, months, and days, the tool shows total days, total hours, total minutes, and total seconds you have lived since birth."}},
+{"@type":"Question","name":"Can I calculate age on a future date?","acceptedAnswer":{"@type":"Answer","text":"Yes. Change the 'Calculate age as of' date to any future date to see what your age will be on that day."}},
+{"@type":"Question","name":"Is my date of birth stored or uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. All calculations run in your browser. Your date of birth never leaves your device."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(26px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(14px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:18px;font-weight:800;color:var(--text-color)}
+.calc-card h2 svg{width:20px;height:20px;flex-shrink:0;color:var(--accent)}
+.calc-card .sub{margin:0 0 20px;font-size:13px;color:var(--subtext-color);line-height:1.55}
+
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:560px){.input-row{grid-template-columns:1fr}}
+.input-field{display:flex;flex-direction:column;gap:6px}
+.input-field label{font-size:11.5px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.input-field input{padding:12px 14px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--card-bg);color:var(--text-color);font-size:15px;font-family:inherit;outline:none;transition:.15s}
+.input-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+.calc-btn{width:100%;padding:14px 20px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(25,57,138,0.28);transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.calc-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(25,57,138,0.35)}
+.calc-btn:active{transform:translateY(0)}
+.calc-btn svg{width:18px;height:18px;flex-shrink:0}
+
+.result-section{margin-top:26px;display:none}
+.result-section.show{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.age-hero{text-align:center;padding:28px 20px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:14px;color:#fff;margin-bottom:20px;box-shadow:0 10px 30px rgba(25,57,138,0.25)}
+.age-hero .age-main{font-size:clamp(36px,8vw,56px);font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:6px}
+.age-hero .age-sub{font-size:14px;opacity:0.9;font-weight:600}
+.age-hero .age-parts{display:flex;justify-content:center;gap:22px;margin-top:16px;flex-wrap:wrap;font-size:15px;font-weight:700}
+.age-hero .age-parts span b{font-size:22px;display:block;margin-bottom:2px}
+
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.result-card{padding:16px;background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;text-align:center}
+.result-card .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;font-weight:800;color:var(--subtext-color);margin-bottom:6px}
+.result-card .val{font-size:19px;font-weight:800;color:var(--accent);letter-spacing:-0.3px;word-break:break-word}
+.result-card .sub-txt{font-size:10.5px;color:var(--subtext-color);margin-top:3px;font-weight:600}
+
+.next-bday{padding:18px;background:rgba(16,163,74,0.06);border:1px solid rgba(16,163,74,0.25);border-radius:12px;text-align:center;margin-bottom:18px}
+.next-bday .nb-lbl{display:inline-flex;align-items:center;gap:6px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:800;color:#16a34a;margin-bottom:6px}
+.next-bday .nb-lbl svg{width:15px;height:15px}
+.next-bday .nb-val{font-size:20px;font-weight:800;color:#15803d;line-height:1.3}
+.next-bday .nb-sub{font-size:12px;color:var(--subtext-color);margin-top:4px;font-weight:600}
+
+.info-box{padding:14px 16px;background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;font-size:13px;color:var(--text-color);line-height:1.6;margin-bottom:16px}
+.info-box b{color:var(--accent)}
+
+.seo-article{max-width:900px;margin:48px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px}
+.seo-article h2{font-size:22px;font-weight:800;color:var(--text-color);margin:32px 0 14px}
+.seo-article h2:first-child{margin-top:0}
+.seo-article h3{font-size:17px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.seo-article p{font-size:15px;color:var(--subtext-color);margin:0 0 16px;line-height:1.75}
+.seo-article ul,.seo-article ol{margin:14px 0;padding-left:22px}
+.seo-article li{font-size:14.5px;color:var(--subtext-color);margin-bottom:8px;line-height:1.65}
+.seo-article b{color:var(--text-color);font-weight:700}
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+details.faq summary{cursor:pointer;font-weight:700;color:var(--text-color);font-size:14.5px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:20px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:10px 0 0;font-size:14px;color:var(--subtext-color);line-height:1.7}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .hero-box{padding:24px 0 16px}
+  .calc-card{padding:20px 16px;margin-bottom:18px}
+  .age-hero{padding:22px 16px}
+  .result-card{padding:12px}
+  .result-card .val{font-size:16px}
+  .seo-article{padding:24px 16px;margin:24px auto}
+  .seo-article h2{font-size:19px}
+  .seo-article h3{font-size:15.5px}
+  .seo-article p,.seo-article li{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Age Calculator</h1>
+    <p class="hero-sub">अपनी जन्म तिथि (DOB) डालें और सटीक उम्र जानें — साल, महीने, दिन, घंटे और मिनट में। Free, private, कुछ भी upload नहीं होता।</p>
+  </div>
+
+  <div class="calc-card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Calculate Your Exact Age
+    </h2>
+    <p class="sub">Enter your date of birth and choose the date as of which you want to calculate your age.</p>
+
+    <div class="input-row">
+      <div class="input-field">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" max="">
+      </div>
+      <div class="input-field">
+        <label for="asof">Calculate age as of</label>
+        <input type="date" id="asof">
+      </div>
+    </div>
+
+    <button class="calc-btn" id="calc-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Calculate Age
+    </button>
+
+    <div class="result-section" id="result">
+      <div class="age-hero">
+        <div class="age-main" id="age-main">—</div>
+        <div class="age-sub">years old</div>
+        <div class="age-parts">
+          <span><b id="p-years">0</b>years</span>
+          <span><b id="p-months">0</b>months</span>
+          <span><b id="p-days">0</b>days</span>
+        </div>
+      </div>
+
+      <div class="next-bday" id="next-bday-box">
+        <div class="nb-lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><line x1="2" y1="21" x2="22" y2="21"/><line x1="7" y1="8" x2="7" y2="11"/><line x1="12" y1="8" x2="12" y2="11"/><line x1="17" y1="8" x2="17" y2="11"/></svg>
+          Next Birthday
+        </div>
+        <div class="nb-val" id="nb-val">—</div>
+        <div class="nb-sub" id="nb-sub"></div>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="lbl">Total Days</div>
+          <div class="val" id="total-days">0</div>
+          <div class="sub-txt">since birth</div>
+        </div>
+        <div class="result-card">
+          <div class="lbl">Total Hours</div>
+          <div class="val" id="total-hours">0</div>
+          <div class="sub-txt">since birth</div>
+        </div>
+        <div class="result-card">
+          <div class="lbl">Total Minutes</div>
+          <div class="val" id="total-minutes">0</div>
+          <div class="sub-txt">since birth</div>
+        </div>
+        <div class="result-card">
+          <div class="lbl">Total Seconds</div>
+          <div class="val" id="total-seconds">0</div>
+          <div class="sub-txt">since birth</div>
+        </div>
+      </div>
+
+      <div class="info-box" id="extra-info"></div>
+    </div>
+  </div>
+
+  <section class="seo-article">
+    <h2>Age Calculator — Exact Age from Date of Birth</h2>
+    <p>यह free age calculator आपकी जन्म तिथि से आज तक की <b>सटीक उम्र</b> बताता है — पूरे साल, महीने, और दिन में। साथ ही यह भी दिखाता है कि आपने कुल कितने दिन, घंटे, मिनट और सेकंड जीवन में बिताए हैं।</p>
+
+    <h3>Age Calculator का उपयोग कहाँ होता है?</h3>
+    <ul>
+      <li><b>सरकारी फॉर्म:</b> आधार, PAN, पासपोर्ट, वोटर ID, और ड्राइविंग लाइसेंस फॉर्म में सटीक उम्र ज़रूरी होती है</li>
+      <li><b>स्कूल/कॉलेज एडमिशन:</b> कई स्कूलों में नर्सरी/1st क्लास एडमिशन के लिए उम्र की सीमा होती है</li>
+      <li><b>Government Jobs:</b> SSC, UPSC, Railway, Bank exams में age limit की जाँच</li>
+      <li><b>Insurance:</b> बीमा पॉलिसी लेते समय सटीक उम्र ज़रूरी होती है</li>
+      <li><b>Retirement Planning:</b> कितने साल बाद रिटायरमेंट है — calculate करने के लिए</li>
+      <li><b>कुल जीवन का हिसाब:</b> जिज्ञासा वश — आपने कितने घंटे, मिनट, सेकंड जीवन में बिताए</li>
+    </ul>
+
+    <h3>उम्र कैसे calculate होती है?</h3>
+    <p>सटीक उम्र निकालने के लिए:</p>
+    <ol>
+      <li>पहले <b>पूरे साल</b> गिने जाते हैं — जन्म से लेकर जब तक same month-day न आए</li>
+      <li>फिर <b>पूरे महीने</b> गिने जाते हैं — आखिरी birthday के बाद अब तक</li>
+      <li>फिर बचे हुए <b>दिन</b> गिने जाते हैं</li>
+    </ol>
+    <p>यही method सरकारी दस्तावेज़ों, school admission, और passport office में उपयोग होता है।</p>
+
+    <h3>Frequently Asked Questions</h3>
+    <details class="faq">
+      <summary>क्या मेरी जन्म तिथि कहीं save होती है?</summary>
+      <p>नहीं। पूरा calculation आपके browser में होता है। कोई भी data server पर नहीं भेजा जाता। आप browser का Developer Tools → Network tab खोलकर खुद verify कर सकते हैं।</p>
+    </details>
+    <details class="faq">
+      <summary>क्या मैं future date पर अपनी उम्र calculate कर सकता हूँ?</summary>
+      <p>हाँ। "Calculate age as of" field में कोई भी future date डालें। यह useful है जब आप जानना चाहें कि किसी exam के दिन (जैसे 2 साल बाद) आपकी उम्र क्या होगी।</p>
+    </details>
+    <details class="faq">
+      <summary>क्या यह कैलकुलेटर leap year को सही तरीके से handle करता है?</summary>
+      <p>हाँ। Leap year और February 29 को standard calendar rules के अनुसार handle किया जाता है।</p>
+    </details>
+    <details class="faq">
+      <summary>Birthday countdown कैसे काम करता है?</summary>
+      <p>यह आपकी जन्म तिथि के same month-day को current year (या अगले साल) में set करता है और आज से उसके बीच के दिनों की गिनती बताता है।</p>
+    </details>
+  </section>
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  var dobInput = document.getElementById('dob');
+  var asofInput = document.getElementById('asof');
+  var calcBtn = document.getElementById('calc-btn');
+  var result = document.getElementById('result');
+
+  var today = new Date();
+  var todayStr = today.toISOString().split('T')[0];
+  asofInput.value = todayStr;
+  dobInput.max = todayStr;
+
+  function padNum(n) { return n.toLocaleString('en-IN'); }
+
+  function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+
+  function calculateAge(dob, asof) {
+    var years = asof.getFullYear() - dob.getFullYear();
+    var months = asof.getMonth() - dob.getMonth();
+    var days = asof.getDate() - dob.getDate();
+
+    if (days < 0) {
+      months--;
+      var prevMonth = asof.getMonth() - 1;
+      var prevYear = asof.getFullYear();
+      if (prevMonth < 0) { prevMonth = 11; prevYear--; }
+      days += getDaysInMonth(prevYear, prevMonth);
+    }
+
+    if (months < 0) { years--; months += 12; }
+    return { years: years, months: months, days: days };
+  }
+
+  function calculate() {
+    var dobVal = dobInput.value;
+    var asofVal = asofInput.value;
+
+    if (!dobVal) { alert('Please enter your date of birth.'); return; }
+    if (!asofVal) { alert('Please enter the date to calculate age as of.'); return; }
+
+    var dobParts = dobVal.split('-').map(Number);
+    var asofParts = asofVal.split('-').map(Number);
+    var dob = new Date(dobParts[0], dobParts[1] - 1, dobParts[2]);
+    var asof = new Date(asofParts[0], asofParts[1] - 1, asofParts[2]);
+
+    if (asof < dob) {
+      alert('"Calculate age as of" date must be on or after the date of birth.');
+      return;
+    }
+
+    var age = calculateAge(dob, asof);
+    var diffMs = asof - dob;
+    var totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    document.getElementById('age-main').textContent = age.years;
+    document.getElementById('p-years').textContent = age.years;
+    document.getElementById('p-months').textContent = age.months;
+    document.getElementById('p-days').textContent = age.days;
+    document.getElementById('total-days').textContent = padNum(totalDays);
+    document.getElementById('total-hours').textContent = padNum(totalDays * 24);
+    document.getElementById('total-minutes').textContent = padNum(totalDays * 24 * 60);
+    document.getElementById('total-seconds').textContent = padNum(totalDays * 24 * 60 * 60);
+
+    var nbYear = asof.getFullYear();
+    var nextBday = new Date(nbYear, dob.getMonth(), dob.getDate());
+    if (nextBday < asof) {
+      nbYear++;
+      nextBday = new Date(nbYear, dob.getMonth(), dob.getDate());
+    }
+    var daysToBday = Math.ceil((nextBday - asof) / (1000 * 60 * 60 * 24));
+    var turningAge = nbYear - dob.getFullYear();
+
+    var nbVal = document.getElementById('nb-val');
+    var nbSub = document.getElementById('nb-sub');
+
+    if (daysToBday === 0) {
+      nbVal.textContent = 'आज ही आपका जन्मदिन है';
+      nbSub.textContent = 'Happy Birthday — you turn ' + turningAge + ' today.';
+    } else if (daysToBday === 1) {
+      nbVal.textContent = 'कल आपका जन्मदिन है';
+      nbSub.textContent = 'You will turn ' + turningAge + ' tomorrow.';
+    } else {
+      nbVal.textContent = daysToBday + ' days to go';
+      nbSub.textContent = 'You will turn ' + turningAge + ' on ' + nextBday.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var bornDay = daysOfWeek[dob.getDay()];
+    var bornDateStr = dob.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+    var zodiac = getZodiac(dob.getMonth() + 1, dob.getDate());
+
+    document.getElementById('extra-info').innerHTML =
+      '<b>Born on:</b> ' + bornDay + ', ' + bornDateStr + ' &nbsp;·&nbsp; <b>Zodiac:</b> ' + zodiac;
+
+    result.classList.add('show');
+  }
+
+  function getZodiac(month, day) {
+    var signs = [
+      { name: 'Capricorn', end: [1, 19] },
+      { name: 'Aquarius',  end: [2, 18] },
+      { name: 'Pisces',    end: [3, 20] },
+      { name: 'Aries',     end: [4, 19] },
+      { name: 'Taurus',    end: [5, 20] },
+      { name: 'Gemini',    end: [6, 20] },
+      { name: 'Cancer',    end: [7, 22] },
+      { name: 'Leo',       end: [8, 22] },
+      { name: 'Virgo',     end: [9, 22] },
+      { name: 'Libra',     end: [10, 22] },
+      { name: 'Scorpio',   end: [11, 21] },
+      { name: 'Sagittarius', end: [12, 21] },
+      { name: 'Capricorn', end: [12, 31] }
+    ];
+    for (var i = 0; i < signs.length; i++) {
+      var e = signs[i].end;
+      if (month < e[0] || (month === e[0] && day <= e[1])) return signs[i].name;
+    }
+    return 'Capricorn';
+  }
+
+  calcBtn.addEventListener('click', calculate);
+  dobInput.addEventListener('change', function() {
+    if (dobInput.value && asofInput.value) calculate();
+  });
+  asofInput.addEventListener('change', function() {
+    if (dobInput.value && asofInput.value) calculate();
+  });
+
+})();
+</script>
+</body>
+</html>
