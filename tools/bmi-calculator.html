@@ -48,17 +48,18 @@
 
 .input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
 @media(max-width:560px){.input-row{grid-template-columns:1fr}}
-.input-field{display:flex;flex-direction:column;gap:6px}
+.input-field{display:flex;flex-direction:column;gap:6px;min-width:0;}
 .input-field label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
 
-/* New Input Group with Unit Dropdown */
-.input-with-unit{display:flex;gap:8px;align-items:center}
-.input-with-unit input{flex:1;padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s;min-width:0}
+/* FIXED INPUT CSS */
+.input-with-unit{display:flex;gap:8px;align-items:center;width:100%}
+.input-with-unit input{flex:1 1 auto;width:100%;min-width:0;padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:16px;font-weight:700;font-family:inherit;outline:none;transition:.15s}
 .input-with-unit input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
-.input-with-unit select{padding:14px 12px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--card-bg);color:var(--text-color);font-size:14px;font-weight:800;font-family:inherit;outline:none;cursor:pointer}
+.input-with-unit select{flex:0 0 auto;padding:14px 12px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--card-bg);color:var(--text-color);font-size:14px;font-weight:800;font-family:inherit;outline:none;cursor:pointer}
 .input-with-unit select:focus{border-color:var(--accent)}
-.height-inputs{display:flex;gap:8px;flex:1}
-.height-inputs input{width:50%}
+
+.height-inputs{display:flex;gap:8px;flex:1 1 auto;width:100%;min-width:0;}
+.height-inputs input{flex:1 1 50%;width:50%;min-width:0;}
 
 .calc-btn{width:100%;padding:14px 20px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(25,57,138,0.28);transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
 .calc-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(25,57,138,0.35)}
@@ -421,40 +422,38 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     });
   });
 
-  function getBMIData(){
-    var weightVal = parseFloat(weightInput.value) || 0;
+  // FIXED CALCULATION FUNCTION WITH PROPER VALIDATION
+  function calculateBMI(){
+    var weightVal = parseFloat(weightInput.value);
+    if (isNaN(weightVal) || weightVal <= 0) {
+      document.getElementById('result').classList.remove('show');
+      return; 
+    }
+
     var weightKg = weightVal;
-    
-    // Convert weight to kg if in lbs
     if (weightUnit.value === 'lb') {
       weightKg = weightVal * 0.453592;
     }
     
     var heightM = 0;
-    
-    // Calculate height in meters
     if (heightUnit.value === 'cm') {
-      var cm = parseFloat(heightCmInput.value) || 0;
+      var cm = parseFloat(heightCmInput.value);
+      if (isNaN(cm) || cm <= 0) {
+        document.getElementById('result').classList.remove('show');
+        return;
+      }
       heightM = cm / 100;
     } else {
       var ft = parseFloat(heightFtInput.value) || 0;
       var inch = parseFloat(heightInInput.value) || 0;
+      if (ft === 0 && inch === 0) {
+        document.getElementById('result').classList.remove('show');
+        return;
+      }
       heightM = (ft * 12 + inch) * 0.0254;
     }
-    
-    if (!weightKg || !heightM) return null;
-    return { weightKg: weightKg, heightM: heightM, bmi: weightKg / (heightM * heightM) };
-  }
 
-  function calculateBMI(){
-    var data = getBMIData();
-    if (!data){ 
-      alert('Please enter valid weight and height.'); 
-      return; 
-    }
-    
-    var bmi = data.bmi;
-    var hM = data.heightM;
+    var bmi = weightKg / (heightM * heightM);
 
     // Determine Thresholds based on selected standard
     var underLimit = 18.5;
@@ -496,12 +495,11 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     document.getElementById('bmi-marker').style.left = pct + '%';
 
     // Healthy Weight Range (Uses the selected standard's limits)
-    // Convert back to lbs if user is using lbs
     var multiplier = weightUnit.value === 'lb' ? 2.20462 : 1;
     var unitLabel = weightUnit.value === 'lb' ? 'lbs' : 'kg';
 
-    var lowKg = underLimit * (hM * hM);
-    var highKg = (overLimit - 0.1) * (hM * hM); 
+    var lowKg = underLimit * (heightM * heightM);
+    var highKg = (overLimit - 0.1) * (heightM * heightM); 
     
     var lowDisp = lowKg * multiplier;
     var highDisp = highKg * multiplier;
@@ -513,12 +511,12 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
     // Calculate weight difference
     var diffEl = document.getElementById('weight-diff');
-    if (data.weightKg > highKg) {
-      var diffVal = (data.weightKg - highKg) * multiplier;
+    if (weightKg > highKg) {
+      var diffVal = (weightKg - highKg) * multiplier;
       diffEl.textContent = 'Lose ' + diffVal.toFixed(1) + ' ' + unitLabel;
       diffEl.style.color = '#dc2626';
-    } else if (data.weightKg < lowKg) {
-      var diffVal = (lowKg - data.weightKg) * multiplier;
+    } else if (weightKg < lowKg) {
+      var diffVal = (lowKg - weightKg) * multiplier;
       diffEl.textContent = 'Gain ' + diffVal.toFixed(1) + ' ' + unitLabel;
       diffEl.style.color = '#0ea5e9';
     } else {
