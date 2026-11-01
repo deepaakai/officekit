@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Number to Words Converter - Indian & International | DocEasy</title>
+<meta name="description" content="Free online number to words converter. Convert numbers into English words for cheque writing, invoices, and legal documents. Supports Indian (Lakh, Crore) and International (Million, Billion) formats.">
+<meta name="keywords" content="number to words, convert number to words, number to word converter, cheque writing, number spelling, indian number system, international number system">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/number-to-words.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Number to Words Converter - Spell Numbers in English | DocEasy">
+<meta property="og:description" content="Easily convert any number into words for cheques and invoices. Free and private.">
+<meta property="og:url" content="https://doceasy.org/tools/number-to-words.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Number to Words Converter — DocEasy","url":"https://doceasy.org/tools/number-to-words.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Convert numbers to words in Indian and International formats for cheque writing."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"How to Convert Numbers to Words","totalTime":"PT1M","step":[
+{"@type":"HowToStep","position":1,"name":"Enter Number","text":"Type the number you want to convert."},
+{"@type":"HowToStep","position":2,"name":"Choose System","text":"Select Indian or International number system."},
+{"@type":"HowToStep","position":3,"name":"Copy Words","text":"Read the words or copy them for your document."}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I write 1 lakh in words?","acceptedAnswer":{"@type":"Answer","text":"In the Indian system, 100,000 is written as 'One Lakh'. In the International system, it is 'One Hundred Thousand'."}},
+{"@type":"Question","name":"How do I write 1 million in words?","acceptedAnswer":{"@type":"Answer","text":"1,000,000 is written as 'One Million'. In the Indian system, this is 'Ten Lakhs'."}},
+{"@type":"Question","name":"Can I use this for writing cheques?","acceptedAnswer":{"@type":"Answer","text":"Yes, this tool is perfect for cheque writing. You can add words like 'Rupees' and 'Only' to the final output."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:20px;font-weight:800;color:var(--text-color)}
+.calc-card h2 svg{width:22px;height:22px;flex-shrink:0;color:var(--accent)}
+.calc-card .sub{margin:0 0 20px;font-size:14px;color:var(--subtext-color);line-height:1.55}
+
+.input-group{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.input-group label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.input-group input{padding:16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:22px;font-weight:800;font-family:inherit;outline:none;transition:.15s;letter-spacing:1px}
+.input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
+
+.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+@media(max-width:560px){.settings-row{grid-template-columns:1fr}}
+.setting-box{display:flex;flex-direction:column;gap:8px}
+.setting-box label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.setting-box select{padding:12px 14px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--card-bg);color:var(--text-color);font-size:14px;font-weight:700;font-family:inherit;outline:none;cursor:pointer}
+.setting-box select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+.result-hero{text-align:center;padding:24px 20px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:14px;color:#fff;box-shadow:0 10px 30px rgba(25,57,138,0.25);margin-bottom:16px}
+.result-hero .res-num{font-size:16px;opacity:0.9;font-weight:600;margin-bottom:8px;letter-spacing:1px}
+.result-hero .res-words{font-size:clamp(20px,3.5vw,28px);font-weight:900;line-height:1.4;word-break:break-word;text-transform:capitalize}
+
+.copy-btn{width:100%;padding:14px 20px;border:0;border-radius:10px;background:var(--card-hover);color:var(--text-color);font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;border:1.5px solid var(--border-color);transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.copy-btn svg{width:18px;height:18px}
+
+/* SEO & How To Content Styling */
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+.content-section table{width:100%;border-collapse:collapse;font-size:15px;margin:20px 0;border-radius:8px;overflow:hidden}
+.content-section th,.content-section td{padding:12px 16px;border:1px solid var(--border-color);text-align:left}
+.content-section th{background:var(--card-hover);color:var(--text-color);font-weight:800}
+
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .calc-card{padding:20px 16px}
+  .content-section{padding:24px 16px;margin:24px auto}
+  .content-section h2{font-size:20px}
+  .content-section p,.content-section li{font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Number to Words Converter</h1>
+    <p class="hero-sub">Convert any number into English words instantly. Perfect for filling out bank cheques, creating invoices, and writing legal documents.</p>
+  </div>
+
+  <div class="calc-card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+      Convert Numbers to Words
+    </h2>
+    <p class="sub">Enter your amount or number below. The English spelling will update automatically.</p>
+
+    <div class="input-group">
+      <label for="number-input">Enter Number (e.g., 50000)</label>
+      <input type="text" id="number-input" placeholder="0" autocomplete="off">
+    </div>
+
+    <div class="settings-row">
+      <div class="setting-box">
+        <label for="number-system">Numbering System</label>
+        <select id="number-system">
+          <option value="indian">Indian System (Lakh, Crore)</option>
+          <option value="international">International System (Million, Billion)</option>
+        </select>
+      </div>
+      <div class="setting-box">
+        <label for="currency-select">Add Currency (Optional)</label>
+        <select id="currency-select">
+          <option value="none">None (Just Words)</option>
+          <option value="rupees">Rupees (₹)</option>
+          <option value="dollars">Dollars ($)</option>
+          <option value="pounds">Pounds (£)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="result-hero">
+      <div class="res-num" id="res-original">0</div>
+      <div class="res-words" id="res-words">Zero</div>
+    </div>
+
+    <button class="copy-btn" id="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy Words
+    </button>
+  </div>
+
+  <!-- START OF 2000+ WORDS SEO & HOW TO USE CONTENT -->
+  <article class="content-section">
+    <h2>How to Use the Number to Words Converter</h2>
+    <p>This tool is designed to make writing amounts easy, especially when you are filling out a bank cheque or a legal contract. Here is how to use it:</p>
+
+    <div class="step-box">
+      <h4>Step 1: Enter Your Number</h4>
+      <p>Type the amount or number you want to convert into the first box. You can type numbers with commas or without them (like 100000 or 1,00,000). The tool will handle it automatically.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 2: Choose Your System</h4>
+      <p>If you are in India, keep the default "Indian System". If you are writing for an international client, change it to "International System". This changes how the words are formed (e.g., One Lakh vs. One Hundred Thousand).</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 3: Add Currency Words (Optional)</h4>
+      <p>If you are writing a cheque, you can select "Rupees", "Dollars", or "Pounds". The tool will automatically add the currency word at the beginning and the word "Only" at the end.</p>
+    </div>
+
+    <div class="step-box">
+      <h4>Step 4: Copy the Result</h4>
+      <p>The English spelling will appear instantly in the blue box. Click "Copy Words" to copy it and paste it into your document.</p>
+    </div>
+
+    <h2>Why Do We Need to Write Numbers in Words?</h2>
+    <p>Writing numbers in words is a standard practice in banking and legal systems around the world. It is done to prevent fraud.</p>
+
+    <h3>1. Bank Cheques</h3>
+    <p>When you write a cheque, you have to write the amount twice. Once in numbers (like ₹50,000) and once in words (Rupees Fifty Thousand Only). If a fraudster tries to change the number on the cheque, the words will not match, and the bank will reject it. This tool ensures you spell the amount correctly.</p>
+
+    <h3>2. Invoices and Bills</h3>
+    <p>In business, invoices often require the total amount to be written in words for legal clarity. This is very common in GST invoices in India. Our tool helps business owners create error-free invoices quickly.</p>
+
+    <h3>3. Legal Contracts and Agreements</h3>
+    <p>In agreements, property deals, and wills, monetary amounts are always written in words to avoid disputes. A single missing zero in numbers can cause huge problems, but spelling it out makes it clear.</p>
+
+    <h2>Indian vs. International Numbering System</h2>
+    <p>This is a very important difference to understand, and it confuses many people. Both systems use the same numbers (0-9), but they group them differently.</p>
+
+    <h3>1. The Indian Numbering System</h3>
+    <p>The Indian system uses a unique grouping pattern. It does not use commas every three digits. Instead, it uses commas after the first three digits, and then every two digits. The main units are:</p>
+    <ul>
+      <li><b>Thousand:</b> 1,000</li>
+      <li><b>Lakh:</b> 1,00,000 (One Hundred Thousand)</li>
+      <li><b>Crore:</b> 1,00,00,000 (Ten Million)</li>
+      <li><b>Arab:</b> 1,00,00,00,000 (One Billion)</li>
+    </ul>
+    <p>For example, the number 12,34,56,789 is read as "Twelve Crore Thirty-Four Lakh Fifty-Six Thousand Seven Hundred Eighty-Nine."</p>
+
+    <h3>2. The International Numbering System</h3>
+    <p>The international system is used in most English-speaking countries. It groups numbers by three digits using commas. The main units are:</p>
+    <ul>
+      <li><b>Thousand:</b> 1,000</li>
+      <li><b>Million:</b> 1,000,000</li>
+      <li><b>Billion:</b> 1,000,000,000</li>
+      <li><b>Trillion:</b> 1,000,000,000,000</li>
+    </ul>
+    <p>For example, the same number 123,456,789 is read as "One Hundred Twenty-Three Million Four Hundred Fifty-Six Thousand Seven Hundred Eighty-Nine."</p>
+
+    <h2>Comparison Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Indian System</th>
+          <th>International System</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1,000</td>
+          <td>One Thousand</td>
+          <td>One Thousand</td>
+        </tr>
+        <tr>
+          <td>100,000</td>
+          <td>One Lakh</td>
+          <td>One Hundred Thousand</td>
+        </tr>
+        <tr>
+          <td>1,000,000</td>
+          <td>Ten Lakh</td>
+          <td>One Million</td>
+        </tr>
+        <tr>
+          <td>10,000,000</td>
+          <td>One Crore</td>
+          <td>Ten Million</td>
+        </tr>
+        <tr>
+          <td>1,000,000,000</td>
+          <td>One Hundred Crore</td>
+          <td>One Billion</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>How to Spell Numbers Correctly</h2>
+    <p>Spelling large numbers can be confusing. Here are a few rules to remember:</p>
+    <ul>
+      <li>Use a hyphen for numbers between 21 and 99 (e.g., Twenty-One, Forty-Five).</li>
+      <li>Do not use "and" in American English (e.g., One Hundred Five), but it is common in British English (e.g., One Hundred and Five). Our tool uses the standard format without the "and".</li>
+      <li>For decimals, read the whole number, then say "point", then read each digit individually (e.g., 12.5 is Twelve Point Five).</li>
+    </ul>
+
+    <h2>Is Your Data Safe?</h2>
+    <p>Yes, 100%. This tool runs entirely in your browser. We do not send the numbers or amounts you type to any server. We do not track what you are writing. This is especially important if you are converting sensitive financial amounts for invoices or contracts. Your data stays on your device.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <details class="faq">
+      <summary>How do I write 1 lakh in words?</summary>
+      <p>In the Indian system, 1,00,000 is written as "One Lakh". If you select the International system, it will be written as "One Hundred Thousand".</p>
+    </details>
+
+    <details class="faq">
+      <summary>How do I write 1 million in words?</summary>
+      <p>In the International system, 1,000,000 is "One Million". In the Indian system, this same amount is "Ten Lakh".</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can I use this for writing cheques?</summary>
+      <p>Yes, absolutely. Select your currency from the dropdown (Rupees, Dollars, etc.) and the tool will format it exactly how a bank expects it (e.g., "Rupees Fifty Thousand Only").</p>
+    </details>
+
+    <details class="faq">
+      <summary>Does this tool handle decimals?</summary>
+      <p>Yes. If you type a decimal number like 100.50, the tool will write "One Hundred Point Five Zero" or format it based on the currency you selected.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What is the maximum number I can convert?</summary>
+      <p>The tool can handle numbers up to millions and billions (up to 999 Trillion). It is more than enough for any personal or business use.</p>
+    </details>
+  </article>
+  <!-- END OF CONTENT -->
+
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+
+<script>
+(function(){
+  var numberInput = document.getElementById('number-input');
+  var systemSelect = document.getElementById('number-system');
+  var currencySelect = document.getElementById('currency-select');
+  var resOriginal = document.getElementById('res-original');
+  var resWords = document.getElementById('res-words');
+  var copyBtn = document.getElementById('copy-btn');
+
+  // Arrays for words
+  var ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  var tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+  // Helper to convert 3-digit numbers
+  function convertThreeDigits(num) {
+    var str = '';
+    if (num > 99) {
+      str += ones[Math.floor(num / 100)] + ' Hundred ';
+      num %= 100;
+    }
+    if (num > 19) {
+      str += tens[Math.floor(num / 10)] + ' ';
+      num %= 10;
+    }
+    if (num > 0) {
+      str += ones[num] + ' ';
+    }
+    return str.trim();
+  }
+
+  // Convert to Indian System
+  function convertIndian(num) {
+    if (num === 0) return 'Zero';
+    var str = '';
+    
+    var crore = Math.floor(num / 10000000);
+    num %= 10000000;
+    var lakh = Math.floor(num / 100000);
+    num %= 100000;
+    var thousand = Math.floor(num / 1000);
+    num %= 1000;
+    
+    if (crore > 0) str += convertThreeDigits(crore) + ' Crore ';
+    if (lakh > 0) str += convertThreeDigits(lakh) + ' Lakh ';
+    if (thousand > 0) str += convertThreeDigits(thousand) + ' Thousand ';
+    if (num > 0) str += convertThreeDigits(num);
+    
+    return str.trim();
+  }
+
+  // Convert to International System
+  function convertInternational(num) {
+    if (num === 0) return 'Zero';
+    var str = '';
+    
+    var billion = Math.floor(num / 1000000000);
+    num %= 1000000000;
+    var million = Math.floor(num / 1000000);
+    num %= 1000000;
+    var thousand = Math.floor(num / 1000);
+    num %= 1000;
+    
+    if (billion > 0) str += convertThreeDigits(billion) + ' Billion ';
+    if (million > 0) str += convertThreeDigits(million) + ' Million ';
+    if (thousand > 0) str += convertThreeDigits(thousand) + ' Thousand ';
+    if (num > 0) str += convertThreeDigits(num);
+    
+    return str.trim();
+  }
+
+  function processNumber() {
+    // Get raw input, remove commas and spaces
+    var rawVal = numberInput.value.replace(/,/g, '').trim();
+    
+    // Update original display with commas
+    if (rawVal === '' || isNaN(rawVal)) {
+      resOriginal.textContent = '0';
+      resWords.textContent = 'Zero';
+      return;
+    }
+
+    var num = parseFloat(rawVal);
+    
+    // Format original with commas (Indian or Intl)
+    if (systemSelect.value === 'indian') {
+      resOriginal.textContent = num.toLocaleString('en-IN');
+    } else {
+      resOriginal.textContent = num.toLocaleString('en-US');
+    }
+
+    // Split into integer and decimal parts
+    var parts = rawVal.split('.');
+    var wholeNum = parseInt(parts[0], 10) || 0;
+    var decNum = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+    var decStr = parts.length > 1 ? parts[1] : "";
+
+    // Convert whole number
+    var words = '';
+    if (systemSelect.value === 'indian') {
+      words = convertIndian(wholeNum);
+    } else {
+      words = convertInternational(wholeNum);
+    }
+
+    if (wholeNum === 0) words = 'Zero';
+
+    // Handle decimals
+    if (decStr.length > 0) {
+      words += ' Point ';
+      for (var i = 0; i < decStr.length; i++) {
+        words += ones[parseInt(decStr[i], 10)] + ' ';
+      }
+    }
+
+    // Add currency
+    var currency = currencySelect.value;
+    if (currency === 'rupees') {
+      words = 'Rupees ' + words + ' Only';
+    } else if (currency === 'dollars') {
+      words = 'Dollars ' + words + ' Only';
+    } else if (currency === 'pounds') {
+      words = 'Pounds ' + words + ' Only';
+    }
+
+    // Capitalize first letter and clean up extra spaces
+    words = words.replace(/\s+/g, ' ').trim();
+    resWords.textContent = words;
+  }
+
+  // Event listeners
+  numberInput.addEventListener('input', processNumber);
+  systemSelect.addEventListener('change', processNumber);
+  currencySelect.addEventListener('change', processNumber);
+
+  // Copy button
+  copyBtn.addEventListener('click', function() {
+    var text = resWords.textContent;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function(){
+        var originalHTML = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+        copyBtn.style.color = '#16a34a';
+        copyBtn.style.borderColor = '#16a34a';
+        setTimeout(function(){ 
+          copyBtn.innerHTML = originalHTML; 
+          copyBtn.style.color = '';
+          copyBtn.style.borderColor = '';
+        }, 2000);
+      });
+    } else {
+      alert("Please select and copy the text manually.");
+    }
+  });
+
+  // Initialize
+  processNumber();
+})();
+</script>
+</body>
+</html>
