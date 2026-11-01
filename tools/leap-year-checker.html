@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leap Year Checker - Is it a Leap Year? | DocEasy</title>
+<meta name="description" content="Free online leap year calculator. Check if any year is a leap year. Learn the rules, the math, and the history behind leap years and February 29.">
+<meta name="keywords" content="leap year checker, is it a leap year, leap year calculator, is 2024 a leap year, february 29, leap year rules">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://doceasy.org/tools/leap-year-checker.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Leap Year Checker - Is it a Leap Year? | DocEasy">
+<meta property="og:description" content="Find out if a year is a leap year instantly.">
+<meta property="og:url" content="https://doceasy.org/tools/leap-year-checker.html">
+<meta property="og:site_name" content="DocEasy">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Leap Year Checker — DocEasy","url":"https://doceasy.org/tools/leap-year-checker.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Check if any year is a leap year and find the next leap year."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is 2024 a leap year?","acceptedAnswer":{"@type":"Answer","text":"Yes, 2024 is a leap year. It has 366 days and February has 29 days."}},
+{"@type":"Question","name":"What is the rule for a leap year?","acceptedAnswer":{"@type":"Answer","text":"A year is a leap year if it is divisible by 4. However, if it is a century year (ending in 00), it must be divisible by 400 to be a leap year."}},
+{"@type":"Question","name":"Why do we have leap years?","acceptedAnswer":{"@type":"Answer","text":"A normal year has 365 days, but the Earth takes about 365.24 days to orbit the Sun. Leap years add an extra day (February 29) every 4 years to keep our calendar in sync with the Earth's seasons."}}
+]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm);text-align:center}
+.calc-card h2{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 6px;font-size:20px;font-weight:800;color:var(--text-color)}
+.calc-card h2 svg{width:22px;height:22px;flex-shrink:0;color:var(--accent)}
+.calc-card .sub{margin:0 0 24px;font-size:14px;color:var(--subtext-color);line-height:1.55}
+
+.input-group{display:flex;flex-direction:column;gap:8px;max-width:300px;margin:0 auto 24px}
+.input-group label{font-size:12px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.input-group input{padding:16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:24px;font-weight:800;font-family:inherit;outline:none;text-align:center;transition:.15s}
+.input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
+
+.result-hero{padding:24px 20px;border-radius:14px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,0.15);margin-bottom:20px;display:none}
+.result-hero.show{display:block;animation:fade .3s}
+.result-hero.yes{background:linear-gradient(135deg,#16a34a,#15803d)}
+.result-hero.no{background:linear-gradient(135deg,#dc2626,#b91c1c)}
+.result-hero .res-main{font-size:clamp(24px,5vw,32px);font-weight:900;line-height:1.2;margin-bottom:8px}
+.result-hero .res-sub{font-size:16px;font-weight:600;opacity:0.9}
+
+.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;display:none}
+.details-grid.show{display:grid;animation:fade .3s}
+.detail-box{background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;padding:16px}
+.detail-box .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:800;color:var(--subtext-color);margin-bottom:6px}
+.detail-box .val{font-size:18px;font-weight:800;color:var(--accent)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+.step-box{background:var(--card-hover);padding:20px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--accent)}
+.step-box h4{margin:0 0 8px;font-size:16px;color:var(--text-color);font-weight:800}
+
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .calc-card{padding:20px 16px}
+  .content-section{padding:24px 16px;margin:24px auto}
+  .content-section h2{font-size:20px}
+  .content-section p,.content-section li{font-size:15px}
+  .details-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+
+  <div class="hero-box">
+    <h1 class="hero-title">Leap Year Checker</h1>
+    <p class="hero-sub">Enter any year to instantly find out if it is a leap year. Learn the history and math behind February 29.</p>
+  </div>
+
+  <div class="calc-card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Check Leap Year
+    </h2>
+    <p class="sub">Type a year below (e.g., 2024) to see if it has 365 or 366 days.</p>
+
+    <div class="input-group">
+      <label for="year-input">Enter Year</label>
+      <input type="number" id="year-input" value="2024" min="1" max="9999" placeholder="YYYY">
+    </div>
+
+    <div class="result-hero" id="result-hero">
+      <div class="res-main" id="res-main">Yes, 2024 is a Leap Year!</div>
+      <div class="res-sub" id="res-sub">It has 366 days. February has 29 days.</div>
+    </div>
+
+    <div class="details-grid" id="details-grid">
+      <div class="detail-box">
+        <div class="lbl">Next Leap Year</div>
+        <div class="val" id="next-leap">2028</div>
+      </div>
+      <div class="detail-box">
+        <div class="lbl">Total Days</div>
+        <div class="val" id="total-days">366</div>
+      </div>
+    </div>
+  </div>
+
+  <article class="content-section">
+    <h2>What is a Leap Year?</h2>
+    <p>A leap year is a special year in the calendar that has 366 days instead of the usual 365. This extra day is added to the end of February, making February 29th instead of the usual 28 days.</p>
+    <p>Leap years happen almost every four years. But there is a specific mathematical rule to determine exactly which years are leap years.</p>
+
+    <h3>The Mathematical Rules for Leap Years</h3>
+    <p>To check if a year is a leap year, you need to follow these three simple rules:</p>
+    <ul>
+      <li><b>Rule 1:</b> The year must be evenly divisible by 4.</li>
+      <li><b>Rule 2:</b> If the year is a century year (ending in 00, like 1900), it must be divisible by 400 to be a leap year. If it is only divisible by 100 but not 400, it is NOT a leap year.</li>
+      <li><b>Rule 3:</b> If the year is not a century year, it only needs to be divisible by 4.</li>
+    </ul>
+    <p><b>Examples:</b></p>
+    <ul>
+      <li><b>2024:</b> Divisible by 4. It is a leap year.</li>
+      <li><b>1900:</b> Divisible by 100, but NOT divisible by 400. It is NOT a leap year.</li>
+      <li><b>2000:</b> Divisible by 400. It IS a leap year.</li>
+    </ul>
+
+    <h2>Why Do We Need Leap Years?</h2>
+    <p>The Earth takes approximately 365.2422 days to complete one full orbit around the Sun. This is called a "Solar Year" or "Tropical Year".</p>
+    <p>Our standard calendar uses 365 days for a normal year. But we are ignoring the extra 0.2422 days. If we ignored it forever, the calendar would slowly drift out of sync with the seasons. After about 700 years, summer in the Northern Hemisphere would actually happen in December!</p>
+    <p>To fix this drift, we add an extra day (leap day) almost every 4 years. 4 years × 0.2422 days = 0.9688 days. Adding one full day gets us very close to the actual solar year.</p>
+
+    <h3>The History of Leap Years</h3>
+    <p>The concept of leap years was introduced by Julius Caesar in 45 BC. He created the Julian calendar, which added a leap day every four years without exception.</p>
+    <p>However, because the solar year is slightly less than 365.25 days, the Julian calendar overcorrected by about 11 minutes per year. By the 16th century, the calendar had drifted by 10 days.</p>
+    <p>In 1582, Pope Gregory XIII introduced the Gregorian calendar, which added the rule about century years (divisible by 400). This is the calendar we still use today, which keeps us accurate for thousands of years.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <details class="faq">
+      <summary>Is 2024 a leap year?</summary>
+      <p>Yes, 2024 is a leap year. It has 366 days and February has 29 days.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What is the rule for a leap year?</summary>
+      <p>A year is a leap year if it is divisible by 4. However, if it is a century year (ending in 00), it must be divisible by 400 to be a leap year. For example, 1900 was not a leap year, but 2000 was.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Are there leap years in other calendars?</summary>
+      <p>Yes. The Hindu calendar, Islamic calendar, and Chinese calendar all have different methods for handling the fractional days of the solar or lunar year, but the concept of adding extra days to sync the calendar is universal.</p>
+    </details>
+  </article>
+</main>
+
+<div id="doceasy-footer"></div>
+<script src="../assets/js/core/doceasy-core.js"></script>
+<script>
+(function(){
+  var yearInput = document.getElementById('year-input');
+  var resHero = document.getElementById('result-hero');
+  var resMain = document.getElementById('res-main');
+  var resSub = document.getElementById('res-sub');
+  var detailsGrid = document.getElementById('details-grid');
+  var nextLeapSpan = document.getElementById('next-leap');
+  var totalDaysSpan = document.getElementById('total-days');
+
+  function isLeapYear(year) {
+    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+  }
+
+  function calculate() {
+    var year = parseInt(yearInput.value, 10);
+    if (isNaN(year) || year < 1) {
+      resHero.classList.remove('show');
+      detailsGrid.classList.remove('show');
+      return;
+    }
+
+    var isLeap = isLeapYear(year);
+    
+    // Find next leap year
+    var nextLeap = year + 1;
+    while (!isLeapYear(nextLeap)) {
+      nextLeap++;
+    }
+
+    if (isLeap) {
+      resHero.className = 'result-hero yes show';
+      resMain.textContent = 'Yes, ' + year + ' is a Leap Year!';
+      resSub.textContent = 'It has 366 days. February has 29 days.';
+      totalDaysSpan.textContent = '366';
+    } else {
+      resHero.className = 'result-hero no show';
+      resMain.textContent = 'No, ' + year + ' is NOT a Leap Year.';
+      resSub.textContent = 'It has 365 days. February has 28 days.';
+      totalDaysSpan.textContent = '365';
+    }
+
+    nextLeapSpan.textContent = nextLeap;
+    detailsGrid.classList.add('show');
+  }
+
+  yearInput.addEventListener('input', calculate);
+  
+  // Initialize
+  calculate();
+})();
+</script>
+</body>
+</html>
