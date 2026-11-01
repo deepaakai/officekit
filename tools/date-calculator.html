@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Date Calculator — Days Between Dates &amp; Date Add/Subtract | DocEasy</title>
+<meta name="description" content="Free date calculator. Find days, weeks, months, years between two dates. Add or subtract days from any date. Includes working days (exclude weekends).">
+<meta name="keywords" content="date calculator, days between dates, date difference calculator, add days to date, working days calculator, business days">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://doceasy.org/tools/date-calculator.html">
+<link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+<link rel="stylesheet" href="../assets/css/doceasy-global.css">
+<style>
+*{box-sizing:border-box}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px}
+.hero-box{text-align:center;padding:36px 0 22px}
+.hero-title{font-size:clamp(26px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px}
+.hero-sub{font-size:clamp(14px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
+.mode-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;justify-content:center}
+.mode-tabs button{padding:10px 18px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.mode-tabs button svg{width:16px;height:16px}
+.mode-tabs button:hover{border-color:var(--accent);color:var(--accent)}
+.mode-tabs button.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(25,57,138,0.28)}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px}
+.calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:17px;font-weight:800;color:var(--text-color)}
+.calc-card h2 svg{width:20px;height:20px;flex-shrink:0;color:var(--accent)}
+.calc-card .sub{margin:0 0 20px;font-size:13px;color:var(--subtext-color);line-height:1.55}
+
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:560px){.input-row{grid-template-columns:1fr}}
+.input-field{display:flex;flex-direction:column;gap:6px}
+.input-field label{font-size:11.5px;font-weight:800;color:var(--text-color);text-transform:uppercase;letter-spacing:0.4px}
+.input-field input,.input-field select{padding:12px 14px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--card-bg);color:var(--text-color);font-size:15px;font-family:inherit;outline:none}
+.input-field input:focus,.input-field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+.calc-btn{width:100%;padding:14px 20px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(25,57,138,0.28);display:flex;align-items:center;justify-content:center;gap:8px}
+.calc-btn:hover{transform:translateY(-2px)}
+.calc-btn svg{width:18px;height:18px;flex-shrink:0}
+
+.result-section{margin-top:24px;display:none}
+.result-section.show{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.big-result{padding:26px 20px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:14px;color:#fff;text-align:center;margin-bottom:16px;box-shadow:0 10px 30px rgba(25,57,138,0.25)}
+.big-result .num{font-size:clamp(40px,9vw,64px);font-weight:900;letter-spacing:-2px;line-height:1;margin-bottom:6px}
+.big-result .unit{font-size:15px;font-weight:600;opacity:0.9}
+
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.result-card{padding:14px;background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;text-align:center}
+.result-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:800;color:var(--subtext-color);margin-bottom:6px}
+.result-card .val{font-size:18px;font-weight:800;color:var(--accent);letter-spacing:-0.3px}
+
+.checkbox-row{display:flex;align-items:center;gap:8px;margin-bottom:18px;font-size:13px;color:var(--text-color);font-weight:600}
+.checkbox-row input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+
+.seo-article{max-width:900px;margin:48px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px}
+.seo-article h2{font-size:22px;font-weight:800;color:var(--text-color);margin:32px 0 14px}
+.seo-article h2:first-child{margin-top:0}
+.seo-article p{font-size:15px;color:var(--subtext-color);margin:0 0 16px;line-height:1.75}
+.seo-article b{color:var(--text-color)}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .calc-card{padding:20px 16px}
+  .big-result{padding:22px 16px}
+  .seo-article{padding:24px 16px;margin:24px auto}
+  .seo-article h2{font-size:19px}
+}
+</style>
+</head>
+<body>
+<div id="doceasy-header"></div>
+
+<main class="main-wrap">
+  <div class="hero-box">
+    <h1 class="hero-title">Date Calculator</h1>
+    <p class="hero-sub">दो तारीखों के बीच के दिन, हफ्ते, महीने और साल जानें — या किसी तारीख में दिन जोड़ें/घटाएँ। Working days भी calculate करें।</p>
+  </div>
+
+  <div class="mode-tabs" id="mode-tabs">
+    <button class="active" data-mode="diff">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 6-6"/></svg>
+      दो तारीखों का अंतर
+    </button>
+    <button data-mode="add">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+      तारीख में जोड़ें/घटाएँ
+    </button>
+  </div>
+
+  <div class="calc-card" id="mode-diff">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 6-6"/></svg>
+      Difference Between Two Dates
+    </h2>
+    <p class="sub">दोनों तारीखें डालें — बीच का exact समय मिलेगा।</p>
+    <div class="input-row">
+      <div class="input-field"><label for="date1">From Date</label><input type="date" id="date1"></div>
+      <div class="input-field"><label for="date2">To Date</label><input type="date" id="date2"></div>
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="working-days">
+      <label for="working-days" style="cursor:pointer">Only count working days (Mon–Fri)</label>
+    </div>
+    <button class="calc-btn" id="diff-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Calculate Difference
+    </button>
+    <div class="result-section" id="diff-result">
+      <div class="big-result">
+        <div class="num" id="diff-days">0</div>
+        <div class="unit" id="diff-unit">days</div>
+      </div>
+      <div class="result-grid">
+        <div class="result-card"><div class="lbl">Weeks</div><div class="val" id="diff-weeks">0</div></div>
+        <div class="result-card"><div class="lbl">Months</div><div class="val" id="diff-months">0</div></div>
+        <div class="result-card"><div class="lbl">Years</div><div class="val" id="diff-years">0</div></div>
+        <div class="result-card"><div class="lbl">Hours</div><div class="val" id="diff-hours">0</div></div>
+        <div class="result-card"><div class="lbl">Minutes</div><div class="val" id="diff-minutes">0</div></div>
+        <div class="result-card"><div class="lbl">Weekends</div><div class="val" id="diff-weekends">0</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calc-card" id="mode-add" style="display:none">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+      Add or Subtract Days
+    </h2>
+    <p class="sub">किसी तारीख में दिन जोड़ें या घटाएँ — नई तारीख मिलेगी।</p>
+    <div class="input-field" style="margin-bottom:14px">
+      <label for="start-date">Start Date</label>
+      <input type="date" id="start-date">
+    </div>
+    <div class="input-row">
+      <div class="input-field">
+        <label for="offset">Days</label>
+        <input type="number" id="offset" value="30" min="1" step="1">
+      </div>
+      <div class="input-field">
+        <label for="operation">Operation</label>
+        <select id="operation">
+          <option value="add">Add (+)</option>
+          <option value="sub">Subtract (−)</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" id="add-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Calculate New Date
+    </button>
+    <div class="result-section" id="add-result">
+      <div class="big-result">
+        <div class="num" id="new-date-day" style="font-size:28px">—</div>
+        <div class="unit" id="new-date-full"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="seo-article">
+    <h2>Date Calculator — दो तारीखों के बीच का अंतर</h2>
+    <p>यह free date calculator दो तारीखों के बीच के exact days, weeks, months और years निकालता है। साथ ही working days (Mon–Fri) भी count कर सकते हैं — leave planning, project timeline, और contract dates के लिए useful।</p>
+    <h2>Date Add/Subtract Calculator</h2>
+    <p>किसी भी date में N दिन जोड़ें या घटाएँ। Common uses: deadline calculation, EMI due date, exam countdown, pregnancy due date, notice period end date।</p>
+    <h2>Common Uses</h2>
+    <ul style="color:var(--subtext-color);font-size:14.5px;line-height:1.7;padding-left:22px">
+      <li>Notice period कब खत्म होगा (60/90 days)</li>
+      <li>Project deadline कितने हफ्ते बाद है</li>
+      <li>Passport/visa कब expire होगी</li>
+      <li>Insurance policy renewal date</li>
+      <li>Exam तक कितने working days बचे हैं</li>
+      <li>Age limit cutoff date (government jobs के लिए)</li>
+    </ul>
+  </section>
+</main>
+
+<div id="doceasy-footer"></div>
+
+<script src="../assets/js/core/doceasy-core.js"></script>
+<script>
+(function(){
+  var modeTabs = document.getElementById('mode-tabs');
+  var modeDiff = document.getElementById('mode-diff');
+  var modeAdd = document.getElementById('mode-add');
+
+  modeTabs.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    modeTabs.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var m = btn.dataset.mode;
+    modeDiff.style.display = m === 'diff' ? 'block' : 'none';
+    modeAdd.style.display = m === 'add' ? 'block' : 'none';
+  });
+
+  var d1 = document.getElementById('date1');
+  var d2 = document.getElementById('date2');
+  var today = new Date().toISOString().split('T')[0];
+  d1.value = today;
+  d2.value = today;
+
+  function parseDate(str){
+    var p = str.split('-').map(Number);
+    return new Date(p[0], p[1]-1, p[2]);
+  }
+
+  function countWeekdays(start, end){
+    var count = 0;
+    var cur = new Date(start);
+    while (cur <= end){
+      var day = cur.getDay();
+      if (day !== 0 && day !== 6) count++;
+      cur.setDate(cur.getDate() + 1);
+    }
+    return count;
+  }
+
+  function countWeekends(start, end){
+    var total = Math.floor((end - start) / (1000*60*60*24)) + 1;
+    var weekdays = countWeekdays(start, end);
+    return total - weekdays;
+  }
+
+  document.getElementById('diff-btn').addEventListener('click', function(){
+    if (!d1.value || !d2.value){ alert('Please enter both dates'); return; }
+    var a = parseDate(d1.value);
+    var b = parseDate(d2.value);
+    if (b < a){ var t = a; a = b; b = t; }
+
+    var onlyWorking = document.getElementById('working-days').checked;
+    var days = onlyWorking ? countWeekdays(a, b) : Math.round((b - a) / (1000*60*60*24));
+
+    document.getElementById('diff-days').textContent = days.toLocaleString('en-IN');
+    document.getElementById('diff-unit').textContent = onlyWorking ? 'working days' : 'days';
+    document.getElementById('diff-weeks').textContent = Math.floor(days / 7);
+    document.getElementById('diff-hours').textContent = (days * 24).toLocaleString('en-IN');
+    document.getElementById('diff-minutes').textContent = (days * 24 * 60).toLocaleString('en-IN');
+    document.getElementById('diff-weekends').textContent = countWeekends(a, b);
+
+    var years = b.getFullYear() - a.getFullYear();
+    var months = b.getMonth() - a.getMonth();
+    if (b.getDate() < a.getDate()) months--;
+    if (months < 0){ years--; months += 12; }
+    document.getElementById('diff-years').textContent = years;
+    document.getElementById('diff-months').textContent = (years*12 + months);
+
+    document.getElementById('diff-result').classList.add('show');
+  });
+
+  var startDate = document.getElementById('start-date');
+  startDate.value = today;
+
+  document.getElementById('add-btn').addEventListener('click', function(){
+    if (!startDate.value){ alert('Please enter a start date'); return; }
+    var s = parseDate(startDate.value);
+    var offset = parseInt(document.getElementById('offset').value, 10) || 0;
+    var op = document.getElementById('operation').value;
+    var newDate = new Date(s);
+    newDate.setDate(newDate.getDate() + (op === 'add' ? offset : -offset));
+
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    document.getElementById('new-date-day').textContent = newDate.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('new-date-full').textContent = days[newDate.getDay()];
+    document.getElementById('add-result').classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
