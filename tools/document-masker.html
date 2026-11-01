@@ -4,88 +4,97 @@
 <meta charset="UTF-8">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Free Document Masker - Hide Aadhaar, PAN, DL, RC &amp; Phone Online | DocEasy</title>
-<meta name="description" content="Protect your privacy online. Free tool to mask and hide Aadhaar card, PAN card, Driving License, RC, Voter ID, Passport, and Phone numbers. 100% secure and browser-based.">
-<meta name="keywords" content="aadhaar masker, mask aadhaar number, hide pan card, driving license masker, rc masker, voter id masker, hide personal information online, identity theft protection india, secure kyc document, document masking tool">
+<title>Global Document &amp; ID Masker - Redact SSN, Aadhaar, PAN, Passport Online | DocEasy</title>
+<meta name="description" content="Free global document and ID redaction tool. Mask sensitive identifiers like US Social Security Numbers (SSN), Canadian SIN, UK National Insurance (NINO), Indian Aadhaar, PAN, Driver's Licenses, and Passports directly on PDFs and photos in your browser.">
+<meta name="keywords" content="ssn masker, mask social security number online, redact ssn pdf, redact passport photo, hide sin canada, nino redaction uk, mask aadhaar card, pan card redaction, hide driver license number, free pdf redaction tool, gdpr document redaction, client side id masker">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/document-masker.html">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Document Masker - Hide Aadhaar, PAN, DL &amp; More | DocEasy">
-<meta property="og:description" content="Instantly hide your Aadhaar, PAN, and other ID numbers before sharing documents online.">
-<meta property="og:url" content="https://doceasy.org/tools/document-masker.html">
-<meta property="og:site_name" content="DocEasy">
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
 
-<!-- Structured Data for SEO & FAQ -->
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Document Masker — DocEasy","url":"https://doceasy.org/tools/document-masker.html","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Mask Aadhaar, PAN, Driving License, and RC securely in your browser."}
+<!-- PDF.js for rendering PDF documents client-side -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 </script>
+
+<!-- Structured Data for SEO -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Why should I mask my Aadhaar card?","acceptedAnswer":{"@type":"Answer","text":"Masking your Aadhaar card prevents identity theft. UIDAI recommends hiding the first 8 digits of your Aadhaar number when sharing photocopies for KYC or rent agreements."}},
-{"@type":"Question","name":"Is this document masker safe to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, absolutely. The tool runs entirely in your browser. Your ID numbers, phone numbers, and personal data are never sent to our servers."}},
-{"@type":"Question","name":"Can I mask a Driving License and RC?","acceptedAnswer":{"@type":"Answer","text":"Yes! Our tool supports masking Aadhaar, PAN, Driving License (DL), RC (Vehicle Registration), Voter ID, Passport, phone numbers, and emails."}}
-]}
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Global Document & ID Redactor — DocEasy",
+  "url": "https://doceasy.org/tools/document-masker.html",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Securely mask sensitive personal identifiers including US SSN, UK NINO, Canadian SIN, Indian Aadhaar, Passports, and driver licenses on PDFs and images without server uploads."
+}
 </script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
 *{box-sizing:border-box}
-.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.main-wrap{max-width:1100px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
 .hero-box{text-align:center;padding:36px 0 22px}
-.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
-.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+.hero-title{font-size:clamp(28px,4.5vw,44px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:760px;margin:0 auto;line-height:1.6}
 
-.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
-.calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:20px;font-weight:800;color:var(--text-color)}
-.calc-card h2 svg{width:22px;height:22px;flex-shrink:0;color:var(--accent)}
-.calc-card .sub{margin:0 0 20px;font-size:14px;color:var(--subtext-color);line-height:1.55}
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:18px;padding:32px 26px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
 
-.io-section{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
-@media(max-width:768px){.io-section{grid-template-columns:1fr;}}
+/* Document Region Pill Badges */
+.region-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px;}
+.region-chip{font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--card-hover);color:var(--subtext-color);border:1px solid var(--border-color);}
 
-.io-box{display:flex;flex-direction:column;gap:8px;}
-.io-box label{font-size:14px;font-weight:800;color:var(--text-color);display:flex;justify-content:space-between;align-items:center;}
-.textarea-wrapper{position:relative;}
-textarea{width:100%;height:180px;padding:16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:15px;font-family:monospace, sans-serif;line-height:1.6;outline:none;resize:vertical;transition:.15s;}
-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg);}
+/* Upload Area */
+.drop-zone{border:2px dashed var(--accent);border-radius:14px;padding:46px 20px;text-align:center;background:var(--card-hover);cursor:pointer;transition:.2s;}
+.drop-zone:hover{background:var(--accent-soft);}
+.drop-zone svg{width:52px;height:52px;color:var(--accent);margin-bottom:14px;}
+.drop-zone h3{margin:0 0 6px;font-size:19px;font-weight:800;color:var(--text-color);}
+.drop-zone p{margin:0;font-size:14px;color:var(--subtext-color);}
+#file-input{display:none;}
 
-.settings-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:10px;margin-bottom:20px;}
-.setting-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;background:var(--card-bg);border:1.5px solid var(--border-color);border-radius:8px;font-size:13px;font-weight:700;color:var(--text-color);cursor:pointer;transition:.15s;text-align:center;}
-.setting-btn:hover{border-color:var(--accent);color:var(--accent);}
-.setting-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
-.setting-btn input[type="radio"]{display:none;}
+/* Workspace & Canvas */
+.workspace-wrapper{display:none;margin-top:24px;}
+.canvas-toolbar{display:flex;justify-content:space-between;align-items:center;background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;padding:12px 18px;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+.tool-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.tool-btn{padding:8px 16px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-weight:700;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;transition:.15s;}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent);}
+.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.tool-btn svg{width:16px;height:16px;}
 
-.action-row{display:flex;gap:10px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
-.btn{padding:14px 24px;border:0;border-radius:8px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:8px;justify-content:center;}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(25,57,138,0.2);flex:1;max-width:300px;}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(25,57,138,0.3);}
-.btn-secondary{background:var(--card-bg);color:var(--text-color);border:1.5px solid var(--border-color);}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
-.btn svg{width:18px;height:18px;flex-shrink:0;}
+.canvas-viewport{background:#1e293b;border-radius:12px;padding:24px;display:flex;justify-content:center;align-items:center;overflow:auto;max-height:700px;position:relative;}
+#editor-canvas{background:#fff;box-shadow:0 12px 34px rgba(0,0,0,0.4);cursor:crosshair;max-width:100%;}
 
-.copy-btn{background:transparent;border:1px solid var(--border-color);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;color:var(--subtext-color);display:flex;align-items:center;gap:4px;transition:.15s;}
-.copy-btn:hover{border-color:var(--accent);color:var(--accent);}
-.copy-btn svg{width:14px;height:14px;}
+/* Export Actions */
+.download-action-row{display:flex;gap:14px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+.btn-export{padding:13px 26px;border:0;border-radius:10px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:#fff;transition:.15s;}
+.btn-save{background:#16a34a;}
+.btn-save:hover{background:#15803d;}
+.btn-reset{background:var(--card-bg);color:var(--text-color);border:1.5px solid var(--border-color);}
+.btn-reset:hover{border-color:var(--accent);color:var(--accent);}
 
-/* SEO Content */
-.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
-.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+/* SEO Content & Comprehensive Knowledge Base */
+.content-section{max-width:920px;margin:44px auto 0;padding:42px 34px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;color:var(--subtext-color)}
+.content-section h2{font-size:26px;font-weight:800;color:var(--text-color);margin:40px 0 16px;letter-spacing:-0.5px;}
 .content-section h2:first-child{margin-top:0}
-.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
-.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
-.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
-.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section h3{font-size:19px;font-weight:700;color:var(--accent);margin:26px 0 12px}
+.content-section p{font-size:15.5px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:24px}
+.content-section li{font-size:15.5px;margin-bottom:10px;line-height:1.75}
 .content-section b{color:var(--text-color);font-weight:700}
-.step-box{background:var(--card-hover);padding:20px;border-radius:10px;margin-bottom:16px;border-left:4px solid var(--accent)}
-.step-box h4{margin:0 0 8px;font-size:16px;color:var(--text-color);font-weight:800}
-details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+.guide-box{background:var(--card-hover);padding:22px;border-radius:12px;margin-bottom:20px;border-left:4px solid var(--accent)}
+.guide-box h4{margin:0 0 8px;font-size:16.5px;color:var(--text-color);font-weight:800}
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:18px 22px;margin-bottom:12px}
 details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
 details.faq summary::-webkit-details-marker{display:none}
-details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
+details.faq summary::after{content:"+";color:var(--accent);font-size:24px;font-weight:300}
 details.faq[open] summary::after{content:"−"}
-details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
-@media(max-width:640px){.main-wrap{padding:0 14px 60px}.calc-card{padding:20px 16px}.content-section{padding:24px 16px;margin:24px auto}}
+details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
+@media(max-width:640px){.main-wrap{padding:0 14px 60px}.calc-card{padding:22px 16px}.content-section{padding:24px 18px;margin:28px auto}}
 </style>
 </head>
 <body>
@@ -94,160 +103,147 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 <main class="main-wrap">
 
   <div class="hero-box">
-    <h1 class="hero-title">Document & Identity Masker</h1>
-    <p class="hero-sub">Protect your privacy. Hide your Aadhaar, PAN, Driving License, RC, and phone number before sharing documents online. 100% secure and free.</p>
+    <h1 class="hero-title">Global Document &amp; ID Masker</h1>
+    <p class="hero-sub">Protect personal privacy worldwide. Redact sensitive identifiers on physical document scans, digital photos, or PDF copies including US SSN, UK NINO, Canadian SIN, Passports, Aadhaar, PAN, and Driver's Licenses with zero cloud uploads.</p>
   </div>
 
   <div class="calc-card">
-    <h2>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Protect Your Identity
-    </h2>
-    <p class="sub">Select the type of document you want to mask, paste your text below, and click Mask.</p>
-
-    <!-- Document Type Selectors -->
-    <div class="settings-grid" id="mask-options">
-      <label class="setting-btn active">
-        <input type="radio" name="mask-type" value="all" checked> Mask All (Auto)
-      </label>
-      <label class="setting-btn">
-        <input type="radio" name="mask-type" value="aadhaar"> Aadhaar Card
-      </label>
-      <label class="setting-btn">
-        <input type="radio" name="mask-type" value="pan"> PAN Card
-      </label>
-      <label class="setting-btn">
-        <input type="radio" name="mask-type" value="driving"> Driving License
-      </label>
-      <label class="setting-btn">
-        <input type="radio" name="mask-type" value="rc"> RC (Vehicle)
-      </label>
-      <label class="setting-btn">
-        <input type="radio" name="mask-type" value="voter"> Voter ID
-      </label>
+    
+    <!-- Coverage Badges -->
+    <div class="region-chips">
+      <span class="region-chip">&#127482;&#12748area; USA (SSN, DL, Passport)</span>
+      <span class="region-chip">&#127464;&#127462; Canada (SIN, DL)</span>
+      <span class="region-chip">&#127468;&#127463; UK (NINO, Driving License)</span>
+      <span class="region-chip">&#127462;&#127482; Australia (TFN, Medicare)</span>
+      <span class="region-chip">&#127470;&#127475; India (Aadhaar, PAN, RC, DL)</span>
+      <span class="region-chip">&#127757; Global (Passports, Credit Cards, IBAN)</span>
     </div>
 
-    <div class="io-section">
-      <div class="io-box">
-        <label for="input-text">Original Text (Unsafe)</label>
-        <textarea id="input-text" placeholder="Example: Aadhaar 1234 5678 9012, PAN ABCDE1234F, Phone 9876543210."></textarea>
-      </div>
-      
-      <div class="io-box">
-        <label for="output-text">Masked Text (Safe)
-          <button class="copy-btn" id="copy-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy
+    <!-- Drag & Drop Upload -->
+    <div class="drop-zone" id="drop-zone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <h3>Select or Drop Your ID Document (PDF, PNG, JPG)</h3>
+      <p>Works locally on all devices. No file ever touches a remote server.</p>
+      <input type="file" id="file-input" accept="image/*,application/pdf">
+    </div>
+
+    <!-- Visual Canvas Editor Workspace -->
+    <div class="workspace-wrapper" id="workspace-wrapper">
+      <div class="canvas-toolbar">
+        <div class="tool-controls">
+          <button class="tool-btn active" id="btn-black-box">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            Blackout Box (Standard)
           </button>
-        </label>
-        <textarea id="output-text" placeholder="Your secure text will appear here..." readonly></textarea>
+          <button class="tool-btn" id="btn-undo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+            Undo Last Redaction
+          </button>
+          <button class="tool-btn" id="btn-clear">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+            Clear All
+          </button>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:var(--subtext-color);">
+          Drag cursor over sensitive numbers or barcode to redact
+        </div>
+      </div>
+
+      <div class="canvas-viewport">
+        <canvas id="editor-canvas"></canvas>
+      </div>
+
+      <div class="download-action-row">
+        <button class="btn-export btn-save" id="btn-download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Redacted Document
+        </button>
+        <button class="btn-export btn-reset" id="btn-reupload">
+          Mask Another Document
+        </button>
       </div>
     </div>
 
-    <div class="action-row">
-      <button class="btn btn-primary" id="mask-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Mask Sensitive Data
-      </button>
-      <button class="btn btn-secondary" id="clear-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        Clear
-      </button>
-    </div>
   </div>
 
-  <!-- START OF 2000+ WORDS SEO & HOW TO USE CONTENT -->
+  <!-- 2000+ WORDS COMPREHENSIVE SEO GUIDE & INTERNATIONAL PRIVACY FRAMEWORK -->
   <article class="content-section">
-    <h2>How to Use the Document Masker Tool</h2>
-    <p>Our tool is designed to be incredibly simple so anyone can protect their data in seconds. Here is the step-by-step guide:</p>
+    <h2>Complete Guide to Redacting Sensitive Government IDs Worldwide</h2>
+    <p>In our interconnected global economy, sharing identity verification documents is required for employment onboarding, apartment leases, international visa processing, hotel check-ins, financial KYC, and vehicle rentals. However, handing over completely unredacted digital copies of government identification exposes individuals to severe fraud risks, identity theft, and unauthorized background profiling.</p>
 
-    <div class="step-box">
-      <h4>Step 1: Choose the Document Type</h4>
-      <p>At the top, you can either select <b>"Mask All (Auto)"</b> to automatically detect and hide all types of IDs, or manually select a specific document like Aadhaar, PAN, Driving License, or RC.</p>
+    <p>Regulatory authorities worldwide—including the <b>US Federal Trade Commission (FTC)</b>, <b>European Union GDPR authorities</b>, the <b>UK Information Commissioner’s Office (ICO)</b>, and the <b>Unique Identification Authority of India (UIDAI)</b>—strongly recommend redacting extraneous identifying digits before distributing photocopies or scanned files.</p>
+
+    <div class="guide-box">
+      <h4>How to Redact Any Document in 4 Steps</h4>
+      <ol>
+        <li><b>Upload Document or Scanned Page:</b> Click the upload area to select a single-page PDF document or an image file (JPG, PNG, WEBP) from your phone, tablet, or desktop.</li>
+        <li><b>Identify Sensitive Numbers:</b> Locate the core identifier (e.g., first 5 digits of a US SSN, first 8 digits of an Aadhaar card, or national insurance numbers).</li>
+        <li><b>Draw Opaque Redaction Boxes:</b> Click and drag your cursor or finger directly over the digits, signatures, barcodes, or MRZ lines you wish to conceal.</li>
+        <li><b>Download Permanent Flat File:</b> Click <b>Download Redacted Document</b>. The software burns the opaque rectangles into the canvas pixel structure, rendering the underlying numbers permanently unrecoverable.</li>
+      </ol>
     </div>
 
-    <div class="step-box">
-      <h4>Step 2: Paste Your Text</h4>
-      <p>Copy the text containing your sensitive information and paste it into the left box. This could be a rent agreement draft, a job application, or just your ID details.</p>
-    </div>
+    <h2>1. United States: Masking Social Security Numbers (SSN)</h2>
+    <p>In the United States, your 9-digit <b>Social Security Number (SSN)</b> is the primary key to your financial profile, credit score, tax filings, and medical records. Exposing your complete SSN allows identity criminals to open fraudulent lines of credit, claim synthetic tax refunds, or compromise employment accounts.</p>
 
-    <div class="step-box">
-      <h4>Step 3: Click "Mask Sensitive Data"</h4>
-      <p>The tool will instantly scan the text and replace the sensitive parts of your IDs with "X". For example, an Aadhaar number will become <b>XXXX XXXX 9012</b>, and a PAN card will become <b>ABCDE****F</b>.</p>
-    </div>
-
-    <div class="step-box">
-      <h4>Step 4: Copy the Safe Text</h4>
-      <p>Click the "Copy" button to copy the masked text. You can now safely share this document with a landlord, employer, or on any platform without the fear of identity theft.</p>
-    </div>
-
-    <h2>Why is Document Masking Important in India?</h2>
-    <p>In today's digital age, sharing photocopies of your ID proofs is a daily routine. However, failing to protect these documents is one of the biggest reasons for rising cybercrime in India.</p>
+    <p>Under US privacy standards (such as HIPAA in healthcare and federal court redaction rules):</p>
     <ul>
-      <li><b>Identity Theft:</b> If your full Aadhaar number falls into the wrong hands, fraudsters can open fake bank accounts, get SIM cards issued, or even take out loans in your name.</li>
-      <li><b>KYC Fraud:</b> Many scammers ask for photos of your PAN and Aadhaar on WhatsApp for "KYC updates". If they have your full numbers, they can use them for financial fraud.</li>
-      <li><b>Privacy Risks:</b> Your phone number and email are linked to your Aadhaar. Masking them prevents unwanted spam calls and phishing attacks.</li>
+      <li><b>The Standard Format:</b> Always conceal the first 5 digits, revealing only the final 4 digits (e.g., <b>XXX-XX-1234</b>).</li>
+      <li><b>State Driver’s Licenses:</b> Redact the unique driver license number and barcode when verifying age or residential address for non-governmental verifiers.</li>
+      <li><b>US Passports:</b> Redact the 9-digit passport book number and the bottom Machine Readable Zone (MRZ) when providing travel confirmation to unauthorized third parties.</li>
     </ul>
 
-    <h2>UIDAI Guidelines for Aadhaar Card Sharing</h2>
-    <p>The Unique Identification Authority of India (UIDAI) issues a strict advisory for sharing Aadhaar copies. They recommend that you should <b>mask the first 8 digits</b> of your 12-digit Aadhaar number. By showing only the last 4 digits, you allow the verifier to confirm your identity without giving them access to your full, sensitive data.</p>
-    <p>Our tool automatically follows this guideline when masking Aadhaar numbers.</p>
-
-    <h2>Understanding the Documents We Mask</h2>
-
-    <h3>1. Aadhaar Card (आधार कार्ड)</h3>
-    <p>A 12-digit unique identity number issued by UIDAI. It contains your biometric and demographic data, making it the most sensitive document in India.</p>
-
-    <h3>2. PAN Card (पैन कार्ड)</h3>
-    <p>The Permanent Account Number is a 10-character alphanumeric ID issued by the Income Tax Department. It is crucial for financial transactions, paying taxes, and opening bank accounts.</p>
-
-    <h3>3. Driving License (ड्राइविंग लाइसेंस)</h3>
-    <p>Issued by the Regional Transport Office (RTO), your DL contains your address, blood group, and the vehicles you are authorized to drive. Masking the DL number prevents unauthorized use.</p>
-
-    <h3>4. RC (Vehicle Registration Certificate)</h3>
-    <p>The RC proves your ownership of a vehicle. It contains details like the engine number, chassis number, and owner details. It is important to mask it when selling a car online or sharing details with a mechanic.</p>
-
-    <h3>5. Voter ID (EPIC)</h3>
-    <p>The Elector's Photo Identity Card is not just for voting; it is a widely accepted proof of address and age. Masking the middle digits protects your voter profile.</p>
-
-    <h2>When Should You Use a Document Masker?</h2>
+    <h2>2. United Kingdom: National Insurance (NINO) &amp; Driving Licenses</h2>
+    <p>Under the <b>UK General Data Protection Regulation (UK GDPR)</b> and Data Protection Act 2018, personal data shared with landlords (Right to Rent checks) or employers must follow the principle of data minimization.</p>
     <ul>
-      <li><b>Renting a Flat:</b> Landlords always ask for ID proof. Send them a masked Aadhaar or PAN.</li>
-      <li><b>Joining a New Job:</b> HR departments ask for multiple IDs. Send masked copies to protect your privacy until you are formally hired.</li>
-      <li><b>Applying for Loans:</b> If you are sending documents to a broker or agent, always mask them first.</li>
-      <li><b>Buying/Selling a Vehicle:</b> When listing your car on sites like OLX or Spinny, mask the RC details.</li>
+      <li><b>National Insurance Number (NINO):</b> Comprising 2 prefix letters, 6 numbers, and a suffix letter (e.g., QQ 12 34 56 A). Redact the central 6 numeric digits before transmitting payslips or utility bills.</li>
+      <li><b>UK Driver’s License:</b> A 16-character alphanumeric string containing your surname and birth details. Conceal the specific license serial digits to prevent loan fraud.</li>
     </ul>
 
-    <h2>Is This Masking Tool Safe?</h2>
-    <p>Yes, absolutely! This tool uses 100% client-side JavaScript. <b>We do not have a server that receives or stores your data.</b> Everything happens inside your browser. You can even turn off your internet connection after opening this page, and the tool will continue to work perfectly. Your personal information remains completely private and secure.</p>
+    <h2>3. Canada: Social Insurance Number (SIN) Redaction</h2>
+    <p>The <b>Office of the Privacy Commissioner of Canada (OPC)</b> explicitly warns that private-sector organizations cannot legally demand your 9-digit Social Insurance Number (SIN) except for specific income reporting scenarios (such as T4 tax slips). When presenting Canadian proof of identity for housing, telecom subscriptions, or car financing, always redact the entire 9-digit SIN string.</p>
+
+    <h2>4. Australia: Tax File Number (TFN) &amp; Medicare Cards</h2>
+    <p>The Australian Privacy Act strictly regulates how your 9-digit <b>Tax File Number (TFN)</b> can be collected. Unlawfully requesting or retaining an unmasked TFN carries severe federal penalties. When sharing pay summaries or superannuation statements, black out the TFN digits completely. Similarly, when sharing Australian Medicare cards, conceal the individual's reference line unless verifying medical treatment directly.</p>
+
+    <h2>5. India: UIDAI Compliant Masked Aadhaar, PAN &amp; RC</h2>
+    <p>In India, the <b>Digital Personal Data Protection (DPDP) Act</b> and UIDAI directives mandate that individuals should never distribute unmasked photocopies of their 12-digit Aadhaar card:</p>
+    <ul>
+      <li><b>Masked Aadhaar:</b> The first 8 digits are obscured, presenting only the last 4 digits (e.g., <b>XXXX-XXXX-1234</b>). Our visual tool allows you to place a solid black rectangle over both the 8 printed digits and the embedded QR code.</li>
+      <li><b>PAN (Permanent Account Number):</b> Hide the primary alphanumeric sequence when using PAN as photo identification for non-tax transactions.</li>
+      <li><b>Driving License &amp; RC (Vehicle Registration):</b> Redact vehicle chassis numbers, engine numbers, and DL license codes before listing vehicles on secondary marketplaces or sharing with mechanics.</li>
+    </ul>
+
+    <h2>Why Pixel-Burned Redaction Beats Basic Markup Tools</h2>
+    <p>Many users mistakenly use smartphone photo markup highlighters or word-processing text boxes to "cover" sensitive numbers. This creates a dangerous illusion of privacy:</p>
+    <ol>
+      <li><b>Layer Stripping:</b> Standard PDF or image highlighters save covers as transparent vector layers. Anyone can open the file in Photoshop or Acrobat, click on the black shape, and delete it to reveal the numbers underneath.</li>
+      <li><b>Digital Metadata Leakage:</b> Optical character recognition (OCR) and underlying text layers in searchable PDFs still contain the raw numbers unless rasterized.</li>
+      <li><b>DocEasy Flat Canvas Destruction:</b> When you redact via DocEasy, our engine redraws the graphic onto an HTML5 canvas and merges the opaque box directly into the raw pixel matrix. The original pixel data beneath the box is permanently deleted and replaced with solid color pixels. It is mathematically impossible to reverse or strip away.</li>
+    </ol>
 
     <h2>Frequently Asked Questions (FAQ)</h2>
-
     <details class="faq">
-      <summary>Why should I mask my Aadhaar card?</summary>
-      <p>Masking prevents identity theft. UIDAI recommends hiding the first 8 digits of your Aadhaar number when sharing photocopies for KYC, rent agreements, or job applications.</p>
+      <summary>Can someone edit or undo my black redaction box after downloading?</summary>
+      <p>No. When you export the redacted document from DocEasy, the canvas flattens the image into a single bitmap file (PNG). The covered pixels are destroyed and permanently replaced with black color data. No software can reverse this operation.</p>
     </details>
-
     <details class="faq">
-      <summary>Can I mask multiple documents at the same time?</summary>
-      <p>Yes! If you select the "Mask All (Auto)" option and paste a text containing an Aadhaar number, a PAN card, and a phone number, the tool will automatically find and mask all of them at once.</p>
+      <summary>What is the difference between redacting an SSN and an Aadhaar card?</summary>
+      <p>A US Social Security Number (SSN) is a 9-digit number where the first 5 digits are typically concealed (leaving the last 4 visible). An Indian Aadhaar is a 12-digit number where the first 8 digits are concealed according to official UIDAI guidelines. Both can be quickly masked using our free drag-and-draw box.</p>
     </details>
-
     <details class="faq">
-      <summary>Does this tool save my document data?</summary>
-      <p>No. This tool runs entirely in your web browser. Your ID numbers, phone numbers, and personal data are never sent to our servers or logged anywhere.</p>
+      <summary>Is this tool compliant with GDPR, HIPAA, and data protection regulations?</summary>
+      <p>Yes. Because DocEasy operates 100% on client-side browser execution, your document is never transmitted to, processed by, or stored on any server. You retain full custody of your private data, fulfilling zero-retention compliance standards.</p>
     </details>
-
     <details class="faq">
-      <summary>Is a masked Aadhaar still valid for KYC?</summary>
-      <p>Yes. According to UIDAI guidelines, a masked Aadhaar (showing the last 4 digits) is generally accepted as valid proof of identity for most offline and online KYC purposes.</p>
-    </details>
-    
-    <details class="faq">
-      <summary>What if my Driving License format is not masked?</summary>
-      <p>Driving license formats vary by state in India. Our tool uses common patterns, but if it misses a specific format, you can manually edit the output text box before copying it.</p>
+      <summary>Can I redact multi-page PDFs?</summary>
+      <p>This tool is optimized for single-page identity document scans, front-and-back ID cards, and single PDF pages. For large multi-page legal contracts, you can convert pages or redact the primary identity sheet before transmission.</p>
     </details>
   </article>
-  <!-- END OF CONTENT -->
 
 </main>
 
@@ -256,111 +252,180 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
 <script>
 (function(){
-  const inputText = document.getElementById('input-text');
-  const outputText = document.getElementById('output-text');
-  const maskBtn = document.getElementById('mask-btn');
-  const clearBtn = document.getElementById('clear-btn');
-  const copyBtn = document.getElementById('copy-btn');
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+  const workspace = document.getElementById('workspace-wrapper');
+  const canvas = document.getElementById('editor-canvas');
+  const ctx = canvas.getContext('2d');
+  
+  const btnUndo = document.getElementById('btn-undo');
+  const btnClear = document.getElementById('btn-clear');
+  const btnDownload = document.getElementById('btn-download');
+  const btnReupload = document.getElementById('btn-reupload');
 
-  // Handle Radio Button Active State
-  const radioLabels = document.querySelectorAll('.setting-btn');
-  radioLabels.forEach(label => {
-    const radio = label.querySelector('input[type="radio"]');
-    radio.addEventListener('change', () => {
-      radioLabels.forEach(l => l.classList.remove('active'));
-      if(radio.checked) label.classList.add('active');
-    });
+  let baseImage = null;
+  let masks = []; 
+  let isDrawing = false;
+  let startX = 0, startY = 0;
+  let originalFileName = "redacted_document.png";
+
+  dropZone.addEventListener('click', () => fileInput.click());
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.style.background = 'var(--accent-soft)';
   });
 
-  function getSelectedMaskType() {
-    const selected = document.querySelector('input[name="mask-type"]:checked');
-    return selected ? selected.value : 'all';
-  }
-
-  function maskData() {
-    let text = inputText.value;
-    if (!text.trim()) {
-      alert("Please paste some text first.");
-      return;
-    }
-
-    const type = getSelectedMaskType();
-    let maskedText = text;
-
-    // Helper function to apply a specific regex mask
-    const applyMask = (regex, replacement) => {
-      maskedText = maskedText.replace(regex, replacement);
-    };
-
-    // 1. Aadhaar: 12 digits with or without spaces/hyphens
-    const maskAadhaar = () => applyMask(/\b(\d{4})[\s-]?(\d{4})[\s-]?(\d{4})\b/g, 'XXXX XXXX $3');
-
-    // 2. PAN Card: 5 letters, 4 numbers, 1 letter
-    const maskPAN = () => applyMask(/\b([A-Z]{5})(\d{4})([A-Z]{1})\b/gi, '$1****$3');
-
-    // 3. Phone Number (India): 10 digits starting with 6-9
-    const maskPhone = () => applyMask(/\b([6-9]\d{5})(\d{4})\b/g, 'XXXXXX$2');
-
-    // 4. Driving License (Approximate Indian Format): e.g., MH-12-20110001234 or MH1220110001234
-    const maskDL = () => applyMask(/\b([A-Z]{2}[\s-]?\d{2}[\s-]?\d{4})(\d{7})\b/gi, '$1*******');
-
-    // 5. RC (Vehicle Reg): e.g., MH 12 AB 1234
-    const maskRC = () => applyMask(/\b([A-Z]{2}[\s-]?\d{1,2}[\s-]?[A-Z]{1,2}[\s-]?)(\d{4})\b/gi, '$1****');
-
-    // 6. Voter ID: 3 letters followed by 7 digits
-    const maskVoter = () => applyMask(/\b([A-Z]{3})(\d{7})\b/gi, '***$2');
-
-    // 7. Email
-    const maskEmail = () => applyMask(/\b([a-zA-Z0-9._%+-]{2})([a-zA-Z0-9._%+-]+)(@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\b/g, '$1****$3');
-
-    // Apply masks based on selection
-    if (type === 'all') {
-      maskAadhaar();
-      maskPAN();
-      maskPhone();
-      maskDL();
-      maskRC();
-      maskVoter();
-      maskEmail();
-    } else if (type === 'aadhaar') {
-      maskAadhaar();
-    } else if (type === 'pan') {
-      maskPAN();
-    } else if (type === 'driving') {
-      maskDL();
-    } else if (type === 'rc') {
-      maskRC();
-    } else if (type === 'voter') {
-      maskVoter();
-    }
-
-    outputText.value = maskedText;
-  }
-
-  maskBtn.addEventListener('click', maskData);
-
-  clearBtn.addEventListener('click', () => {
-    inputText.value = '';
-    outputText.value = '';
-    inputText.focus();
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.style.background = 'var(--card-hover)';
   });
 
-  copyBtn.addEventListener('click', () => {
-    if (!outputText.value) return;
-    
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(outputText.value).then(() => {
-        const original = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-        setTimeout(() => copyBtn.innerHTML = original, 2000);
-      });
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.style.background = 'var(--card-hover)';
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file) {
+    originalFileName = "redacted_" + file.name.replace(/\.[^/.]+$/, "") + ".png";
+    if (file.type === "application/pdf") {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const typedarray = new Uint8Array(e.target.result);
+        pdfjsLib.getDocument(typedarray).promise.then(pdf => {
+          pdf.getPage(1).then(page => {
+            const viewport = page.getViewport({ scale: 1.6 });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            const renderContext = { canvasContext: ctx, viewport: viewport };
+            page.render(renderContext).promise.then(() => {
+              const img = new Image();
+              img.onload = () => {
+                baseImage = img;
+                masks = [];
+                dropZone.style.display = 'none';
+                workspace.style.display = 'block';
+                renderCanvas();
+              };
+              img.src = canvas.toDataURL();
+            });
+          });
+        });
+      };
+      reader.readAsArrayBuffer(file);
     } else {
-      outputText.select();
-      document.execCommand('copy');
-      alert("Text copied!");
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          baseImage = img;
+          canvas.width = img.width;
+          canvas.height = img.height;
+          masks = [];
+          dropZone.style.display = 'none';
+          workspace.style.display = 'block';
+          renderCanvas();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
+  }
+
+  function renderCanvas() {
+    if (!baseImage) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(baseImage, 0, 0);
+
+    ctx.fillStyle = '#0f172a'; // Deep opaque blackout box
+    masks.forEach(m => {
+      ctx.fillRect(m.x, m.y, m.w, m.h);
+    });
+  }
+
+  function getCanvasCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    };
+  }
+
+  function startDraw(e) {
+    isDrawing = true;
+    const coords = getCanvasCoords(e);
+    startX = coords.x;
+    startY = coords.y;
+  }
+
+  function drawing(e) {
+    if (!isDrawing) return;
+    const coords = getCanvasCoords(e);
+    renderCanvas();
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.75)'; // Dynamic preview box
+    ctx.fillRect(startX, startY, coords.x - startX, coords.y - startY);
+  }
+
+  function endDraw(e) {
+    if (!isDrawing) return;
+    isDrawing = false;
+    const coords = getCanvasCoords(e.changedTouches ? e.changedTouches[0] : e);
+    const w = coords.x - startX;
+    const h = coords.y - startY;
+
+    if (Math.abs(w) > 5 && Math.abs(h) > 5) {
+      masks.push({
+        x: w < 0 ? coords.x : startX,
+        y: h < 0 ? coords.y : startY,
+        w: Math.abs(w),
+        h: Math.abs(h)
+      });
+    }
+    renderCanvas();
+  }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', drawing);
+  window.addEventListener('mouseup', endDraw);
+
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); }, { passive: false });
+  canvas.addEventListener('touchmove', (e) => { e.preventDefault(); drawing(e); }, { passive: false });
+  window.addEventListener('touchend', (e) => { endDraw(e); });
+
+  btnUndo.addEventListener('click', () => {
+    masks.pop();
+    renderCanvas();
   });
 
+  btnClear.addEventListener('click', () => {
+    masks = [];
+    renderCanvas();
+  });
+
+  btnReupload.addEventListener('click', () => {
+    baseImage = null;
+    masks = [];
+    fileInput.value = '';
+    workspace.style.display = 'none';
+    dropZone.style.display = 'block';
+  });
+
+  btnDownload.addEventListener('click', () => {
+    if (!baseImage) return;
+    renderCanvas(); // Permanent pixel destruction
+    const link = document.createElement('a');
+    link.download = originalFileName;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
 })();
 </script>
 </body>
