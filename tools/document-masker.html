@@ -5,8 +5,8 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Global Document &amp; ID Masker - Redact SSN, Aadhaar, PAN, Passport Online | DocEasy</title>
-<meta name="description" content="Free global document and ID redaction tool. Mask sensitive identifiers like US Social Security Numbers (SSN), Canadian SIN, UK National Insurance (NINO), Indian Aadhaar, PAN, Driver's Licenses, and Passports directly on PDFs and photos in your browser.">
-<meta name="keywords" content="ssn masker, mask social security number online, redact ssn pdf, redact passport photo, hide sin canada, nino redaction uk, mask aadhaar card, pan card redaction, hide driver license number, free pdf redaction tool, gdpr document redaction, client side id masker">
+<meta name="description" content="Fast, mobile-friendly ID redaction tool. Tap preset badges to easily mask ID numbers, photos, barcodes, QR codes, and addresses on PDFs and photos with zero uploads.">
+<meta name="keywords" content="document masker, mask aadhaar card online, redact ssn pdf, mask pan card photo, hide driver license number, blackout qr code id, mobile friendly document redaction, client side id masker">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/document-masker.html">
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
@@ -34,11 +34,43 @@
   "description": "Securely mask sensitive personal identifiers including US SSN, UK NINO, Canadian SIN, Indian Aadhaar, Passports, and driver licenses on PDFs and images without server uploads."
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why are movable stamps better than drawing on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Drawing with a finger on a small smartphone screen is imprecise and often covers unintended text. Movable stamp badges appear instantly with standard dimensions, allowing you to easily drag, resize, or delete them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does masking mean hiding the entire ID number?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Official standards like UIDAI Masked Aadhaar and US SSN truncation recommend keeping the last 4 digits visible for identity verification while permanently obscuring the beginning digits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can someone remove the redaction boxes after downloading?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. During export, the black rectangles are permanently burned into the underlying canvas image pixels. The hidden data is overwritten and permanently destroyed."
+      }
+    }
+  ]
+}
+</script>
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
 *{box-sizing:border-box}
-.main-wrap{max-width:1100px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
+.main-wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
 .hero-box{text-align:center;padding:36px 0 22px}
 .hero-title{font-size:clamp(28px,4.5vw,44px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
 .hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:760px;margin:0 auto;line-height:1.6}
@@ -57,20 +89,27 @@
 .drop-zone p{margin:0;font-size:14px;color:var(--subtext-color);}
 #file-input{display:none;}
 
-/* Workspace & Canvas */
+/* Workspace & Interactive Overlay */
 .workspace-wrapper{display:none;margin-top:24px;}
-.canvas-toolbar{display:flex;justify-content:space-between;align-items:center;background:var(--card-hover);border:1px solid var(--border-color);border-radius:12px;padding:12px 18px;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
-.tool-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.tool-btn{padding:8px 16px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-weight:700;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;transition:.15s;}
-.tool-btn:hover{border-color:var(--accent);color:var(--accent);}
-.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-.tool-btn svg{width:16px;height:16px;}
+.preset-bar{background:var(--card-hover);border:1px solid var(--border-color);border-radius:14px;padding:16px 20px;margin-bottom:18px;}
+.preset-bar h4{margin:0 0 12px;font-size:13.5px;font-weight:900;text-transform:uppercase;color:var(--accent);letter-spacing:0.6px;display:flex;align-items:center;gap:6px;}
+.preset-btn-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.preset-btn{padding:10px 16px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:8px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s;font-family:inherit;}
+.preset-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.preset-btn svg{width:16px;height:16px;}
 
-.canvas-viewport{background:#1e293b;border-radius:12px;padding:24px;display:flex;justify-content:center;align-items:center;overflow:auto;max-height:700px;position:relative;}
-#editor-canvas{background:#fff;box-shadow:0 12px 34px rgba(0,0,0,0.4);cursor:crosshair;max-width:100%;}
+.viewport-container{background:#0f172a;border-radius:12px;padding:20px;display:flex;justify-content:center;align-items:center;overflow:auto;max-height:700px;position:relative;}
+.stage-wrapper{position:relative;display:inline-block;box-shadow:0 12px 34px rgba(0,0,0,0.5);}
+#editor-canvas{display:block;max-width:100%;height:auto;}
 
-/* Export Actions */
-.download-action-row{display:flex;gap:14px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+/* Floating Mask Badges */
+.mask-badge{position:absolute;background:#090d16;border:2px solid #38bdf8;box-shadow:0 4px 14px rgba(0,0,0,0.4);cursor:move;user-select:none;touch-action:none;display:flex;align-items:center;justify-content:center;}
+.mask-badge .badge-label{color:#94a3b8;font-size:10px;font-weight:900;letter-spacing:0.5px;pointer-events:none;text-transform:uppercase;padding:0 6px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mask-badge .badge-del{position:absolute;top:-10px;right:-10px;background:#ef4444;color:#fff;border:0;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.4);}
+.mask-badge .badge-handle{position:absolute;bottom:-7px;right:-7px;width:16px;height:16px;background:#38bdf8;border-radius:3px;cursor:nwse-resize;}
+
+/* Actions */
+.download-action-row{display:flex;gap:14px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
 .btn-export{padding:13px 26px;border:0;border-radius:10px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:#fff;transition:.15s;}
 .btn-save{background:#16a34a;}
 .btn-save:hover{background:#15803d;}
@@ -104,19 +143,19 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
 
   <div class="hero-box">
     <h1 class="hero-title">Global Document &amp; ID Masker</h1>
-    <p class="hero-sub">Protect personal privacy worldwide. Redact sensitive identifiers on physical document scans, digital photos, or PDF copies including US SSN, UK NINO, Canadian SIN, Passports, Aadhaar, PAN, and Driver's Licenses with zero cloud uploads.</p>
+    <p class="hero-sub">Protect personal privacy worldwide. Tap preset badges to easily mask ID numbers, photos, barcodes, QR codes, and addresses on PDFs and photos with zero cloud uploads.</p>
   </div>
 
   <div class="calc-card">
     
     <!-- Coverage Badges -->
     <div class="region-chips">
-      <span class="region-chip">&#127482;&#12748area; USA (SSN, DL, Passport)</span>
+      <span class="region-chip">&#127482;&#127488; USA (SSN, DL, Passport)</span>
       <span class="region-chip">&#127464;&#127462; Canada (SIN, DL)</span>
       <span class="region-chip">&#127468;&#127463; UK (NINO, Driving License)</span>
       <span class="region-chip">&#127462;&#127482; Australia (TFN, Medicare)</span>
       <span class="region-chip">&#127470;&#127475; India (Aadhaar, PAN, RC, DL)</span>
-      <span class="region-chip">&#127757; Global (Passports, Credit Cards, IBAN)</span>
+      <span class="region-chip">&#127757; Global (Passports, Barcodes, IBAN)</span>
     </div>
 
     <!-- Drag & Drop Upload -->
@@ -127,34 +166,48 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
         <line x1="12" y1="3" x2="12" y2="15"/>
       </svg>
       <h3>Select or Drop Your ID Document (PDF, PNG, JPG)</h3>
-      <p>Works locally on all devices. No file ever touches a remote server.</p>
+      <p>Works locally in your mobile or desktop browser. No file touches any remote server.</p>
       <input type="file" id="file-input" accept="image/*,application/pdf">
     </div>
 
-    <!-- Visual Canvas Editor Workspace -->
+    <!-- Visual Workspace with Movable Stamp Badges -->
     <div class="workspace-wrapper" id="workspace-wrapper">
-      <div class="canvas-toolbar">
-        <div class="tool-controls">
-          <button class="tool-btn active" id="btn-black-box">
+      
+      <div class="preset-bar">
+        <h4>Tap to add a blackout stamp (Drag into position on your document):</h4>
+        <div class="preset-btn-grid">
+          <button class="preset-btn" id="add-id-front">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="8" width="18" height="8" rx="2"/></svg>
+            + ID Number (First Digits)
+          </button>
+          <button class="preset-btn" id="add-photo">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+            + Photo / Face Box
+          </button>
+          <button class="preset-btn" id="add-qr">
             <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-            Blackout Box (Standard)
+            + QR / Barcode Box
           </button>
-          <button class="tool-btn" id="btn-undo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
-            Undo Last Redaction
+          <button class="preset-btn" id="add-name">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="10" width="18" height="5" rx="1"/></svg>
+            + Full Name Strip
           </button>
-          <button class="tool-btn" id="btn-clear">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
-            Clear All
+          <button class="preset-btn" id="add-address">
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="6" width="18" height="12" rx="2"/></svg>
+            + Address / DOB Block
           </button>
-        </div>
-        <div style="font-size:13px;font-weight:700;color:var(--subtext-color);">
-          Drag cursor over sensitive numbers or barcode to redact
+          <button class="preset-btn" id="add-custom">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+            + Custom Box
+          </button>
         </div>
       </div>
 
-      <div class="canvas-viewport">
-        <canvas id="editor-canvas"></canvas>
+      <div class="viewport-container">
+        <div class="stage-wrapper" id="stage-wrapper">
+          <canvas id="editor-canvas"></canvas>
+          <!-- Dynamic stamps are injected here -->
+        </div>
       </div>
 
       <div class="download-action-row">
@@ -166,6 +219,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
           Mask Another Document
         </button>
       </div>
+
     </div>
 
   </div>
@@ -181,9 +235,9 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
       <h4>How to Redact Any Document in 4 Steps</h4>
       <ol>
         <li><b>Upload Document or Scanned Page:</b> Click the upload area to select a single-page PDF document or an image file (JPG, PNG, WEBP) from your phone, tablet, or desktop.</li>
-        <li><b>Identify Sensitive Numbers:</b> Locate the core identifier (e.g., first 5 digits of a US SSN, first 8 digits of an Aadhaar card, or national insurance numbers).</li>
-        <li><b>Draw Opaque Redaction Boxes:</b> Click and drag your cursor or finger directly over the digits, signatures, barcodes, or MRZ lines you wish to conceal.</li>
-        <li><b>Download Permanent Flat File:</b> Click <b>Download Redacted Document</b>. The software burns the opaque rectangles into the canvas pixel structure, rendering the underlying numbers permanently unrecoverable.</li>
+        <li><b>Tap a Preset Badge:</b> Select the item you need to hide—such as <b>ID Number (First Digits)</b>, <b>Photo / Face</b>, <b>QR Code</b>, or <b>Address Block</b>. The stamp will immediately appear on the preview.</li>
+        <li><b>Drag and Resize:</b> Touch and slide the stamp directly over the sensitive area. Drag the bottom-right blue corner handle to adjust width or height.</li>
+        <li><b>Download Permanent Flat File:</b> Click <b>Download Redacted Document</b>. The software permanently overwrites the pixels under each black box, creating an irreversible, flat output.</li>
       </ol>
     </div>
 
@@ -213,7 +267,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
     <h2>5. India: UIDAI Compliant Masked Aadhaar, PAN &amp; RC</h2>
     <p>In India, the <b>Digital Personal Data Protection (DPDP) Act</b> and UIDAI directives mandate that individuals should never distribute unmasked photocopies of their 12-digit Aadhaar card:</p>
     <ul>
-      <li><b>Masked Aadhaar:</b> The first 8 digits are obscured, presenting only the last 4 digits (e.g., <b>XXXX-XXXX-1234</b>). Our visual tool allows you to place a solid black rectangle over both the 8 printed digits and the embedded QR code.</li>
+      <li><b>Masked Aadhaar:</b> The first 8 digits are obscured, presenting only the last 4 digits (e.g., <b>XXXX-XXXX-1234</b>). Use our <b>ID Number</b> stamp for the first 8 digits and the <b>QR / Barcode</b> stamp to cover the scannable code.</li>
       <li><b>PAN (Permanent Account Number):</b> Hide the primary alphanumeric sequence when using PAN as photo identification for non-tax transactions.</li>
       <li><b>Driving License &amp; RC (Vehicle Registration):</b> Redact vehicle chassis numbers, engine numbers, and DL license codes before listing vehicles on secondary marketplaces or sharing with mechanics.</li>
     </ul>
@@ -233,15 +287,15 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
     </details>
     <details class="faq">
       <summary>What is the difference between redacting an SSN and an Aadhaar card?</summary>
-      <p>A US Social Security Number (SSN) is a 9-digit number where the first 5 digits are typically concealed (leaving the last 4 visible). An Indian Aadhaar is a 12-digit number where the first 8 digits are concealed according to official UIDAI guidelines. Both can be quickly masked using our free drag-and-draw box.</p>
+      <p>A US Social Security Number (SSN) is a 9-digit number where the first 5 digits are typically concealed (leaving the last 4 visible). An Indian Aadhaar is a 12-digit number where the first 8 digits are concealed according to official UIDAI guidelines. Both can be quickly masked using our preset ID Number stamp badge.</p>
     </details>
     <details class="faq">
       <summary>Is this tool compliant with GDPR, HIPAA, and data protection regulations?</summary>
       <p>Yes. Because DocEasy operates 100% on client-side browser execution, your document is never transmitted to, processed by, or stored on any server. You retain full custody of your private data, fulfilling zero-retention compliance standards.</p>
     </details>
     <details class="faq">
-      <summary>Can I redact multi-page PDFs?</summary>
-      <p>This tool is optimized for single-page identity document scans, front-and-back ID cards, and single PDF pages. For large multi-page legal contracts, you can convert pages or redact the primary identity sheet before transmission.</p>
+      <summary>Why is this badge system better on mobile phones than drawing by hand?</summary>
+      <p>Drawing on small mobile touchscreens is frustrating and inaccurate. Our movable badge stamps appear in standard sizes right where you need them. You simply slide them into place with your thumb, adjust the corner if needed, and download.</p>
     </details>
   </article>
 
@@ -255,19 +309,16 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
   const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('file-input');
   const workspace = document.getElementById('workspace-wrapper');
+  const stage = document.getElementById('stage-wrapper');
   const canvas = document.getElementById('editor-canvas');
   const ctx = canvas.getContext('2d');
   
-  const btnUndo = document.getElementById('btn-undo');
-  const btnClear = document.getElementById('btn-clear');
   const btnDownload = document.getElementById('btn-download');
   const btnReupload = document.getElementById('btn-reupload');
 
   let baseImage = null;
-  let masks = []; 
-  let isDrawing = false;
-  let startX = 0, startY = 0;
   let originalFileName = "redacted_document.png";
+  let activeBadges = [];
 
   dropZone.addEventListener('click', () => fileInput.click());
 
@@ -306,10 +357,9 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
               const img = new Image();
               img.onload = () => {
                 baseImage = img;
-                masks = [];
+                clearBadges();
                 dropZone.style.display = 'none';
                 workspace.style.display = 'block';
-                renderCanvas();
               };
               img.src = canvas.toDataURL();
             });
@@ -325,10 +375,10 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
           baseImage = img;
           canvas.width = img.width;
           canvas.height = img.height;
-          masks = [];
+          ctx.drawImage(img, 0, 0);
+          clearBadges();
           dropZone.style.display = 'none';
           workspace.style.display = 'block';
-          renderCanvas();
         };
         img.src = e.target.result;
       };
@@ -336,96 +386,167 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
     }
   }
 
-  function renderCanvas() {
+  function clearBadges() {
+    activeBadges.forEach(b => b.el.remove());
+    activeBadges = [];
+  }
+
+  // Preset Stamp Badges Factory
+  function addBadge(label, widthPercent, heightPercent) {
     if (!baseImage) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(baseImage, 0, 0);
 
-    ctx.fillStyle = '#0f172a'; // Deep opaque blackout box
-    masks.forEach(m => {
-      ctx.fillRect(m.x, m.y, m.w, m.h);
+    const stageRect = stage.getBoundingClientRect();
+    const stageW = stageRect.width || canvas.clientWidth || 300;
+    const stageH = stageRect.height || canvas.clientHeight || 200;
+
+    const bW = Math.max(60, stageW * widthPercent);
+    const bH = Math.max(26, stageH * heightPercent);
+    const bX = (stageW - bW) / 2;
+    const bY = (stageH - bH) / 2;
+
+    const el = document.createElement('div');
+    el.className = 'mask-badge';
+    el.style.left = bX + 'px';
+    el.style.top = bY + 'px';
+    el.style.width = bW + 'px';
+    el.style.height = bH + 'px';
+
+    el.innerHTML = `
+      <span class="badge-label">${label}</span>
+      <button class="badge-del" title="Remove">&times;</button>
+      <div class="badge-handle" title="Drag to Resize"></div>
+    `;
+
+    stage.appendChild(el);
+
+    const badgeObj = { el, label };
+    activeBadges.push(badgeObj);
+
+    // Remove Stamp Button
+    el.querySelector('.badge-del').addEventListener('click', (e) => {
+      e.stopPropagation();
+      el.remove();
+      activeBadges = activeBadges.filter(b => b !== badgeObj);
     });
+
+    // Make Draggable & Resizable with Touch & Mouse
+    setupDraggable(el);
   }
 
-  function getCanvasCoords(e) {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return {
-      x: (clientX - rect.left) * scaleX,
-      y: (clientY - rect.top) * scaleY
-    };
-  }
+  function setupDraggable(el) {
+    let isDragging = false;
+    let isResizing = false;
+    let startX, startY, startLeft, startTop, startW, startH;
 
-  function startDraw(e) {
-    isDrawing = true;
-    const coords = getCanvasCoords(e);
-    startX = coords.x;
-    startY = coords.y;
-  }
+    const handle = el.querySelector('.badge-handle');
 
-  function drawing(e) {
-    if (!isDrawing) return;
-    const coords = getCanvasCoords(e);
-    renderCanvas();
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.75)'; // Dynamic preview box
-    ctx.fillRect(startX, startY, coords.x - startX, coords.y - startY);
-  }
+    function onPointerDown(e) {
+      if (e.target.classList.contains('badge-del')) return;
+      e.preventDefault();
 
-  function endDraw(e) {
-    if (!isDrawing) return;
-    isDrawing = false;
-    const coords = getCanvasCoords(e.changedTouches ? e.changedTouches[0] : e);
-    const w = coords.x - startX;
-    const h = coords.y - startY;
+      const evt = e.touches ? e.touches[0] : e;
+      startX = evt.clientX;
+      startY = evt.clientY;
 
-    if (Math.abs(w) > 5 && Math.abs(h) > 5) {
-      masks.push({
-        x: w < 0 ? coords.x : startX,
-        y: h < 0 ? coords.y : startY,
-        w: Math.abs(w),
-        h: Math.abs(h)
-      });
+      startLeft = parseFloat(el.style.left) || 0;
+      startTop = parseFloat(el.style.top) || 0;
+      startW = parseFloat(el.style.width) || 80;
+      startH = parseFloat(el.style.height) || 30;
+
+      if (e.target === handle) {
+        isResizing = true;
+      } else {
+        isDragging = true;
+      }
+
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+      window.addEventListener('touchmove', onPointerMove, { passive: false });
+      window.addEventListener('touchend', onPointerUp);
     }
-    renderCanvas();
+
+    function onPointerMove(e) {
+      if (!isDragging && !isResizing) return;
+      e.preventDefault();
+
+      const evt = e.touches ? e.touches[0] : e;
+      const dx = evt.clientX - startX;
+      const dy = evt.clientY - startY;
+
+      const stageW = stage.clientWidth;
+      const stageH = stage.clientHeight;
+
+      if (isDragging) {
+        let newX = Math.max(0, Math.min(stageW - startW, startLeft + dx));
+        let newY = Math.max(0, Math.min(stageH - startH, startTop + dy));
+        el.style.left = newX + 'px';
+        el.style.top = newY + 'px';
+      } else if (isResizing) {
+        let newW = Math.max(40, startW + dx);
+        let newH = Math.max(18, startH + dy);
+        el.style.width = newW + 'px';
+        el.style.height = newH + 'px';
+      }
+    }
+
+    function onPointerUp() {
+      isDragging = false;
+      isResizing = false;
+      window.removeEventListener('mousemove', onPointerMove);
+      window.removeEventListener('mouseup', onPointerUp);
+      window.removeEventListener('touchmove', onPointerMove);
+      window.removeEventListener('touchend', onPointerUp);
+    }
+
+    el.addEventListener('mousedown', onPointerDown);
+    el.addEventListener('touchstart', onPointerDown, { passive: false });
   }
 
-  canvas.addEventListener('mousedown', startDraw);
-  canvas.addEventListener('mousemove', drawing);
-  window.addEventListener('mouseup', endDraw);
-
-  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); }, { passive: false });
-  canvas.addEventListener('touchmove', (e) => { e.preventDefault(); drawing(e); }, { passive: false });
-  window.addEventListener('touchend', (e) => { endDraw(e); });
-
-  btnUndo.addEventListener('click', () => {
-    masks.pop();
-    renderCanvas();
-  });
-
-  btnClear.addEventListener('click', () => {
-    masks = [];
-    renderCanvas();
-  });
+  // Stamp Click Handlers
+  document.getElementById('add-id-front').addEventListener('click', () => addBadge("ID NO (FRONT)", 0.45, 0.08));
+  document.getElementById('add-photo').addEventListener('click', () => addBadge("PHOTO / FACE", 0.28, 0.32));
+  document.getElementById('add-qr').addEventListener('click', () => addBadge("QR / BARCODE", 0.32, 0.32));
+  document.getElementById('add-name').addEventListener('click', () => addBadge("NAME", 0.40, 0.07));
+  document.getElementById('add-address').addEventListener('click', () => addBadge("ADDRESS BLOCK", 0.55, 0.22));
+  document.getElementById('add-custom').addEventListener('click', () => addBadge("REDACTED", 0.35, 0.10));
 
   btnReupload.addEventListener('click', () => {
     baseImage = null;
-    masks = [];
+    clearBadges();
     fileInput.value = '';
     workspace.style.display = 'none';
     dropZone.style.display = 'block';
   });
 
+  // Final Redaction & Burn-in Download
   btnDownload.addEventListener('click', () => {
     if (!baseImage) return;
-    renderCanvas(); // Permanent pixel destruction
+
+    // Reset base canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(baseImage, 0, 0);
+
+    const scaleX = canvas.width / stage.clientWidth;
+    const scaleY = canvas.height / stage.clientHeight;
+
+    ctx.fillStyle = '#090d16'; // Deep opaque blackout box
+
+    activeBadges.forEach(b => {
+      const left = parseFloat(b.el.style.left) || 0;
+      const top = parseFloat(b.el.style.top) || 0;
+      const width = parseFloat(b.el.style.width) || 0;
+      const height = parseFloat(b.el.style.height) || 0;
+
+      // Burn into canvas pixel matrix
+      ctx.fillRect(left * scaleX, top * scaleY, width * scaleX, height * scaleY);
+    });
+
     const link = document.createElement('a');
     link.download = originalFileName;
     link.href = canvas.toDataURL('image/png');
     link.click();
   });
+
 })();
 </script>
 </body>
