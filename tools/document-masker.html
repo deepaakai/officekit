@@ -5,8 +5,8 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Global Document &amp; ID Masker - Redact SSN, Aadhaar, PAN, Passport Online | DocEasy</title>
-<meta name="description" content="Fast, mobile-friendly ID redaction tool. Tap preset badges to easily mask ID numbers, photos, barcodes, QR codes, and addresses on PDFs and photos with zero uploads.">
-<meta name="keywords" content="document masker, mask aadhaar card online, redact ssn pdf, mask pan card photo, hide driver license number, blackout qr code id, mobile friendly document redaction, client side id masker">
+<meta name="description" content="Free global document and ID redaction tool. Securely mask sensitive identifiers like US Social Security Numbers (SSN), Canadian SIN, UK National Insurance (NINO), Indian Aadhaar, PAN, Driver's Licenses, and Passports directly on PDFs and photos with precision drag-and-resize handles and zero server uploads.">
+<meta name="keywords" content="document masker, mask aadhaar card online, redact ssn pdf, mask pan card photo, hide driver license number, blackout qr code id, mobile friendly document redaction, client side id masker, redact passport photo, hide sin canada, nino redaction uk, tfn masking australia, permanent pdf redaction tool, gdpr document redaction, hipaa compliant redaction tool, identity theft protection">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/document-masker.html">
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
@@ -17,7 +17,7 @@
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 </script>
 
-<!-- Structured Data for SEO -->
+<!-- Structured Data for SEO & Rich Snippets -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -41,10 +41,18 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Why are movable stamps better than drawing on mobile?",
+      "name": "How do I resize the redaction box horizontally or vertically on mobile?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Drawing with a finger on a small smartphone screen is imprecise and often covers unintended text. Movable stamp badges appear instantly with standard dimensions, allowing you to easily drag, resize, or delete them."
+        "text": "Each blackout badge includes dedicated precision handles: drag the right edge handle to adjust width horizontally, drag the bottom handle to adjust height vertically, or drag the bottom-right corner handle to scale both dimensions simultaneously down to 5 pixels."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I make the mask strip very thin for single digit lines or small text?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The minimum dimension restriction is set to 5px, allowing you to accurately mask small lines of text, single digits, or narrow document borders without covering neighboring details."
       }
     },
     {
@@ -52,7 +60,7 @@
       "name": "Does masking mean hiding the entire ID number?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Official standards like UIDAI Masked Aadhaar and US SSN truncation recommend keeping the last 4 digits visible for identity verification while permanently obscuring the beginning digits."
+        "text": "No. Official standards like UIDAI Masked Aadhaar and US SSN truncation recommend keeping the last 4 digits visible for identity verification while permanently obscuring the initial sensitive digits."
       }
     },
     {
@@ -60,7 +68,15 @@
       "name": "Can someone remove the redaction boxes after downloading?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. During export, the black rectangles are permanently burned into the underlying canvas image pixels. The hidden data is overwritten and permanently destroyed."
+        "text": "No. During export, the black rectangles are permanently burned into the underlying canvas image pixels. The original pixel data beneath the box is overwritten with solid color and permanently destroyed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my documents uploaded to any server or cloud database?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Never. DocEasy operates 100% on client-side browser execution via the HTML5 Canvas API and PDF.js. Your document never leaves your phone, tablet, or computer."
       }
     }
   ]
@@ -78,15 +94,16 @@
 .calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:18px;padding:32px 26px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
 
 /* Document Region Pill Badges */
-.region-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px;}
-.region-chip{font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--card-hover);color:var(--subtext-color);border:1px solid var(--border-color);}
+.region-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:24px;}
+.region-chip{font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;background:var(--card-hover);color:var(--subtext-color);border:1px solid var(--border-color);}
 
-/* Upload Area */
-.drop-zone{border:2px dashed var(--accent);border-radius:14px;padding:46px 20px;text-align:center;background:var(--card-hover);cursor:pointer;transition:.2s;}
+/* Perfectly Centered Drop Zone Container */
+.drop-zone-container{width:100%;max-width:640px;margin:0 auto;}
+.drop-zone{border:2px dashed var(--accent);border-radius:16px;padding:44px 20px;text-align:center;background:var(--card-hover);cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .drop-zone:hover{background:var(--accent-soft);}
-.drop-zone svg{width:52px;height:52px;color:var(--accent);margin-bottom:14px;}
-.drop-zone h3{margin:0 0 6px;font-size:19px;font-weight:800;color:var(--text-color);}
-.drop-zone p{margin:0;font-size:14px;color:var(--subtext-color);}
+.drop-zone svg{width:56px;height:56px;color:var(--accent);margin-bottom:14px;flex-shrink:0;}
+.drop-zone h3{margin:0 0 8px;font-size:19px;font-weight:800;color:var(--text-color);text-align:center;}
+.drop-zone p{margin:0;font-size:14px;color:var(--subtext-color);text-align:center;line-height:1.5;}
 #file-input{display:none;}
 
 /* Workspace & Interactive Overlay */
@@ -94,21 +111,25 @@
 .preset-bar{background:var(--card-hover);border:1px solid var(--border-color);border-radius:14px;padding:16px 20px;margin-bottom:18px;}
 .preset-bar h4{margin:0 0 12px;font-size:13.5px;font-weight:900;text-transform:uppercase;color:var(--accent);letter-spacing:0.6px;display:flex;align-items:center;gap:6px;}
 .preset-btn-grid{display:flex;flex-wrap:wrap;gap:10px;}
-.preset-btn{padding:10px 16px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:8px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s;font-family:inherit;}
+.preset-btn{padding:10px 16px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s;font-family:inherit;}
 .preset-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
-.preset-btn svg{width:16px;height:16px;}
+.preset-btn svg{width:15px;height:15px;}
 
-.viewport-container{background:#0f172a;border-radius:12px;padding:20px;display:flex;justify-content:center;align-items:center;overflow:auto;max-height:700px;position:relative;}
-.stage-wrapper{position:relative;display:inline-block;box-shadow:0 12px 34px rgba(0,0,0,0.5);}
+.viewport-container{background:#090d16;border-radius:14px;padding:16px;display:flex;justify-content:center;align-items:center;overflow:auto;max-height:750px;position:relative;}
+.stage-wrapper{position:relative;display:inline-block;box-shadow:0 12px 34px rgba(0,0,0,0.6);}
 #editor-canvas{display:block;max-width:100%;height:auto;}
 
-/* Floating Mask Badges */
-.mask-badge{position:absolute;background:#090d16;border:2px solid #38bdf8;box-shadow:0 4px 14px rgba(0,0,0,0.4);cursor:move;user-select:none;touch-action:none;display:flex;align-items:center;justify-content:center;}
-.mask-badge .badge-label{color:#94a3b8;font-size:10px;font-weight:900;letter-spacing:0.5px;pointer-events:none;text-transform:uppercase;padding:0 6px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.mask-badge .badge-del{position:absolute;top:-10px;right:-10px;background:#ef4444;color:#fff;border:0;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.4);}
-.mask-badge .badge-handle{position:absolute;bottom:-7px;right:-7px;width:16px;height:16px;background:#38bdf8;border-radius:3px;cursor:nwse-resize;}
+/* Floating Mask Badges with Multi-Directional Handles */
+.mask-badge{position:absolute;background:#090d16;border:2px solid #38bdf8;box-shadow:0 4px 14px rgba(0,0,0,0.5);cursor:move;user-select:none;touch-action:none;display:flex;align-items:center;justify-content:center;min-width:5px;min-height:5px;}
+.mask-badge .badge-label{color:#94a3b8;font-size:9.5px;font-weight:900;letter-spacing:0.5px;pointer-events:none;text-transform:uppercase;padding:0 4px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mask-badge .badge-del{position:absolute;top:-11px;right:-11px;background:#ef4444;color:#fff;border:0;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.4);z-index:10;}
 
-/* Actions */
+/* Independent Resize Handles */
+.handle-r{position:absolute;top:50%;right:-7px;transform:translateY(-50%);width:14px;height:22px;background:#38bdf8;border-radius:3px;cursor:ew-resize;touch-action:none;}
+.handle-b{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:22px;height:14px;background:#38bdf8;border-radius:3px;cursor:ns-resize;touch-action:none;}
+.handle-c{position:absolute;bottom:-7px;right:-7px;width:15px;height:15px;background:#38bdf8;border-radius:3px;cursor:nwse-resize;touch-action:none;}
+
+/* Export Actions */
 .download-action-row{display:flex;gap:14px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
 .btn-export{padding:13px 26px;border:0;border-radius:10px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:#fff;transition:.15s;}
 .btn-save{background:#16a34a;}
@@ -116,7 +137,7 @@
 .btn-reset{background:var(--card-bg);color:var(--text-color);border:1.5px solid var(--border-color);}
 .btn-reset:hover{border-color:var(--accent);color:var(--accent);}
 
-/* SEO Content & Comprehensive Knowledge Base */
+/* Comprehensive 2000+ Words SEO Content & Knowledge Base */
 .content-section{max-width:920px;margin:44px auto 0;padding:42px 34px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;color:var(--subtext-color)}
 .content-section h2{font-size:26px;font-weight:800;color:var(--text-color);margin:40px 0 16px;letter-spacing:-0.5px;}
 .content-section h2:first-child{margin-top:0}
@@ -133,7 +154,7 @@ details.faq summary::-webkit-details-marker{display:none}
 details.faq summary::after{content:"+";color:var(--accent);font-size:24px;font-weight:300}
 details.faq[open] summary::after{content:"−"}
 details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
-@media(max-width:640px){.main-wrap{padding:0 14px 60px}.calc-card{padding:22px 16px}.content-section{padding:24px 18px;margin:28px auto}}
+@media(max-width:640px){.main-wrap{padding:0 14px 60px}.calc-card{padding:22px 14px}.content-section{padding:24px 18px;margin:28px auto}}
 </style>
 </head>
 <body>
@@ -143,7 +164,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
 
   <div class="hero-box">
     <h1 class="hero-title">Global Document &amp; ID Masker</h1>
-    <p class="hero-sub">Protect personal privacy worldwide. Tap preset badges to easily mask ID numbers, photos, barcodes, QR codes, and addresses on PDFs and photos with zero cloud uploads.</p>
+    <p class="hero-sub">Protect personal privacy worldwide. Tap preset badges to easily mask ID numbers, photos, barcodes, QR codes, and addresses on PDFs and photos with precision handles and zero cloud uploads.</p>
   </div>
 
   <div class="calc-card">
@@ -158,16 +179,18 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
       <span class="region-chip">&#127757; Global (Passports, Barcodes, IBAN)</span>
     </div>
 
-    <!-- Drag & Drop Upload -->
-    <div class="drop-zone" id="drop-zone">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="17 8 12 3 7 8"/>
-        <line x1="12" y1="3" x2="12" y2="15"/>
-      </svg>
-      <h3>Select or Drop Your ID Document (PDF, PNG, JPG)</h3>
-      <p>Works locally in your mobile or desktop browser. No file touches any remote server.</p>
-      <input type="file" id="file-input" accept="image/*,application/pdf">
+    <!-- Centered Drag & Drop Upload Container -->
+    <div class="drop-zone-container" id="drop-zone-container">
+      <div class="drop-zone" id="drop-zone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <h3>Select or Drop Your ID Document (PDF, PNG, JPG)</h3>
+        <p>Works locally in your mobile or desktop browser. No file touches any remote server.</p>
+        <input type="file" id="file-input" accept="image/*,application/pdf">
+      </div>
     </div>
 
     <!-- Visual Workspace with Movable Stamp Badges -->
@@ -178,7 +201,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
         <div class="preset-btn-grid">
           <button class="preset-btn" id="add-id-front">
             <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="8" width="18" height="8" rx="2"/></svg>
-            + ID Number (First Digits)
+            + ID Number (Front)
           </button>
           <button class="preset-btn" id="add-photo">
             <svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
@@ -190,7 +213,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
           </button>
           <button class="preset-btn" id="add-name">
             <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="10" width="18" height="5" rx="1"/></svg>
-            + Full Name Strip
+            + Name Strip
           </button>
           <button class="preset-btn" id="add-address">
             <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="6" width="18" height="12" rx="2"/></svg>
@@ -206,7 +229,6 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
       <div class="viewport-container">
         <div class="stage-wrapper" id="stage-wrapper">
           <canvas id="editor-canvas"></canvas>
-          <!-- Dynamic stamps are injected here -->
         </div>
       </div>
 
@@ -227,75 +249,83 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
   <!-- 2000+ WORDS COMPREHENSIVE SEO GUIDE & INTERNATIONAL PRIVACY FRAMEWORK -->
   <article class="content-section">
     <h2>Complete Guide to Redacting Sensitive Government IDs Worldwide</h2>
-    <p>In our interconnected global economy, sharing identity verification documents is required for employment onboarding, apartment leases, international visa processing, hotel check-ins, financial KYC, and vehicle rentals. However, handing over completely unredacted digital copies of government identification exposes individuals to severe fraud risks, identity theft, and unauthorized background profiling.</p>
+    <p>In our interconnected global digital economy, distributing identity verification paperwork has become an essential prerequisite for remote employment onboarding, tenant lease approvals, international visa issuance, hotel guest check-ins, customer KYC compliance, and vehicle rentals. However, circulating unredacted high-resolution color copies of sovereign identity credentials exposes private citizens to catastrophic identity theft, financial fraud, synthetic credit impersonation, and unauthorized background profiling.</p>
 
-    <p>Regulatory authorities worldwide—including the <b>US Federal Trade Commission (FTC)</b>, <b>European Union GDPR authorities</b>, the <b>UK Information Commissioner’s Office (ICO)</b>, and the <b>Unique Identification Authority of India (UIDAI)</b>—strongly recommend redacting extraneous identifying digits before distributing photocopies or scanned files.</p>
+    <p>Leading international privacy authorities—including the <b>US Federal Trade Commission (FTC)</b>, the <b>European Data Protection Board (EDPB)</b> enforcing the GDPR, the <b>UK Information Commissioner’s Office (ICO)</b> under the Data Protection Act 2018, and the <b>Unique Identification Authority of India (UIDAI)</b> under statutory advisories—explicitly instruct consumers and enterprises to practice strict data minimization by redacting all unnecessary personally identifiable numbers before sharing photocopies or digital image scans.</p>
 
     <div class="guide-box">
-      <h4>How to Redact Any Document in 4 Steps</h4>
+      <h4>How to Redact Any Document in 4 Simple Steps</h4>
       <ol>
-        <li><b>Upload Document or Scanned Page:</b> Click the upload area to select a single-page PDF document or an image file (JPG, PNG, WEBP) from your phone, tablet, or desktop.</li>
-        <li><b>Tap a Preset Badge:</b> Select the item you need to hide—such as <b>ID Number (First Digits)</b>, <b>Photo / Face</b>, <b>QR Code</b>, or <b>Address Block</b>. The stamp will immediately appear on the preview.</li>
-        <li><b>Drag and Resize:</b> Touch and slide the stamp directly over the sensitive area. Drag the bottom-right blue corner handle to adjust width or height.</li>
-        <li><b>Download Permanent Flat File:</b> Click <b>Download Redacted Document</b>. The software permanently overwrites the pixels under each black box, creating an irreversible, flat output.</li>
+        <li><b>Upload Document or Scanned Page:</b> Click the centered upload zone or drag-and-drop a single-page PDF document or digital photo (JPG, PNG, WEBP) from your smartphone, tablet, or PC.</li>
+        <li><b>Tap a Preset Badge:</b> Select the specific element you need to conceal—such as <b>ID Number (Front)</b>, <b>Photo / Face Box</b>, <b>QR / Barcode</b>, <b>Name Strip</b>, or <b>Address Block</b>. The stamp badge immediately materializes over your document.</li>
+        <li><b>Position and Adjust with Precision Handles:</b> Touch and drag the badge directly over the sensitive characters. Use the dedicated <b>Right Handle</b> for width, the <b>Bottom Handle</b> for height, or the <b>Corner Handle</b> for simultaneous resizing down to 5 pixels.</li>
+        <li><b>Download Irreversible Flat File:</b> Click <b>Download Redacted Document</b>. The software burns the opaque rectangles into the canvas pixel structure, overwriting the underlying sensitive numbers permanently.</li>
       </ol>
     </div>
 
-    <h2>1. United States: Masking Social Security Numbers (SSN)</h2>
-    <p>In the United States, your 9-digit <b>Social Security Number (SSN)</b> is the primary key to your financial profile, credit score, tax filings, and medical records. Exposing your complete SSN allows identity criminals to open fraudulent lines of credit, claim synthetic tax refunds, or compromise employment accounts.</p>
+    <h2>1. United States: Concealing Social Security Numbers (SSN)</h2>
+    <p>In the United States, your 9-digit <b>Social Security Number (SSN)</b> functions as the core universal identifier across federal tax reporting, consumer credit reporting bureaus (Equifax, Experian, TransUnion), medical systems, and banking institutions. Leaving an SSN unredacted on rental applications, employee onboarding W-9/W-4 forms, or utility account setups gives scammers the master key to your entire financial existence.</p>
 
-    <p>Under US privacy standards (such as HIPAA in healthcare and federal court redaction rules):</p>
+    <p>Under United States privacy standards, including Federal Court Redaction Rules (Federal Rule of Civil Procedure 5.2) and HIPAA healthcare regulations:</p>
     <ul>
-      <li><b>The Standard Format:</b> Always conceal the first 5 digits, revealing only the final 4 digits (e.g., <b>XXX-XX-1234</b>).</li>
-      <li><b>State Driver’s Licenses:</b> Redact the unique driver license number and barcode when verifying age or residential address for non-governmental verifiers.</li>
-      <li><b>US Passports:</b> Redact the 9-digit passport book number and the bottom Machine Readable Zone (MRZ) when providing travel confirmation to unauthorized third parties.</li>
+      <li><b>The Truncation Standard:</b> Always conceal the first 5 digits of the SSN, leaving only the final 4 digits visible for identity verification (e.g., <b>XXX-XX-1234</b>).</li>
+      <li><b>State Driver’s Licenses:</b> Redact the primary license number and the scannable PDF417 2D barcode printed on the reverse side when supplying proof of age or residential residency.</li>
+      <li><b>US Passport Booklets:</b> Redact the 9-digit passport book number in the upper right corner along with the two-line Machine Readable Zone (MRZ) printed at the bottom of the data page.</li>
     </ul>
 
-    <h2>2. United Kingdom: National Insurance (NINO) &amp; Driving Licenses</h2>
-    <p>Under the <b>UK General Data Protection Regulation (UK GDPR)</b> and Data Protection Act 2018, personal data shared with landlords (Right to Rent checks) or employers must follow the principle of data minimization.</p>
+    <h2>2. United Kingdom: National Insurance (NINO) &amp; Driving Licences</h2>
+    <p>Under the <b>UK General Data Protection Regulation (UK GDPR)</b> and Data Protection Act 2018, organizations conducting "Right to Rent" checks or pre-employment verification are legally required to practice strict data minimization.</p>
     <ul>
-      <li><b>National Insurance Number (NINO):</b> Comprising 2 prefix letters, 6 numbers, and a suffix letter (e.g., QQ 12 34 56 A). Redact the central 6 numeric digits before transmitting payslips or utility bills.</li>
-      <li><b>UK Driver’s License:</b> A 16-character alphanumeric string containing your surname and birth details. Conceal the specific license serial digits to prevent loan fraud.</li>
+      <li><b>National Insurance Number (NINO):</b> Formatted with 2 letter prefixes, 6 numeric digits, and a final letter suffix (e.g., QQ 12 34 56 A). You should permanently redact the central 6 digits on salary payslips, P60 certificates, or HMRC tax notices.</li>
+      <li><b>UK Photocard Driving Licence:</b> Features a distinctive 16-character alphanumeric sequence encoding your surname and birth year. Conceal the central digits to prevent fraudsters from taking out unauthorized hire-purchase loans in your name.</li>
     </ul>
 
     <h2>3. Canada: Social Insurance Number (SIN) Redaction</h2>
-    <p>The <b>Office of the Privacy Commissioner of Canada (OPC)</b> explicitly warns that private-sector organizations cannot legally demand your 9-digit Social Insurance Number (SIN) except for specific income reporting scenarios (such as T4 tax slips). When presenting Canadian proof of identity for housing, telecom subscriptions, or car financing, always redact the entire 9-digit SIN string.</p>
+    <p>The <b>Office of the Privacy Commissioner of Canada (OPC)</b> explicitly warns consumers that private sector corporations, landlords, and telecom providers have no legal entitlement to record or demand your 9-digit Social Insurance Number (SIN). Outside of statutory government income reporting (such as employment T4 slips), organizations requesting identity verification must accept alternative documentation with the 9-digit SIN completely blacked out.</p>
 
     <h2>4. Australia: Tax File Number (TFN) &amp; Medicare Cards</h2>
-    <p>The Australian Privacy Act strictly regulates how your 9-digit <b>Tax File Number (TFN)</b> can be collected. Unlawfully requesting or retaining an unmasked TFN carries severe federal penalties. When sharing pay summaries or superannuation statements, black out the TFN digits completely. Similarly, when sharing Australian Medicare cards, conceal the individual's reference line unless verifying medical treatment directly.</p>
+    <p>The Australian Privacy Act 1988 strictly regulates the collection and handling of your 9-digit <b>Tax File Number (TFN)</b>. Unlawfully demanding or storing an unredacted TFN carries severe federal civil penalties. When submitting group certificates or superannuation statements to brokers or mortgage agents, the TFN digits must be blacked out completely. Similarly, on Australian Medicare cards, always redact the individual reference number unless verifying healthcare entitlements directly.</p>
 
-    <h2>5. India: UIDAI Compliant Masked Aadhaar, PAN &amp; RC</h2>
-    <p>In India, the <b>Digital Personal Data Protection (DPDP) Act</b> and UIDAI directives mandate that individuals should never distribute unmasked photocopies of their 12-digit Aadhaar card:</p>
+    <h2>5. India: UIDAI Compliant Masked Aadhaar, PAN &amp; RC Redaction</h2>
+    <p>In India, the <b>Digital Personal Data Protection (DPDP) Act</b> and UIDAI administrative directives emphasize that citizens should never hand over unmasked photocopies of their 12-digit Aadhaar card to unauthorized third parties:</p>
     <ul>
-      <li><b>Masked Aadhaar:</b> The first 8 digits are obscured, presenting only the last 4 digits (e.g., <b>XXXX-XXXX-1234</b>). Use our <b>ID Number</b> stamp for the first 8 digits and the <b>QR / Barcode</b> stamp to cover the scannable code.</li>
-      <li><b>PAN (Permanent Account Number):</b> Hide the primary alphanumeric sequence when using PAN as photo identification for non-tax transactions.</li>
-      <li><b>Driving License &amp; RC (Vehicle Registration):</b> Redact vehicle chassis numbers, engine numbers, and DL license codes before listing vehicles on secondary marketplaces or sharing with mechanics.</li>
+      <li><b>Official Masked Aadhaar:</b> The statutory UIDAI standard requires concealing the first 8 digits of the Aadhaar number, keeping only the final 4 digits visible (e.g., <b>XXXX-XXXX-1234</b>). Use our <b>ID Number (Front)</b> badge to cover the first 8 digits, and apply the <b>QR / Barcode</b> badge over the large scannable biometric QR code on both halves of the card.</li>
+      <li><b>PAN (Permanent Account Number):</b> Hide the alphanumeric sequence when submitting PAN cards as visual age or identity proof for hotel check-ins or gym memberships.</li>
+      <li><b>Driving License &amp; Vehicle RC:</b> When listing second-hand vehicles on marketplaces like OLX or sharing registration papers with third-party insurance brokers, black out vehicle chassis numbers, engine numbers, and full DL digits.</li>
     </ul>
 
-    <h2>Why Pixel-Burned Redaction Beats Basic Markup Tools</h2>
-    <p>Many users mistakenly use smartphone photo markup highlighters or word-processing text boxes to "cover" sensitive numbers. This creates a dangerous illusion of privacy:</p>
+    <h2>Why Pixel-Burned Redaction Beats Basic Smartphone Markup Tools</h2>
+    <p>Many smartphone users mistakenly open their default gallery app and draw black marker lines or highlight strokes over sensitive digits before sending images via messaging apps. This creates a severe, dangerous illusion of privacy:</p>
     <ol>
-      <li><b>Layer Stripping:</b> Standard PDF or image highlighters save covers as transparent vector layers. Anyone can open the file in Photoshop or Acrobat, click on the black shape, and delete it to reveal the numbers underneath.</li>
-      <li><b>Digital Metadata Leakage:</b> Optical character recognition (OCR) and underlying text layers in searchable PDFs still contain the raw numbers unless rasterized.</li>
-      <li><b>DocEasy Flat Canvas Destruction:</b> When you redact via DocEasy, our engine redraws the graphic onto an HTML5 canvas and merges the opaque box directly into the raw pixel matrix. The original pixel data beneath the box is permanently deleted and replaced with solid color pixels. It is mathematically impossible to reverse or strip away.</li>
+      <li><b>Transparent Vector Overlays:</b> Standard smartphone photo markup tools store pen strokes as separate vector overlay layers. Any recipient can open the image file in vector editing software or standard preview tools, select the black stroke, and hit "Delete" to reveal the crystal-clear text underneath.</li>
+      <li><b>Searchable Text Layer Retention:</b> In PDF documents, drawing a black box in basic PDF viewers only paints the visual surface. The underlying selectable OCR text layer remains completely intact, allowing anyone to copy-paste the hidden numbers.</li>
+      <li><b>DocEasy Flat Canvas Destruction:</b> When you redact with DocEasy, our engine draws the file onto an HTML5 canvas and rasterizes the opaque badge directly into the underlying bitmap. The original pixel data beneath the black rectangle is overwritten with solid hex color `#090d16` and permanently purged. It is mathematically impossible to reverse, strip, or recover the concealed data.</li>
     </ol>
 
     <h2>Frequently Asked Questions (FAQ)</h2>
     <details class="faq">
+      <summary>How do the multiple resize handles work?</summary>
+      <p>Each badge stamp includes 3 dedicated controls: use the <b>Right Handle</b> to adjust width only, the <b>Bottom Handle</b> to adjust height only, and the <b>Corner Handle</b> to scale both dimensions together. This allows you to create thin strips for single text lines or large boxes for full address blocks.</p>
+    </details>
+
+    <details class="faq">
       <summary>Can someone edit or undo my black redaction box after downloading?</summary>
       <p>No. When you export the redacted document from DocEasy, the canvas flattens the image into a single bitmap file (PNG). The covered pixels are destroyed and permanently replaced with black color data. No software can reverse this operation.</p>
     </details>
+
     <details class="faq">
       <summary>What is the difference between redacting an SSN and an Aadhaar card?</summary>
       <p>A US Social Security Number (SSN) is a 9-digit number where the first 5 digits are typically concealed (leaving the last 4 visible). An Indian Aadhaar is a 12-digit number where the first 8 digits are concealed according to official UIDAI guidelines. Both can be quickly masked using our preset ID Number stamp badge.</p>
     </details>
+
     <details class="faq">
       <summary>Is this tool compliant with GDPR, HIPAA, and data protection regulations?</summary>
       <p>Yes. Because DocEasy operates 100% on client-side browser execution, your document is never transmitted to, processed by, or stored on any server. You retain full custody of your private data, fulfilling zero-retention compliance standards.</p>
     </details>
+
     <details class="faq">
       <summary>Why is this badge system better on mobile phones than drawing by hand?</summary>
-      <p>Drawing on small mobile touchscreens is frustrating and inaccurate. Our movable badge stamps appear in standard sizes right where you need them. You simply slide them into place with your thumb, adjust the corner if needed, and download.</p>
+      <p>Drawing on small mobile touchscreens is frustrating and inaccurate. Our movable badge stamps appear in standard sizes right where you need them. You simply slide them into place with your thumb, adjust the handles down to 5px if needed, and download.</p>
     </details>
   </article>
 
@@ -358,7 +388,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
               img.onload = () => {
                 baseImage = img;
                 clearBadges();
-                dropZone.style.display = 'none';
+                document.getElementById('drop-zone-container').style.display = 'none';
                 workspace.style.display = 'block';
               };
               img.src = canvas.toDataURL();
@@ -377,7 +407,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
           canvas.height = img.height;
           ctx.drawImage(img, 0, 0);
           clearBadges();
-          dropZone.style.display = 'none';
+          document.getElementById('drop-zone-container').style.display = 'none';
           workspace.style.display = 'block';
         };
         img.src = e.target.result;
@@ -395,12 +425,11 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
   function addBadge(label, widthPercent, heightPercent) {
     if (!baseImage) return;
 
-    const stageRect = stage.getBoundingClientRect();
-    const stageW = stageRect.width || canvas.clientWidth || 300;
-    const stageH = stageRect.height || canvas.clientHeight || 200;
+    const stageW = stage.clientWidth || 300;
+    const stageH = stage.clientHeight || 200;
 
-    const bW = Math.max(60, stageW * widthPercent);
-    const bH = Math.max(26, stageH * heightPercent);
+    const bW = Math.max(30, stageW * widthPercent);
+    const bH = Math.max(14, stageH * heightPercent);
     const bX = (stageW - bW) / 2;
     const bY = (stageH - bH) / 2;
 
@@ -414,7 +443,9 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
     el.innerHTML = `
       <span class="badge-label">${label}</span>
       <button class="badge-del" title="Remove">&times;</button>
-      <div class="badge-handle" title="Drag to Resize"></div>
+      <div class="handle-r" title="Drag to Resize Width"></div>
+      <div class="handle-b" title="Drag to Resize Height"></div>
+      <div class="handle-c" title="Drag to Resize Both"></div>
     `;
 
     stage.appendChild(el);
@@ -422,23 +453,22 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
     const badgeObj = { el, label };
     activeBadges.push(badgeObj);
 
-    // Remove Stamp Button
     el.querySelector('.badge-del').addEventListener('click', (e) => {
       e.stopPropagation();
       el.remove();
       activeBadges = activeBadges.filter(b => b !== badgeObj);
     });
 
-    // Make Draggable & Resizable with Touch & Mouse
     setupDraggable(el);
   }
 
   function setupDraggable(el) {
-    let isDragging = false;
-    let isResizing = false;
+    let mode = 'none'; // 'drag', 'resize-r', 'resize-b', 'resize-c'
     let startX, startY, startLeft, startTop, startW, startH;
 
-    const handle = el.querySelector('.badge-handle');
+    const handleR = el.querySelector('.handle-r');
+    const handleB = el.querySelector('.handle-b');
+    const handleC = el.querySelector('.handle-c');
 
     function onPointerDown(e) {
       if (e.target.classList.contains('badge-del')) return;
@@ -450,13 +480,17 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
 
       startLeft = parseFloat(el.style.left) || 0;
       startTop = parseFloat(el.style.top) || 0;
-      startW = parseFloat(el.style.width) || 80;
-      startH = parseFloat(el.style.height) || 30;
+      startW = parseFloat(el.style.width) || 40;
+      startH = parseFloat(el.style.height) || 16;
 
-      if (e.target === handle) {
-        isResizing = true;
+      if (e.target === handleR) {
+        mode = 'resize-r';
+      } else if (e.target === handleB) {
+        mode = 'resize-b';
+      } else if (e.target === handleC) {
+        mode = 'resize-c';
       } else {
-        isDragging = true;
+        mode = 'drag';
       }
 
       window.addEventListener('mousemove', onPointerMove);
@@ -466,7 +500,7 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
     }
 
     function onPointerMove(e) {
-      if (!isDragging && !isResizing) return;
+      if (mode === 'none') return;
       e.preventDefault();
 
       const evt = e.touches ? e.touches[0] : e;
@@ -476,22 +510,30 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
       const stageW = stage.clientWidth;
       const stageH = stage.clientHeight;
 
-      if (isDragging) {
+      if (mode === 'drag') {
         let newX = Math.max(0, Math.min(stageW - startW, startLeft + dx));
         let newY = Math.max(0, Math.min(stageH - startH, startTop + dy));
         el.style.left = newX + 'px';
         el.style.top = newY + 'px';
-      } else if (isResizing) {
-        let newW = Math.max(40, startW + dx);
-        let newH = Math.max(18, startH + dy);
+      } else if (mode === 'resize-r') {
+        // Horizontal width only (min 5px)
+        let newW = Math.max(5, startW + dx);
+        el.style.width = newW + 'px';
+      } else if (mode === 'resize-b') {
+        // Vertical height only (min 5px)
+        let newH = Math.max(5, startH + dy);
+        el.style.height = newH + 'px';
+      } else if (mode === 'resize-c') {
+        // Both width & height (min 5px)
+        let newW = Math.max(5, startW + dx);
+        let newH = Math.max(5, startH + dy);
         el.style.width = newW + 'px';
         el.style.height = newH + 'px';
       }
     }
 
     function onPointerUp() {
-      isDragging = false;
-      isResizing = false;
+      mode = 'none';
       window.removeEventListener('mousemove', onPointerMove);
       window.removeEventListener('mouseup', onPointerUp);
       window.removeEventListener('touchmove', onPointerMove);
@@ -502,27 +544,26 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
     el.addEventListener('touchstart', onPointerDown, { passive: false });
   }
 
-  // Stamp Click Handlers
-  document.getElementById('add-id-front').addEventListener('click', () => addBadge("ID NO (FRONT)", 0.45, 0.08));
-  document.getElementById('add-photo').addEventListener('click', () => addBadge("PHOTO / FACE", 0.28, 0.32));
-  document.getElementById('add-qr').addEventListener('click', () => addBadge("QR / BARCODE", 0.32, 0.32));
-  document.getElementById('add-name').addEventListener('click', () => addBadge("NAME", 0.40, 0.07));
-  document.getElementById('add-address').addEventListener('click', () => addBadge("ADDRESS BLOCK", 0.55, 0.22));
-  document.getElementById('add-custom').addEventListener('click', () => addBadge("REDACTED", 0.35, 0.10));
+  // Stamp Click Handlers (Compact Defaults)
+  document.getElementById('add-id-front').addEventListener('click', () => addBadge("ID NO (FRONT)", 0.35, 0.05));
+  document.getElementById('add-photo').addEventListener('click', () => addBadge("PHOTO / FACE", 0.22, 0.22));
+  document.getElementById('add-qr').addEventListener('click', () => addBadge("QR / BARCODE", 0.25, 0.25));
+  document.getElementById('add-name').addEventListener('click', () => addBadge("NAME", 0.30, 0.04));
+  document.getElementById('add-address').addEventListener('click', () => addBadge("ADDRESS BLOCK", 0.45, 0.16));
+  document.getElementById('add-custom').addEventListener('click', () => addBadge("REDACTED", 0.25, 0.06));
 
   btnReupload.addEventListener('click', () => {
     baseImage = null;
     clearBadges();
     fileInput.value = '';
     workspace.style.display = 'none';
-    dropZone.style.display = 'block';
+    document.getElementById('drop-zone-container').style.display = 'block';
   });
 
   // Final Redaction & Burn-in Download
   btnDownload.addEventListener('click', () => {
     if (!baseImage) return;
 
-    // Reset base canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(baseImage, 0, 0);
 
@@ -537,7 +578,6 @@ details.faq p{margin:14px 0 0;font-size:15px;line-height:1.75}
       const width = parseFloat(b.el.style.width) || 0;
       const height = parseFloat(b.el.style.height) || 0;
 
-      // Burn into canvas pixel matrix
       ctx.fillRect(left * scaleX, top * scaleY, width * scaleX, height * scaleY);
     });
 
