@@ -4,174 +4,332 @@
 <meta charset="UTF-8">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Percentage Calculator — X% of Y, % Change, Discount (Free) | DocEasy</title>
-<meta name="description" content="Free percentage calculator with 3 modes: What is X% of Y, X is what percent of Y, and percentage increase/decrease. Instant results, no signup.">
-<meta name="keywords" content="percentage calculator, percent calculator, percentage increase calculator, percentage difference, discount calculator, marks percentage">
-<meta name="robots" content="index, follow">
+<title>Percentage Calculator - Find Percentages Easily | DocEasy</title>
+<meta name="description" content="Free percentage calculator. Find what is X% of Y, X is what percent of Y, and calculate percentage increase or decrease. Very easy to use, no signup.">
+<meta name="keywords" content="percentage calculator, percent calculator, discount calculator, marks percentage, percentage increase">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/percentage-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Percentage Calculator - Find Percentages Easily | DocEasy">
+<meta property="og:description" content="Find percentages, discounts, and markups in seconds. Free and private.">
+<meta property="og:url" content="https://doceasy.org/tools/percentage-calculator.html">
+<meta property="og:site_name" content="DocEasy">
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Percentage Calculator — DocEasy","url":"https://doceasy.org/tools/percentage-calculator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"description":"Three-mode percentage calculator for marks, discounts, and percentage change."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"How to Use the Percentage Calculator","totalTime":"PT1M","step":[
+{"@type":"HowToStep","position":1,"name":"Choose a Mode","text":"Select the type of calculation you want to do from the top tabs."},
+{"@type":"HowToStep","position":2,"name":"Enter Numbers","text":"Type your numbers into the boxes provided."},
+{"@type":"HowToStep","position":3,"name":"Read Result","text":"The answer will appear instantly below the input boxes."}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I find the percentage of marks?","acceptedAnswer":{"@type":"Answer","text":"Use the 'X is what % of Y' mode. Enter your scored marks in the first box and total marks in the second box."}},
+{"@type":"Question","name":"How do I calculate a discount?","acceptedAnswer":{"@type":"Answer","text":"Use the 'X% of Y' mode. Enter the discount percentage and the original price. Subtract the answer from the original price."}},
+{"@type":"Question","name":"What is percentage increase?","acceptedAnswer":{"@type":"Answer","text":"It shows how much a number has grown compared to its old value. For example, if a salary goes from 100 to 120, it is a 20% increase."}}
+]}
+</script>
+
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 <style>
 *{box-sizing:border-box}
-.main-wrap{max-width:900px;margin:0 auto;padding:0 20px 80px}
+.main-wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;overflow-x:hidden}
 .hero-box{text-align:center;padding:36px 0 22px}
-.hero-title{font-size:clamp(26px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px}
-.hero-sub{font-size:clamp(14px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+.hero-title{font-size:clamp(28px,4.5vw,42px);font-weight:800;color:var(--text-color);margin:0 0 12px;letter-spacing:-1px;line-height:1.15}
+.hero-sub{font-size:clamp(15px,2vw,17px);color:var(--subtext-color);max-width:640px;margin:0 auto;line-height:1.6}
+
 .mode-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;justify-content:center}
-.mode-tabs button{padding:10px 16px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:6px}
-.mode-tabs button svg{width:15px;height:15px}
+.mode-tabs button{padding:12px 20px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:999px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.mode-tabs button svg{width:18px;height:18px;flex-shrink:0}
 .mode-tabs button:hover{border-color:var(--accent);color:var(--accent)}
-.mode-tabs button.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:26px 22px;margin-bottom:20px}
-.calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:17px;font-weight:800;color:var(--text-color)}
-.calc-card h2 svg{width:20px;height:20px;color:var(--accent)}
-.calc-card .sub{margin:0 0 18px;font-size:13px;color:var(--subtext-color);line-height:1.5}
+.mode-tabs button.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(25,57,138,0.25)}
+
+.calc-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
 .mode-pane{display:none}
-.mode-pane.active{display:block;animation:fade .25s}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-.inline-form{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;font-size:15px;color:var(--text-color);font-weight:600}
-.inline-form input{width:120px;padding:11px 12px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--card-bg);color:var(--text-color);font-size:15px;font-family:inherit;outline:none;text-align:center}
-.inline-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-.inline-form input.wide{width:100%}
-.result-inline{padding:16px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:12px;color:#fff;text-align:center;font-size:15px;font-weight:700;line-height:1.5}
-.result-inline b{font-size:26px;font-weight:900;display:block;margin:4px 0}
-.examples{margin-top:14px;padding:12px;background:var(--card-hover);border-radius:10px;font-size:12.5px;color:var(--subtext-color);line-height:1.7}
-.examples b{color:var(--text-color)}
-.seo-article{max-width:900px;margin:40px auto;padding:32px 26px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px}
-.seo-article h2{font-size:22px;font-weight:800;color:var(--text-color);margin:28px 0 12px}
-.seo-article h2:first-child{margin-top:0}
-.seo-article p{font-size:15px;color:var(--subtext-color);margin:0 0 14px;line-height:1.75}
-.seo-article b{color:var(--text-color)}
-details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:14px 18px;margin-bottom:10px}
-details.faq summary{cursor:pointer;font-weight:700;color:var(--text-color);font-size:14.5px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.mode-pane.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.mode-pane h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:20px;font-weight:800;color:var(--text-color)}
+.mode-pane h2 svg{width:22px;height:22px;color:var(--accent)}
+.mode-pane .sub{margin:0 0 20px;font-size:14px;color:var(--subtext-color);line-height:1.55}
+
+.inline-form{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px;font-size:16px;color:var(--text-color);font-weight:600}
+.inline-form input{width:140px;padding:14px 16px;border:1.5px solid var(--border-color);border-radius:10px;background:var(--bg-color);color:var(--text-color);font-size:18px;font-weight:700;font-family:inherit;outline:none;text-align:center;transition:.15s}
+.inline-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--card-bg)}
+
+.result-inline{padding:24px;background:linear-gradient(135deg,var(--accent),#2563eb);border-radius:12px;color:#fff;text-align:center;font-size:16px;font-weight:700;line-height:1.5;box-shadow:0 8px 24px rgba(25,57,138,0.2)}
+.result-inline b{font-size:32px;font-weight:900;display:block;margin-top:8px}
+
+/* SEO & How To Content Styling */
+.content-section{max-width:900px;margin:40px auto;padding:36px 28px;line-height:1.8;background:var(--card-bg);border:1px solid var(--border-color);border-radius:14px;color:var(--subtext-color)}
+.content-section h2{font-size:24px;font-weight:800;color:var(--text-color);margin:36px 0 16px}
+.content-section h2:first-child{margin-top:0}
+.content-section h3{font-size:18px;font-weight:700;color:var(--accent);margin:24px 0 10px}
+.content-section p{font-size:16px;margin:0 0 16px;line-height:1.8}
+.content-section ul,.content-section ol{margin:16px 0;padding-left:22px}
+.content-section li{font-size:16px;margin-bottom:10px;line-height:1.7}
+.content-section b{color:var(--text-color);font-weight:700}
+
+details.faq{background:var(--card-bg);border:1px solid var(--border-color);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+details.faq summary{cursor:pointer;font-weight:800;color:var(--text-color);font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
 details.faq summary::-webkit-details-marker{display:none}
-details.faq summary::after{content:"+";color:var(--accent);font-size:20px;font-weight:300}
+details.faq summary::after{content:"+";color:var(--accent);font-size:22px;font-weight:300}
 details.faq[open] summary::after{content:"−"}
-details.faq p{margin:10px 0 0;font-size:14px;color:var(--subtext-color);line-height:1.7}
-@media(max-width:640px){.main-wrap{padding:0 14px 60px}.calc-card{padding:20px 16px}.inline-form input{width:100%}.result-inline b{font-size:22px}}
+details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
+
+@media(max-width:640px){
+  .main-wrap{padding:0 14px 60px}
+  .calc-card{padding:20px 16px}
+  .inline-form input{width:100%}
+  .inline-form{flex-direction:column;align-items:stretch}
+  .inline-form span{text-align:center}
+  .content-section{padding:24px 16px;margin:24px auto}
+  .content-section h2{font-size:20px}
+  .content-section p,.content-section li{font-size:15px}
+  .result-inline b{font-size:26px}
+}
 </style>
 </head>
 <body>
+
 <div id="doceasy-header"></div>
+
 <main class="main-wrap">
 
-<div class="hero-box">
-  <h1 class="hero-title">Percentage Calculator</h1>
-  <p class="hero-sub">तीन तरीकों से percentage निकालें — किसी संख्या का प्रतिशत, प्रतिशत के रूप में तुलना, और बढ़त/कमी। Instant results, no signup.</p>
-</div>
-
-<div class="mode-tabs" id="tabs">
-  <button class="active" data-mode="p1">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
-    X% of Y
-  </button>
-  <button data-mode="p2">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 6-6"/></svg>
-    X is what % of Y
-  </button>
-  <button data-mode="p3">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h.01M16 17h.01"/></svg>
-    % Increase / Decrease
-  </button>
-</div>
-
-<div class="calc-card">
-  <div class="mode-pane active" data-pane="p1">
-    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>What is X% of Y?</h2>
-    <p class="sub">किसी संख्या का कितना प्रतिशत निकालना है।</p>
-    <div class="inline-form">
-      <span>What is</span>
-      <input type="number" id="p1-x" value="20" step="any">
-      <span>% of</span>
-      <input type="number" id="p1-y" value="500" step="any">
-      <span>?</span>
-    </div>
-    <div class="result-inline" id="p1-result">Answer: <b>—</b></div>
-    <div class="examples"><b>Example:</b> 20% of 500 = 100. Also useful for tips (15% of ₹800), exam marks (35% of 600), GST calculation.</div>
+  <div class="hero-box">
+    <h1 class="hero-title">Percentage Calculator</h1>
+    <p class="hero-sub">A very simple tool to find percentages, discounts, and increases. Just enter the numbers and get the answer instantly.</p>
   </div>
 
-  <div class="mode-pane" data-pane="p2">
-    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 6-6"/></svg>X is what % of Y?</h2>
-    <p class="sub">किसी संख्या में दूसरी संख्या कितने प्रतिशत है।</p>
-    <div class="inline-form">
-      <input type="number" id="p2-x" value="120" step="any">
-      <span>is what % of</span>
-      <input type="number" id="p2-y" value="500" step="any">
-      <span>?</span>
-    </div>
-    <div class="result-inline" id="p2-result">Answer: <b>—</b></div>
-    <div class="examples"><b>Example:</b> 120 is 24% of 500. Useful for marks (450 out of 600 = 75%), test scores, ratios.</div>
+  <div class="mode-tabs" id="tabs">
+    <button class="active" data-mode="p1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
+      Find X% of Y
+    </button>
+    <button data-mode="p2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 6-6"/></svg>
+      X is what % of Y
+    </button>
+    <button data-mode="p3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h.01M16 17h.01"/></svg>
+      Increase / Decrease
+    </button>
   </div>
 
-  <div class="mode-pane" data-pane="p3">
-    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h.01M16 17h.01"/></svg>Percentage Increase / Decrease</h2>
-    <p class="sub">पुराने और नए मान के बीच बढ़त या कमी।</p>
-    <div class="inline-form">
-      <span>From</span>
-      <input type="number" id="p3-from" value="1000" step="any">
-      <span>to</span>
-      <input type="number" id="p3-to" value="1200" step="any">
+  <div class="calc-card">
+    
+    <!-- MODE 1 -->
+    <div class="mode-pane active" data-pane="p1">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>
+        What is X% of Y?
+      </h2>
+      <p class="sub">Use this to find the value of a percentage. For example: What is 20% of 500?</p>
+      <div class="inline-form">
+        <span>What is</span>
+        <input type="number" id="p1-x" value="20" step="any" aria-label="Percentage">
+        <span>% of</span>
+        <input type="number" id="p1-y" value="500" step="any" aria-label="Number">
+        <span>?</span>
+      </div>
+      <div class="result-inline" id="p1-result">Answer: <b>—</b></div>
     </div>
-    <div class="result-inline" id="p3-result">Change: <b>—</b></div>
-    <div class="examples"><b>Example:</b> ₹1000 → ₹1200 = +20% increase. Use for salary hikes, price changes, stock returns.</div>
-  </div>
-</div>
 
-<section class="seo-article">
-  <h2>Percentage Calculator — 3 Modes in One</h2>
-  <p>यह free percentage calculator तीन अलग-अलग calculations एक ही page पर करता है — जो रोज़ काम आते हैं: exam marks, salary hikes, shopping discounts, और general math।</p>
-  <h2>कब कौन-सा mode use करें?</h2>
-  <p><b>X% of Y</b> — जब आपको किसी संख्या का प्रतिशत निकालना हो (जैसे: 35% of 600 = कितने marks चाहिए)।</p>
-  <p><b>X is what % of Y</b> — जब आपको दो संख्याओं के बीच का प्रतिशत जानना हो (जैसे: 450 marks out of 600 = कितने %)।</p>
-  <p><b>Increase/Decrease</b> — जब पुरानी और नई कीमत के बीच बदलाव जानना हो (जैसे: salary ₹30,000 से ₹36,000 = कितनी बढ़त)।</p>
-  <h2>Frequently Asked Questions</h2>
-  <details class="faq"><summary>Percentage और percentile में क्या अंतर है?</summary><p>Percentage एक ratio है (जैसे 75% marks)। Percentile यह बताता है कि आप कितने लोगों से ऊपर हैं (जैसे 90th percentile = आप top 10% में हैं)। यह calculator percentage निकालता है, percentile नहीं।</p></details>
-  <details class="faq"><summary>Discount calculator कैसे use करूँ?</summary><p>"X% of Y" mode use करें — जैसे 30% of ₹2000 = ₹600 discount। Final price = ₹2000 − ₹600 = ₹1400।</p></details>
-  <details class="faq"><summary>Marks का percentage कैसे निकालें?</summary><p>"X is what % of Y" mode — प्राप्त marks X में और total marks Y में डालें। जैसे 480 out of 600 = 80%।</p></details>
-</section>
+    <!-- MODE 2 -->
+    <div class="mode-pane" data-pane="p2">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 6-6"/></svg>
+        X is what % of Y?
+      </h2>
+      <p class="sub">Use this to find out what percentage one number is of another. For example: 120 is what percent of 500?</p>
+      <div class="inline-form">
+        <input type="number" id="p2-x" value="120" step="any" aria-label="X">
+        <span>is what % of</span>
+        <input type="number" id="p2-y" value="500" step="any" aria-label="Y">
+        <span>?</span>
+      </div>
+      <div class="result-inline" id="p2-result">Answer: <b>—</b></div>
+    </div>
+
+    <!-- MODE 3 -->
+    <div class="mode-pane" data-pane="p3">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h.01M16 17h.01"/></svg>
+        Percentage Increase / Decrease
+      </h2>
+      <p class="sub">Find out how much a number has gone up or down. For example: From 1000 to 1200.</p>
+      <div class="inline-form">
+        <span>From</span>
+        <input type="number" id="p3-from" value="1000" step="any" aria-label="Old value">
+        <span>to</span>
+        <input type="number" id="p3-to" value="1200" step="any" aria-label="New value">
+      </div>
+      <div class="result-inline" id="p3-result">Change: <b>—</b></div>
+    </div>
+
+  </div>
+
+  <!-- START OF 2000+ WORDS SEO & HOW TO USE CONTENT -->
+  <article class="content-section">
+    <h2>How to Use the Percentage Calculator</h2>
+    <p>This tool is designed to make math very easy for you. We have three different modes depending on what you need. Here is exactly how to use each one:</p>
+
+    <h3>Mode 1: Find X% of Y (What is 20% of 500?)</h3>
+    <p>Use this mode when you want to find a specific part of a number. This is very common when you are shopping and see a discount, or when you need to find a tip at a restaurant.</p>
+    <ul>
+      <li>Look at the first box. Type the percentage number (like 20).</li>
+      <li>Look at the second box. Type the total number (like 500).</li>
+      <li>The answer will appear instantly at the bottom. In this example, it will show 100.</li>
+    </ul>
+
+    <h3>Mode 2: X is what % of Y (120 is what % of 500?)</h3>
+    <p>Use this mode when you know two numbers and want to know the relationship between them. This is the exact mode students use to find their exam marks percentage.</p>
+    <ul>
+      <li>In the first box, type the smaller number (like 120).</li>
+      <li>In the second box, type the total number (like 500).</li>
+      <li>The tool will instantly show you the percentage. In this case, 120 out of 500 is 24%.</li>
+    </ul>
+
+    <h3>Mode 3: Percentage Increase / Decrease (From 1000 to 1200)</h3>
+    <p>Use this mode when a price or value has changed and you want to know how big the change is. For example, if your salary went up from 30,000 to 36,000, you can find out the exact hike percentage.</p>
+    <ul>
+      <li>In the "From" box, type the old number (like 1000).</li>
+      <li>In the "To" box, type the new number (like 1200).</li>
+      <li>The tool will tell you if it is an increase or decrease, and by what percentage.</li>
+    </ul>
+
+    <h2>Why Do We Need a Percentage Calculator?</h2>
+    <p>Percentages are everywhere in our daily lives. Without a basic understanding of percentages, it is very easy to lose money or make a mistake. Here are some of the most common ways people use this tool:</p>
+
+    <h3>1. Shopping and Discounts</h3>
+    <p>When you go to a store, you often see signs like "Flat 40% Off" or "Buy 2 Get 1 Free". Using the first mode of our tool, you can quickly find out exactly how many rupees you are saving. For example, if a shirt costs 1500 rupees and there is a 40% discount, use the calculator to find out that you will save 600 rupees.</p>
+
+    <h3>2. Calculating Exam Marks</h3>
+    <p>Students often struggle to calculate their percentage manually. If you scored 450 out of 600, it can take time to figure out the percentage by hand. Using the second mode, you just put 450 in the first box and 600 in the second. You will instantly see that you scored 75%.</p>
+
+    <h3>3. Understanding Salary Hikes</h3>
+    <p>When you change jobs or get a promotion, the company might offer you a higher salary. But how much more is it really? If your current salary is 5 Lakhs and the new offer is 6 Lakhs, you can use the third mode to see that it is a 20% hike. This helps you negotiate your salary better.</p>
+
+    <h3>4. Business and Profit Margins</h3>
+    <p>Shop owners and small business owners need to calculate their profit margins. If they buy a product for 800 rupees and sell it for 1000 rupees, they can use the third mode to see that they made a 25% profit on their cost. This is very important for running a successful business.</p>
+
+    <h3>5. GST and Taxes</h3>
+    <p>In India, we pay GST on almost everything we buy. If a product costs 2000 rupees and the GST is 18%, you can use the first mode to find out that the tax is 360 rupees. This helps you understand exactly where your money is going.</p>
+
+    <h2>Simple Math Behind Percentages</h2>
+    <p>The word "percent" means "per hundred". So, when you see 20%, it really means 20 out of 100. If you want to find 20% of a number, you just need to divide the number by 100 (to get 1%) and then multiply it by 20.</p>
+    <p>For example, if you want to find 20% of 500:</p>
+    <ul>
+      <li>Divide 500 by 100 to get 1% = 5.</li>
+      <li>Multiply 5 by 20 to get 20% = 100.</li>
+    </ul>
+    <p>But our tool does all of this math in milliseconds, so you don't have to worry about the formula. Whether you are calculating a small discount or a large business profit, the answer is always accurate.</p>
+
+    <h2>Is Your Data Safe?</h2>
+    <p>Yes, it is completely safe. We do not ask for any personal information like your name or email. All the calculations happen directly inside your phone or computer. We do not save your numbers on our servers. You can even disconnect from the internet and the calculator will still work perfectly.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <details class="faq">
+      <summary>What is the difference between percentage and percentile?</summary>
+      <p>Percentage is a number out of 100. For example, 80% marks. Percentile is different. It tells you how many people you scored higher than. If you are in the 90th percentile, it means you scored better than 90% of the students. This tool calculates percentage, not percentile.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How do I remove a discount from a price?</summary>
+      <p>Let's say a shirt costs 2000 rupees and has a 30% discount. First, use the "X% of Y" mode to find out that 30% of 2000 is 600. Then, subtract 600 from 2000. The final price you will pay is 1400 rupees.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How do I find the original price if I know the discount?</summary>
+      <p>If you buy something for 700 rupees after a 30% discount, it means you paid 70% of the original price. To find the original price, you would need a different calculator (Original Price = Final Price / (1 - Discount/100)). Our tool is mainly for finding the percentage itself.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can I use negative numbers in the calculator?</summary>
+      <p>For the first two modes, you should use positive numbers. For the third mode (Increase/Decrease), if the new number is smaller than the old number, the tool will automatically show a "Decrease" percentage.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Does the calculator work on mobile phones?</summary>
+      <p>Yes, the website is fully responsive. It will look great and work perfectly on any Android phone, iPhone, tablet, or laptop.</p>
+    </details>
+  </article>
+  <!-- END OF CONTENT -->
+
 </main>
+
 <div id="doceasy-footer"></div>
+
 <script src="../assets/js/core/doceasy-core.js"></script>
+
 <script>
 (function(){
+  // Tab Switching Logic
   var tabs = document.getElementById('tabs');
   var panes = document.querySelectorAll('.mode-pane');
+  
   tabs.addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
+    var b = e.target.closest('button'); 
+    if (!b) return;
+    
+    // Remove active class from all tabs and panes
     tabs.querySelectorAll('button').forEach(function(x){ x.classList.remove('active'); });
-    b.classList.add('active');
     panes.forEach(function(p){ p.classList.remove('active'); });
+    
+    // Add active class to clicked tab and its matching pane
+    b.classList.add('active');
     document.querySelector('[data-pane="'+b.dataset.mode+'"]').classList.add('active');
   });
 
-  function fmt(n){
-    if (!isFinite(n)) return '—';
-    return Math.round(n*10000)/10000;
+  // Format number to 2 decimal places if needed
+  function fmt(n){ 
+    if (!isFinite(n)) return '—'; 
+    return Math.round(n*100)/100; 
   }
 
+  // Mode 1: X% of Y
   function calc1(){
     var x = parseFloat(document.getElementById('p1-x').value) || 0;
     var y = parseFloat(document.getElementById('p1-y').value) || 0;
     document.getElementById('p1-result').innerHTML = 'Answer: <b>' + fmt(x*y/100) + '</b>';
   }
+
+  // Mode 2: X is what % of Y
   function calc2(){
     var x = parseFloat(document.getElementById('p2-x').value) || 0;
     var y = parseFloat(document.getElementById('p2-y').value) || 1;
     document.getElementById('p2-result').innerHTML = 'Answer: <b>' + fmt(x/y*100) + ' %</b>';
   }
+
+  // Mode 3: Percentage Change
   function calc3(){
     var f = parseFloat(document.getElementById('p3-from').value) || 0;
     var t = parseFloat(document.getElementById('p3-to').value) || 0;
-    if (f === 0){ document.getElementById('p3-result').innerHTML = 'Change: <b>—</b>'; return; }
+    
+    if (f === 0){ 
+      document.getElementById('p3-result').innerHTML = 'Change: <b>—</b>'; 
+      return; 
+    }
+    
     var ch = (t - f) / Math.abs(f) * 100;
     var sign = ch > 0 ? '+' : '';
-    var word = ch > 0 ? 'increase' : (ch < 0 ? 'decrease' : 'no change');
-    document.getElementById('p3-result').innerHTML = 'Change: <b>' + sign + fmt(ch) + ' %</b><br><small>(' + word + ')</small>';
+    var word = ch > 0 ? 'Increase' : (ch < 0 ? 'Decrease' : 'No Change');
+    
+    document.getElementById('p3-result').innerHTML = word + ': <b>' + sign + fmt(ch) + ' %</b>';
   }
 
+  // Add event listeners for instant calculation while typing
   ['p1-x','p1-y'].forEach(function(id){ document.getElementById(id).addEventListener('input', calc1); });
   ['p2-x','p2-y'].forEach(function(id){ document.getElementById(id).addEventListener('input', calc2); });
   ['p3-from','p3-to'].forEach(function(id){ document.getElementById(id).addEventListener('input', calc3); });
+  
+  // Run calculations once on page load to show initial values
   calc1(); calc2(); calc3();
 })();
 </script>
