@@ -21,8 +21,7 @@
 })();
 
 /* ==========================================================================
-   DocEasy Core — Auto-injects clean header, footer, theme toggle on every page.
-   IDs: #doceasy-header, #doceasy-footer  |  Theme key: doceasy_theme
+   DocEasy Core — Auto-injects clean header, footer, theme toggle, search.
    ========================================================================== */
 (function () {
   'use strict';
@@ -33,43 +32,67 @@
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) {}
 
-  /* ==========================================================================
-     ROOT-LEVEL PAGES — these live in the SITE ROOT (not inside tools/)
-     Everything else is assumed to be inside /tools/
-     ========================================================================== */
+  /* ---------- ROOT-LEVEL PAGES ---------- */
   var ROOT_PAGES = [
-    'index',
-    'about',
-    'contact',
-    'privacy',
-    'terms',
-    'feedback',
-    'business-tools',
-    'finance-tools',
-    'printing-tools',
-    'career-tools',
-    'media-tools',
-    'categories',
-    'blog'
+    'index', 'about', 'contact', 'privacy', 'terms', 'feedback',
+    'business-tools', 'finance-tools', 'printing-tools', 'career-tools',
+    'media-tools', 'categories', 'blog'
+  ];
+
+  /* ---------- MASTER TOOLS DATABASE (For Search) ---------- */
+  // जैसे-जैसे आप नए टूल्स बनाएंगे, उन्हें यहाँ जोड़ते रहें
+  var TOOLS_DB = [
+    // Finance & Math
+    { name: 'EMI Calculator', url: 'emi-calculator.html', desc: 'Car, Home & Personal loan EMI', root: false },
+    { name: 'SIP Calculator', url: 'sip-calculator.html', desc: 'Mutual fund returns with chart', root: false },
+    { name: 'Private Loan (Monthly)', url: 'private-loan-calculator.html', desc: 'Moneylender monthly interest', root: false },
+    { name: 'Percentage Calculator', url: 'percentage-calculator.html', desc: 'Find X% of Y and % change', root: false },
+    { name: 'Age Calculator', url: 'age-calculator.html', desc: 'Calculate exact age from DOB', root: false },
+    { name: 'Date Calculator', url: 'date-calculator.html', desc: 'Days between dates, add/subtract', root: false },
+    { name: 'BMI Calculator', url: 'bmi-calculator.html', desc: 'Check Body Mass Index (WHO/Asian)', root: false },
+    { name: 'Unit Converter', url: 'unit-converter.html', desc: 'Length, Weight, Temperature', root: false },
+    { name: 'Number to Words', url: 'number-to-words.html', desc: 'Convert numbers to English words', root: false },
+    { name: 'Tip Calculator', url: 'tip-calculator.html', desc: 'Calculate tips & split bills', root: false },
+    { name: 'Simple Interest', url: 'simple-interest-calculator.html', desc: 'Calculate SI on loans', root: false },
+    { name: 'Average Calculator', url: 'average-calculator.html', desc: 'Mean, Median, Mode', root: false },
+
+    // Security & Utility
+    { name: 'Document Masker', url: 'document-masker.html', desc: 'Hide Aadhaar, PAN, DL, RC', root: false },
+    { name: 'Password Generator', url: 'password-generator.html', desc: 'Create strong secure passwords', root: false },
+    { name: 'Base64 & URL Encoder', url: 'encoder-decoder.html', desc: 'Encode/decode text safely', root: false },
+    { name: 'Random Generator & Dice', url: 'random-generator.html', desc: 'Random numbers, dice, lottery', root: false },
+    { name: 'Case Converter', url: 'case-converter.html', desc: 'UPPER, lower, Title case text', root: false },
+
+    // PDF & Office
+    { name: 'Merge PDF', url: 'pdf-merge.html', desc: 'Combine multiple PDFs', root: false },
+    { name: 'Compress PDF', url: 'pdf-compressor.html', desc: 'Reduce PDF file size', root: false },
+    { name: 'PDF to Word', url: 'pdf-to-word.html', desc: 'Convert PDF to editable DOCX', root: false },
+    { name: 'Image to PDF', url: 'jpg-to-pdf.html', desc: 'Convert JPG/PNG to PDF', root: false },
+    
+    // Image & ID Tools
+    { name: 'Image Compressor', url: 'image-compressor.html', desc: 'Reduce JPG/PNG size to KB', root: false },
+    { name: 'ID Card Cropper', url: 'card-cropper.html', desc: 'Aadhaar/PAN print at 300 DPI', root: false },
+    { name: 'Passport Photo Maker', url: 'passport-maker.html', desc: '35x45mm photo sheet on A4', root: false },
+    { name: 'PAN Photo & Signature', url: 'pan-photo-signature-resizer.html', desc: 'Exact pixels & KB for UTI/Protean', root: false },
+    
+    // Root Hubs
+    { name: 'Finance Tools Hub', url: 'finance-tools.html', desc: 'All financial calculators', root: true },
+    { name: 'Printing Tools Hub', url: 'printing-tools.html', desc: 'Print IDs, Aadhaar, Photos', root: true },
+    { name: 'All Categories', url: 'categories.html', desc: 'Browse all 90+ tools', root: true }
   ];
 
   /* ---------- Config ---------- */
   var CONFIG = {
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
-
-    /* Clean Main Nav (Section IDs aligned with index.html) */
     mainNav: [
       { href: 'index.html',                 label: 'Home',       root: true },
-      { href: 'index.html#pdf-tools',       label: 'PDF Tools',  root: true },
+      { href: 'index.html#pdf-tools',       label: 'PDF',        root: true },
       { href: 'index.html#image-tools',     label: 'Images',     root: true },
       { href: 'index.html#id-forms',        label: 'ID Cards',   root: true },
-      { href: 'index.html#media',           label: 'Media',      root: true },
-      { href: 'index.html#utility',         label: 'Utilities',  root: true },
-      { href: 'categories.html',            label: 'All Hubs',   root: true }
+      { href: 'index.html#finance',         label: 'Finance',    root: true },
+      { href: 'categories.html',            label: 'All Tools',  root: true }
     ],
-
-    /* Quick Top Bar Tools */
     quickTools: [
       { href: 'card-cropper.html',          label: 'ID Card Crop' },
       { href: 'resume-builder.html',        label: 'Resume Builder' },
@@ -83,7 +106,6 @@
       { href: 'image-compressor.html',      label: 'Compress Image' },
       { href: 'passport-maker.html',        label: 'Passport Photo' }
     ],
-
     footer: {
       pdfTools: [
         { href: 'pdf-merge.html',       label: 'Merge PDF' },
@@ -120,9 +142,7 @@
     }
   };
 
-  /* ==========================================================================
-     FIXED PATH RESOLVER
-     ========================================================================== */
+  /* ---------- Path Resolver ---------- */
   function resolvePath(href, isRoot) {
     if (!href) return '#';
     if (/^https?:\/\//.test(href) || href.charAt(0) === '#') return href;
@@ -139,7 +159,7 @@
     }
   }
 
-  /* ---------- Header builder ---------- */
+  /* ---------- Header Builder (With Search Box) ---------- */
   function buildHeader() {
     var navLinks = CONFIG.mainNav.map(function (p) {
       return '<a href="' + resolvePath(p.href, p.root) + '">' + p.label + '</a>';
@@ -151,40 +171,6 @@
 
     var homeHref = resolvePath('index.html', true);
 
-    /* TEMPORARILY DISABLED FOR ADSENSE APPROVAL (Original Code Saved Below)
-    var supportModal =
-      '<div class="support-modal-backdrop" id="supportModal">' +
-        '<div class="support-modal">' +
-          '<div class="support-modal-header">' +
-            '<div class="coffee-badge">☕ Buy Me a Coffee · एक कॉफ़ी सपोर्ट करें</div>' +
-            '<button type="button" class="support-modal-close" onclick="docEasyCloseSupport()" aria-label="Close">✕</button>' +
-          '</div>' +
-          '<h2>Keep DocEasy 100% Free &amp; Private</h2>' +
-          '<p class="sm-sub-hi">DocEasy पूरी तरह मुफ़्त, बिना लॉगिन और बिना किसी सर्वर अपलोड के काम करता है। अगर इसने आपका समय बचाया है, तो डेवलपर को सपोर्ट करें।</p>' +
-          '<p class="sm-sub-en">100% local, zero limits. If it saved your day, fuel the project with a small coffee!</p>' +
-          '<div class="sm-grid">' +
-            '<div class="sm-pay-box">' +
-              '<span class="sm-badge-country">🇮🇳 India (UPI)</span>' +
-              '<div class="sm-qr-frame">' +
-                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=deepaakai@dbs%26pn=DocEasy" alt="UPI QR Code" class="sm-upi-qr">' +
-              '</div>' +
-              '<p class="sm-upi-id">deepaakai@dbs</p>' +
-              '<p class="sm-upi-text">GPay / PhonePe / Paytm</p>' +
-            '</div>' +
-            '<div class="sm-pay-box">' +
-              '<span class="sm-badge-country">🌍 Worldwide</span>' +
-              '<div class="sm-paypal-content">' +
-                '<svg viewBox="0 0 24 24" width="42" height="42" fill="#003087"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.78.78 0 0 1 .77-.655h6.634c3.275 0 5.64 1.34 6.183 4.293.447 2.435-.45 4.498-2.344 5.56 1.954.767 2.613 2.73 2.158 5.207-.547 2.977-3.037 4.545-6.674 4.545H7.71a.64.64 0 0 1-.634-.533l-.001-.005z"/></svg>' +
-                '<h4>Buy a Coffee</h4>' +
-                '<p class="sm-pp-desc">Quick &amp; secure international contribution</p>' +
-                '<a href="https://www.paypal.me/DPaswan198" target="_blank" rel="noopener" class="sm-paypal-btn">Gift a Coffee via PayPal →</a>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    */
-
     return '<header class="site-header">' +
       '<div class="header-inner">' +
         '<a class="brand-link" href="' + homeHref + '" aria-label="DocEasy Home">' +
@@ -192,12 +178,19 @@
             '<img src="' + resolvePath('assets/images/logo-full.png', true) + '" alt="DocEasy" onerror="this.parentElement.textContent=\'DocEasy\'">' +
           '</span>' +
         '</a>' +
+        
+        /* --- SEARCH BOX START --- */
+        '<div class="de-search-wrapper">' +
+          '<div class="de-search-box">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>' +
+            '<input type="text" id="de-global-search" placeholder="Search 90+ tools..." autocomplete="off">' +
+          '</div>' +
+          '<div class="de-search-results" id="de-search-results"></div>' +
+        '</div>' +
+        /* --- SEARCH BOX END --- */
+
         '<nav class="pill-nav" aria-label="Sections">' + navLinks + '</nav>' +
-        /* Support button temporarily hidden for AdSense Review
-        '<button type="button" class="support-link" onclick="docEasyOpenSupport()" aria-label="Support">' +
-          '<span class="support-icon">☕</span>' +
-          '<span class="support-text">Support</span>' +
-        '</button>' + */
+        
         '<label class="theme-switch" aria-label="Toggle theme">' +
           '<input type="checkbox" id="theme-checkbox" onchange="docEasyToggleTheme()">' +
           '<span class="slider"></span>' +
@@ -207,7 +200,7 @@
     '</header>';
   }
 
-  /* ---------- Footer builder ---------- */
+  /* ---------- Footer Builder ---------- */
   function buildFooter() {
     function col(title, items) {
       var lis = items.map(function (it) {
@@ -224,10 +217,6 @@
         '<p style="color:#e0e7ff;font-size:12.5px;line-height:1.65;margin:12px 0 0;max-width:280px;">' +
           '90+ free browser-based tools for PDFs, images, and commercial documents. 100% private — your files never leave your device.' +
         '</p>' +
-        /* Support button temporarily hidden
-        '<button type="button" class="footer-support-btn" onclick="docEasyOpenSupport()">' +
-          '<span>☕</span> Support DocEasy' +
-        '</button>' + */
       '</div>' +
       col('PDF Tools',      CONFIG.footer.pdfTools) +
       col('Business Suite', CONFIG.footer.businessTools) +
@@ -237,6 +226,51 @@
         '<div>© <span id="de-year"></span> DocEasy. All rights reserved.</div>' +
         '<div><a class="made-with-love-link" href="https://deepaakai.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Made with ❤️ by Deepaak Kumar</a></div>' +
       '</div></footer>';
+  }
+
+  /* ---------- Search Logic ---------- */
+  function initSearch() {
+    var input = document.getElementById('de-global-search');
+    var dropdown = document.getElementById('de-search-results');
+    if (!input || !dropdown) return;
+
+    input.addEventListener('input', function() {
+      var q = this.value.toLowerCase().trim();
+      if (!q) { dropdown.classList.remove('show'); return; }
+
+      var matches = TOOLS_DB.filter(function(t) {
+        return t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q);
+      });
+
+      if (matches.length > 0) {
+        dropdown.innerHTML = matches.map(function(t) {
+          // Path resolver for search results
+          var url = resolvePath(t.url, t.root);
+          return '<a href="' + url + '" class="de-search-item">' +
+                   '<div class="de-si-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>' +
+                   '<div class="de-si-text"><h4>' + t.name + '</h4><p>' + t.desc + '</p></div>' +
+                 '</a>';
+        }).join('');
+      } else {
+        dropdown.innerHTML = '<div class="de-search-empty">No tools found for "' + this.value + '"</div>';
+      }
+      dropdown.classList.add('show');
+    });
+
+    // Enter key logic
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        var first = dropdown.querySelector('.de-search-item');
+        if (first) window.location.href = first.href;
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', function(e) {
+      if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
   }
 
   /* ---------- Inject ---------- */
@@ -257,6 +291,9 @@
 
     var y = document.getElementById('de-year');
     if (y) y.textContent = new Date().getFullYear();
+
+    // Initialize Search after Header is injected
+    initSearch();
   }
 
   /* ---------- Theme toggle ---------- */
@@ -271,8 +308,6 @@
     }
   };
   window.officekitToggleTheme = window.docEasyToggleTheme;
-
-  /* ---------- Support Modal Open/Close (Stubbed safely) ---------- */
   window.docEasyOpenSupport = function () {};
   window.docEasyCloseSupport = function () {};
 
