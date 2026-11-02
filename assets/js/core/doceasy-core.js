@@ -32,67 +32,130 @@
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) {}
 
-  /* ---------- ROOT-LEVEL PAGES ---------- */
+  /* ==========================================================================
+     ROOT-LEVEL PAGES (जो फाइलें मेन फोल्डर में हैं)
+     ========================================================================== */
   var ROOT_PAGES = [
     'index', 'about', 'contact', 'privacy', 'terms', 'feedback',
     'business-tools', 'finance-tools', 'printing-tools', 'career-tools',
-    'media-tools', 'categories', 'blog'
+    'categories'
   ];
 
-  /* ---------- MASTER TOOLS DATABASE (For Search) ---------- */
-  // जैसे-जैसे आप नए टूल्स बनाएंगे, उन्हें यहाँ जोड़ते रहें
+  /* ==========================================================================
+     MASTER TOOLS DATABASE (आपके GitHub स्क्रीनशॉट के अनुसार 100% सटीक)
+     ========================================================================== */
   var TOOLS_DB = [
-    // Finance & Math
-    { name: 'EMI Calculator', url: 'emi-calculator.html', desc: 'Car, Home & Personal loan EMI', root: false },
-    { name: 'SIP Calculator', url: 'sip-calculator.html', desc: 'Mutual fund returns with chart', root: false },
-    { name: 'Private Loan (Monthly)', url: 'private-loan-calculator.html', desc: 'Moneylender monthly interest', root: false },
+    // --- Finance & Loan ---
+    { name: 'EMI Calculator', url: 'emi-loan-calculator.html', desc: 'Car, Home & Personal loan EMI', root: false },
+    { name: 'SIP Calculator', url: 'investment-calculator.html', desc: 'Mutual fund returns with chart', root: false },
+    { name: 'FD Calculator', url: 'fd-calculator.html', desc: 'Fixed Deposit maturity', root: false },
+    { name: 'In-Hand Salary', url: 'in-hand-salary-calculator.html', desc: 'CTC to take-home salary', root: false },
     { name: 'Percentage Calculator', url: 'percentage-calculator.html', desc: 'Find X% of Y and % change', root: false },
+    { name: 'Tip Calculator', url: 'tip-calculator.html', desc: 'Calculate tips & split bills', root: false },
+    { name: 'Average Calculator', url: 'average-calculator.html', desc: 'Mean, Median, Mode', root: false },
+    { name: 'Marks & CGPA', url: 'marks-cgpa-calculator.html', desc: 'Convert marks to percentage', root: false },
+
+    // --- Health, Date & Age ---
+    { name: 'BMI Calculator', url: 'bmi-calculator.html', desc: 'Check Body Mass Index (WHO/Asian)', root: false },
     { name: 'Age Calculator', url: 'age-calculator.html', desc: 'Calculate exact age from DOB', root: false },
     { name: 'Date Calculator', url: 'date-calculator.html', desc: 'Days between dates, add/subtract', root: false },
-    { name: 'BMI Calculator', url: 'bmi-calculator.html', desc: 'Check Body Mass Index (WHO/Asian)', root: false },
+    { name: 'Working Days', url: 'working-days-calculator.html', desc: 'Business days excluding weekends', root: false },
+    { name: 'Countdown Timer', url: 'countdown-timer.html', desc: 'Event countdown timer', root: false },
+    { name: 'Leap Year Checker', url: 'leap-year-checker.html', desc: 'Check if a year is a leap year', root: false },
+
+    // --- Math & Converters ---
     { name: 'Unit Converter', url: 'unit-converter.html', desc: 'Length, Weight, Temperature', root: false },
     { name: 'Number to Words', url: 'number-to-words.html', desc: 'Convert numbers to English words', root: false },
-    { name: 'Tip Calculator', url: 'tip-calculator.html', desc: 'Calculate tips & split bills', root: false },
-    { name: 'Simple Interest', url: 'simple-interest-calculator.html', desc: 'Calculate SI on loans', root: false },
-    { name: 'Average Calculator', url: 'average-calculator.html', desc: 'Mean, Median, Mode', root: false },
-
-    // Security & Utility
-    { name: 'Document Masker', url: 'document-masker.html', desc: 'Hide Aadhaar, PAN, DL, RC', root: false },
-    { name: 'Password Generator', url: 'password-generator.html', desc: 'Create strong secure passwords', root: false },
-    { name: 'Base64 & URL Encoder', url: 'encoder-decoder.html', desc: 'Encode/decode text safely', root: false },
-    { name: 'Random Generator & Dice', url: 'random-generator.html', desc: 'Random numbers, dice, lottery', root: false },
+    { name: 'Roman Numeral', url: 'roman-numeral-converter.html', desc: 'Numbers to Roman numerals', root: false },
     { name: 'Case Converter', url: 'case-converter.html', desc: 'UPPER, lower, Title case text', root: false },
+    { name: 'Base64 & URL Encoder', url: 'encoder-decoder.html', desc: 'Encode/decode Base64 & URL', root: false },
+    { name: 'Random Generator', url: 'random-generator.html', desc: 'Random numbers, dice, lottery', root: false },
+    { name: 'Name Picker', url: 'random-name-picker.html', desc: 'Spin wheel to pick names', root: false },
+    
+    // --- Security & Utility ---
+    { name: 'Password Generator', url: 'password-generator.html', desc: 'Create strong secure passwords', root: false },
+    { name: 'Document Masker', url: 'document-masker.html', desc: 'Hide Aadhaar, PAN, DL, RC', root: false },
+    { name: 'Word Counter', url: 'word-counter.html', desc: 'Count words, characters & SEO', root: false },
+    { name: 'Word Writer', url: 'word-writer.html', desc: 'Write & export as DOCX', root: false },
+    { name: 'QR Code Generator', url: 'qr-generator.html', desc: 'Create custom QR codes', root: false },
+    { name: 'QR Code Scanner', url: 'qr-scanner.html', desc: 'Scan QR from camera', root: false },
 
-    // PDF & Office
-    { name: 'Merge PDF', url: 'pdf-merge.html', desc: 'Combine multiple PDFs', root: false },
-    { name: 'Compress PDF', url: 'pdf-compressor.html', desc: 'Reduce PDF file size', root: false },
-    { name: 'PDF to Word', url: 'pdf-to-word.html', desc: 'Convert PDF to editable DOCX', root: false },
-    { name: 'Image to PDF', url: 'jpg-to-pdf.html', desc: 'Convert JPG/PNG to PDF', root: false },
-    
-    // Image & ID Tools
-    { name: 'Image Compressor', url: 'image-compressor.html', desc: 'Reduce JPG/PNG size to KB', root: false },
+    // --- ID & Photo Printing ---
+    { name: 'Exam Photo Resizer', url: 'exam-photo-resizer.html', desc: 'Resize photo for exam forms', root: false },
     { name: 'ID Card Cropper', url: 'card-cropper.html', desc: 'Aadhaar/PAN print at 300 DPI', root: false },
+    { name: '2 in 1 ID Maker', url: 'id-2in1-maker.html', desc: 'Front & back on one page', root: false },
     { name: 'Passport Photo Maker', url: 'passport-maker.html', desc: '35x45mm photo sheet on A4', root: false },
-    { name: 'PAN Photo & Signature', url: 'pan-photo-signature-resizer.html', desc: 'Exact pixels & KB for UTI/Protean', root: false },
+    { name: 'Photo Size Resize', url: 'photo-size-resize.html', desc: 'Exact mm / px / KB for print', root: false },
+    { name: 'PAN Photo & Signature', url: 'pan-photo-signature-resizer.html', desc: 'Exact pixels & KB for UTI', root: false },
+    { name: 'Signature Resize', url: 'signature-resize.html', desc: 'Exact pixel / KB for exams', root: false },
+    { name: 'Signature BG Remover', url: 'signature-bg-remover.html', desc: 'Clean white background', root: false },
+
+    // --- PDF Tools ---
+    { name: 'Merge PDF', url: 'pdf-merge.html', desc: 'Combine multiple PDFs', root: false },
+    { name: 'Universal Merger', url: 'merger.html', desc: 'Merge Word, Excel, PPT & PDF', root: false },
+    { name: 'Split PDF', url: 'pdf-split.html', desc: 'Extract pages from PDF', root: false },
+    { name: 'Compress PDF', url: 'pdf-compressor.html', desc: 'Reduce PDF file size', root: false },
+    { name: 'Lock / Unlock PDF', url: 'pdf-lock-unlock.html', desc: 'Add or remove PDF password', root: false },
+    { name: 'PDF Editor', url: 'pdf-editor.html', desc: 'Edit text and images in PDF', root: false },
+    { name: 'PDF Writer', url: 'pdf-writer.html', desc: 'Create PDF from scratch', root: false },
+    { name: 'Word to PDF', url: 'word-to-pdf.html', desc: 'DOC, DOCX to PDF converter', root: false },
+    { name: 'JPG to PDF', url: 'jpg-to-pdf.html', desc: 'Convert images to PDF', root: false },
+    { name: 'Excel to PDF', url: 'excel-to-pdf.html', desc: 'Convert XLS, XLSX to PDF', root: false },
+    { name: 'PPT to PDF', url: 'ppt-to-pdf.html', desc: 'Convert PowerPoint to PDF', root: false },
+    { name: 'PDF to Word', url: 'pdf-to-word.html', desc: 'Convert PDF to editable DOCX', root: false },
+    { name: 'PDF to JPG', url: 'pdf-to-jpg.html', desc: 'Save PDF pages as images', root: false },
+    { name: 'PDF to Excel', url: 'pdf-to-excel.html', desc: 'Extract tables from PDF', root: false },
+    { name: 'DWG to PDF', url: 'dwg-to-pdf.html', desc: 'AutoCAD drawings to PDF', root: false },
+
+    // --- Image Tools ---
+    { name: 'Image Compressor', url: 'image-compressor.html', desc: 'Reduce JPG/PNG size', root: false },
+    { name: 'Image Converter', url: 'image-converter.html', desc: 'JPG, PNG, WEBP converter', root: false },
+    { name: 'Background Remover', url: 'image-bg-remover.html', desc: 'Remove image background', root: false },
+    { name: 'Image Beautifier', url: 'image-beautifier.html', desc: 'Sharpen and enhance photos', root: false },
+    { name: 'Document Scanner', url: 'doc-scanner.html', desc: 'Photo to scanned PDF', root: false },
+
+    // --- Media Tools ---
+    { name: 'Screen Recorder', url: 'media-screen-recorder.html', desc: 'Record screen with audio', root: false },
+    { name: 'Webcam Recorder', url: 'media-webcam-recorder.html', desc: 'Record video from camera', root: false },
+    { name: 'Voice Recorder', url: 'media-voice-recorder.html', desc: 'Record audio with waveform', root: false },
+    { name: 'Text to Speech', url: 'media-text-to-speech.html', desc: 'Turn text into voice', root: false },
+    { name: 'Noise Remover', url: 'noise-remover.html', desc: 'Remove background noise', root: false },
+    { name: 'Video Voice Changer', url: 'video-voice-changer.html', desc: 'Change voice in video', root: false },
+    { name: 'Video Enhancer', url: 'video-enhancer.html', desc: 'Upscale and sharpen video', root: false },
+    { name: 'Media Editor', url: 'media-editor.html', desc: 'Trim and edit video/audio', root: false },
+    { name: 'Meme Generator', url: 'media-meme-generator.html', desc: 'Make memes online', root: false },
+    { name: 'Mic Test', url: 'media-mic-test.html', desc: 'Check your microphone', root: false },
+    { name: 'Webcam Test', url: 'media-webcam-test.html', desc: 'Check camera FPS', root: false },
+
+    // --- Career & Business ---
+    { name: 'Resume Builder', url: 'resume-builder.html', desc: '30 ATS-friendly templates', root: false },
+    { name: 'Invoice Generator', url: 'invoice-generator.html', desc: 'Professional GST invoices', root: false },
+    { name: 'eMitra / CSC Tools', url: 'emitra-csc-tools.html', desc: 'Citizen service utilities', root: false },
     
-    // Root Hubs
+    // --- Root Hubs ---
     { name: 'Finance Tools Hub', url: 'finance-tools.html', desc: 'All financial calculators', root: true },
+    { name: 'Business Tools Hub', url: 'business-tools.html', desc: 'GST, profit margin, ROI', root: true },
+    { name: 'Career Tools Hub', url: 'career-tools.html', desc: 'Cover letter, interview prep', root: true },
     { name: 'Printing Tools Hub', url: 'printing-tools.html', desc: 'Print IDs, Aadhaar, Photos', root: true },
-    { name: 'All Categories', url: 'categories.html', desc: 'Browse all 90+ tools', root: true }
+    { name: 'All Categories', url: 'categories.html', desc: 'Browse all 90+ tools', root: true },
+    { name: 'All Tools Directory', url: 'all-tools.html', desc: 'Browse complete tool list', root: false } // यह tools फोल्डर के अंदर है
   ];
 
   /* ---------- Config ---------- */
   var CONFIG = {
     brand: 'DocEasy',
     isSubPage: location.pathname.indexOf('/tools/') !== -1,
+
     mainNav: [
       { href: 'index.html',                 label: 'Home',       root: true },
-      { href: 'index.html#pdf-tools',       label: 'PDF',        root: true },
+      { href: 'index.html#pdf-tools',       label: 'PDF Tools',  root: true },
       { href: 'index.html#image-tools',     label: 'Images',     root: true },
       { href: 'index.html#id-forms',        label: 'ID Cards',   root: true },
-      { href: 'index.html#finance',         label: 'Finance',    root: true },
-      { href: 'categories.html',            label: 'All Tools',  root: true }
+      { href: 'index.html#media',           label: 'Media',      root: true },
+      { href: 'index.html#utility',         label: 'Utilities',  root: true },
+      { href: 'categories.html',            label: 'All Hubs',   root: true }
     ],
+
     quickTools: [
       { href: 'card-cropper.html',          label: 'ID Card Crop' },
       { href: 'resume-builder.html',        label: 'Resume Builder' },
@@ -106,6 +169,7 @@
       { href: 'image-compressor.html',      label: 'Compress Image' },
       { href: 'passport-maker.html',        label: 'Passport Photo' }
     ],
+
     footer: {
       pdfTools: [
         { href: 'pdf-merge.html',       label: 'Merge PDF' },
@@ -159,7 +223,7 @@
     }
   }
 
-  /* ---------- Header Builder (With Search Box) ---------- */
+  /* ---------- Header builder ---------- */
   function buildHeader() {
     var navLinks = CONFIG.mainNav.map(function (p) {
       return '<a href="' + resolvePath(p.href, p.root) + '">' + p.label + '</a>';
@@ -200,7 +264,7 @@
     '</header>';
   }
 
-  /* ---------- Footer Builder ---------- */
+  /* ---------- Footer builder ---------- */
   function buildFooter() {
     function col(title, items) {
       var lis = items.map(function (it) {
@@ -228,7 +292,7 @@
       '</div></footer>';
   }
 
-  /* ---------- Search Logic ---------- */
+  /* ---------- Search Logic (FIXED: Hyphens & spaces handled perfectly) ---------- */
   function initSearch() {
     var input = document.getElementById('de-global-search');
     var dropdown = document.getElementById('de-search-results');
@@ -238,13 +302,16 @@
       var q = this.value.toLowerCase().trim();
       if (!q) { dropdown.classList.remove('show'); return; }
 
+      // हाइफन (-) और अंडरस्कोर (_) को स्पेस से बदल दें ताकि "in hand" और "in-hand" दोनों मैच हों
+      var cleanQ = q.replace(/[-_]/g, ' ');
+
       var matches = TOOLS_DB.filter(function(t) {
-        return t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q);
+        var target = (t.name + ' ' + t.desc).toLowerCase().replace(/[-_]/g, ' ');
+        return target.indexOf(cleanQ) !== -1;
       });
 
       if (matches.length > 0) {
         dropdown.innerHTML = matches.map(function(t) {
-          // Path resolver for search results
           var url = resolvePath(t.url, t.root);
           return '<a href="' + url + '" class="de-search-item">' +
                    '<div class="de-si-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>' +
@@ -308,6 +375,8 @@
     }
   };
   window.officekitToggleTheme = window.docEasyToggleTheme;
+
+  /* ---------- Support Modal Open/Close (Stubbed safely) ---------- */
   window.docEasyOpenSupport = function () {};
   window.docEasyCloseSupport = function () {};
 
