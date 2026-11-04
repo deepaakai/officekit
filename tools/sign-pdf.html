@@ -406,15 +406,19 @@
 
   // Initialize Signature Canvas
   function initSigCanvas() {
-    sigCanvas.width = sigCanvas.offsetWidth;
-    sigCanvas.height = sigCanvas.offsetHeight;
-    sigCtx.lineWidth = 3;
-    sigCtx.lineCap = 'round';
-    sigCtx.lineJoin = 'round';
-    sigCtx.strokeStyle = '#111827'; // Dark color for signature
+  const w = sigCanvas.offsetWidth;
+  const h = sigCanvas.offsetHeight;
+  if (!w || !h) { setTimeout(initSigCanvas, 60); return; }
+  sigCanvas.width = w;
+  sigCanvas.height = h;
+  sigCtx.lineWidth = 3;
+  sigCtx.lineCap = 'round';
+  sigCtx.lineJoin = 'round';
+  sigCtx.strokeStyle = '#111827';
+}
+setTimeout(initSigCanvas, 100);
   }
-  setTimeout(initSigCanvas, 100); // Wait for DOM layout
-
+ 
   // Tab Switching
   sigTabs.forEach(tab => {
     tab.addEventListener('click', () => {
