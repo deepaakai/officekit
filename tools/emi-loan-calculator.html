@@ -186,6 +186,15 @@ details.faq summary::-webkit-details-marker{display:none}
 details.faq summary::after{content:"+";color:var(--accent);font-size:24px;font-weight:300}
 details.faq[open] summary::after{content:"−"}
 details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
+
+/* Related Tools Grid */
+.related-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 24px; }
+.tool-card-rel { display: flex; align-items: flex-start; gap: 14px; padding: 16px; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; text-decoration: none !important; transition: transform 0.2s, border-color 0.2s; }
+.tool-card-rel:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+.tool-icon-wrap { width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.tool-icon-wrap svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-info h4 { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: var(--text-color); }
+.tool-info p { margin: 0; font-size: 13px; color: var(--subtext-color); line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -198,12 +207,12 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     <p class="hero-sub">Standard Bank Reducing Balance EMI & Private Monthly Interest (रुपये सैकड़ा ब्याज / सूद) Calculator. Dual tenure controls, party ledger records, printable dual copies with manual offline repayment entries, photos, and signatures.</p>
   </div>
 
-  <!-- Ad Banner Top -->
+  <!-- Ad Banner Top (Replace 1234567890 with your Ad Slot ID) -->
   <div class="ad-slot-wrapper">
     <ins class="adsbygoogle"
          style="display:block;width:100%"
          data-ad-client="ca-pub-2444163954222707"
-         data-ad-slot="auto"
+         data-ad-slot="1234567890"
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -293,10 +302,9 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
             Party Ledger & Identity Details (Optional Photo Upload)
           </h4>
           <div class="credentials-grid">
-            <!-- Lender Input + Photo Tab -->
             <div class="cred-field">
               <label>GIVEN BY (LENDER NAME)</label>
-              <input type="text" id="party-lender" placeholder="E.G. DEEPAAK KUMAR >
+              <input type="text" id="party-lender" placeholder="E.G. DEEPAAK KUMAR">
               <div class="photo-tab-wrap">
                 <label for="lender-photo" class="photo-btn-label">📷 Lender Photo</label>
                 <input type="file" id="lender-photo" accept="image/*" style="display: none;">
@@ -304,7 +312,6 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
               </div>
             </div>
 
-            <!-- Borrower Input + Photo Tab -->
             <div class="cred-field">
               <label>TAKEN BY (BORROWER NAME)</label>
               <input type="text" id="party-borrower" placeholder="E.G. SURESH SHARMA">
@@ -315,7 +322,6 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
               </div>
             </div>
 
-            <!-- Purpose Field -->
             <div class="cred-field" style="grid-column: 1 / -1;">
               <label>REASON / PURPOSE OF LOAN</label>
               <input type="text" id="party-purpose" placeholder="E.G. SHOP EXPANSION / CROPS / EMERGENCY">
@@ -390,7 +396,6 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       <div class="table-header">
         <h3 id="table-title">Loan Repayment Schedule</h3>
         <div class="action-buttons">
-          <!-- Language Toggle for PDF -->
           <div class="lang-toggle" id="pdf-lang-toggle" title="Choose PDF Language">
             <button type="button" class="active" data-lang="en">English</button>
             <button type="button" data-lang="hi">हिन्दी</button>
@@ -423,12 +428,12 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
     </div>
   </div>
 
-  <!-- Ad Banner Mid -->
+  <!-- Ad Banner Mid (Replace 1234567890 with your Ad Slot ID) -->
   <div class="ad-slot-wrapper">
     <ins class="adsbygoogle"
          style="display:block;width:100%"
          data-ad-client="ca-pub-2444163954222707"
-         data-ad-slot="auto"
+         data-ad-slot="1234567890"
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -467,6 +472,55 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.75}
       <summary>Why is there a cross-signature instruction on the photo?</summary>
       <p>Signing across the photograph (half signature on the paper, half across the photo) prevents anyone from tampering with or replacing the photograph, ensuring the document cannot be forged.</p>
     </details>
+
+    <!-- ============ RELATED TOOLS GRID ============ -->
+    <h3>Related Tools from DocEasy</h3>
+    <p>If you found this tool helpful, you might also need our other free utilities:</p>
+    
+    <div class="related-tools-grid">
+      
+      <a href="/tools/fd-calculator.html" class="tool-card-rel">
+        <div class="tool-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="tool-info">
+          <h4>FD Calculator</h4>
+          <p>Calculate Fixed Deposit maturity amount and interest.</p>
+        </div>
+      </a>
+
+      <a href="/tools/in-hand-salary-calculator.html" class="tool-card-rel">
+        <div class="tool-icon-wrap">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div class="tool-info">
+          <h4>In-Hand Salary</h4>
+          <p>Calculate your take-home salary after taxes and PF.</p>
+        </div>
+      </a>
+
+      <a href="/tools/invoice-generator.html" class="tool-card-rel">
+        <div class="tool-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="tool-info">
+          <h4>Invoice Generator</h4>
+          <p>Create professional GST invoices for your business.</p>
+        </div>
+      </a>
+
+      <a href="/tools/exam-photo-resizer.html" class="tool-card-rel">
+        <div class="tool-icon-wrap">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        </div>
+        <div class="tool-info">
+          <h4>Exam Photo Resizer</h4>
+          <p>Auto-resize for SSC, UPSC, NEET, and PAN presets.</p>
+        </div>
+      </a>
+
+    </div>
+    <!-- END RELATED TOOLS -->
   </article>
 </main>
 
