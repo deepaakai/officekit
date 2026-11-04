@@ -67,11 +67,10 @@
 .upload-box b { display: block; font-size: 13px; color: var(--text-color); }
 .upload-box span { font-size: 11px; color: var(--subtext-color); }
 
-.canvas-wrap { border: 1px solid var(--border-color); border-radius: 8px; background: #fff; margin-bottom: 16px; display: none; }
-.canvas-wrap.show { display: block; }
+/* FIXED CSS: Canvas and Actions are visible by default */
+.canvas-wrap { border: 1px solid var(--border-color); border-radius: 8px; background: #fff; margin-bottom: 16px; display: block; }
 #sig-canvas { width: 100%; height: 150px; cursor: crosshair; touch-action: none; border-radius: 8px; }
-.sig-actions { display: flex; gap: 8px; margin-bottom: 16px; display: none; }
-.sig-actions.show { display: flex; }
+.sig-actions { display: flex; gap: 8px; margin-bottom: 16px; }
 .sig-actions button { flex: 1; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); }
 .sig-actions button:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -145,7 +144,8 @@
     <div class="sidebar">
       <h3>1. Upload PDF</h3>
       <div class="upload-box" id="pdf-upload-box">
-        <input type="file" id="pdf-input" accept="application/pdf">
+        <!-- FIXED: Added .pdf and application/pdf to accept -->
+        <input type="file" id="pdf-input" accept=".pdf,application/pdf">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
         <b id="pdf-name">Click to upload PDF</b>
         <span>Max size 25 MB</span>
@@ -404,21 +404,20 @@
   let isDrawing = false;
   const sigInput = $('sig-input');
 
-  // Initialize Signature Canvas
+  // Initialize Signature Canvas (FIXED Syntax Error)
   function initSigCanvas() {
-  const w = sigCanvas.offsetWidth;
-  const h = sigCanvas.offsetHeight;
-  if (!w || !h) { setTimeout(initSigCanvas, 60); return; }
-  sigCanvas.width = w;
-  sigCanvas.height = h;
-  sigCtx.lineWidth = 3;
-  sigCtx.lineCap = 'round';
-  sigCtx.lineJoin = 'round';
-  sigCtx.strokeStyle = '#111827';
-}
-setTimeout(initSigCanvas, 100);
+    const w = sigCanvas.offsetWidth;
+    const h = sigCanvas.offsetHeight;
+    if (!w || !h) { setTimeout(initSigCanvas, 60); return; }
+    sigCanvas.width = w;
+    sigCanvas.height = h;
+    sigCtx.lineWidth = 3;
+    sigCtx.lineCap = 'round';
+    sigCtx.lineJoin = 'round';
+    sigCtx.strokeStyle = '#111827';
   }
- 
+  setTimeout(initSigCanvas, 100);
+
   // Tab Switching
   sigTabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -427,6 +426,7 @@ setTimeout(initSigCanvas, 100);
       if (tab.dataset.tab === 'draw') {
         tabDraw.style.display = 'block';
         tabUpload.style.display = 'none';
+        initSigCanvas(); // Re-init to ensure correct dimensions
       } else {
         tabDraw.style.display = 'none';
         tabUpload.style.display = 'block';
@@ -434,16 +434,23 @@ setTimeout(initSigCanvas, 100);
     });
   });
 
-  // Handle PDF Upload
+  // Handle PDF Upload (FIXED: Added value reset & library check)
   pdfInput.addEventListener('change', async function(e) {
     const file = e.target.files[0];
     if (!file) return;
+    
+    // Check if PDF.js is loaded
+    if (!window.pdfjsLib) {
+      alert('PDF engine is still loading. Please wait a moment and try again.');
+      return;
+    }
+    
     if (file.size > 25 * 1024 * 1024) {
       alert('File too large. Max 25MB.');
       return;
     }
 
-    pdfName.textContent = file.name;
+    pdfName.textContent = 'Loading PDF...';
     const arrayBuffer = await file.arrayBuffer();
     pdfFileBuffer = arrayBuffer;
 
@@ -457,16 +464,28 @@ setTimeout(initSigCanvas, 100);
       emptyState.style.display = 'none';
       pdfControls.style.display = 'flex';
       await renderPage(currentPage);
+      
+      pdfName.textContent = file.name;
+      
+      // Auto-apply signature if it exists
+      if (currentSignatureBase64) {
+        applySignatureToPreview();
+      }
     } catch (err) {
       console.error(err);
+      pdfName.textContent = 'Click to upload PDF';
       alert('Error loading PDF. It might be corrupted or password protected.');
     }
+    
+    // Reset input so user can upload the same file again if needed
+    pdfInput.value = '';
   });
 
   // Render PDF Page
   async function renderPage(num) {
+    if (!pdfDoc) return;
     const page = await pdfDoc.getPage(num);
-    const viewport = page.getViewport({ scale: 1.5 }); // Render at 1.5x for better quality
+    const viewport = page.getViewport({ scale: 1.5 }); 
     canvas.width = viewport.width;
     canvas.height = viewport.height;
     
@@ -477,7 +496,7 @@ setTimeout(initSigCanvas, 100);
     await page.render(renderContext).promise;
     
     pageNum.textContent = num;
-    sigOverlay.style.display = 'none'; // Hide overlay until placed
+    sigOverlay.style.display = 'none'; // Hide overlay on page change
   }
 
   // Page Navigation
@@ -505,7 +524,7 @@ setTimeout(initSigCanvas, 100);
 
   function draw(e) {
     if (!isDrawing) return;
-    e.preventDefault(); // Prevent scrolling on touch
+    e.preventDefault(); 
     const rect = sigCanvas.getBoundingClientRect();
     const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
     const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
@@ -521,8 +540,8 @@ setTimeout(initSigCanvas, 100);
   sigCanvas.addEventListener('mousemove', draw);
   sigCanvas.addEventListener('mouseup', stopDrawing);
   sigCanvas.addEventListener('mouseleave', stopDrawing);
-  sigCanvas.addEventListener('touchstart', startDrawing);
-  sigCanvas.addEventListener('touchmove', draw);
+  sigCanvas.addEventListener('touchstart', startDrawing, { passive: false });
+  sigCanvas.addEventListener('touchmove', draw, { passive: false });
   sigCanvas.addEventListener('touchend', stopDrawing);
 
   // Clear & Save Signature
@@ -531,7 +550,6 @@ setTimeout(initSigCanvas, 100);
   });
 
   $('save-sig').addEventListener('click', () => {
-    // Check if canvas is empty (very basic check)
     const blank = document.createElement('canvas');
     blank.width = sigCanvas.width;
     blank.height = sigCanvas.height;
@@ -558,6 +576,7 @@ setTimeout(initSigCanvas, 100);
       applySignatureToPreview();
     };
     reader.readAsDataURL(file);
+    sigInput.value = '';
   });
 
   // Show Signature Overlay
@@ -572,7 +591,7 @@ setTimeout(initSigCanvas, 100);
     sigOverlay.style.display = 'block';
     sigOverlay.style.top = '50%';
     sigOverlay.style.left = '50%';
-    // Reset size
+    sigOverlay.style.transform = 'translate(-50%, -50%)'; 
     $('sig-img').style.width = '150px';
     downloadBtn.disabled = false;
   }
@@ -617,9 +636,7 @@ setTimeout(initSigCanvas, 100);
       sigOverlay.style.top = (startTop + dy) + 'px';
     } else if (isResizing) {
       const dx = e.clientX - startX;
-      const newWidth = Math.max(30, startWidth + dx); // Min width 30px
-      // Maintain aspect ratio
-      const aspectRatio = startWidth / startHeight;
+      const newWidth = Math.max(30, startWidth + dx);
       $('sig-img').style.width = newWidth + 'px';
       $('sig-img').style.height = 'auto';
     }
@@ -673,35 +690,32 @@ setTimeout(initSigCanvas, 100);
   downloadBtn.addEventListener('click', async () => {
     if (!pdfFileBuffer || !currentSignatureBase64) return;
     
+    if (!window.PDFLib) {
+      alert('PDF library is loading. Please wait a moment and try again.');
+      return;
+    }
+
     const btn = downloadBtn;
     const origText = btn.innerHTML;
     btn.innerHTML = 'Processing...';
     btn.disabled = true;
 
     try {
-      const { PDFDocument } = PDFLib;
+      const { PDFDocument } = window.PDFLib;
       const pdfDocLib = await PDFDocument.load(pdfFileBuffer);
       
-      // Get the current page (0-indexed in pdf-lib)
       const pageIndex = currentPage - 1;
       const page = pdfDocLib.getPage(pageIndex);
       const { width: pdfWidth, height: pdfHeight } = page.getSize();
 
-      // Get canvas dimensions to scale coordinates
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
-
-      // Get signature position on canvas
       const sigRect = sigOverlay.getBoundingClientRect();
       const canvasRect = canvas.getBoundingClientRect();
       
-      // Calculate position relative to canvas (accounting for scroll if any, but boundingClientRect handles it)
       const relX = sigRect.left - canvasRect.left;
       const relY = sigRect.top - canvasRect.top;
       const relW = sigRect.width;
       const relH = sigRect.height;
 
-      // Scale to PDF points
       const scaleX = pdfWidth / canvasRect.width;
       const scaleY = pdfHeight / canvasRect.height;
 
@@ -709,11 +723,8 @@ setTimeout(initSigCanvas, 100);
       const sigW = relW * scaleX;
       const sigH = relH * scaleY;
       
-      // Y-axis is inverted in PDF (0 is bottom)
       const sigY = pdfHeight - (relY * scaleY) - sigH;
 
-      // Embed signature image
-      // Need to handle PNG (which is expected) and JPG
       let sigImage;
       if (currentSignatureBase64.startsWith('data:image/png')) {
         sigImage = await pdfDocLib.embedPng(currentSignatureBase64);
@@ -721,7 +732,6 @@ setTimeout(initSigCanvas, 100);
         sigImage = await pdfDocLib.embedJpg(currentSignatureBase64);
       }
 
-      // Draw signature on PDF
       page.drawImage(sigImage, {
         x: sigX,
         y: sigY,
@@ -729,7 +739,6 @@ setTimeout(initSigCanvas, 100);
         height: sigH,
       });
 
-      // Save and download
       const pdfBytes = await pdfDocLib.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
@@ -754,4 +763,4 @@ setTimeout(initSigCanvas, 100);
 })();
 </script>
 </body>
-  </html>
+</html>
