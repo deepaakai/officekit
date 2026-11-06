@@ -71,7 +71,11 @@
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
+<!-- PDF.js for rendering -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<!-- jsPDF for perfect printing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
   if (window.pdfjsLib) {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
@@ -507,7 +511,7 @@
           <span style="color:var(--subtext-color); font-weight:700;">×</span>
           <input type="number" id="box-h-input" class="size-input" value="8.5" step="0.1" min="5" max="20" title="Height (cm)">
           
-          <!-- NEW SWAP BUTTON -->
+          <!-- Swap Button -->
           <button class="tool-btn" id="btn-swap-size" style="padding: 6px 10px; font-size: 12px; margin-left: 6px;" title="Swap Width & Height">↔ Swap</button>
         </div>
         <div class="toolbar-group">
@@ -532,7 +536,7 @@
         </div>
         <button class="tool-btn btn-print-both" id="btn-print-both">
           <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-          Print Ultra HD
+          Print Perfect PDF
         </button>
         <button class="tool-btn" id="btn-download-both">
           <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -541,7 +545,7 @@
       </div>
 
       <div class="hd-note">
-        ✨ <b>300 DPI Studio Quality:</b> Drag each box onto the corresponding card. Default size is set to 5.5cm × 8.5cm. Use <b>↔ Swap</b> for landscape cards.
+        ✨ <b>300 DPI Studio Quality:</b> Drag boxes onto the cards. Use <b>↔ Swap</b> for landscape (voter ID) cards. The Print button generates a perfect PDF.
       </div>
 
       <div class="viewport-box" id="viewport-wrap">
@@ -630,7 +634,7 @@
       <li><b>Upload:</b> Drag and drop your Aadhaar PDF or image. If it's a password-protected e-Aadhaar, enter your password (First 4 letters of name in CAPS + Birth Year).</li>
       <li><b>Adjust:</b> The tool automatically sets the crop box to 5.5cm × 8.5cm. Simply drag the green box over your front side and the blue box over the back side.</li>
       <li><b>Preview:</b> Use the handles to ensure the edges are perfectly aligned with the card borders.</li>
-      <li><b>Download/Print:</b> Click "Save HD Images" to get 300 DPI PNG files, or click "Print Ultra HD" to generate a perfectly sized A4 printout.</li>
+      <li><b>Download/Print:</b> Click "Save HD Images" to get 300 DPI PNG files, or click "Print Perfect PDF" to generate a perfectly sized A4 printout.</li>
     </ol>
 
     <h3>Local SEO: Why Users in Delhi NCR Trust DocEasy</h3>
@@ -878,11 +882,14 @@ async function renderPdfPage(pageNum) {
   canvas.height = displayViewport.height;
   viewportWrap.style.width = displayViewport.width + "px";
   viewportWrap.style.height = displayViewport.height + "px";
+  
+  // High-res rendering for 300 DPI output
   const hdScale = Math.max(3.2, 2480 / unscaledViewport.width);
   const hdViewport = page.getViewport({ scale: hdScale });
   hdCanvas.width = hdViewport.width;
   hdCanvas.height = hdViewport.height;
   hdRatio = hdCanvas.width / canvas.width;
+  
   await page.render({ canvasContext: ctx, viewport: displayViewport }).promise;
   await page.render({ canvasContext: hdCtx, viewport: hdViewport }).promise;
 }
@@ -969,7 +976,6 @@ function syncSizeFromInputs() {
 boxWInput.oninput = syncSizeFromInputs;
 boxHInput.oninput = syncSizeFromInputs;
 
-// NEW: Swap width and height for landscape cards
 btnSwapSize.onclick = () => {
   const w = boxWInput.value;
   boxWInput.value = boxHInput.value;
@@ -1044,7 +1050,7 @@ function setupInteractiveBox(box) {
 setupInteractiveBox(cropFront);
 setupInteractiveBox(cropBack);
 
-// FIXED: Dynamic Output Canvas Size based on user inputs
+// Generate the exact high-res image based on user's mm input
 function getUltraHdCroppedCanvas(boxEl) {
   const wCm = parseFloat(boxWInput.value) || 5.5;
   const hCm = parseFloat(boxHInput.value) || 8.5;
@@ -1071,66 +1077,58 @@ function getUltraHdCroppedCanvas(boxEl) {
   return outCanvas;
 }
 
-// FIXED: Popup Window Print Method (Bypasses mobile WebView bugs)
-btnPrintBoth.onclick = () => {
+// REAL PDF GENERATION (Replaces window.print for 100% accuracy)
+btnPrintBoth.onclick = async () => {
   const frontOn = chkFront.checked;
   const backOn  = chkBack.checked;
   if (!frontOn && !backOn) { alert("Enable at least one side."); return; }
 
-  const frontData = frontOn ? getUltraHdCroppedCanvas(cropFront).toDataURL("image/jpeg", 0.95) : null;
-  const backData  = backOn  ? getUltraHdCroppedCanvas(cropBack).toDataURL("image/jpeg", 0.95) : null;
-
-  const wCm = parseFloat(boxWInput.value) || 5.5;
-  const hCm = parseFloat(boxHInput.value) || 8.5;
-
-  const printWindow = window.open('', '_blank');
-  if (!printWindow) {
-    alert("Please allow popups in your browser settings to print.");
+  if (!window.jspdf) {
+    alert("PDF engine loading, please wait...");
     return;
   }
 
-  printWindow.document.write(`
-    <html>
-    <head>
-      <title>Print ID Cards</title>
-      <style>
-        body {
-          margin: 0;
-          padding: 10mm;
-          display: flex;
-          flex-direction: row;
-          gap: 5mm;
-          justify-content: center;
-          align-items: flex-start;
-          background: #fff;
-        }
-        img {
-          width: ${wCm}cm;
-          height: ${hCm}cm;
-          object-fit: contain;
-          border: 1px dashed #ccc;
-        }
-        @media print {
-          body { padding: 5mm; gap: 2mm; }
-          img { border: none; }
-        }
-        @page { size: A4; margin: 10mm; }
-      </style>
-    </head>
-    <body>
-      ${frontData ? `<img src="${frontData}" alt="Front">` : ''}
-      ${backData ? `<img src="${backData}" alt="Back">` : ''}
-      <script>
-        window.onload = function() {
-          setTimeout(function() {
-            window.print();
-          }, 300);
-        };
-      <\/script>
-    </body>
-    </html>
-  `);
-  printWindow.document.close();
+  const btn = btnPrintBoth;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = "Generating PDF...";
+  btn.disabled = true;
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+    
+    const wCm = parseFloat(boxWInput.value) || 5.5;
+    const hCm = parseFloat(boxHInput.value) || 8.5;
+    
+    // Using mm for jsPDF
+    const wMm = wCm * 10;
+    const hMm = hCm * 10;
+    
+    let currentX = 15; // 15mm margin from left
+    const currentY = 15; // 15mm margin from top
+
+    if (frontOn) {
+      const frontData = getUltraHdCroppedCanvas(cropFront).toDataURL("image/jpeg", 0.95);
+      doc.addImage(frontData, 'JPEG', currentX, currentY, wMm, hMm);
+      currentX += wMm + 10; // 10mm gap
+    }
+    
+    if (backOn) {
+      const backData = getUltraHdCroppedCanvas(cropBack).toDataURL("image/jpeg", 0.95);
+      // If only back is selected, place it at the start
+      if (!frontOn) currentX = 15;
+      doc.addImage(backData, 'JPEG', currentX, currentY, wMm, hMm);
+    }
+
+    doc.save("Aadhaar_Card_Print.pdf");
+    
+  } catch (e) {
+    console.error(e);
+    alert("Failed to generate PDF. Please try again.");
+  } finally {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
 };
 
 btnDownloadBoth.onclick = () => {
@@ -1156,4 +1154,4 @@ btnDownloadBoth.onclick = () => {
 };
 </script>
 </body>
-  </html>
+</html>
