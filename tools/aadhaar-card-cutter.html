@@ -423,63 +423,6 @@
   .seo-article p { font-size: 15.5px !important; }
   .seo-article li { font-size: 15px !important; }
 }
-
-/* ============ PRINT — Single Page Output ============ */
-@media print {
-  @page {
-    size: A4 portrait;
-    margin: 0;
-  }
-
-  html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 210mm !important;
-    height: 297mm !important;
-    overflow: hidden !important;
-    background: #ffffff !important;
-  }
-
-  body > * {
-    display: none !important;
-  }
-
-  #print-area {
-    display: flex !important;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 5mm;
-    padding: 10mm;
-    margin: 0;
-    box-sizing: border-box;
-    width: 210mm;
-    height: 297mm;
-    page-break-after: avoid;
-    page-break-inside: avoid;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: #ffffff;
-  }
-
-  #print-area[style*="display: none"],
-  #print-area[style*="display:none"] {
-    display: none !important;
-  }
-
-  .card-print-img {
-    display: block !important;
-    width: 55mm !important; /* Updated width */
-    height: 85mm !important; /* Updated height */
-    border: 0 !important;
-    outline: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    object-fit: fill;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
-}
 </style>
 </head>
 <body>
@@ -563,6 +506,9 @@
           <input type="number" id="box-w-input" class="size-input" value="5.5" step="0.1" min="3" max="15" title="Width (cm)">
           <span style="color:var(--subtext-color); font-weight:700;">×</span>
           <input type="number" id="box-h-input" class="size-input" value="8.5" step="0.1" min="5" max="20" title="Height (cm)">
+          
+          <!-- NEW SWAP BUTTON -->
+          <button class="tool-btn" id="btn-swap-size" style="padding: 6px 10px; font-size: 12px; margin-left: 6px;" title="Swap Width & Height">↔ Swap</button>
         </div>
         <div class="toolbar-group">
           <span class="toolbar-label">Sides:</span>
@@ -595,7 +541,7 @@
       </div>
 
       <div class="hd-note">
-        ✨ <b>300 DPI Studio Quality:</b> Drag each box onto the corresponding card. Default size is set to 5.5cm × 8.5cm.
+        ✨ <b>300 DPI Studio Quality:</b> Drag each box onto the corresponding card. Default size is set to 5.5cm × 8.5cm. Use <b>↔ Swap</b> for landscape cards.
       </div>
 
       <div class="viewport-box" id="viewport-wrap">
@@ -777,11 +723,6 @@
 
 </main>
 
-<div id="print-area" style="display:none;">
-  <img id="print-front-img" class="card-print-img" alt="Front">
-  <img id="print-back-img" class="card-print-img" alt="Back">
-</div>
-
 <div id="doceasy-footer"></div>
 
 <script src="../assets/js/core/doceasy-core.js"></script>
@@ -806,6 +747,7 @@ const cropBack = document.getElementById("crop-back");
 
 const boxWInput = document.getElementById("box-w-input");
 const boxHInput = document.getElementById("box-h-input");
+const btnSwapSize = document.getElementById("btn-swap-size");
 
 const btnBottomReset = document.getElementById("btn-bottom-reset");
 const btnBottomUpload = document.getElementById("btn-bottom-upload");
@@ -999,14 +941,17 @@ function initBothBoxes() {
   const aspect = wCm / hCm;
   const boxWidth = Math.min(canvas.width * 0.44, 430);
   const boxHeight = boxWidth / aspect;
+  
   cropFront.style.width = boxWidth + "px";
   cropFront.style.height = boxHeight + "px";
   cropFront.style.left = (canvas.width * 0.05) + "px";
   cropFront.style.top = (canvas.height - boxHeight - 35) + "px";
+  
   cropBack.style.width = boxWidth + "px";
   cropBack.style.height = boxHeight + "px";
   cropBack.style.left = (canvas.width * 0.51) + "px";
   cropBack.style.top = (canvas.height - boxHeight - 35) + "px";
+  
   applySideVisibility();
 }
 
@@ -1023,6 +968,14 @@ function syncSizeFromInputs() {
 }
 boxWInput.oninput = syncSizeFromInputs;
 boxHInput.oninput = syncSizeFromInputs;
+
+// NEW: Swap width and height for landscape cards
+btnSwapSize.onclick = () => {
+  const w = boxWInput.value;
+  boxWInput.value = boxHInput.value;
+  boxHInput.value = w;
+  syncSizeFromInputs();
+};
 
 function setupInteractiveBox(box) {
   let activeMode = null;
@@ -1091,7 +1044,14 @@ function setupInteractiveBox(box) {
 setupInteractiveBox(cropFront);
 setupInteractiveBox(cropBack);
 
+// FIXED: Dynamic Output Canvas Size based on user inputs
 function getUltraHdCroppedCanvas(boxEl) {
+  const wCm = parseFloat(boxWInput.value) || 5.5;
+  const hCm = parseFloat(boxHInput.value) || 8.5;
+  const dpi = 300;
+  const outW = Math.round((wCm / 2.54) * dpi);
+  const outH = Math.round((hCm / 2.54) * dpi);
+
   const screenX = parseFloat(boxEl.style.left);
   const screenY = parseFloat(boxEl.style.top);
   const screenW = boxEl.offsetWidth;
@@ -1100,32 +1060,77 @@ function getUltraHdCroppedCanvas(boxEl) {
   const realY = screenY * hdRatio;
   const realW = screenW * hdRatio;
   const realH = screenH * hdRatio;
+  
   const outCanvas = document.createElement("canvas");
-  outCanvas.width = 650;
-  outCanvas.height = 1004;
+  outCanvas.width = outW;
+  outCanvas.height = outH;
   const outCtx = outCanvas.getContext("2d");
   outCtx.imageSmoothingEnabled = true;
   outCtx.imageSmoothingQuality = "high";
-  outCtx.drawImage(hdCanvas, realX, realY, realW, realH, 0, 0, outCanvas.width, outCanvas.height);
+  outCtx.drawImage(hdCanvas, realX, realY, realW, realH, 0, 0, outW, outH);
   return outCanvas;
 }
 
+// FIXED: Popup Window Print Method (Bypasses mobile WebView bugs)
 btnPrintBoth.onclick = () => {
   const frontOn = chkFront.checked;
   const backOn  = chkBack.checked;
   if (!frontOn && !backOn) { alert("Enable at least one side."); return; }
-  const printArea = document.getElementById("print-area");
-  const frontImg = document.getElementById("print-front-img");
-  const backImg  = document.getElementById("print-back-img");
-  frontImg.style.display = frontOn ? "" : "none";
-  backImg.style.display  = backOn  ? "" : "none";
-  if (frontOn) frontImg.src = getUltraHdCroppedCanvas(cropFront).toDataURL("image/png", 1.0);
-  if (backOn)  backImg.src  = getUltraHdCroppedCanvas(cropBack).toDataURL("image/png", 1.0);
-  printArea.style.display = "flex";
-  setTimeout(() => {
-    window.print();
-    printArea.style.display = "none";
-  }, 250);
+
+  const frontData = frontOn ? getUltraHdCroppedCanvas(cropFront).toDataURL("image/jpeg", 0.95) : null;
+  const backData  = backOn  ? getUltraHdCroppedCanvas(cropBack).toDataURL("image/jpeg", 0.95) : null;
+
+  const wCm = parseFloat(boxWInput.value) || 5.5;
+  const hCm = parseFloat(boxHInput.value) || 8.5;
+
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    alert("Please allow popups in your browser settings to print.");
+    return;
+  }
+
+  printWindow.document.write(`
+    <html>
+    <head>
+      <title>Print ID Cards</title>
+      <style>
+        body {
+          margin: 0;
+          padding: 10mm;
+          display: flex;
+          flex-direction: row;
+          gap: 5mm;
+          justify-content: center;
+          align-items: flex-start;
+          background: #fff;
+        }
+        img {
+          width: ${wCm}cm;
+          height: ${hCm}cm;
+          object-fit: contain;
+          border: 1px dashed #ccc;
+        }
+        @media print {
+          body { padding: 5mm; gap: 2mm; }
+          img { border: none; }
+        }
+        @page { size: A4; margin: 10mm; }
+      </style>
+    </head>
+    <body>
+      ${frontData ? `<img src="${frontData}" alt="Front">` : ''}
+      ${backData ? `<img src="${backData}" alt="Back">` : ''}
+      <script>
+        window.onload = function() {
+          setTimeout(function() {
+            window.print();
+          }, 300);
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
 };
 
 btnDownloadBoth.onclick = () => {
@@ -1136,7 +1141,7 @@ btnDownloadBoth.onclick = () => {
     const fCanvas = getUltraHdCroppedCanvas(cropFront);
     const a1 = document.createElement("a");
     a1.href = fCanvas.toDataURL("image/png", 1.0);
-    a1.download = "DocEasy-Aadhaar-Front-300DPI-" + Date.now() + ".png";
+    a1.download = "DocEasy-Front-300DPI-" + Date.now() + ".png";
     a1.click();
   }
   if (backOn) {
@@ -1144,7 +1149,7 @@ btnDownloadBoth.onclick = () => {
       const bCanvas = getUltraHdCroppedCanvas(cropBack);
       const a2 = document.createElement("a");
       a2.href = bCanvas.toDataURL("image/png", 1.0);
-      a2.download = "DocEasy-Aadhaar-Back-300DPI-" + Date.now() + ".png";
+      a2.download = "DocEasy-Back-300DPI-" + Date.now() + ".png";
       a2.click();
     }, 300);
   }
