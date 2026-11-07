@@ -157,7 +157,7 @@
     ],
 
     quickTools: [
-      { href: 'card-cropper.html',          label: 'ID Card Crop' },
+      { href: 'aadhaar-card-cutter.html',          label: 'Aadhaar Cutter' },
       { href: 'resume-builder.html',        label: 'Resume Builder' },
       { href: 'invoice-generator.html',     label: 'Invoice Maker' },
       { href: 'printing-tools.html',        label: 'Printing Suite',  root: true },
@@ -189,7 +189,7 @@
       ],
       idTools: [
         { href: 'printing-tools.html',               label: 'Printing Hub',        root: true },
-        { href: 'card-cropper.html',                 label: 'ID Card Cropper' },
+        { href: 'aadhaar-card-cutter.html',          label: 'Aadhaar Cutter' },
         { href: 'id-2in1-maker.html',                label: '2 in 1 ID Maker' },
         { href: 'passport-maker.html',               label: 'Passport Photo Maker' },
         { href: 'pan-photo-signature-resizer.html',  label: 'PAN Photo & Signature' },
