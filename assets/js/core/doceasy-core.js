@@ -82,7 +82,7 @@
 
     // --- ID & Photo Printing ---
     { name: 'Exam Photo Resizer', url: 'exam-photo-resizer.html', desc: 'Resize photo for exam forms', root: false },
-    { name: 'ID Card Cropper', url: 'card-cropper.html', desc: 'Aadhaar/PAN print at 300 DPI', root: false },
+    { name: 'Aadhaar & ID Card Cutter', url: 'aadhaar-card-cutter.html', desc: 'Aadhaar/PAN print at 300 DPI', root: false },
     { name: '2 in 1 ID Maker', url: 'id-2in1-maker.html', desc: 'Front & back on one page', root: false },
     { name: 'Passport Photo Maker', url: 'passport-maker.html', desc: '35x45mm photo sheet on A4', root: false },
     { name: 'Photo Size Resize', url: 'photo-size-resize.html', desc: 'Exact mm / px / KB for print', root: false },
