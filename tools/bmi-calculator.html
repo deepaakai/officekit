@@ -5,7 +5,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Free BMI Calculator (kg, lbs, cm, ft/in) - Asian & WHO Standard | DocEasy</title>
-<meta name="description" content="Calculate your Body Mass Index (BMI) accurately for free. Supports mixed units (kg, lbs, cm, feet, inches) and age. Compare Asian/Indian vs WHO standards to find your ideal weight.">
+<meta name="description" content="Calculate your Body Mass Index (BMI) accurately for free. Supports mixed units (kg, lbs, cm, feet, inches), age and gender. Compare Asian/Indian vs WHO standards.">
 <meta name="keywords" content="bmi calculator, body mass index, indian bmi calculator, asian bmi standard, bmi calculator in feet and inches, bmi calculator with age, bmi chart for men and women, who bmi calculator, ideal weight calculator">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://doceasy.org/tools/bmi-calculator.html">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://doceasy.org/tools/bmi-calculator.html">
 <meta property="og:title" content="Free BMI Calculator - Asian/Indian & WHO Standards | DocEasy">
-<meta property="og:description" content="Check your BMI, healthy weight range, and health risks. Supports kg/lbs and feet/inches with Indian and International standards.">
+<meta property="og:description" content="Check your BMI, body fat estimate, and healthy weight range. Supports kg/lbs, feet/inches, age and gender.">
 <meta property="og:image" content="https://doceasy.org/assets/images/og-bmi-calculator.png">
 <meta property="og:site_name" content="DocEasy">
 <meta property="og:locale" content="en_US">
@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://doceasy.org/tools/bmi-calculator.html">
 <meta name="twitter:title" content="Free BMI Calculator - Asian/Indian & WHO Standards | DocEasy">
-<meta name="twitter:description" content="Check your BMI, healthy weight range, and health risks instantly.">
+<meta name="twitter:description" content="Check your BMI, body fat estimate, and healthy weight range instantly.">
 <meta name="twitter:image" content="https://doceasy.org/assets/images/og-bmi-calculator.png">
 
 <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
@@ -35,7 +35,7 @@
   "applicationCategory": "HealthApplication",
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-  "description": "Accurate BMI calculator offering both WHO International and Asian/Indian health risk thresholds with mixed units like kg, lbs, cm, and feet/inches."
+  "description": "Accurate BMI calculator with body fat estimate, gender-aware, offering both WHO International and Asian/Indian health risk thresholds."
 }
 </script>
 <script type="application/ld+json">
@@ -43,10 +43,9 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Which BMI standard should Indians use: WHO or Asian?","acceptedAnswer":{"@type":"Answer","text":"Indians and South Asians should strictly use the Asian/Indian BMI standard. Research shows that Indians have a higher body fat percentage at the same weight as Westerners. Therefore, health risks like diabetes start at a lower BMI (Overweight starts at 23 instead of 25)."}},
-    {"@type":"Question","name":"Can I calculate BMI with weight in kg and height in feet/inches?","acceptedAnswer":{"@type":"Answer","text":"Yes, absolutely. DocEasy allows independent unit selection, meaning you can enter weight in kilograms (kg) and height in feet and inches (ft/in) simultaneously without manual conversion."}},
-    {"@type":"Question","name":"Is BMI accurate for children and teenagers?","acceptedAnswer":{"@type":"Answer","text":"No, standard BMI is for adults (18+). For children and teens, BMI is calculated using age and gender-specific percentile charts because their body composition changes rapidly as they grow."}},
-    {"@type":"Question","name":"What is the healthy BMI for a 5'5\" Indian woman?","acceptedAnswer":{"@type":"Answer","text":"According to the Asian/Indian standard, a 5'5\" (165 cm) woman should have a BMI between 18.5 and 22.9. This translates to a healthy weight range of approximately 50.5 kg to 62 kg."}}
+    {"@type":"Question","name":"Which BMI standard should Indians use: WHO or Asian?","acceptedAnswer":{"@type":"Answer","text":"Indians and South Asians should strictly use the Asian/Indian BMI standard. Overweight starts at 23 instead of 25."}},
+    {"@type":"Question","name":"Does BMI differ for men and women?","acceptedAnswer":{"@type":"Answer","text":"The BMI formula and cutoffs are the same for men and women. However, healthy body fat percentages differ. This calculator shows a gender-specific body fat estimate alongside BMI."}},
+    {"@type":"Question","name":"Is BMI accurate for children and teenagers?","acceptedAnswer":{"@type":"Answer","text":"No. Standard BMI is for adults (18+). Children and teens need age- and gender-specific percentile charts."}}
   ]
 }
 </script>
@@ -72,10 +71,23 @@
 .calc-card h2{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:20px;font-weight:800;color:var(--text-color)}
 .calc-card h2 svg{width:22px;height:22px;flex-shrink:0;color:var(--accent)}
 
-.top-controls{display:flex;justify-content:flex-end;margin-bottom:20px}
+.top-controls{display:flex;justify-content:flex-end;margin-bottom:16px}
 .standard-btn{padding:10px 16px;border:1.5px solid var(--border-color);background:var(--card-bg);color:var(--text-color);border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;transition:.15s}
 .standard-btn:hover{border-color:var(--accent);color:var(--accent)}
 .standard-btn svg{width:16px;height:16px}
+
+/* Gender pills */
+.gender-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.gender-label{font-size:12px;font-weight:900;color:var(--text-color);text-transform:uppercase;letter-spacing:0.5px}
+.gender-pills{display:flex;gap:8px;flex-wrap:wrap}
+.gender-pill{display:flex;align-items:center;gap:6px;padding:9px 16px;border:1.5px solid var(--border-color);border-radius:24px;cursor:pointer;transition:.15s;background:var(--card-bg)}
+.gender-pill:hover{border-color:var(--accent)}
+.gender-pill input{display:none}
+.gender-pill span{font-size:13px;font-weight:700;color:var(--text-color)}
+.gender-pill.active{border-color:var(--accent);background:var(--accent-soft)}
+.gender-pill.active span{color:var(--accent)}
+.gender-pill svg{width:16px;height:16px;color:var(--subtext-color)}
+.gender-pill.active svg{color:var(--accent)}
 
 .input-row{display:grid;grid-template-columns:1fr 1.1fr 0.9fr;gap:14px;margin-bottom:24px}
 @media(max-width:768px){.input-row{grid-template-columns:1fr 1fr;}}
@@ -84,14 +96,13 @@
 .input-field{display:flex;flex-direction:column;gap:6px;width:100%;min-width:0}
 .input-field label{font-size:12px;font-weight:900;color:var(--text-color);text-transform:uppercase;letter-spacing:0.5px}
 
-/* Input + unit grid */
 .input-with-unit{display:grid !important;grid-template-columns:1fr 75px !important;gap:6px !important;width:100% !important;align-items:stretch !important}
 .input-with-unit input{width:100% !important;min-width:0 !important;padding:14px 12px !important;border:1.5px solid var(--border-color) !important;border-radius:10px !important;background:var(--bg-color) !important;color:var(--text-color) !important;font-size:15px !important;font-weight:700 !important;font-family:inherit !important;outline:none !important;transition:.15s}
 .input-with-unit input:focus{border-color:var(--accent) !important;box-shadow:0 0 0 3px var(--accent-soft) !important;background:var(--card-bg) !important}
 .input-with-unit select{width:75px !important;max-width:75px !important;min-width:75px !important;padding:14px 4px !important;border:1.5px solid var(--border-color) !important;border-radius:10px !important;background:var(--card-bg) !important;color:var(--text-color) !important;font-size:13px !important;font-weight:800 !important;font-family:inherit !important;outline:none !important;cursor:pointer !important;text-align:center !important}
 .input-with-unit select:focus{border-color:var(--accent) !important}
 
-/* ⚠️ FIX: display/grid-template-columns पर !important नहीं — वरना JS toggle काम नहीं करेगा */
+/* ⚠️ display/grid-template-columns पर !important नहीं — वरना JS toggle fail */
 .height-inputs,.weight-inputs{gap:6px !important;width:100% !important;min-width:0 !important}
 .height-inputs input{width:100% !important;min-width:0 !important;padding:14px 8px !important;text-align:center !important}
 
@@ -178,15 +189,47 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 .tool-info h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--text-color)}
 .tool-info p{margin:0;font-size:13px;color:var(--subtext-color);line-height:1.4}
 
+/* ---------- PRINT TEMPLATE (hidden on screen) ---------- */
+#print-only-template{display:none}
+
 @media print {
-  #doceasy-header, #doceasy-footer, .breadcrumb, .hero-box, .ad-slot-wrapper,
-  .top-controls, .input-row, .calc-btn, .modal-overlay, .content-section,
-  .result-actions, .last-updated { display:none !important; }
-  .calc-card{box-shadow:none !important;border:1px solid #ccc !important}
-  .main-wrap{padding:0 !important;max-width:100% !important}
-  body{background:#fff !important}
-  .bmi-hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .bmi-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  /* Hide everything else */
+  body > *{display:none !important}
+  body > #print-only-template{display:block !important}
+
+  html,body{background:#fff !important;margin:0 !important;padding:0 !important;display:block !important;color:#000 !important;font-family:Arial,sans-serif !important}
+  @page{size:A4;margin:14mm}
+
+  #print-only-template{padding:0;width:100%}
+  #print-only-template .p-header{text-align:center;border-bottom:2px solid #1e293b;padding-bottom:12px;margin-bottom:20px}
+  #print-only-template .p-logo{font-size:20px;font-weight:900;letter-spacing:-0.5px;color:#1e3a8a}
+  #print-only-template .p-title{font-size:16px;font-weight:700;margin:6px 0 4px;color:#111}
+  #print-only-template .p-date{font-size:11px;color:#555}
+
+  #print-only-template .p-section{margin-bottom:16px}
+  #print-only-template .p-section h3{font-size:12px;text-transform:uppercase;letter-spacing:0.8px;font-weight:800;color:#1e3a8a;margin:0 0 8px;border-bottom:1px solid #e5e7eb;padding-bottom:4px}
+
+  #print-only-template .p-inputs{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;font-size:13px}
+  #print-only-template .p-inputs .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted #ccc}
+  #print-only-template .p-inputs .k{color:#555;font-weight:600}
+  #print-only-template .p-inputs .v{font-weight:700;color:#000}
+
+  #print-only-template .p-bmi-box{text-align:center;padding:18px;border:2px solid #1e3a8a;border-radius:10px;margin:16px 0;background:#f8fafc}
+  #print-only-template .p-bmi-val{font-size:52px;font-weight:900;line-height:1;color:#1e3a8a}
+  #print-only-template .p-bmi-cat{font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-top:8px;color:#111}
+  #print-only-template .p-bmi-scale{font-size:11px;color:#555;margin-top:6px}
+
+  #print-only-template .p-results{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+  #print-only-template .p-res-card{border:1px solid #d1d5db;border-radius:8px;padding:10px;background:#fff}
+  #print-only-template .p-res-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#6b7280;font-weight:700;margin-bottom:4px}
+  #print-only-template .p-res-card .val{font-size:16px;font-weight:800;color:#1e3a8a}
+
+  #print-only-template .p-advice{padding:12px 14px;background:#f0f9ff;border-left:4px solid #1e3a8a;font-size:12px;line-height:1.55;color:#111;margin:12px 0}
+  #print-only-template .p-advice b{color:#1e3a8a}
+
+  #print-only-template .p-footer{margin-top:24px;padding-top:10px;border-top:1px solid #d1d5db;text-align:center;font-size:10px;color:#666;line-height:1.5}
+  #print-only-template .p-footer .url{font-weight:700;color:#1e3a8a}
+  #print-only-template .p-footer .disc{font-style:italic;margin-top:6px}
 }
 
 @media(max-width:640px){
@@ -213,17 +256,12 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
   <div class="hero-box">
     <h1 class="hero-title">BMI Calculator</h1>
-    <p class="hero-sub">Calculate your Body Mass Index using globally verified health metrics. Supports mixed units like weight in kg and height in feet and inches.</p>
+    <p class="hero-sub">Calculate your Body Mass Index, healthy weight range, and body fat estimate. Supports mixed units, age, and gender — with Asian/Indian &amp; WHO standards.</p>
     <div class="last-updated">Last updated: <span id="last-updated-date">November 2025</span> • Reviewed for medical accuracy</div>
   </div>
 
   <div class="ad-slot-wrapper">
-    <ins class="adsbygoogle"
-         style="display:block;width:100%"
-         data-ad-client="ca-pub-2444163954222707"
-         data-ad-slot="auto"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-2444163954222707" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
@@ -240,9 +278,26 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
       </button>
     </div>
 
+    <!-- GENDER -->
+    <div class="gender-row" role="group" aria-label="Gender">
+      <span class="gender-label">Gender</span>
+      <div class="gender-pills">
+        <label class="gender-pill active" data-gender="male">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="14" r="5"/><line x1="21" y1="3" x2="14.5" y2="9.5"/><polyline points="15 3 21 3 21 9"/></svg>
+          <input type="radio" name="gender" value="male" checked>
+          <span>Male</span>
+        </label>
+        <label class="gender-pill" data-gender="female">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="21"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
+          <input type="radio" name="gender" value="female">
+          <span>Female</span>
+        </label>
+      </div>
+    </div>
+
     <div class="input-row">
 
-      <!-- WEIGHT: kg/lbs toggle with separate inputs -->
+      <!-- WEIGHT -->
       <div class="input-field">
         <label for="weight-kg">Weight</label>
         <div class="input-with-unit">
@@ -259,7 +314,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
         </div>
       </div>
 
-      <!-- HEIGHT: cm/ft-in toggle with separate inputs -->
+      <!-- HEIGHT -->
       <div class="input-field">
         <label for="height-cm">Height</label>
         <div class="input-with-unit">
@@ -285,7 +340,6 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <select disabled aria-hidden="true"><option>yrs</option></select>
         </div>
       </div>
-
     </div>
 
     <button class="calc-btn" id="calc-btn">
@@ -310,7 +364,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
       <div class="result-grid">
         <div class="result-card">
-          <div class="lbl">Healthy Weight Range</div>
+          <div class="lbl">Healthy Weight</div>
           <div class="val" id="healthy-range">—</div>
           <div class="sub-txt">For your height</div>
         </div>
@@ -320,9 +374,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
           <div class="sub-txt" id="cat-sub-txt">Asian Standard</div>
         </div>
         <div class="result-card">
-          <div class="lbl">Weight to Lose/Gain</div>
+          <div class="lbl">Lose / Gain</div>
           <div class="val" id="weight-diff">—</div>
           <div class="sub-txt">To reach normal</div>
+        </div>
+        <div class="result-card">
+          <div class="lbl">Body Fat (est.)</div>
+          <div class="val" id="body-fat">—</div>
+          <div class="sub-txt" id="body-fat-cat">Deurenberg formula</div>
         </div>
       </div>
 
@@ -336,19 +395,14 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
         </button>
         <button class="action-btn" id="print-btn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          Print Result
+          Print Report
         </button>
       </div>
     </div>
   </div>
 
   <div class="ad-slot-wrapper">
-    <ins class="adsbygoogle"
-         style="display:block;width:100%"
-         data-ad-client="ca-pub-2444163954222707"
-         data-ad-slot="auto"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-2444163954222707" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
@@ -380,22 +434,21 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   <article class="content-section">
     <h2>The Ultimate Guide to Body Mass Index (BMI): Asian vs. WHO Standards</h2>
 
-    <p>Body Mass Index (BMI) is one of the most widely used screening tools in modern healthcare. Whether you are starting a fitness journey, consulting a doctor, or simply curious about your health, knowing your BMI is the first step. However, a standard BMI calculator often ignores a crucial factor: <b>ethnicity</b>. This comprehensive guide explains how BMI works, why Indians need a different standard, and how to calculate it correctly using mixed units like kilograms and feet.</p>
+    <p>Body Mass Index (BMI) is one of the most widely used screening tools in modern healthcare. Whether you are starting a fitness journey, consulting a doctor, or simply curious about your health, knowing your BMI is the first step. However, a standard BMI calculator often ignores a crucial factor: <b>ethnicity</b>. This guide explains how BMI works, why Indians need a different standard, and how to calculate it correctly using mixed units like kilograms and feet.</p>
 
     <h3>What is BMI and How is it Calculated?</h3>
-    <p>BMI is a simple mathematical ratio that uses your weight and height to estimate whether you are in a healthy weight range. It was invented in the 19th century by Belgian mathematician Adolphe Quetelet. The formula is:</p>
+    <p>BMI is a simple mathematical ratio of weight to height. The formula is:</p>
     <ul>
       <li><b>Metric:</b> BMI = Weight (kg) / Height (m)²</li>
       <li><b>Imperial:</b> BMI = Weight (lbs) / Height (in)² × 703</li>
     </ul>
-    <p>For example, if you weigh 70 kg and are 1.70 meters tall, your BMI is 70 / (1.70 × 1.70) = 24.2. While this number gives a quick snapshot, its interpretation depends heavily on your genetic background. That is why DocEasy's tool offers two different standards.</p>
+    <p>For example, 70 kg and 1.70 m gives BMI 24.2.</p>
 
     <h3>Why is the Asian/Indian Standard Different from WHO?</h3>
-    <p>The World Health Organization (WHO) initially established BMI cutoffs (Overweight at 25, Obese at 30) based on studies primarily done on Caucasian populations in Europe and America. However, extensive research in India, China, and Japan revealed a critical difference: <b>Asians tend to have a higher body fat percentage at the same BMI compared to Westerners.</b></p>
-    <p>This phenomenon is known as the "Asian Indian Phenotype." Even if an Indian and an American weigh the same and are the same height, the Indian is more likely to store fat around the abdomen (visceral fat) and have lower muscle mass. This significantly increases the risk of Type-2 Diabetes and cardiovascular disease at a lower body weight.</p>
-    <p>As a result, the Indian Council of Medical Research (ICMR) and WHO introduced a revised scale for Asian populations:</p>
+    <p>The World Health Organization (WHO) initially established BMI cutoffs (Overweight at 25, Obese at 30) based on studies on Caucasian populations. However, extensive research in India, China, and Japan revealed a critical difference: <b>Asians tend to have a higher body fat percentage at the same BMI compared to Westerners.</b></p>
+    <p>This is known as the "Asian Indian Phenotype." Even if an Indian and an American weigh the same and are the same height, the Indian is more likely to store fat around the abdomen (visceral fat) and have lower muscle mass. This significantly increases the risk of Type-2 Diabetes and cardiovascular disease at a lower body weight.</p>
     <table>
-      <thead><tr><th>Category</th><th>WHO (Western) Standard</th><th>Asian / Indian Standard</th></tr></thead>
+      <thead><tr><th>Category</th><th>WHO (Western)</th><th>Asian / Indian</th></tr></thead>
       <tbody>
         <tr><td>Underweight</td><td>Below 18.5</td><td>Below 18.5</td></tr>
         <tr><td>Normal</td><td>18.5 – 24.9</td><td>18.5 – 22.9</td></tr>
@@ -403,63 +456,49 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
         <tr><td>Obese</td><td>30.0 and above</td><td>25.0 and above</td></tr>
       </tbody>
     </table>
-    <p>Using the DocEasy calculator, you can toggle between these standards. If you are of Indian descent, always use the Asian/Indian standard to get a realistic picture of your health risks.</p>
 
-    <h3>Understanding the Role of Age in BMI</h3>
-    <p>Our calculator includes an <b>Age</b> field. Why does this matter? Because a healthy BMI for a 25-year-old is not necessarily the same as for a 65-year-old. As we age, we naturally lose muscle mass and gain fat. Therefore, doctors often use different BMI charts for children, teenagers, and the elderly.</p>
+    <h3>Does BMI Differ for Men and Women?</h3>
+    <p>The BMI formula and category cutoffs are <b>the same for both genders</b>. However, men and women naturally carry different amounts of body fat:</p>
     <ul>
-      <li><b>Children & Teens (Under 18):</b> BMI is calculated using age and gender-specific percentiles. A BMI of 20 might be normal for a 16-year-old but underweight for a 10-year-old. Our tool shows a warning if the age is under 18.</li>
-      <li><b>Adults (18 – 64):</b> The standard BMI chart applies directly.</li>
-      <li><b>Seniors (65+):</b> Studies suggest that a slightly higher BMI (around 23–28) may be protective in older adults, as being underweight in old age can lead to frailty and bone loss.</li>
+      <li><b>Essential fat:</b> Men ~3–5%, Women ~10–13%</li>
+      <li><b>Healthy (athletic):</b> Men 6–17%, Women 14–24%</li>
+      <li><b>Healthy (average):</b> Men 18–24%, Women 25–31%</li>
+      <li><b>High risk:</b> Men 25%+, Women 32%+</li>
     </ul>
+    <p>This is why our calculator shows a gender-aware <b>Body Fat % estimate</b> alongside BMI — using the Deurenberg formula which combines BMI, age, and gender for a more complete picture.</p>
 
-    <h3>How to Measure BMI with Feet, Inches, and Kilograms</h3>
-    <p>In India and the UK, height is commonly measured in feet and inches, while weight is measured in kilograms. This creates a problem for standard calculators that demand either all-metric or all-imperial units. DocEasy solves this with independent unit selectors.</p>
-    <ol>
-      <li>Enter your weight (e.g., 70) and select <b>kg</b>.</li>
-      <li>Enter your height (e.g., 5 feet 7 inches) and select <b>ft/in</b>.</li>
-      <li>The tool automatically converts everything internally to the metric system to give you an accurate result.</li>
-    </ol>
-    <p>This prevents errors caused by manual conversion. For example, 1 foot = 0.3048 meters, and 1 inch = 0.0254 meters. Getting these numbers slightly wrong can change your BMI result entirely.</p>
+    <h3>Understanding the Role of Age</h3>
+    <p>As we age, we naturally lose muscle mass and gain fat. Doctors often use different BMI charts for children, teenagers, and the elderly.</p>
+    <ul>
+      <li><b>Under 18:</b> BMI must be checked against age/gender growth percentile charts.</li>
+      <li><b>Adults (18–64):</b> Standard BMI chart applies.</li>
+      <li><b>Seniors (65+):</b> A slightly higher BMI (23–28) may actually be protective.</li>
+    </ul>
 
     <h3>Limitations of Using BMI Alone</h3>
     <ul>
-      <li><b>Muscle Mass vs. Fat:</b> A bodybuilder with 5% body fat and heavy muscles can have a BMI of 30 (classified as "Obese"), despite being extremely healthy. BMI cannot differentiate between fat and muscle.</li>
-      <li><b>Fat Distribution:</b> BMI does not tell you where the fat is stored. Visceral fat (around the organs) is far more dangerous than subcutaneous fat (under the skin).</li>
-      <li><b>Ethnicity:</b> As discussed, the Asian body type requires a lower threshold, which many basic calculators do not account for.</li>
+      <li><b>Muscle vs. Fat:</b> A bodybuilder can have a BMI of 30 despite very low body fat.</li>
+      <li><b>Fat Distribution:</b> BMI does not tell you where fat is stored.</li>
+      <li><b>Ethnicity:</b> Asian thresholds differ from WHO.</li>
     </ul>
-    <p>For a complete health picture, always use BMI in conjunction with waist circumference, body fat percentage, and routine blood tests.</p>
-
-    <h3>Recommended Action Plan Based on Your BMI Result</h3>
-    <h4>1. Underweight (Below 18.5)</h4>
-    <p>If your BMI is below 18.5, you may be at risk of malnutrition, weakened immunity, and bone density loss. Focus on a nutrient-dense diet rich in protein and healthy fats.</p>
-    <h4>2. Normal (18.5 – 22.9 Asian / 24.9 WHO)</h4>
-    <p>Congratulations! You are in the healthy range. Maintain this with 150 minutes of moderate exercise per week and a balanced diet.</p>
-    <h4>3. Overweight (23 – 24.9 Asian / 25 – 29.9 WHO)</h4>
-    <p>You are at an increased risk of hypertension, pre-diabetes, and joint issues. Losing just 5% of your body weight can significantly improve your health markers.</p>
-    <h4>4. Obese (25+ Asian / 30+ WHO)</h4>
-    <p>Obesity is a chronic condition linked to heart disease, stroke, and Type-2 Diabetes. A combination of medical supervision, calorie tracking, and structured physical activity is essential.</p>
+    <p>Always combine BMI with waist circumference, body fat %, and routine blood tests.</p>
 
     <h3>Frequently Asked Questions (FAQ)</h3>
     <details class="faq">
       <summary>Is a BMI of 24 good for an Indian?</summary>
-      <p>No. According to the Asian/Indian standard, a BMI of 24 falls into the "Overweight" category. For Indians, a BMI above 23 is a warning sign, and the ideal range is 18.5 to 22.9.</p>
-    </details>
-    <details class="faq">
-      <summary>How can I calculate my BMI without a calculator?</summary>
-      <p>Use the formula: BMI = Weight (kg) / (Height in meters × Height in meters). For mixed units, first convert feet to inches (feet × 12 + inches), then multiply by 0.0254 to get meters.</p>
+      <p>No. According to the Asian/Indian standard, a BMI of 24 falls into the "Overweight" category. The ideal range is 18.5 to 22.9.</p>
     </details>
     <details class="faq">
       <summary>Does BMI vary for men and women?</summary>
-      <p>The mathematical formula for BMI is the same. However, because women naturally have a higher body fat percentage than men, body fat charts may differ slightly.</p>
+      <p>The mathematical formula is the same. However, healthy body fat percentages differ significantly. Our calculator shows a gender-specific body fat estimate.</p>
     </details>
     <details class="faq">
       <summary>Can BMI be used for pregnant women?</summary>
-      <p>No. BMI is not an accurate measure during pregnancy because the weight gain includes the baby, placenta, and amniotic fluid.</p>
+      <p>No. BMI is not accurate during pregnancy because weight gain includes the baby, placenta, and amniotic fluid.</p>
     </details>
 
     <div class="disclaimer">
-      <b>⚠️ Medical Disclaimer:</b> This BMI calculator is for informational and educational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. BMI is a screening tool, not a diagnostic measure. Always consult a qualified healthcare provider for personalized health assessments, especially if you are pregnant, under 18, elderly, or have a medical condition.
+      <b>⚠️ Medical Disclaimer:</b> This BMI calculator is for informational and educational purposes only and is not a substitute for professional medical advice. BMI is a screening tool, not a diagnostic measure. Always consult a qualified healthcare provider for personalized health assessments.
     </div>
 
     <h3>Related Health & Utility Tools</h3>
@@ -486,6 +525,38 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
 
 <div id="doceasy-footer"></div>
 
+<!-- ============ PRINT-ONLY TEMPLATE (hidden on screen) ============ -->
+<div id="print-only-template">
+  <div class="p-header">
+    <div class="p-logo">DocEasy</div>
+    <div class="p-title">Body Mass Index (BMI) Report</div>
+    <div class="p-date" id="p-date">—</div>
+  </div>
+
+  <div class="p-section">
+    <h3>User Details</h3>
+    <div class="p-inputs" id="p-inputs"></div>
+  </div>
+
+  <div class="p-bmi-box">
+    <div class="p-bmi-val" id="p-bmi-val">—</div>
+    <div class="p-bmi-cat" id="p-bmi-cat">—</div>
+    <div class="p-bmi-scale" id="p-bmi-scale">—</div>
+  </div>
+
+  <div class="p-section">
+    <h3>Results</h3>
+    <div class="p-results" id="p-results"></div>
+  </div>
+
+  <div class="p-advice" id="p-advice"></div>
+
+  <div class="p-footer">
+    <div>Generated at <span class="url">doceasy.org/tools/bmi-calculator.html</span></div>
+    <div class="disc">This report is for informational purposes only and does not replace professional medical advice.</div>
+  </div>
+</div>
+
 <script src="../assets/js/core/doceasy-core.js"></script>
 
 <script>
@@ -493,8 +564,9 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   'use strict';
 
   var currentStandard = 'asian';
+  var currentGender   = 'male';
 
-  // ---- Element references ----
+  // ---- Elements ----
   var weightKgInput   = document.getElementById('weight-kg');
   var weightLbInput   = document.getElementById('weight-lb');
   var weightKgGroup   = document.getElementById('weight-kg-group');
@@ -520,10 +592,12 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   var shareLabel      = document.getElementById('share-label');
   var printBtn        = document.getElementById('print-btn');
 
+  var genderPills     = document.querySelectorAll('.gender-pill');
+
   var lastWeightUnit = 'kg';
   var lastHeightUnit = 'cm';
 
-  // ---- BMI bar gradient per standard ----
+  // ---- BMI bar gradient ----
   function updateBarGradient(){
     if(currentStandard === 'asian'){
       bmiBar.style.background = 'linear-gradient(to right,#0ea5e9 0%,#0ea5e9 14%,#16a34a 14%,#16a34a 32%,#f59e0b 32%,#f59e0b 40%,#dc2626 40%,#dc2626 100%)';
@@ -533,20 +607,27 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
   }
   updateBarGradient();
 
-  // ---- Weight unit toggle: convert + hide/show ----
+  // ---- Gender toggle ----
+  genderPills.forEach(function(pill){
+    pill.addEventListener('click', function(){
+      genderPills.forEach(function(p){ p.classList.remove('active'); });
+      pill.classList.add('active');
+      pill.querySelector('input').checked = true;
+      currentGender = pill.dataset.gender;
+      calculateBMI();
+    });
+  });
+
+  // ---- Weight unit toggle ----
   weightUnit.addEventListener('change', function(){
     var newUnit = weightUnit.value;
     if(newUnit !== lastWeightUnit){
       if(newUnit === 'lb'){
         var kgVal = parseFloat(weightKgInput.value);
-        if(!isNaN(kgVal) && kgVal > 0){
-          weightLbInput.value = (kgVal * 2.20462).toFixed(1);
-        }
+        if(!isNaN(kgVal) && kgVal > 0) weightLbInput.value = (kgVal * 2.20462).toFixed(1);
       } else {
         var lbVal = parseFloat(weightLbInput.value);
-        if(!isNaN(lbVal) && lbVal > 0){
-          weightKgInput.value = (lbVal * 0.453592).toFixed(1);
-        }
+        if(!isNaN(lbVal) && lbVal > 0) weightKgInput.value = (lbVal * 0.453592).toFixed(1);
       }
     }
     if(newUnit === 'kg'){
@@ -560,19 +641,15 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     calculateBMI();
   });
 
-  // ---- Height unit toggle: convert + hide/show ----
+  // ---- Height unit toggle ----
   heightUnit.addEventListener('change', function(){
     var newUnit = heightUnit.value;
     if(newUnit !== lastHeightUnit){
       if(newUnit === 'cm'){
-        // ft/in → cm
         var ft = parseFloat(heightFtInput.value) || 0;
         var inch = parseFloat(heightInInput.value) || 0;
-        if(ft > 0 || inch > 0){
-          heightCmInput.value = ((ft * 12 + inch) * 2.54).toFixed(1);
-        }
+        if(ft > 0 || inch > 0) heightCmInput.value = ((ft * 12 + inch) * 2.54).toFixed(1);
       } else {
-        // cm → ft/in
         var cmVal = parseFloat(heightCmInput.value);
         if(!isNaN(cmVal) && cmVal > 0){
           var totalIn = cmVal / 2.54;
@@ -608,9 +685,8 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     opt.addEventListener('click', function(){
       standardOptions.forEach(function(o){ o.classList.remove('selected'); });
       opt.classList.add('selected');
-      var radio = opt.querySelector('input');
-      radio.checked = true;
-      currentStandard = radio.value;
+      opt.querySelector('input').checked = true;
+      currentStandard = opt.querySelector('input').value;
 
       if(currentStandard === 'asian'){
         currentStdLabel.textContent = 'Asian/Indian';
@@ -629,11 +705,28 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     });
   });
 
-  // ---- Calculate BMI ----
+  // ---- Body fat interpretation ----
+  function interpretBodyFat(bf, gender){
+    if(gender === 'male'){
+      if(bf < 6)   return 'Essential / very low';
+      if(bf < 14)  return 'Athletic';
+      if(bf < 18)  return 'Fitness';
+      if(bf < 25)  return 'Average';
+      return 'High';
+    } else {
+      if(bf < 14)  return 'Essential / very low';
+      if(bf < 21)  return 'Athletic';
+      if(bf < 25)  return 'Fitness';
+      if(bf < 32)  return 'Average';
+      return 'High';
+    }
+  }
+
+  // ---- Calculate ----
   var lastResult = null;
 
   function calculateBMI(){
-    // Read weight (in kg)
+    // weight in kg
     var weightKg;
     if(weightUnit.value === 'kg'){
       var kgVal = parseFloat(weightKgInput.value);
@@ -645,7 +738,7 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
       weightKg = lbVal * 0.453592;
     }
 
-    // Read height (in meters)
+    // height in meters
     var heightM = 0;
     if(heightUnit.value === 'cm'){
       var cm = parseFloat(heightCmInput.value);
@@ -665,10 +758,10 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     var obeseLimit = currentStandard === 'asian' ? 25 : 30;
 
     var category = '', heroClass = '', note = '';
-    if(bmi < underLimit){ category = 'Underweight'; heroClass = 'under'; note = 'Your weight is less than normal.'; }
+    if(bmi < underLimit){ category = 'Underweight'; heroClass = 'under'; note = 'Below the healthy range.'; }
     else if(bmi < overLimit){ category = 'Normal'; heroClass = 'normal'; note = 'You are in the healthy range.'; }
-    else if(bmi < obeseLimit){ category = 'Overweight'; heroClass = 'over'; note = 'Your weight is slightly high.'; }
-    else { category = 'Obese'; heroClass = 'obese'; note = 'Your weight is much higher than normal.'; }
+    else if(bmi < obeseLimit){ category = 'Overweight'; heroClass = 'over'; note = 'Slightly above the healthy range.'; }
+    else { category = 'Obese'; heroClass = 'obese'; note = 'Well above the healthy range.'; }
 
     document.getElementById('bmi-num').textContent = bmi.toFixed(1);
     document.getElementById('bmi-cat').textContent = category;
@@ -679,7 +772,6 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     if(pct < 0) pct = 0; if(pct > 100) pct = 100;
     document.getElementById('bmi-marker').style.left = pct + '%';
 
-    // Healthy range / diff based on currently-visible unit
     var multiplier   = weightUnit.value === 'lb' ? 2.20462 : 1;
     var unitLabel    = weightUnit.value === 'lb' ? 'lbs' : 'kg';
     var lowKg        = underLimit * (heightM * heightM);
@@ -702,33 +794,62 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
       diffEl.textContent = diffText;
       diffEl.style.color = '#0ea5e9';
     } else {
-      diffText = 'You are perfect';
+      diffText = 'Healthy';
       diffEl.textContent = diffText;
       diffEl.style.color = '#16a34a';
     }
 
+    // ---- Body Fat % (Deurenberg formula) ----
+    var age = parseInt(ageInput.value, 10);
+    if(isNaN(age) || age < 2) age = 30;
+    var sexFactor = currentGender === 'male' ? 1 : 0;
+    var bodyFat = (1.20 * bmi) + (0.23 * age) - (10.8 * sexFactor) - 5.4;
+    if(bodyFat < 2) bodyFat = 2; // sanity
+    if(bodyFat > 70) bodyFat = 70;
+    var bfCat = interpretBodyFat(bodyFat, currentGender);
+    document.getElementById('body-fat').textContent = bodyFat.toFixed(1) + '%';
+    document.getElementById('body-fat-cat').textContent = bfCat;
+
+    // ---- Advice ----
     var advice = '';
-    if(bmi < underLimit) advice = 'You need to eat more healthy food and gain some weight. Please consult a nutritionist or doctor.';
-    else if(bmi < overLimit) advice = 'Great job! Keep eating healthy food and exercise regularly to stay in this healthy bracket.';
+    if(bmi < underLimit) advice = 'You need to eat more healthy, calorie-dense food and gain some weight. Please consult a nutritionist or doctor.';
+    else if(bmi < overLimit) advice = 'Great job! Keep eating healthy food and exercise regularly to stay in this bracket.';
     else advice = 'Aim for gradual weight reduction through regular brisk walking, balanced caloric intake, and hydration.';
-    document.getElementById('extra-info').innerHTML = '<b>Recommended Action:</b> ' + advice;
+
+    // Gender-specific waist note
+    var waistNote = '';
+    if(currentGender === 'male') waistNote = ' Men: keep waist circumference under 90 cm (Asian) / 94 cm (WHO).';
+    else waistNote = ' Women: keep waist circumference under 80 cm (Asian) / 80 cm (WHO).';
+
+    document.getElementById('extra-info').innerHTML = '<b>Recommended Action:</b> ' + advice + waistNote;
 
     // Age warning
-    var age = parseInt(ageInput.value, 10);
     var ageBox = document.getElementById('age-warn-box');
     if(!isNaN(age) && age < 18){
-      ageBox.innerHTML = '<div class="age-warn">⚠️ <b>Age under 18:</b> Standard BMI values are for adults only. For children and teens, BMI is measured using age &amp; gender-specific growth charts. Please consult a pediatrician.</div>';
+      ageBox.innerHTML = '<div class="age-warn">⚠️ <b>Age under 18:</b> Standard BMI values are for adults only. For children and teens, BMI must be measured using age &amp; gender-specific growth charts. Please consult a pediatrician.</div>';
     } else {
       ageBox.innerHTML = '';
     }
 
-    lastResult = { bmi: bmi.toFixed(1), category: category, weightDiff: diffText };
+    // Save last result for print/share
+    lastResult = {
+      bmi: bmi.toFixed(1),
+      category: category,
+      weightKg: weightKg,
+      heightM: heightM,
+      healthyRange: document.getElementById('healthy-range').textContent,
+      diff: diffText,
+      bodyFat: bodyFat.toFixed(1),
+      bfCat: bfCat,
+      advice: advice + waistNote,
+      age: age
+    };
+
     document.getElementById('result').classList.add('show');
   }
 
   document.getElementById('calc-btn').addEventListener('click', calculateBMI);
 
-  // Live recalculation
   [weightKgInput, weightLbInput, heightCmInput, heightFtInput, heightInInput, ageInput].forEach(function(el){
     el.addEventListener('input', function(){
       if(document.getElementById('result').classList.contains('show')) calculateBMI();
@@ -752,10 +873,61 @@ details.faq p{margin:12px 0 0;font-size:15px;line-height:1.7}
     }
   });
 
-  // ---- Print ----
-  printBtn.addEventListener('click', function(){ window.print(); });
+  // ---- Print: populate template then print ----
+  function populatePrintTemplate(){
+    if(!lastResult) return;
 
-  // ---- Last updated date (auto from lastModified) ----
+    // Date
+    var now = new Date();
+    document.getElementById('p-date').textContent =
+      now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) +
+      ' at ' + now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+
+    // User details
+    var weightDisplay = document.getElementById('weight-kg-group').style.display !== 'none'
+      ? document.getElementById('weight-kg').value + ' kg'
+      : document.getElementById('weight-lb').value + ' lbs';
+
+    var heightDisplay = document.getElementById('height-cm-group').style.display !== 'none'
+      ? document.getElementById('height-cm').value + ' cm'
+      : document.getElementById('height-ft').value + ' ft ' + document.getElementById('height-in').value + ' in';
+
+    var stdLabel = currentStandard === 'asian' ? 'Asian / Indian' : 'WHO International';
+
+    document.getElementById('p-inputs').innerHTML =
+      '<div class="row"><span class="k">Gender</span><span class="v">' + (currentGender === 'male' ? 'Male' : 'Female') + '</span></div>' +
+      '<div class="row"><span class="k">Age</span><span class="v">' + lastResult.age + ' years</span></div>' +
+      '<div class="row"><span class="k">Weight</span><span class="v">' + weightDisplay + '</span></div>' +
+      '<div class="row"><span class="k">Height</span><span class="v">' + heightDisplay + '</span></div>' +
+      '<div class="row"><span class="k">Standard</span><span class="v">' + stdLabel + '</span></div>' +
+      '<div class="row"><span class="k">Standard Applied</span><span class="v">' + stdLabel + '</span></div>';
+
+    // BMI box
+    document.getElementById('p-bmi-val').textContent = lastResult.bmi;
+    document.getElementById('p-bmi-cat').textContent = lastResult.category;
+    document.getElementById('p-bmi-scale').textContent =
+      'Interpreted using ' + stdLabel + ' standard (Overweight ≥ ' +
+      (currentStandard === 'asian' ? '23' : '25') + ', Obese ≥ ' +
+      (currentStandard === 'asian' ? '25' : '30') + ')';
+
+    // Results grid
+    document.getElementById('p-results').innerHTML =
+      '<div class="p-res-card"><div class="lbl">Healthy Weight Range</div><div class="val">' + lastResult.healthyRange + '</div></div>' +
+      '<div class="p-res-card"><div class="lbl">Category</div><div class="val">' + lastResult.category + '</div></div>' +
+      '<div class="p-res-card"><div class="lbl">Weight Adjustment</div><div class="val">' + lastResult.diff + '</div></div>' +
+      '<div class="p-res-card"><div class="lbl">Body Fat (estimate)</div><div class="val">' + lastResult.bodyFat + '% — ' + lastResult.bfCat + '</div></div>';
+
+    // Advice
+    document.getElementById('p-advice').innerHTML = '<b>Recommended Action:</b> ' + lastResult.advice;
+  }
+
+  printBtn.addEventListener('click', function(){
+    populatePrintTemplate();
+    // small delay to ensure template is populated before print
+    setTimeout(function(){ window.print(); }, 80);
+  });
+
+  // ---- Last updated date ----
   try {
     var lm = new Date(document.lastModified);
     if(!isNaN(lm.getTime())){
