@@ -81,7 +81,7 @@
 }
 </script>
 
-<!-- AdSense कोड (अप्रूवल के बाद अनकमेंट करें) -->
+<!-- AdSense Code (Uncomment after approval) -->
 <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script> -->
 
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
@@ -578,37 +578,64 @@
     var img = new Image();
     img.onload = function () {
       try {
-        var MAX_SIZE = 1000;
+        // 🔥 FIX: MAX_SIZE is increased to 3000 to handle very dense QR codes (like long digital signatures)
+        var MAX_SIZE = 3000;
         var scale = Math.min(1, MAX_SIZE / Math.max(img.naturalWidth, img.naturalHeight));
+        
         scanCanvas.width = Math.round(img.naturalWidth * scale);
         scanCanvas.height = Math.round(img.naturalHeight * scale);
+        
         scanCtx.drawImage(img, 0, 0, scanCanvas.width, scanCanvas.height);
         var imgData = scanCtx.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
 
-        var code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
+        var code = null;
 
+        // --- ATTEMPT 1: Scan original image ---
+        code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
+
+        // --- ATTEMPT 2: Standard Contrast (Binarization) ---
         if (!code) {
-          var d = new Uint8ClampedArray(imgData.data);
-          for (var i = 0; i < d.length; i += 4) {
-            var gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
-            var v = gray > 128 ? 255 : 0;
-            d[i] = d[i + 1] = d[i + 2] = v;
+          var d1 = new Uint8ClampedArray(imgData.data);
+          for (var i = 0; i < d1.length; i += 4) {
+            var gray = 0.299 * d1[i] + 0.587 * d1[i + 1] + 0.114 * d1[i + 2];
+            var v = gray > 128 ? 255 : 0; // Standard threshold
+            d1[i] = d1[i + 1] = d1[i + 2] = v;
           }
-          code = window.jsQR(d, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
+          code = window.jsQR(d1, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
+        }
+
+        // --- ATTEMPT 3: Aggressive Contrast for low-light or faded prints ---
+        if (!code) {
+          var d2 = new Uint8ClampedArray(imgData.data);
+          for (var i = 0; i < d2.length; i += 4) {
+            var gray = 0.299 * d2[i] + 0.587 * d2[i + 1] + 0.114 * d2[i + 2];
+            var v = gray > 160 ? 255 : 0; // Pushes gray shadows to pure black
+            d2[i] = d2[i + 1] = d2[i + 2] = v;
+          }
+          code = window.jsQR(d2, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
         }
 
         URL.revokeObjectURL(url);
         setProgress(false);
 
-        if (code && code.data) { playBeep(); showResult(code.data); }
-        else { showToast('QR code nahi mila. Photo thodi clear ya paas se lein.', 'error'); }
+        if (code && code.data) { 
+          playBeep(); 
+          showResult(code.data); 
+        } else {
+          showToast('QR code not found. Please ensure the photo is in focus and well-lit.', 'error'); 
+        }
       } catch (e) {
+        console.error(e);
         URL.revokeObjectURL(url);
         setProgress(false);
-        showToast('Is image ko padha nahi ja saka.', 'error');
+        showToast('Could not decode this image due to an error.', 'error');
       }
     };
-    img.onerror = function () { URL.revokeObjectURL(url); setProgress(false); showToast('Image load nahi ho payi.', 'error'); };
+    img.onerror = function () { 
+      URL.revokeObjectURL(url); 
+      setProgress(false); 
+      showToast('Image failed to load.', 'error'); 
+    };
     img.src = url;
   }
 
