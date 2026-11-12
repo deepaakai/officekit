@@ -81,9 +81,6 @@
 }
 </script>
 
-<!-- AdSense Code (Uncomment after approval) -->
-<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444163954222707" crossorigin="anonymous"></script> -->
-
 <link rel="stylesheet" href="../assets/css/doceasy-global.css">
 
 <style>
@@ -126,6 +123,10 @@
 .scan-opt span { font-size: 14px; font-weight: 800; color: var(--text-color); }
 .scan-modal-cancel { background: none; border: none; color: var(--subtext-color); font-size: 13px; font-weight: 700; cursor: pointer; padding: 8px 16px; font-family: inherit; text-decoration: underline; }
 .scan-modal-cancel:hover { color: var(--accent); }
+
+/* Image Preview Container */
+.preview-container { margin-top: 15px; display: none; text-align: center; }
+.preview-img { max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
 
 /* Result box */
 .result-box { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--accent); border-radius: 12px; padding: 20px; box-shadow: 0 0 0 3px var(--accent-soft); text-align: left; display: none; }
@@ -247,6 +248,11 @@
 
       <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
       <input type="file" id="galleryInput" accept="image/*" hidden>
+
+      <!-- 🔥 New Image Preview Area -->
+      <div class="preview-container" id="previewContainer">
+        <img id="imagePreview" class="preview-img" alt="Selected Image">
+      </div>
 
       <div class="progress-wrap" id="progressWrap">
         <div class="progress-bar-outer">
@@ -478,6 +484,10 @@
   var toast        = $('toast');
   var toastMsg     = $('toastMsg');
   var toastIcon    = $('toastIcon');
+  
+  // Image Preview Elements
+  var previewContainer = $('previewContainer');
+  var imagePreview     = $('imagePreview');
 
   var scanCanvas = document.createElement('canvas');
   var scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true });
@@ -543,7 +553,7 @@
       toastIcon.innerHTML = '<path d="M20 6L9 17l-5-5"/>';
     }
     clearTimeout(toast._t);
-    toast._t = setTimeout(function () { toast.classList.remove('show'); }, 3000);
+    toast._t = setTimeout(function () { toast.classList.remove('show'); }, 4000);
   }
 
   function setProgress(show, text) {
@@ -568,18 +578,21 @@
     if (!/^image\//.test(file.type)) { showToast('Please select an image file', 'error'); return; }
     if (file.size > 20 * 1024 * 1024) { showToast('Image too large. Max 20 MB.', 'error'); return; }
 
+    // 🔥 Show Image Preview immediately
+    var objectUrl = URL.createObjectURL(file);
+    imagePreview.src = objectUrl;
+    previewContainer.style.display = 'block';
     resultBox.classList.remove('show');
     setProgress(true, 'Decoding QR code…');
 
     try { await ensureJsQR(); }
     catch (err) { setProgress(false); showToast(err.message, 'error'); return; }
 
-    var url = URL.createObjectURL(file);
     var img = new Image();
     img.onload = function () {
       try {
-        // 🔥 FIX: MAX_SIZE is increased to 3000 to handle very dense QR codes (like long digital signatures)
-        var MAX_SIZE = 3000;
+        // 🔥 FIX: Increased MAX_SIZE to 4000 to avoid losing pixels on dense codes
+        var MAX_SIZE = 4000;
         var scale = Math.min(1, MAX_SIZE / Math.max(img.naturalWidth, img.naturalHeight));
         
         scanCanvas.width = Math.round(img.naturalWidth * scale);
@@ -590,53 +603,78 @@
 
         var code = null;
 
-        // --- ATTEMPT 1: Scan original image ---
+        // --- ATTEMPT 1: Original ---
         code = window.jsQR(imgData.data, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
 
-        // --- ATTEMPT 2: Standard Contrast (Binarization) ---
+        // --- ATTEMPT 2: Standard Binarization (128) ---
         if (!code) {
           var d1 = new Uint8ClampedArray(imgData.data);
           for (var i = 0; i < d1.length; i += 4) {
             var gray = 0.299 * d1[i] + 0.587 * d1[i + 1] + 0.114 * d1[i + 2];
-            var v = gray > 128 ? 255 : 0; // Standard threshold
+            var v = gray > 128 ? 255 : 0; 
             d1[i] = d1[i + 1] = d1[i + 2] = v;
           }
           code = window.jsQR(d1, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
         }
 
-        // --- ATTEMPT 3: Aggressive Contrast for low-light or faded prints ---
+        // --- ATTEMPT 3: Aggressive Binarization (160) for faded prints ---
         if (!code) {
           var d2 = new Uint8ClampedArray(imgData.data);
           for (var i = 0; i < d2.length; i += 4) {
             var gray = 0.299 * d2[i] + 0.587 * d2[i + 1] + 0.114 * d2[i + 2];
-            var v = gray > 160 ? 255 : 0; // Pushes gray shadows to pure black
+            var v = gray > 160 ? 255 : 0;
             d2[i] = d2[i + 1] = d2[i + 2] = v;
           }
           code = window.jsQR(d2, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
         }
 
-        URL.revokeObjectURL(url);
+        // --- ATTEMPT 4: Otsu Threshold (Dynamic contrast for paper documents) ---
+        if (!code) {
+          var d3 = new Uint8ClampedArray(imgData.data);
+          var hist = new Uint32Array(256);
+          for (var i = 0; i < d3.length; i += 4) {
+            var gray = Math.round(0.299 * d3[i] + 0.587 * d3[i + 1] + 0.114 * d3[i + 2]);
+            hist[gray]++;
+          }
+          var total = d3.length / 4;
+          var sum = 0;
+          for (var i = 0; i < 256; i++) sum += i * hist[i];
+          var sumB = 0, wB = 0, maxVar = 0, threshold = 127;
+          for (var i = 0; i < 256; i++) {
+            wB += hist[i]; if (wB === 0) continue;
+            var wF = total - wB; if (wF === 0) break;
+            sumB += i * hist[i];
+            var mB = sumB / wB, mF = (sum - sumB) / wF;
+            var variance = wB * wF * (mB - mF) * (mB - mF);
+            if (variance > maxVar) { maxVar = variance; threshold = i; }
+          }
+          for (var i = 0; i < d3.length; i += 4) {
+            var gray = 0.299 * d3[i] + 0.587 * d3[i + 1] + 0.114 * d3[i + 2];
+            var v = gray > threshold ? 255 : 0;
+            d3[i] = d3[i + 1] = d3[i + 2] = v;
+          }
+          code = window.jsQR(d3, scanCanvas.width, scanCanvas.height, { inversionAttempts: 'attemptBoth' });
+        }
+
         setProgress(false);
 
         if (code && code.data) { 
           playBeep(); 
           showResult(code.data); 
         } else {
-          showToast('QR code not found. Please ensure the photo is in focus and well-lit.', 'error'); 
+          showToast('QR code not found. This specific QR code is too dense. Try cropping the image close to the QR code and upload again.', 'error'); 
         }
       } catch (e) {
         console.error(e);
-        URL.revokeObjectURL(url);
         setProgress(false);
         showToast('Could not decode this image due to an error.', 'error');
       }
     };
     img.onerror = function () { 
-      URL.revokeObjectURL(url); 
       setProgress(false); 
       showToast('Image failed to load.', 'error'); 
     };
-    img.src = url;
+    img.src = objectUrl;
   }
 
   function showResult(text) {
@@ -681,6 +719,8 @@
   scanAgainBtn.addEventListener('click', function () {
     resultBox.classList.remove('show');
     resultText.textContent = '—';
+    previewContainer.style.display = 'none';
+    imagePreview.src = '';
     setProgress(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
