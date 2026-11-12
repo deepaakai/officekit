@@ -304,10 +304,9 @@
       </div>
     </div>
     
-    <!-- 🔥 NEW TUTORIAL / DEMO SECTION -->
+    <!-- Tutorial / Demo Section -->
     <div class="tutorial-box">
       <h4>How to use? (Demo)</h4>
-      <!-- अगर आपकी इमेज का नाम अलग है, तो नीचे src में बदलाव करें -->
       <img src="../assets/images/qr-scanner-demo.jpg" alt="QR Code Scanner Tutorial">
       <p>Upload a screenshot or photo of the QR code. The tool will automatically detect and decode it.</p>
     </div>
@@ -586,34 +585,7 @@
   cameraInput.addEventListener('change', function () { if (this.files && this.files[0]) scanImageFile(this.files[0]); this.value = ''; });
   galleryInput.addEventListener('change', function () { if (this.files && this.files[0]) scanImageFile(this.files[0]); this.value = ''; });
 
-  // 🔥 SMART SCAN LOGIC: Try full image -> Try center crop -> Try contrast
-  function tryDecode(canvas) {
-    var ctx = canvas.getContext('2d');
-    var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    var code = window.jsQR(imgData.data, canvas.width, canvas.height, { inversionAttempts: 'attemptBoth' });
-    if (code) return code;
-
-    // Try standard contrast
-    var d1 = new Uint8ClampedArray(imgData.data);
-    for (var i = 0; i < d1.length; i += 4) {
-      var gray = 0.299 * d1[i] + 0.587 * d1[i + 1] + 0.114 * d1[i + 2];
-      var v = gray > 128 ? 255 : 0;
-      d1[i] = d1[i + 1] = d1[i + 2] = v;
-    }
-    code = window.jsQR(d1, canvas.width, canvas.height, { inversionAttempts: 'attemptBoth' });
-    if (code) return code;
-
-    // Try aggressive contrast (for faded paper)
-    var d2 = new Uint8ClampedArray(imgData.data);
-    for (var i = 0; i < d2.length; i += 4) {
-      var gray = 0.299 * d2[i] + 0.587 * d2[i + 1] + 0.114 * d2[i + 2];
-      var v = gray > 160 ? 255 : 0;
-      d2[i] = d2[i + 1] = d2[i + 2] = v;
-    }
-    code = window.jsQR(d2, canvas.width, canvas.height, { inversionAttempts: 'attemptBoth' });
-    return code;
-  }
-
+  // 🔥 The Main "Jugaad" Function: Try Native -> Try 5 Crops -> Try Filters
   async function scanImageFile(file) {
     if (!file) return;
     if (!/^image\//.test(file.type)) { showToast('Please select an image file', 'error'); return; }
@@ -623,50 +595,64 @@
     imagePreview.src = objectUrl;
     previewContainer.style.display = 'block';
     resultBox.classList.remove('show');
-    setProgress(true, 'Decoding QR code…');
+    setProgress(true, 'Scanning…');
 
     try { await ensureJsQR(); }
     catch (err) { setProgress(false); showToast(err.message, 'error'); return; }
 
     var img = new Image();
-    img.onload = function () {
+    img.onload = async function () {
       try {
-        // --- ATTEMPT 1: Full Image Scan ---
-        var MAX_SIZE = 4000;
-        var scale = Math.min(1, MAX_SIZE / Math.max(img.naturalWidth, img.naturalHeight));
-        scanCanvas.width = Math.round(img.naturalWidth * scale);
-        scanCanvas.height = Math.round(img.naturalHeight * scale);
-        scanCtx.drawImage(img, 0, 0, scanCanvas.width, scanCanvas.height);
-
-        var code = tryDecode(scanCanvas);
-
-        // --- ATTEMPT 2: Smart Zoom & Crop (Center 50%) ---
-        if (!code) {
-          setProgress(true, 'Zooming & Scanning…');
-          var cropW = Math.round(img.naturalWidth * 0.5);
-          var cropH = Math.round(img.naturalHeight * 0.5);
-          var cropX = Math.round((img.naturalWidth - cropW) / 2);
-          var cropY = Math.round((img.naturalHeight - cropH) / 2);
-
-          scanCanvas.width = cropW;
-          scanCanvas.height = cropH;
-          scanCtx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-
-          code = tryDecode(scanCanvas);
+        // 🚀 STEP 1: Google Lens / Samsung Style Native Detection (Fastest & Best)
+        if ('BarcodeDetector' in window) {
+          setProgress(true, 'Locating QR Code (Native AI)…');
+          try {
+            var detector = new window.BarcodeDetector({ formats: ['qr_code'] });
+            var barcodes = await detector.detect(img);
+            if (barcodes.length > 0) {
+              playBeep();
+              showResult(barcodes[0].rawValue);
+              setProgress(false);
+              return; // Done! We found it natively.
+            }
+          } catch (e) {
+            console.warn("Native detector failed, falling back to manual grid.", e);
+          }
         }
 
-        // --- ATTEMPT 3: Ultra Zoom (Center 25%) ---
-        if (!code) {
-          var cropW3 = Math.round(img.naturalWidth * 0.25);
-          var cropH3 = Math.round(img.naturalHeight * 0.25);
-          var cropX3 = Math.round((img.naturalWidth - cropW3) / 2);
-          var cropY3 = Math.round((img.naturalHeight - cropH3) / 2);
+        // 🚀 STEP 2: Jugaad Grid Scanning (If Native fails or not supported, like on iPhone)
+        setProgress(true, 'Deep Scanning Image…');
+        
+        // Define 5 regions (Full, Center, Top-Left, Top-Right, Bottom-Left, Bottom-Right)
+        var regions = [
+          { x: 0, y: 0, w: 1, h: 1 },         // Full image
+          { x: 0.25, y: 0.25, w: 0.5, h: 0.5 }, // Center
+          { x: 0, y: 0, w: 0.5, h: 0.5 },     // Top-Left
+          { x: 0.5, y: 0, w: 0.5, h: 0.5 },   // Top-Right
+          { x: 0, y: 0.5, w: 0.5, h: 0.5 },   // Bottom-Left
+          { x: 0.5, y: 0.5, w: 0.5, h: 0.5 }  // Bottom-Right
+        ];
 
-          scanCanvas.width = cropW3;
-          scanCanvas.height = cropH3;
-          scanCtx.drawImage(img, cropX3, cropY3, cropW3, cropH3, 0, 0, cropW3, cropH3);
+        var code = null;
 
-          code = tryDecode(scanCanvas);
+        for (var r = 0; r < regions.length; r++) {
+          if (code) break;
+          
+          var reg = regions[r];
+          var cropX = img.naturalWidth * reg.x;
+          var cropY = img.naturalHeight * reg.y;
+          var cropW = img.naturalWidth * reg.w;
+          var cropH = img.naturalHeight * reg.h;
+
+          // Keep max size 2000 per crop to avoid memory crash
+          var scale = Math.min(1, 2000 / Math.max(cropW, cropH));
+          scanCanvas.width = Math.round(cropW * scale);
+          scanCanvas.height = Math.round(cropH * scale);
+          
+          scanCtx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, scanCanvas.width, scanCanvas.height);
+
+          // Try decoding with our contrast filters
+          code = tryDecodeWithFilters(scanCanvas);
         }
 
         setProgress(false);
@@ -675,12 +661,12 @@
           playBeep(); 
           showResult(code.data); 
         } else {
-          showToast('QR code not found. This QR code is too dense. Please crop the image close to the QR code and try again.', 'error'); 
+          showToast('QR code not found. Please ensure the photo is well-lit and the code is clear.', 'error'); 
         }
       } catch (e) {
         console.error(e);
         setProgress(false);
-        showToast('Could not decode this image due to an error.', 'error');
+        showToast('Could not decode this image.', 'error');
       }
     };
     img.onerror = function () { 
@@ -688,6 +674,59 @@
       showToast('Image failed to load.', 'error'); 
     };
     img.src = objectUrl;
+  }
+
+  // 🎨 Helper: Apply High Contrast and Binarization
+  function tryDecodeWithFilters(canvas) {
+    var ctx = canvas.getContext('2d');
+    var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var data = imgData.data;
+    var len = data.length;
+
+    // 1. Original
+    var code = window.jsQR(data, canvas.width, canvas.height, { inversionAttempts: 'attemptBoth' });
+    if (code) return code;
+
+    // 2. Grayscale + Stretch
+    var grayscale = new Uint8ClampedArray(len / 4);
+    var min = 255, max = 0;
+    for (var i = 0, j = 0; i < len; i += 4, j++) {
+      var g = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+      grayscale[j] = g;
+      if (g < min) min = g;
+      if (g > max) max = g;
+    }
+    var range = Math.max(1, max - min);
+    var stretch = new Uint8ClampedArray(len);
+    for (var i = 0, j = 0; i < len; i += 4, j++) {
+      var v = ((grayscale[j] - min) / range) * 255;
+      stretch[i] = stretch[i+1] = stretch[i+2] = v;
+      stretch[i+3] = 255;
+    }
+    code = window.jsQR(stretch, canvas.width, canvas.height, { inversionAttempts: 'attemptBoth' });
+    if (code) return code;
+
+    // 3. Otsu Threshold (Dynamic)
+    var hist = new Uint32Array(256);
+    for (var i = 0; i < len / 4; i++) hist[Math.round(grayscale[i])]++;
+    var total = len / 4, sum = 0;
+    for (var i = 0; i < 256; i++) sum += i * hist[i];
+    var sumB = 0, wB = 0, maxVar = 0, threshold = 127;
+    for (var i = 0; i < 256; i++) {
+      wB += hist[i]; if (wB === 0) continue;
+      var wF = total - wB; if (wF === 0) break;
+      sumB += i * hist[i];
+      var mB = sumB / wB, mF = (sum - sumB) / wF;
+      var variance = wB * wF * (mB - mF) * (mB - mF);
+      if (variance > maxVar) { maxVar = variance; threshold = i; }
+    }
+    var dOtsu = new Uint8ClampedArray(len);
+    for (var i = 0; i < len; i += 4) {
+      var v = grayscale[i/4] > threshold ? 255 : 0;
+      dOtsu[i] = dOtsu[i+1] = dOtsu[i+2] = v;
+      dOtsu[i+3] = 255;
+    }
+    return window.jsQR(dOtsu, canvas.width, canvas.height, { inversionAttempts: 'attemptBoth' });
   }
 
   function showResult(text) {
