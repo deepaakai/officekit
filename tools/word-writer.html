@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Word Writer — English, Hindi & Hinglish Typing with DOCX/PDF Export | DocEasy</title>
-  <meta name="description" content="Free online Word writer with English, Hinglish, and Hindi typing. Built-in Devanagari keyboard, 14+ fonts, header/footer, and Word/PDF export. 100% browser-based.">
-  <meta name="keywords" content="word writer, hindi typing, hinglish typing, hindi keyboard, devanagari font, mangal font, docx writer, online word editor">
+  <title>Word Writer & Translator — Multi-Language Support | DocEasy</title>
+  <meta name="description" content="Free online Word writer with English, Hinglish, and Hindi typing. Built-in translator, 14+ fonts, header/footer, True A4 print preview, and Word/PDF export. 100% browser-based.">
+  <meta name="keywords" content="word writer, hindi typing, hinglish typing, hindi keyboard, devanagari font, mangal font, docx writer, online word editor, free translator, print preview">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://doceasy.org/tools/word-writer.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Word Writer — English, Hindi & Hinglish | DocEasy">
-  <meta property="og:description" content="Write in English, Hinglish, or Hindi with 14+ fonts, header/footer, and Word/PDF export.">
+  <meta property="og:title" content="Word Writer & Translator — DocEasy">
+  <meta property="og:description" content="Write, translate, and export in any language with 14+ fonts, print preview, and Word/PDF export.">
   <meta property="og:url" content="https://doceasy.org/tools/word-writer.html">
   <meta property="og:site_name" content="DocEasy">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2319398A'/%3E%3Cpath d='M18 16h18l10 10v22a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z' fill='%23FFFFFF' fill-opacity='0.14' stroke='%23FFFFFF' stroke-width='2.5'/%3E%3Cpath d='M36 16v10h10' fill='none' stroke='%23FFFFFF' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M22 34h20M22 41h14' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -34,6 +34,7 @@
       overflow-x: hidden;
       width: 100%;
     }
+    /* Clean text-only header (No SVG) */
     .ww-head {
       display: flex;
       align-items: flex-end;
@@ -44,12 +45,10 @@
     }
     .ww-brand {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      flex-direction: column;
       flex: 1;
       min-width: 240px;
     }
-    .ww-brand > div { min-width: 0; flex: 1; }
     .ww-brand h1 {
       margin: 0 0 4px;
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -335,21 +334,30 @@
     }
     .preview-header h2 { margin: 0; font-size: 16px; font-weight: 600; color: #f8fafc; }
     .preview-actions { display: flex; gap: 10px; }
+    
+    /* Preview Body */
     .preview-body {
       flex: 1; overflow: auto; padding: 20px;
-      display: flex; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
+    
     .a4-paper {
-      background: white; width: 210mm; min-height: 297mm; padding: 1cm;
+      background: white; width: 210mm; height: 297mm; padding: 1cm;
       box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;
-      transform-origin: top center; transition: transform 0.2s;
       font-family: 'Noto Sans Devanagari', 'Noto Sans', 'DM Sans', sans-serif;
-      color: #0f172a;
+      color: #0f172a; position: relative; flex-shrink: 0;
+      overflow: hidden;
     }
+    
+    /* Mobile zoom */
     @media (max-width: 820px) {
-      .a4-paper { transform: scale(0.45); margin-bottom: -150mm; }
+      .preview-body {
+        zoom: 0.45;
+        padding: 10px;
+      }
     }
 
+    /* SEO Section */
     .seo-section {
       margin-top: 40px; padding: 32px 28px;
       background: var(--card-bg, #ffffff);
@@ -362,10 +370,10 @@
       font-size: 22px; font-weight: 800; letter-spacing: -0.015em;
       margin: 0 0 12px; color: var(--text-color, #0f172a);
     }
-    .seo-section h2:not(:first-child) { margin-top: 32px; }
+    .seo-section h2:not(:first-child) { margin-top: 36px; }
     .seo-section h3 {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 700; margin: 20px 0 8px; color: #19398a;
+      font-size: 16px; font-weight: 700; margin: 24px 0 8px; color: #19398a;
     }
     .seo-section p {
       margin: 0 0 12px; font-size: 14.5px; line-height: 1.75; color: #334155;
@@ -374,7 +382,7 @@
       margin: 0 0 14px; padding-left: 22px;
       font-size: 14.5px; line-height: 1.75; color: #334155;
     }
-    .seo-section li { margin-bottom: 6px; }
+    .seo-section li { margin-bottom: 8px; }
     .seo-section strong { color: #0f172a; }
     .seo-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -389,6 +397,7 @@
       color: #19398a; text-transform: uppercase; letter-spacing: 0.4px;
     }
     .seo-card p { margin: 0; font-size: 13px; line-height: 1.6; color: #475569; }
+    
     .faq-list { margin: 12px 0 0; }
     .faq-list details { border-bottom: 1px solid #e2e8f0; padding: 12px 0; }
     .faq-list details:last-child { border-bottom: none; }
@@ -441,10 +450,10 @@
       .seo-grid { gap: 10px; }
     }
 
-    /* Print Fixes - Reduced Margin and Line Height to fit in one page */
+    /* Print Fixes */
     .print-header-el, .print-footer-el { display: none; }
     @media print {
-      @page { margin: 0.5cm 0.8cm; size: A4 portrait; }
+      @page { margin: 1cm; size: A4 portrait; }
       
       header, footer, nav, #doceasy-header, #doceasy-footer,
       .ww-head, .template-bar, .toolbar, .hinglish-bar, .hf-row, .hk-wrap, .status-bar, .modal-overlay, .seo-section, .preview-modal {
@@ -455,7 +464,7 @@
       .ww-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
       
       .editor-wrap { border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
-      .editor { padding: 0 !important; margin: 0 !important; min-height: auto !important; line-height: 1.4 !important; }
+      .editor { padding: 0 !important; margin: 0 !important; min-height: auto !important; line-height: 1.75 !important; }
       
       .editor > *:last-child { margin-bottom: 0 !important; padding-bottom: 0 !important; }
       .editor p, .editor h1, .editor h2, .editor h3, .editor li, .editor div { page-break-inside: avoid; }
@@ -481,23 +490,14 @@
 
   <main class="ww-wrap">
     <div class="ww-head">
+      <!-- SVG Logo removed as requested -->
       <div class="ww-brand">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="38" height="38" fill="none" aria-hidden="true">
-          <rect width="40" height="40" rx="10" fill="#19398A" />
-          <path d="M12.5 9.5H23L29.5 16V29.5C29.5 30.6046 28.6046 31.5 27.5 31.5H12.5C11.3954 31.5 10.5 30.6046 10.5 29.5V11.5C10.5 10.3954 11.3954 9.5 12.5 9.5Z" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="1.75" stroke-linejoin="round" />
-          <path d="M23 9.5V16H29.5" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M14.5 20.5H25.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
-          <path d="M14.5 25H21.5" stroke="#93C5FD" stroke-width="2" stroke-linecap="round" />
-          <circle cx="25.5" cy="25" r="1.5" fill="#FBBF24" />
-        </svg>
-        <div>
-          <h1>Word Writer</h1>
-          <p>Write, translate, and export in any language with rich fonts, print preview, and instant DOCX/PDF export.</p>
-        </div>
+        <h1>Word Writer &amp; Translator</h1>
+        <p>Write, translate, and export in any language with rich fonts, print preview, and instant DOCX/PDF export.</p>
       </div>
       <div class="ww-title-box">
         <label for="docTitleInput">Document Title (Auto-saved)</label>
-        <input id="docTitleInput" type="text" value="English Document - DocEasy - 1" placeholder="Document Title">
+        <input id="docTitleInput" type="text" value="Word Translator - English - 1" placeholder="Document Title">
       </div>
     </div>
 
@@ -586,7 +586,6 @@
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/></svg>
           <span>Hindi Keyboard</span>
         </button>
-        <!-- Translate Button -->
         <button type="button" class="tb-btn-blue" id="openTranslateModal">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
           <span>Translate</span>
@@ -653,29 +652,108 @@
       </div>
     </div>
 
-    <!-- SEO Section -->
+    <!-- DETAILED SEO SECTION -->
     <section class="seo-section" aria-label="Word Writer Guide and Information">
-      <h2>Word Writer — Free Online Word Processor</h2>
-      <p>Word Writer is DocEasy's free, browser-based word processor built for global users and anyone who needs a fast, reliable way to create and export documents without installing heavy software like Microsoft Word or Google Docs.</p>
-      <h2>Key Features</h2>
+      <h2>Word Writer &amp; Translator — Free Online Word Processor</h2>
+      <p>Word Writer &amp; Translator is DocEasy's free, browser-based word processor built for global users. It allows you to create, format, translate, and export documents without installing heavy software like Microsoft Word or Google Docs. Whether you're typing a simple English letter, a Hindi assignment using Hinglish, or translating an entire document into Chinese or Russian, this tool adapts to your workflow. It runs entirely locally in your browser, ensuring 100% privacy, and offers a genuine A4 print preview so you never waste paper.</p>
+
+      <h2>Key Features at a Glance</h2>
       <div class="seo-grid">
         <div class="seo-card">
-          <h4>International Support</h4>
-          <p>Use your device's native keyboard to type in any language. Our universal fonts ensure all characters display correctly.</p>
-        </div>
-        <div class="seo-card">
           <h4>Built-in Translator</h4>
-          <p>Translate your entire document to English, Hindi, Spanish, French, and more with just one click.</p>
+          <p>Instantly translate your entire document into Hindi, Chinese, Russian, Spanish, French, and more using our integrated Google Translate API.</p>
         </div>
         <div class="seo-card">
-          <h4>Print Preview</h4>
-          <p>See exactly how your document will look on an A4 page before printing. No more wasted paper or wrong margins.</p>
+          <h4>True A4 Print Preview</h4>
+          <p>See exactly how your document will look on paper. Long documents automatically paginate into multiple A4 sheets, matching the final PDF exactly.</p>
+        </div>
+        <div class="seo-card">
+          <h4>Smart Auto-Naming</h4>
+          <p>Downloads are auto-named with the language and a unique counter (e.g., "Word Translator - Hindi - 1") so you never overwrite files.</p>
+        </div>
+        <div class="seo-card">
+          <h4>International Fonts</h4>
+          <p>Universal Noto Sans and Noto Serif fonts ensure that characters from any language (Cyrillic, Arabic, Chinese) display perfectly.</p>
+        </div>
+        <div class="seo-card">
+          <h4>3 Typing Modes</h4>
+          <p>Type natively in English, use phonetic Hinglish (English letters to Devanagari), or use our Virtual Hindi Keyboard.</p>
         </div>
         <div class="seo-card">
           <h4>Rich Header &amp; Footer</h4>
-          <p>Add custom headers and footers. You can bold, italicize, and change fonts inside them just like the main editor.</p>
+          <p>Add institutional headers and footers that repeat on every page. You can bold, italicize, and change fonts inside them.</p>
         </div>
       </div>
+
+      <h2>1. Built-in Document Translator</h2>
+      <p>Unlike other word processors that require you to copy-paste text into a separate translation tool, Word Writer has the translator built right into the toolbar. By clicking the blue <strong>"Translate"</strong> button, you can translate your entire document instantly.</p>
+      <p>The translator uses a highly accurate internal Google Translate API. It carefully preserves numbers, currencies (₹), and proper nouns (like names and addresses) while converting the surrounding text into your target language. Supported languages include:</p>
+      <ul>
+        <li><strong>Hindi (हिन्दी):</strong> Perfect for official applications, leave letters, and academic assignments.</li>
+        <li><strong>Chinese (中文), Russian (Русский), Arabic (العربية):</strong> For international communication, with universal fonts ensuring no broken characters.</li>
+        <li><strong>Spanish, French, German, and English:</strong> For global business and travel.</li>
+      </ul>
+      <p><em>Tip: After translating, you can manually click on any word to edit it if you want to fine-tune the translation.</em></p>
+
+      <h2>2. True A4 Print Preview (No More Wasted Paper)</h2>
+      <p>Have you ever printed a document online, only to find that the text has run off the page or created a huge empty gap? Word Writer solves this with its <strong>True A4 Print Preview</strong>.</p>
+      <p>When you click the <strong>"Preview"</strong> button, the tool renders your text exactly as it will appear on an A4 sheet of paper. If your document is long, it intelligently splits the content into <strong>Page 1, Page 2, Page 3</strong>, etc., complete with accurate page breaks. You can review the layout, check your margins, and ensure your headers and footers are in place before clicking "Print / Save PDF."</p>
+
+      <h2>3. Smart Auto-Naming &amp; File Counter</h2>
+      <p>We know how frustrating it is to download multiple documents named "Untitled" and then have to rename them manually. Word Writer features a smart file-naming system.</p>
+      <p>When you translate a document, the title automatically updates to reflect the new language. When you save the file (as PDF or DOCX), the tool appends a unique counter to the filename (e.g., <code>Word Translator - Chinese - 1</code>). After saving, the counter automatically increments to <code>- 2</code> for your next download. This ensures that you never accidentally overwrite a previous file, and you save time on manual renaming.</p>
+
+      <h2>4. International Language &amp; Font Support</h2>
+      <p>Word Writer is built for global use. By integrating <strong>Noto Sans</strong> and <strong>Noto Serif</strong> (Google's universal fonts), we ensure that every character from every major script (Latin, Cyrillic, Devanagari, Arabic, Chinese) renders flawlessly.</p>
+      <p>For Hindi typing, you can choose from the modern <strong>Noto Sans Devanagari</strong> or the official Government of India font, <strong>Mangal</strong>. When you export your document, the text remains crisp and readable across all devices and PDF viewers.</p>
+
+      <h2>5. Three Typing Modes (English, Hinglish, Hindi)</h2>
+      <p>We understand the diverse typing habits of users. The toolbar offers three distinct modes:</p>
+      <ul>
+        <li><strong>English Mode (Default):</strong> Standard left-to-right typing for international users. Spell-check is enabled.</li>
+        <li><strong>Hinglish Mode:</strong> Type Hindi words using English letters. For example, typing "namaste" and pressing Space will automatically convert it to "नमस्ते". A smart suggestion bar helps you pick the right word.</li>
+        <li><strong>Hindi Mode:</strong> Opens a fully categorized <strong>Virtual Devanagari Keyboard</strong>. You can click Consonants, Vowels, and Matras to form perfect Hindi words without needing a physical Hindi keyboard.</li>
+      </ul>
+
+      <h2>6. Rich Header &amp; Footer</h2>
+      <p>For professional documents, headers and footers are essential. You can toggle them on using the switches below the editor. Unlike other tools, our headers and footers are fully rich-text enabled. You can highlight the text inside them and use the toolbar to make it <strong>Bold</strong>, <em>Italic</em>, or change the font size. They will print cleanly on every A4 page in the PDF.</p>
+
+      <h2>Step-by-Step: How to Use Word Writer</h2>
+      <ol>
+        <li><strong>Start with a Template or Blank Page:</strong> Choose from Formal Letter, Leave Application, Resume, or Notice to save time.</li>
+        <li><strong>Type Your Content:</strong> Use English, Hinglish, or Hindi mode. Use the toolbar for bold, italics, lists, and fonts.</li>
+        <li><strong>Translate (Optional):</strong> Click "Translate" in the toolbar, select your target language (e.g., Chinese or Russian), and click "Translate Now". The title will update automatically.</li>
+        <li><strong>Add Header/Footer (Optional):</strong> Toggle the header/footer switches and type your institution's name. You can bold the text directly.</li>
+        <li><strong>Check the Preview:</strong> Click the blue "Preview" button to see your A4 pages. Ensure the page breaks look correct.</li>
+        <li><strong>Export and Save:</strong> Click <strong>Print / Save PDF</strong> to get a perfect PDF, or <strong>Save Word (.docx)</strong> to download an editable Word file. The file will be named with your language and an incremented counter.</li>
+      </ol>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-list">
+        <details>
+          <summary>Does the built-in translator cost extra?</summary>
+          <p>No. The translation feature is 100% free and uses Google Translate's internal API. You can translate your entire document into multiple languages without paying a penny.</p>
+        </details>
+        <details>
+          <summary>Will the PDF look exactly like the Print Preview?</summary>
+          <p>Yes. The Print Preview is designed to match the final PDF output exactly. When you click "Print / Save PDF" from the preview screen, your browser's print dialog will open. Ensure the margins are set to "Default" or "Minimum" for the best result.</p>
+        </details>
+        <details>
+          <summary>How does the Auto-Naming feature prevent file overwrites?</summary>
+          <p>Every time you save a file, the tool increments a counter stored in your browser's local storage. The next time you save, the filename changes from, for example, "Word Translator - Hindi - 1" to "Word Translator - Hindi - 2". This guarantees that your browser will never ask you to "Replace" an existing file.</p>
+        </details>
+        <details>
+          <summary>Can I edit the text after translating it?</summary>
+          <p>Absolutely. The translation happens directly inside the editor. Once translated, you can click anywhere in the text and type normally to correct any words or format the text.</p>
+        </details>
+        <details>
+          <summary>Does it support international fonts like Arabic or Russian?</summary>
+          <p>Yes. By selecting the "Noto Sans" or "Noto Serif" universal fonts from the font picker, your text will render perfectly in Russian, Arabic, Chinese, Hindi, and over 100 other languages.</p>
+        </details>
+      </div>
+
+      <h2>Privacy &amp; Security</h2>
+      <p>Word Writer runs entirely in your browser (client-side). Your document text, headers, and footers are never sent to our servers for storage. The only external requests are for loading the fonts and making the translation API call when you explicitly click the "Translate" button. For maximum privacy, you can confidently use Word Writer for confidential letters and applications.</p>
     </section>
   </main>
 
@@ -761,10 +839,8 @@
         </button>
       </div>
     </div>
-    <div class="preview-body">
-      <div class="a4-paper" id="previewPaper">
-        <!-- Content injected via JS -->
-      </div>
+    <div class="preview-body" id="previewBody">
+      <!-- Content injected via JS -->
     </div>
   </div>
 
@@ -809,7 +885,7 @@
 
       function updateFileName() {
         const langName = langMap[currentLanguage] || 'Document';
-        docTitleInput.value = `${langName} Document - DocEasy - ${saveCounter}`;
+        docTitleInput.value = `Word Translator - ${langName} - ${saveCounter}`;
       }
 
       function incrementCounter() {
@@ -818,7 +894,6 @@
         updateFileName();
       }
 
-      // Initialize title on load
       updateFileName();
 
       editor.addEventListener('focus', () => activeEditable = editor);
@@ -1205,7 +1280,6 @@
             }
           }
           
-          // After successful translation, update the current language and auto-generate the filename
           currentLanguage = target;
           updateFileName();
           
@@ -1220,28 +1294,132 @@
         }
       });
 
-      // --- PRINT PREVIEW LOGIC ---
+      // --- PRINT PREVIEW LOGIC (True A4 Pagination) ---
       const previewModal = document.getElementById('previewModal');
-      const previewPaper = document.getElementById('previewPaper');
+      const previewBody = document.getElementById('previewBody');
 
       document.getElementById('previewBtn').addEventListener('click', () => {
+        previewBody.innerHTML = '';
+        
         const hVal = toggleHeader.checked ? docHeader.innerHTML : '';
         const fVal = toggleFooter.checked ? docFooter.innerHTML : '';
-        
-        let previewHTML = '';
-        if (hVal.trim()) {
-          previewHTML += `<div style="text-align:center; border-bottom:1px solid #cbd5e1; padding-bottom:8px; margin-bottom:16px; font-size:11pt; color:#0f172a;">${hVal}</div>`;
-        }
-        
-        previewHTML += `<div style="font-size:12pt; line-height:1.75;">${editor.innerHTML}</div>`;
-        
-        if (fVal.trim()) {
-          previewHTML += `<div style="text-align:center; border-top:1px solid #cbd5e1; padding-top:8px; margin-top:16px; font-size:10pt; color:#475569;">${fVal}</div>`;
-        }
 
-        previewPaper.innerHTML = previewHTML;
-        previewPaper.style.fontFamily = currentFontFamily;
+        const measureContainer = document.createElement('div');
+        measureContainer.style.width = '210mm';
+        measureContainer.style.padding = '1cm';
+        measureContainer.style.boxSizing = 'border-box';
+        measureContainer.style.position = 'absolute';
+        measureContainer.style.visibility = 'hidden';
+        measureContainer.style.top = '-9999px';
+        measureContainer.style.fontFamily = currentFontFamily;
+        measureContainer.style.fontSize = '12pt';
+        measureContainer.style.lineHeight = '1.75';
+        document.body.appendChild(measureContainer);
+
+        let currentPage = document.createElement('div');
+        currentPage.className = 'a4-paper';
+        currentPage.style.fontFamily = currentFontFamily;
         
+        let pageContent = document.createElement('div');
+        pageContent.style.height = '100%';
+        pageContent.style.display = 'flex';
+        pageContent.style.flexDirection = 'column';
+        
+        const createHeader = () => {
+            if (!hVal.trim()) return null;
+            const div = document.createElement('div');
+            div.innerHTML = hVal;
+            div.style.textAlign = 'center';
+            div.style.borderBottom = '1px solid #cbd5e1';
+            div.style.paddingBottom = '8px';
+            div.style.marginBottom = '16px';
+            div.style.fontSize = '11pt';
+            return div;
+        };
+
+        const createFooter = () => {
+            if (!fVal.trim()) return null;
+            const div = document.createElement('div');
+            div.innerHTML = fVal;
+            div.style.textAlign = 'center';
+            div.style.borderTop = '1px solid #cbd5e1';
+            div.style.paddingTop = '8px';
+            div.style.marginTop = '16px';
+            div.style.fontSize = '10pt';
+            div.style.color = '#475569';
+            return div;
+        };
+
+        const firstHeader = createHeader();
+        if (firstHeader) pageContent.appendChild(firstHeader);
+
+        let textBody = document.createElement('div');
+        textBody.style.flex = '1';
+        pageContent.appendChild(textBody);
+
+        const firstFooter = createFooter();
+        if (firstFooter) pageContent.appendChild(firstFooter);
+
+        currentPage.appendChild(pageContent);
+
+        // Calculate available height
+        const pageHeight = (297 / 25.4) * 96; // ~1122px
+        const paddingHeight = (2 / 2.54) * 96; // ~75px
+        let availableHeight = pageHeight - paddingHeight;
+
+        // Measure header/footer
+        measureContainer.appendChild(pageContent.cloneNode(true));
+        let hHeight = 0, fHeight = 0;
+        if (firstHeader) hHeight = firstHeader.offsetHeight;
+        if (firstFooter) fHeight = firstFooter.offsetHeight;
+        
+        availableHeight -= (hHeight + fHeight);
+        measureContainer.innerHTML = '';
+
+        const blocks = Array.from(editor.childNodes).filter(n => n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim()));
+
+        blocks.forEach(node => {
+            const clone = node.cloneNode(true);
+            measureContainer.appendChild(clone);
+            
+            // If we have content AND it overflows, start new page
+            if (measureContainer.scrollHeight > availableHeight && textBody.children.length > 0) {
+                measureContainer.removeChild(clone); // Remove from measure
+                
+                previewBody.appendChild(currentPage);
+                
+                currentPage = document.createElement('div');
+                currentPage.className = 'a4-paper';
+                currentPage.style.fontFamily = currentFontFamily;
+                
+                pageContent = document.createElement('div');
+                pageContent.style.height = '100%';
+                pageContent.style.display = 'flex';
+                pageContent.style.flexDirection = 'column';
+                
+                const nH = createHeader();
+                if (nH) pageContent.appendChild(nH);
+                
+                textBody = document.createElement('div');
+                textBody.style.flex = '1';
+                pageContent.appendChild(textBody);
+                
+                const nF = createFooter();
+                if (nF) pageContent.appendChild(nF);
+                
+                currentPage.appendChild(pageContent);
+                
+                // Reset measurement
+                measureContainer.innerHTML = '';
+                measureContainer.appendChild(clone);
+            }
+            
+            textBody.appendChild(clone);
+        });
+
+        previewBody.appendChild(currentPage);
+        document.body.removeChild(measureContainer);
+
         previewModal.classList.add('open');
       });
 
@@ -1252,7 +1430,6 @@
       document.getElementById('confirmPrintBtn').addEventListener('click', () => {
         previewModal.classList.remove('open');
         
-        // Update document title for PDF filename, then increment counter
         const originalTitle = document.title;
         document.title = docTitleInput.value;
         incrementCounter();
@@ -1280,7 +1457,6 @@
           const tpl = TEMPLATES[btn.dataset.tpl];
           if (tpl) {
             editor.innerHTML = tpl.html;
-            // Don't override the auto-generated title with template title, just reset language
             currentLanguage = 'en';
             updateFileName();
             savedRange = null; updateCounts();
@@ -1376,11 +1552,10 @@
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
         
-        // Auto-increment counter after download
         incrementCounter();
       });
     })();
   </script>
   <script src="../assets/js/core/doceasy-core.js"></script>
 </body>
-                                   </html>
+  </html>
