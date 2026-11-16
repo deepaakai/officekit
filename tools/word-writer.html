@@ -157,6 +157,15 @@
     }
     .tb-kb-btn.active { background: #d97706; border-color: #d97706; color: #ffffff; }
 
+    .tb-btn-blue {
+      height: 30px; padding: 0 12px; border-radius: 6px;
+      border: 1px solid #19398a; background: #eef2ff; color: #19398a;
+      font-size: 12px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px;
+      cursor: pointer; white-space: nowrap;
+    }
+    .tb-btn-blue:hover { background: #19398a; color: #ffffff; }
+
     .hinglish-bar {
       display: none; align-items: center; justify-content: space-between;
       gap: 10px; flex-wrap: wrap; padding: 8px 14px;
@@ -205,7 +214,6 @@
       letter-spacing: 0.5px; color: #64748b; width: 52px; flex-shrink: 0;
     }
     
-    /* Rich Text Header/Footer Input */
     .hf-input {
       flex: 1; min-width: 0; border: none; outline: none;
       background: transparent; font-size: 13.5px; color: #0f172a;
@@ -283,6 +291,8 @@
     .btn:hover { background: #f8fafc; }
     .btn-success { background: #15803d; border-color: #15803d; color: #ffffff; }
     .btn-success:hover { background: #166534; }
+    .btn-primary { background: #19398a; border-color: #19398a; color: #ffffff; }
+    .btn-primary:hover { background: #102a68; }
 
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 9999;
@@ -301,15 +311,47 @@
     }
     .modal-header h2 { margin: 0; font-size: 16px; font-weight: 700; }
     .modal-close { background: none; border: none; font-size: 22px; color: #64748b; cursor: pointer; }
-    .font-group-title { font-size: 11px; font-weight: 700; color: #64748b; margin: 12px 4px 6px; }
-    .font-option-item {
-      display: flex; align-items: center; justify-content: space-between;
-      width: 100%; text-align: left; padding: 10px 12px;
-      border-radius: 10px; border: 1px solid transparent;
-      background: #ffffff; cursor: pointer; margin-bottom: 4px;
+    
+    /* Translator Form Elements */
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px; }
+    .form-select { width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none; }
+    .form-select:focus { border-color: #19398a; }
+    .loading-spinner {
+      display: none; width: 20px; height: 20px; border: 3px solid #cbd5e1;
+      border-top-color: #19398a; border-radius: 50%; animation: spin 1s linear infinite;
+      margin-left: 8px;
     }
-    .font-option-item:hover { background: #f8fafc; }
-    .font-option-item.selected { background: #eef2ff; border-color: #19398a; color: #19398a; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Preview Modal Specific */
+    .preview-modal {
+      display: none; position: fixed; inset: 0; z-index: 10000;
+      background: #334155; flex-direction: column;
+    }
+    .preview-modal.open { display: flex; }
+    .preview-header {
+      background: #1e293b; color: white; padding: 12px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 10;
+    }
+    .preview-header h2 { margin: 0; font-size: 16px; font-weight: 600; color: #f8fafc; }
+    .preview-actions { display: flex; gap: 10px; }
+    .preview-body {
+      flex: 1; overflow: auto; padding: 20px;
+      display: flex; justify-content: center;
+    }
+    .a4-paper {
+      background: white; width: 210mm; min-height: 297mm; padding: 1cm;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;
+      transform-origin: top center; transition: transform 0.2s;
+      font-family: 'Noto Sans Devanagari', 'Noto Sans', 'DM Sans', sans-serif;
+      color: #0f172a;
+    }
+    /* Mobile scaling for preview */
+    @media (max-width: 820px) {
+      .a4-paper { transform: scale(0.45); margin-bottom: -150mm; }
+    }
 
     /* SEO Content */
     .seo-section {
@@ -372,6 +414,8 @@
       .mode-wrap { margin-left: 0; width: 100%; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #e2e8f0; justify-content: space-between; }
       .tb-kb-btn span { display: none; }
       .tb-kb-btn { padding: 0 8px; }
+      .tb-btn-blue span { display: none; }
+      .tb-btn-blue { padding: 0 8px; }
     }
     @media (max-width: 640px) {
       .ww-head { flex-direction: column; align-items: stretch; }
@@ -402,36 +446,32 @@
       .seo-grid { gap: 10px; }
     }
 
-    /* Print Fixes to prevent Blank Page & minimize Gap */
-    .print-header, .print-footer { display: none; }
+    /* Print Fixes */
+    .print-header-el, .print-footer-el { display: none; }
     @media print {
-      /* Using safe standard margins to prevent overflow and blank pages */
       @page { margin: 1cm; size: A4 portrait; }
       
       header, footer, nav, #doceasy-header, #doceasy-footer,
-      .ww-head, .template-bar, .toolbar, .hinglish-bar, .hf-row, .hk-wrap, .status-bar, .modal-overlay, .seo-section {
+      .ww-head, .template-bar, .toolbar, .hinglish-bar, .hf-row, .hk-wrap, .status-bar, .modal-overlay, .seo-section, .preview-modal {
         display: none !important;
       }
       
       body, html { background: #ffffff !important; margin: 0 !important; padding: 0 !important; }
       .ww-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
       
-      /* Remove borders and padding from containers */
       .editor-wrap { border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
       .editor { padding: 0 !important; margin: 0 !important; min-height: auto !important; }
       
-      /* CRITICAL FIX: Prevent last element's margin from pushing to a new blank page */
       .editor > *:last-child { margin-bottom: 0 !important; padding-bottom: 0 !important; }
-      /* Hide empty elements that cause blank pages */
       .editor p:empty, .editor div:empty { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
 
-      .print-header.has-content {
+      .print-header-el.has-content {
         display: block !important; text-align: center;
         font-size: 11pt; color: #0f172a;
         border-bottom: 1px solid #cbd5e1;
         padding-bottom: 8px; margin-bottom: 16px;
       }
-      .print-footer.has-content {
+      .print-footer-el.has-content {
         display: block !important; text-align: center;
         font-size: 10pt; color: #475569;
         border-top: 1px solid #cbd5e1;
@@ -456,7 +496,7 @@
         </svg>
         <div>
           <h1>Word Writer</h1>
-          <p>Write in English, Hinglish, or any language with rich fonts, optional page headers/footers, and instant Word or PDF export.</p>
+          <p>Write, translate, and export in any language with rich fonts, print preview, and instant DOCX/PDF export.</p>
         </div>
       </div>
       <div class="ww-title-box">
@@ -550,6 +590,11 @@
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/></svg>
           <span>Hindi Keyboard</span>
         </button>
+        <!-- Translate Button -->
+        <button type="button" class="tb-btn-blue" id="openTranslateModal">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+          <span>Translate</span>
+        </button>
       </div>
     </div>
 
@@ -569,9 +614,9 @@
     </div>
 
     <div class="editor-wrap">
-      <div class="print-header" id="printHeader"></div>
+      <div class="print-header-el" id="printHeader"></div>
       <div class="editor" id="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing here..."></div>
-      <div class="print-footer" id="printFooter"></div>
+      <div class="print-footer-el" id="printFooter"></div>
     </div>
 
     <div class="hf-row hf-disabled" id="hfFooterRow">
@@ -604,7 +649,10 @@
       </div>
       <div class="status-actions">
         <button type="button" class="btn" id="clearBtn">Clear</button>
-        <button type="button" class="btn" id="printBtn">Print / Save PDF</button>
+        <button type="button" class="btn btn-primary" id="previewBtn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Preview
+        </button>
         <button type="button" class="btn btn-success" id="docxBtn">Save Word (.docx)</button>
       </div>
     </div>
@@ -612,7 +660,7 @@
     <!-- SEO Section -->
     <section class="seo-section" aria-label="Word Writer Guide and Information">
       <h2>Word Writer — Free Online Word Processor</h2>
-      <p>Word Writer is DocEasy's free, browser-based word processor built for global users and anyone who needs a fast, reliable way to create and export documents without installing heavy software like Microsoft Word or Google Docs. From students preparing assignments to government employees drafting official notices, from bloggers writing bilingual content to professionals crafting formal business letters — the tool adapts to your workflow. Unlike most online editors that limit language support, Word Writer includes three distinct typing modes, a built-in Devanagari virtual keyboard, universal font support for international languages (Arabic, Chinese, Russian, etc.), and over fifteen fonts.</p>
+      <p>Word Writer is DocEasy's free, browser-based word processor built for global users and anyone who needs a fast, reliable way to create and export documents without installing heavy software like Microsoft Word or Google Docs.</p>
       <h2>Key Features</h2>
       <div class="seo-grid">
         <div class="seo-card">
@@ -620,16 +668,16 @@
           <p>Use your device's native keyboard to type in any language. Our universal fonts ensure all characters display correctly.</p>
         </div>
         <div class="seo-card">
-          <h4>3 Typing Modes</h4>
-          <p>Switch between English, Hinglish, and Hindi with one click. Each mode is optimised for its own input flow.</p>
+          <h4>Built-in Translator</h4>
+          <p>Translate your entire document to English, Hindi, Spanish, French, and more with just one click.</p>
+        </div>
+        <div class="seo-card">
+          <h4>Print Preview</h4>
+          <p>See exactly how your document will look on an A4 page before printing. No more wasted paper or wrong margins.</p>
         </div>
         <div class="seo-card">
           <h4>Rich Header &amp; Footer</h4>
-          <p>Add custom headers and footers. You can now bold, italicize, and change fonts inside them just like the main editor.</p>
-        </div>
-        <div class="seo-card">
-          <h4>Real .docx Export</h4>
-          <p>Exports a genuine OpenXML Word document. Opens perfectly in Word, Google Docs, and LibreOffice.</p>
+          <p>Add custom headers and footers. You can bold, italicize, and change fonts inside them just like the main editor.</p>
         </div>
       </div>
     </section>
@@ -677,6 +725,53 @@
     </div>
   </div>
 
+  <!-- Translate Modal -->
+  <div class="modal-overlay" id="translateModal" role="dialog" aria-modal="true" aria-label="Translate Document">
+    <div class="modal-card" style="max-width: 400px;">
+      <div class="modal-header">
+        <h2>Translate Document</h2>
+        <button type="button" class="modal-close" id="closeTranslateModal" aria-label="Close">&times;</button>
+      </div>
+      <p style="margin: 0 0 16px; font-size: 13px; color: #64748b;">This will translate the text inside your editor. Note: Formatting like bold/italics may be simplified to plain text blocks.</p>
+      <div class="form-group">
+        <label class="form-label">Target Language</label>
+        <select class="form-select" id="targetLang">
+          <option value="hi">Hindi (हिन्दी)</option>
+          <option value="en">English</option>
+          <option value="es">Spanish (Español)</option>
+          <option value="fr">French (Français)</option>
+          <option value="de">German (Deutsch)</option>
+          <option value="ar">Arabic (العربية)</option>
+          <option value="zh">Chinese (中文)</option>
+          <option value="ru">Russian (Русский)</option>
+        </select>
+      </div>
+      <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px;">
+        <div class="loading-spinner" id="translationSpinner"></div>
+        <button type="button" class="btn btn-primary" id="doTranslateBtn">Translate Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print Preview Modal -->
+  <div class="preview-modal" id="previewModal">
+    <div class="preview-header">
+      <h2>Print Preview</h2>
+      <div class="preview-actions">
+        <button type="button" class="btn" id="closePreviewBtn">Close</button>
+        <button type="button" class="btn btn-primary" id="confirmPrintBtn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print / Save PDF
+        </button>
+      </div>
+    </div>
+    <div class="preview-body">
+      <div class="a4-paper" id="previewPaper">
+        <!-- Content injected via JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- Clear Confirmation Modal -->
   <div class="modal-overlay" id="clearModal" role="dialog" aria-modal="true" aria-label="Clear Document">
     <div class="modal-card" style="max-width:380px">
@@ -706,8 +801,6 @@
       let savedRange = null;
       let typingMode = 'english'; 
       let currentFontFamily = "'Noto Sans Devanagari', 'Noto Sans', 'DM Sans', sans-serif";
-      
-      // Track which element is currently being edited for formatting
       let activeEditable = editor;
 
       editor.addEventListener('focus', () => activeEditable = editor);
@@ -720,58 +813,31 @@
         const r = sel.getRangeAt(0);
         return activeEditable.contains(r.commonAncestorContainer) ? r.cloneRange() : null;
       }
-
-      function saveSelection() {
-        const r = getRangeInEditor();
-        if (r) savedRange = r;
-      }
-
+      function saveSelection() { const r = getRangeInEditor(); if (r) savedRange = r; }
       function ensureSelection() {
         const cur = getRangeInEditor();
         if (cur) return cur;
         if (savedRange && activeEditable.contains(savedRange.commonAncestorContainer)) {
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(savedRange);
-          return savedRange;
+          const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(savedRange); return savedRange;
         }
         activeEditable.focus();
-        const r = document.createRange();
-        r.selectNodeContents(activeEditable);
-        r.collapse(false);
-        const sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(r);
-        return r;
+        const r = document.createRange(); r.selectNodeContents(activeEditable); r.collapse(false);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); return r;
       }
-
       function getTextNodesInRange(range) {
-        const nodes = [];
-        const walker = document.createTreeWalker(activeEditable, NodeFilter.SHOW_TEXT);
+        const nodes = []; const walker = document.createTreeWalker(activeEditable, NodeFilter.SHOW_TEXT);
         let cur = walker.nextNode();
-        while (cur) {
-          if (cur.data.length > 0 && range.intersectsNode(cur)) nodes.push(cur);
-          cur = walker.nextNode();
-        }
+        while (cur) { if (cur.data.length > 0 && range.intersectsNode(cur)) nodes.push(cur); cur = walker.nextNode(); }
         return nodes;
       }
-
       function applyInlineStyle(prop, value) {
         const range = ensureSelection();
         if (range.collapsed) {
-          const span = document.createElement('span');
-          span.style[prop] = value;
-          const zwsp = document.createTextNode('\u200B');
-          span.appendChild(zwsp);
-          range.insertNode(span);
-          const next = document.createRange();
-          next.setStart(zwsp, 1);
-          next.collapse(true);
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(next);
-          savedRange = next;
-          return;
+          const span = document.createElement('span'); span.style[prop] = value;
+          const zwsp = document.createTextNode('\u200B'); span.appendChild(zwsp); range.insertNode(span);
+          const next = document.createRange(); next.setStart(zwsp, 1); next.collapse(true);
+          const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(next);
+          savedRange = next; return;
         }
         const textNodes = getTextNodesInRange(range);
         if (!textNodes.length) return;
@@ -787,13 +853,10 @@
           if (start > 0) target = target.splitText(start);
           const p = target.parentElement;
           if (p && p !== activeEditable && p.tagName.toLowerCase() === 'span' && p.childNodes.length === 1) {
-            p.style[prop] = value;
-            spans.push(p);
+            p.style[prop] = value; spans.push(p);
           } else {
-            const span = document.createElement('span');
-            span.style[prop] = value;
-            target.parentNode.insertBefore(span, target);
-            span.appendChild(target);
+            const span = document.createElement('span'); span.style[prop] = value;
+            target.parentNode.insertBefore(span, target); span.appendChild(target);
             span.querySelectorAll('span,font').forEach(el => { el.style[prop] = ''; });
             spans.push(span);
           }
@@ -801,17 +864,9 @@
         if (spans.length) {
           const nr = document.createRange();
           const f = spans[0].firstChild, l = spans[spans.length - 1].lastChild;
-          if (f && l && l.nodeType === 3) {
-            nr.setStart(f, 0);
-            nr.setEnd(l, l.data.length);
-          } else {
-            nr.setStartBefore(spans[0]);
-            nr.setEndAfter(spans[spans.length - 1]);
-          }
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(nr);
-          savedRange = nr;
+          if (f && l && l.nodeType === 3) { nr.setStart(f, 0); nr.setEnd(l, l.data.length); }
+          else { nr.setStartBefore(spans[0]); nr.setEndAfter(spans[spans.length - 1]); }
+          const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(nr); savedRange = nr;
         }
       }
 
@@ -821,18 +876,16 @@
           ensureSelection();
           document.execCommand('styleWithCSS', false, false);
           document.execCommand(btn.dataset.cmd, false, null);
-          saveSelection();
-          syncToolbarState();
+          saveSelection(); syncToolbarState();
         });
       });
 
       document.getElementById('blockStyle').addEventListener('mousedown', saveSelection);
       document.getElementById('blockStyle').addEventListener('change', function () {
-        if (activeEditable !== editor) return; // Only apply heading to main editor
+        if (activeEditable !== editor) return;
         ensureSelection();
         document.execCommand('formatBlock', false, '<' + this.value + '>');
-        saveSelection();
-        syncToolbarState();
+        saveSelection(); syncToolbarState();
       });
 
       document.getElementById('fontSizeSelect').addEventListener('mousedown', saveSelection);
@@ -842,14 +895,10 @@
       });
 
       document.getElementById('textColor').addEventListener('mousedown', saveSelection);
-      document.getElementById('textColor').addEventListener('input', function () {
-        applyInlineStyle('color', this.value);
-      });
+      document.getElementById('textColor').addEventListener('input', function () { applyInlineStyle('color', this.value); });
 
       document.getElementById('hlColor').addEventListener('mousedown', saveSelection);
-      document.getElementById('hlColor').addEventListener('input', function () {
-        applyInlineStyle('backgroundColor', this.value);
-      });
+      document.getElementById('hlColor').addEventListener('input', function () { applyInlineStyle('backgroundColor', this.value); });
 
       document.getElementById('clearFormatBtn').addEventListener('mousedown', e => e.preventDefault());
       document.getElementById('clearFormatBtn').addEventListener('click', () => {
@@ -857,9 +906,7 @@
         document.execCommand('removeFormat', false, null);
         if (!r.collapsed) {
           getTextNodesInRange(r).forEach(t => {
-            if (t.parentElement && t.parentElement !== activeEditable && t.parentElement.tagName.toLowerCase() === 'span') {
-              t.parentElement.removeAttribute('style');
-            }
+            if (t.parentElement && t.parentElement !== activeEditable && t.parentElement.tagName.toLowerCase() === 'span') t.parentElement.removeAttribute('style');
           });
         }
         syncToolbarState();
@@ -882,12 +929,8 @@
           
           applyInlineStyle('fontFamily', currentFontFamily);
           
-          // Also set the fallback font family for the whole editable area if empty
-          if (!activeEditable.innerText.replace(/\u200B/g, '').trim()) {
-            activeEditable.style.fontFamily = currentFontFamily;
-          }
+          if (!activeEditable.innerText.replace(/\u200B/g, '').trim()) activeEditable.style.fontFamily = currentFontFamily;
           
-          // Update print elements
           document.getElementById('printHeader').style.fontFamily = currentFontFamily;
           document.getElementById('printFooter').style.fontFamily = currentFontFamily;
 
@@ -921,10 +964,7 @@
           typingMode = btn.dataset.mode;
           editor.spellcheck = typingMode === 'english';
           hinglishBar.classList.toggle('show', typingMode === 'hinglish');
-          if (typingMode === 'hindi') {
-            hkWrap.classList.add('show');
-            hkBtn.classList.add('active');
-          }
+          if (typingMode === 'hindi') { hkWrap.classList.add('show'); hkBtn.classList.add('active'); }
           editor.focus();
         });
       });
@@ -934,8 +974,7 @@
         hkBtn.classList.toggle('active', open);
       });
       document.getElementById('hkClose').addEventListener('click', () => {
-        hkWrap.classList.remove('show');
-        hkBtn.classList.remove('active');
+        hkWrap.classList.remove('show'); hkBtn.classList.remove('active');
       });
 
       const DICT = {
@@ -960,11 +999,9 @@
         const r = document.createRange();
         r.setStart(node, sel.anchorOffset - m[1].length);
         r.setEnd(node, sel.anchorOffset);
-        sel.removeAllRanges();
-        sel.addRange(r);
+        sel.removeAllRanges(); sel.addRange(r);
         document.execCommand('insertText', false, replacement + (addSpace ? ' ' : ''));
-        hinglishChips.innerHTML = '';
-        updateCounts();
+        hinglishChips.innerHTML = ''; updateCounts();
       }
 
       editor.addEventListener('keydown', e => {
@@ -983,13 +1020,11 @@
       });
 
       editor.addEventListener('input', () => {
-        saveSelection();
-        updateCounts();
+        saveSelection(); updateCounts();
         if (typingMode !== 'hinglish') return;
         const sel = window.getSelection();
         if (!sel || !sel.rangeCount || !sel.isCollapsed || !sel.anchorNode || sel.anchorNode.nodeType !== 3) {
-          hinglishChips.innerHTML = '';
-          return;
+          hinglishChips.innerHTML = ''; return;
         }
         const txt = sel.anchorNode.textContent.slice(0, sel.anchorOffset);
         const m = txt.match(/([a-zA-Z]{1,24})$/);
@@ -1003,16 +1038,13 @@
         const matches = Object.entries(DICT).filter(([k]) => k.startsWith(prefix)).slice(0, 5);
         matches.forEach(([, hindi]) => {
           const b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'hinglish-chip';
-          b.textContent = hindi;
+          b.type = 'button'; b.className = 'hinglish-chip'; b.textContent = hindi;
           b.addEventListener('mousedown', ev => ev.preventDefault());
           b.addEventListener('click', () => replaceWordBeforeCaret(hindi, true));
           hinglishChips.appendChild(b);
         });
       });
 
-      // Virtual Keyboard
       const VOWELS = ['अ','आ','इ','ई','उ','ऊ','ऋ','ए','ऐ','ओ','औ','अं','अः','ऑ','ॐ'];
       const CONS = ['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह','क्ष','त्र','ज्ञ','श्र'];
       const MATRAS = ['ा','ि','ी','ु','ू','ृ','े','ै','ो','ौ','ं','ँ','ः','्','।','॥'];
@@ -1022,15 +1054,11 @@
         const el = document.getElementById(id);
         list.forEach(ch => {
           const b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'hk-key ' + (cls || '');
-          b.textContent = ch;
+          b.type = 'button'; b.className = 'hk-key ' + (cls || ''); b.textContent = ch;
           b.addEventListener('mousedown', e => e.preventDefault());
           b.addEventListener('click', () => {
-            ensureSelection();
-            document.execCommand('insertText', false, ch);
-            saveSelection();
-            updateCounts();
+            ensureSelection(); document.execCommand('insertText', false, ch);
+            saveSelection(); updateCounts();
           });
           el.appendChild(b);
         });
@@ -1045,16 +1073,9 @@
         { label: 'Enter', fn: () => document.execCommand('insertParagraph', false, null) },
       ].forEach(ctrl => {
         const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'hk-key ctrl';
-        b.textContent = ctrl.label;
+        b.type = 'button'; b.className = 'hk-key ctrl'; b.textContent = ctrl.label;
         b.addEventListener('mousedown', e => e.preventDefault());
-        b.addEventListener('click', () => {
-          ensureSelection();
-          ctrl.fn();
-          saveSelection();
-          updateCounts();
-        });
+        b.addEventListener('click', () => { ensureSelection(); ctrl.fn(); saveSelection(); updateCounts(); });
         document.getElementById('numGrid').appendChild(b);
       });
 
@@ -1069,25 +1090,20 @@
       
       function syncHF() {
         const hVal = toggleHeader.checked ? docHeader.innerHTML.trim() : '';
-        printHeader.innerHTML = hVal;
-        printHeader.classList.toggle('has-content', hVal.length > 0);
-        
+        printHeader.innerHTML = hVal; printHeader.classList.toggle('has-content', hVal.length > 0);
         const fVal = toggleFooter.checked ? docFooter.innerHTML.trim() : '';
-        printFooter.innerHTML = fVal;
-        printFooter.classList.toggle('has-content', fVal.length > 0);
+        printFooter.innerHTML = fVal; printFooter.classList.toggle('has-content', fVal.length > 0);
       }
       
       toggleHeader.addEventListener('change', () => {
         hfHeaderRow.classList.toggle('hf-disabled', !toggleHeader.checked);
-        docHeader.contentEditable = toggleHeader.checked;
-        syncHF();
+        docHeader.contentEditable = toggleHeader.checked; syncHF();
       });
       docHeader.addEventListener('input', syncHF);
       
       toggleFooter.addEventListener('change', () => {
         hfFooterRow.classList.toggle('hf-disabled', !toggleFooter.checked);
-        docFooter.contentEditable = toggleFooter.checked;
-        syncHF();
+        docFooter.contentEditable = toggleFooter.checked; syncHF();
       });
       docFooter.addEventListener('input', syncHF);
 
@@ -1096,6 +1112,115 @@
         document.getElementById('charCount').textContent = t.length;
         document.getElementById('wordCount').textContent = t.trim() ? t.trim().split(/\s+/).length : 0;
       }
+
+      // --- TRANSLATOR LOGIC ---
+      const translateModal = document.getElementById('translateModal');
+      const doTranslateBtn = document.getElementById('doTranslateBtn');
+      const translationSpinner = document.getElementById('translationSpinner');
+      const targetLang = document.getElementById('targetLang');
+
+      document.getElementById('openTranslateModal').addEventListener('click', () => translateModal.classList.add('open'));
+      document.getElementById('closeTranslateModal').addEventListener('click', () => translateModal.classList.remove('open'));
+      
+      doTranslateBtn.addEventListener('click', async () => {
+        const target = targetLang.value;
+        // Very naive source detection: check if Devanagari characters exist
+        const isHindi = /[\u0900-\u097F]/.test(editor.innerText);
+        const source = isHindi ? 'hi' : 'en';
+        
+        if (source === target) {
+          alert("Document is already in the target language.");
+          translateModal.classList.remove('open');
+          return;
+        }
+
+        doTranslateBtn.disabled = true;
+        translationSpinner.style.display = 'inline-block';
+
+        // We traverse block elements to preserve basic structure (paragraphs, headings)
+        const blocks = editor.querySelectorAll('p, h1, h2, h3, li, div');
+        if (blocks.length === 0 && editor.innerText.trim()) {
+          // Fallback if no blocks
+          blocks.push(editor);
+        }
+
+        try {
+          for (let block of blocks) {
+            const text = block.innerText.trim();
+            if (!text) continue;
+            
+            // Translate line by line (split by <br> or newlines)
+            const lines = text.split('\n');
+            const translatedLines = [];
+            
+            for (let line of lines) {
+              if (!line.trim()) {
+                translatedLines.push('');
+                continue;
+              }
+              const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(line)}&langpair=${source}|${target}`);
+              const data = await res.json();
+              if (data.responseData && data.responseData.translatedText) {
+                translatedLines.push(data.responseData.translatedText);
+              } else {
+                translatedLines.push(line); // fallback
+              }
+            }
+            
+            // Rebuild the block with translated text (simplifying inline styles)
+            if (translatedLines.join('').trim()) {
+               block.innerHTML = translatedLines.join('<br>');
+            }
+          }
+          alert("Translation Complete!");
+          translateModal.classList.remove('open');
+        } catch (e) {
+          console.error(e);
+          alert("Translation failed. Please check your internet connection or try smaller chunks of text.");
+        } finally {
+          doTranslateBtn.disabled = false;
+          translationSpinner.style.display = 'none';
+        }
+      });
+
+      // --- PRINT PREVIEW LOGIC ---
+      const previewModal = document.getElementById('previewModal');
+      const previewPaper = document.getElementById('previewPaper');
+
+      document.getElementById('previewBtn').addEventListener('click', () => {
+        // Inject content into A4 paper mockup
+        const hVal = toggleHeader.checked ? docHeader.innerHTML : '';
+        const fVal = toggleFooter.checked ? docFooter.innerHTML : '';
+        
+        let previewHTML = '';
+        if (hVal.trim()) {
+          previewHTML += `<div style="text-align:center; border-bottom:1px solid #cbd5e1; padding-bottom:8px; margin-bottom:16px; font-size:11pt; color:#0f172a;">${hVal}</div>`;
+        }
+        
+        previewHTML += `<div style="font-size:12pt; line-height:1.75;">${editor.innerHTML}</div>`;
+        
+        if (fVal.trim()) {
+          previewHTML += `<div style="text-align:center; border-top:1px solid #cbd5e1; padding-top:8px; margin-top:16px; font-size:10pt; color:#475569;">${fVal}</div>`;
+        }
+
+        previewPaper.innerHTML = previewHTML;
+        
+        // Apply current font to preview
+        previewPaper.style.fontFamily = currentFontFamily;
+        
+        previewModal.classList.add('open');
+      });
+
+      document.getElementById('closePreviewBtn').addEventListener('click', () => {
+        previewModal.classList.remove('open');
+      });
+
+      document.getElementById('confirmPrintBtn').addEventListener('click', () => {
+        previewModal.classList.remove('open');
+        setTimeout(() => {
+          window.print();
+        }, 150);
+      });
 
       // Templates
       const dStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -1115,8 +1240,7 @@
           if (tpl) {
             editor.innerHTML = tpl.html;
             docTitleInput.value = tpl.title;
-            savedRange = null;
-            updateCounts();
+            savedRange = null; updateCounts();
           }
         });
       });
@@ -1127,22 +1251,13 @@
       document.getElementById('closeClearModal').addEventListener('click', () => clearModal.classList.remove('open'));
       document.getElementById('cancelClearBtn').addEventListener('click', () => clearModal.classList.remove('open'));
       document.getElementById('confirmClearBtn').addEventListener('click', () => {
-        editor.innerHTML = '';
-        docTitleInput.value = 'Untitled Document';
-        docHeader.innerHTML = '';
-        docFooter.innerHTML = '';
-        toggleHeader.checked = false;
-        toggleFooter.checked = false;
-        hfHeaderRow.classList.add('hf-disabled');
-        hfFooterRow.classList.add('hf-disabled');
-        docHeader.contentEditable = false;
-        docFooter.contentEditable = false;
-        syncHF();
-        updateCounts();
-        clearModal.classList.remove('open');
+        editor.innerHTML = ''; docTitleInput.value = 'Untitled Document';
+        docHeader.innerHTML = ''; docFooter.innerHTML = '';
+        toggleHeader.checked = false; toggleFooter.checked = false;
+        hfHeaderRow.classList.add('hf-disabled'); hfFooterRow.classList.add('hf-disabled');
+        docHeader.contentEditable = false; docFooter.contentEditable = false;
+        syncHF(); updateCounts(); clearModal.classList.remove('open');
       });
-
-      document.getElementById('printBtn').addEventListener('click', () => window.print());
 
       // Export DOCX
       function escXml(s) {
@@ -1211,12 +1326,9 @@
         zip.file('word/document.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + paragraphsXml.join('') + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>');
         const blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
+        const a = document.createElement('a'); a.href = url;
         a.download = (docTitleInput.value.trim() || 'Document') + '.docx';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        document.body.appendChild(a); a.click(); a.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       });
     })();
