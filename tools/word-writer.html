@@ -16,7 +16,6 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2319398A'/%3E%3Cpath d='M18 16h18l10 10v22a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z' fill='%23FFFFFF' fill-opacity='0.14' stroke='%23FFFFFF' stroke-width='2.5'/%3E%3Cpath d='M36 16v10h10' fill='none' stroke='%23FFFFFF' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M22 34h20M22 41h14' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Added Noto Sans and Noto Serif for Universal/International Language Support -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Hind:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif:wght@400;700&family=Noto+Serif+Devanagari:wght@400;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/doceasy-global.css">
   <style>
@@ -205,12 +204,14 @@
       font-size: 11px; font-weight: 800; text-transform: uppercase;
       letter-spacing: 0.5px; color: #64748b; width: 52px; flex-shrink: 0;
     }
-    /* Changed from input to contenteditable div for rich text support */
+    
+    /* Rich Text Header/Footer Input */
     .hf-input {
       flex: 1; min-width: 0; border: none; outline: none;
       background: transparent; font-size: 13.5px; color: #0f172a;
       min-height: 24px; max-height: 80px; overflow-y: auto;
       padding: 2px 0; line-height: 1.5;
+      font-family: 'Noto Sans Devanagari', 'Noto Sans', 'DM Sans', sans-serif;
     }
     .hf-input:empty::before {
       content: attr(data-placeholder);
@@ -310,7 +311,7 @@
     .font-option-item:hover { background: #f8fafc; }
     .font-option-item.selected { background: #eef2ff; border-color: #19398a; color: #19398a; }
 
-    /* ===== SEO Content Section ===== */
+    /* SEO Content */
     .seo-section {
       margin-top: 40px; padding: 32px 28px;
       background: var(--card-bg, #ffffff);
@@ -366,18 +367,12 @@
     .faq-list details[open] summary::after { content: '−'; }
     .faq-list details p { margin: 8px 0 0; font-size: 14px; color: #475569; line-height: 1.7; }
 
-    /* ===== Responsive fixes ===== */
+    /* Responsive */
     @media (max-width: 768px) {
-      .mode-wrap {
-        margin-left: 0; width: 100%;
-        margin-top: 6px; padding-top: 6px;
-        border-top: 1px dashed #e2e8f0;
-        justify-content: space-between;
-      }
+      .mode-wrap { margin-left: 0; width: 100%; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #e2e8f0; justify-content: space-between; }
       .tb-kb-btn span { display: none; }
       .tb-kb-btn { padding: 0 8px; }
     }
-
     @media (max-width: 640px) {
       .ww-head { flex-direction: column; align-items: stretch; }
       .ww-title-box { width: 100%; }
@@ -389,17 +384,9 @@
       .tb-select, .font-picker-trigger { height: 28px; font-size: 11.5px; padding: 0 6px; }
       .font-picker-trigger { max-width: 105px; }
       .mode-btn { padding: 4px 7px; font-size: 11px; }
-      .status-bar {
-        flex-direction: column; align-items: stretch;
-        gap: 10px; padding: 10px 12px;
-      }
-      .status-actions {
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
-      }
-      .status-actions .btn {
-        justify-content: center; font-size: 11px;
-        padding: 8px 6px; min-width: 0;
-      }
+      .status-bar { flex-direction: column; align-items: stretch; gap: 10px; padding: 10px 12px; }
+      .status-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .status-actions .btn { justify-content: center; font-size: 11px; padding: 8px 6px; min-width: 0; }
       .hf-row { flex-wrap: wrap; padding: 8px 10px; gap: 8px; }
       .hf-input { font-size: 13px; }
       .hinglish-bar { padding: 8px 10px; }
@@ -415,17 +402,11 @@
       .seo-grid { gap: 10px; }
     }
 
-    @media (max-width: 380px) {
-      .tb-select, .font-picker-trigger { font-size: 10.5px; padding: 0 4px; }
-      .font-picker-trigger { max-width: 88px; }
-      .tpl-btn { padding: 4px 8px; font-size: 11px; }
-    }
-
-    /* Print */
+    /* Print Fixes to prevent Blank Page & minimize Gap */
     .print-header, .print-footer { display: none; }
     @media print {
-      /* PDF में मार्जिन बिल्कुल 0 कर दिया गया है ताकि कंटेंट ऊपर से शुरू हो */
-      @page { margin: 0; size: A4 portrait; }
+      /* Using safe standard margins to prevent overflow and blank pages */
+      @page { margin: 1cm; size: A4 portrait; }
       
       header, footer, nav, #doceasy-header, #doceasy-footer,
       .ww-head, .template-bar, .toolbar, .hinglish-bar, .hf-row, .hk-wrap, .status-bar, .modal-overlay, .seo-section {
@@ -435,24 +416,26 @@
       body, html { background: #ffffff !important; margin: 0 !important; padding: 0 !important; }
       .ww-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
       
+      /* Remove borders and padding from containers */
       .editor-wrap { border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
       .editor { padding: 0 !important; margin: 0 !important; min-height: auto !important; }
       
-      /* अगर यूजर ने शुरुआत में कोई खाली लाइन (Enter) दबाई है तो वो प्रिंट में हाइड हो जाएगी */
-      .editor > *:first-child { margin-top: 0 !important; }
+      /* CRITICAL FIX: Prevent last element's margin from pushing to a new blank page */
+      .editor > *:last-child { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+      /* Hide empty elements that cause blank pages */
       .editor p:empty, .editor div:empty { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
 
       .print-header.has-content {
         display: block !important; text-align: center;
-        font-size: 9.5pt; color: #475569;
+        font-size: 11pt; color: #0f172a;
         border-bottom: 1px solid #cbd5e1;
-        padding-bottom: 4px; margin-bottom: 12px;
+        padding-bottom: 8px; margin-bottom: 16px;
       }
       .print-footer.has-content {
         display: block !important; text-align: center;
-        font-size: 9.5pt; color: #475569;
+        font-size: 10pt; color: #475569;
         border-top: 1px solid #cbd5e1;
-        padding-top: 4px; margin-top: 12px;
+        padding-top: 8px; margin-top: 16px;
       }
     }
   </style>
@@ -559,7 +542,6 @@
 
       <div class="mode-wrap">
         <div class="mode-group" role="group" aria-label="Typing language mode">
-          <!-- DEFAULT ENGLISH ACTIVE -->
           <button type="button" class="mode-btn active" data-mode="english">English</button>
           <button type="button" class="mode-btn" data-mode="hinglish">Hinglish</button>
           <button type="button" class="mode-btn" data-mode="hindi">Hindi</button>
@@ -571,7 +553,6 @@
       </div>
     </div>
 
-    <!-- Hinglish Bar hidden by default -->
     <div class="hinglish-bar" id="hinglishBar">
       <span id="hinglishPrompt"><strong>Hinglish mode active:</strong> Type phonetically in English letters and press Space to convert to Hindi.</span>
       <div class="hinglish-chips" id="hinglishChips"></div>
@@ -584,13 +565,12 @@
         <span class="hf-knob"></span>
       </label>
       <span class="hf-label">Header</span>
-      <!-- Changed to contenteditable div so you can use Bold/Font Size -->
       <div class="hf-input" id="docHeader" contenteditable="false" data-placeholder="Enable switch to add a page header..."></div>
     </div>
 
     <div class="editor-wrap">
       <div class="print-header" id="printHeader"></div>
-      <div class="editor" id="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing here in English, Hinglish, or any language..."></div>
+      <div class="editor" id="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing here..."></div>
       <div class="print-footer" id="printFooter"></div>
     </div>
 
@@ -629,12 +609,11 @@
       </div>
     </div>
 
-    <!-- ========== SEO CONTENT SECTION ========== -->
+    <!-- SEO Section -->
     <section class="seo-section" aria-label="Word Writer Guide and Information">
-      <h2>Word Writer — Free Online Word Processor for English &amp; International Languages</h2>
-      <p>Word Writer is DocEasy's free, browser-based word processor built for global users and anyone who needs a fast, reliable way to create and export documents without installing heavy software like Microsoft Word or Google Docs. From students preparing assignments to government employees drafting official notices, from bloggers writing bilingual content to professionals crafting formal business letters — the tool adapts to your workflow. Unlike most online editors that limit language support, Word Writer includes three distinct typing modes, a built-in Devanagari virtual keyboard, universal font support for international languages (Arabic, Chinese, Russian, etc.), and over fifteen fonts. Everything runs locally in your browser, so your text never leaves your device, and when you are ready, you can export your work as a genuine Microsoft Word .docx file or convert it into a PDF via your browser's print dialog. No signups, no ads, no hidden costs.</p>
-
-      <h2>Key Features at a Glance</h2>
+      <h2>Word Writer — Free Online Word Processor</h2>
+      <p>Word Writer is DocEasy's free, browser-based word processor built for global users and anyone who needs a fast, reliable way to create and export documents without installing heavy software like Microsoft Word or Google Docs. From students preparing assignments to government employees drafting official notices, from bloggers writing bilingual content to professionals crafting formal business letters — the tool adapts to your workflow. Unlike most online editors that limit language support, Word Writer includes three distinct typing modes, a built-in Devanagari virtual keyboard, universal font support for international languages (Arabic, Chinese, Russian, etc.), and over fifteen fonts.</p>
+      <h2>Key Features</h2>
       <div class="seo-grid">
         <div class="seo-card">
           <h4>International Support</h4>
@@ -645,65 +624,13 @@
           <p>Switch between English, Hinglish, and Hindi with one click. Each mode is optimised for its own input flow.</p>
         </div>
         <div class="seo-card">
-          <h4>Virtual Devanagari Keyboard</h4>
-          <p>Complete on-screen keyboard with vowels, consonants, matras, and Devanagari numerals for accurate Hindi typing.</p>
-        </div>
-        <div class="seo-card">
           <h4>Rich Header &amp; Footer</h4>
           <p>Add custom headers and footers. You can now bold, italicize, and change fonts inside them just like the main editor.</p>
         </div>
         <div class="seo-card">
           <h4>Real .docx Export</h4>
-          <p>Exports a genuine OpenXML Word document — not just a renamed HTML file. Opens perfectly in Word, Google Docs, and LibreOffice.</p>
+          <p>Exports a genuine OpenXML Word document. Opens perfectly in Word, Google Docs, and LibreOffice.</p>
         </div>
-        <div class="seo-card">
-          <h4>PDF via Print</h4>
-          <p>Clean A4 print layout with optional headers and footers, ready for submission, printing, or archiving.</p>
-        </div>
-      </div>
-
-      <h2>Typing Modes Explained</h2>
-      <h3>1. English Mode (Default)</h3>
-      <p>Standard left-to-right typing with the browser's native spell checker enabled. Ideal for professional emails, resumes, official letters, school essays, and anything you intend to submit in English. All formatting tools — bold, italic, underline, strike-through, text colour, highlight, alignment, and lists — work exactly as expected. Fonts like Times New Roman, DM Sans, Plus Jakarta Sans, and Libre Baskerville are optimised for English body text.</p>
-
-      <h3>2. Hinglish Mode</h3>
-      <p>Hinglish mode lets you type phonetically in English letters and automatically converts common Hindi words to Devanagari as you press the space bar. For example, typing "namaste" and pressing Space becomes <b>नमस्ते</b>. The intelligent suggestion bar above the editor shows the top matching Hindi word as you type, letting you pick the exact word you need with a single click. This mode is perfect for WhatsApp-style bilingual writers or anyone who knows Hindi phonetics but is not comfortable with Devanagari keyboard layouts.</p>
-
-      <h3>3. Hindi Mode</h3>
-      <p>Hindi mode is designed for fluent Devanagari writers who want a dedicated Hindi typing experience. Selecting this mode opens the virtual Devanagari keyboard automatically. You can type using the on-screen keyboard with proper consonant + matra combinations, or use the Devanagari keyboard layout on your device if you have one installed. This gives you 100% accurate Hindi typing without needing to install any additional software.</p>
-
-      <h2>Global Language Support &amp; Fonts</h2>
-      <p>We have integrated Universal Noto Fonts (Noto Sans and Noto Serif) into the editor. These fonts support almost all international scripts including Latin, Cyrillic (Russian), Greek, Arabic, Chinese, Japanese, and Korean. If you want to write in French, Spanish, or any other language, simply change your device's keyboard language and start typing—the editor will automatically render the text correctly.</p>
-      <p><strong>Mangal (Official Govt):</strong> For Hindi government submissions, Mangal is the officially mandated font by the Government of India and is required for many SSC, UPSC, and court documents.</p>
-
-      <h2>Step-by-Step: How to Use Word Writer</h2>
-      <ol>
-        <li><strong>Choose a template or start blank.</strong> Pick from the six templates at the top if you want a starting structure.</li>
-        <li><strong>Enter your document title</strong> in the Document Title field — this becomes the filename when you save.</li>
-        <li><strong>Pick your typing mode</strong> from the English / Hinglish / Hindi toggle in the toolbar.</li>
-        <li><strong>Start typing in the editor.</strong> Use the formatting toolbar for bold, italic, lists, alignment, colours, and font changes.</li>
-        <li><strong>(Optional) Enable a header and/or footer</strong> and type their content. You can use the toolbar to make the text bold or change its size.</li>
-        <li><strong>Export your work</strong> — Save Word (.docx) for editable files, or Print / Save PDF for a submission-ready document. (Tip: In mobile print dialogs, set "Margins" to "Minimum" or "None" for the tightest layout).</li>
-      </ol>
-
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq-list">
-        <details>
-          <summary>Is Word Writer really free?</summary>
-          <p>Yes. Word Writer is 100% free with no signups, no watermarks, no ads, and no hidden limits. You can use it as many times as you want, for personal, academic, or commercial documents.</p>
-        </details>
-        <details>
-          <summary>Does the .docx export really open in Microsoft Word?</summary>
-          <p>Yes. The exported file is a genuine OpenXML .docx package (not a renamed HTML or RTF file). It opens without any warnings in Microsoft Word 2010+, Google Docs, LibreOffice Writer, WPS Office, and Apple Pages. All formatting you applied — headings, bold, italics, colours, fonts, and alignment — is preserved.</p>
-        </details>
-        <details>
-          <summary>Can I use this for international languages like Arabic or Russian?</summary>
-          <p>Yes. The editor is Unicode-compliant and uses universal fonts. Just switch your operating system's keyboard to your desired language, and type normally. The browser will render the script correctly, and the PDF/docx exports will preserve it.</p>
-        </details>
-        <details>
-          <summary>How do I style the Header and Footer?</summary>
-          <p>Enable the Header/Footer switch. The text boxes are now rich-text enabled. You can select the text inside the header/footer and use the formatting toolbar (Bold, Italic, Font Size) just like the main document. Changes will automatically carry over to the PDF print.</p>
-        </details>
       </div>
     </section>
   </main>
@@ -737,20 +664,8 @@
         <span style="font-family:'Mangal','Tiro Devanagari Hindi',sans-serif;font-weight:600">Mangal (Official Govt)</span>
         <span style="font-size:12px;color:#64748b">Standard SSC / Court</span>
       </button>
-      <button type="button" class="font-option-item" data-font="'Noto Serif Devanagari', 'Lora', serif" data-label="Noto Serif Dev.">
-        <span style="font-family:'Noto Serif Devanagari',serif;font-weight:600">Noto Serif Devanagari</span>
-        <span style="font-size:12px;color:#64748b">Editorial Serif</span>
-      </button>
-      <button type="button" class="font-option-item" data-font="'Tiro Devanagari Hindi', serif" data-label="Tiro Hindi">
-        <span style="font-family:'Tiro Devanagari Hindi',serif;font-weight:600">Tiro Devanagari Hindi</span>
-        <span style="font-size:12px;color:#64748b">Classic Literary</span>
-      </button>
 
       <div class="font-group-title">English &amp; Editorial Fonts</div>
-      <button type="button" class="font-option-item" data-font="'Plus Jakarta Sans', sans-serif" data-label="Jakarta Sans">
-        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:600">Plus Jakarta Sans</span>
-        <span style="font-size:12px;color:#64748b">Modern Geometric</span>
-      </button>
       <button type="button" class="font-option-item" data-font="'DM Sans', sans-serif" data-label="DM Sans">
         <span style="font-family:'DM Sans',sans-serif;font-weight:600">DM Sans</span>
         <span style="font-size:12px;color:#64748b">Business Body</span>
@@ -758,10 +673,6 @@
       <button type="button" class="font-option-item" data-font="'Times New Roman', serif" data-label="Times New Roman">
         <span style="font-family:'Times New Roman',serif;font-weight:600">Times New Roman</span>
         <span style="font-size:12px;color:#64748b">Academic Standard</span>
-      </button>
-      <button type="button" class="font-option-item" data-font="'EB Garamond', serif" data-label="Garamond">
-        <span style="font-family:'EB Garamond',serif;font-weight:600">EB Garamond</span>
-        <span style="font-size:12px;color:#64748b">Book &amp; Legal Serif</span>
       </button>
     </div>
   </div>
@@ -789,42 +700,78 @@
       'use strict';
       const editor = document.getElementById('editor');
       const docTitleInput = document.getElementById('docTitleInput');
+      const docHeader = document.getElementById('docHeader');
+      const docFooter = document.getElementById('docFooter');
+      
       let savedRange = null;
-      // DEFAULT ENGLISH MODE
       let typingMode = 'english'; 
-      let currentFontFamily = "'Noto Sans Devanagari', 'DM Sans', sans-serif";
+      let currentFontFamily = "'Noto Sans Devanagari', 'Noto Sans', 'DM Sans', sans-serif";
+      
+      // Track which element is currently being edited for formatting
+      let activeEditable = editor;
+
+      editor.addEventListener('focus', () => activeEditable = editor);
+      docHeader.addEventListener('focus', () => activeEditable = docHeader);
+      docFooter.addEventListener('focus', () => activeEditable = docFooter);
 
       function getRangeInEditor() {
         const sel = window.getSelection();
         if (!sel || !sel.rangeCount) return null;
         const r = sel.getRangeAt(0);
-        return editor.contains(r.commonAncestorContainer) ? r.cloneRange() : null;
+        return activeEditable.contains(r.commonAncestorContainer) ? r.cloneRange() : null;
       }
-      function saveSelection() { const r = getRangeInEditor(); if (r) savedRange = r; }
+
+      function saveSelection() {
+        const r = getRangeInEditor();
+        if (r) savedRange = r;
+      }
+
       function ensureSelection() {
         const cur = getRangeInEditor();
         if (cur) return cur;
-        if (savedRange && editor.contains(savedRange.commonAncestorContainer)) {
-          const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(savedRange); return savedRange;
+        if (savedRange && activeEditable.contains(savedRange.commonAncestorContainer)) {
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(savedRange);
+          return savedRange;
         }
-        editor.focus();
-        const r = document.createRange(); r.selectNodeContents(editor); r.collapse(false);
-        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); return r;
+        activeEditable.focus();
+        const r = document.createRange();
+        r.selectNodeContents(activeEditable);
+        r.collapse(false);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+        return r;
       }
+
       function getTextNodesInRange(range) {
-        const nodes = []; const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        const walker = document.createTreeWalker(activeEditable, NodeFilter.SHOW_TEXT);
         let cur = walker.nextNode();
-        while (cur) { if (cur.data.length > 0 && range.intersectsNode(cur)) nodes.push(cur); cur = walker.nextNode(); }
+        while (cur) {
+          if (cur.data.length > 0 && range.intersectsNode(cur)) nodes.push(cur);
+          cur = walker.nextNode();
+        }
         return nodes;
       }
+
       function applyInlineStyle(prop, value) {
         const range = ensureSelection();
         if (range.collapsed) {
-          const span = document.createElement('span'); span.style[prop] = value;
-          const zwsp = document.createTextNode('\u200B'); span.appendChild(zwsp); range.insertNode(span);
-          const next = document.createRange(); next.setStart(zwsp, 1); next.collapse(true);
-          const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(next);
-          savedRange = next; return;
+          const span = document.createElement('span');
+          span.style[prop] = value;
+          const zwsp = document.createTextNode('\u200B');
+          span.appendChild(zwsp);
+          range.insertNode(span);
+          const next = document.createRange();
+          next.setStart(zwsp, 1);
+          next.collapse(true);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(next);
+          savedRange = next;
+          return;
         }
         const textNodes = getTextNodesInRange(range);
         if (!textNodes.length) return;
@@ -839,11 +786,14 @@
           if (end < target.data.length) target.splitText(end);
           if (start > 0) target = target.splitText(start);
           const p = target.parentElement;
-          if (p && p !== editor && p.tagName.toLowerCase() === 'span' && p.childNodes.length === 1) {
-            p.style[prop] = value; spans.push(p);
+          if (p && p !== activeEditable && p.tagName.toLowerCase() === 'span' && p.childNodes.length === 1) {
+            p.style[prop] = value;
+            spans.push(p);
           } else {
-            const span = document.createElement('span'); span.style[prop] = value;
-            target.parentNode.insertBefore(span, target); span.appendChild(target);
+            const span = document.createElement('span');
+            span.style[prop] = value;
+            target.parentNode.insertBefore(span, target);
+            span.appendChild(target);
             span.querySelectorAll('span,font').forEach(el => { el.style[prop] = ''; });
             spans.push(span);
           }
@@ -851,9 +801,17 @@
         if (spans.length) {
           const nr = document.createRange();
           const f = spans[0].firstChild, l = spans[spans.length - 1].lastChild;
-          if (f && l && l.nodeType === 3) { nr.setStart(f, 0); nr.setEnd(l, l.data.length); }
-          else { nr.setStartBefore(spans[0]); nr.setEndAfter(spans[spans.length - 1]); }
-          const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(nr); savedRange = nr;
+          if (f && l && l.nodeType === 3) {
+            nr.setStart(f, 0);
+            nr.setEnd(l, l.data.length);
+          } else {
+            nr.setStartBefore(spans[0]);
+            nr.setEndAfter(spans[spans.length - 1]);
+          }
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(nr);
+          savedRange = nr;
         }
       }
 
@@ -863,34 +821,35 @@
           ensureSelection();
           document.execCommand('styleWithCSS', false, false);
           document.execCommand(btn.dataset.cmd, false, null);
-          saveSelection(); syncToolbarState();
+          saveSelection();
+          syncToolbarState();
         });
       });
 
       document.getElementById('blockStyle').addEventListener('mousedown', saveSelection);
       document.getElementById('blockStyle').addEventListener('change', function () {
+        if (activeEditable !== editor) return; // Only apply heading to main editor
         ensureSelection();
         document.execCommand('formatBlock', false, '<' + this.value + '>');
-        saveSelection(); syncToolbarState();
+        saveSelection();
+        syncToolbarState();
       });
 
       document.getElementById('fontSizeSelect').addEventListener('mousedown', saveSelection);
       document.getElementById('fontSizeSelect').addEventListener('change', function () {
         applyInlineStyle('fontSize', this.value + 'pt');
-        if (!editor.innerText.replace(/\u200B/g, '').trim()) editor.style.fontSize = this.value + 'pt';
-        
-        // Also apply font size to header/footer visually
-        document.getElementById('docHeader').style.fontSize = this.value + 'pt';
-        document.getElementById('docFooter').style.fontSize = this.value + 'pt';
-
         syncToolbarState();
       });
 
       document.getElementById('textColor').addEventListener('mousedown', saveSelection);
-      document.getElementById('textColor').addEventListener('input', function () { applyInlineStyle('color', this.value); });
+      document.getElementById('textColor').addEventListener('input', function () {
+        applyInlineStyle('color', this.value);
+      });
 
       document.getElementById('hlColor').addEventListener('mousedown', saveSelection);
-      document.getElementById('hlColor').addEventListener('input', function () { applyInlineStyle('backgroundColor', this.value); });
+      document.getElementById('hlColor').addEventListener('input', function () {
+        applyInlineStyle('backgroundColor', this.value);
+      });
 
       document.getElementById('clearFormatBtn').addEventListener('mousedown', e => e.preventDefault());
       document.getElementById('clearFormatBtn').addEventListener('click', () => {
@@ -898,7 +857,9 @@
         document.execCommand('removeFormat', false, null);
         if (!r.collapsed) {
           getTextNodesInRange(r).forEach(t => {
-            if (t.parentElement && t.parentElement !== editor && t.parentElement.tagName.toLowerCase() === 'span') t.parentElement.removeAttribute('style');
+            if (t.parentElement && t.parentElement !== activeEditable && t.parentElement.tagName.toLowerCase() === 'span') {
+              t.parentElement.removeAttribute('style');
+            }
           });
         }
         syncToolbarState();
@@ -919,15 +880,14 @@
           currentFontLabel.textContent = this.dataset.label;
           fontModal.classList.remove('open');
           
-          // Apply font to main editor
-          if (!editor.innerText.replace(/\u200B/g, '').trim()) editor.style.fontFamily = currentFontFamily;
           applyInlineStyle('fontFamily', currentFontFamily);
           
-          // Apply font to header and footer visually
-          document.getElementById('docHeader').style.fontFamily = currentFontFamily;
-          document.getElementById('docFooter').style.fontFamily = currentFontFamily;
+          // Also set the fallback font family for the whole editable area if empty
+          if (!activeEditable.innerText.replace(/\u200B/g, '').trim()) {
+            activeEditable.style.fontFamily = currentFontFamily;
+          }
           
-          // Apply to print elements
+          // Update print elements
           document.getElementById('printHeader').style.fontFamily = currentFontFamily;
           document.getElementById('printFooter').style.fontFamily = currentFontFamily;
 
@@ -938,7 +898,7 @@
       function syncToolbarState() {
         document.querySelectorAll('[data-cmd]').forEach(btn => {
           const cmd = btn.dataset.cmd;
-          if (['bold','italic','underline','strikeThrough','justifyLeft','justifyCenter','justifyRight','insertUnorderedList','insertOrderedList'].includes(cmd)) {
+          if (['bold', 'italic', 'underline', 'strikeThrough', 'justifyLeft', 'justifyCenter', 'justifyRight', 'insertUnorderedList', 'insertOrderedList'].includes(cmd)) {
             try { btn.classList.toggle('active', document.queryCommandState(cmd)); } catch {}
           }
         });
@@ -947,6 +907,7 @@
         if (getRangeInEditor()) { saveSelection(); syncToolbarState(); }
       });
 
+      // Typing Modes
       const hinglishBar = document.getElementById('hinglishBar');
       const hinglishChips = document.getElementById('hinglishChips');
       const hinglishPrompt = document.getElementById('hinglishPrompt');
@@ -960,7 +921,10 @@
           typingMode = btn.dataset.mode;
           editor.spellcheck = typingMode === 'english';
           hinglishBar.classList.toggle('show', typingMode === 'hinglish');
-          if (typingMode === 'hindi') { hkWrap.classList.add('show'); hkBtn.classList.add('active'); }
+          if (typingMode === 'hindi') {
+            hkWrap.classList.add('show');
+            hkBtn.classList.add('active');
+          }
           editor.focus();
         });
       });
@@ -970,7 +934,8 @@
         hkBtn.classList.toggle('active', open);
       });
       document.getElementById('hkClose').addEventListener('click', () => {
-        hkWrap.classList.remove('show'); hkBtn.classList.remove('active');
+        hkWrap.classList.remove('show');
+        hkBtn.classList.remove('active');
       });
 
       const DICT = {
@@ -995,9 +960,11 @@
         const r = document.createRange();
         r.setStart(node, sel.anchorOffset - m[1].length);
         r.setEnd(node, sel.anchorOffset);
-        sel.removeAllRanges(); sel.addRange(r);
+        sel.removeAllRanges();
+        sel.addRange(r);
         document.execCommand('insertText', false, replacement + (addSpace ? ' ' : ''));
-        hinglishChips.innerHTML = ''; updateCounts();
+        hinglishChips.innerHTML = '';
+        updateCounts();
       }
 
       editor.addEventListener('keydown', e => {
@@ -1016,11 +983,13 @@
       });
 
       editor.addEventListener('input', () => {
-        saveSelection(); updateCounts();
+        saveSelection();
+        updateCounts();
         if (typingMode !== 'hinglish') return;
         const sel = window.getSelection();
         if (!sel || !sel.rangeCount || !sel.isCollapsed || !sel.anchorNode || sel.anchorNode.nodeType !== 3) {
-          hinglishChips.innerHTML = ''; return;
+          hinglishChips.innerHTML = '';
+          return;
         }
         const txt = sel.anchorNode.textContent.slice(0, sel.anchorOffset);
         const m = txt.match(/([a-zA-Z]{1,24})$/);
@@ -1034,13 +1003,16 @@
         const matches = Object.entries(DICT).filter(([k]) => k.startsWith(prefix)).slice(0, 5);
         matches.forEach(([, hindi]) => {
           const b = document.createElement('button');
-          b.type = 'button'; b.className = 'hinglish-chip'; b.textContent = hindi;
+          b.type = 'button';
+          b.className = 'hinglish-chip';
+          b.textContent = hindi;
           b.addEventListener('mousedown', ev => ev.preventDefault());
           b.addEventListener('click', () => replaceWordBeforeCaret(hindi, true));
           hinglishChips.appendChild(b);
         });
       });
 
+      // Virtual Keyboard
       const VOWELS = ['अ','आ','इ','ई','उ','ऊ','ऋ','ए','ऐ','ओ','औ','अं','अः','ऑ','ॐ'];
       const CONS = ['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह','क्ष','त्र','ज्ञ','श्र'];
       const MATRAS = ['ा','ि','ी','ु','ू','ृ','े','ै','ो','ौ','ं','ँ','ः','्','।','॥'];
@@ -1050,11 +1022,15 @@
         const el = document.getElementById(id);
         list.forEach(ch => {
           const b = document.createElement('button');
-          b.type = 'button'; b.className = 'hk-key ' + (cls || ''); b.textContent = ch;
+          b.type = 'button';
+          b.className = 'hk-key ' + (cls || '');
+          b.textContent = ch;
           b.addEventListener('mousedown', e => e.preventDefault());
           b.addEventListener('click', () => {
-            ensureSelection(); document.execCommand('insertText', false, ch);
-            saveSelection(); updateCounts();
+            ensureSelection();
+            document.execCommand('insertText', false, ch);
+            saveSelection();
+            updateCounts();
           });
           el.appendChild(b);
         });
@@ -1069,22 +1045,35 @@
         { label: 'Enter', fn: () => document.execCommand('insertParagraph', false, null) },
       ].forEach(ctrl => {
         const b = document.createElement('button');
-        b.type = 'button'; b.className = 'hk-key ctrl'; b.textContent = ctrl.label;
+        b.type = 'button';
+        b.className = 'hk-key ctrl';
+        b.textContent = ctrl.label;
         b.addEventListener('mousedown', e => e.preventDefault());
-        b.addEventListener('click', () => { ensureSelection(); ctrl.fn(); saveSelection(); updateCounts(); });
+        b.addEventListener('click', () => {
+          ensureSelection();
+          ctrl.fn();
+          saveSelection();
+          updateCounts();
+        });
         document.getElementById('numGrid').appendChild(b);
       });
 
-      const toggleHeader = document.getElementById('toggleHeader'), docHeader = document.getElementById('docHeader'), hfHeaderRow = document.getElementById('hfHeaderRow'), printHeader = document.getElementById('printHeader');
-      const toggleFooter = document.getElementById('toggleFooter'), docFooter = document.getElementById('docFooter'), hfFooterRow = document.getElementById('hfFooterRow'), printFooter = document.getElementById('printFooter');
+      // Header & Footer
+      const toggleHeader = document.getElementById('toggleHeader');
+      const hfHeaderRow = document.getElementById('hfHeaderRow');
+      const printHeader = document.getElementById('printHeader');
+      
+      const toggleFooter = document.getElementById('toggleFooter');
+      const hfFooterRow = document.getElementById('hfFooterRow');
+      const printFooter = document.getElementById('printFooter');
       
       function syncHF() {
         const hVal = toggleHeader.checked ? docHeader.innerHTML.trim() : '';
-        printHeader.innerHTML = hVal; 
+        printHeader.innerHTML = hVal;
         printHeader.classList.toggle('has-content', hVal.length > 0);
         
         const fVal = toggleFooter.checked ? docFooter.innerHTML.trim() : '';
-        printFooter.innerHTML = fVal; 
+        printFooter.innerHTML = fVal;
         printFooter.classList.toggle('has-content', fVal.length > 0);
       }
       
@@ -1108,6 +1097,7 @@
         document.getElementById('wordCount').textContent = t.trim() ? t.trim().split(/\s+/).length : 0;
       }
 
+      // Templates
       const dStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
       const TEMPLATES = {
         blank: { title: 'Untitled Document', html: '' },
@@ -1125,36 +1115,36 @@
           if (tpl) {
             editor.innerHTML = tpl.html;
             docTitleInput.value = tpl.title;
-            savedRange = null; updateCounts();
+            savedRange = null;
+            updateCounts();
           }
         });
       });
 
+      // Clear Modal
       const clearModal = document.getElementById('clearModal');
       document.getElementById('clearBtn').addEventListener('click', () => clearModal.classList.add('open'));
       document.getElementById('closeClearModal').addEventListener('click', () => clearModal.classList.remove('open'));
       document.getElementById('cancelClearBtn').addEventListener('click', () => clearModal.classList.remove('open'));
       document.getElementById('confirmClearBtn').addEventListener('click', () => {
-        editor.innerHTML = ''; docTitleInput.value = 'Untitled Document';
-        docHeader.innerHTML = ''; docFooter.innerHTML = '';
-        toggleHeader.checked = false; toggleFooter.checked = false;
-        hfHeaderRow.classList.add('hf-disabled'); hfFooterRow.classList.add('hf-disabled');
-        docHeader.contentEditable = false; docFooter.contentEditable = false;
-        syncHF(); updateCounts(); clearModal.classList.remove('open');
+        editor.innerHTML = '';
+        docTitleInput.value = 'Untitled Document';
+        docHeader.innerHTML = '';
+        docFooter.innerHTML = '';
+        toggleHeader.checked = false;
+        toggleFooter.checked = false;
+        hfHeaderRow.classList.add('hf-disabled');
+        hfFooterRow.classList.add('hf-disabled');
+        docHeader.contentEditable = false;
+        docFooter.contentEditable = false;
+        syncHF();
+        updateCounts();
+        clearModal.classList.remove('open');
       });
 
-      // Clear empty paragraphs before printing to prevent top gap
-      document.getElementById('printBtn').addEventListener('click', () => {
-        const firstNode = editor.firstElementChild;
-        if (firstNode && (firstNode.tagName === 'P' || firstNode.tagName === 'DIV') && !firstNode.innerText.trim()) {
-           firstNode.style.display = 'none'; // Temporarily hide
-           window.print();
-           firstNode.style.display = ''; // Restore
-        } else {
-           window.print();
-        }
-      });
+      document.getElementById('printBtn').addEventListener('click', () => window.print());
 
+      // Export DOCX
       function escXml(s) {
         return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       }
@@ -1221,13 +1211,16 @@
         zip.file('word/document.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + paragraphsXml.join('') + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>');
         const blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href = url;
+        const a = document.createElement('a');
+        a.href = url;
         a.download = (docTitleInput.value.trim() || 'Document') + '.docx';
-        document.body.appendChild(a); a.click(); a.remove();
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       });
     })();
   </script>
   <script src="../assets/js/core/doceasy-core.js"></script>
 </body>
-  </html>
+</html>
