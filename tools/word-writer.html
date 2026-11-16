@@ -312,7 +312,6 @@
     .modal-header h2 { margin: 0; font-size: 16px; font-weight: 700; }
     .modal-close { background: none; border: none; font-size: 22px; color: #64748b; cursor: pointer; }
     
-    /* Translator Form Elements */
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px; }
     .form-select { width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; outline: none; }
@@ -324,7 +323,6 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Preview Modal Specific */
     .preview-modal {
       display: none; position: fixed; inset: 0; z-index: 10000;
       background: #334155; flex-direction: column;
@@ -348,12 +346,10 @@
       font-family: 'Noto Sans Devanagari', 'Noto Sans', 'DM Sans', sans-serif;
       color: #0f172a;
     }
-    /* Mobile scaling for preview */
     @media (max-width: 820px) {
       .a4-paper { transform: scale(0.45); margin-bottom: -150mm; }
     }
 
-    /* SEO Content */
     .seo-section {
       margin-top: 40px; padding: 32px 28px;
       background: var(--card-bg, #ffffff);
@@ -409,7 +405,6 @@
     .faq-list details[open] summary::after { content: '−'; }
     .faq-list details p { margin: 8px 0 0; font-size: 14px; color: #475569; line-height: 1.7; }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .mode-wrap { margin-left: 0; width: 100%; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #e2e8f0; justify-content: space-between; }
       .tb-kb-btn span { display: none; }
@@ -446,10 +441,10 @@
       .seo-grid { gap: 10px; }
     }
 
-    /* Print Fixes */
+    /* Print Fixes - Reduced Margin and Line Height to fit in one page */
     .print-header-el, .print-footer-el { display: none; }
     @media print {
-      @page { margin: 1cm; size: A4 portrait; }
+      @page { margin: 0.5cm 0.8cm; size: A4 portrait; }
       
       header, footer, nav, #doceasy-header, #doceasy-footer,
       .ww-head, .template-bar, .toolbar, .hinglish-bar, .hf-row, .hk-wrap, .status-bar, .modal-overlay, .seo-section, .preview-modal {
@@ -460,9 +455,10 @@
       .ww-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
       
       .editor-wrap { border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
-      .editor { padding: 0 !important; margin: 0 !important; min-height: auto !important; }
+      .editor { padding: 0 !important; margin: 0 !important; min-height: auto !important; line-height: 1.4 !important; }
       
       .editor > *:last-child { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+      .editor p, .editor h1, .editor h2, .editor h3, .editor li, .editor div { page-break-inside: avoid; }
       .editor p:empty, .editor div:empty { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
 
       .print-header-el.has-content {
@@ -500,8 +496,8 @@
         </div>
       </div>
       <div class="ww-title-box">
-        <label for="docTitleInput">Document Title</label>
-        <input id="docTitleInput" type="text" value="Untitled Document" placeholder="Untitled Document">
+        <label for="docTitleInput">Document Title (Auto-saved)</label>
+        <input id="docTitleInput" type="text" value="English Document - DocEasy - 1" placeholder="Document Title">
       </div>
     </div>
 
@@ -802,6 +798,28 @@
       let typingMode = 'english'; 
       let currentFontFamily = "'Noto Sans Devanagari', 'Noto Sans', 'DM Sans', sans-serif";
       let activeEditable = editor;
+
+      // --- AUTO NAMING LOGIC ---
+      const langMap = { 
+        'en': 'English', 'hi': 'Hindi', 'es': 'Spanish', 'fr': 'French', 
+        'de': 'German', 'ar': 'Arabic', 'zh': 'Chinese', 'ru': 'Russian' 
+      };
+      let currentLanguage = 'en'; 
+      let saveCounter = parseInt(localStorage.getItem('doceasy_counter') || '1');
+
+      function updateFileName() {
+        const langName = langMap[currentLanguage] || 'Document';
+        docTitleInput.value = `${langName} Document - DocEasy - ${saveCounter}`;
+      }
+
+      function incrementCounter() {
+        saveCounter++;
+        localStorage.setItem('doceasy_counter', saveCounter);
+        updateFileName();
+      }
+
+      // Initialize title on load
+      updateFileName();
 
       editor.addEventListener('focus', () => activeEditable = editor);
       docHeader.addEventListener('focus', () => activeEditable = docHeader);
@@ -1122,9 +1140,17 @@
       document.getElementById('openTranslateModal').addEventListener('click', () => translateModal.classList.add('open'));
       document.getElementById('closeTranslateModal').addEventListener('click', () => translateModal.classList.remove('open'));
       
+      function fixMojibake(str) {
+        try {
+          if (/[\u00C0-\u00FF]/.test(str)) {
+            return decodeURIComponent(escape(str));
+          }
+        } catch (e) { return str; }
+        return str;
+      }
+      
       doTranslateBtn.addEventListener('click', async () => {
         const target = targetLang.value;
-        // Very naive source detection: check if Devanagari characters exist
         const isHindi = /[\u0900-\u097F]/.test(editor.innerText);
         const source = isHindi ? 'hi' : 'en';
         
@@ -1137,10 +1163,8 @@
         doTranslateBtn.disabled = true;
         translationSpinner.style.display = 'inline-block';
 
-        // We traverse block elements to preserve basic structure (paragraphs, headings)
         const blocks = editor.querySelectorAll('p, h1, h2, h3, li, div');
         if (blocks.length === 0 && editor.innerText.trim()) {
-          // Fallback if no blocks
           blocks.push(editor);
         }
 
@@ -1149,7 +1173,6 @@
             const text = block.innerText.trim();
             if (!text) continue;
             
-            // Translate line by line (split by <br> or newlines)
             const lines = text.split('\n');
             const translatedLines = [];
             
@@ -1158,20 +1181,34 @@
                 translatedLines.push('');
                 continue;
               }
-              const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(line)}&langpair=${source}|${target}`);
+              
+              const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(line)}`;
+              const res = await fetch(url);
               const data = await res.json();
-              if (data.responseData && data.responseData.translatedText) {
-                translatedLines.push(data.responseData.translatedText);
+              
+              if (data && data[0] && data[0][0] && data[0][0][0]) {
+                let translatedText = '';
+                data[0].forEach(item => {
+                  if (item[0]) translatedText += item[0];
+                });
+                translatedText = fixMojibake(translatedText);
+                translatedText = translatedText.replace(/₽/g, '₹'); 
+                
+                translatedLines.push(translatedText);
               } else {
-                translatedLines.push(line); // fallback
+                translatedLines.push(line);
               }
             }
             
-            // Rebuild the block with translated text (simplifying inline styles)
             if (translatedLines.join('').trim()) {
                block.innerHTML = translatedLines.join('<br>');
             }
           }
+          
+          // After successful translation, update the current language and auto-generate the filename
+          currentLanguage = target;
+          updateFileName();
+          
           alert("Translation Complete!");
           translateModal.classList.remove('open');
         } catch (e) {
@@ -1188,7 +1225,6 @@
       const previewPaper = document.getElementById('previewPaper');
 
       document.getElementById('previewBtn').addEventListener('click', () => {
-        // Inject content into A4 paper mockup
         const hVal = toggleHeader.checked ? docHeader.innerHTML : '';
         const fVal = toggleFooter.checked ? docFooter.innerHTML : '';
         
@@ -1204,8 +1240,6 @@
         }
 
         previewPaper.innerHTML = previewHTML;
-        
-        // Apply current font to preview
         previewPaper.style.fontFamily = currentFontFamily;
         
         previewModal.classList.add('open');
@@ -1217,8 +1251,15 @@
 
       document.getElementById('confirmPrintBtn').addEventListener('click', () => {
         previewModal.classList.remove('open');
+        
+        // Update document title for PDF filename, then increment counter
+        const originalTitle = document.title;
+        document.title = docTitleInput.value;
+        incrementCounter();
+        
         setTimeout(() => {
           window.print();
+          setTimeout(() => { document.title = originalTitle; }, 1000);
         }, 150);
       });
 
@@ -1239,7 +1280,9 @@
           const tpl = TEMPLATES[btn.dataset.tpl];
           if (tpl) {
             editor.innerHTML = tpl.html;
-            docTitleInput.value = tpl.title;
+            // Don't override the auto-generated title with template title, just reset language
+            currentLanguage = 'en';
+            updateFileName();
             savedRange = null; updateCounts();
           }
         });
@@ -1251,7 +1294,9 @@
       document.getElementById('closeClearModal').addEventListener('click', () => clearModal.classList.remove('open'));
       document.getElementById('cancelClearBtn').addEventListener('click', () => clearModal.classList.remove('open'));
       document.getElementById('confirmClearBtn').addEventListener('click', () => {
-        editor.innerHTML = ''; docTitleInput.value = 'Untitled Document';
+        editor.innerHTML = ''; 
+        currentLanguage = 'en';
+        updateFileName();
         docHeader.innerHTML = ''; docFooter.innerHTML = '';
         toggleHeader.checked = false; toggleFooter.checked = false;
         hfHeaderRow.classList.add('hf-disabled'); hfFooterRow.classList.add('hf-disabled');
@@ -1330,9 +1375,12 @@
         a.download = (docTitleInput.value.trim() || 'Document') + '.docx';
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
+        
+        // Auto-increment counter after download
+        incrementCounter();
       });
     })();
   </script>
   <script src="../assets/js/core/doceasy-core.js"></script>
 </body>
-</html>
+                                   </html>
