@@ -16,7 +16,8 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2319398A'/%3E%3Cpath d='M18 16h18l10 10v22a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z' fill='%23FFFFFF' fill-opacity='0.14' stroke='%23FFFFFF' stroke-width='2.5'/%3E%3Cpath d='M36 16v10h10' fill='none' stroke='%23FFFFFF' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M22 34h20M22 41h14' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Hind:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  <!-- Added Noto Sans and Noto Serif for Universal/International Language Support -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Hind:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif:wght@400;700&family=Noto+Serif+Devanagari:wght@400;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/doceasy-global.css">
   <style>
     * { box-sizing: border-box; }
@@ -204,9 +205,18 @@
       font-size: 11px; font-weight: 800; text-transform: uppercase;
       letter-spacing: 0.5px; color: #64748b; width: 52px; flex-shrink: 0;
     }
+    /* Changed from input to contenteditable div for rich text support */
     .hf-input {
       flex: 1; min-width: 0; border: none; outline: none;
       background: transparent; font-size: 13.5px; color: #0f172a;
+      min-height: 24px; max-height: 80px; overflow-y: auto;
+      padding: 2px 0; line-height: 1.5;
+    }
+    .hf-input:empty::before {
+      content: attr(data-placeholder);
+      color: #94a3b8;
+      pointer-events: none;
+      display: block;
     }
 
     .editor-wrap {
@@ -217,7 +227,7 @@
     }
     .editor {
       min-height: 520px; padding: 40px 48px;
-      font-family: 'Noto Sans Devanagari', 'DM Sans', sans-serif;
+      font-family: 'Noto Sans', 'Noto Sans Devanagari', 'DM Sans', sans-serif;
       font-size: 12pt; line-height: 1.75; color: #0f172a;
       outline: none; max-width: 100%;
       word-wrap: break-word; overflow-wrap: break-word;
@@ -414,26 +424,35 @@
     /* Print */
     .print-header, .print-footer { display: none; }
     @media print {
-      @page { margin: 1.5cm 1.4cm; size: A4 portrait; }
+      /* PDF में मार्जिन बिल्कुल 0 कर दिया गया है ताकि कंटेंट ऊपर से शुरू हो */
+      @page { margin: 0; size: A4 portrait; }
+      
       header, footer, nav, #doceasy-header, #doceasy-footer,
       .ww-head, .template-bar, .toolbar, .hinglish-bar, .hf-row, .hk-wrap, .status-bar, .modal-overlay, .seo-section {
         display: none !important;
       }
-      body { background: #ffffff !important; }
+      
+      body, html { background: #ffffff !important; margin: 0 !important; padding: 0 !important; }
       .ww-wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-      .editor-wrap { border: none !important; box-shadow: none !important; margin: 0 !important; }
-      .editor { padding: 0 !important; min-height: auto !important; }
+      
+      .editor-wrap { border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
+      .editor { padding: 0 !important; margin: 0 !important; min-height: auto !important; }
+      
+      /* अगर यूजर ने शुरुआत में कोई खाली लाइन (Enter) दबाई है तो वो प्रिंट में हाइड हो जाएगी */
+      .editor > *:first-child { margin-top: 0 !important; }
+      .editor p:empty, .editor div:empty { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
+
       .print-header.has-content {
         display: block !important; text-align: center;
         font-size: 9.5pt; color: #475569;
         border-bottom: 1px solid #cbd5e1;
-        padding-bottom: 6px; margin-bottom: 14px;
+        padding-bottom: 4px; margin-bottom: 12px;
       }
       .print-footer.has-content {
         display: block !important; text-align: center;
         font-size: 9.5pt; color: #475569;
         border-top: 1px solid #cbd5e1;
-        padding-top: 6px; margin-top: 16px;
+        padding-top: 4px; margin-top: 12px;
       }
     }
   </style>
@@ -454,7 +473,7 @@
         </svg>
         <div>
           <h1>Word Writer</h1>
-          <p>Write in English, Hinglish, or Hindi with rich fonts, optional page headers/footers, and instant Word or PDF export.</p>
+          <p>Write in English, Hinglish, or any language with rich fonts, optional page headers/footers, and instant Word or PDF export.</p>
         </div>
       </div>
       <div class="ww-title-box">
@@ -540,6 +559,7 @@
 
       <div class="mode-wrap">
         <div class="mode-group" role="group" aria-label="Typing language mode">
+          <!-- DEFAULT ENGLISH ACTIVE -->
           <button type="button" class="mode-btn active" data-mode="english">English</button>
           <button type="button" class="mode-btn" data-mode="hinglish">Hinglish</button>
           <button type="button" class="mode-btn" data-mode="hindi">Hindi</button>
@@ -551,6 +571,7 @@
       </div>
     </div>
 
+    <!-- Hinglish Bar hidden by default -->
     <div class="hinglish-bar" id="hinglishBar">
       <span id="hinglishPrompt"><strong>Hinglish mode active:</strong> Type phonetically in English letters and press Space to convert to Hindi.</span>
       <div class="hinglish-chips" id="hinglishChips"></div>
@@ -563,12 +584,13 @@
         <span class="hf-knob"></span>
       </label>
       <span class="hf-label">Header</span>
-      <input class="hf-input" id="docHeader" placeholder="Enable switch to add a page header for Word and PDF exports" autocomplete="off" disabled>
+      <!-- Changed to contenteditable div so you can use Bold/Font Size -->
+      <div class="hf-input" id="docHeader" contenteditable="false" data-placeholder="Enable switch to add a page header..."></div>
     </div>
 
     <div class="editor-wrap">
       <div class="print-header" id="printHeader"></div>
-      <div class="editor" id="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing here in English, Hinglish, or Hindi..."></div>
+      <div class="editor" id="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing here in English, Hinglish, or any language..."></div>
       <div class="print-footer" id="printFooter"></div>
     </div>
 
@@ -579,7 +601,7 @@
         <span class="hf-knob"></span>
       </label>
       <span class="hf-label">Footer</span>
-      <input class="hf-input" id="docFooter" placeholder="Enable switch to add a page footer for Word and PDF exports" autocomplete="off" disabled>
+      <div class="hf-input" id="docFooter" contenteditable="false" data-placeholder="Enable switch to add a page footer..."></div>
     </div>
 
     <div class="hk-wrap" id="hkWrap">
@@ -609,11 +631,15 @@
 
     <!-- ========== SEO CONTENT SECTION ========== -->
     <section class="seo-section" aria-label="Word Writer Guide and Information">
-      <h2>Word Writer — Free Online Word Processor for English, Hinglish &amp; Hindi</h2>
-      <p>Word Writer is DocEasy's free, browser-based word processor built for Indian users and anyone who needs a fast, reliable way to create and export documents without installing heavy software like Microsoft Word or Google Docs. From students preparing Hindi assignments to government employees drafting official notices, from bloggers writing bilingual content to professionals crafting formal business letters — the tool adapts to your workflow. Unlike most online editors that only support English, Word Writer includes three distinct typing modes, a built-in Devanagari virtual keyboard, a growing Hinglish dictionary, and over fourteen bilingual fonts. Everything runs locally in your browser, so your text never leaves your device, and when you are ready, you can export your work as a genuine Microsoft Word .docx file or convert it into a PDF via your browser's print dialog. No signups, no ads, no hidden costs.</p>
+      <h2>Word Writer — Free Online Word Processor for English &amp; International Languages</h2>
+      <p>Word Writer is DocEasy's free, browser-based word processor built for global users and anyone who needs a fast, reliable way to create and export documents without installing heavy software like Microsoft Word or Google Docs. From students preparing assignments to government employees drafting official notices, from bloggers writing bilingual content to professionals crafting formal business letters — the tool adapts to your workflow. Unlike most online editors that limit language support, Word Writer includes three distinct typing modes, a built-in Devanagari virtual keyboard, universal font support for international languages (Arabic, Chinese, Russian, etc.), and over fifteen fonts. Everything runs locally in your browser, so your text never leaves your device, and when you are ready, you can export your work as a genuine Microsoft Word .docx file or convert it into a PDF via your browser's print dialog. No signups, no ads, no hidden costs.</p>
 
       <h2>Key Features at a Glance</h2>
       <div class="seo-grid">
+        <div class="seo-card">
+          <h4>International Support</h4>
+          <p>Use your device's native keyboard to type in any language. Our universal fonts ensure all characters display correctly.</p>
+        </div>
         <div class="seo-card">
           <h4>3 Typing Modes</h4>
           <p>Switch between English, Hinglish, and Hindi with one click. Each mode is optimised for its own input flow.</p>
@@ -623,8 +649,8 @@
           <p>Complete on-screen keyboard with vowels, consonants, matras, and Devanagari numerals for accurate Hindi typing.</p>
         </div>
         <div class="seo-card">
-          <h4>14+ Bilingual Fonts</h4>
-          <p>From official Mangal and modern Noto Sans Devanagari to editorial EB Garamond and Libre Baskerville.</p>
+          <h4>Rich Header &amp; Footer</h4>
+          <p>Add custom headers and footers. You can now bold, italicize, and change fonts inside them just like the main editor.</p>
         </div>
         <div class="seo-card">
           <h4>Real .docx Export</h4>
@@ -634,73 +660,21 @@
           <h4>PDF via Print</h4>
           <p>Clean A4 print layout with optional headers and footers, ready for submission, printing, or archiving.</p>
         </div>
-        <div class="seo-card">
-          <h4>6 Ready Templates</h4>
-          <p>Formal letter, leave application, resume, notice, essay, and blank — pre-formatted and bilingual-ready.</p>
-        </div>
       </div>
 
-      <h2>Three Typing Modes Explained</h2>
-      <h3>1. English Mode</h3>
+      <h2>Typing Modes Explained</h2>
+      <h3>1. English Mode (Default)</h3>
       <p>Standard left-to-right typing with the browser's native spell checker enabled. Ideal for professional emails, resumes, official letters, school essays, and anything you intend to submit in English. All formatting tools — bold, italic, underline, strike-through, text colour, highlight, alignment, and lists — work exactly as expected. Fonts like Times New Roman, DM Sans, Plus Jakarta Sans, and Libre Baskerville are optimised for English body text.</p>
 
       <h3>2. Hinglish Mode</h3>
-      <p>Hinglish mode lets you type phonetically in English letters and automatically converts common Hindi words to Devanagari as you press the space bar. For example, typing "namaste" and pressing Space becomes <b>नमस्ते</b>, "dhanyavad" becomes <b>धन्यवाद</b>, "kripya" becomes <b>कृपया</b>, and so on. The intelligent suggestion bar above the editor shows the top matching Hindi word as you type, letting you pick the exact word you need with a single click. This mode is perfect for WhatsApp-style bilingual writers, students writing mixed-language essays, or anyone who knows Hindi phonetics but is not comfortable with Devanagari keyboard layouts.</p>
+      <p>Hinglish mode lets you type phonetically in English letters and automatically converts common Hindi words to Devanagari as you press the space bar. For example, typing "namaste" and pressing Space becomes <b>नमस्ते</b>. The intelligent suggestion bar above the editor shows the top matching Hindi word as you type, letting you pick the exact word you need with a single click. This mode is perfect for WhatsApp-style bilingual writers or anyone who knows Hindi phonetics but is not comfortable with Devanagari keyboard layouts.</p>
 
       <h3>3. Hindi Mode</h3>
-      <p>Hindi mode is designed for fluent Devanagari writers who want a dedicated Hindi typing experience. Selecting this mode opens the virtual Devanagari keyboard automatically. You can type using the on-screen keyboard with proper consonant + matra combinations, or use the Devanagari keyboard layout on your device if you have one installed. The virtual keyboard is fully organised into Vowels (अ, आ, इ, ई...), Consonants (क, ख, ग, घ...), Matras (ा, ि, ी, ु, ू...), and Devanagari numerals (०, १, २, ३...). This gives you 100% accurate Hindi typing without needing to install any additional software.</p>
+      <p>Hindi mode is designed for fluent Devanagari writers who want a dedicated Hindi typing experience. Selecting this mode opens the virtual Devanagari keyboard automatically. You can type using the on-screen keyboard with proper consonant + matra combinations, or use the Devanagari keyboard layout on your device if you have one installed. This gives you 100% accurate Hindi typing without needing to install any additional software.</p>
 
-      <h2>Using the Devanagari Virtual Keyboard</h2>
-      <p>The virtual Hindi keyboard is one of Word Writer's strongest features. Most online tools either lack a proper Devanagari keyboard or provide a clumsy layout that produces wrong characters. Word Writer solves this by giving you a structured, category-wise keyboard:</p>
-      <ul>
-        <li><strong>Vowels (स्वर):</strong> अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ, अं, अः, ऑ, and ॐ — for writing independent vowel sounds.</li>
-        <li><strong>Consonants (व्यंजन):</strong> क, ख, ग, घ, ङ, च, छ, ज, झ, ञ, ट, ठ, ड, ढ, ण, त, थ, द, ध, न, प, फ, ब, भ, म, य, र, ल, व, श, ष, स, ह, क्ष, त्र, ज्ञ, and श्र — every consonant needed for formal and informal Hindi.</li>
-        <li><strong>Matras (मात्राएँ):</strong> ा, ि, ी, ु, ू, ृ, े, ै, ो, ौ, ं, ँ, ः, ् (halant), and danda marks (।, ॥) — the signs that combine with consonants.</li>
-        <li><strong>Numerals (अंक):</strong> ०, १, २, ३, ४, ५, ६, ७, ८, ९ — Devanagari digits, plus Space, Backspace, and Enter controls.</li>
-      </ul>
-      <p>To type a combined character like "कि" (ki), click the consonant <b>क</b> first, then click the matra <b>ि</b>. The keyboard automatically inserts the correct combined form. This approach lets you type natural Hindi with proper conjuncts, matras, and halants without guessing.</p>
-
-      <h2>14+ Fonts for Every Purpose</h2>
-      <p>Word Writer offers fourteen carefully chosen fonts spanning two groups — Devanagari and bilingual, plus English and editorial. Each font is available in the font picker with a live preview and a short description, so you can see exactly what you're applying before confirming.</p>
-      <p><strong>Devanagari &amp; Bilingual Fonts:</strong></p>
-      <ul>
-        <li><strong>Noto Sans Devanagari</strong> — Modern, clean sans-serif. Perfect for digital documents, websites, and general typing.</li>
-        <li><strong>Mangal</strong> — The official Government of India Hindi font. Mandatory for many government submissions, court documents, and SSC exams.</li>
-        <li><strong>Noto Serif Devanagari</strong> — Editorial serif with excellent readability for books, reports, and long-form content.</li>
-        <li><strong>Tiro Devanagari Hindi</strong> — Classic literary feel. Ideal for poetry, cultural essays, and traditional publications.</li>
-        <li><strong>Hind</strong> — Structured, print-ready sans-serif used by many Hindi news outlets.</li>
-        <li><strong>Baloo Bhai 2</strong> — Display font with heavy weight. Great for headings, posters, and creative projects.</li>
-      </ul>
-      <p><strong>English &amp; Editorial Fonts:</strong></p>
-      <ul>
-        <li><strong>Plus Jakarta Sans</strong> — Modern geometric sans for contemporary documents.</li>
-        <li><strong>DM Sans</strong> — Balanced business body font with excellent screen readability.</li>
-        <li><strong>Libre Baskerville</strong> — Classic British serif, ideal for academic papers and formal letters.</li>
-        <li><strong>EB Garamond</strong> — Timeless book and legal serif used in publishing and court filings.</li>
-        <li><strong>Times New Roman</strong> — The universal academic standard for essays, theses, and reports.</li>
-        <li><strong>Lora</strong> — Editorial story font with a warm literary feel.</li>
-        <li><strong>Poppins</strong> — Clean geometric sans for presentations and marketing documents.</li>
-        <li><strong>JetBrains Mono</strong> — Monospace font for code snippets, technical documentation, and tabular data.</li>
-      </ul>
-
-      <h2>Six Ready-Made Document Templates</h2>
-      <p>Instead of staring at a blank page, start with one of six pre-structured templates. Each is filled with realistic placeholder content that you can edit or delete, and each is designed to work with both English and Hindi content.</p>
-      <ul>
-        <li><strong>Blank:</strong> A clean empty page — ideal when you already know what you want to write.</li>
-        <li><strong>Formal Letter:</strong> Structured with sender address, recipient address, subject, salutation, body, and sign-off — exactly as expected in Indian formal correspondence.</li>
-        <li><strong>Leave Application:</strong> The standard school or office leave letter format with placeholders for dates, reason, and authority name.</li>
-        <li><strong>Resume:</strong> Contact header, professional summary, work experience, and education sections — ready for any job application.</li>
-        <li><strong>Notice:</strong> The official notice layout used by schools, offices, and housing societies, complete with date, subject, body, and authority signature block.</li>
-        <li><strong>Essay:</strong> Introduction, key arguments, and conclusion sections — the standard three-part essay structure taught in Indian schools and colleges.</li>
-      </ul>
-
-      <h2>Headers &amp; Footers for Professional Documents</h2>
-      <p>The optional header and footer controls let you add a page header (like a school name, company letterhead, or document title) and a page footer (like page numbers, submission dates, or confidentiality notices) that appear consistently across every printed page. Both are toggled independently with a switch, so you can enable only the header, only the footer, or both — and their content is preserved in both the .docx export and the PDF print output. This is especially useful for students submitting assignments with an institutional header or professionals creating structured reports.</p>
-
-      <h2>Export to Word (.docx) and PDF</h2>
-      <p>Word Writer supports two export paths, both free and both production-ready:</p>
-      <p><strong>Save Word (.docx):</strong> Clicking "Save Word (.docx)" generates a genuine OpenXML Word document using the JSZip library. Your formatting — headings, bold, italic, underline, strike-through, text colour, font family, font size, text alignment, bullet lists, and numbered lists — is all translated into proper WordprocessingML tags. The resulting file opens cleanly in Microsoft Word, Google Docs, LibreOffice Writer, WPS Office, and Apple Pages without any "damaged file" warnings. Your browser downloads it as a standard .docx file with your document title as the filename.</p>
-      <p><strong>Print / Save PDF:</strong> Clicking "Print / Save PDF" opens your browser's native print dialog. The layout is specifically tuned for A4 paper with 1.5cm top/bottom and 1.4cm left/right margins. All the editing UI is hidden, and your optional header and footer are rendered with proper separation lines. Choose "Save as PDF" in the print dialog to produce a clean, submission-ready PDF — with Devanagari text rendered perfectly using the same fonts you selected in the editor.</p>
+      <h2>Global Language Support &amp; Fonts</h2>
+      <p>We have integrated Universal Noto Fonts (Noto Sans and Noto Serif) into the editor. These fonts support almost all international scripts including Latin, Cyrillic (Russian), Greek, Arabic, Chinese, Japanese, and Korean. If you want to write in French, Spanish, or any other language, simply change your device's keyboard language and start typing—the editor will automatically render the text correctly.</p>
+      <p><strong>Mangal (Official Govt):</strong> For Hindi government submissions, Mangal is the officially mandated font by the Government of India and is required for many SSC, UPSC, and court documents.</p>
 
       <h2>Step-by-Step: How to Use Word Writer</h2>
       <ol>
@@ -708,9 +682,8 @@
         <li><strong>Enter your document title</strong> in the Document Title field — this becomes the filename when you save.</li>
         <li><strong>Pick your typing mode</strong> from the English / Hinglish / Hindi toggle in the toolbar.</li>
         <li><strong>Start typing in the editor.</strong> Use the formatting toolbar for bold, italic, lists, alignment, colours, and font changes.</li>
-        <li><strong>(Optional) Enable a header and/or footer</strong> and type their content — great for institutional submissions.</li>
-        <li><strong>Format your text</strong> using the font picker (14+ fonts), font size dropdown, and colour pickers.</li>
-        <li><strong>Export your work</strong> — Save Word (.docx) for editable files, or Print / Save PDF for a submission-ready document.</li>
+        <li><strong>(Optional) Enable a header and/or footer</strong> and type their content. You can use the toolbar to make the text bold or change its size.</li>
+        <li><strong>Export your work</strong> — Save Word (.docx) for editable files, or Print / Save PDF for a submission-ready document. (Tip: In mobile print dialogs, set "Margins" to "Minimum" or "None" for the tightest layout).</li>
       </ol>
 
       <h2>Frequently Asked Questions</h2>
@@ -724,43 +697,14 @@
           <p>Yes. The exported file is a genuine OpenXML .docx package (not a renamed HTML or RTF file). It opens without any warnings in Microsoft Word 2010+, Google Docs, LibreOffice Writer, WPS Office, and Apple Pages. All formatting you applied — headings, bold, italics, colours, fonts, and alignment — is preserved.</p>
         </details>
         <details>
-          <summary>Can I type Hindi without installing a Hindi keyboard?</summary>
-          <p>Absolutely. Word Writer's built-in Devanagari virtual keyboard lets you type complete Hindi text without installing any system keyboard. Just click "Hindi Keyboard" in the toolbar, and the on-screen keyboard appears with all vowels, consonants, matras, and numerals organised by category.</p>
+          <summary>Can I use this for international languages like Arabic or Russian?</summary>
+          <p>Yes. The editor is Unicode-compliant and uses universal fonts. Just switch your operating system's keyboard to your desired language, and type normally. The browser will render the script correctly, and the PDF/docx exports will preserve it.</p>
         </details>
         <details>
-          <summary>What exactly is Hinglish mode and how does it work?</summary>
-          <p>Hinglish mode lets you type Hindi words using English (Roman) letters. When you press the space bar after typing a word like "namaste", Word Writer automatically converts it to "नमस्ते" using its built-in dictionary. The suggestion bar above the editor shows the top Hindi match for the word you're currently typing, so you can pick the exact word you need. This is ideal for WhatsApp-style bilingual writers, students, and anyone more comfortable with Roman letters.</p>
-        </details>
-        <details>
-          <summary>Which font is best for government and SSC documents?</summary>
-          <p>Use Mangal. It is the officially mandated Hindi font by the Government of India and is required for many SSC, UPSC, court, and government submissions. You can select it from the font picker modal under "Devanagari &amp; Bilingual Fonts".</p>
-        </details>
-        <details>
-          <summary>Is my document saved anywhere on your servers?</summary>
-          <p>No. Word Writer is entirely client-side — your text is stored only in your browser's live DOM and never transmitted to any server. There is no backend, no database, and no analytics on the editor content. When you close the tab, the content is gone. For long documents, we recommend periodically saving your work by clicking Save Word (.docx).</p>
-        </details>
-        <details>
-          <summary>Can I use Word Writer on my phone or tablet?</summary>
-          <p>Yes. Word Writer is fully responsive and works on Android phones, iPhones, iPads, Android tablets, and desktop computers. The toolbar reflows into a mobile-friendly layout with icon-only Hindi keyboard button on small screens, and the virtual keyboard scales down appropriately. Typing in Hinglish mode works especially well on mobile because you only need the regular English keyboard.</p>
-        </details>
-        <details>
-          <summary>How do I add page numbers to my exported PDF?</summary>
-          <p>Enable the footer toggle (the switch below the editor), then type "Page " (or any custom footer text) into the footer input. When you click Print / Save PDF, the footer text appears at the bottom of the page. Native auto-numbering is not currently supported — a common workaround is to manually enter "Page 1", "Page 2", etc. if your document is short, or open the exported .docx in Word to add automatic page numbers there.</p>
+          <summary>How do I style the Header and Footer?</summary>
+          <p>Enable the Header/Footer switch. The text boxes are now rich-text enabled. You can select the text inside the header/footer and use the formatting toolbar (Bold, Italic, Font Size) just like the main document. Changes will automatically carry over to the PDF print.</p>
         </details>
       </div>
-
-      <h2>Privacy &amp; Data</h2>
-      <p>Word Writer is fully client-side. Your document text, headers, footers, and formatting are stored only in the browser's live DOM and never leave your device. No analytics are collected on the editor content. The only network requests the page makes are for loading fonts from Google Fonts and the JSZip library — both for rendering and export functionality. You can use Word Writer confidently for confidential or personal documents.</p>
-
-      <h2>Tips for Best Results</h2>
-      <ul>
-        <li><strong>For long Hindi documents</strong>, choose Noto Sans Devanagari or Mangal and use 12pt body size for maximum readability.</li>
-        <li><strong>For formal submissions</strong>, enable the header toggle and add your institution name — it prints cleanly on every page.</li>
-        <li><strong>For Hinglish writers</strong>, remember that the suggestion bar appears as you type — click a suggestion to instantly replace your word without waiting for the space bar.</li>
-        <li><strong>For .docx exports</strong>, use the font picker to choose a font that is installed on your target system (Mangal, Times New Roman, or Noto Sans Devanagari are the safest choices).</li>
-        <li><strong>For PDF printing</strong>, use Ctrl+P or Cmd+P on desktop, or the Print button on mobile — both open your browser's native print dialog where you can select "Save as PDF".</li>
-        <li><strong>Always save your work</strong> by clicking Save Word (.docx) after long editing sessions — the editor does not persist between browser sessions.</li>
-      </ul>
     </section>
   </main>
 
@@ -773,6 +717,17 @@
         <h2>Select Document Font</h2>
         <button type="button" class="modal-close" id="closeFontModal" aria-label="Close">&times;</button>
       </div>
+      
+      <div class="font-group-title">Universal / International Fonts</div>
+      <button type="button" class="font-option-item" data-font="'Noto Sans', sans-serif" data-label="Noto Sans (Universal)">
+        <span style="font-family:'Noto Sans',sans-serif;font-weight:600">Noto Sans (Universal)</span>
+        <span style="font-size:12px;color:#64748b">Covers 100+ Languages</span>
+      </button>
+      <button type="button" class="font-option-item" data-font="'Noto Serif', serif" data-label="Noto Serif (Universal)">
+        <span style="font-family:'Noto Serif',serif;font-weight:600">Noto Serif (Universal)</span>
+        <span style="font-size:12px;color:#64748b">Covers 100+ Languages</span>
+      </button>
+
       <div class="font-group-title">Devanagari &amp; Bilingual Fonts</div>
       <button type="button" class="font-option-item selected" data-font="'Noto Sans Devanagari', 'DM Sans', sans-serif" data-label="Noto Sans Dev.">
         <span style="font-family:'Noto Sans Devanagari',sans-serif;font-weight:600">Noto Sans Devanagari</span>
@@ -790,14 +745,6 @@
         <span style="font-family:'Tiro Devanagari Hindi',serif;font-weight:600">Tiro Devanagari Hindi</span>
         <span style="font-size:12px;color:#64748b">Classic Literary</span>
       </button>
-      <button type="button" class="font-option-item" data-font="'Hind', sans-serif" data-label="Hind">
-        <span style="font-family:'Hind',sans-serif;font-weight:600">Hind</span>
-        <span style="font-size:12px;color:#64748b">Structured Print</span>
-      </button>
-      <button type="button" class="font-option-item" data-font="'Baloo Bhai 2', 'Noto Sans Devanagari', sans-serif" data-label="Baloo Bhai 2">
-        <span style="font-family:'Baloo Bhai 2',sans-serif;font-weight:600">Baloo Bhai 2</span>
-        <span style="font-size:12px;color:#64748b">Display &amp; Headings</span>
-      </button>
 
       <div class="font-group-title">English &amp; Editorial Fonts</div>
       <button type="button" class="font-option-item" data-font="'Plus Jakarta Sans', sans-serif" data-label="Jakarta Sans">
@@ -808,29 +755,13 @@
         <span style="font-family:'DM Sans',sans-serif;font-weight:600">DM Sans</span>
         <span style="font-size:12px;color:#64748b">Business Body</span>
       </button>
-      <button type="button" class="font-option-item" data-font="'Libre Baskerville', serif" data-label="Baskerville">
-        <span style="font-family:'Libre Baskerville',serif;font-weight:600">Libre Baskerville</span>
-        <span style="font-size:12px;color:#64748b">Classic British Serif</span>
-      </button>
-      <button type="button" class="font-option-item" data-font="'EB Garamond', serif" data-label="Garamond">
-        <span style="font-family:'EB Garamond',serif;font-weight:600">EB Garamond</span>
-        <span style="font-size:12px;color:#64748b">Book &amp; Legal Serif</span>
-      </button>
       <button type="button" class="font-option-item" data-font="'Times New Roman', serif" data-label="Times New Roman">
         <span style="font-family:'Times New Roman',serif;font-weight:600">Times New Roman</span>
         <span style="font-size:12px;color:#64748b">Academic Standard</span>
       </button>
-      <button type="button" class="font-option-item" data-font="'Lora', Georgia, serif" data-label="Lora">
-        <span style="font-family:'Lora',serif;font-weight:600">Lora</span>
-        <span style="font-size:12px;color:#64748b">Editorial Story</span>
-      </button>
-      <button type="button" class="font-option-item" data-font="'Poppins', sans-serif" data-label="Poppins">
-        <span style="font-family:'Poppins',sans-serif;font-weight:600">Poppins</span>
-        <span style="font-size:12px;color:#64748b">Clean Presentation</span>
-      </button>
-      <button type="button" class="font-option-item" data-font="'JetBrains Mono', monospace" data-label="JetBrains Mono">
-        <span style="font-family:'JetBrains Mono',monospace;font-weight:600">JetBrains Mono</span>
-        <span style="font-size:12px;color:#64748b">Monospace / Code</span>
+      <button type="button" class="font-option-item" data-font="'EB Garamond', serif" data-label="Garamond">
+        <span style="font-family:'EB Garamond',serif;font-weight:600">EB Garamond</span>
+        <span style="font-size:12px;color:#64748b">Book &amp; Legal Serif</span>
       </button>
     </div>
   </div>
@@ -852,21 +783,6 @@
     </div>
   </div>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {"@type":"Question","name":"Is Word Writer really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Word Writer is 100% free with no signups, no watermarks, no ads, and no hidden limits."}},
-      {"@type":"Question","name":"Does the .docx export really open in Microsoft Word?","acceptedAnswer":{"@type":"Answer","text":"Yes. The exported file is a genuine OpenXML .docx package that opens cleanly in Microsoft Word, Google Docs, LibreOffice Writer, WPS Office, and Apple Pages."}},
-      {"@type":"Question","name":"Can I type Hindi without installing a Hindi keyboard?","acceptedAnswer":{"@type":"Answer","text":"Yes. Word Writer includes a built-in Devanagari virtual keyboard with all vowels, consonants, matras, and numerals."}},
-      {"@type":"Question","name":"What is Hinglish mode?","acceptedAnswer":{"@type":"Answer","text":"Hinglish mode lets you type Hindi words using English letters. Typing 'namaste' and pressing space converts it to 'नमस्ते' automatically."}},
-      {"@type":"Question","name":"Which font is best for government and SSC documents?","acceptedAnswer":{"@type":"Answer","text":"Mangal is the officially mandated Hindi font by the Government of India and is required for many SSC, UPSC, court, and government submissions."}},
-      {"@type":"Question","name":"Is my document saved on your servers?","acceptedAnswer":{"@type":"Answer","text":"No. Word Writer is entirely client-side. Your text is stored only in your browser and never transmitted to any server."}}
-    ]
-  }
-  </script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
     (function () {
@@ -874,7 +790,8 @@
       const editor = document.getElementById('editor');
       const docTitleInput = document.getElementById('docTitleInput');
       let savedRange = null;
-      let typingMode = 'english';
+      // DEFAULT ENGLISH MODE
+      let typingMode = 'english'; 
       let currentFontFamily = "'Noto Sans Devanagari', 'DM Sans', sans-serif";
 
       function getRangeInEditor() {
@@ -961,6 +878,11 @@
       document.getElementById('fontSizeSelect').addEventListener('change', function () {
         applyInlineStyle('fontSize', this.value + 'pt');
         if (!editor.innerText.replace(/\u200B/g, '').trim()) editor.style.fontSize = this.value + 'pt';
+        
+        // Also apply font size to header/footer visually
+        document.getElementById('docHeader').style.fontSize = this.value + 'pt';
+        document.getElementById('docFooter').style.fontSize = this.value + 'pt';
+
         syncToolbarState();
       });
 
@@ -988,6 +910,7 @@
       document.getElementById('openFontModal').addEventListener('click', () => fontModal.classList.add('open'));
       document.getElementById('closeFontModal').addEventListener('click', () => fontModal.classList.remove('open'));
       fontModal.addEventListener('click', e => { if (e.target === fontModal) fontModal.classList.remove('open'); });
+      
       document.querySelectorAll('.font-option-item').forEach(item => {
         item.addEventListener('click', function () {
           document.querySelectorAll('.font-option-item').forEach(i => i.classList.remove('selected'));
@@ -995,8 +918,19 @@
           currentFontFamily = this.dataset.font;
           currentFontLabel.textContent = this.dataset.label;
           fontModal.classList.remove('open');
+          
+          // Apply font to main editor
           if (!editor.innerText.replace(/\u200B/g, '').trim()) editor.style.fontFamily = currentFontFamily;
           applyInlineStyle('fontFamily', currentFontFamily);
+          
+          // Apply font to header and footer visually
+          document.getElementById('docHeader').style.fontFamily = currentFontFamily;
+          document.getElementById('docFooter').style.fontFamily = currentFontFamily;
+          
+          // Apply to print elements
+          document.getElementById('printHeader').style.fontFamily = currentFontFamily;
+          document.getElementById('printFooter').style.fontFamily = currentFontFamily;
+
           syncToolbarState();
         });
       });
@@ -1143,20 +1077,28 @@
 
       const toggleHeader = document.getElementById('toggleHeader'), docHeader = document.getElementById('docHeader'), hfHeaderRow = document.getElementById('hfHeaderRow'), printHeader = document.getElementById('printHeader');
       const toggleFooter = document.getElementById('toggleFooter'), docFooter = document.getElementById('docFooter'), hfFooterRow = document.getElementById('hfFooterRow'), printFooter = document.getElementById('printFooter');
+      
       function syncHF() {
-        const hVal = toggleHeader.checked ? docHeader.value.trim() : '';
-        printHeader.textContent = hVal; printHeader.classList.toggle('has-content', hVal.length > 0);
-        const fVal = toggleFooter.checked ? docFooter.value.trim() : '';
-        printFooter.textContent = fVal; printFooter.classList.toggle('has-content', fVal.length > 0);
+        const hVal = toggleHeader.checked ? docHeader.innerHTML.trim() : '';
+        printHeader.innerHTML = hVal; 
+        printHeader.classList.toggle('has-content', hVal.length > 0);
+        
+        const fVal = toggleFooter.checked ? docFooter.innerHTML.trim() : '';
+        printFooter.innerHTML = fVal; 
+        printFooter.classList.toggle('has-content', fVal.length > 0);
       }
+      
       toggleHeader.addEventListener('change', () => {
         hfHeaderRow.classList.toggle('hf-disabled', !toggleHeader.checked);
-        docHeader.disabled = !toggleHeader.checked; syncHF();
+        docHeader.contentEditable = toggleHeader.checked;
+        syncHF();
       });
       docHeader.addEventListener('input', syncHF);
+      
       toggleFooter.addEventListener('change', () => {
         hfFooterRow.classList.toggle('hf-disabled', !toggleFooter.checked);
-        docFooter.disabled = !toggleFooter.checked; syncHF();
+        docFooter.contentEditable = toggleFooter.checked;
+        syncHF();
       });
       docFooter.addEventListener('input', syncHF);
 
@@ -1194,14 +1136,24 @@
       document.getElementById('cancelClearBtn').addEventListener('click', () => clearModal.classList.remove('open'));
       document.getElementById('confirmClearBtn').addEventListener('click', () => {
         editor.innerHTML = ''; docTitleInput.value = 'Untitled Document';
-        docHeader.value = ''; docFooter.value = '';
+        docHeader.innerHTML = ''; docFooter.innerHTML = '';
         toggleHeader.checked = false; toggleFooter.checked = false;
         hfHeaderRow.classList.add('hf-disabled'); hfFooterRow.classList.add('hf-disabled');
-        docHeader.disabled = true; docFooter.disabled = true;
+        docHeader.contentEditable = false; docFooter.contentEditable = false;
         syncHF(); updateCounts(); clearModal.classList.remove('open');
       });
 
-      document.getElementById('printBtn').addEventListener('click', () => window.print());
+      // Clear empty paragraphs before printing to prevent top gap
+      document.getElementById('printBtn').addEventListener('click', () => {
+        const firstNode = editor.firstElementChild;
+        if (firstNode && (firstNode.tagName === 'P' || firstNode.tagName === 'DIV') && !firstNode.innerText.trim()) {
+           firstNode.style.display = 'none'; // Temporarily hide
+           window.print();
+           firstNode.style.display = ''; // Restore
+        } else {
+           window.print();
+        }
+      });
 
       function escXml(s) {
         return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
